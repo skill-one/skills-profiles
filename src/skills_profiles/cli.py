@@ -263,8 +263,8 @@ def run(
         logger.info("LLM: %d call(s), %.1fs total, %.2fs average per prompt",
                     stats.prompts_generated, stats.llm_seconds, avg)
     # stats.json is the artifact's state, not the run's: how complete it is right
-    # now (the snapshot it came from rides beside the data as `upstream`). Run
-    # counters and timings stay in the log.
+    # now (which snapshot it became, and from which mirror tag, is stamped by the
+    # publish step). Run counters and timings stay in the log.
     write_artifact_stats(settings, cov)
     logger.info(
         "Coverage: %d/%d skill(s) complete (%d profiled), %d remaining, %d stale "

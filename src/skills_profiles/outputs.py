@@ -128,10 +128,13 @@ def write_stats(settings: Settings, stats: Mapping) -> Path:
     """Overwrite output/stats.json: the artifact's current state, not the run's.
 
     How many skills are complete and how many hold each prompt's output on disk,
-    plus how many covers are rendered. Run counters, timings and provenance stay
-    out of it — which upstream snapshot it came from is the root `upstream`
-    pointer. One snapshot file (no history) so CI and humans read the same place;
-    sorting dict keys keeps the layout stable across runs.
+    plus how many covers are rendered. Run counters and timings stay out of it,
+    and so does provenance: the publish step stamps `publishedAt` and the
+    `upstream` mirror tag into this same file (see the publish-dist action),
+    because only it knows both — a value copied here by a run would lag the day
+    `sync` republished the dataset without regenerating anything. One snapshot
+    file (no history) so CI and humans read the same place; sorting dict keys
+    keeps the layout stable across runs.
     """
     path = settings.output_dir / "stats.json"
     path.parent.mkdir(parents=True, exist_ok=True)

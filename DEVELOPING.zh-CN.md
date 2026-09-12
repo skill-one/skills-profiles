@@ -170,11 +170,13 @@ gh workflow run sync.yml                                     # 刷新上游，�
 ```
 
 两条工作流共用 [restore-dist](.github/actions/restore-dist/action.yml)（一个 codeload 请求把分支拉回
-到 `output/` 和 `cache/`）与 [publish-dist](.github/actions/publish-dist/action.yml)（把工作目录镜像回
-`dist`、写入根目录的两行指针——`latest` 是本次 tag、`upstream` 是数据集来自镜像的哪个 tag——打 tag、按
-时间窗剪枝）。两行指针都在 commit 之前写入，所以快照与它的名字一起发布；只有 `latest`、tag、`HEAD`
-三者一致时该步骤才算成功——`upstream` 由数据集自己的 marker 派生，所以不论哪条工作流发布，它都不会滞后
-于数据。`dist` 是唯一的原子快照
+到 `output/` 和 `cache/`，跳过根目录指针——每次发布都会重写它，管道从不读它）与
+[publish-dist](.github/actions/publish-dist/action.yml)（把工作目录镜像回 `dist`、写入根目录的 `latest`
+指针标明本次 tag、给 `stats.json` 盖章写入 `publishedAt` 与数据集来自镜像的哪个 tag、打 tag、按
+时间窗剪枝）。指针和章都在 commit 之前写入，所以快照与它的身份一起发布；只有 `latest`、tag、`HEAD`
+三者一致、且已发布的 `stats.json` 章还在时该步骤才算成功——镜像 tag 由数据集自己的 marker 派生，所以
+不论哪条工作流发布它都不会滞后于数据；又因为 [stamp-stats.sh](.github/actions/publish-dist/stamp-stats.sh)
+能把章再剥掉，只改了时间戳的一轮什么都不发布。`dist` 是唯一的原子快照
 ——根目录是档案，外加 `cache/skills-sh/` 数据集镜像——所以**只有 `sync` 会碰上游**，而 `generate` 只读
 上一次 `sync` 发布的数据集并增加二进制体积：`limit` 封顶单批，`SKILLS_PROFILES_TOTAL_LIMIT` 封顶数据集，
 所以是这道封顶（而非任何单次 run）决定了 `dist` 最多能装多少张配图。历史按滚动时间窗剪枝
@@ -193,7 +195,8 @@ gh workflow run sync.yml                                     # 刷新上游，�
 
 ## 测试
 
-整条管道均离线验证：数据解析、`latest` 指针的解析与对垃圾内容的拒绝、DAG 排序、模板渲染、续跑跳过、
+整条管道均离线验证：数据解析、`latest` 指针的解析与对垃圾内容的拒绝、发布盖章的往返（给 `stats.json`
+加上 `publishedAt` / `upstream` 再剥回去，因此「什么都没改」的一轮仍然认得出来）、DAG 排序、模板渲染、续跑跳过、
 失效、依赖传递、markdown 渲染、配图配方的 prompt/种子/请求体构造、端点的重试规则、按 key 的限流器，
 以及 `run` 的完整 CLI dry-run——都不需要网络（`conftest.py` 把 `data.download_file` 换成由 fixture
 构造快照 tarball 的假服务，上游指针与图像端点则都只通过一个打了桩的 `httpx` 调用触达）。

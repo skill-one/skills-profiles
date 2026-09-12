@@ -10,9 +10,8 @@ English: [README.md](README.md) · 开发指南：[DEVELOPING.zh-CN.md](DEVELOPI
 
 ```
 ├── latest         最新一次发布的 tag，一行——读它即可钉住版本
-├── upstream       这份快照基于镜像的哪个 tag——按它做关联
 ├── skills.jsonl   每个已生成档案的 skill 一行，按 id 排序——筛选 / 关联 / 排行都从这里开始
-├── stats.json     产物有多完整：skill 数、每个 prompt 的覆盖数、配图数
+├── stats.json     产物有多完整，外加盖章写入的 publishedAt 与 upstream（来自镜像的哪个 tag）
 └── skills/        每个 skill 一个目录，目录名就是它的 id
     └── vercel-labs/skills/find-skills/   ({owner}/{repo}/{slug})
         ├── domain.json  scenario.json  blackbox.json  whitebox.json
@@ -58,13 +57,15 @@ English: [README.md](README.md) · 开发指南：[DEVELOPING.zh-CN.md](DEVELOPI
 `{...[n–m]}` 表示长度为 n~m 的数组；`input_output` 的元素是 `{input, output}`，`comments` 的元素是
 `{user, category, comment}`。除 id、路径和字段名外，全部是中文。
 
-`stats.json` 说明产物有多完整：
+`stats.json` 说明产物有多完整，以及它们是哪一份快照：
 
 ```json
 {
   "covers": { "rendered": 999 },
   "prompts": { "blackbox": 1000, "comments": 1000, "cover": 1000, "domain": 1000, "persona": 1000, "scenario": 1000, "tagline": 1000, "whitebox": 1000 },
-  "skills": { "profiled": 1000, "complete": 999, "total": 1000 }
+  "publishedAt": "2026-09-13T01:02:03Z",
+  "skills": { "profiled": 1000, "complete": 999, "total": 1000 },
+  "upstream": "dist-2026-09-12"
 }
 ```
 
@@ -76,13 +77,15 @@ English: [README.md](README.md) · 开发指南：[DEVELOPING.zh-CN.md](DEVELOPI
 - `skills.total` 是整条管道刻意设了封顶的窗口：安装量最高的至多 `SKILLS_PROFILES_TOTAL_LIMIT` 个
   skill（默认 1000），而非上游全量。计数在每轮 `generate` 发布时重写，要精确数字就数 `skills.jsonl`
   的行数。
-- 这些档案基于哪一版上游数据不在这里，而是根目录的 `upstream` 指针——任何一次发布都会把它写对，所以
-  它不会滞后于数据（见[与镜像数据关联](#与镜像数据关联)）。
+- `publishedAt`（这份快照何时发布）与 `upstream`（它随包的数据集来自镜像的哪个 tag）由发布环节盖章写
+  入，而不是由管道抄写，所以二者都不可能滞后于数据：比 `publishedAt` 判断两份快照是否不同，按
+  `upstream` 对齐 hash。本地尚未发布时，文件里这两个键都不存在。
 
 三条由结构本身保证的性质：索引是每个 skill 目录的投影、每次重写都从磁盘重新推导（行存在当且仅当目录
 存在，且行里的 `domain` / `persona` 必然与该目录的 json 一致）；`hash` 就是生成档案时依据的那份内容，
-所以上游改写某个 skill 后它的档案会被丢弃，而不是继续描述另一个版本；`latest` 指明是哪一份快照，因为
-只有指针、tag、commit 三者一致时发布才算成功。
+所以上游改写某个 skill 后它的档案会被丢弃，而不是继续描述另一个版本；`latest` 指明是哪一份快照，
+`stats.json` 则盖章写明它何时发布、基于哪一版镜像，因为指针、tag、commit 三者不一致，或已发布的快照
+丢了章，发布都算失败。
 
 `cover.json` 只是配图配方的**主体**（英文、逗号短语、一个正在干活的人）；画面、取景以及每个分类对应的
 画风都由生成器补上。配方与配图分开存放，所以重画一张配图不花任何 LLM 调用。细节见
@@ -91,9 +94,9 @@ English: [README.md](README.md) · 开发指南：[DEVELOPING.zh-CN.md](DEVELOPI
 ## 如何获取数据
 
 [`dist` 分支](../../tree/dist)的根目录**就是**快照：滚动分支是最新状态，`sync` 打 `dist-YYYY-MM-DD`
-（同日内 force 覆盖），`generate` 每批追加一个不可变的 `dist-YYYY-MM-DD-N`；根目录两行指针各指一个版本
-——`latest` 是那次发布推上的 tag，`upstream` 是随快照一起发布的数据集来自镜像的哪个 tag。文字档案压缩
-后不到 1 MB；`dist` 还附带内部 `cache/skills-sh/`
+（同日内 force 覆盖），`generate` 每批追加一个不可变的 `dist-YYYY-MM-DD-N`。钉版本只需一个指针——根目录
+的 `latest`（镜像也发布同样形状的一行），快照身份的其余部分则由 `stats.json` 带出：它何时发布、数据集来自
+镜像的哪个 tag。文字档案压缩后不到 1 MB；`dist` 还附带内部 `cache/skills-sh/`
 数据集镜像供 CI 恢复（约 120 MB 文本，整包克隆会带上，不属于档案 API）。
 
 ```bash
@@ -116,11 +119,11 @@ tag 时才重新拉取。索引很小（约 130 KB），筛选用 jq 就够：
 
 安装量、stars、简介和 `SKILL.md` 原文在
 [skills-sh-mirror](https://github.com/skill-one/skills-sh-mirror)；用 `id` 关联行，用 `hash` 确认内容
-一致。若也要按 hash 对齐，就把上游钉到 `upstream` 指针：
+一致。若也要按 hash 对齐，就从盖好章的 `stats.json` 取镜像 tag：
 
 ```bash
 BASE=https://raw.githubusercontent.com/skill-one/skills-profiles
-up=$(curl -s $BASE/dist/upstream)   # 例如 dist-2026-09-12
+up=$(curl -s $BASE/dist/stats.json | jq -r .upstream)   # 例如 dist-2026-09-12
 curl -s "https://raw.githubusercontent.com/skill-one/skills-sh-mirror/$up/skills.jsonl" -o up.jsonl
 curl -s $BASE/dist/skills.jsonl -o mine.jsonl
 

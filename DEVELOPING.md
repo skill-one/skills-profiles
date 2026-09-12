@@ -179,12 +179,15 @@ gh workflow run sync.yml                                    # refresh upstream, 
 ```
 
 Both share [restore-dist](.github/actions/restore-dist/action.yml) (one codeload request pulls the
-branch back into `output/` and `cache/`) and
+branch back into `output/` and `cache/`, skipping the root pointer — a publish rewrites it and the
+pipeline never reads it) and
 [publish-dist](.github/actions/publish-dist/action.yml) (mirror the working dirs back to `dist`, write
-the root-level `latest` pointer naming the tag it pushes plus an `upstream` pointer naming the mirror
-tag the bundled dataset was synced from, tag, prune). Both pointers are written before the commit, so a
-snapshot ships with its names, and the step fails unless `latest`, the tag and `HEAD` agree — `upstream`
-is derived from the dataset's own marker, so whichever workflow publishes, it cannot lag the data.
+the root-level `latest` pointer naming the tag it pushes, stamp `stats.json` with `publishedAt` plus the
+mirror tag the bundled dataset was synced from, tag, prune). Pointer and stamp are written before the
+commit, so a snapshot ships with its own identity, and the step fails unless `latest`, the tag and
+`HEAD` agree or the published `stats.json` lost its stamp. The mirror ref comes from the dataset's own
+marker, so whichever workflow publishes it cannot lag the data — and because [stamp-stats.sh](.github/actions/publish-dist/stamp-stats.sh)
+strips the stamp back off, a run that changed nothing but the timestamp publishes nothing.
 `dist` is the single atomic snapshot — the profiles at its root plus the `cache/skills-sh/`
 dataset mirror — so **only `sync` ever touches upstream**, while `generate` reads what the last `sync`
 published and adds the binary weight: `limit` caps one batch and `SKILLS_PROFILES_TOTAL_LIMIT` caps the
@@ -205,7 +208,9 @@ Required configuration (Settings → Secrets and variables → Actions):
 ## Testing
 
 The pipeline is verified offline: dataset parsing, the `latest` pointer's parsing and its refusal of
-junk, DAG ordering, template rendering, resume skip, invalidation, dependency passing, markdown
+junk, the publish stamp's round trip (`stats.json` with `publishedAt` / `upstream` added and stripped
+back off, so a no-op run stays recognisable), DAG ordering, template rendering, resume skip,
+invalidation, dependency passing, markdown
 rendering, the cover recipe's prompt/seed/payload construction, the endpoint's retry rules, the per-key
 rate limiter, and a full CLI dry-run of `run` — no network access (`conftest.py` replaces
 `data.download_file` with a fake serving a snapshot tarball built from the fixtures, and the upstream

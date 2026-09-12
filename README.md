@@ -11,9 +11,8 @@ snapshots.
 
 ```
 ├── latest         the newest publish's tag, one line — read it to pin a version
-├── upstream       the mirror tag this snapshot was built from — join on it
 ├── skills.jsonl   one row per profiled skill, sorted by id — filter / join / rank here
-├── stats.json     how complete the artifacts are: skills, per-prompt counts, covers
+├── stats.json     how complete the artifacts are, plus publishedAt and the upstream mirror tag
 └── skills/        one directory per skill, named after its id
     └── vercel-labs/skills/find-skills/   ({owner}/{repo}/{slug})
         ├── domain.json  scenario.json  blackbox.json  whitebox.json
@@ -60,13 +59,15 @@ schema:
 `{...[n–m]}` = an array of that many entries; `input_output` items are `{input, output}`, `comments`
 items `{user, category, comment}`. Everything but ids, paths and field names is Chinese.
 
-`stats.json` says how complete the artifacts are:
+`stats.json` says how complete the artifacts are, and which snapshot they are:
 
 ```json
 {
   "covers": { "rendered": 999 },
   "prompts": { "blackbox": 1000, "comments": 1000, "cover": 1000, "domain": 1000, "persona": 1000, "scenario": 1000, "tagline": 1000, "whitebox": 1000 },
-  "skills": { "profiled": 1000, "complete": 999, "total": 1000 }
+  "publishedAt": "2026-09-13T01:02:03Z",
+  "skills": { "profiled": 1000, "complete": 999, "total": 1000 },
+  "upstream": "dist-2026-09-12"
 }
 ```
 
@@ -78,15 +79,17 @@ items `{user, category, comment}`. Everything but ids, paths and field names is 
 - `skills.total` is the pipeline's capped window — the most installed `SKILLS_PROFILES_TOTAL_LIMIT`
   skills (default 1000), never every upstream one. The counters are rewritten on every `generate`
   publish, so count `skills.jsonl` lines when an exact number matters.
-- Which upstream snapshot these came from is not here: it is the root `upstream` pointer, which any
-  publish keeps current, so it cannot lag the data (see
-  [Join with the mirror](#join-with-the-mirror)).
+- `publishedAt` (when the snapshot was published) and `upstream` (the mirror tag its dataset came from)
+  are stamped by the publish step rather than written by the pipeline, so they can never lag the data:
+  compare `publishedAt` to tell two snapshots apart, join on `upstream` to match hashes. Locally,
+  before anything is published, the file carries neither.
 
 Three guarantees the layout enforces: the index is a projection re-derived from disk (a row exists iff
 its directory does, and its `domain` / `persona` always match that directory's json); `hash` is the
 content the profiles were generated from, so when upstream rewrites a skill its profiles are dropped
-rather than left describing another version; and `latest` names the snapshot, because publishing fails
-unless pointer, tag and commit agree.
+rather than left describing another version; and `latest` names the snapshot while `stats.json` stamps
+when it was published and from which mirror tag, because publishing fails unless pointer, tag and
+commit agree — or a published snapshot turns out to have lost its stamp.
 
 `cover.json` is only the recipe's **subject** (English, comma-separated phrases, a person at work); the
 render, the framing and the per-category style come from the generator. Recipe and picture are stored
@@ -96,11 +99,11 @@ apart, so re-drawing one costs no LLM call. Full detail: [DEVELOPING.md](DEVELOP
 
 The [`dist` branch](../../tree/dist) root _is_ the snapshot: the rolling branch is the newest state,
 `sync` tags `dist-YYYY-MM-DD` (force-updated within the day) and `generate` appends an immutable
-`dist-YYYY-MM-DD-N` per batch, and one-line pointers name both versions: `latest` the tag that publish
-pushed, `upstream` the mirror tag the bundled dataset came from — the shape the mirror publishes too.
-Text profiles are under 1 MB compressed; `dist` also carries the internal
-`cache/skills-sh/` dataset mirror CI restores (~120 MB of text, included in a full clone, not part of
-this API).
+`dist-YYYY-MM-DD-N` per batch. One pointer names the version — the root `latest`, the shape the mirror
+publishes too — while `stats.json` carries the rest of its identity: when it was published and which
+mirror tag its dataset came from. Text profiles are under 1 MB compressed; `dist` also carries the
+internal `cache/skills-sh/` dataset mirror CI restores (~120 MB of text, included in a full clone, not
+part of this API).
 
 ```bash
 BASE=https://raw.githubusercontent.com/skill-one/skills-profiles
@@ -122,11 +125,11 @@ https://github.com/skill-one/skills-profiles.git`, or the same tree as a tarball
 
 Installs, stars, descriptions and the `SKILL.md` sources are in
 [skills-sh-mirror](https://github.com/skill-one/skills-sh-mirror); `id` joins the rows, `hash` proves
-the content matches. Pin upstream to the `upstream` pointer for an exact hash join:
+the content matches. Read the mirror tag off the stamped `stats.json` for an exact hash join:
 
 ```bash
 BASE=https://raw.githubusercontent.com/skill-one/skills-profiles
-up=$(curl -s $BASE/dist/upstream)   # e.g. dist-2026-09-12
+up=$(curl -s $BASE/dist/stats.json | jq -r .upstream)   # e.g. dist-2026-09-12
 curl -s "https://raw.githubusercontent.com/skill-one/skills-sh-mirror/$up/skills.jsonl" -o up.jsonl
 curl -s $BASE/dist/skills.jsonl -o mine.jsonl
 

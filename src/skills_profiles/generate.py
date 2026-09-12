@@ -183,10 +183,11 @@ def write_artifact_stats(settings: Settings, cov: dict) -> dict:
 
     How complete the artifacts are right now: skills profiled (text) and complete
     (text + cover), a cached count per prompt, covers rendered. Nothing a run did
-    (counters, timings) and no provenance — the upstream tag these were built from
-    is published beside the data as its own one-line `upstream` pointer (see the
-    publish-dist action), where either workflow can keep it current. `cov` is the
-    coverage dict computed by the caller; the full stats written are returned.
+    (counters, timings) and no provenance — when this snapshot was published and
+    which mirror tag its dataset came from are stamped into the same file by the
+    publish step, the only actor that can know both (see the publish-dist action).
+    `cov` is the coverage dict computed by the caller; the full stats written are
+    returned.
     """
     stats = {
         "skills": {"total": cov["skills"], "profiled": cov["profiled"],
