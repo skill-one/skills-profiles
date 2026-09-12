@@ -2,7 +2,9 @@ name: restore-dist
 description: >-
   Pull the published `dist` branch back into the working directories: profiles
   at the branch root go to `output-dir`, the dataset mirror (`cache/…`) goes to
-  `data-dir`. One codeload request; no-op when the branch does not exist yet.
+  `data-dir`. The branch-root `latest` pointer is left out — a publish rewrites
+  it and the pipeline never reads it. One codeload request; no-op when the
+  branch does not exist yet.
 
 inputs:
   output-dir:
@@ -41,6 +43,10 @@ runs:
           fi
           for item in "$tmp"/*; do
             [ -e "$item" ] || continue
+            # the branch-root pointers are what a publish writes, not what the
+            # pipeline reads: restoring them would let a snapshot's own metadata
+            # ride into the next publish as if it were generated output
+            case "$(basename "$item")" in latest | upstream) continue ;; esac
             cp -a "$item" "$OUTPUT_DIR/"
           done
           echo "restored=true" >> "$GITHUB_OUTPUT"

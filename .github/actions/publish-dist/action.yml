@@ -6,7 +6,10 @@ description: >-
   base is the newest bare date tag (or today, when none) and N increments
   across that base's publishes (used by generate). The branch root also gets a
   one-line `latest` pointer naming that tag — the same way upstream publishes
-  its newest snapshot — and the run fails unless pointer, tag and HEAD agree.
+  its newest snapshot — and stats.json gets stamped with what only this step
+  knows: `publishedAt` and the `upstream` mirror tag the bundled dataset came
+  from. The run fails unless pointer, tag and HEAD agree, or a published
+  snapshot lost its stamp. Nothing new (stamp aside) publishes nothing.
 
 inputs:
   tag-mode:
@@ -103,15 +106,31 @@ runs:
         # costs one tiny request instead of the whole branch.
         printf '%s\n' "$tag" > latest
 
-        # The dataset's provenance, symmetric with `latest`: one line naming the
-        # upstream tag the bundled snapshot was synced from, derived from that
-        # snapshot's own marker — so whichever workflow publishes, the pointer
-        # cannot lag the data. Absent when no dataset rides in the snapshot.
+        # Provenance, by contrast, is not a sibling pointer: it goes into
+        # stats.json, so the one file a consumer already reads also tells it
+        # which mirror tag to join hashes on and when the snapshot was published.
+        # The ref is derived from the bundled dataset's own marker, so whichever
+        # workflow publishes it cannot lag the data; empty when no dataset rides
+        # along (then only `publishedAt` is stamped).
         marker=$(ls "${dist}/${DATA_DIR}"/*/SNAPSHOT.json 2>/dev/null | head -1 || true)
-        if [ -n "$marker" ] && [ -n "$(jq -r '.ref // empty' "$marker")" ]; then
-          jq -r .ref "$marker" > upstream
-        else
-          rm -f upstream
+        upstream_ref=""
+        if [ -n "$marker" ]; then
+          upstream_ref=$(jq -r '.ref // empty' "$marker")
+        fi
+
+        # Nothing-new is judged on content, not on the stamp: the snapshot being
+        # replaced already carries a publishedAt this run has not earned, so both
+        # sides are compared with the stamped fields off.
+        stats_core=""
+        head_core=""
+        if [ -f stats.json ]; then
+          stats_core=$("${GITHUB_ACTION_PATH}/stamp-stats.sh" core stats.json)
+          if git rev-parse -q --verify HEAD >/dev/null; then
+            # best-effort: a previous snapshot with no readable stats.json is an
+            # empty baseline, i.e. a difference — which is a publish, not an error
+            head_core=$(git show HEAD:stats.json 2>/dev/null \
+              | "${GITHUB_ACTION_PATH}/stamp-stats.sh" core - || true)
+          fi
         fi
 
         git add -A
@@ -120,7 +139,23 @@ runs:
           echo "tag=" >> "$GITHUB_OUTPUT"
           exit 0
         fi
-        git commit -q -m "profiles: ${GITHUB_RUN_ID} at $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+        # The unrestricted compare above cannot call a stamp-only difference no-op
+        # (the previous snapshot's stamp is inside the file it staged against), so
+        # stats.json is weighed a second time with both stamps removed.
+        if [ -n "$stats_core" ] && [ "$stats_core" = "$head_core" ] \
+          && git diff --cached --quiet -- . ':(exclude)stats.json'; then
+          echo "Nothing new to publish"
+          echo "tag=" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+        published_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+        if [ -n "$stats_core" ]; then
+          # stamped into the tree, not staged over it: the snapshot must carry the
+          # time and ref it was published with, since neither can be derived later
+          "${GITHUB_ACTION_PATH}/stamp-stats.sh" stamp stats.json "$published_at" "$upstream_ref"
+          git add stats.json
+        fi
+        git commit -q -m "profiles: ${GITHUB_RUN_ID} at ${published_at}"
 
         # Prune dist history by age. Author timestamps survive `rebase` (which
         # preserves %at) and the squashed root gets a fresh author date, so
@@ -157,6 +192,25 @@ runs:
           echo "tag ${tag} does not point at the published snapshot HEAD" >&2
           exit 1
         }
+
+        # And the stamp has to be inside the snapshot consumers pin to: a publish
+        # that lost it would leave a freshness probe unable to tell two snapshots
+        # apart, and a hash join unable to say which mirror version the profiles
+        # describe. An empty ref means no `upstream` field, so the two sides are
+        # compared as strings.
+        if [ -n "$stats_core" ]; then
+          raw=$(git show "${tag}:stats.json")
+          served_at=$(jq -r '.publishedAt // empty' <<<"$raw")
+          served_upstream=$(jq -r '.upstream // empty' <<<"$raw")
+          [ "$served_at" = "$published_at" ] || {
+            echo "published stats.json carries '${served_at}', expected '${published_at}'" >&2
+            exit 1
+          }
+          [ "$served_upstream" = "$upstream_ref" ] || {
+            echo "published stats.json upstream is '${served_upstream}', expected '${upstream_ref}'" >&2
+            exit 1
+          }
+        fi
 
         # Prune: drop tags whose embedded date is older than the cutoff.
         # Always keep the newest of each pattern as a floor, so a repo that
