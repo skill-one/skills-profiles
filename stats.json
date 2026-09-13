@@ -12,9 +12,11 @@
     "tagline": 945,
     "whitebox": 945
   },
+  "publishedAt": "2026-09-13T00:01:17Z",
   "skills": {
     "complete": 927,
     "profiled": 928,
     "total": 1000
-  }
+  },
+  "upstream": "dist-2026-09-12"
 }
