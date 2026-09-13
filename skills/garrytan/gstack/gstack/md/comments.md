@@ -1,0 +1,10 @@
+# gstack (`garrytan/gstack/gstack`)
+
+## comments
+
+- user: 独立开发者, category: 妙用, comment: 记不住那一堆子技能名, 我直接描述症状: 说"页面变慢了"它路由到 /benchmark, 说"这看着不对"给 /design-review. 说症状别猜工具名, 路由更准.
+- user: 第一次用的新手, category: 坑, comment: 只敲 gstack 然后干等, 它不会自己动. 它是前台不是工人, 得附一句问题 (如"帮我查登录后为啥跳转失败") 它才知道送进哪个技能.
+- user: 运维老哥, category: 注意, comment: 测登录后的页面, 它优先驱动我自己的浏览器 (Aside), 会话现成不用倒 cookie. 但 Aside 没开会静默换它自带的浏览器, 那就得手动导 cookie, 跑之前先确认开的是哪个.
+- user: 后端老兵, category: 启发, comment: 嫌它老自动起技能就关了 proactive, 之后它只问"要不要跑 /qa"不再自动跑, 恢复用 gstack-config set proactive true. 它默认宁可路由错也不漏流程, 这思路我借走了.
+- user: 接活的前端, category: 坑, comment: 新机器首跑输出里有 stale install 提示, 我没理会, 结果引导和授权提问一直不出现——它们被推迟到下次健康启动了. 先跑 ./setup 或 /gstack-upgrade 再干正事.
+- user: 技术负责人, category: 注意, comment: 跑完先看结尾的状态行: DONE / BLOCKED / NEEDS_CONTEXT. 显示 BLOCKED 别急着重跑, 它写清了卡在哪、试过啥, 按提示补齐再来, 能省一整轮来回.

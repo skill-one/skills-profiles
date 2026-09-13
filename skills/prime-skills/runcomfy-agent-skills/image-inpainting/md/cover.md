@@ -2,4 +2,4 @@
 
 ## cover
 
-A focused photo retoucher in a dark apron leans over a glowing pen display, tracing a stylus around a half-erased silhouette in a street photograph, a white mask highlight marking the fading spot, a desk lamp over the tidy studio desk
+A bespectacled photo retoucher in a rolled-sleeve shirt leans over a pen display tablet, stylus tracing a glowing mask outline around a cluttered parked car in a street photo, headphones around neck, coffee mug beside keyboard, dim studio lamp

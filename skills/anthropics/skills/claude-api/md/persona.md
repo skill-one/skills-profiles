@@ -1,0 +1,9 @@
+# claude-api (`anthropics/skills/claude-api`)
+
+## persona
+
+**tool**: anthropic
+
+**role**: 模型接入工程师
+
+**scene**: 要给应用接上 Claude、卡在模型选型和 SDK 报错时

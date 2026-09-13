@@ -1,0 +1,10 @@
+# motion-graphics (`heygen-com/hyperframes/motion-graphics`)
+
+## comments
+
+- user: 自媒体新手, category: 坑, comment: 我上来就要 2 分钟带配音的产品片, 它直接说超范围: 这技能是 10 秒上下、无旁白的动效, 长片得走 general-video。先想清时长再开口, 免得白聊一轮。
+- user: 运维老哥, category: 坑, comment: 环境没备齐就让它直接渲染, 到导出那步报错才回头补 ffmpeg。后来开工先让它跑一遍 doctor 环境检查, 缺啥一次报清, 省得中途返工。
+- user: 数据分析师, category: 妙用, comment: 纯数据动画最省事: 不用找任何素材, 我把季度数字直接粘给它, 数字滚动加环形图就出来了, 整个素材环节自动跳过, 半天能出好几版。
+- user: 短视频剪辑师, category: 妙用, comment: 让它导 webm 透明底的名条和数据小卡, 直接叠在我的真人口播视频上。它不拍真人, 但包装动画全能外包给它, 成片质感立刻上一档。
+- user: 品牌设计师, category: 注意, comment: logo 在 Figma 里就别截图进场, 直接给 figma 链接: 品牌色会绑成变量, 以后换 VI 改一处全片跟着变。我当初用截图, 换色只能整支重做。
+- user: 兼职做汇报的产品经理, category: 启发, comment: 它顶多问我一个问题就做完, 我学会把时长、用途、配色、数据开工前列全; 渲染前它会停一下问「先预览还是直接出片」, 这个反悔窗口别浪费。

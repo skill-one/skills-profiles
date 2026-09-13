@@ -1,0 +1,13 @@
+# remotion-multimedia (`remotion-dev/skills/remotion-multimedia`)
+
+## whitebox
+
+- 接收任务, 判断是否属于三类元信息查询之一: 音频时长 / 视频宽高 / 视频时长
+- 按任务加载 skill.md 索引到的对应参考文档 (get-audio-duration.md / get-video-dimensions.md / get-video-duration.md)
+- 需要超出三篇文档的能力时, 查阅 Mediabunny 官方总览
+- 按文档给出的方式, 用 Mediabunny 在浏览器中读取媒体文件元数据
+- 返回结果 (时长以秒计, 尺寸为宽x高)
+
+- 核心依赖: Mediabunny — 一个在浏览器里处理音频/视频的多媒体库, 所有解析工作由它完成
+- 知识分层: skill.md 只存能力清单和文档索引, 具体实现细节在三篇子文档中, 按需取用, 不凭记忆编写
+- 能力边界明确: 仅覆盖 skill.md 列出的三类查询 (音频时长、视频尺寸、视频时长), 不外溢

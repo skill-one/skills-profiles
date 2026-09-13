@@ -1,0 +1,7 @@
+# wecomcli-doc (`wecomteam/wecom-cli/wecomcli-doc`)
+
+## tagline
+
+- 一句话，生成企微在线文档
+- Word 秒变在线文档，一键导入
+- 新建读写，文档管家随叫随到

@@ -1,0 +1,9 @@
+# remotion-to-hyperframes (`heygen-com/hyperframes/remotion-to-hyperframes`)
+
+## persona
+
+**tool**: gsap
+
+**role**: 动效移植师
+
+**scene**: 递来一份 Remotion (React) 视频源码、想原样搬进 HyperFrames 的那一刻

@@ -1,0 +1,9 @@
+# remotion-interactivity (`remotion-dev/skills/remotion-interactivity`)
+
+## blackbox
+
+**function**: 帮你把 Remotion（用代码做视频的工具）的视频代码整理成"可视化可编辑"的形态——在 Remotion Studio 预览器里，画面中的文字、图片、动画能直接用鼠标点选、拖拽、缩放，样式和动画节奏不用改代码就能调。
+
+- input: 一份现有的 Remotion 视频代码文件（.tsx）, output: 一份改写好的代码：贴回项目后，Studio 里的画面元素变成可点选、可拖动/缩放/旋转，右侧面板能直接改字号、颜色、位置、动画时长
+- input: 一句话需求，如"标题从屏幕下方弹入并轻微旋转，2 秒后淡出", output: 一份可直接预览运行的 Remotion 组件代码，动画完整，且其中每段文字、每段动画在 Studio 里都能继续手动微调
+- input: "Studio 里某个元素的样式是灰色的、改不动"+对应代码, output: 调整后的代码，之前灰掉锁死的样式和动画参数重新变成可视化可编辑

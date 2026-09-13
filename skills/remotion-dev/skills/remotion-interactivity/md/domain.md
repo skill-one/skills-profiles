@@ -1,0 +1,7 @@
+# remotion-interactivity (`remotion-dev/skills/remotion-interactivity`)
+
+## domain
+
+**domain**: 🎨 设计多媒体
+
+**reason**: 用代码结构化 Remotion 视频标记, 让 Studio 可交互编辑, 服务视频/动效制作

@@ -1,0 +1,12 @@
+# remotion-studio (`remotion-dev/skills/remotion-studio`)
+
+## whitebox
+
+- 通过 npx 执行 `remotion studio --no-open`, 调起 Remotion 内置的 Studio
+- 若检测到同一项目/端口的 Studio 已在运行: 直接打印已有 URL 并退出
+- 若未运行: 启动一个长驻进程, 并打印 Studio 的访问 URL
+- 在浏览器中打开该 URL, 即可预览视频
+
+- 依赖 npx (Node.js 的命令行包执行器) 运行 Remotion CLI, 不需要本地预先安装
+- 实例检测机制: 默认避免对同一项目和端口重复启动 Studio; 可用 `--force-new` 强制再开一个实例
+- 端口分配: 默认由 Remotion 自动寻找空闲端口, 可用 `--port=<number>` 指定; 日志级别可用 `--log=<level>` (error/warn/info/verbose) 调整

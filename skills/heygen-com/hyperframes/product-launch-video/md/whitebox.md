@@ -1,0 +1,13 @@
+# product-launch-video (`heygen-com/hyperframes/product-launch-video`)
+
+## whitebox
+
+- Step 0: npx hyperframes init 建项目, 确认/锁定 brief 写入 BRIEF.md, 检查 auth status (HeyGen 在线 or 本地引擎)
+- Step 1: npx hyperframes capture 抓取产品 URL → capture/ 下的品牌 tokens.json、可见文案、资产清单 (asset-descriptions.md); 抓取失败即硬停
+- Step 2+3: build-frame.mjs 把选中的预设 remix 到品牌 token 生成 frame.md; 再依据抓取物写 STORYBOARD.md + SCRIPT.md, 用户审批分镜
+- Step 3.1+4: audio.mjs 后台跑配音/词级时间戳/BGM; 同时给 STORYBOARD.md 每帧补上时间轴镜头序列与动效
+- Step 5+6: 每帧派发一个 sub-agent 产出 compositions/frames/NN-*.html + index.html, 最终渲染为 renders/video.mp4
+
+- 门禁式流水线: 步骤按序执行, 每步有硬校验 gate — capture 必须 JSON ok:true 且无 BLOCKED.md; build-frame.mjs 必须 exit 0; 用户门禁在 Step 0/3/6, 未过 gate 不得进入下一步
+- 确定性设计转换: capture 产出 {colors, fonts} 的 tokens.json, build-frame.mjs 把预设 FRAME.md 按角色 (ink/canvas/accents) 映射到品牌色、换品牌字体, 生成 frame.md + caption-skin.html, 禁止手改; 分镜 visuals 必须源自 asset-descriptions.md 清单, 不可虚构资产
+- 外部依赖全走 CLI/API: npx hyperframes (init/capture/catalog 查 ~400 个托管组件 registry); TTS+BGM 走 HeyGen API (离线回退 Kokoro 本地引擎), 需 ~/.heygen 凭据; 可选视觉模型 (GEMINI/GOOGLE/OpenRouter key) 自动给资产写 caption

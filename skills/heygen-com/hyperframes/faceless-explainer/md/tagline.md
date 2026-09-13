@@ -1,0 +1,7 @@
+# faceless-explainer (`heygen-com/hyperframes/faceless-explainer`)
+
+## tagline
+
+- 文字进, 视频出, 全程无需出镜
+- 逐帧动画, 把复杂讲得一看就懂
+- 你的文稿, 变身会讲课的视频

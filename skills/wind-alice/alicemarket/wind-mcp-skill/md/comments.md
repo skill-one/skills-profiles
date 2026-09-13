@@ -1,0 +1,10 @@
+# wind-mcp-skill (`wind-alice/alicemarket/wind-mcp-skill`)
+
+## comments
+
+- user: 量化散户, category: 妙用, comment: 自选股30只不用一只只问，行情指标直接逗号拼代码一次查（单次上限50个），一轮出全表，省掉一堆来回。
+- user: 第一次用的新手, category: 坑, comment: 没配 API Key 就开跑，第一条就报 AUTH_ERROR 白等半天。先按报错信封里的指引把密钥配好，再发请求一次就通。
+- user: 基金定投族, category: 注意, comment: 它只回数据不给买卖建议，问"哪只基金该买"会被拒。想筛基金就把条件说具体，如"股票型、近一年收益超20%"，直接出名单。
+- user: 后端老兵, category: 坑, comment: 十几个标的一口气全并发打过去，撞了限流整批停。学乖了：先发一个探针，确认能正常回数据再发其余的，反而更稳更快。
+- user: 行研实习生, category: 注意, comment: 拉产销量这类宏观数据，先看返回里的单位和量级元数据再引用。我一度把"万"当"亿"写进周报，被领导当场指出。
+- user: 十年老股民, category: 启发, comment: 以前估值全凭感觉，现在先查指数 PE/PB 历史分位再动手。数据摆出来才发现，所谓"便宜"很多时候只是跌得久。

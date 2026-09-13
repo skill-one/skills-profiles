@@ -1,0 +1,7 @@
+# wecomcli-todo (`wecomteam/wecom-cli/wecomcli-todo`)
+
+## domain
+
+**domain**: 🗂️ 办公效率
+
+**reason**: 管理企业微信待办（创建/完成/查询/修改任务与截止时间），属于任务与项目管理。

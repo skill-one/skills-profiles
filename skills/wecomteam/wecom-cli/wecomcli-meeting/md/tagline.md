@@ -1,0 +1,7 @@
+# wecomcli-meeting (`wecomteam/wecom-cli/wecomcli-meeting`)
+
+## tagline
+
+- 开会的事，一句话搞定
+- 约会查会改会，动口不动手
+- 会议纪要转写，张口就来

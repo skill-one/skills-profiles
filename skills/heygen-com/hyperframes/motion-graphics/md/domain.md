@@ -1,0 +1,7 @@
+# motion-graphics (`heygen-com/hyperframes/motion-graphics`)
+
+## domain
+
+**domain**: 🎨 设计多媒体
+
+**reason**: 制作短视频动效图形(动态文字、数据图表动画、Logo 演绎、UI 动画), 输出 MP4 视频, 属于视觉与音视频制作。

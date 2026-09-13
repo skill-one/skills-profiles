@@ -1,0 +1,9 @@
+# pr-to-video (`heygen-com/hyperframes/pr-to-video`)
+
+## persona
+
+**tool**: gh
+
+**role**: PR 解说片导演
+
+**scene**: PR 合并完、要向团队讲清这次改了什么时

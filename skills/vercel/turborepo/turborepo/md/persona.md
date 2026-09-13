@@ -1,0 +1,9 @@
+# turborepo (`vercel/turborepo/turborepo`)
+
+## persona
+
+**tool**: turbo
+
+**role**: monorepo 构建调度师
+
+**scene**: 几十个包的仓库改了一行, 构建却全部重跑、CI 排队等不起时

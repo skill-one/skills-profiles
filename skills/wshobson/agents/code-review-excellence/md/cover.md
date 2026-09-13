@@ -2,4 +2,4 @@
 
 ## cover
 
-A bespectacled software engineer in a hoodie, smiling slightly while studying a laptop screen of green and red code lines, one hand on the trackpad, chin resting on the other hand, coffee mug and sticky notes on a cluttered desk, headphones around neck
+A thoughtful developer in glasses and a hoodie sits alone at a dual-monitor desk, examining side-by-side code changes on screen, one hand on chin, the other on the mouse, coffee mug and sticky notes nearby, dim late-night office

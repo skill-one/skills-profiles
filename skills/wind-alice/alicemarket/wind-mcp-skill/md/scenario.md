@@ -1,0 +1,5 @@
+# wind-mcp-skill (`wind-alice/alicemarket/wind-mcp-skill`)
+
+## scenario
+
+盯盘查数据,网页信息真假难辨、新旧不一?我直连万得金融数据库:股票、基金、指数、宏观一站式查询,实时行情、财报、估值秒出权威答案。选股、比价、看年报,一句话搞定。📈

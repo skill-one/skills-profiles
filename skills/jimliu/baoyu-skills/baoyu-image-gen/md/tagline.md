@@ -1,0 +1,7 @@
+# baoyu-image-gen (`jimliu/baoyu-skills/baoyu-image-gen`)
+
+## tagline
+
+- 你出创意, 我出好图
+- 一句话, 大片即达
+- 高清出图, 批量无忧

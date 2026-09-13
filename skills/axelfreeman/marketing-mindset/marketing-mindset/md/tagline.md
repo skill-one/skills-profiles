@@ -1,0 +1,7 @@
+# marketing-mindset (`axelfreeman/marketing-mindset/marketing-mindset`)
+
+## tagline
+
+- 十五年实战营销, 一句话说到客户心里
+- 把想法变生意, 从赢下第一个客户开始
+- 不过时、不空谈, 只给能立刻用的打法

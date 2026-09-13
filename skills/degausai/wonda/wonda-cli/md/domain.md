@@ -1,0 +1,7 @@
+# wonda-cli (`degausai/wonda/wonda-cli`)
+
+## domain
+
+**domain**: 🎨 设计多媒体
+
+**reason**: 核心是图像/视频/音乐/语音生成与媒体剪辑合成, 兼具社媒平台发布与自动化

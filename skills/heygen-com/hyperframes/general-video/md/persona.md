@@ -1,0 +1,9 @@
+# general-video (`heygen-com/hyperframes/general-video`)
+
+## persona
+
+**tool**: npx hyperframes
+
+**role**: 动效片导演
+
+**scene**: 素材和文案都齐了、却不知怎么拼成一支片子时

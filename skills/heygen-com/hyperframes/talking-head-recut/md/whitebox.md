@@ -1,0 +1,13 @@
+# talking-head-recut (`heygen-com/hyperframes/talking-head-recut`)
+
+## whitebox
+
+- 环境自检: npx hyperframes doctor 确认 ffmpeg/ffprobe、headless 浏览器、内置字体与 gsap.min.js 就绪
+- 素材准备: ffmpeg 抽音频 + ffprobe 读时长/宽高/fps → hyperframes transcribe 本地 Whisper 转写, 产出词级 transcript.json
+- 规划: 读转写稿修 ASR 错误 → 按时长×信息密度推卡片数, 写 storyboard.json 并在对话里直接逐张写卡片 HTML
+- 确认渲染策略: 向用户问 4 个参数 (画幅/布局/风格组/卡片数, 附预计算的推荐值)
+- 组装渲染: 拼装 public/index.html (GSAP 时间线 + 5 种 zone 解析为像素 bounds) → hyperframes render 输出 output.mp4
+
+- 词级时间戳驱动: Whisper (hyperframes transcribe, 本地运行, 无 API key) 输出扁平词数组 {text,start,end}; 直接原位改词文本修错但保留时间戳; 所有卡片 endSec 和时长向 metadata 的 duration 收口 (clamp), 防渲染出黑尾
+- 无固定卡片模板, 卡片从转写内容涌现: 卡片数 = max(5, round(视频秒数 / (基础节奏 × 密度系数))), 基础节奏按时长分档 (<60s 为 6-8s/卡 … >30min 为 30-60s/卡), 密度系数 0.7/1.0/1.5 由转写文本的信息密度判断; zone 枚举映射到画布像素区域
+- 渲染全靠本地工具链: hyperframes CLI + 系统 ffmpeg/ffprobe + headless 浏览器把组装的 composition HTML (卡片 HTML 片段 + GSAP 动画) 渲成 MP4; 视频轨 bounds 在 composition 层只设一次, 想让画面'移动'就动 GSAP tween 操作 #video-wrap

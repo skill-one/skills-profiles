@@ -1,0 +1,9 @@
+# remotion-to-hyperframes (`heygen-com/hyperframes/remotion-to-hyperframes`)
+
+## blackbox
+
+**function**: 把你已有的 Remotion (React) 视频源码, 一比一搬译成一份播放效果相同的 HyperFrames (HTML) 作品。
+
+- input: 一个 Remotion 项目源码目录 (React 视频组件), output: 一份打开即播同款动画的 index.html (HyperFrames 格式)
+- input: 依赖 React 状态逻辑 (如 useState/useEffect) 驱动动画的 Remotion 源码, output: 明确告知无法干净搬译, 并附替代方案建议 (如让 Remotion 原样运行、由外部嵌入)
+- input: 可正常搬译的 Remotion 源码, output: 译后的 HTML 作品 + 一份 TRANSLATION_NOTES.md (哪些细节未能 1:1 还原) + 与原版视频逐帧比对的一致性报告

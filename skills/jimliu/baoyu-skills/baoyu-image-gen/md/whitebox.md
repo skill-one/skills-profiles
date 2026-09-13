@@ -1,0 +1,13 @@
+# baoyu-image-gen (`jimliu/baoyu-skills/baoyu-image-gen`)
+
+## whitebox
+
+- 加载偏好: 依序找 项目 → XDG → 用户目录 的 EXTEND.md, 找不到就先跑首次设置向导 (选厂商/模型/质量/保存位置), 完成前禁止生成
+- 合并配置定选型: 按 CLI 参数 > EXTEND.md > 环境变量 > .env 的优先级定 provider 和模型 (OpenAI 默认 gpt-image-2.5-flare)
+- 组装并执行命令: 用 bun (或 npx -y bun) 跑 scripts/main.ts, 传入 --prompt/--image/--ar/--quality 及可选 --ref, 生成前先打印 Using [provider]/[model]
+- 调用所选厂商的图像 API 生成图片, 默认串行; --batchfile 含 ≥2 个待办任务时自动切并行批量 (每图重试最多 3 次)
+- 图片落盘到 --image 路径, 汇报成功/失败数及失败原因
+
+- Provider 抽象层: 一套统一 CLI 参数翻译成 10+ 家 API 的不同报文格式——如 --quality/--ar 在 OpenAI 原生方言映射为像素 size (1536x1024), 在 ratio-metadata 方言映射为 16:9 + metadata.resolution (1K/2K/4K)
+- 双解析链 + 自动选厂: 模型按 CLI --model > EXTEND.md default_model > <PROVIDER>_IMAGE_MODEL > 内置默认; provider 按 --ref 有无 (Google→OpenAI→…)、API key 数量自动判定, codex-cli 永不自动选中 (必须显式指定)
+- 外部依赖: bun/npx 运行 TypeScript 脚本; 底层是各厂商图像 API (OpenAI GPT Image 2.5、Google gemini-3-pro-image、通义 qwen-image-2.0-pro、Replicate、即梦/豆包等); codex-cli 模式额外依赖本机已登录的 codex CLI

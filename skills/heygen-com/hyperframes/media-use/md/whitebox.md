@@ -1,0 +1,13 @@
+# media-use (`heygen-com/hyperframes/media-use`)
+
+## whitebox
+
+- 首次运行: 安装并登录 heygen CLI (免费用量路径), 用 `resolve.mjs --doctor` 自检通过。
+- 把任务归一为 `--type` (bgm/sfx/image/icon/logo/voice/grade/lut) + `--intent`, 按任务表只读对应的那一份 references/*.md。
+- 先 `--candidates` 列出项目内可复用资产自行判断适配, 合适则直接复用, 不合适才继续。
+- 执行 `resolve.mjs --type --intent --project`: 搜索 HeyGen 目录 (BGM 10k+ / 图像向量 75k+ / 内置 19 个 SFX); 目录缺失时降级到生成模型 (HeyGen TTS, 可选本地 Kokoro / 音乐 / 图像模型)。
+- 返回一行 `resolved <id> → <path>` 结论, 资产冻结为本地文件并写入 ledger; 涉及画面风格 (修色/效果) 的需求再用 `hyperframes media-treatment` 应用组合效果并持久化。
+
+- 单动词分发 + 结果收敛: 所有媒体需求统一走 `scripts/resolve.mjs` 的 resolve 一个入口, 无论走目录搜索还是生成, 对外只暴露一行 resolved 结论 + ledger 记账, 搜索噪音全部留在磁盘。
+- 级联回退: logo 按 svgl → simple-icons → GitHub 头像 → favicon 逐级取官方标志 (绝不重绘); 目录 miss 时降级到外部生成 API/模型 (HeyGen TTS、音乐、图像模型, TTS 可切本地 Kokoro)。
+- 视觉反馈→媒体意图管线: 宽泛反馈 (偏暗/平/该复古) 先用 `hyperframes media-treatment --analyze --json` 对真实媒体做测量, 选定一个主意图后请求单个 `--capability` 组装 treatment, 最终 payload 用 `hyperframes media-treatment` 确定性持久化; 校验约束: 修色只存 preset/adjustment JSON、不为曝光/对比生成 .cube LUT、禁止用 CSS/SVG 复刻 shader 效果; 主动机会扫描遵循 '有信号才建议、一次性询问、只提议不静默改'。

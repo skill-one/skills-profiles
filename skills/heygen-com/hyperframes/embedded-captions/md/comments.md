@@ -1,0 +1,10 @@
+# embedded-captions (`heygen-com/hyperframes/embedded-captions`)
+
+## comments
+
+- user: 短视频剪辑师, category: 坑, comment: 拿二创素材直接跑, 开头抽三帧没看出问题, 成片中段才冒出原生字幕, 整条全废. 现在先跑 1fps 拼图逐格扫完再开工.
+- user: 第一次用的新手, category: 坑, comment: 我要求每句话都嵌进人物身后, 结果满屏特效, 高潮词毫无冲击力. 后来只挑 1~2 个关键词嵌入, 其余走普通底部字幕, 反而高级了.
+- user: 带口音的海外博主, category: 注意, comment: 口音重时转写会一本正经地胡说. 先通读 transcript.json, 不像人话就 WHISPER_MODEL=medium 重转一次, 还不行就放弃, 错字幕比没字幕更毁.
+- user: 在线课程制作者, category: 注意, comment: 它只吃单人出镜说话的素材: 对谈要先按镜头切开分段做, 3 秒以内、没人声的片段会被直接拒收. 开工前先自查这三条.
+- user: 独立纪录片导演, category: 妙用, comment: 户外大晴天的采访, 我担心浅色字看不清, 换 ink 风格后深字像印在亮墙上, 比浅字配暗底干净得多. 亮场景认准它.
+- user: VFX特效控, category: 坑, comment: 主题模式渲染完我在文件夹里只找 final.mp4, 以为失败干等半天, 其实成品叫 final_fx.mp4. 记住这个命名, 少白等一次.

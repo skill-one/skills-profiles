@@ -2,4 +2,4 @@
 
 ## cover
 
-A bespectacled analyst in a hooded sweatshirt sits at a desk spread with printed session logs, circling lines with a marker pen, dual monitors behind glowing with scrolling code and terminal windows, sticky notes pinned along the screen edge, single desk lamp on
+A bespectacled man in a gray cardigan sits flipping through a thick stack of printed session logs, circling a line with a pen, dual monitors glowing with code behind him, empty coffee cup and sticky notes on the desk

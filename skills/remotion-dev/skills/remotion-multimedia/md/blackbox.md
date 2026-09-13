@@ -1,0 +1,10 @@
+# remotion-multimedia (`remotion-dev/skills/remotion-multimedia`)
+
+## blackbox
+
+**function**: 读取音频/视频文件的基本信息：时长（秒）和视频画面尺寸（宽×高）。
+
+- input: 一个音频文件（如 .mp3、.wav）, output: 该音频的时长，如「184.5 秒」
+- input: 一个视频文件（如 .mp4）, output: 该视频的时长，如「372 秒」
+- input: 一个视频文件（如 .mov）, output: 该视频的画面尺寸，如「1920 × 1080」
+- input: 一批视频/音频文件, output: 每个文件的时长和尺寸清单，一眼看出谁超长、谁分辨率不达标

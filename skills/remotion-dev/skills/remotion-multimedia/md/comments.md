@@ -1,0 +1,10 @@
+# remotion-multimedia (`remotion-dev/skills/remotion-multimedia`)
+
+## comments
+
+- user: 后端老兵, category: 坑, comment: 我先在后端 npm install 然后 node 跑，直接报错跑不起来。后来看清文档才知道这是浏览器端库，要在网页的 JS 里用。装包前先确认运行环境。
+- user: 工具站独立开发者, category: 妙用, comment: 我做上传工具站：用户选完文件，前端先读宽高和时长，不符合规格当场拦下，不合格的视频根本不用传服务器，转码带宽全省了。
+- user: 第一次用的新手, category: 注意, comment: 它只负责读信息：音频时长、视频时长、视频宽高。想播放、剪辑、转码视频的别装它，各回各家。
+- user: 全栈自学者, category: 注意, comment: 拿到的时长是 187.4 这种秒数，不是 03:07。页面上要显示分秒的话，得自己写个换算函数，别等上线才发现。
+- user: 合规审核岗, category: 妙用, comment: 读时长和尺寸全在用户浏览器本地完成，文件不经过服务器。我做内部审片工具时靠这一点直接过了隐私合规评审。
+- user: 剪辑师转开发, category: 启发, comment: 以前判断客户素材是竖屏还是横屏全靠肉眼一个个点开。现在做个网页拖进去自动报宽高，两百条素材几分钟筛完。

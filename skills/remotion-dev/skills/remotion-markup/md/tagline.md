@@ -1,0 +1,7 @@
+# remotion-markup (`remotion-dev/skills/remotion-markup`)
+
+## tagline
+
+- 代码即镜头, 创意即刻成片
+- 动画字幕配音, 一键全搞定
+- 写代码拍视频, 专业又省心

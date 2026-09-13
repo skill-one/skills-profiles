@@ -1,0 +1,7 @@
+# context-engineering (`addyosmani/agent-skills/context-engineering`)
+
+## tagline
+
+- 喂对信息,AI 才不瞎猜
+- 对的时刻,给对的内容
+- 上下文精一分,输出稳十分

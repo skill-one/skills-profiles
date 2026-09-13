@@ -1,0 +1,7 @@
+# context-engineering (`addyosmani/agent-skills/context-engineering`)
+
+## domain
+
+**domain**: 💻 开发编程
+
+**reason**: 为 AI 编程助手配置上下文与规则文件, 服务于编码会话质量和项目开发效率

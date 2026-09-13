@@ -1,0 +1,5 @@
+# wecomcli-doc (`wecomteam/wecom-cli/wecomcli-doc`)
+
+## scenario
+
+场景：领导临时要你把会议纪要整理成企微在线文档，手动复制粘贴半小时，格式还乱 🤯 把内容或 Word 文件丢给我，我直接新建/导入企微 doc，能读、能改、能补，一条链接交付。

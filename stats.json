@@ -1,21 +1,21 @@
 {
   "covers": {
-    "rendered": 945
+    "rendered": 979
   },
   "prompts": {
-    "blackbox": 945,
-    "comments": 945,
-    "cover": 928,
-    "domain": 945,
-    "persona": 945,
-    "scenario": 945,
-    "tagline": 945,
-    "whitebox": 945
+    "blackbox": 979,
+    "comments": 979,
+    "cover": 978,
+    "domain": 979,
+    "persona": 979,
+    "scenario": 979,
+    "tagline": 979,
+    "whitebox": 979
   },
-  "publishedAt": "2026-09-13T00:01:17Z",
+  "publishedAt": "2026-09-13T00:36:55Z",
   "skills": {
-    "complete": 927,
-    "profiled": 928,
+    "complete": 977,
+    "profiled": 978,
     "total": 1000
   },
   "upstream": "dist-2026-09-12"

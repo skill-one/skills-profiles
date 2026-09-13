@@ -1,0 +1,7 @@
+# product-launch-video (`heygen-com/hyperframes/product-launch-video`)
+
+## domain
+
+**domain**: 🎨 设计多媒体
+
+**reason**: 核心产出是视频制作(宣传片/演示视频), 含画面设计、动画、配音配乐与渲染。

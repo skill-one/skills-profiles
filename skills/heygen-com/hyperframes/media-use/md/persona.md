@@ -1,0 +1,9 @@
+# media-use (`heygen-com/hyperframes/media-use`)
+
+## persona
+
+**tool**: resolve
+
+**role**: 媒体道具师
+
+**scene**: 视频搭好了，画面平、没声音、图还是占位符的那一刻

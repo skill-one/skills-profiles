@@ -2,4 +2,4 @@
 
 ## cover
 
-A focused Chinese content editor at a cluttered late-night desk, flipping through a thick formula binder with color-coded index tabs, surrounded by crumpled discarded paper drafts, crossing out lines on a note card with a pen, sticky notes everywhere, warm desk lamp glow
+A bespectacled writer in a knit cardigan leaning over a desk littered with crumpled paper balls, holding a bulky box of worn index cards, striking out crossed-off title drafts with a red pen, sticky notes pinned on the wall behind

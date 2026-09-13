@@ -1,0 +1,7 @@
+# remotion-multimedia (`remotion-dev/skills/remotion-multimedia`)
+
+## tagline
+
+- 浏览器里，秒懂每一段影音
+- 时长尺寸，一眼即达
+- 不装软件，玩转音视频信息

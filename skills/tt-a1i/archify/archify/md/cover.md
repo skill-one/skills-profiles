@@ -1,0 +1,5 @@
+# archify (`tt-a1i/archify/archify`)
+
+## cover
+
+A bespectacled software architect in a rolled-sleeve shirt, standing alone in a meeting room, sketching a system diagram of connected boxes and arrows on a large digital whiteboard, laptop open beside him, empty chairs and a long conference table behind

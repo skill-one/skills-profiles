@@ -2,4 +2,4 @@
 
 ## cover
 
-A casual young man in a hoodie at a tidy desk at night, one hand on the mouse hovering over a publish button in a Chrome browser window on a large monitor, printed photos and an open notebook beside the keyboard, warm desk lamp
+Young man in casual shirt at a tidy desk, finger hovering over mouse ready to click the final button on a browser page, article draft and photo thumbnails filling the screen, printed photos stacked beside keyboard, coffee cup nearby

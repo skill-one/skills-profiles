@@ -1,0 +1,13 @@
+# claude-api (`anthropics/skills/claude-api`)
+
+## whitebox
+
+- 触发后先扫描目标文件/提示词中的非 Anthropic 标记 (openai、gpt 等), 命中即停下询问用户是否切换, 不动他厂代码
+- 按文件扩展名/构建文件 (.py、package.json、go.mod… ) 推断项目语言, 映射到 skill 内对应 {lang}/ 文档; 无法判断时询问用户
+- 读取 {lang}/ 文档确定 SDK 用法, 以文档而非训练记忆为准; 所需绑定文档缺失时 WebFetch shared/live-sources.md 列出的官方 SDK 仓库核实
+- 生成代码: 默认走官方 Anthropic SDK, 模型 claude-opus-5 + adaptive thinking + streaming; 仅当用户明确要求时才用 raw HTTP
+- 运行编译器/解释器验证, 按报错迭代修正; 网络受限时不重试, 直接按 {lang}/ 模式写码走编译修复循环
+
+- 厂商守门: 写码前先扫描/grep 非 Anthropic 标记, 只产出 Anthropic SDK 代码, 拒绝在非 Anthropic 文件里插入 Anthropic 调用
+- 文档优先防漂移: SDK 函数名/签名只取自 {lang}/ 文件或 live-sources.md 的官方仓库, 不凭记忆猜; 内置 2025-2026 API 漂移对照表 (如 budget_tokens 现已被 400 拒绝, 改用 thinking: {type: "adaptive"}) 纠正过时先验
+- 输出硬约束: 官方 SDK 或显式要求的 raw HTTP 二选一, 禁止混用、禁止 OpenAI 兼容 shim; 静态语言 (C#/Java/Go) 靠本地编译报错迭代收敛, 依赖外部工具即官方 SDK + WebFetch + 编译器

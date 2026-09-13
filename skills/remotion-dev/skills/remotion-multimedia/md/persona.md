@@ -1,0 +1,9 @@
+# remotion-multimedia (`remotion-dev/skills/remotion-multimedia`)
+
+## persona
+
+**tool**: mediabunny
+
+**role**: 音像档案员
+
+**scene**: 拖来一段音频或视频, 想立刻知道它多长、多宽多高时

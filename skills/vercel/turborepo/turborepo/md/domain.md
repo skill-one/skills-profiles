@@ -1,0 +1,7 @@
+# turborepo (`vercel/turborepo/turborepo`)
+
+## domain
+
+**domain**: 💻 开发编程
+
+**reason**: Turborepo 是 JavaScript/TypeScript monorepo 构建系统, 核心是配置构建任务、依赖管线、缓存与 CI, 属于典型的工程开发场景。

@@ -1,0 +1,7 @@
+# claude-api (`anthropics/skills/claude-api`)
+
+## domain
+
+**domain**: 💻 开发编程
+
+**reason**: 技能是 Claude API/SDK 集成开发: 写代码、调模型、工具调用、流式与迁移等, 属于编程场景。

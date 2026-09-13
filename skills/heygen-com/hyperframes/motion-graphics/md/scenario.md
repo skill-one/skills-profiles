@@ -1,0 +1,5 @@
+# motion-graphics (`heygen-com/hyperframes/motion-graphics`)
+
+## scenario
+
+发布会明天就开,想让数据"跳"出来?可做动画要请团队、学AE——贵、慢、不会。痛点就在这。把数字、图表或logo发给我,几分钟产出10秒有设计感的动态短片,数字跳动、品牌定格,直接交付MP4。🎬

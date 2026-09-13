@@ -1,0 +1,7 @@
+# remotion-studio (`remotion-dev/skills/remotion-studio`)
+
+## tagline
+
+- 代码即视频，预览一键直达
+- 写完即见，浏览器里看片
+- 视频工作台，即刻点亮

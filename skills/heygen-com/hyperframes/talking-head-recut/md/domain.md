@@ -1,0 +1,7 @@
+# talking-head-recut (`heygen-com/hyperframes/talking-head-recut`)
+
+## domain
+
+**domain**: 🎨 设计多媒体
+
+**reason**: 把口播/访谈视频包装成带动态图形卡片的成片, 属视频视觉制作

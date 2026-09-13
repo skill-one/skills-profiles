@@ -2,4 +2,4 @@
 
 ## cover
 
-SMS marketing operator in a plaid shirt, hunched at a late-night desk, typing a short draft text message into a chat-style dashboard on the laptop, smartphone with a glowing message bubble beside it, tiny shopping cart figurine abandoned on the desk
+A marketer in a hoodie with headphones around his neck, hunched over a desk at night, typing on a laptop beside a smartphone glowing with chat bubbles, empty coffee cup and wall clock nearby, shopping-cart icon on the screen

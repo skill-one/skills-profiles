@@ -2,4 +2,4 @@
 
 ## cover
 
-A lone SEO specialist in a hoodie, hunched over a laptop in a dim home office at night, typing a curl command into a glowing terminal window, empty blank search results page on a second monitor, freshly launched website waiting in silence
+A bespectacled man in a dark hoodie hunched over a laptop at a midnight desk, typing into a glowing terminal window, monitors beside him showing blank empty browser pages of his just-launched website, dim office, city lights outside

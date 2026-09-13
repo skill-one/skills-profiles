@@ -1,0 +1,5 @@
+# wecomcli-doc (`wecomteam/wecom-cli/wecomcli-doc`)
+
+## cover
+
+An office clerk in a white shirt and work lanyard, holding a paper file in one hand, typing on a laptop with the other, a blank document page glowing on the screen, at a tidy desk in a bright office

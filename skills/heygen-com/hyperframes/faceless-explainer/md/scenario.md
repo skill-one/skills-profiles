@@ -1,0 +1,5 @@
+# faceless-explainer (`heygen-com/hyperframes/faceless-explainer`)
+
+## scenario
+
+辛苦写的干货,发出去却没人看完?想做成视频,又怕出镜、不会剪辑、外包太贵。把文字丢给我,直接生成不用露脸的讲解视频:画面、图表、配音、配乐全包,一键发全网。🎥

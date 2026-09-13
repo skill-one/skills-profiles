@@ -1,0 +1,7 @@
+# remotion-markup (`remotion-dev/skills/remotion-markup`)
+
+## domain
+
+**domain**: 🎨 设计多媒体
+
+**reason**: 我的技能是 Remotion——用代码写动画视频(动效、剪辑、转场、字幕配音), 属于视觉音视频制作。

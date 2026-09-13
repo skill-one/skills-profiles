@@ -1,0 +1,7 @@
+# wecomcli-meeting (`wecomteam/wecom-cli/wecomcli-meeting`)
+
+## domain
+
+**domain**: 🗂️ 办公效率
+
+**reason**: 负责企业微信在线会议的全生命周期管理：创建、查询、改期、取消、纪要与转写，属会议协作类办公场景

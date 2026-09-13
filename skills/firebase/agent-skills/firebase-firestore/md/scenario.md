@@ -1,0 +1,5 @@
+# firebase-firestore (`firebase/agent-skills/firebase-firestore`)
+
+## scenario
+
+做 App 的你:数据乱存难查、用户一多就卡顿、信息裸奔被泄露 😰 我专治 Firestore 数据库(谷歌云的云端数据仓):建模、索引提速、安全规则上锁,再接通网页/手机端,数据稳稳落地。

@@ -1,0 +1,10 @@
+# remotion-captions (`remotion-dev/skills/remotion-captions`)
+
+## comments
+
+- user: 自媒体剪辑新人, category: 坑, comment: 一开始手动写 JSON 填 startMs/endMs,对半天音轨全对不上。正确姿势是先按 transcribe-captions.md 转录生成,再只改文本,时间轴天然是准的。
+- user: 囤了三年 srt 的播客主, category: 妙用, comment: 往期节目攒了一堆 .srt,根本不用重新跑识别,走 import-srt-captions.md 转成 Caption JSON,老字幕直接进新视频。
+- user: 短视频卡点字幕玩家, category: 注意, comment: 想做逐字蹦出的卡点字幕,关键是 timestampMs 字段,它存的是每个词的出现时间点;展示样式别自己瞎拼,display-captions.md 里有现成方案。
+- user: 搬运长访谈的 up 主, category: 坑, comment: 一小时长音频转录出来是分页的,我把 pageBreakAfter 当普通字段删了,后续处理直接乱序。这个分页标记要原样保留。
+- user: 做字幕质检的后端, category: 注意, comment: confidence 不是必有值,有些来源会给 null。想按置信度过滤低质量词条,先判空再比较,否则脚本直接崩。
+- user: 独立开发者, category: 启发, comment: 以前字幕是剪辑软件里的死数据,现在就是一份 JSON:能按时间点检索、批量改词、换样式复用,同一份字幕喂不同视频都不用重打。

@@ -2,4 +2,4 @@
 
 ## cover
 
-A weary developer in a hoodie with glasses and headphones around his neck, sitting at a late-night desk, pressing a key on a laptop whose screen shows a progress bar and cloud upload arrow, two smartphones and coffee cups beside him
+A developer in a hoodie and glasses sitting at a cluttered desk at night, typing a terminal command on a laptop, holding a smartphone, parcel boxes ready to ship beside two empty storefront shelves

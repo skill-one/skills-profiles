@@ -1,0 +1,9 @@
+# remotion-studio (`remotion-dev/skills/remotion-studio`)
+
+## persona
+
+**tool**: remotion studio
+
+**role**: 样片放映师
+
+**scene**: 视频代码刚写完、想立刻在浏览器里看到画面动起来时

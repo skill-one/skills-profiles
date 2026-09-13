@@ -1,0 +1,13 @@
+# slideshow (`heygen-com/hyperframes/slideshow`)
+
+## whitebox
+
+- 意图确认: 用户没有明确要幻灯片/演示文稿时, 先问一句 "Do you want this as a HyperFrames slideshow?", 得到 yes 才动工 (路由决定, 自动模式也不跳过)
+- 开工前检查: 跑 `npx hyperframes skills update slideshow` 刷新技能, 读 /hyperframes-core 掌握基础组合契约; 若内容来自 figma.com 则先跑 /figma
+- 编写: 每个 slide 声明为一个场景 (data-composition-id/data-start/data-duration), 再在 body 顶部写一份 JSON island 声明 slide 顺序、演讲备注、fragment 时刻、热点分支
+- 需要图表/特效等成品视觉时, 先 `npx hyperframes catalog --query` 搜索 (~400 个托管模块) 再 `add` 源码落地定制, 不徒手硬造
+- 交付: 用 `hyperframes present <项目目录>` 跑实时可导航 deck; 绝不 render 成单个 MP4 (render 只解析第一个场景, 会静默截断)
+
+- JSON island 解析: 每个组合 HTML 恰好一个 `<script type="application/hyperframes-slideshow+json">` 块, 是 slide 顺序/备注/hold 点/分支的唯一事实来源; 播放器内置 SlideshowController 读它, 把连续 GSAP 时间线切成离散可导航 deck
+- Fragment 机制: hold 点是场景内绝对时间轴秒数 (必须在 [start,end] 范围内, lint 拒绝越界值); 导航是 seek 驱动而非播放驱动, 每次按键确定性跳到目标 hold 帧
+- 分支与校验: 分支场景只登记在 slideSequences、不得混入主 slides 数组 (lint 检查重叠); 点击热点压导航栈, back() 弹栈回父 slide, backToMain() 清栈回主线; lint 另要求原生音视频带 data-start/data-duration 等时序属性、字体 token 须解析为具体字型栈。外部依赖: npx hyperframes CLI (skills update / catalog / add / present / lint) + GSAP 时间线, 无模型 API

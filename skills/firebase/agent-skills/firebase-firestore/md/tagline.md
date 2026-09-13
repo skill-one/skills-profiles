@@ -1,0 +1,7 @@
+# firebase-firestore (`firebase/agent-skills/firebase-firestore`)
+
+## tagline
+
+- 建库建模写查询,数据全流程搞定
+- 数据存得稳、查得快、管得安全
+- 云数据库从零到上线,一步到位

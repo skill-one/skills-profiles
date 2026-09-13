@@ -1,0 +1,7 @@
+# wind-mcp-skill (`wind-alice/alicemarket/wind-mcp-skill`)
+
+## tagline
+
+- 投资有据，决策有底
+- 股基债汇宏，一问万得知
+- 不凭记忆，只报实数

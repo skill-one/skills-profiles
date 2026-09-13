@@ -1,0 +1,5 @@
+# remotion-to-hyperframes (`heygen-com/hyperframes/remotion-to-hyperframes`)
+
+## scenario
+
+你有一套跑得好好的 Remotion 视频, 现在要迁到 HyperFrames (网页动画方案)。手动重写费时费神, 还容易丢动画细节、画面跑偏 🎬。我把 Remotion 源码一键翻译成 HyperFrames, 逐帧比对验证, 画面几乎零差异。

@@ -1,0 +1,10 @@
+# wonda-cli (`degausai/wonda/wonda-cli`)
+
+## comments
+
+- user: 第一次用的新手, category: 坑, comment: 充了余额就开跑，命令全报 paid_plan_required。余额不能替代订阅，免费登录号也没有任何产品权限，得先去 wonda.sh/account 买套餐。
+- user: 社媒运营老哥, category: 坑, comment: 把日常浏览器的 li_at 手粘进 auth set，几天就风控。新指纹配手贴 cookie 是最高危姿势，现在一律 wonda wab login 原生登录，会话出生就在 WAB 指纹下。
+- user: 短视频创作者, category: 注意, comment: 克隆声音花 $1.50，闲置 7 天没跑 TTS 会自动过期，等于白扔。现在每周配音一次顺带续期；上限 20 个，定期 voice list 清理不用的。
+- user: 后端老兵, category: 妙用, comment: 取平台密码我从不 get，改用 credentials use <id> --reason 写明用途，一步拿到密码还留下审计记录，事后 credentials events 能查到谁、哪天、为什么用。
+- user: 脚本党运维, category: 妙用, comment: 写批处理加 --quiet 只吐 job ID，管道接 --jq '.outputs[0].media.url' 直取下载链接。终端公告刷屏别慌，那些走 stderr，stdout 永远干净不污染脚本。
+- user: 五人小团队lead, category: 坑, comment: 组员在 org 上下文里跑 topup，钱全进了他个人钱包，org 钱包纹丝不动。org 充值只能管理员在网页做，没权限就让他 wonda use --personal 切回个人。

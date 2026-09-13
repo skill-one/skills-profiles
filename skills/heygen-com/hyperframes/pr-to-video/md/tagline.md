@@ -1,0 +1,7 @@
+# pr-to-video (`heygen-com/hyperframes/pr-to-video`)
+
+## tagline
+
+- 一个 PR 一支视频,代码改动一看就懂
+- 从 diff 到镜头,让每次改动自己开口
+- 别再啃 diff,一支视频讲透每一次变更

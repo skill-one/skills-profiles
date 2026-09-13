@@ -1,0 +1,7 @@
+# gstack (`garrytan/gstack/gstack`)
+
+## domain
+
+**domain**: 💻 开发编程
+
+**reason**: gstack 是开发全流程路由器: 规划、调试、代码审查、QA 测试、安全与发布部署, 核心围绕写代码的完整生命周期。

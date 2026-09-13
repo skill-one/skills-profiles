@@ -1,0 +1,10 @@
+# context-engineering (`addyosmani/agent-skills/context-engineering`)
+
+## comments
+
+- user: 第一次用 AI 写代码的新手, category: 注意, comment: 上手第一周我没建规则文件,agent 每次换一套写法。后来花 10 分钟把技术栈、命令、红线写进 CLAUDE.md,风格立刻稳了。
+- user: 三年 Java 后端, category: 坑, comment: 测试挂了我把 500 行日志全贴进去,agent 抓错重点来回改。只贴失败那条的报错原文+文件行号,反而一次修对。
+- user: 独立接活的全栈, category: 坑, comment: 一下午不重启会话,agent 开始引用我早删掉的函数。现在任务做完就存档重启,重启前把决定和验证命令写进文档。
+- user: 带六人团队的 Tech Lead, category: 启发, comment: "上下文是工作台不是文件柜"点醒我:失败尝试不删,注意力就被稀释。现在只留一句结论,长会话质量不再跳水。
+- user: 外包项目赶工期, category: 妙用, comment: 我把"压缩再删"用成了决策日志:每段会话结束把结论追加进 NOTES 文件,新会话开场贴上,agent 像记得前情一样接得上。
+- user: AI 重度产品经理, category: 注意, comment: 七千字需求文档只贴本次相关那节就够。整本塞进去 agent 会跑偏还慢,聚焦的上下文胜过大而全。

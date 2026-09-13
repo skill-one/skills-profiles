@@ -1,0 +1,10 @@
+# expo-brownfield (`expo/skills/expo-brownfield`)
+
+## comments
+
+- user: iOS 老兵, category: 坑, comment: 在宿主工程里跑 prebuild 排查, 它直接改写了我手动维护的 Xcode 工程, 回滚半天。宿主 App 千万别跑 prebuild。
+- user: 技术负责人, category: 妙用, comment: 选隔离方案后, RN 打成 XCFramework/AAR 当普通依赖发版, 原生同事不装 Node 不碰 JS 工具链, 两仓库按各自节奏发版互不阻塞。
+- user: 第一次接 RN 的新手, category: 坑, comment: 在 Expo Go 里跑通就以为集成成功, Release 包在宿主 App 里直接白屏。验收要关掉 Metro、用 Release 产物在宿主里实测。
+- user: 前端转做 RN, category: 注意, comment: 别为了照抄文档就升级现有 SDK 或换包管理器, 保持原版本, 用 npx expo install 对齐依赖就行, 我升级后适配了好几天。
+- user: Android 老哥, category: 注意, comment: RN 页面二次打开显示旧数据, 是监听器没清理。验收按「传参→返回结果→关闭→再开新参」完整走一遍, 只开一次测不出来。
+- user: CI 运维, category: 启发, comment: 想通了「谁生产谁装工具」: 打 RN 包的机器装 Node, 消费 XCFramework 的机器只留 Xcode, 打包机镜像瘦身, 流水线分段各自缓存。

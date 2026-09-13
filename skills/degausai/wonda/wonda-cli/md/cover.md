@@ -1,0 +1,5 @@
+# wonda-cli (`degausai/wonda/wonda-cli`)
+
+## cover
+
+A tired young social media manager in a wrinkled hoodie, hunched at a cluttered late-night desk, typing commands on a glowing laptop terminal, untouched camera tripod and ring light idle behind, empty coffee cups and snack wrappers scattered around

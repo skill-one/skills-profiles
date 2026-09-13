@@ -1,0 +1,10 @@
+# pr-to-video (`heygen-com/hyperframes/pr-to-video`)
+
+## comments
+
+- user: 发版负责人, category: 妙用, comment: merge 过的 PR 它会反查真实版本号写进片尾, 不瞎编。我把每周新合的 PR 批量转成更新视频发群里, 替代手写 release note。
+- user: 第一次用的新手, category: 坑, comment: 没先 gh auth login, 第一步取 PR 就报错停了; 它绝不编造 PR 内容, 私有仓库也直接拒。先认证再跑, 省一轮排查。
+- user: 开源维护者, category: 注意, comment: 默认配音是女声 Marcia, 想要男声或沉稳语气必须开口就指定, 不传就按默认来, 我渲染完才发现口吻不对只能重来。
+- user: 接外包活的全栈, category: 坑, comment: 把产品文档网址丢给它会被转去别的技能; 它只吃 GitHub PR, 要给完整 URL 或 owner/repo#N 这种写法。
+- user: 带新人的技术组长, category: 妙用, comment: 在已 checkout 的仓库里直接说 this PR 就能开工。code review 前让新人先看一分钟视频再上 diff, 低级提问明显变少。
+- user: 自托管运维老哥, category: 注意, comment: 没登 HeyGen 会自动落回本地 TTS, 音色差一截。开跑前看它报的登录状态, 想要在线音色就按提示先登录。

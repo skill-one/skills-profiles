@@ -1,0 +1,13 @@
+# remotion-create (`remotion-dev/skills/remotion-create`)
+
+## whitebox
+
+- 检查当前文件夹（含隐藏文件）：空目录或只有 .DS_Store 等垃圾文件 → 原地脚手架；有实质内容 → 建子项目文件夹
+- 运行 npx create-video@latest --yes --blank --no-tailwind 生成空白 Remotion 项目，再 npm i 装依赖
+- 保留脚手架，往里写 React 标记（即视频内容），多场景/交互/样式按对应子规范处理
+- 启动 npx remotion studio --no-open 长驻预览服务，可访问 /[composition-id]（如 /MapAnimation）查看某个合成
+- 仅当用户明确要求时才执行 npx remotion render 渲染出片
+
+- 路径判定靠文件夹嗅探：只有操作系统垃圾元数据（如 .DS_Store）可先删除（因为 create-video 拒绝非空目录），.env、.git 等视为有效内容不可动
+- 视频即 React：不写视频代码，只写 React 组件标记，遵循 Remotion 布局规范（video-first 布局、字号规范）；Tailwind 仅在被要求时引入
+- 渲染与预览分离：studio 是长驻进程只负责预览；render 是高成本操作，默认不执行，仅显式请求时才跑

@@ -1,0 +1,7 @@
+# motion-graphics (`heygen-com/hyperframes/motion-graphics`)
+
+## tagline
+
+- 动效即信息, 十秒讲透一个点
+- 让品牌、数据、文字舞动起来
+- 精炼动效, 一眼入心
