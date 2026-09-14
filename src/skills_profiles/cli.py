@@ -121,13 +121,17 @@ def invalidate(
              "vanished from the snapshot (run `sync` first to have a fresh snapshot)",
     ),
 ) -> None:
-    """Drop cached outputs so the next `run` regenerates them."""
+    """Drop cached outputs so the next `run` regenerates them. stats.json is
+    recomputed over what survives, so a publish straight after an invalidation
+    carries the post-drop numbers, not the ones from the run that filled what
+    was just deleted."""
     setup_logging()
     settings = Settings()
 
+    prompt_set = load_prompt_set(settings.prompts_dir)
     prompt_ids: set[str] | None = None
     if prompts_opt:
-        prompt_ids = parse_prompt_ids(load_prompt_set(settings.prompts_dir), prompts_opt)
+        prompt_ids = parse_prompt_ids(prompt_set, prompts_opt)
 
     skill_ids = list(skill or [])
     if stale:
@@ -147,6 +151,11 @@ def invalidate(
     removed = invalidate_cache(settings, skill_ids or None, prompt_ids)
     targets = sorted(skill_ids) if skill_ids else sorted(recorded)
     logger.info("Invalidated %d output(s) across %d skill(s)", removed, len(targets))
+    # stats.json is the artifact's state, same sense as `run` writes it: recompute
+    # it over what survived so the publish that follows an invalidation does not
+    # report skills and covers that are no longer there
+    cov = coverage(settings, prompt_set, served_skills(settings)[1])
+    write_artifact_stats(settings, cov)
 
 
 @app.command()

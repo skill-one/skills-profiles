@@ -282,6 +282,25 @@ def test_invalidate_prompt_cover_drops_recipe_and_picture(settings, monkeypatch)
         assert cover_path(settings, skill_id).exists()
 
 
+def test_invalidate_rewrites_stats(settings, monkeypatch):
+    """Invalidation recomputes stats.json over what survives, so a publish made
+    straight after it carries the post-drop numbers instead of the ones from the
+    run that filled what was just deleted."""
+    monkeypatch.setattr("skills_profiles.cli.Settings", lambda: settings)
+    runner.invoke(app, ["run", "--limit", "2", "--dry-run"])
+    before = json.loads((settings.output_dir / "stats.json").read_text(encoding="utf-8"))
+    assert before["covers"] == {"rendered": 2}
+
+    result = runner.invoke(app, ["invalidate", "--prompts", "cover"])
+    assert result.exit_code == 0, result.output
+
+    stats = json.loads((settings.output_dir / "stats.json").read_text(encoding="utf-8"))
+    assert stats["skills"] == {"total": 4, "profiled": 0, "complete": 0}
+    assert stats["prompts"]["cover"] == 0  # every recipe was dropped
+    assert stats["prompts"]["tagline"] == 2  # untouched prompts keep their count
+    assert stats["covers"] == {"rendered": 0}, "no picture outlives its recipe"
+
+
 class FailingForAlpha:
     """LLM that raises for Alpha (matched via its SKILL.md text), delegates the rest."""
 
