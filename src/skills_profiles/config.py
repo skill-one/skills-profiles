@@ -22,13 +22,6 @@ def tarball_url(ref: str = DIST_BRANCH) -> str:
 
 TARBALL_URL = tarball_url()
 
-# the image_size values the API documents for each text-to-image model; an
-# unknown model is left alone (the endpoint answers with a 400 and a message).
-# https://api-docs.siliconflow.cn/docs/api/images-generations-post
-DOCUMENTED_SIZES: dict[str, tuple[str, ...]] = {
-    "Kwai-Kolors/Kolors": ("1024x1024", "960x1280", "768x1024", "720x1440", "720x1280"),
-}
-
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
@@ -57,21 +50,17 @@ class Settings(BaseSettings):
 
     # Covers: a separate text-to-image endpoint (own key, own base url), so the
     # chat provider and the image provider are freely different services.
-    image_base_url: str = "https://api.siliconflow.cn/v1"
+    # https://agnes-ai.com/docs/agnes-image-25-flash
+    image_base_url: str = "https://apihub.agnes-ai.com/v1"
     image_api_key: str | None = None
     # extra endpoint keys (comma-separated in the env): each key is paced at
     # image_rate_limit/min in its own bucket, so N keys render N times as fast
     image_api_keys: Annotated[list[str], NoDecode] = []
-    image_model: str = "Kwai-Kolors/Kolors"
-    image_size: str = "1024x1024"
-    # 0 means "do not send the field": the endpoint documents num_inference_steps
-    # per model family and guidance_scale as Kolors-only, and 0 is a value neither
-    # range allows, so switching model needs no code change and works from env too
-    image_steps: int = 20           # num_inference_steps: more steps, better and slower
-    image_guidance: float = 7.5     # guidance_scale: how strictly the prompt is followed
-    # max images per minute per key the endpoint allows (e.g. siliconflow's 2/min);
-    # one aiolimiter per key paces that key's renders. 0 = do not pace at all
-    image_rate_limit: int = 2
+    image_model: str = "agnes-image-2.5-flash"
+    image_size: str = "1024x1024"  # exact sizes work too (1K/2K tiers map to them)
+    # max images per minute per key; the endpoint announces no quota, so the
+    # default is unbounded and the knob exists for when it starts answering 429
+    image_rate_limit: int = 0
 
     @field_validator("image_api_keys", mode="before")
     @classmethod
@@ -121,13 +110,4 @@ class Settings(BaseSettings):
         width, sep, height = self.image_size.partition("x")
         if not sep or not width.isdigit() or not height.isdigit():
             raise ValueError(f"image_size must be [width]x[height], got {self.image_size!r}")
-        documented = DOCUMENTED_SIZES.get(self.image_model)
-        if documented and self.image_size not in documented:
-            raise ValueError(
-                f"{self.image_model} documents image_size "
-                f"{'/'.join(documented)}, got {self.image_size!r}")
-        if self.image_steps and not 1 <= self.image_steps <= 100:
-            raise ValueError("image_steps must be 0 (omit the field) or within 1..100")
-        if self.image_guidance and not 0 < self.image_guidance <= 20:
-            raise ValueError("image_guidance must be 0 (omit the field) or within 0..20")
         return self

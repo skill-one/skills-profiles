@@ -98,8 +98,8 @@ def test_run_writes_a_stats_summary(settings, monkeypatch):
     result = runner.invoke(app, ["run", "--limit", "2", "--dry-run"])
     assert result.exit_code == 0, result.output
     assert "Done in" in result.output
-    # 2 skills x every prompt in prompts/
-    assert "16 prompt(s) generated for 2/2 skill(s)" in result.output
+    # 2 skills x every prompt in prompts/ (seven text prompts; covers are not one)
+    assert "14 prompt(s) generated for 2/2 skill(s)" in result.output
     assert "Coverage:" in result.output
     # progress lines list only the newly generated prompts, with seconds, no markers
     assert "*" not in result.output
@@ -110,7 +110,7 @@ def test_run_writes_a_stats_summary(settings, monkeypatch):
     assert all(v == 2 for v in stats["prompts"].values())
     # state only: no run counters, no provenance (that rides beside the data)
     assert set(stats) == {"skills", "prompts", "covers"}
-    assert stats["covers"] == {"rendered": 2}, "run renders the recipes it just filled in"
+    assert stats["covers"] == {"rendered": 2}, "run renders the personas it just filled in"
 
 
 def test_run_stats_snapshot_is_overwritten(settings, monkeypatch):

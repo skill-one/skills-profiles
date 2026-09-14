@@ -1,6 +1,6 @@
 """On-disk artifact layout under <output_dir>: one json per prompt in
 skills/<id>/ (with a markdown copy in md/), the binary assets a prompt owns
-beside it (the cover prompt's rendered png), plus skills.jsonl — the skill
+beside it (the persona's rendered cover.png), plus skills.jsonl — the skill
 index, one line per skill carrying its id, the upstream content hash its
 profiles were generated from, and the aggregated domain/persona outputs."""
 
@@ -15,9 +15,11 @@ from .layout import INDEX_NAME, MD_SUBDIR, SKILLS_SUBDIR
 from .models import Domain
 
 AGGREGATED_PROMPTS = ("domain", "persona")  # prompts folded into the index lines, derived from disk
-# file suffixes a prompt owns next to its json: they are its rendered artifacts,
-# so invalidating the prompt drops them together with the json (see invalidate)
-PROMPT_ASSETS: dict[str, tuple[str, ...]] = {"cover": (".png",)}
+# asset filenames (relative to a skill's artifact dir) owned by a prompt: they
+# are its rendered artifacts, so invalidating the prompt drops them with the
+# json (see invalidate). The persona owns cover.png — the picture is rendered
+# directly from persona.tool, no separate recipe prompt in between.
+PROMPT_ASSETS: dict[str, tuple[str, ...]] = {"persona": ("cover.png",)}
 
 logger = logging.getLogger(__name__)
 
@@ -31,16 +33,6 @@ def skill_result_dir(settings: Settings, skill_id: str) -> Path:
 def prompt_result_path(settings: Settings, skill_id: str, prompt_id: str) -> Path:
     """The json file holding one prompt's structured output."""
     return skill_result_dir(settings, skill_id) / f"{prompt_id}.json"
-
-
-def prompt_asset_path(settings: Settings, skill_id: str, prompt_id: str,
-                      suffix: str) -> Path:
-    """One rendered, non-json artifact of a prompt (e.g. cover.png).
-
-    Lives in the skill directory like the json, not in `md/`: it is an artifact
-    consumers read, not a browsing copy.
-    """
-    return skill_result_dir(settings, skill_id) / f"{prompt_id}{suffix}"
 
 
 def prompt_markdown_path(settings: Settings, skill_id: str, prompt_id: str) -> Path:
@@ -169,7 +161,7 @@ def invalidate(settings: Settings, skill_ids: Iterable[str] | None = None,
     `skill_ids` None means every skill on record; `prompt_ids` None
     means every prompt of each selected skill. Dropping a prompt also drops the
     rendered assets it owns (PROMPT_ASSETS), which is how a cover gets
-    re-rendered: one invalidation, then `run` refills the json and the picture.
+    re-rendered: invalidate persona, then `run` refills the json and the picture.
     A skill left without any output is dropped from the index, i.e. it
     counts as new again; the index is then rewritten so its aggregated copies
     match what is left on disk. This is the only invalidation path:
@@ -185,8 +177,8 @@ def invalidate(settings: Settings, skill_ids: Iterable[str] | None = None,
                  else [prompt_result_path(settings, skill_id, p) for p in prompt_ids])
         for path in paths:
             _unlink(path.parent / MD_SUBDIR / f"{path.stem}.md")
-            for suffix in PROMPT_ASSETS.get(path.stem, ()):
-                _unlink(path.parent / f"{path.stem}{suffix}")
+            for asset in PROMPT_ASSETS.get(path.stem, ()):  # explicit filenames in the skill dir
+                _unlink(path.parent / asset)
             removed += _unlink(path)
         if not _stored_jsons(settings, skill_id):
             shutil.rmtree(skill_result_dir(settings, skill_id), ignore_errors=True)

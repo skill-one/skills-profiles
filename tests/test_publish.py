@@ -18,7 +18,7 @@ SCRIPT = Path(__file__).parents[1] / ".github/actions/publish-dist/stamp-stats.s
 
 ARTIFACT_STATE = {
     "covers": {"rendered": 999},
-    "prompts": {"cover": 1000, "domain": 1000},
+    "prompts": {"persona": 1000, "domain": 1000},
     "skills": {"complete": 999, "profiled": 1000, "total": 1000},
 }
 

@@ -25,7 +25,7 @@ class FakeSkill:
 
 def test_all_prompts_loaded_from_files(prompts):
     expected = {"domain", "scenario", "blackbox", "whitebox",
-                "tagline", "persona", "comments", "cover"}
+                "tagline", "persona", "comments"}
     assert set(prompts.by_id) == expected
     files = {p.stem for p in PROMPTS_DIR.glob("*.md") if not p.name.startswith("_")}
     assert files == expected

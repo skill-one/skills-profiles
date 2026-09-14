@@ -497,7 +497,7 @@ async def test_prompts_within_a_skill_share_the_concurrency_pool(settings, promp
     llm = ConcurrencyTrackingLLM(FakeLLM())
     record, reused = await run_one(llm, settings, prompt_set, skill)
     assert not reused
-    assert llm.peak == 7  # the seven root prompts fan out at once; cover waits for persona
+    assert llm.peak == 7  # all seven prompts are roots and fan out at once
     assert set(record["prompt_seconds"]) == set(record["generated"])
 
     # the same pool caps skills and prompts together: another skill, concurrency 2
@@ -570,19 +570,22 @@ async def test_dep_outputs_flow_into_downstream_prompts(settings, tmp_path):
 
 async def test_model_and_system_prompt_passed_to_llm(settings, prompt_set):
     skill = load_skills(settings)[0]
-    captured = {}
+    seen = {}
 
     class RecordingLLM:
         async def create(self, response_model=None, messages=None, **kwargs):
-            captured.update(kwargs, messages=messages)
+            seen[response_model.__name__] = (kwargs, messages)
             return await FakeLLM().create(response_model, messages, **kwargs)
 
     await run_one(RecordingLLM(), settings, prompt_set, skill)
-    assert captured["model"] == settings.model
-    assert captured["messages"][0]["role"] == "system"
-    assert "推销自己" in captured["messages"][0]["content"]
-    # the skill's SKILL.md source lives in the system prompt
-    assert "Alpha does useful things" in captured["messages"][0]["content"]
+    # every text prompt carries the same system message: sales framing + SKILL.md
+    expected = {spec.output_model.__name__ for spec in prompt_set.by_id.values()}
+    assert set(seen) == expected
+    for kwargs, messages in seen.values():
+        assert kwargs["model"] == settings.model
+        assert [m["role"] for m in messages] == ["system", "user"]
+        assert "推销自己" in messages[0]["content"]
+        assert "Alpha does useful things" in messages[0]["content"]
 
 
 async def test_debug_dumps_rendered_messages(settings, prompt_set, capfd):

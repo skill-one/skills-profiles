@@ -3,7 +3,8 @@
 Each `<id>.md` has YAML frontmatter (description, output, depends_on) followed by
 the user-prompt template as the body; the prompt id is the file name (stem).
 `_system.md` holds the shared system prompt as a per-skill template: it renders
-the skill context (name, description, SKILL.md source) every prompt sees.
+the skill context (name, description, SKILL.md source) every text prompt sees.
+
 Templates are rendered with jinja2; the DAG is ordered with the stdlib
 graphlib.TopologicalSorter. The prompts directory defaults to `./prompts` and
 can be overridden with SKILLS_PROFILES_PROMPTS_DIR.
@@ -22,7 +23,6 @@ from .models import (
     BlackBoxIntro,
     Domain,
     DomainClassification,
-    ImagePrompt,
     IntroText,
     Persona,
     SkillComments,
@@ -33,7 +33,7 @@ from .models import (
 # frontmatter `output` name -> pydantic schema in models.py
 OUTPUT_MODELS: dict[str, type[BaseModel]] = {
     cls.__name__: cls
-    for cls in (DomainClassification, IntroText, ImagePrompt, BlackBoxIntro, WhiteBoxIntro,
+    for cls in (DomainClassification, IntroText, BlackBoxIntro, WhiteBoxIntro,
                 Taglines, Persona, SkillComments)
 }
 

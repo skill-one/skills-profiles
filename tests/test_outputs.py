@@ -58,7 +58,7 @@ def test_skill_output_files_render_fields(settings, results):
     assert Domain.display(intro["domain"]["domain"]) in domain_md  # emoji-prefixed
 
     persona_md = (md_dir / "persona.md").read_text(encoding="utf-8")
-    for field in ("tool", "role", "scene"):
+    for field in ("tool", "pitch"):
         assert f"**{field}**: {intro['persona'][field]}" in persona_md
 
     comments_md = (md_dir / "comments.md").read_text(encoding="utf-8")

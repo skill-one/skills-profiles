@@ -2,8 +2,8 @@
 
 The generator behind the dataset described in [README.md](README.md): it reads each skill's
 `SKILL.md` from [skills-sh-mirror](https://github.com/skill-one/skills-sh-mirror), asks an
-OpenAI-compatible LLM for eight structured angles per skill, renders a cover image from one of them,
-and publishes the result to this repository's `dist` branch.
+OpenAI-compatible LLM for seven structured angles per skill, renders a tool-avatar cover from
+`persona.tool`, and publishes the result to this repository's `dist` branch.
 
 中文: [DEVELOPING.zh-CN.md](DEVELOPING.zh-CN.md)
 
@@ -23,11 +23,11 @@ Offline, no API calls: `skills-profiles run --limit 5 --dry-run` (text plus plac
 
 ## CLI
 
-| Command | What it does |
-|---|---|
-| `sync [--refresh]` | Read upstream's one-line `latest` pointer to learn the newest tag, then pull that ref as one tarball into `cache/skills-sh`, unpacking only `skills.jsonl` and every `SKILL.md`. Records the tag in `SNAPSHOT.json` and skips the download when it is already current (`--refresh` forces it). Never touches the artifacts. |
-| `run [--limit N] [--prompts a,b] [--concurrency C] [--dry-run] [--debug] [--verbose]` | Complete skills, most installed first: `N` of them (`0` = every skill with gaps). A skill is complete when every prompt is cached and its `cover.png` is drawn — the selection counts both halves, so the run fills missing text and then renders the selected skills' missing pictures, paced at `SKILLS_PROFILES_IMAGE_RATE_LIMIT` images/minute per key. Skills that need nothing, or have no `SKILL.md` in the snapshot, are skipped and do not consume the budget; without `SKILLS_PROFILES_IMAGE_API_KEY` the render pass is skipped with a warning, not an error. |
-| `invalidate [--skill ID]... [--prompts a,b] [--stale] [--all]` | Drop cached outputs so the next `run` refills them. `--stale` selects the skills whose upstream hash changed or that vanished (run `sync` first). Refuses a filter-less full wipe without `--all`. Invalidating `cover` takes its `cover.png` along, which is how a picture is redrawn. |
+| Command                                                                   | What it does                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `sync [--refresh]`                                                        | Read upstream's one-line `latest` pointer to learn the newest tag, then pull that ref as one tarball into `cache/skills-sh`, unpacking only `skills.jsonl` and every `SKILL.md`. Records the tag in `SNAPSHOT.json` and skips the download when it is already current (`--refresh` forces it). Never touches the artifacts.                                                                                                                                                                                                                                              |
+| `run [--limit N] [--prompts a,b] [--concurrency C] [--dry-run] [--debug]` | Complete skills, most installed first: `N` of them (`0` = every skill with gaps). A skill is complete when every prompt is cached and its `cover.png` is drawn — the selection counts both halves, so the run fills missing text and then renders the selected skills' missing pictures, paced at `SKILLS_PROFILES_IMAGE_RATE_LIMIT` images/minute per key. Skills that need nothing, or have no `SKILL.md` in the snapshot, are skipped and do not consume the budget; without `SKILLS_PROFILES_IMAGE_API_KEY` the render pass is skipped with a warning, not an error. |
+| `invalidate [--skill ID]... [--prompts a,b] [--stale] [--all]`            | Drop cached outputs so the next `run` refills them. `--stale` selects the skills whose upstream hash changed or that vanished (run `sync` first). Refuses a filter-less full wipe without `--all`. Invalidating `persona` takes its `cover.png` along, which is how a picture is redrawn.                                                                                                                                                                                                                                                                                |
 
 `invalidate` deletes and `run` refills — redoing work is never a `run` flag. Failures are isolated per
 skill: the run continues, finished prompts are published, and only a total washout exits non-zero.
@@ -48,7 +48,7 @@ mirror dist branch tarball ──► cache/skills-sh (skills.jsonl + skills/<id>
                                                 ──► output/skills/<id>/<prompt>.json
                                                 ──► output/skills/<id>/md/<prompt>.md
                                                 ──► output/skills.jsonl (id + hash + domain + persona)
-                        cover.json + domain.json ──► `run`'s post-pass
+                                persona.json ──► `run`'s post-pass
                                                 ──► output/skills/<id>/cover.png
 ```
 
@@ -57,8 +57,7 @@ from upstream is ever written next to a generated profile. Prompt DAG (edges mea
 output of"):
 
 ```
-domain   scenario   blackbox   whitebox   tagline   comments      (roots)
-persona ──► cover                                                 (the picture is drawn from the portrait)
+domain   scenario   blackbox   whitebox   tagline   persona   comments   (all roots)
 # add `depends_on: [scenario]` to a prompt's frontmatter to chain it
 ```
 
@@ -74,10 +73,14 @@ Design decisions:
   last, so a crash cannot leave a json without its copy. Resume granularity is per prompt.
 - **The index is a projection** — `skills.jsonl` is rewritten in full from disk, so a row can never
   drift from the files; it is what `invalidate --stale` compares hashes against.
-- **A cover is a recipe plus a render** — `cover` is an ordinary prompt, so it inherits the DAG, the
-  cache and `invalidate`; `images.py` adds the framing and the per-`Domain` style to the recipe's
-  subject. The picture's cache is the file's existence, because the endpoint's url expires within the
-  hour — bytes are stored, urls never are — and re-rendering costs no LLM call.
+- **A cover is a render, not a prompt** — there is no image-recipe LLM step: `images.py` leads the
+  prompt with `persona.tool` verbatim (a Chinese physical-tool name; the image endpoint, Agnes Image
+  2.5 Flash, understood Chinese names when tested), then appends one shared English style tail
+  (`COVER_STYLE`) and the banned content as positive "no ..." phrases (`NEGATIVE_PROMPT`), since the
+  endpoint takes no `negative_prompt` field.
+  `cover.png` is an asset of `persona` in `PROMPT_ASSETS`, so invalidating persona drops json and
+  picture together. The picture's cache is the file's existence, because the endpoint's url expires —
+  bytes are stored, urls never are — and re-rendering costs no LLM call.
 - **One snapshot, one request** — `sync` downloads the branch as a single codeload tarball, unpacks only
   what a run reads, and replaces the previous snapshot wholesale. Upstream tags each daily scrape and
   keeps a one-line `latest` pointer naming the newest tag, so a repeat sync downloads only when the
@@ -91,9 +94,8 @@ Design decisions:
 `run --prompts <id>` computes the dependency closure of the target prompts and generates only what is
 missing in it: dependencies are inputs, so they reuse their stored json unless it is missing or
 schema-invalid. Nothing outside the closure is recomputed, and a skill left with no output at all is
-dropped from `skills.jsonl`. The closure walks to dependencies, never to dependents: invalidating
-`persona` leaves the `cover` recipe (and its picture) describing the older portrait — to redo that
-follow-on work, name it: `invalidate --prompts persona,cover`.
+dropped from `skills.jsonl`. Invalidating `persona` also removes its `cover.png` (the picture is
+persona's registered asset), so `invalidate --prompts persona` followed by `run` refills both.
 
 ## Adding a prompt
 
@@ -103,12 +105,12 @@ model in `models.py`):
 ```markdown
 ---
 description: one line
-output: IntroText          # a pydantic schema registered in models.py
-depends_on: [scenario]     # DAG edges; omit for root prompts
+output: IntroText # a pydantic schema registered in models.py
+depends_on: [scenario] # DAG edges; omit for root prompts
 ---
 
 请为下面的 skill 写……
-{{ deps.scenario.text }}   # deps maps prompt ids to their parsed output objects
+{{ deps.scenario.text }} # deps maps prompt ids to their parsed output objects
 ```
 
 `_system.md` provides `{{ skill.name }}`, `{{ skill.description }}` and the full `{{ skill_md }}`
@@ -120,8 +122,8 @@ skills-profiles run --prompts my_angle --limit 0
 ```
 
 Add the prompt's id to `AGGREGATED_PROMPTS` in `outputs.py` to fold it into every `skills.jsonl` row,
-and register its non-json suffixes in `PROMPT_ASSETS` there — that is how `cover` owns `cover.png`, and
-why invalidating the prompt drops the rendered artifact with its recipe.
+and register any non-json assets it owns in `PROMPT_ASSETS` (asset filenames in the skill dir) — that
+is how `persona` owns `cover.png`, and why invalidating the prompt drops the rendered artifact too.
 
 ## Project layout
 
@@ -143,35 +145,33 @@ tests/               # offline fixtures + end-to-end CLI tests
 
 Resolution order (highest first): `SKILLS_PROFILES_*` env vars → local `.env` → built-in defaults.
 
-| Variable | Default | Description |
-|---|---|---|
-| `SKILLS_PROFILES_MODEL` | `gpt-4.1-mini` | Any OpenAI-compatible chat model |
-| `SKILLS_PROFILES_BASE_URL` | – | OpenAI-compatible endpoint |
-| `SKILLS_PROFILES_API_KEY` | – | API key for the endpoint |
-| `SKILLS_PROFILES_LIMIT` | `10` | Skills per run (`0` = all; cached ones are skipped, not counted) |
-| `SKILLS_PROFILES_TOTAL_LIMIT` | `1000` | Skills the whole pipeline serves, most installed first — a ceiling on the dataset, not on one run (`0` = all) |
-| `SKILLS_PROFILES_CONCURRENCY` | `2` | Max concurrent LLM calls / image requests, shared across skills and prompts |
-| `SKILLS_PROFILES_OUTPUT_DIR` | `output` | Artifacts directory |
-| `SKILLS_PROFILES_DATA_DIR` | `cache/skills-sh` | Upstream data directory |
-| `SKILLS_PROFILES_PROMPTS_DIR` | `prompts` | Prompt markdown directory (plus `_system.md`) |
-| `SKILLS_PROFILES_IMAGE_BASE_URL` | `https://api.siliconflow.cn/v1` | Text-to-image endpoint; covers are drawn from a service of their own |
-| `SKILLS_PROFILES_IMAGE_API_KEY` | – | Its key (without one, `run` skips the render pass with a warning; `--dry-run` needs none) |
-| `SKILLS_PROFILES_IMAGE_API_KEYS` | – | Extra keys, comma-separated: each key holds its own per-minute quota, so N keys render N times as fast |
-| `SKILLS_PROFILES_IMAGE_RATE_LIMIT` | `2` | Max images per minute **per key** (the endpoint's documented quota; `0` = unbounded) |
-| `SKILLS_PROFILES_IMAGE_MODEL` | `Kwai-Kolors/Kolors` | Any model the endpoint serves |
-| `SKILLS_PROFILES_IMAGE_SIZE` | `1024x1024` | Checked against the sizes the endpoint documents per model |
-| `SKILLS_PROFILES_IMAGE_STEPS` | `20` | `num_inference_steps` (1–100); `0` omits the field |
-| `SKILLS_PROFILES_IMAGE_GUIDANCE` | `7.5` | `guidance_scale` (≤ 20, documented as Kolors-only); `0` omits it for other models |
+| Variable                           | Default                          | Description                                                                                                   |
+| ---------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `SKILLS_PROFILES_MODEL`            | `gpt-4.1-mini`                   | Any OpenAI-compatible chat model                                                                              |
+| `SKILLS_PROFILES_BASE_URL`         | –                                | OpenAI-compatible endpoint                                                                                    |
+| `SKILLS_PROFILES_API_KEY`          | –                                | API key for the endpoint                                                                                      |
+| `SKILLS_PROFILES_LIMIT`            | `10`                             | Skills per run (`0` = all; cached ones are skipped, not counted)                                              |
+| `SKILLS_PROFILES_TOTAL_LIMIT`      | `1000`                           | Skills the whole pipeline serves, most installed first — a ceiling on the dataset, not on one run (`0` = all) |
+| `SKILLS_PROFILES_CONCURRENCY`      | `2`                              | Max concurrent LLM calls / image requests, shared across skills and prompts                                   |
+| `SKILLS_PROFILES_OUTPUT_DIR`       | `output`                         | Artifacts directory                                                                                           |
+| `SKILLS_PROFILES_DATA_DIR`         | `cache/skills-sh`                | Upstream data directory                                                                                       |
+| `SKILLS_PROFILES_PROMPTS_DIR`      | `prompts`                        | Prompt markdown directory (plus `_system.md`)                                                                 |
+| `SKILLS_PROFILES_IMAGE_BASE_URL`   | `https://apihub.agnes-ai.com/v1` | Text-to-image endpoint; covers are drawn from a service of their own                                          |
+| `SKILLS_PROFILES_IMAGE_API_KEY`    | –                                | Its key (without one, `run` skips the render pass with a warning; `--dry-run` needs none)                     |
+| `SKILLS_PROFILES_IMAGE_API_KEYS`   | –                                | Extra keys, comma-separated: each key holds its own per-minute quota, so N keys render N times as fast        |
+| `SKILLS_PROFILES_IMAGE_RATE_LIMIT` | `0`                              | Max images per minute **per key**; the endpoint announces no quota, so the default is unbounded               |
+| `SKILLS_PROFILES_IMAGE_MODEL`      | `agnes-image-2.5-flash`          | Any model the endpoint serves                                                                                 |
+| `SKILLS_PROFILES_IMAGE_SIZE`       | `1024x1024`                      | Exact size; the endpoint also takes `1K`/`2K`/`3K`/`4K` tiers and normalizes exotic sizes                     |
 
 ## Publishing (GitHub Actions)
 
 [`ci`](.github/workflows/ci.yml) checks every push and pull request (tests, lint, types); the two
 manually-triggered workflows below share one publish lock (`concurrency: publish-dist`):
 
-| Workflow | Pipeline | Tag |
-|---|---|---|
-| [`sync`](.github/workflows/sync.yml) | restore dist → sync upstream → `invalidate --stale` → publish | `dist-YYYY-MM-DD`, force-updated within a day |
-| [`generate`](.github/workflows/generate.yml) | restore dist → `run --limit <input, default 10>` → publish | `dist-<base>-N`, base = newest sync tag, N increments |
+| Workflow                                     | Pipeline                                                      | Tag                                                   |
+| -------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------- |
+| [`sync`](.github/workflows/sync.yml)         | restore dist → sync upstream → `invalidate --stale` → publish | `dist-YYYY-MM-DD`, force-updated within a day         |
+| [`generate`](.github/workflows/generate.yml) | restore dist → `run --limit <input, default 10>` → publish    | `dist-<base>-N`, base = newest sync tag, N increments |
 
 ```bash
 gh workflow run generate.yml -f limit=50 -f concurrency=8   # complete 50 skills (text + covers)
@@ -196,14 +196,14 @@ to a rolling window (default `1 month`).
 
 Required configuration (Settings → Secrets and variables → Actions):
 
-| Where | Name | Example |
-|---|---|---|
-| Secret | `SKILLS_PROFILES_API_KEY` | the endpoint's API key |
-| Secret | `SKILLS_PROFILES_IMAGE_API_KEY` | the text-to-image endpoint's key (optional: without it `generate` stays text-only) |
-| Variable | `SKILLS_PROFILES_BASE_URL` | `https://api.b.ai/v1` |
-| Variable | `SKILLS_PROFILES_MODEL` | `GLM-5.3-Flash` |
-| Variable | `SKILLS_PROFILES_IMAGE_BASE_URL`, `SKILLS_PROFILES_IMAGE_MODEL`, `SKILLS_PROFILES_IMAGE_SIZE` | optional; default to the documented Kolors endpoint at `1024x1024` |
-| Variable | `SKILLS_PROFILES_TOTAL_LIMIT` | optional; the built-in `1000` already bounds local and CI alike |
+| Where    | Name                                                                                          | Example                                                                            |
+| -------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Secret   | `SKILLS_PROFILES_API_KEY`                                                                     | the endpoint's API key                                                             |
+| Secret   | `SKILLS_PROFILES_IMAGE_API_KEY`                                                               | the text-to-image endpoint's key (optional: without it `generate` stays text-only) |
+| Variable | `SKILLS_PROFILES_BASE_URL`                                                                    | `https://api.b.ai/v1`                                                              |
+| Variable | `SKILLS_PROFILES_MODEL`                                                                       | `GLM-5.3-Flash`                                                                    |
+| Variable | `SKILLS_PROFILES_IMAGE_BASE_URL`, `SKILLS_PROFILES_IMAGE_MODEL`, `SKILLS_PROFILES_IMAGE_SIZE` | optional; default to the documented Agnes endpoint at `1024x1024`                  |
+| Variable | `SKILLS_PROFILES_TOTAL_LIMIT`                                                                 | optional; the built-in `1000` already bounds local and CI alike                    |
 
 ## Testing
 

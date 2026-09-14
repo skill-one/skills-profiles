@@ -169,10 +169,9 @@ def run(
     ),
     dry_run: bool = typer.Option(False, "--dry-run", help="Use a fake LLM, no API calls"),
     debug: bool = typer.Option(
-        False, "--debug", help="Dump the rendered system/user prompts to stderr"
-    ),
-    verbose: bool = typer.Option(
-        False, "--verbose", "-v", help="Enable debug logging"
+        False, "--debug",
+        help="Debug logging, plus the rendered system/user prompts and the final image "
+             "prompt dumped to stderr",
     ),
 ) -> None:
     """Complete skills: fill missing profiles, then render their missing covers.
@@ -180,11 +179,11 @@ def run(
     `--limit N` means "make N skills complete": the selection counts a skill
     that is missing any prompt or whose cover.png has not been drawn yet, and
     the run fills both halves for exactly the skills it selected. Rendering is
-    paced at `SKILLS_PROFILES_IMAGE_RATE_LIMIT` images/minute per key (default
-    2); without an image key the post-pass is skipped with a warning and picked
-    up by a later run once the key is set.
+    paced at `SKILLS_PROFILES_IMAGE_RATE_LIMIT` images/minute per key (0 =
+    unbounded, the default); without an image key the post-pass is skipped with
+    a warning and picked up by a later run once the key is set.
     """
-    setup_logging(verbose)
+    setup_logging(debug)
     settings = Settings()
     if limit is not None:
         settings.limit = limit

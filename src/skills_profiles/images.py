@@ -1,25 +1,27 @@
-"""Cover images: one png per skill, rendering the skill as a person at work.
+"""Cover images: one png per skill, an avatar of the persona's physical tool.
 
-The picture is a projection of three parts, and only the first is the model's
-job: the subject `cover.json` holds (who that person is, what they hold, in what
-moment), the framing every cover shares (`CHARACTER`, which is why a cover is
-always one person and never a still life), and the look of the skill's usage
-category (`domain.json` -> `Domain.cover_style`: medium, palette, light). This
-module only renders, which keeps the two costs apart: a picture you do not like
-is re-rendered without spending any text call, and re-running the DAG never
-re-renders a picture.
+There is no image-recipe LLM step: the persona prompt already names the one
+physical tool (`persona.json` -> tool), and that Chinese name is the only
+Chinese word in the image prompt. `image_prompt` assembles the full prompt
+from three parts: the Chinese tool name, the one shared look every cover
+gets (`COVER_STYLE`), and the banned content restated as positive "no ..."
+phrases (`NEGATIVE_PROMPT`) — the endpoint takes no negative_prompt field,
+so the bans ride in the prompt itself. The style phrases stay English
+because diffusion training captions are English short phrases; the tool
+stays Chinese because the endpoint (Agnes Image 2.5 Flash) understood
+Chinese names when tested.
 
 Rendering is a post-pass of `run` rather than a prompt in the DAG for three
 reasons: the image endpoint is a different service with its own key (see
 config's `image_*`), its calls are far slower and costlier than a chat call, and
-its answer is a url the provider expires within the hour - so the bytes must be
-fetched at once and stored, never referenced.
+its answer is a url the provider expires - so the bytes must be fetched at once
+and stored, never referenced.
 
 The file is the cache, as everywhere else in the artifact layout: a skill that
 has a `cover.png` is never re-rendered, and dropping one is
-`invalidate --prompts cover`'s job (it takes the json with it, so the recipe and
-the picture are refilled together). A skill with no `cover` output yet simply has
-nothing to render and waits for a later run.
+`invalidate --prompts persona`'s job (the picture is an asset of the persona
+that names its subject, so the two are refilled together). A skill with no
+persona yet simply has nothing to render and waits for a later run.
 """
 
 import asyncio
@@ -34,30 +36,35 @@ from pathlib import Path
 
 import httpx
 from aiolimiter import AsyncLimiter
+from PIL import Image
 
 from .config import Settings
 from .data import download_file
 from .layout import SKILLS_SUBDIR
-from .models import Domain, SkillRecord
-from .outputs import prompt_asset_path, read_prompt_output
+from .models import SkillRecord
+from .outputs import read_prompt_output, skill_result_dir
 
 logger = logging.getLogger(__name__)
 
-PROMPT_ID = "cover"  # the prompt whose output supplies the picture's subject
-ASSET_SUFFIX = ".png"  # the rendered cover, next to its json in the skill dir
-# A cover is always one person, whatever the subject line says: the profiles cast
-# every skill as an occupation (see prompts/persona.md), and a diffusion model
-# left to itself fills the frame with the props a prompt mentions instead.
-CHARACTER = ("one character, full body, center of the composition, "
-             "dressed and posed for their occupation")
-# The two things no cover may contain: letters (diffusion models render them as
-# garbage) and a crowd (this is a portrait of one professional, not a street scene)
-NEGATIVE_PROMPT = ("text, letters, numbers, logo, watermark, blurry, low quality, "
-                   "crowd, multiple people")
-# a stalled endpoint must become a timeout, not a hung CI job (the docs list 504)
+PERSONA_PROMPT_ID = "persona"  # its `tool` field supplies the picture's subject
+COVER_FILENAME = "cover.png"  # the rendered cover, next to the prompt jsons
+# The one shared look every cover gets, kept English: diffusion training
+# captions are comma-separated English short phrases.
+COVER_STYLE = ("premium flat illustration style, rounded, refined, friendly, "
+               "well-designed, avatar composition, subject prominent, "
+               "simple background")
+# What no cover may contain: letters render as garbage, and anything alive or
+# busy would turn the tool avatar into an illustration of a scene. The endpoint
+# takes no negative_prompt field, so the bans are restated as positive "no ..."
+# phrases and ride in the prompt itself.
+NEGATIVE_PROMPT = ("no text, no letters, no numbers, no logo, no watermark, "
+                   "no person, no face, no hands, no multiple objects, "
+                   "no busy background, no complex scene, not photorealistic")
+# a stalled endpoint must become a timeout, not a hung CI job (a slow generation
+# takes ~20s; the timeout leaves room for the retry backoff on top)
 REQUEST_TIMEOUT_SECONDS = 300
-# transient per the docs (429 rate limit "TPM limit reached", 503 model service
-# overloaded, 504 gateway timeout) plus the proxy-side 502 that fronts them
+# transient statuses worth a retry: 429 rate limit, 503 model service
+# overloaded, 504 gateway timeout, plus the proxy-side 502 that fronts them
 RETRYABLE_STATUS = frozenset({429, 502, 503, 504})
 # the window the endpoint's per-minute quota is counted in: each key's limiter
 # lets at most settings.image_rate_limit requests into any 60-second stretch
@@ -120,7 +127,7 @@ class CoverStats:
 
 def cover_path(settings: Settings, skill_id: str) -> Path:
     """Where a skill's rendered cover lives."""
-    return prompt_asset_path(settings, skill_id, PROMPT_ID, ASSET_SUFFIX)
+    return skill_result_dir(settings, skill_id) / COVER_FILENAME
 
 
 def covers_on_disk(settings: Settings) -> int:
@@ -130,81 +137,78 @@ def covers_on_disk(settings: Settings) -> int:
     the dataset's current state, not a run's tally.
     """
     root = settings.output_dir / SKILLS_SUBDIR
-    return sum(1 for _ in root.rglob(f"{PROMPT_ID}{ASSET_SUFFIX}"))
+    return sum(1 for _ in root.rglob(COVER_FILENAME))
 
 
 def cover_needed(settings: Settings, skill_id: str) -> bool:
-    """True when there is a recipe to render and no picture yet."""
+    """True when there is a persona to render and no picture yet."""
     return image_prompt(settings, skill_id) is not None and not cover_path(
         settings, skill_id).is_file()
 
 
 def image_prompt(settings: Settings, skill_id: str) -> str | None:
-    """The full prompt for one cover: subject, framing, then the category's look.
+    """The full prompt for one cover, assembled from the persona's tool name.
 
-    The subject is the model's answer (who that person is, what they hold, in what
-    moment); `CHARACTER` is what makes the result a portrait however thin that
-    answer is; the style comes from the category lookup rather than from the
-    model, so the 13 categories stay visually distinct families and none of them
-    competes with the person for the frame. None means the skill has no `cover`
-    output yet, i.e. nothing to render; a stored but empty subject still renders
-    the framed character on the category's look, because that is a visible
-    outcome you can invalidate, not a silently skipped skill.
+    Three parts joined with sentence breaks: the persona's Chinese tool name
+    (the endpoint's tested Chinese understanding makes its own wording the
+    best subject), the shared `COVER_STYLE` look, and `NEGATIVE_PROMPT`
+    restated as "no ..." phrases since the endpoint takes no negative field.
+    None means the skill has no usable persona yet, i.e. nothing to render.
     """
-    stored = read_prompt_output(settings, skill_id, PROMPT_ID)
+    stored = read_prompt_output(settings, skill_id, PERSONA_PROMPT_ID)
     if stored is None:
         return None
-    subject = str(stored.get("text") or "").strip().rstrip(".,; ")
-    category = (read_prompt_output(settings, skill_id, "domain") or {}).get("domain", "")
-    parts = (subject, CHARACTER, Domain.style_for(str(category)))
-    return ", ".join(part for part in parts if part)
+    subject = str(stored.get("tool") or "").strip()
+    if not subject:
+        return None
+    return f"{subject}. {COVER_STYLE}. {NEGATIVE_PROMPT}"
 
 
 def seed_for(skill_id: str) -> int:
-    """A seed stable per skill id (the endpoint documents values up to 9999999999).
+    """A seed stable per skill id, within the endpoint's documented 0..999.
 
     Providers do not promise that a fixed seed reproduces the same pixels, so
     this is not a byte-level cache — the file's existence is. Pinning the seed
     just keeps a deliberate re-render close to the picture it replaces.
     """
-    return zlib.crc32(skill_id.encode("utf-8"))
+    return zlib.crc32(skill_id.encode("utf-8")) % 1000
 
 
 def request_payload(settings: Settings, prompt: str, seed: int) -> dict:
     """The generations body, per the endpoint's documented fields.
 
-    `num_inference_steps` and `guidance_scale` are dropped when set to 0: the
-    latter is documented as Kolors-only (Qwen-Image wants `cfg`), so switching
-    models needs no code change. `batch_size` is never sent — one picture per
-    skill, and the field is Kolors-only too.
+    The endpoint takes no `negative_prompt`, `num_inference_steps` or
+    `guidance_scale` (each answers 400), and `batch_size` has no meaning for
+    one picture per skill.
     """
-    payload: dict = {
+    return {
         "model": settings.image_model,
         "prompt": prompt,
-        "negative_prompt": NEGATIVE_PROMPT,
-        "image_size": settings.image_size,
+        "size": settings.image_size,
         "seed": seed,
     }
-    if settings.image_steps:
-        payload["num_inference_steps"] = settings.image_steps
-    if settings.image_guidance:
-        payload["guidance_scale"] = settings.image_guidance
-    return payload
 
 
 def _error_detail(response: httpx.Response) -> str:
-    """The provider's own message from an error body ({"code", "message", "data"})."""
+    """The provider's own message from an error body.
+
+    The endpoint answers OpenAI-shaped errors ({"error": {"message", ...}});
+    a proxy in front may answer with other shapes.
+    """
     try:
         body = response.json()
     except ValueError:  # not json: an html error page from something in front
         return str(response.status_code)
     if isinstance(body, dict):
+        error = body.get("error")
+        if isinstance(error, dict) and error.get("message"):
+            return str(error["message"])
         return str(body.get("message") or body)
     return str(body)
 
 
 def _request_image(settings: Settings, prompt: str, seed: int, key: str) -> tuple[str, str]:
-    """One generations request on `key`; returns (image url, provider trace id).
+    """One generations request on `key`; returns (image url, provider task id).
 
     Retries transient failures with exponential backoff. A 400/401/403 is raised
     at once: the same request would be rejected the same way, and the message
@@ -227,20 +231,20 @@ def _request_image(settings: Settings, prompt: str, seed: int, key: str) -> tupl
                     raise RuntimeError(detail)
                 last_error = RuntimeError(detail)
             else:
-                trace = response.headers.get("x-siliconcloud-trace-id", "")
                 try:
                     body = response.json()
                 except ValueError as e:
                     # e.g. an html error page from something in front of the endpoint
                     raise RuntimeError(
-                        f"image endpoint replied with something that is not json "
-                        f"(trace {trace}): {response.text[:200]!r}") from e
-                # the answer is `{"images": [{"url": ...}], "timings", "seed"}`:
-                # a url, not base64, and not the `data` array the OpenAI type expects
-                urls = [img.get("url") for img in body.get("images") or [] if img.get("url")]
+                        f"image endpoint replied with something that is not json: "
+                        f"{response.text[:200]!r}") from e
+                # the answer is OpenAI-shaped: `{"data": [{"url": ...}], "task_id"}` —
+                # a url, not base64 (`return_base64` stays unset)
+                urls = [img.get("url") for img in body.get("data") or [] if img.get("url")]
                 if not urls:
                     raise RuntimeError(f"no image url in the response: {str(body)[:200]}")
-                logger.debug("generated an image (trace %s)", trace)
+                trace = str(body.get("task_id") or "")
+                logger.debug("generated an image (task %s)", trace)
                 return str(urls[0]), trace
         except (httpx.HTTPError, OSError) as e:
             last_error = RuntimeError(f"image endpoint unreachable: {e}")
@@ -250,6 +254,30 @@ def _request_image(settings: Settings, prompt: str, seed: int, key: str) -> tupl
     raise RuntimeError(
         f"giving up on the image endpoint after {attempts} attempt(s): {last_error}"
     ) from last_error
+
+
+def _compress_png(dest: Path) -> None:
+    """Re-encode a downloaded cover in place as an optimized palette PNG.
+
+    The endpoint returns a full-color PNG (~1.7 MB) although covers are flat
+    illustrations with few colors: quantizing to a 256-color palette with
+    dithering off keeps the flat look intact and shrinks the artifact several
+    fold. A re-encode that does not shrink is discarded — the original download
+    is already on disk, so the worst case is the raw bytes.
+    """
+    with Image.open(dest) as img:
+        palette = img.convert("RGB").quantize(colors=256, dither=Image.Dither.NONE)
+    candidate = dest.with_name(f"{dest.stem}.tmp{dest.suffix}")
+    try:
+        palette.save(candidate, optimize=True)
+        if candidate.stat().st_size < dest.stat().st_size:
+            logger.debug("%s: compressed %d -> %d bytes", dest.name,
+                         dest.stat().st_size, candidate.stat().st_size)
+            candidate.replace(dest)
+        else:
+            candidate.unlink()  # re-encode did not pay: keep the raw download
+    finally:
+        candidate.unlink(missing_ok=True)
 
 
 class ImageClient:
@@ -270,9 +298,10 @@ class ImageClient:
 
     def _generate(self, prompt: str, seed: int, dest: Path, key: str) -> None:
         url, trace = _request_image(self.settings, prompt, seed, key)
-        # the url is good for an hour: download it now, store the bytes
+        # the url expires on the provider's schedule: download it now, store the bytes
         if not download_file(url, dest, timeout=REQUEST_TIMEOUT_SECONDS):
-            raise RuntimeError(f"the generated image was already gone (404, trace {trace})")
+            raise RuntimeError(f"the generated image was already gone (404, task {trace})")
+        _compress_png(dest)
 
 
 class FakeImages:
@@ -297,7 +326,8 @@ async def render_cover(
     """
     prompt = image_prompt(settings, skill.id)
     if prompt is None:  # callers pre-filter with cover_needed; a caller may not
-        raise RuntimeError(f"{skill.id} has no {PROMPT_ID} output to render")
+        raise RuntimeError(f"{skill.id} has no persona output to render a cover from")
+    logger.debug("%s: image prompt: %s", skill.id, prompt)
     dest = cover_path(settings, skill.id)
     dest.parent.mkdir(parents=True, exist_ok=True)
     async with sem:

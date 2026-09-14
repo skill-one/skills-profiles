@@ -33,9 +33,6 @@ def _fake_output(model, name: str):
         return m.DomainClassification(domain=m.Domain.OFFICE, reason="离线演示用的固定分类")
     if model is m.IntroText:
         return m.IntroText(text=f"{name} 的离线演示档案文本, 用于验证管道, 不含真实内容。")
-    if model is m.ImagePrompt:
-        # ASCII only: the schema rejects a Chinese recipe, so the fake must obey it too
-        return m.ImagePrompt(text="a worker holding their tool, mid-task at the busy desk")
     if model is m.BlackBoxIntro:
         return m.BlackBoxIntro(
             function=f"{name} 的离线演示功能描述",
@@ -53,9 +50,8 @@ def _fake_output(model, name: str):
         return m.Taglines(taglines=[f"{name}, 简单高效", "让 agent 更能干", "省时省力的好帮手"])
     if model is m.Persona:
         return m.Persona(
-            tool=f"{name} 使用的核心工具",
-            role=f"{name} 的专属把关人",
-            scene=f"需要 {name} 帮忙的那一刻",
+            tool="扳手",
+            pitch=f"我替你把 {name} 的活做完, 还你一个能用的结果——我是一把扳手",
         )
     if model is m.SkillComments:
         return m.SkillComments(comments=[
