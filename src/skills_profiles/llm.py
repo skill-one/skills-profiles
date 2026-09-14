@@ -53,6 +53,11 @@ def _fake_output(model, name: str):
             tool="扳手",
             pitch=f"我替你把 {name} 的活做完, 还你一个能用的结果——我是一把扳手",
         )
+    if model is m.ImagePrompt:
+        # ASCII only: the schema rejects a Chinese recipe, so the fake must obey it too
+        return m.ImagePrompt(
+            text="a sturdy chrome wrench, boxy head, knurled straight handle, "
+                 "slightly open jaws, lying at a slight angle")
     if model is m.SkillComments:
         return m.SkillComments(comments=[
             m.SkillComment(user="后端老兵", category="妙用", comment=f"我发现 {name} 能直接接进现有流程, 省了一步手工操作"),

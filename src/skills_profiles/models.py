@@ -2,7 +2,7 @@
 
 from enum import StrEnum
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class Domain(StrEnum):
@@ -149,6 +149,33 @@ class Taglines(BaseModel):
     """Output schema for the `tagline` prompt."""
 
     taglines: list[str] = Field(description="3 条宣传短标语, 每条 20 个字以内")
+
+
+class ImagePrompt(BaseModel):
+    """Output schema for the `cover` prompt: one English line describing the picture.
+
+    Not just an `IntroText`, because this text feeds a text-to-image model rather
+    than a human. Measured against real endpoints: a recipe that came back as
+    Chinese marketing prose still validated as a string, and became a garbage
+    picture. Every rule below is therefore a rejection instructor hands back to
+    the model, so the recipe is corrected before it is stored.
+    """
+
+    text: str = Field(description="英文画面主体: 逗号分隔的短语, 40 词以内, 只描述那件物理工具长什么样")
+
+    @field_validator("text")
+    @classmethod
+    def _english_phrase(cls, value: str) -> str:
+        value = " ".join(value.split()).strip().rstrip(".,;: ")
+        if not value:
+            raise ValueError("不能为空")
+        if not value.isascii():
+            raise ValueError("必须是纯英文 (ASCII), 不要出现中文")
+        if len(value.split()) > 40:
+            raise ValueError("超过 40 个英文单词, 请精简成逗号短语")
+        if any(mark in value for mark in "!?\"'()"):
+            raise ValueError("只要逗号分隔的短语, 不要问句/引号/括号")
+        return value
 
 
 class SkillComment(BaseModel):

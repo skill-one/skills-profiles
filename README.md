@@ -85,8 +85,8 @@ items `{user, category, comment}`. Everything but ids, paths and field names is 
 ```
 
 - `prompts` counts the cached outputs of each angle; `covers.rendered` counts the pictures rendered
-  directly from `persona.tool`. Treat `cover.png` (~200 KB after the automatic palette-quantization)
-  as present-or-absent per skill.
+  from the cover recipe (an LLM-written English subject line derived from `persona.tool`).
+  Treat `cover.png` (~200 KB after the automatic palette-quantization) as present-or-absent per skill.
 - `skills.profiled` counts skills with every angle cached (the text half); `skills.complete` the subset
   whose `cover.png` is drawn too — the sense `run --limit` spends budget on, so a key-less run can
   reach `profiled == total` with `complete` still catching up.
@@ -105,11 +105,12 @@ rather than left describing another version; and `latest` names the snapshot whi
 when it was published and from which mirror tag, because publishing fails unless pointer, tag and
 commit agree — or a published snapshot turns out to have lost its stamp.
 
-There is no image-recipe prompt: `cover.png` is rendered straight from the persona's tool name
-(`persona.tool`, a Chinese physical-tool name), with the avatar framing and the unified premium 3D
-illustration style appended by the generator. Invalidate `persona` to re-draw a cover — the picture
-is its asset, so json and png are refilled together; re-rendering costs no extra text call.
-Full detail: [DEVELOPING.md](DEVELOPING.md).
+One image-recipe prompt (`cover`, fed by `persona.tool`) turns the Chinese tool name into an English
+subject description; `cover.png` is then rendered from that text, with the avatar framing, the unified
+premium 3D illustration style and the "no text / no person" bans appended by the generator. Invalidate
+`persona` to re-draw a cover — the invalidation cascades to the recipe, so tool name, recipe and png
+are refilled together; or run `invalidate --assets cover` to drop only the pictures, keeping every
+cached text (the next run re-renders them, no LLM work). Full detail: [DEVELOPING.md](DEVELOPING.md).
 
 ## How to get the data
 

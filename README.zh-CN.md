@@ -82,8 +82,8 @@ English: [README.md](README.md) · 开发指南：[DEVELOPING.zh-CN.md](DEVELOPI
 }
 ```
 
-- `prompts` 数的是每个角度已缓存的输出数；`covers.rendered` 数的是直接据 `persona.tool`
-  渲染出的配图数。把 `cover.png`（自动调色板量化后约 200 KB）当作每个 skill 上「有则有、无则无」的东西。
+- `prompts` 数的是每个角度已缓存的输出数；`covers.rendered` 数的是据 cover 配方（由 `persona.tool`
+  派生、LLM 撰写的英文画面主体描述）渲染出的配图数。把 `cover.png`（自动调色板量化后约 200 KB）当作每个 skill 上「有则有、无则无」的东西。
 - `skills.profiled` 数的是每个角度都已缓存的 skill（文字那一半）；`skills.complete` 是其子集，要求
   `cover.png` 也已画出——也就是 `run --limit` 会占用预算的那个口径，所以没有配图 key 的一轮可以让
   `profiled == total` 而 `complete` 仍在追赶。
@@ -100,9 +100,10 @@ English: [README.md](README.md) · 开发指南：[DEVELOPING.zh-CN.md](DEVELOPI
 `stats.json` 则盖章写明它何时发布、基于哪一版镜像，因为指针、tag、commit 三者不一致，或已发布的快照
 丢了章，发布都算失败。
 
-不存在「配图配方」这一步：`cover.png` 直接拿 persona 的工具名（`persona.tool`，一个中文物理工具
-名）做主体，头像级取景和统一的高级 3D 插画画风由生成器追加。要重画配图就 invalidate `persona`
-——配图是 persona 的资产，json 和 png 会一起重建；重渲染不产生额外的文本调用。细节见
+配图有一个配方 prompt（`cover`，输入 `persona.tool`）把中文工具名翻译成英文画面主体描述；`cover.png`
+随后据这段文案渲染，生成器会追加头像级取景、统一的高级 3D 插画画风以及「无文字 / 无人脸」禁令。要重画配图
+就 invalidate `persona`——失效会级联到配方，工具名、配方和 png 会一起重建；或用 `invalidate --assets cover`
+只删图片、保留全部已缓存的文本（下次 run 直接据配方重画，不消耗 LLM）。细节见
 [DEVELOPING.zh-CN.md](DEVELOPING.zh-CN.md)。
 
 ## 如何获取数据

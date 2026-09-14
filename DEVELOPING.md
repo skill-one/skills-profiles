@@ -27,7 +27,7 @@ Offline, no API calls: `skills-profiles run --limit 5 --dry-run` (text plus plac
 | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `sync [--refresh]`                                                        | Read upstream's one-line `latest` pointer to learn the newest tag, then pull that ref as one tarball into `cache/skills-sh`, unpacking only `skills.jsonl` and every `SKILL.md`. Records the tag in `SNAPSHOT.json` and skips the download when it is already current (`--refresh` forces it). Never touches the artifacts.                                                                                                                                                                                                                                              |
 | `run [--limit N] [--prompts a,b] [--concurrency C] [--dry-run] [--debug]` | Complete skills, most installed first: `N` of them (`0` = every skill with gaps). A skill is complete when every prompt is cached and its `cover.png` is drawn — the selection counts both halves, so the run fills missing text and then renders the selected skills' missing pictures, paced at `SKILLS_PROFILES_IMAGE_RATE_LIMIT` images/minute per key. Skills that need nothing, or have no `SKILL.md` in the snapshot, are skipped and do not consume the budget; without `SKILLS_PROFILES_IMAGE_API_KEY` the render pass is skipped with a warning, not an error. |
-| `invalidate [--skill ID]... [--prompts a,b] [--stale] [--all]`            | Drop cached outputs so the next `run` refills them. `--stale` selects the skills whose upstream hash changed or that vanished (run `sync` first). Refuses a filter-less full wipe without `--all`. Invalidating `persona` takes its `cover.png` along, which is how a picture is redrawn.                                                                                                                                                                                                                                                                                |
+| `invalidate [--skill ID]... [--prompts a,b] [--stale] [--all]`            | Drop cached outputs so the next `run` refills them. `--stale` selects the skills whose upstream hash changed or that vanished (run `sync` first). Refuses a filter-less full wipe without `--all`. Invalidating a prompt also drops its downstream prompts and their assets: `persona` cascades to `cover`, which is how a picture is redrawn.                                                                                                                                                                                                                                                                                |
 
 `invalidate` deletes and `run` refills — redoing work is never a `run` flag. Failures are isolated per
 skill: the run continues, finished prompts are published, and only a total washout exits non-zero.
@@ -58,6 +58,7 @@ output of"):
 
 ```
 domain   scenario   blackbox   whitebox   tagline   persona   comments   (all roots)
+                                                                   └─► cover   (the one edge)
 # add `depends_on: [scenario]` to a prompt's frontmatter to chain it
 ```
 
@@ -73,13 +74,13 @@ Design decisions:
   last, so a crash cannot leave a json without its copy. Resume granularity is per prompt.
 - **The index is a projection** — `skills.jsonl` is rewritten in full from disk, so a row can never
   drift from the files; it is what `invalidate --stale` compares hashes against.
-- **A cover is a render, not a prompt** — there is no image-recipe LLM step: `images.py` leads the
-  prompt with `persona.tool` verbatim (a Chinese physical-tool name; the image endpoint, Agnes Image
-  2.5 Flash, understood Chinese names when tested), then appends one shared English style tail
-  (`COVER_STYLE`) and the banned content as positive "no ..." phrases (`NEGATIVE_PROMPT`), since the
-  endpoint takes no `negative_prompt` field.
-  `cover.png` is an asset of `persona` in `PROMPT_ASSETS`, so invalidating persona drops json and
-  picture together. The picture's cache is the file's existence, because the endpoint's url expires —
+- **A cover is a recipe plus a render** — one DAG prompt (`cover`, fed by `persona.tool`) turns the
+  Chinese tool name into an English subject description; `images.py` appends the shared English
+  style tail (`COVER_STYLE`) and the banned content as positive "no ..." phrases (`NEGATIVE_PROMPT`)
+  — the image endpoint, Agnes Image 2.5 Flash, takes no `negative_prompt` field.
+  `cover.png` is an asset of `cover` in `PROMPT_ASSETS`, so invalidating the recipe drops json and
+  picture together, and invalidating persona cascades to cover (a new tool name must not keep the
+  old recipe). The picture's cache is the file's existence, because the endpoint's url expires —
   bytes are stored, urls never are — and re-rendering costs no LLM call.
 - **One snapshot, one request** — `sync` downloads the branch as a single codeload tarball, unpacks only
   what a run reads, and replaces the previous snapshot wholesale. Upstream tags each daily scrape and
@@ -94,8 +95,12 @@ Design decisions:
 `run --prompts <id>` computes the dependency closure of the target prompts and generates only what is
 missing in it: dependencies are inputs, so they reuse their stored json unless it is missing or
 schema-invalid. Nothing outside the closure is recomputed, and a skill left with no output at all is
-dropped from `skills.jsonl`. Invalidating `persona` also removes its `cover.png` (the picture is
-persona's registered asset), so `invalidate --prompts persona` followed by `run` refills both.
+dropped from `skills.jsonl`. Invalidating a prompt also drops every prompt downstream of it
+(`persona` cascades to `cover`) plus each dropped prompt's registered assets — so
+`invalidate --prompts persona` followed by `run` refills the tool name, the recipe and the picture.
+`invalidate --assets cover` is the narrower hammer: it drops only the registered assets (the
+cover.png files) and keeps every cached json — `run` then re-renders the pictures from the recipes
+already on disk, no LLM work.
 
 ## Adding a prompt
 
@@ -123,7 +128,7 @@ skills-profiles run --prompts my_angle --limit 0
 
 Add the prompt's id to `AGGREGATED_PROMPTS` in `outputs.py` to fold it into every `skills.jsonl` row,
 and register any non-json assets it owns in `PROMPT_ASSETS` (asset filenames in the skill dir) — that
-is how `persona` owns `cover.png`, and why invalidating the prompt drops the rendered artifact too.
+is how `cover` owns `cover.png`, and why invalidating the prompt drops the rendered artifact too.
 
 ## Project layout
 
@@ -165,17 +170,20 @@ Resolution order (highest first): `SKILLS_PROFILES_*` env vars → local `.env` 
 
 ## Publishing (GitHub Actions)
 
-[`ci`](.github/workflows/ci.yml) checks every push and pull request (tests, lint, types); the two
+[`ci`](.github/workflows/ci.yml) checks every push and pull request (tests, lint, types); the
 manually-triggered workflows below share one publish lock (`concurrency: publish-dist`):
 
-| Workflow                                     | Pipeline                                                      | Tag                                                   |
-| -------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------- |
-| [`sync`](.github/workflows/sync.yml)         | restore dist → sync upstream → `invalidate --stale` → publish | `dist-YYYY-MM-DD`, force-updated within a day         |
-| [`generate`](.github/workflows/generate.yml) | restore dist → `run --limit <input, default 10>` → publish    | `dist-<base>-N`, base = newest sync tag, N increments |
+| Workflow                                       | Pipeline                                                      | Tag                                                   |
+| ---------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------- |
+| [`sync`](.github/workflows/sync.yml)           | restore dist → sync upstream → `invalidate --stale` → publish | `dist-YYYY-MM-DD`, force-updated within a day         |
+| [`generate`](.github/workflows/generate.yml)   | restore dist → `run --limit <input, default 10>` → publish    | `dist-<base>-N`, base = newest sync tag, N increments |
+| [`invalidate`](.github/workflows/invalidate.yml) | restore dist → `invalidate --prompts/--assets [--skill …]` → publish | `dist-<base>-N`, same counter as `generate`    |
 
 ```bash
 gh workflow run generate.yml -f limit=50 -f concurrency=8   # complete 50 skills (text + covers)
 gh workflow run sync.yml                                    # refresh upstream, drop stale profiles
+gh workflow run invalidate.yml -f assets=cover              # drop every cover.png; texts stay cached
+gh workflow run invalidate.yml -f prompts=persona           # re-do every persona (cascades to cover)
 ```
 
 Both share [restore-dist](.github/actions/restore-dist/action.yml) (one codeload request pulls the

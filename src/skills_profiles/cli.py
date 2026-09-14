@@ -14,8 +14,8 @@ from .images import CoverStats, FakeImages, cover_needed, make_images, run_cover
 from .llm import FakeLLM, make_llm
 from .logging import setup_logging
 from .models import SkillRecord
+from .outputs import PROMPT_ASSETS, load_hashes
 from .outputs import invalidate as invalidate_cache
-from .outputs import load_hashes
 from .prompts import PromptSet, load_prompt_set
 
 logger = logging.getLogger(__name__)
@@ -110,6 +110,11 @@ def invalidate(
     prompts_opt: str | None = typer.Option(
         None, "--prompts", help="Comma-separated prompt ids; omit for every prompt"
     ),
+    assets_opt: str | None = typer.Option(
+        None, "--assets", help="Comma-separated prompt ids whose rendered assets to "
+             "drop while keeping the cached outputs (cover owns cover.png) - the next "
+             "run re-renders them from the recipes already on disk"
+    ),
     all_skills: bool = typer.Option(
         False, "--all", help="Allow invalidating every skill (required when no filter is given)"
     ),
@@ -123,9 +128,18 @@ def invalidate(
     setup_logging()
     settings = Settings()
 
-    prompt_ids: set[str] | None = None
-    if prompts_opt:
-        prompt_ids = parse_prompt_ids(load_prompt_set(settings.prompts_dir), prompts_opt)
+    prompt_set = load_prompt_set(settings.prompts_dir)
+    prompt_ids = parse_prompt_ids(prompt_set, prompts_opt)
+    asset_ids = parse_prompt_ids(prompt_set, assets_opt)
+    if prompt_ids and asset_ids:
+        raise typer.BadParameter("use --prompts or --assets, not both")
+    if asset_ids and stale:
+        raise typer.BadParameter("--assets cannot be combined with --stale")
+    barren = sorted((asset_ids or set()) - set(PROMPT_ASSETS))
+    if barren:
+        raise typer.BadParameter(
+            f"{barren} own(s) no rendered assets; prompts that do: {sorted(PROMPT_ASSETS)}"
+        )
 
     skill_ids = list(skill or [])
     if stale:
@@ -135,14 +149,15 @@ def invalidate(
         if not found:
             logger.info("Nothing to invalidate")
             return
-    if not skill_ids and not prompt_ids and not all_skills:
+    if not skill_ids and not prompt_ids and not asset_ids and not all_skills:
         raise typer.BadParameter("refusing to invalidate everything - pass --all to confirm")
 
     recorded = load_hashes(settings)
     for skill_id in skill_ids:
         if skill_id not in recorded:
             logger.warning("%s has no cached results", skill_id)
-    removed = invalidate_cache(settings, skill_ids or None, prompt_ids)
+    removed = invalidate_cache(settings, skill_ids or None, prompt_ids,
+                               assets_only=asset_ids is not None)
     targets = sorted(skill_ids) if skill_ids else sorted(recorded)
     logger.info("Invalidated %d output(s) across %d skill(s)", removed, len(targets))
 

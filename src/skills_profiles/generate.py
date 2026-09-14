@@ -112,8 +112,8 @@ def select_skills(
     """The skills of this run: the first `limit` ones that still need work.
 
     "Work" is anything the run can complete for the skill: a missing prompt, or
-    a persona whose cover.png has not been drawn yet — `limit N` therefore
-    means "make N skills complete", text and picture alike. Skills are considered in install
+    a cover recipe without its picture — `limit N` therefore means "make N
+    skills complete", text and picture alike. Skills are considered in install
     order (the list handed in is already the `settings.total_limit` window, see
     `data.portfolio`); one that needs nothing is skipped without spending any
     of the budget, so repeated runs keep moving down the list instead of
@@ -193,8 +193,8 @@ def write_artifact_stats(settings: Settings, cov: dict) -> dict:
         "skills": {"total": cov["skills"], "profiled": cov["profiled"],
                    "complete": cov["complete"]},
         "prompts": cov["prompts"],
-        # rendered covers are counted from disk too: prompts.persona says how
-        # many tool names exist, this says how many of them have a picture
+        # rendered covers are counted from disk too: prompts.cover says how
+        # many recipes exist, this says how many of them have become a picture
         "covers": {"rendered": covers_on_disk(settings)},
     }
     write_stats(settings, stats)

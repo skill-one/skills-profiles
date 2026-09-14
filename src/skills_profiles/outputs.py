@@ -1,6 +1,6 @@
 """On-disk artifact layout under <output_dir>: one json per prompt in
 skills/<id>/ (with a markdown copy in md/), the binary assets a prompt owns
-beside it (the persona's rendered cover.png), plus skills.jsonl — the skill
+beside it (the cover prompt's rendered png), plus skills.jsonl — the skill
 index, one line per skill carrying its id, the upstream content hash its
 profiles were generated from, and the aggregated domain/persona outputs."""
 
@@ -17,9 +17,9 @@ from .models import Domain
 AGGREGATED_PROMPTS = ("domain", "persona")  # prompts folded into the index lines, derived from disk
 # asset filenames (relative to a skill's artifact dir) owned by a prompt: they
 # are its rendered artifacts, so invalidating the prompt drops them with the
-# json (see invalidate). The persona owns cover.png — the picture is rendered
-# directly from persona.tool, no separate recipe prompt in between.
-PROMPT_ASSETS: dict[str, tuple[str, ...]] = {"persona": ("cover.png",)}
+# json (see invalidate). The cover recipe owns cover.png — the picture is
+# rendered from the recipe's text, and invalidating the recipe drops both.
+PROMPT_ASSETS: dict[str, tuple[str, ...]] = {"cover": ("cover.png",)}
 
 logger = logging.getLogger(__name__)
 
@@ -155,30 +155,40 @@ def write_prompt_output(settings: Settings, skill_id: str, prompt_id: str, outpu
 
 
 def invalidate(settings: Settings, skill_ids: Iterable[str] | None = None,
-               prompt_ids: Iterable[str] | None = None) -> int:
+               prompt_ids: Iterable[str] | None = None,
+               assets_only: bool = False) -> int:
     """Delete cached prompt outputs (and the assets they own) so the next run refills them.
 
     `skill_ids` None means every skill on record; `prompt_ids` None
-    means every prompt of each selected skill. Dropping a prompt also drops the
-    rendered assets it owns (PROMPT_ASSETS), which is how a cover gets
-    re-rendered: invalidate persona, then `run` refills the json and the picture.
+    means every prompt of each selected skill. Dropping a prompt also drops
+    every prompt downstream of it in the DAG (the cover recipe derives from the
+    persona, so a new tool name must not keep the old recipe), and the rendered
+    assets the dropped prompts own (PROMPT_ASSETS) — which is how a cover gets
+    re-rendered: one invalidation, then `run` refills the jsons and the picture.
+    With `assets_only` the cached outputs all stay and only their rendered
+    assets are dropped (no dependent cascade, no index change): the next `run`
+    re-renders them from the recipes already on disk.
     A skill left without any output is dropped from the index, i.e. it
     counts as new again; the index is then rewritten so its aggregated copies
     match what is left on disk. This is the only invalidation path:
     `invalidate --stale` uses it for skills whose upstream hash changed. Returns
-    the number of removed prompt outputs.
+    the number of removed prompt outputs and assets.
     """
     index = load_index(settings)
     targets = sorted(index) if skill_ids is None else list(dict.fromkeys(skill_ids))
+    if prompt_ids is not None and not assets_only:
+        prompt_ids = _with_dependents(settings, set(prompt_ids))  # a dropped prompt takes its dependents with it
     removed = 0
     dropped = False
     for skill_id in targets:
         paths = (_stored_jsons(settings, skill_id) if prompt_ids is None
                  else [prompt_result_path(settings, skill_id, p) for p in prompt_ids])
         for path in paths:
-            _unlink(path.parent / MD_SUBDIR / f"{path.stem}.md")
             for asset in PROMPT_ASSETS.get(path.stem, ()):  # explicit filenames in the skill dir
-                _unlink(path.parent / asset)
+                removed += _unlink(path.parent / asset)
+            if assets_only:  # the cached output stays; only its rendered asset went
+                continue
+            _unlink(path.parent / MD_SUBDIR / f"{path.stem}.md")
             removed += _unlink(path)
         if not _stored_jsons(settings, skill_id):
             shutil.rmtree(skill_result_dir(settings, skill_id), ignore_errors=True)
@@ -186,6 +196,29 @@ def invalidate(settings: Settings, skill_ids: Iterable[str] | None = None,
     if removed or dropped:
         write_index(settings, index)
     return removed
+
+
+def _with_dependents(settings: Settings, prompt_ids: set[str]) -> set[str]:
+    """`prompt_ids` plus every prompt that transitively depends on one of them.
+
+    Read from the prompt DAG (prompts/ frontmatter), so invalidating an upstream
+    output never leaves a downstream one stale on disk.
+    """
+    from .prompts import load_prompt_set  # imported here: prompts.py has no use for outputs.py
+
+    by_id = load_prompt_set(settings.prompts_dir).by_id
+    dependents: dict[str, set[str]] = {pid: set() for pid in by_id}
+    for spec in by_id.values():
+        for dep in spec.depends_on:
+            dependents[dep].add(spec.id)
+    seen = set(prompt_ids)
+    stack = list(prompt_ids)
+    while stack:
+        for child in dependents.get(stack.pop(), ()):
+            if child not in seen:
+                seen.add(child)
+                stack.append(child)
+    return seen
 
 
 def _stored_jsons(settings: Settings, skill_id: str) -> list[Path]:

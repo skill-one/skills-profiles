@@ -27,7 +27,7 @@ skills-profiles run --limit 10  # 生成档案 + 渲染就绪的配图，按安�
 | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `sync [--refresh]`                                                        | 先读上游一行的 `latest` 指针得知最新 tag，再把该 ref 作为一个 tarball 拉到 `cache/skills-sh`，只解压 `skills.jsonl` 和每个 `SKILL.md`。tag 记在 `SNAPSHOT.json`，未变则跳过下载（`--refresh` 强制）。从不碰产物。                                                                                                                                                                                    |
 | `run [--limit N] [--prompts a,b] [--concurrency C] [--dry-run] [--debug]` | 把 skill 补到完整，按安装量排序取 N 个（`0` = 所有有缺口的）。一个 skill「完整」= 所有 prompt 已缓存且 `cover.png` 已画出——选择同时计入两半，run 先补缺失文本，再渲染本轮选中 skill 缺失的配图，按 `SKILLS_PROFILES_IMAGE_RATE_LIMIT` 张/分钟/key 限速。什么都不缺的、以及快照里没有 `SKILL.md` 的 skill 会被跳过且不占名额；没有 `SKILLS_PROFILES_IMAGE_API_KEY` 时渲染阶段会告警并跳过，而非报错。 |
-| `invalidate [--skill ID]... [--prompts a,b] [--stale] [--all]`            | 删除缓存输出，让下一次 `run` 重算。`--stale` 选上游 hash 变化或已从快照消失的 skill（先 `sync`）。无任何筛选条件时必须显式 `--all`。失效 `persona` 会连同它的 `cover.png` 一起删掉，这正是重画一张配图的唯一途径。                                                                                                                                                                                   |
+| `invalidate [--skill ID]... [--prompts a,b] [--stale] [--all]`            | 删除缓存输出，让下一次 `run` 重算。`--stale` 选上游 hash 变化或已从快照消失的 skill（先 `sync`）。无任何筛选条件时必须显式 `--all`。失效一个 prompt 会连同它在 DAG 里的下游 prompt 和各自资产一起删掉：`persona` 级联到 `cover`，这正是重画一张配图的途径。                                                                                                                                                                                   |
 
 重算从来不是 `run` 的参数：`invalidate` 删，`run` 补。单个 skill 的失败会被隔离：run 继续，已完成的
 prompt 保留并随本轮发布，只有全军覆没才以非零码退出。图像请求按 key 限速——每个 key 每分钟最多
@@ -55,6 +55,7 @@ prompt 保留并随本轮发布，只有全军覆没才以非零码退出。图�
 
 ```
 domain   scenario   blackbox   whitebox   tagline   persona   comments   （全部是根节点）
+                                                                   └─► cover   （唯一一条边）
 # 在 frontmatter 里加 `depends_on: [scenario]` 即可串联
 ```
 
@@ -70,14 +71,13 @@ domain   scenario   blackbox   whitebox   tagline   persona   comments   （全�
   多余的 markdown，不会出现没有副本的 json。续跑粒度是 prompt 级。
 - **索引是投影** —— `skills.jsonl` 每次全量重写、内容来自磁盘，所以行不可能与文件漂移；它是
   `invalidate --stale` 比对 hash 的依据。
-- **配图 = 直接渲染，不是 prompt** —— 不存在「配图配方」这一步：`images.py` 把 `persona.tool`
-  原样作为主体开头（中文物理工具名；图像端点 Agnes Image 2.5 Flash 实测可理解中文名称），随后
-  拼接统一的英文风格尾段（`COVER_STYLE`）与改写为正向 "no ..." 短语的禁用内容
-  （`NEGATIVE_PROMPT`）——端点不支持 `negative_prompt` 字段，禁令只能随正向提示词一起发送。
-  `cover.png` 在 `PROMPT_ASSETS` 里登记为
-  `persona` 的资产，所以失效 persona 会把 json 和
-  配图一起删掉。配图的缓存就是文件本身是否存在，因为接口返回的 url 会过期——存下来的是字节，
-  url 从不保存——而重渲染不花 LLM 调用。
+- **配图 = 配方 + 渲染** —— DAG 里有一个配方 prompt（`cover`，输入 `persona.tool`），把中文工具名
+  翻译成一段英文画面主体描述；`images.py` 随后拼接统一的英文风格尾段（`COVER_STYLE`）与改写为
+  正向 "no ..." 短语的禁用内容（`NEGATIVE_PROMPT`）——图像端点 Agnes Image 2.5 Flash 不支持
+  `negative_prompt` 字段，禁令只能随正向提示词一起发送。
+  `cover.png` 在 `PROMPT_ASSETS` 里登记为 `cover` 的资产，所以失效配方会把 json 和配图一起删掉，
+  而失效 persona 会级联到 cover（新的工具名不能留旧配方）。配图的缓存就是文件本身是否存在，
+  因为接口返回的 url 会过期——存下来的是字节，url 从不保存——而重渲染不花 LLM 调用。
 - **一次请求拿整个快照** —— `sync` 用 codeload 把分支作为一个 tarball 下载，只解压真正会读的内容，
   并整包替换上一次快照。上游每天为抓取结果打 tag，并在根目录放一行 `latest` 指针指向最新的那个，因此
   重复 sync 只有当指针指向的 tag 本地还没有时才下载；在 CI 里快照从我们自己的 `dist` 恢复。
@@ -88,8 +88,10 @@ domain   scenario   blackbox   whitebox   tagline   persona   comments   （全�
 
 `run --prompts <id>` 先算目标 prompt 的依赖闭包，只生成闭包里缺失的部分：依赖属于输入，因此复用已存的
 json，仅在缺失或 schema 校验失败时重算。闭包之外完全不动；某 skill 若一个输出都不剩，会从
-`skills.jsonl` 除名。失效 `persona` 会连同它的 `cover.png`（persona 在 `PROMPT_ASSETS`
-里登记的资产）一起删掉——`invalidate --prompts persona` 后再 `run`，工具名和配图会一起补上。
+`skills.jsonl` 除名。失效一个 prompt 时，它在 DAG 里的所有下游 prompt（`persona` 会级联到 `cover`）
+连同各自登记的资产一起删掉——`invalidate --prompts persona` 后再 `run`，工具名、配方和配图会一起补上。
+`invalidate --assets cover` 是更窄的一档：只删登记的资产（cover.png），保留全部已缓存的 json——
+`run` 会直接依据已有的配方重画配图，不消耗 LLM。
 
 ## 新增一个 prompt
 
@@ -115,7 +117,7 @@ skills-profiles run --prompts my_angle --limit 0
 ```
 
 把 prompt id 加进 `outputs.py` 的 `AGGREGATED_PROMPTS`，它就会折进每一行 `skills.jsonl`；若它拥有
-非 json 的产物，在同一个文件里的 `PROMPT_ASSETS` 登记资产文件名——`persona` 就是这样持有
+非 json 的产物，在同一个文件里的 `PROMPT_ASSETS` 登记资产文件名——`cover` 就是这样持有
 `cover.png` 的，也正因如此，失效这个 prompt 时会连同渲染出的产物一起丢弃。
 
 ## 项目结构
@@ -158,17 +160,20 @@ tests/               # 离线 fixture + 端到端 CLI 测试
 
 ## 发布（GitHub Actions）
 
-[`ci`](.github/workflows/ci.yml) 在每次 push 与 pull request 上做检查（测试、lint、类型）；下面
-两条手动触发的工作流共用同一个发布锁（`concurrency: publish-dist`）：
+[`ci`](.github/workflows/ci.yml) 在每次 push 与 pull request 上做检查（测试、lint、类型）；下面的
+手动触发工作流共用同一个发布锁（`concurrency: publish-dist`）：
 
-| 工作流                                       | 流水线                                             | Tag                                                    |
-| -------------------------------------------- | -------------------------------------------------- | ------------------------------------------------------ |
-| [`sync`](.github/workflows/sync.yml)         | 恢复 dist → 同步上游 → `invalidate --stale` → 发布 | `dist-YYYY-MM-DD`（同日内 force 覆盖）                 |
-| [`generate`](.github/workflows/generate.yml) | 恢复 dist → `run --limit <输入，默认 10>` → 发布   | `dist-<base>-N`（base = 最近一次 sync 的 tag，N 递增） |
+| 工作流                                         | 流水线                                                  | Tag                                                    |
+| ---------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------ |
+| [`sync`](.github/workflows/sync.yml)           | 恢复 dist → 同步上游 → `invalidate --stale` → 发布      | `dist-YYYY-MM-DD`（同日内 force 覆盖）                 |
+| [`generate`](.github/workflows/generate.yml)   | 恢复 dist → `run --limit <输入，默认 10>` → 发布        | `dist-<base>-N`（base = 最近一次 sync 的 tag，N 递增） |
+| [`invalidate`](.github/workflows/invalidate.yml) | 恢复 dist → `invalidate --prompts/--assets [--skill …]` → 发布 | `dist-<base>-N`（与 `generate` 同一计数）        |
 
 ```bash
 gh workflow run generate.yml -f limit=50 -f concurrency=8   # 补完整 50 个 skill（文本 + 配图）
 gh workflow run sync.yml                                     # 刷新上游，丢弃过期档案
+gh workflow run invalidate.yml -f assets=cover               # 只删全部 cover.png，文本缓存保留
+gh workflow run invalidate.yml -f prompts=persona            # 重做全部 persona（级联到 cover）
 ```
 
 两条工作流共用 [restore-dist](.github/actions/restore-dist/action.yml)（一个 codeload 请求把分支拉回

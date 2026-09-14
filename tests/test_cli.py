@@ -98,8 +98,8 @@ def test_run_writes_a_stats_summary(settings, monkeypatch):
     result = runner.invoke(app, ["run", "--limit", "2", "--dry-run"])
     assert result.exit_code == 0, result.output
     assert "Done in" in result.output
-    # 2 skills x every prompt in prompts/ (seven text prompts; covers are not one)
-    assert "14 prompt(s) generated for 2/2 skill(s)" in result.output
+    # 2 skills x every prompt in prompts/ (seven text prompts + the cover recipe)
+    assert "16 prompt(s) generated for 2/2 skill(s)" in result.output
     assert "Coverage:" in result.output
     # progress lines list only the newly generated prompts, with seconds, no markers
     assert "*" not in result.output
@@ -110,7 +110,7 @@ def test_run_writes_a_stats_summary(settings, monkeypatch):
     assert all(v == 2 for v in stats["prompts"].values())
     # state only: no run counters, no provenance (that rides beside the data)
     assert set(stats) == {"skills", "prompts", "covers"}
-    assert stats["covers"] == {"rendered": 2}, "run renders the personas it just filled in"
+    assert stats["covers"] == {"rendered": 2}, "run renders the recipes it just filled in"
 
 
 def test_run_stats_snapshot_is_overwritten(settings, monkeypatch):
@@ -232,6 +232,46 @@ def test_invalidate_rejects_unknown_prompt(settings, monkeypatch):
     result = runner.invoke(app, ["invalidate", "--prompts", "nope"])
     assert result.exit_code != 0
     assert "unknown prompt" in result.output
+
+
+def test_invalidate_assets_only_keeps_text_and_redraws_covers(settings, monkeypatch):
+    """`invalidate --assets cover` drops just the pictures: every prompt output
+    stays cached and the next run re-renders the covers from the recipes."""
+    monkeypatch.setattr("skills_profiles.cli.Settings", lambda: settings)
+    runner.invoke(app, ["run", "--limit", "2", "--dry-run"])
+
+    from skills_profiles.images import cover_path
+
+    covers = [cover_path(settings, sid) for sid in
+              ("owner-a/repo-a/alpha", "owner-b/repo-b/beta")]
+    assert all(c.exists() for c in covers)
+
+    result = runner.invoke(app, ["invalidate", "--assets", "cover"])
+    assert result.exit_code == 0, result.output
+    assert not any(c.exists() for c in covers)
+    from skills_profiles.outputs import prompt_result_path
+
+    assert prompt_result_path(settings, "owner-a/repo-a/alpha", "persona").exists()
+    assert prompt_result_path(settings, "owner-a/repo-a/alpha", "cover").exists()
+
+    result = runner.invoke(app, ["run", "--limit", "2", "--dry-run"])
+    assert result.exit_code == 0, result.output
+    assert "(cached)" in result.output  # every prompt output was reused
+    assert all(c.exists() for c in covers)  # and the covers were redrawn
+
+
+def test_invalidate_rejects_assets_and_prompts_together(settings, monkeypatch):
+    monkeypatch.setattr("skills_profiles.cli.Settings", lambda: settings)
+    result = runner.invoke(app, ["invalidate", "--prompts", "persona", "--assets", "cover"])
+    assert result.exit_code != 0
+    assert "not both" in result.output
+
+
+def test_invalidate_rejects_assets_that_own_nothing(settings, monkeypatch):
+    monkeypatch.setattr("skills_profiles.cli.Settings", lambda: settings)
+    result = runner.invoke(app, ["invalidate", "--assets", "tagline"])
+    assert result.exit_code != 0
+    assert "own(s) no rendered assets" in result.output
 
 
 class FailingForAlpha:

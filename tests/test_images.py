@@ -72,47 +72,55 @@ class StubPost:
 
 @pytest.fixture
 def with_profiles(settings):
-    """Two skills holding a persona: the Chinese tool name is the cover subject."""
+    """Two skills holding a persona and its cover recipe: the recipe's English
+    text is the cover subject."""
     skills = load_skills(settings)
     store(settings, skills[0].id, "persona",
           {"tool": "放大镜", "pitch": "放大细节给你看——我是一只放大镜。"})
     store(settings, skills[1].id, "persona",
           {"tool": "扳手", "pitch": "拧好松掉的地方——我是一把扳手。"})
+    store(settings, skills[0].id, "cover",
+          {"text": "a round magnifying glass, brass rim, clear lens, slim handle"})
+    store(settings, skills[1].id, "cover",
+          {"text": "a sturdy chrome wrench, boxy head, knurled straight handle"})
     return skills[:2]
 
 
-# --- the projection: the tool name leads the assembled prompt ---------------
+# --- the projection: the recipe text leads the assembled prompt --------------
 
-def test_image_prompt_leads_with_the_tool_name(settings, with_profiles):
-    assert image_prompt(settings, with_profiles[0].id).startswith("放大镜. ")
+def test_image_prompt_leads_with_the_recipe_text(settings, with_profiles):
+    assert image_prompt(settings, with_profiles[0].id).startswith(
+        "a round magnifying glass, ")
 
 
 def test_every_cover_assembles_style_and_bans_into_one_prompt(settings):
     """Style and negative terms ride in the prompt (the endpoint has no
-    negative_prompt field), after the persona's subject."""
+    negative_prompt field), after the recipe's subject."""
     skill = load_skills(settings)[0]
     store(settings, skill.id, "persona", {"tool": "某物", "pitch": "x"})
+    store(settings, skill.id, "cover", {"text": "a small object"})
     prompt = image_prompt(settings, skill.id)
-    assert prompt.startswith("某物. ")
+    assert prompt.startswith("a small object. ")
     assert f". {COVER_STYLE}. " in prompt
     assert prompt.endswith(NEGATIVE_PROMPT)
     assert "no person" in NEGATIVE_PROMPT and "no text" in NEGATIVE_PROMPT
 
 
-def test_image_prompt_is_none_without_a_persona(settings):
+def test_image_prompt_is_none_without_a_cover_recipe(settings):
     assert image_prompt(settings, load_skills(settings)[0].id) is None
 
 
-def test_image_prompt_is_none_for_an_empty_tool_name(settings):
-    """A persona without a usable tool name has no subject: nothing to render."""
+def test_image_prompt_is_none_for_an_empty_recipe_text(settings):
+    """A recipe without a usable text has no subject: nothing to render."""
     skill = load_skills(settings)[0]
-    store(settings, skill.id, "persona", {"tool": "   ", "pitch": "x"})
+    store(settings, skill.id, "persona", {"tool": "某物", "pitch": "x"})
+    store(settings, skill.id, "cover", {"text": "   "})
     assert image_prompt(settings, skill.id) is None
 
 
 def test_image_prompt_does_not_read_any_other_prompt(settings, with_profiles):
-    """The picture derives from persona only: deleting domain.json must not
-    change the prompt."""
+    """The picture derives from the cover recipe only: deleting domain.json must
+    not change the prompt."""
     before = image_prompt(settings, with_profiles[0].id)
     invalidate(settings, [with_profiles[0].id], {"domain"})
     assert image_prompt(settings, with_profiles[0].id) == before
@@ -234,23 +242,25 @@ async def test_client_stores_the_bytes_behind_the_expiring_url(settings, with_pr
 
 
 def test_compress_png_reduces_a_full_color_cover(tmp_path):
-    """A downloaded full-color cover is re-encoded as a palette PNG, in place."""
+    """A downloaded full-color cover is downscaled and re-encoded as a palette
+    PNG, in place."""
     import random
 
     from PIL import Image as PILImage
 
     dest = tmp_path / "cover.png"
     rng = random.Random(7)
-    img = PILImage.new("RGB", (256, 256))
+    img = PILImage.new("RGB", (1024, 1024))
     img.putdata([(rng.randint(0, 255), rng.randint(0, 255), rng.randint(0, 255))
-                 for _ in range(256 * 256)])
+                 for _ in range(1024 * 1024)])
     img.save(dest)
     raw = dest.stat().st_size
 
     images_mod._compress_png(dest)
 
     with PILImage.open(dest) as out:
-        assert out.mode == "P", "flat-illustration covers store as 256-color palettes"
+        assert out.mode == "P", "flat-illustration covers store as palettes"
+        assert out.size == (images_mod.COVER_PIXEL_SIZE,) * 2, "avatars store at 512px"
     assert dest.stat().st_size < raw
     assert not (tmp_path / "cover.tmp.png").exists(), "no candidate file is left behind"
 
@@ -337,7 +347,7 @@ async def test_run_covers_renders_each_pending_skill_once(settings, with_profile
 async def test_run_covers_isolates_a_failing_skill(settings, with_profiles):
     class Exploding(FakeImages):
         async def generate(self, prompt, seed, dest):
-            if "扳手" in prompt:  # the second fixture skill's tool
+            if "wrench" in prompt:  # the second fixture skill's tool
                 raise RuntimeError("429 rate limit reached")
             await super().generate(prompt, seed, dest)
 
@@ -413,26 +423,39 @@ async def test_an_unlimited_rate_limit_never_paces(settings, with_profiles):
     assert times[1] - times[0] < 0.05
 
 
-async def test_render_refuses_a_skill_with_no_persona(settings):
+async def test_render_refuses_a_skill_with_no_cover_recipe(settings):
     skill = load_skills(settings)[0]
 
-    with pytest.raises(RuntimeError, match="no persona output"):
+    with pytest.raises(RuntimeError, match="no cover recipe"):
         await images_mod.render_cover(FakeImages(), settings, skill, asyncio.Semaphore(1))
 
 
-# --- invalidation drops the picture with its persona ------------------------
+# --- invalidation drops the picture with its recipe --------------------------
 
-def test_invalidate_persona_takes_the_png_with_the_json(settings, with_profiles):
-    """The picture is persona's asset: one invalidation drops both, so a run
-    refills the tool name and the picture together."""
+def test_invalidate_the_cover_takes_the_png_with_the_json(settings, with_profiles):
+    """The picture is the cover recipe's asset: one invalidation drops both, so
+    a run refills the recipe and the picture together."""
     skill = with_profiles[0]
     cover_of(settings, skill.id).parent.mkdir(parents=True, exist_ok=True)
     cover_of(settings, skill.id).write_bytes(FAKE_PNG)
 
-    assert invalidate(settings, [skill.id], {"persona"}) == 1
+    assert invalidate(settings, [skill.id], {"cover"}) == 2  # recipe json + its cover.png
     assert not cover_of(settings, skill.id).exists()
     assert image_prompt(settings, skill.id) is None
-    assert not cover_needed(settings, skill.id), "nothing to render until run refills persona"
+    assert not cover_needed(settings, skill.id), "nothing to render until run refills cover"
+
+
+def test_invalidate_persona_cascades_to_the_cover_recipe(settings, with_profiles):
+    """The recipe derives from persona.tool: a new tool name must not keep the
+    old recipe, so invalidating persona drops recipe json and picture too."""
+    skill = with_profiles[0]
+    cover_of(settings, skill.id).parent.mkdir(parents=True, exist_ok=True)
+    cover_of(settings, skill.id).write_bytes(FAKE_PNG)
+
+    assert invalidate(settings, [skill.id], {"persona"}) == 3  # persona + recipe json + cover.png
+    assert not cover_of(settings, skill.id).exists()
+    assert image_prompt(settings, skill.id) is None
+    assert not cover_needed(settings, skill.id)
 
 
 def test_invalidate_a_different_prompt_keeps_the_picture(settings, with_profiles):
@@ -440,11 +463,11 @@ def test_invalidate_a_different_prompt_keeps_the_picture(settings, with_profiles
     cover_of(settings, skill.id).parent.mkdir(parents=True, exist_ok=True)
     cover_of(settings, skill.id).write_bytes(FAKE_PNG)
 
-    # no domain.json in the fixture, and the picture derives only from persona:
+    # no domain.json in the fixture, and nothing depends on domain:
     # invalidating domain removes nothing and leaves the cover intact
     assert invalidate(settings, [skill.id], {"domain"}) == 0
-    assert cover_of(settings, skill.id).is_file(), "only persona owns the png"
-    assert image_prompt(settings, skill.id).startswith("放大镜. ")
+    assert cover_of(settings, skill.id).is_file(), "only the cover recipe owns the png"
+    assert image_prompt(settings, skill.id).startswith("a round magnifying glass, ")
 
 
 def test_a_transient_failure_then_success_renders(settings, monkeypatch):

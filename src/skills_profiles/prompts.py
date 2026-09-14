@@ -23,6 +23,7 @@ from .models import (
     BlackBoxIntro,
     Domain,
     DomainClassification,
+    ImagePrompt,
     IntroText,
     Persona,
     SkillComments,
@@ -34,7 +35,7 @@ from .models import (
 OUTPUT_MODELS: dict[str, type[BaseModel]] = {
     cls.__name__: cls
     for cls in (DomainClassification, IntroText, BlackBoxIntro, WhiteBoxIntro,
-                Taglines, Persona, SkillComments)
+                Taglines, Persona, SkillComments, ImagePrompt)
 }
 
 # Template contexts. System prompt (per skill): `skill` (SkillRecord) and

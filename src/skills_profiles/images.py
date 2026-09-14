@@ -1,15 +1,14 @@
 """Cover images: one png per skill, an avatar of the persona's physical tool.
 
-There is no image-recipe LLM step: the persona prompt already names the one
-physical tool (`persona.json` -> tool), and that Chinese name is the only
-Chinese word in the image prompt. `image_prompt` assembles the full prompt
-from three parts: the Chinese tool name, the one shared look every cover
-gets (`COVER_STYLE`), and the banned content restated as positive "no ..."
-phrases (`NEGATIVE_PROMPT`) — the endpoint takes no negative_prompt field,
-so the bans ride in the prompt itself. The style phrases stay English
-because diffusion training captions are English short phrases; the tool
-stays Chinese because the endpoint (Agnes Image 2.5 Flash) understood
-Chinese names when tested.
+Two steps stand between the persona and the picture. First the `cover` prompt
+(the DAG's one LLM recipe, fed by `persona.tool`) turns the Chinese tool name
+into an English subject description — the visual details a bare name cannot
+carry. Then `image_prompt` assembles the full prompt from three parts: that
+recipe text, the one shared look every cover gets (`COVER_STYLE`), and the
+banned content restated as positive "no ..." phrases (`NEGATIVE_PROMPT`) —
+the endpoint takes no negative_prompt field, so the bans ride in the prompt
+itself. The recipe and style phrases stay English because diffusion training
+captions are English short phrases.
 
 Rendering is a post-pass of `run` rather than a prompt in the DAG for three
 reasons: the image endpoint is a different service with its own key (see
@@ -19,9 +18,10 @@ and stored, never referenced.
 
 The file is the cache, as everywhere else in the artifact layout: a skill that
 has a `cover.png` is never re-rendered, and dropping one is
-`invalidate --prompts persona`'s job (the picture is an asset of the persona
-that names its subject, so the two are refilled together). A skill with no
-persona yet simply has nothing to render and waits for a later run.
+`invalidate --prompts cover`'s job (the picture is an asset of the cover
+recipe, so the two are refilled together; invalidating persona cascades to
+cover, so a new tool name redraws the picture). A skill with no cover recipe
+yet simply has nothing to render and waits for a later run.
 """
 
 import asyncio
@@ -46,20 +46,20 @@ from .outputs import read_prompt_output, skill_result_dir
 
 logger = logging.getLogger(__name__)
 
-PERSONA_PROMPT_ID = "persona"  # its `tool` field supplies the picture's subject
+COVER_PROMPT_ID = "cover"  # its `text` field supplies the picture's subject
 COVER_FILENAME = "cover.png"  # the rendered cover, next to the prompt jsons
 # The one shared look every cover gets, kept English: diffusion training
 # captions are comma-separated English short phrases.
-COVER_STYLE = ("premium flat illustration style, rounded, refined, friendly, "
-               "well-designed, avatar composition, subject prominent, "
-               "simple background")
+COVER_STYLE = ("premium flat illustration style, rounded, refined, friendly, ",
+"avatar composition, subject prominent, well-designed"
+)
 # What no cover may contain: letters render as garbage, and anything alive or
 # busy would turn the tool avatar into an illustration of a scene. The endpoint
 # takes no negative_prompt field, so the bans are restated as positive "no ..."
 # phrases and ride in the prompt itself.
 NEGATIVE_PROMPT = ("no text, no letters, no numbers, no logo, no watermark, "
                    "no person, no face, no hands, no multiple objects, "
-                   "no busy background, no complex scene, not photorealistic")
+                   "no complex scene, not photorealistic")
 # a stalled endpoint must become a timeout, not a hung CI job (a slow generation
 # takes ~20s; the timeout leaves room for the retry backoff on top)
 REQUEST_TIMEOUT_SECONDS = 300
@@ -69,7 +69,6 @@ RETRYABLE_STATUS = frozenset({429, 502, 503, 504})
 # the window the endpoint's per-minute quota is counted in: each key's limiter
 # lets at most settings.image_rate_limit requests into any 60-second stretch
 RATE_WINDOW_SECONDS = 60
-
 
 @dataclass
 class _KeyEntry:
@@ -116,7 +115,6 @@ FAKE_PNG = base64.b64decode(
     "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGNoaGgAAAMEAYFL09IQAAAAAElFTkSuQmCC"
 )
 
-
 @dataclass
 class CoverStats:
     """Aggregated counters for one rendering post-pass, tallied by `run_covers`."""
@@ -147,18 +145,18 @@ def cover_needed(settings: Settings, skill_id: str) -> bool:
 
 
 def image_prompt(settings: Settings, skill_id: str) -> str | None:
-    """The full prompt for one cover, assembled from the persona's tool name.
+    """The full prompt for one cover, assembled from the cover recipe's text.
 
-    Three parts joined with sentence breaks: the persona's Chinese tool name
-    (the endpoint's tested Chinese understanding makes its own wording the
-    best subject), the shared `COVER_STYLE` look, and `NEGATIVE_PROMPT`
+    Three parts joined with sentence breaks: the recipe's English subject
+    description (the `cover` prompt's LLM output, which turns persona.tool
+    into visual details), the shared `COVER_STYLE` look, and `NEGATIVE_PROMPT`
     restated as "no ..." phrases since the endpoint takes no negative field.
-    None means the skill has no usable persona yet, i.e. nothing to render.
+    None means the skill has no cover recipe yet, i.e. nothing to render.
     """
-    stored = read_prompt_output(settings, skill_id, PERSONA_PROMPT_ID)
+    stored = read_prompt_output(settings, skill_id, COVER_PROMPT_ID)
     if stored is None:
         return None
-    subject = str(stored.get("tool") or "").strip()
+    subject = str(stored.get("text") or "").strip()
     if not subject:
         return None
     return f"{subject}. {COVER_STYLE}. {NEGATIVE_PROMPT}"
@@ -256,17 +254,27 @@ def _request_image(settings: Settings, prompt: str, seed: int, key: str) -> tupl
     ) from last_error
 
 
-def _compress_png(dest: Path) -> None:
-    """Re-encode a downloaded cover in place as an optimized palette PNG.
+# the stored cover's size: a 1024px render downscaled to 512 — plenty for an
+# avatar — and quantized to a 128-color palette, with dithering off to keep
+# flat-illustration color blocks clean
+COVER_PIXEL_SIZE = 512
+COVER_PALETTE_COLORS = 128
 
-    The endpoint returns a full-color PNG (~1.7 MB) although covers are flat
-    illustrations with few colors: quantizing to a 256-color palette with
-    dithering off keeps the flat look intact and shrinks the artifact several
-    fold. A re-encode that does not shrink is discarded — the original download
-    is already on disk, so the worst case is the raw bytes.
+
+def _compress_png(dest: Path) -> None:
+    """Re-encode a downloaded cover in place: 512px, 128-color palette PNG.
+
+    The endpoint returns a full-color 1024px PNG (~1.7 MB) although covers are
+    flat illustrations shown at avatar size: downscaling to 512 and quantizing
+    to a 128-color palette (dithering off, so flat color blocks stay clean)
+    shrinks the artifact an order of magnitude. A re-encode that does not
+    shrink is discarded — the original download is already on disk, so the
+    worst case is the raw bytes.
     """
     with Image.open(dest) as img:
-        palette = img.convert("RGB").quantize(colors=256, dither=Image.Dither.NONE)
+        small = img.convert("RGB").resize(
+            (COVER_PIXEL_SIZE, COVER_PIXEL_SIZE), Image.Resampling.LANCZOS)
+        palette = small.quantize(colors=COVER_PALETTE_COLORS, dither=Image.Dither.NONE)
     candidate = dest.with_name(f"{dest.stem}.tmp{dest.suffix}")
     try:
         palette.save(candidate, optimize=True)
@@ -326,7 +334,7 @@ async def render_cover(
     """
     prompt = image_prompt(settings, skill.id)
     if prompt is None:  # callers pre-filter with cover_needed; a caller may not
-        raise RuntimeError(f"{skill.id} has no persona output to render a cover from")
+        raise RuntimeError(f"{skill.id} has no cover recipe to render a cover from")
     logger.debug("%s: image prompt: %s", skill.id, prompt)
     dest = cover_path(settings, skill.id)
     dest.parent.mkdir(parents=True, exist_ok=True)
