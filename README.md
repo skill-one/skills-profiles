@@ -107,10 +107,11 @@ commit agree — or a published snapshot turns out to have lost its stamp.
 
 One image-recipe prompt (`cover`, fed by `persona.tool`) turns the Chinese tool name into an English
 subject description; `cover.png` is then rendered from that text, with the avatar framing, the unified
-premium 3D illustration style and the "no text / no person" bans appended by the generator. Invalidate
-`persona` to re-draw a cover — the invalidation cascades to the recipe, so tool name, recipe and png
-are refilled together; or run `invalidate --assets cover` to drop only the pictures, keeping every
-cached text (the next run re-renders them, no LLM work). Full detail: [DEVELOPING.md](DEVELOPING.md).
+premium 3D illustration style and the "no text / no person" bans appended by the generator. Recipe and
+picture travel as one unit: `run --prompts cover` fills the recipe (and persona, when missing) and
+renders the picture in the same invocation, and `invalidate --prompts cover` — like invalidating
+`persona`, which cascades to the recipe — drops both halves together. Full detail:
+[DEVELOPING.md](DEVELOPING.md).
 
 ## How to get the data
 

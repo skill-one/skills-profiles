@@ -101,10 +101,10 @@ English: [README.md](README.md) · 开发指南：[DEVELOPING.zh-CN.md](DEVELOPI
 丢了章，发布都算失败。
 
 配图有一个配方 prompt（`cover`，输入 `persona.tool`）把中文工具名翻译成英文画面主体描述；`cover.png`
-随后据这段文案渲染，生成器会追加头像级取景、统一的高级 3D 插画画风以及「无文字 / 无人脸」禁令。要重画配图
-就 invalidate `persona`——失效会级联到配方，工具名、配方和 png 会一起重建；或用 `invalidate --assets cover`
-只删图片、保留全部已缓存的文本（下次 run 直接据配方重画，不消耗 LLM）。细节见
-[DEVELOPING.zh-CN.md](DEVELOPING.zh-CN.md)。
+随后据这段文案渲染，生成器会追加头像级取景、统一的高级 3D 插画画风以及「无文字 / 无人脸」禁令。配方与
+配图作为一个整体进出：`run --prompts cover` 一条命令补齐配方（缺 persona 时连带补上）并渲染图片；
+`invalidate --prompts cover`（以及会级联到配方的 `invalidate --prompts persona`）则把两半一起删掉。
+细节见 [DEVELOPING.zh-CN.md](DEVELOPING.zh-CN.md)。
 
 ## 如何获取数据
 

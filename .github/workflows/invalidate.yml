@@ -1,25 +1,20 @@
 name: invalidate
 
 # Manual: drop cached outputs from the dist snapshot so a later `generate` run
-# regenerates them. Two targeting modes, mutually exclusive:
-#   prompts — fully invalidate a prompt's outputs (json + markdown + owned
-#             assets) for every skill; invalidating `persona` also cascades to
-#             its dependent `cover` recipe and picture
-#   assets  — drop only the rendered assets a prompt owns (`cover` -> cover.png),
-#             keeping every cached text: the next run re-renders the pictures
-#             from the recipes already on disk, no LLM text work
-# An optional `skills` filter restricts either mode to a few skills. Filling in
-# nothing would mean "everything", which this workflow refuses - the CLI's --all
-# confirmation is passed here, once a real target is given.
+# regenerates them. A prompt goes together with everything derived from it:
+# its DAG dependents (`persona` cascades to `cover`) and its registered assets
+# (`cover` takes its cover.png along) — so `prompts=cover` re-does the image
+# recipes and the pictures as one unit, and `prompts=persona` re-does every
+# persona plus its cover.
+# An optional `skills` filter restricts the invalidation to a few skills.
+# Filling in nothing would mean "everything", which this workflow refuses - the
+# CLI's --all confirmation is passed here, once a real target is given.
 
 on:
   workflow_dispatch:
     inputs:
       prompts:
-        description: Comma-separated prompt ids to invalidate fully (e.g. persona, tagline)
-        default: ""
-      assets:
-        description: Comma-separated prompt ids whose assets only to drop (cover = cover images)
+        description: Comma-separated prompt ids to invalidate (e.g. cover, persona, tagline)
         default: ""
       skills:
         description: Optional comma-separated skill ids to restrict the invalidation to
@@ -51,17 +46,9 @@ jobs:
       - name: Invalidate cached outputs
         run: |
           set -euo pipefail
-          prompts="${{ inputs.prompts }}"
-          assets="${{ inputs.assets }}"
-          if [ -n "$prompts" ] && [ -n "$assets" ]; then
-            echo "Fill in 'prompts' or 'assets', not both" >&2
-            exit 1
-          fi
           args=()
-          if [ -n "$prompts" ]; then
-            args+=(--prompts "$prompts")
-          elif [ -n "$assets" ]; then
-            args+=(--assets "$assets")
+          if [ -n "${{ inputs.prompts }}" ]; then
+            args+=(--prompts "${{ inputs.prompts }}")
           fi
           if [ -n "${{ inputs.skills }}" ]; then
             IFS=',' read -ra skills <<< "${{ inputs.skills }}"
@@ -70,7 +57,7 @@ jobs:
             done
           fi
           if [ ${#args[@]} -eq 0 ]; then
-            echo "Nothing to invalidate - fill in 'prompts', 'assets' or 'skills'" >&2
+            echo "Nothing to invalidate - fill in 'prompts' or 'skills'" >&2
             exit 1
           fi
           # the inputs themselves are the confirmation the CLI asks --all for

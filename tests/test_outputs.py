@@ -79,21 +79,6 @@ def test_invalidate_one_prompt_removes_only_it(settings, results):
     assert skill_id in load_hashes(settings)
 
 
-def test_invalidate_assets_only_keeps_the_output_drops_its_asset(settings, results):
-    """assets-only removal deletes just the rendered asset a prompt owns; the
-    json, its markdown and the hash record all stay, so the next run re-renders
-    the asset from the recipe already on disk."""
-    skill_id = results[0]["skill"]["id"]
-    skill_dir = skill_result_dir(settings, skill_id)
-    (skill_dir / "cover.png").write_bytes(b"png")
-
-    assert invalidate(settings, [skill_id], {"cover"}, assets_only=True) == 1
-    assert not (skill_dir / "cover.png").exists()
-    assert (skill_dir / "cover.json").exists()
-    assert (skill_dir / "md" / "cover.md").exists()
-    assert skill_id in load_hashes(settings)
-
-
 def test_invalidate_whole_skill_drops_it_from_the_hashes(settings, results):
     skill_id = results[0]["skill"]["id"]
     skill_dir = skill_result_dir(settings, skill_id)

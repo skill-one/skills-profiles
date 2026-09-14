@@ -90,8 +90,8 @@ domain   scenario   blackbox   whitebox   tagline   persona   comments   （全�
 json，仅在缺失或 schema 校验失败时重算。闭包之外完全不动；某 skill 若一个输出都不剩，会从
 `skills.jsonl` 除名。失效一个 prompt 时，它在 DAG 里的所有下游 prompt（`persona` 会级联到 `cover`）
 连同各自登记的资产一起删掉——`invalidate --prompts persona` 后再 `run`，工具名、配方和配图会一起补上。
-`invalidate --assets cover` 是更窄的一档：只删登记的资产（cover.png），保留全部已缓存的 json——
-`run` 会直接依据已有的配方重画配图，不消耗 LLM。
+配图的两半在生成侧也是一个整体：`run --prompts cover` 一条命令重生成配方（缺 persona 时连带补上）
+并渲染图片。
 
 ## 新增一个 prompt
 
@@ -167,12 +167,12 @@ tests/               # 离线 fixture + 端到端 CLI 测试
 | ---------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------ |
 | [`sync`](.github/workflows/sync.yml)           | 恢复 dist → 同步上游 → `invalidate --stale` → 发布      | `dist-YYYY-MM-DD`（同日内 force 覆盖）                 |
 | [`generate`](.github/workflows/generate.yml)   | 恢复 dist → `run --limit <输入，默认 10>` → 发布        | `dist-<base>-N`（base = 最近一次 sync 的 tag，N 递增） |
-| [`invalidate`](.github/workflows/invalidate.yml) | 恢复 dist → `invalidate --prompts/--assets [--skill …]` → 发布 | `dist-<base>-N`（与 `generate` 同一计数）        |
+| [`invalidate`](.github/workflows/invalidate.yml) | 恢复 dist → `invalidate --prompts [--skill …]` → 发布 | `dist-<base>-N`（与 `generate` 同一计数）        |
 
 ```bash
 gh workflow run generate.yml -f limit=50 -f concurrency=8   # 补完整 50 个 skill（文本 + 配图）
 gh workflow run sync.yml                                     # 刷新上游，丢弃过期档案
-gh workflow run invalidate.yml -f assets=cover               # 只删全部 cover.png，文本缓存保留
+gh workflow run invalidate.yml -f prompts=cover              # 重做全部封面（配方 + 配图）
 gh workflow run invalidate.yml -f prompts=persona            # 重做全部 persona（级联到 cover）
 ```
 

@@ -98,9 +98,8 @@ schema-invalid. Nothing outside the closure is recomputed, and a skill left with
 dropped from `skills.jsonl`. Invalidating a prompt also drops every prompt downstream of it
 (`persona` cascades to `cover`) plus each dropped prompt's registered assets — so
 `invalidate --prompts persona` followed by `run` refills the tool name, the recipe and the picture.
-`invalidate --assets cover` is the narrower hammer: it drops only the registered assets (the
-cover.png files) and keeps every cached json — `run` then re-renders the pictures from the recipes
-already on disk, no LLM work.
+The two halves of a cover are one unit in generation too: `run --prompts cover` regenerates the
+recipe (and persona, when missing) and renders the picture in the same invocation.
 
 ## Adding a prompt
 
@@ -177,12 +176,12 @@ manually-triggered workflows below share one publish lock (`concurrency: publish
 | ---------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------- |
 | [`sync`](.github/workflows/sync.yml)           | restore dist → sync upstream → `invalidate --stale` → publish | `dist-YYYY-MM-DD`, force-updated within a day         |
 | [`generate`](.github/workflows/generate.yml)   | restore dist → `run --limit <input, default 10>` → publish    | `dist-<base>-N`, base = newest sync tag, N increments |
-| [`invalidate`](.github/workflows/invalidate.yml) | restore dist → `invalidate --prompts/--assets [--skill …]` → publish | `dist-<base>-N`, same counter as `generate`    |
+| [`invalidate`](.github/workflows/invalidate.yml) | restore dist → `invalidate --prompts [--skill …]` → publish | `dist-<base>-N`, same counter as `generate`    |
 
 ```bash
 gh workflow run generate.yml -f limit=50 -f concurrency=8   # complete 50 skills (text + covers)
 gh workflow run sync.yml                                    # refresh upstream, drop stale profiles
-gh workflow run invalidate.yml -f assets=cover              # drop every cover.png; texts stay cached
+gh workflow run invalidate.yml -f prompts=cover             # re-do every cover (recipe + picture)
 gh workflow run invalidate.yml -f prompts=persona           # re-do every persona (cascades to cover)
 ```
 

@@ -155,8 +155,7 @@ def write_prompt_output(settings: Settings, skill_id: str, prompt_id: str, outpu
 
 
 def invalidate(settings: Settings, skill_ids: Iterable[str] | None = None,
-               prompt_ids: Iterable[str] | None = None,
-               assets_only: bool = False) -> int:
+               prompt_ids: Iterable[str] | None = None) -> int:
     """Delete cached prompt outputs (and the assets they own) so the next run refills them.
 
     `skill_ids` None means every skill on record; `prompt_ids` None
@@ -165,9 +164,8 @@ def invalidate(settings: Settings, skill_ids: Iterable[str] | None = None,
     persona, so a new tool name must not keep the old recipe), and the rendered
     assets the dropped prompts own (PROMPT_ASSETS) — which is how a cover gets
     re-rendered: one invalidation, then `run` refills the jsons and the picture.
-    With `assets_only` the cached outputs all stay and only their rendered
-    assets are dropped (no dependent cascade, no index change): the next `run`
-    re-renders them from the recipes already on disk.
+    A prompt and everything derived from it go together, in generation
+    (`run --prompts cover` fills recipe and picture) as in invalidation.
     A skill left without any output is dropped from the index, i.e. it
     counts as new again; the index is then rewritten so its aggregated copies
     match what is left on disk. This is the only invalidation path:
@@ -176,8 +174,8 @@ def invalidate(settings: Settings, skill_ids: Iterable[str] | None = None,
     """
     index = load_index(settings)
     targets = sorted(index) if skill_ids is None else list(dict.fromkeys(skill_ids))
-    if prompt_ids is not None and not assets_only:
-        prompt_ids = _with_dependents(settings, set(prompt_ids))  # a dropped prompt takes its dependents with it
+    if prompt_ids is not None:  # a dropped prompt takes its dependents with it
+        prompt_ids = _with_dependents(settings, set(prompt_ids))
     removed = 0
     dropped = False
     for skill_id in targets:
@@ -186,8 +184,6 @@ def invalidate(settings: Settings, skill_ids: Iterable[str] | None = None,
         for path in paths:
             for asset in PROMPT_ASSETS.get(path.stem, ()):  # explicit filenames in the skill dir
                 removed += _unlink(path.parent / asset)
-            if assets_only:  # the cached output stays; only its rendered asset went
-                continue
             _unlink(path.parent / MD_SUBDIR / f"{path.stem}.md")
             removed += _unlink(path)
         if not _stored_jsons(settings, skill_id):

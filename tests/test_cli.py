@@ -234,44 +234,52 @@ def test_invalidate_rejects_unknown_prompt(settings, monkeypatch):
     assert "unknown prompt" in result.output
 
 
-def test_invalidate_assets_only_keeps_text_and_redraws_covers(settings, monkeypatch):
-    """`invalidate --assets cover` drops just the pictures: every prompt output
-    stays cached and the next run re-renders the covers from the recipes."""
+def test_run_with_prompts_cover_fills_recipe_and_picture_together(settings, monkeypatch):
+    """`run --prompts cover` is the one command for both halves of a cover: it
+    regenerates the recipe (with its persona dependency, when missing) and
+    renders the picture, while prompts outside the selection stay untouched."""
     monkeypatch.setattr("skills_profiles.cli.Settings", lambda: settings)
     runner.invoke(app, ["run", "--limit", "2", "--dry-run"])
 
     from skills_profiles.images import cover_path
-
-    covers = [cover_path(settings, sid) for sid in
-              ("owner-a/repo-a/alpha", "owner-b/repo-b/beta")]
-    assert all(c.exists() for c in covers)
-
-    result = runner.invoke(app, ["invalidate", "--assets", "cover"])
-    assert result.exit_code == 0, result.output
-    assert not any(c.exists() for c in covers)
     from skills_profiles.outputs import prompt_result_path
 
-    assert prompt_result_path(settings, "owner-a/repo-a/alpha", "persona").exists()
-    assert prompt_result_path(settings, "owner-a/repo-a/alpha", "cover").exists()
+    skill_id = "owner-a/repo-a/alpha"
+    prompt_result_path(settings, skill_id, "cover").unlink()
+    cover_path(settings, skill_id).unlink()
 
-    result = runner.invoke(app, ["run", "--limit", "2", "--dry-run"])
+    result = runner.invoke(app, ["run", "--limit", "1", "--prompts", "cover", "--dry-run"])
     assert result.exit_code == 0, result.output
-    assert "(cached)" in result.output  # every prompt output was reused
-    assert all(c.exists() for c in covers)  # and the covers were redrawn
+
+    assert prompt_result_path(settings, skill_id, "cover").exists()  # recipe refilled
+    assert cover_path(settings, skill_id).exists()  # picture rendered in the same run
+    assert prompt_result_path(settings, skill_id, "tagline").exists()  # untouched
+    # the persona was still cached: reused, not regenerated
+    assert f"{skill_id}: persona" not in result.output
 
 
-def test_invalidate_rejects_assets_and_prompts_together(settings, monkeypatch):
+def test_invalidate_prompt_cover_drops_recipe_and_picture(settings, monkeypatch):
+    """One invalidation drops both halves of a cover: the next run refills them
+    together, and no picture outlives its recipe."""
     monkeypatch.setattr("skills_profiles.cli.Settings", lambda: settings)
-    result = runner.invoke(app, ["invalidate", "--prompts", "persona", "--assets", "cover"])
-    assert result.exit_code != 0
-    assert "not both" in result.output
+    runner.invoke(app, ["run", "--limit", "2", "--dry-run"])
 
+    from skills_profiles.images import cover_path
+    from skills_profiles.outputs import prompt_result_path
 
-def test_invalidate_rejects_assets_that_own_nothing(settings, monkeypatch):
-    monkeypatch.setattr("skills_profiles.cli.Settings", lambda: settings)
-    result = runner.invoke(app, ["invalidate", "--assets", "tagline"])
-    assert result.exit_code != 0
-    assert "own(s) no rendered assets" in result.output
+    result = runner.invoke(app, ["invalidate", "--prompts", "cover"])
+    assert result.exit_code == 0, result.output
+
+    for skill_id in ("owner-a/repo-a/alpha", "owner-b/repo-b/beta"):
+        assert not prompt_result_path(settings, skill_id, "cover").exists()
+        assert not cover_path(settings, skill_id).exists()
+        assert prompt_result_path(settings, skill_id, "persona").exists()  # kept
+
+    result = runner.invoke(app, ["run", "--limit", "2", "--prompts", "cover", "--dry-run"])
+    assert result.exit_code == 0, result.output
+    for skill_id in ("owner-a/repo-a/alpha", "owner-b/repo-b/beta"):
+        assert prompt_result_path(settings, skill_id, "cover").exists()
+        assert cover_path(settings, skill_id).exists()
 
 
 class FailingForAlpha:
