@@ -50,9 +50,9 @@ COVER_PROMPT_ID = "cover"  # its `text` field supplies the picture's subject
 COVER_FILENAME = "cover.png"  # the rendered cover, next to the prompt jsons
 # The one shared look every cover gets, kept English: diffusion training
 # captions are comma-separated English short phrases.
-COVER_STYLE = ("premium flat illustration style, rounded, refined, friendly, ",
-"avatar composition, subject prominent, well-designed"
-)
+COVER_STYLE = ("premium flat illustration style, rounded, refined, friendly, "
+               "well-designed, avatar composition, subject prominent, "
+               "plain background")
 # What no cover may contain: letters render as garbage, and anything alive or
 # busy would turn the tool avatar into an illustration of a scene. The endpoint
 # takes no negative_prompt field, so the bans are restated as positive "no ..."
