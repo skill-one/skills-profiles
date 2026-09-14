@@ -164,8 +164,10 @@ runs:
         cutoff_date=$(date -u -d "${RETENTION} ago" +%Y-%m-%d)
 
         # oldest commit whose author date is within the window; HEAD when none is
+        # `|| true`: awk exits after the first match, so git log can die on a
+        # later write (EPIPE -> SIGPIPE -> 141) once awk's read end is gone
         keep_from=$(git log --reverse --format='%H %at' \
-          | awk -v c="$cutoff_epoch" '$2 >= c { print $1; exit }')
+          | awk -v c="$cutoff_epoch" '$2 >= c { print $1; exit }' || true)
         [ -z "$keep_from" ] && keep_from=$(git rev-parse HEAD)
 
         root=$(git rev-list --max-parents=0 HEAD)
