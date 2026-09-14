@@ -1,7 +1,0 @@
-# okx-dex-market (`okx/onchainos-skills/okx-dex-market`)
-
-## domain
-
-**domain**: 💰 支付金融
-
-**reason**: 专注链上 DEX 行情与交易数据: 价格、K线、持币分布、聪明钱信号、钱包盈亏等交易类分析。

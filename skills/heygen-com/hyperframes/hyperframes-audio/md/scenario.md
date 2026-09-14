@@ -1,5 +1,0 @@
-# hyperframes-audio (`heygen-com/hyperframes/hyperframes-audio`)
-
-## scenario
-
-配音一响,背景乐总盖住人声;把音乐调小,它又全程蔫掉 🎵 我只挖人声占的那几个频段让音乐"退后"——说话时退、停顿时回,音乐依然有劲。淡入淡出、交叉过渡、音量自动化也一并搞定。

@@ -1,7 +1,0 @@
-# planning-with-files (`othmanadi/planning-with-files/planning-with-files`)
-
-## domain
-
-**domain**: 🗂️ 办公效率
-
-**reason**: 核心是把多步骤任务的计划、进度、发现落盘成 markdown 文件持续管理，本质是任务与项目管理。

@@ -1,5 +1,0 @@
-# remotion-maps (`remotion-dev/skills/remotion-maps`)
-
-## cover
-
-A map animator in a hoodie and headphones, leaning at his desk, typing on a keyboard while pointing at a monitor showing a glowing flight path curving from an earth globe down to a street corner map

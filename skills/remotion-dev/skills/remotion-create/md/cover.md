@@ -1,5 +1,0 @@
-# remotion-create (`remotion-dev/skills/remotion-create`)
-
-## cover
-
-A young creative developer in a hoodie, sitting at a desk before a large monitor showing abstract animated frames with motion trails, one hand on keyboard, storyboard sketch cards propped beside the screen, coffee mug, headphones around neck

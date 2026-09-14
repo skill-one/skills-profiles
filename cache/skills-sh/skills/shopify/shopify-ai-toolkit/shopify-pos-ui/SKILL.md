@@ -4,7 +4,7 @@ description: "Build retail point-of-sale applications using Shopify's POS UI com
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.13.0"
+  version: "1.14.1"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -246,6 +246,17 @@ Renders a single interactive button component as a menu item in the post-return 
 
 - Use the exact target name (in quotes) when registering your extension with `shopify.extend()`
 - Each target receives specific API interfaces and component access
+
+## App backend
+
+When the extension makes authenticated calls to the app's own backend (using session tokens from the Session API, `shopify.session.getSessionToken()`), use Shopify's official library for the server language — these handle session token verification:
+
+- Node.js: `@shopify/shopify-app-react-router` (recommended), `@shopify/shopify-app-remix`, or `@shopify/shopify-app-express`
+- Ruby: `shopify_app` for Rails
+- PHP (Laravel or any framework): `shopify-app-php`
+- Python (Django or any framework): `shopify-app-python`
+
+The full list of official libraries and app templates lives at [shopify.dev/docs/api/libraries-and-templates](https://shopify.dev/docs/api/libraries-and-templates).
 
 ## Imports
 

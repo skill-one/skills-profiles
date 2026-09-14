@@ -1,7 +1,0 @@
-# remotion-create (`remotion-dev/skills/remotion-create`)
-
-## tagline
-
-- 代码为笔，让创意一帧帧动起来
-- 从想法到成片，只需一次对话
-- 程序化视频，精准掌控每一帧

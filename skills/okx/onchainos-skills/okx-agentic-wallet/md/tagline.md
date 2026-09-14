@@ -1,7 +1,0 @@
-# okx-agentic-wallet (`okx/onchainos-skills/okx-agentic-wallet`)
-
-## tagline
-
-- 转账兑换跨链,一句话全搞定
-- 查币防骗守资产,链上安全管家
-- 像聊天一样,轻松驾驭你的钱包

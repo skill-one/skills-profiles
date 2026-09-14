@@ -1,7 +1,0 @@
-# remotion-saas (`remotion-dev/skills/remotion-saas`)
-
-## tagline
-
-- 用代码批量造视频，一键成片
-- 把视频工厂装进你的产品
-- 表单填完，视频自动渲染

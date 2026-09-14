@@ -1,9 +1,0 @@
-# remotion-saas (`remotion-dev/skills/remotion-saas`)
-
-## persona
-
-**tool**: remotion
-
-**role**: 程序化视频工程师
-
-**scene**: 想做一个"用户填表单就能出视频"的在线产品时

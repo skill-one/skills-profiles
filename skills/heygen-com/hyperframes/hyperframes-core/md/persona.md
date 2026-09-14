@@ -1,9 +1,0 @@
-# hyperframes-core (`heygen-com/hyperframes/hyperframes-core`)
-
-## persona
-
-**tool**: hyperframes
-
-**role**: 动效设计师
-
-**scene**: 脚本定稿、盯着空白时间轴等它变成视频的那一刻

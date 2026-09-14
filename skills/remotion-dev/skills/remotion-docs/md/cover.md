@@ -1,5 +1,0 @@
-# remotion-docs (`remotion-dev/skills/remotion-docs`)
-
-## cover
-
-A developer in a hoodie leaning over a desk, one hand on a laptop keyboard, the other flipping through an open reference manual, eyes darting between glowing monitors and the pages, desk lamp, coffee mug

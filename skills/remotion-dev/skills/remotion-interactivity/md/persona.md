@@ -1,9 +1,0 @@
-# remotion-interactivity (`remotion-dev/skills/remotion-interactivity`)
-
-## persona
-
-**tool**: remotion
-
-**role**: 时间线装配师
-
-**scene**: 动画代码刚写完, 打开 Remotion Studio 发现参数一片灰、拖不动的时候

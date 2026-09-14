@@ -1,7 +1,0 @@
-# okx-agentic-wallet (`okx/onchainos-skills/okx-agentic-wallet`)
-
-## domain
-
-**domain**: 💰 支付金融
-
-**reason**: 链上钱包技能: 转账、兑换 (swap)、跨链、余额查询与交易安全检查, 属交易与金融理财类

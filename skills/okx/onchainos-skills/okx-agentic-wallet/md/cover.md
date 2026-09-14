@@ -1,5 +1,0 @@
-# okx-agentic-wallet (`okx/onchainos-skills/okx-agentic-wallet`)
-
-## cover
-
-A sharp-eyed wallet concierge in a tailored vest, tapping glowing chains of light linking floating coin tokens, sending one coin across a translucent blockchain bridge, standing in a dim sleek trading lounge with holographic balance panels and coin charts

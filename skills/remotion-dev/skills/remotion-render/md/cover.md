@@ -1,5 +1,0 @@
-# remotion-render (`remotion-dev/skills/remotion-render`)
-
-## cover
-
-A young developer in a hoodie with headphones around his neck, leaning over his desk pressing the enter key, eyes fixed on a glowing loading bar filling a large monitor, video preview on a second screen, coffee cup nearby

@@ -1,9 +1,0 @@
-# last30days (`mvanhorn/last30days-skill/last30days`)
-
-## persona
-
-**tool**: last30days
-
-**role**: 舆情研究员
-
-**scene**: 你想知道一个话题最近30天大家在真实聊什么、却刷不过来十个平台时

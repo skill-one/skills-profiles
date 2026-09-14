@@ -1,7 +1,0 @@
-# remotion-docs (`remotion-dev/skills/remotion-docs`)
-
-## domain
-
-**domain**: 💻 开发编程
-
-**reason**: Remotion 是用代码做视频的 React 框架, 本技能为其文档检索, 服务于框架/API 集成开发

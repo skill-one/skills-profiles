@@ -1,5 +1,0 @@
-# okx-dex-market (`okx/onchainos-skills/okx-dex-market`)
-
-## cover
-
-A young on-chain detective in a dark hoodie leaning toward glowing monitors, magnifying glass in hand over a spiking green candlestick chart, glowing wallet network nodes beside it, cluttered desk with coffee mug, dim late-night room

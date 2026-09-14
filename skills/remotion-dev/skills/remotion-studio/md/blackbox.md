@@ -1,9 +1,0 @@
-# remotion-studio (`remotion-dev/skills/remotion-studio`)
-
-## blackbox
-
-**function**: 帮你在浏览器里打开一个「视频预览页」——针对用代码写的视频项目 (Remotion), 你可以在页面上播放、暂停、拖动进度条查看视频效果。
-
-- input: 一个用代码写的视频项目文件夹路径, output: 一个网址 (如 http://localhost:3000), 浏览器打开后就能看到视频画面, 可以播放、暂停、拖时间轴
-- input: 「帮我打开预览」+ 一个之前已经开过预览的项目, output: 直接拿到那个已经在运行的预览网址, 不会重复开新页面
-- input: 「用 3456 端口打开预览」+ 项目文件夹, output: 预览页固定开在 http://localhost:3456 这个网址上

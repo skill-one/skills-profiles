@@ -1,5 +1,0 @@
-# general-video (`heygen-com/hyperframes/general-video`)
-
-## cover
-
-A motion-graphics director in a hoodie with headphones around her neck, sorting storyboard cards, footage stills and script pages into sequence at a cluttered desk, hands typing on a keyboard beneath monitors showing a video timeline, a clapperboard nearby

@@ -1,7 +1,0 @@
-# last30days (`mvanhorn/last30days-skill/last30days`)
-
-## tagline
-
-- 全网热议，30天一网打尽
-- 听真实用户说，不猜不编
-- 条条有出处，结论站得住

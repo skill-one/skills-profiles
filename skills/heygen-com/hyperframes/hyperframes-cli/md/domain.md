@@ -1,7 +1,0 @@
-# hyperframes-cli (`heygen-com/hyperframes/hyperframes-cli`)
-
-## domain
-
-**domain**: 🎨 设计多媒体
-
-**reason**:  HyperFrames CLI 是动效视频制作工具: 从编排动画到预览、质检、渲染成片 (含云端渲染), 属于音视频制作。

@@ -1,7 +1,0 @@
-# remotion-docs (`remotion-dev/skills/remotion-docs`)
-
-## tagline
-
-- Remotion 文档, 一搜即达
-- 用代码做视频, 有我少踩坑
-- 实时读最新文档, 写码不靠记忆

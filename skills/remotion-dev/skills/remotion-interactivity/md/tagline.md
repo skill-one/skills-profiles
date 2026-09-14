@@ -1,7 +1,0 @@
-# remotion-interactivity (`remotion-dev/skills/remotion-interactivity`)
-
-## tagline
-
-- 代码写规范,视频随点改
-- 让每一帧,都能拖拽编辑
-- 告别灰参数,创作全互动

@@ -1,9 +1,0 @@
-# archify (`tt-a1i/archify/archify`)
-
-## persona
-
-**tool**: archify
-
-**role**: 架构图师
-
-**scene**: 方案要讲给团队听、纯文字说不清系统怎么跑时

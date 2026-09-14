@@ -1,7 +1,0 @@
-# archify (`tt-a1i/archify/archify`)
-
-## domain
-
-**domain**: 💻 开发编程
-
-**reason**: 把架构、工作流、时序、数据流、状态机画成可交互的 HTML 图, 是面向开发者的系统设计与技术沟通工具

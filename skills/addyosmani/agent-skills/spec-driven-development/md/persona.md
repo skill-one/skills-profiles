@@ -1,9 +1,0 @@
-# spec-driven-development (`addyosmani/agent-skills/spec-driven-development`)
-
-## persona
-
-**tool**: markdown
-
-**role**: 需求分析师
-
-**scene**: 项目要开工、需求还只是一句模糊想法时

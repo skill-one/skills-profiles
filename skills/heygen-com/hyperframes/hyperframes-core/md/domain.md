@@ -1,7 +1,0 @@
-# hyperframes-core (`heygen-com/hyperframes/hyperframes-core`)
-
-## domain
-
-**domain**: 🎨 设计多媒体
-
-**reason**: 从 HTML 合成渲染视频, 属于视频剪辑与音视频制作范畴。

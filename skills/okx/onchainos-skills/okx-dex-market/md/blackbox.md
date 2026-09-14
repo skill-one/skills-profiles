@@ -1,9 +1,0 @@
-# okx-dex-market (`okx/onchainos-skills/okx-dex-market`)
-
-## blackbox
-
-**function**: 链上行情雷达：帮你查币、看价格K线、盯巨鲸和聪明钱动向、扫 pump.fun 新盘和加密新闻（只读查询，不帮你买卖）。
-
-- input: "Solana 上现在最火的新 meme 币有哪些？", output: 一份实时榜单：代币名、合约地址、当前价格、市值、流动性、涨跌幅
-- input: 一个代币的合约地址 + "这币安全吗", output: 风险档案：前十大持仓占比、持仓集中度、关联钱包抱团情况，帮你判断是否是庄控盘/貔貅盘
-- input: "过去 24 小时有哪些巨鲸和大 KOL 在买什么币？", output: 交易动向清单：谁买了什么币、买了多少、他的历史胜率和盈亏记录

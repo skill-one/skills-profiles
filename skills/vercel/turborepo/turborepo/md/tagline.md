@@ -1,7 +1,0 @@
-# turborepo (`vercel/turborepo/turborepo`)
-
-## tagline
-
-- 代码没变, 秒出构建
-- 只跑改动处, CI 快人一步
-- 依赖自动排, 任务全并行
