@@ -56,10 +56,12 @@ COVER_STYLE = ("premium flat illustration style, rounded, refined, friendly, ",
 # What no cover may contain: letters render as garbage, and anything alive or
 # busy would turn the tool avatar into an illustration of a scene. The endpoint
 # takes no negative_prompt field, so the bans are restated as positive "no ..."
-# phrases and ride in the prompt itself.
+# phrases and ride in the prompt itself ("duplicates, second tool" — diffusion
+# models love the crossed-tools icon and will draw two unless told not to).
 NEGATIVE_PROMPT = ("no text, no letters, no numbers, no logo, no watermark, "
-                   "no person, no face, no hands, no multiple objects, "
-                   "no complex scene, not photorealistic")
+                   "no person, no face, no hands, no duplicates, no second tool, "
+                   "no multiple objects, no busy background, no complex scene, "
+                   "not photorealistic")
 # a stalled endpoint must become a timeout, not a hung CI job (a slow generation
 # takes ~20s; the timeout leaves room for the retry backoff on top)
 REQUEST_TIMEOUT_SECONDS = 300
