@@ -1,5 +1,0 @@
-# neon (`neondatabase/agent-skills/neon`)
-
-## cover
-
-A young cloud backend engineer in a dark hoodie, headphones around his neck, at a bare midnight desk, typing into a glowing command-line window, a database cylinder icon lighting up on the laptop screen, steaming coffee mug, focused expression

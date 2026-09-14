@@ -1,5 +1,0 @@
-# vue-best-practices (`vuejs-ai/skills/vue-best-practices`)
-
-## cover
-
-A tired developer in a gray hoodie and glasses, headphones around his neck, hesitating with red scissors above a long glowing scroll of colorful lines spilling from the monitor to the floor, whiteboard of small rectangles behind, coffee cups

@@ -1,5 +1,0 @@
-# frontend-ui-engineering (`addyosmani/agent-skills/frontend-ui-engineering`)
-
-## cover
-
-A bespectacled developer in a hoodie, leaning toward a monitor, hovering a cursor outlining a highlighted webpage element, smartphone propped beside the keyboard showing the same layout, coffee mug and notebook on the desk

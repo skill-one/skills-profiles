@@ -1,5 +1,0 @@
-# gh-cli (`github/awesome-copilot/gh-cli`)
-
-## cover
-
-A bearded developer in a dark hoodie and glasses, hunched at a glowing terminal in a dim room, hands on a mechanical keyboard, green progress bar and checkmark on screen, coffee mug beside, headphones around neck, night outside

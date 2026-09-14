@@ -1,5 +1,0 @@
-# marketing-mindset (`axelfreeman/marketing-mindset/marketing-mindset`)
-
-## cover
-
-A lone marketer in a slightly rumpled shirt leaning over his laptop late at night, clicking through an ad campaign dashboard, a shrink-wrapped finished product box sitting untouched beside him, phone face-down and silent, dim empty office

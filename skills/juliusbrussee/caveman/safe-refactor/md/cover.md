@@ -1,5 +1,0 @@
-# safe-refactor (`juliusbrussee/caveman/safe-refactor`)
-
-## cover
-
-A tense programmer in a dark hoodie and glasses, finger hovering above the laptop keyboard, hunched over a cluttered desk, screen glowing with a green checkmark beside blurred tangled lines, twisted cables and cold coffee cups around him

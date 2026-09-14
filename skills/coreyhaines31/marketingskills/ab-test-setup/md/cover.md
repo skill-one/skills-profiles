@@ -1,5 +1,0 @@
-# ab-test-setup (`coreyhaines31/marketingskills/ab-test-setup`)
-
-## cover
-
-A hoodie-clad product analyst at a dual-monitor desk, finger hovering over a launch button, one screen comparing two landing page versions side by side, the other showing conversion funnel charts, headphones around neck, pensive expression

@@ -1,5 +1,0 @@
-# langchain-rag (`langchain-ai/langchain-skills/langchain-rag`)
-
-## cover
-
-A bespectacled knowledge engineer in a cardigan, stacking PDF printouts beside a laptop, connecting a glowing chain of links from the papers to the screen, chat bubbles floating above the keyboard, open browser windows behind

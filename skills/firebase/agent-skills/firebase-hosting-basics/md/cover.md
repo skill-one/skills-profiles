@@ -1,5 +1,0 @@
-# firebase-hosting-basics (`firebase/agent-skills/firebase-hosting-basics`)
-
-## cover
-
-Focused web developer in a dark hoodie, headphones around his neck, leaning over a laptop at a tidy desk, pressing enter to deploy, pointing at a glowing browser window on a second monitor, coffee mug and sticky notes nearby

@@ -1,5 +1,0 @@
-# insforge-integrations (`insforge/insforge-skills/insforge-integrations`)
-
-## cover
-
-A bearded engineer in a gray hoodie and headphones sits at a dim night desk, typing on a laptop linked by cable to a glowing database model beside an unlocked padlock, sticky notes and energy cans scattered around

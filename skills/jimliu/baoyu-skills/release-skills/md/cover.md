@@ -1,5 +1,0 @@
-# release-skills (`jimliu/baoyu-skills/release-skills`)
-
-## cover
-
-A software release engineer in a hoodie, hunched at a cluttered desk at night, typing git commands on a laptop terminal, luggage tag dangling from the laptop, sticky notes and printed documents scattered around, empty coffee cups, rubbing forehead wearily

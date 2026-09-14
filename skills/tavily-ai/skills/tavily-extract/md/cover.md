@@ -1,5 +1,0 @@
-# tavily-extract (`tavily-ai/skills/tavily-extract`)
-
-## cover
-
-A bespectacled web content extractor in rolled-up sleeves typing at a keyboard, dual monitors glowing with tidy page layouts, crumpled ad banners and pop-up cards swept into a wastebasket, floating link cards drifting toward the desk

@@ -1,5 +1,0 @@
-# higgsfield-websites (`higgsfield-ai/skills/higgsfield-websites`)
-
-## cover
-
-A website builder in a hoodie and glasses, headphones around his neck, leaning toward a glowing monitor where a webpage wireframe becomes a finished live page, one hand on the laptop, coffee cup and paper sketches on the desk

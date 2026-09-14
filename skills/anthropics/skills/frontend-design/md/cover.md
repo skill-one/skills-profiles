@@ -1,5 +1,0 @@
-# frontend-design (`anthropics/skills/frontend-design`)
-
-## cover
-
-A bespectacled interface designer with rolled-up sleeves hovers one finger over a keyboard, holding a color swatch fan against a monitor showing a page layout, crossed-out drafts pinned on the corkboard behind, desk lamp glowing, late-night studio desk

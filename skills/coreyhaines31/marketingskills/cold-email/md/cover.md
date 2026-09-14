@@ -1,5 +1,0 @@
-# cold-email (`coreyhaines31/marketingskills/cold-email`)
-
-## cover
-
-A lone salesperson in a rumpled blazer sitting at a dim late-night desk, hand hovering over a laptop showing an unsent email draft, other hand rubbing his tired eyes, crumpled sticky notes and an hourglass beside the keyboard

@@ -1,5 +1,0 @@
-# golang-documentation (`samber/cc-skills-golang/golang-documentation`)
-
-## cover
-
-A tired bearded programmer in a plaid shirt at a late-night desk, typing documentation notes beside his laptop, second screen showing a blank document page, mechanical keyboard, coffee mug, handwritten notepad and pen, headphones around neck

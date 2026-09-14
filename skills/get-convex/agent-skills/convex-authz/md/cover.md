@@ -1,5 +1,0 @@
-# convex-authz (`get-convex/agent-skills/convex-authz`)
-
-## cover
-
-A hoodie-clad security auditor hunched alone at a desk on launch eve, one hand on the keyboard scanning dense lines of code across dual monitors, empty coffee cups beside him, a server rack glowing in the dim office corner

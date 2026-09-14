@@ -1,5 +1,0 @@
-# git-guardrails-claude-code (`mattpocock/skills/git-guardrails-claude-code`)
-
-## cover
-
-A stern checkpoint inspector in a reflective safety vest stands in a dim server room before a glowing keyboard, holding a clipboard, raising one hand to stop a robotic fingertip hovering above a large enter key

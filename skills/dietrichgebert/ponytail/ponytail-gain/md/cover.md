@@ -1,5 +1,0 @@
-# ponytail-gain (`dietrichgebert/ponytail/ponytail-gain`)
-
-## cover
-
-A scorekeeper in rolled-up sleeves holding up a tall scoreboard card printed with rows of solid block bars beside dotted empty tracks, standing at a dim workstation with glowing terminals, tilting the board forward to display it

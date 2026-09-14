@@ -1,5 +1,0 @@
-# tailwind-design-system (`wshobson/agents/tailwind-design-system`)
-
-## cover
-
-A bespectacled designer in a dark hoodie at a dual-monitor desk, pinning color chips and component mockup cards into a tidy grid on the wall, aligning a clear ruler over them, screens glowing with mismatched page layouts

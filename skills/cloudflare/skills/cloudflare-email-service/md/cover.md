@@ -1,5 +1,0 @@
-# cloudflare-email-service (`cloudflare/skills/cloudflare-email-service`)
-
-## cover
-
-A tired developer in a hoodie and headphones, typing in a terminal at a dim desk, monitors showing envelope flow diagrams, a sealed envelope untouched on the keyboard, tangled cables and arrow flowcharts pinned on the wall behind

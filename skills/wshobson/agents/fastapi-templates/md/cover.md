@@ -1,5 +1,0 @@
-# fastapi-templates (`wshobson/agents/fastapi-templates`)
-
-## cover
-
-A backend engineer in a dark hoodie with headphones around his neck, typing on a laptop at a cluttered desk, empty project folder open on screen beside a terminal window, coffee mug nearby, server rack glowing behind him

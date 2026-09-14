@@ -1,5 +1,0 @@
-# copy-editing (`coreyhaines31/marketingskills/copy-editing`)
-
-## cover
-
-A bespectacled copy editor in a rolled-sleeve shirt leans over a manuscript page at a desk, red pen crossing out a wordy sentence, marked-up drafts and sticky notes around a desk lamp, coffee cup at his elbow, frowning mid-read

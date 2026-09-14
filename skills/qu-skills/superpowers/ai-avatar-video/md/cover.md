@@ -1,5 +1,0 @@
-# ai-avatar-video (`qu-skills/superpowers/ai-avatar-video`)
-
-## cover
-
-A young video director in a black hoodie, headphones around neck, typing on a laptop at a cluttered desk, monitor beside her displaying a talking digital avatar, ring light and camera gear filling her small home studio

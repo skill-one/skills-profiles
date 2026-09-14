@@ -1,5 +1,0 @@
-# baoyu-post-to-x (`jimliu/baoyu-skills/baoyu-post-to-x`)
-
-## cover
-
-A freelancer in a hoodie at a desk late at night, finger hovering over a bright post button inside a browser window, other hand on the mouse, eyes fixed on the screen, coffee mug beside the keyboard

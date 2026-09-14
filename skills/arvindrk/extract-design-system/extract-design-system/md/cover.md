@@ -1,5 +1,0 @@
-# extract-design-system (`arvindrk/extract-design-system/extract-design-system`)
-
-## cover
-
-A designer in rolled-up sleeves and headphones sits at a dual-monitor desk in a home studio, typing while one screen shows a website and the other a terminal, color swatch cards scattered on the desk

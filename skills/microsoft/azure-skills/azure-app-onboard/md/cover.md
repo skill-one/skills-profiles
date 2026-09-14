@@ -1,5 +1,0 @@
-# azure-app-onboard (`microsoft/azure-skills/azure-app-onboard`)
-
-## cover
-
-A weathered construction foreman in yellow hard hat and reflective vest, typing on a laptop with a glowing dark command-line screen, blueprints of server racks under one arm, standing amid cardboard moving boxes and cloud-shaped scaffolding poles

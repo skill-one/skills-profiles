@@ -1,5 +1,0 @@
-# caveman-discover (`juliusbrussee/caveman/caveman-discover`)
-
-## cover
-
-A worker in canvas vest and cap hunched over an open paper bill, one huge bucket beside him overflowing with identical parcels, pressing blank paper tags onto small sorting bins, tagging gun in hand

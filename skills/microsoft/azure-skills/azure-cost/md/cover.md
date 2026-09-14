@@ -1,5 +1,0 @@
-# azure-cost (`microsoft/azure-skills/azure-cost`)
-
-## cover
-
-A weary cloud cost auditor in rolled-up shirt sleeves and a lanyard, pointing at a steeply rising line chart on his monitor, calculator and scattered paper invoices on the desk, coffee cup nearby, late-night office glow

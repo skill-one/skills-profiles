@@ -1,5 +1,0 @@
-# tavily-best-practices (`tavily-ai/skills/tavily-best-practices`)
-
-## cover
-
-A cable technician in a work vest and headset, kneeling beside a desk, plugging a glowing cable from a Wi-Fi router into a desktop AI assistant robot with a blank screen, a holographic globe rising from the laptop

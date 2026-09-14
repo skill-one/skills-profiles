@@ -1,5 +1,0 @@
-# convex-verify (`get-convex/agent-skills/convex-verify`)
-
-## cover
-
-A focused engineer in a dark hoodie, headphones around neck, at a late-night desk, testing freshly written code on dual monitors, rows of green checkmarks, several avatar windows with one denied in red, cursor hovering near a launch button

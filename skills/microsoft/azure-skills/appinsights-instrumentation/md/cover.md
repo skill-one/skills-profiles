@@ -1,5 +1,0 @@
-# appinsights-instrumentation (`microsoft/azure-skills/appinsights-instrumentation`)
-
-## cover
-
-A focused software engineer in a hoodie with headphones around his neck, hunched at a late-night desk, typing instrumentation code, dual monitors showing cloud server dashboards with error spikes and latency charts, coffee mug beside the keyboard

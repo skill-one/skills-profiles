@@ -1,5 +1,0 @@
-# azure-cloud-migrate (`microsoft/azure-skills/azure-cloud-migrate`)
-
-## cover
-
-A focused cloud migration engineer in a hoodie and headphones, typing on a laptop beside glowing monitors, glancing at a whiteboard sketch of clouds and arrows, surrounded by tangled cables and sticky notes in a cluttered office

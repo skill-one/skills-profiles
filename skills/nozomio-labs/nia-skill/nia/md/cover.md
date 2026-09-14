@@ -1,5 +1,0 @@
-# nia (`nozomio-labs/nia-skill/nia`)
-
-## cover
-
-A bespectacled librarian in a vest with rolled sleeves stands in a towering archive of shelves packed with scrolls, folders and paper slips, holding a glowing handheld lantern, spotlighting one tiny slip among thousands

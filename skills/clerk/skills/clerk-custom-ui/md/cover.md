@@ -1,5 +1,0 @@
-# clerk-custom-ui (`clerk/skills/clerk-custom-ui`)
-
-## cover
-
-A young designer in a rolled-sleeve shirt, holding a color swatch card beside his monitor, matching a sign-in form on screen to a pinned wireframe sketch, hand on mouse over a rounded button, tidy studio desk with sticky notes

@@ -1,5 +1,0 @@
-# explore-run (`lllllllama/rigorpilot-skills/explore-run`)
-
-## cover
-
-A bespectacled researcher in a hoodie sitting at a cluttered desk, arranging a grid of small paper cards with tiny line charts, marking one card with a pen, dual monitors showing short progress bars, humming server racks behind

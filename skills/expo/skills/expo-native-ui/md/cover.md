@@ -1,5 +1,0 @@
-# expo-native-ui (`expo/skills/expo-native-ui`)
-
-## cover
-
-A meticulous young designer in a dark hoodie hunched over a wooden desk at night, polishing a smartphone screen with a soft cloth, laptop beside him glowing with wireframe boxes, paper mockups and sketchpads scattered around

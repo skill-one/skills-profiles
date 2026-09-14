@@ -1,5 +1,0 @@
-# azure-kubernetes (`microsoft/azure-skills/azure-kubernetes`)
-
-## cover
-
-Bearded cloud engineer in a gray hoodie, sitting at a desk before two glowing monitors in a dim server room, one hand hovering over the keyboard, the other rubbing his forehead, network diagram blueprint and coffee mug beside him

@@ -1,5 +1,0 @@
-# solidity-security (`wshobson/agents/solidity-security`)
-
-## cover
-
-A focused solidity security auditor in a dark hoodie and glasses, leaning over a dual-monitor desk, magnifying glass hovering above glowing blockchain code, other hand poised over a hardware wallet, finger hesitating before a deploy button, late-night workspace

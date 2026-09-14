@@ -1,5 +1,0 @@
-# prisma-compute (`prisma/skills/prisma-compute`)
-
-## cover
-
-A bearded developer in a hoodie, headphones around his neck, sitting at a late-night desk, pressing a key on his laptop, frowning at a terminal window full of red warning lines, dim second monitor, coffee mug nearby

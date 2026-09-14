@@ -1,5 +1,0 @@
-# respond-to-pr-comments-in-blocklist (`warpdotdev/common-skills/respond-to-pr-comments-in-blocklist`)
-
-## cover
-
-Weary developer in a rumpled hoodie, headphones around neck, typing in a glowing terminal on a laptop, desk cluttered with empty coffee cups, monitor stacked with rows of blank comment bubbles, rubbing one eye at night

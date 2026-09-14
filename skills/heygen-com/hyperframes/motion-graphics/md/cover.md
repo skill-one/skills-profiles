@@ -1,5 +1,0 @@
-# motion-graphics (`heygen-com/hyperframes/motion-graphics`)
-
-## cover
-
-A motion graphics designer with headphones around her neck, drawing motion paths with a stylus on a glowing screen, a rising bar chart and flying shapes animating across it, storyboard sketches taped on the wall behind

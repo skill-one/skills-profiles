@@ -1,5 +1,0 @@
-# flutter-implement-json-serialization (`flutter/agent-plugins/flutter-implement-json-serialization`)
-
-## cover
-
-Bespectacled programmer in a gray hoodie, headphones around his neck, frowning at a monitor glowing with dense cascading code, holding a marker to sketch class boxes and arrows on a whiteboard, alone in a dim home office

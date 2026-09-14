@@ -1,5 +1,0 @@
-# write-product-spec (`warpdotdev/common-skills/write-product-spec`)
-
-## cover
-
-A bespectacled product manager in a smart blazer, standing alone in an empty meeting room beside a whiteboard covered in tangled arrows and blank sticky notes, marking up a printed document on the table, open laptop nearby

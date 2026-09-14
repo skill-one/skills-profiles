@@ -1,5 +1,0 @@
-# insforge (`insforge/insforge-skills/insforge`)
-
-## cover
-
-A focused developer in a gray hoodie, headphones around his neck, typing late at night at a cluttered desk, wiring a login form on one monitor to cloud database tables on another, sticky notes and coffee mug nearby

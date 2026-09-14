@@ -1,5 +1,0 @@
-# playwright-stealth-verify (`liarjsdev/liarjs-skills/playwright-stealth-verify`)
-
-## cover
-
-A focused inspector in a dark hoodie, comparing two identical browser windows side by side on large monitors, holding an open laptop with a glowing screen, magnifying glass on the desk, alone in a dim office before launch

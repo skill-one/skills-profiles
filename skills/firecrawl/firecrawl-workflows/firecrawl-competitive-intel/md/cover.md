@@ -1,5 +1,0 @@
-# firecrawl-competitive-intel (`firecrawl/firecrawl-workflows/firecrawl-competitive-intel`)
-
-## cover
-
-A focused analyst in glasses and a dark blazer, typing on a laptop at a desk with multiple monitors glowing with webpage layouts and charts, open notebook and coffee cup beside the keyboard, dim office at night

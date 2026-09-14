@@ -1,5 +1,0 @@
-# seo-geo (`resciencelab/opc-skills/seo-geo`)
-
-## cover
-
-A bespectacled man in a dark hoodie hunched over a laptop at a midnight desk, typing into a glowing terminal window, monitors beside him showing blank empty browser pages of his just-launched website, dim office, city lights outside

@@ -1,5 +1,0 @@
-# convex-agent (`get-convex/agent-skills/convex-agent`)
-
-## cover
-
-A backend developer in a hoodie at a cluttered desk, holding a small convex-shaped circuit board toward a laptop with chat bubbles, a tangle of glowing keys and stacked archive boxes of chat transcripts around him

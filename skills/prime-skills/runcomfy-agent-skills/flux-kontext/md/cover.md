@@ -1,5 +1,0 @@
-# flux-kontext (`prime-skills/runcomfy-agent-skills/flux-kontext`)
-
-## cover
-
-A focused photo retoucher in a work apron leans over a lit desk, holding a beloved printed photograph close, touching one tiny detail with a fine retouching brush, graphics tablet and stylus beside, single desk lamp overhead

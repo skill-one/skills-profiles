@@ -1,5 +1,0 @@
-# fastify-best-practices (`mcollina/skills/fastify-best-practices`)
-
-## cover
-
-Bearded backend developer in dark hoodie, headphones around neck, hunched at cluttered desk typing fast on laptop, two glowing monitors with terminal windows, sticky notes on monitor edge, glowing phone beside coffee cups, server cables, late-night office

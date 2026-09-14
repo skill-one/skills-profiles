@@ -1,5 +1,0 @@
-# agent-development (`anthropics/claude-code/agent-development`)
-
-## cover
-
-A focused AI agent engineer in a smart-casual shirt with headphones around his neck, holding a document while tuning a small humanoid robot on his desk, surrounded by monitors showing glowing node diagrams, in a dim modern workspace

@@ -1,5 +1,0 @@
-# systematic-debugging (`obra/superpowers/systematic-debugging`)
-
-## cover
-
-A weary software engineer in a hooded sweatshirt, holding a printed log sheet, one hand hovering over the keyboard, seated before a monitor filled with scrolling warning lines, cluttered desk with coffee cups and tangled cables

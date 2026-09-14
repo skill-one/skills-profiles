@@ -1,5 +1,0 @@
-# prisma-postgres-setup (`prisma/skills/prisma-postgres-setup`)
-
-## cover
-
-A rugged database trailblazer in canvas work apron, kneeling at a wooden desk, plugging a glowing cable from laptop into a small server stack, laptop terminal flashing red, glass prism on the keyboard, empty project folders scattered nearby

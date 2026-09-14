@@ -1,5 +1,0 @@
-# diagnose (`mattpocock/skills/diagnose`)
-
-## cover
-
-Software detective in trench coat over hoodie, magnifying glass raised to a monitor flashing error alerts from a remote user session, a second monitor showing a smooth passing local test, cluttered late-night desk with coffee cups and sticky notes

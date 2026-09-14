@@ -1,5 +1,0 @@
-# golang-project-layout (`samber/cc-skills-golang/golang-project-layout`)
-
-## cover
-
-A bearded software architect in a plaid shirt and glasses, holding a small paper file, sketching a folder tree on a whiteboard showing three empty folders in a row, desk with glowing monitor and mechanical keyboard behind him

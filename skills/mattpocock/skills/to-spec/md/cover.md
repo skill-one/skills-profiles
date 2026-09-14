@@ -1,5 +1,0 @@
-# to-spec (`mattpocock/skills/to-spec`)
-
-## cover
-
-A bespectacled analyst in a rolled-up shirt types on a laptop at a desk, whiteboard covered in clustered sticky notes behind, one card held in the other hand, empty meeting chair nearby

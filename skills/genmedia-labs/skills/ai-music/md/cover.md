@@ -1,5 +1,0 @@
-# ai-music (`genmedia-labs/skills/ai-music`)
-
-## cover
-
-A young composer in a hoodie and studio headphones sits at a cluttered desk at night, typing on his laptop, a finished video-editing timeline glowing on the second monitor, one hand resting on a MIDI keyboard, audio waveform on screen

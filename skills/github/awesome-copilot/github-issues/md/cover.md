@@ -1,5 +1,0 @@
-# github-issues (`github/awesome-copilot/github-issues`)
-
-## cover
-
-Bespectacled programmer in a worn hoodie leaning urgently toward a laptop at a cluttered desk, typing a bug report in a terminal, one hand grabbing a pen and sticky note, coffee mug and desk lamp glowing late at night

@@ -1,5 +1,0 @@
-# google-agents-cli-deploy (`google/agents-cli/google-agents-cli-deploy`)
-
-## cover
-
-A bespectacled software engineer in a hoodie, headphones around his neck, fingers frozen over a laptop with a glowing terminal, staring blankly at a cloud diagram sketched on the whiteboard, coffee mug and sticky notes on his cluttered desk

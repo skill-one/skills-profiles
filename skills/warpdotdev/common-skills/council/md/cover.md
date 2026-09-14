@@ -1,5 +1,0 @@
-# council (`warpdotdev/common-skills/council`)
-
-## cover
-
-A silver-bearded judge in black robes holding a gavel, hesitating between two thick dossiers on his bench, three glowing wall screens behind him showing rival diagrams, empty counsel seats before him, furrowed brow

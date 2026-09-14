@@ -1,5 +1,0 @@
-# firecrawl-company-directories (`firecrawl/firecrawl-workflows/firecrawl-company-directories`)
-
-## cover
-
-A tired analyst in glasses and rolled-up sleeves sits at a desk stacked with coffee cups, frowning at a huge monitor filled with endless company directory pages, steering a small robotic spider down the long list with a mouse

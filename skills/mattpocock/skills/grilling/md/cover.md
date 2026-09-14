@@ -1,5 +1,0 @@
-# grilling (`mattpocock/skills/grilling`)
-
-## cover
-
-A sharp-eyed consultant in rolled sleeves and glasses, leaning over a desk, finger pressed on a large branching flowchart diagram, pen hovering above an unsigned contract, scattered documents around, half-lit meeting room

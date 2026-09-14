@@ -1,5 +1,0 @@
-# implement-spec (`mattpocock/skills/implement-spec`)
-
-## cover
-
-A hard-hatted site foreman holding a clipboard of blank ticket cards and a branching steel pipe tool, standing on a scaffold deck beside several separate lit workstations stacked with materials, steel rails branching and merging overhead

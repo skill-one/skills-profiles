@@ -1,5 +1,0 @@
-# better-accessibility (`jakubkrehel/skills/better-accessibility`)
-
-## cover
-
-A blind accessibility auditor in over-ear headphones, eyes closed, one hand tabbing across a laptop keyboard, other hand reading a braille display, quiet office on website launch eve, single desk lamp

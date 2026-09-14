@@ -1,5 +1,0 @@
-# zoom-out (`mattpocock/skills/zoom-out`)
-
-## cover
-
-A cartographer in a canvas vest frowns before a wall of monitors glowing with tangled lines, unrolling a hand-drawn route map across his cluttered desk, tracing a path with a brass compass, cable threads snaking around his boots

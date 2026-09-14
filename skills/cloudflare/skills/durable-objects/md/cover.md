@@ -1,5 +1,0 @@
-# durable-objects (`cloudflare/skills/durable-objects`)
-
-## cover
-
-A rugged edge wrangler in a butler waistcoat and work gloves, spinning a lasso around tangled glowing data streams converging on one steel data vault, sparks flaring where streams nearly collide, standing amid stacked server racks

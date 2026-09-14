@@ -1,5 +1,0 @@
-# fingerprint-ci-gate (`liarjsdev/liarjs-skills/fingerprint-ci-gate`)
-
-## cover
-
-A bearded engineer in a plaid shirt compares two printed scan reports at his laptop, terminal glowing with a green checkmark and a score gauge, a conveyor of glowing browser build pods in a dim server room behind him

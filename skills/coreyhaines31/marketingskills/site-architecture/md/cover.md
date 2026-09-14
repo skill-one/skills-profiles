@@ -1,5 +1,0 @@
-# site-architecture (`coreyhaines31/marketingskills/site-architecture`)
-
-## cover
-
-A bespectacled information architect in a rolled-sleeve shirt stands before a wall of blank page cards, drawing a tree diagram of empty boxes linked by arrows, arranging card tiers across a desk with laptop and flowchart notes nearby

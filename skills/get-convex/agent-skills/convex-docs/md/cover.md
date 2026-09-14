@@ -1,5 +1,0 @@
-# convex-docs (`get-convex/agent-skills/convex-docs`)
-
-## cover
-
-A programmer in a hoodie and glasses sits at a cluttered late-night desk, typing into a terminal beside an open code editor, sticky notes pinned to the monitor, a steaming mug nearby, eyes fixed on the screen, no readable text

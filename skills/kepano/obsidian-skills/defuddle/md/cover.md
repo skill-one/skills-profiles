@@ -1,5 +1,0 @@
-# defuddle (`kepano/obsidian-skills/defuddle`)
-
-## cover
-
-A focused web editor in rolled-up sleeves and round glasses, snipping a floating cluttered webpage panel with large scissors, cutting away banner ads, pop-ups and sidebar menus, one tidy clean page left on his desk

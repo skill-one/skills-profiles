@@ -1,5 +1,0 @@
-# higgsfield-video-explainer (`higgsfield-ai/skills/higgsfield-video-explainer`)
-
-## cover
-
-A bespectacled director with rolled-up sleeves and studio headphones sits at a storyboard-cluttered desk, dragging animated clip blocks along a glowing editing timeline while narrating into a microphone, pinned scene sketches and a storyboard sheet behind him

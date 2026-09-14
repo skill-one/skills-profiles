@@ -1,5 +1,0 @@
-# influencer-marketing (`coreyhaines31/marketingskills/influencer-marketing`)
-
-## cover
-
-A marketing professional in a smart blazer leaning toward a laptop showing audience analytics charts, one hand on a calculator, sticky notes and coffee scattered across the desk, ring light and camera tripod in the corner of an office

@@ -1,5 +1,0 @@
-# extension-openai (`caffeinelabs/skills/extension-openai`)
-
-## cover
-
-A wiring technician in a utility vest at a desk of glowing servers, plugging a cable into an open laptop, screen showing a glowing chat bubble, one hand slipping a brass key into a small locked metal box

@@ -1,5 +1,0 @@
-# clerk-orgs (`clerk/skills/clerk-orgs`)
-
-## cover
-
-A meticulous young developer wearing a lanyard, holding a large key ring while slotting a blank badge card onto a wall of card holders, standing in an office corridor lined with locked doors and stacks of invitation envelopes

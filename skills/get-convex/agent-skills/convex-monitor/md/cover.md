@@ -1,5 +1,0 @@
-# convex-monitor (`get-convex/agent-skills/convex-monitor`)
-
-## cover
-
-A lone software engineer in a hoodie, sitting at an empty office desk late at night, eyes fixed on a glowing terminal screen, one hand on the keyboard, coffee mug nearby, dark office with empty chairs around him

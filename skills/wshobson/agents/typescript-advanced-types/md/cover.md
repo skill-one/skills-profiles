@@ -1,5 +1,0 @@
-# typescript-advanced-types (`wshobson/agents/typescript-advanced-types`)
-
-## cover
-
-A bespectacled programmer in a hoodie, whistle around his neck, hunched over his laptop typing, large monitor glowing with red warning marks beside him, cold coffee mug on the late-night desk

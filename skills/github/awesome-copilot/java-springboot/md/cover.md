@@ -1,5 +1,0 @@
-# java-springboot (`github/awesome-copilot/java-springboot`)
-
-## cover
-
-A young programmer in a gray hoodie, hand hovering over the keyboard, staring at a blank dark screen on a laptop with a green leaf sticker, cluttered desk with coffee mugs, cables and a notebook, dim home office at night

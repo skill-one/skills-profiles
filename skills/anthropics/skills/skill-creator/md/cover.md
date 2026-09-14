@@ -1,5 +1,0 @@
-# skill-creator (`anthropics/skills/skill-creator`)
-
-## cover
-
-Middle-aged craftsman with glasses and rolled-up sleeves at a cluttered workbench, marking up a printed instruction manual with a red pen, surrounded by sticky notes, box-and-arrow flowchart sheets, an open laptop, and a small robot figurine

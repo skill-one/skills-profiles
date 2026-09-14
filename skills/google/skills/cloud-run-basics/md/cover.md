@@ -1,5 +1,0 @@
-# cloud-run-basics (`google/skills/cloud-run-basics`)
-
-## cover
-
-A cloud engineer in a hoodie at a late-night desk, typing into a terminal on a laptop, finished code glowing on a second monitor, server racks softly lit behind, coffee mug beside keyboard, leaning forward in focus

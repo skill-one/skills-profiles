@@ -1,5 +1,0 @@
-# algorithmic-art (`anthropics/skills/algorithmic-art`)
-
-## cover
-
-A generative artist in a black hoodie, headphones around neck, typing at a desk, two monitors glowing with swirling particle patterns and flowing curves, dozens of pinned abstract prints covering the wall, dim studio lit only by screens

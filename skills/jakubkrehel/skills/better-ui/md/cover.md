@@ -1,5 +1,0 @@
-# better-ui (`jakubkrehel/skills/better-ui`)
-
-## cover
-
-A young developer in a dark hoodie with headphones around his neck leaning toward a laptop, highlighting a crooked button with an inspector panel on the glowing screen, cluttered late-night desk with coffee cup and sticky notes

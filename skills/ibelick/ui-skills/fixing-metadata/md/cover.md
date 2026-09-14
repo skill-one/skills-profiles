@@ -1,5 +1,0 @@
-# fixing-metadata (`ibelick/ui-skills/fixing-metadata`)
-
-## cover
-
-A bespectacled web developer in a hoodie pinning a small blank paper tag onto a floating browser window, desk monitor showing a share preview card with an empty image slot, smartphone lying nearby, dim night office

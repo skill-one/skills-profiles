@@ -1,5 +1,0 @@
-# airunway-aks-setup (`microsoft/azure-skills/airunway-aks-setup`)
-
-## cover
-
-A young engineer in a dark hoodie, crouching in a cloud data center aisle, typing a terminal command on a laptop, surrounded by empty translucent server node outlines and a large glowing AI model waiting to be placed

@@ -1,5 +1,0 @@
-# azure-messaging (`microsoft/azure-skills/azure-messaging`)
-
-## cover
-
-A technician in a navy work jacket and utility tool belt kneels before server racks, holding a laptop connected by cables, blue screen glow on his face, red warning lights flashing across the racks

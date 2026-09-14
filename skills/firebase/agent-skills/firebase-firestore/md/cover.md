@@ -1,5 +1,0 @@
-# firebase-firestore (`firebase/agent-skills/firebase-firestore`)
-
-## cover
-
-A bearded database administrator in a dark hoodie, typing a command into a glowing terminal on his laptop, dual monitors showing cloud database diagrams, scribbled whiteboard of cloud icons and arrows behind him, coffee mug, late-night launch eve

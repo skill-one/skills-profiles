@@ -1,5 +1,0 @@
-# firecrawl-workflows (`firecrawl/firecrawl-workflows/firecrawl-workflows`)
-
-## cover
-
-A tired web researcher in glasses and a hoodie sits at a late-night desk, dragging glowing webpage thumbnails from dozens of floating browser windows into one document on his laptop, surrounded by scattered notes and empty coffee cups

@@ -1,5 +1,0 @@
-# baoyu-post-to-weibo (`jimliu/baoyu-skills/baoyu-post-to-weibo`)
-
-## cover
-
-Young man in casual shirt at a tidy desk, finger hovering over mouse ready to click the final button on a browser page, article draft and photo thumbnails filling the screen, printed photos stacked beside keyboard, coffee cup nearby

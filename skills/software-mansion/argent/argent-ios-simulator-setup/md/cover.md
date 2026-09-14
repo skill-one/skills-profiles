@@ -1,5 +1,0 @@
-# argent-ios-simulator-setup (`software-mansion/argent/argent-ios-simulator-setup`)
-
-## cover
-
-Young developer in a black hoodie at his desk before dawn, holding a smartphone with dark blank screen in one hand, other hand resting on a keyboard, monitor beside him showing a matching phone-shaped simulator window, dim quiet office

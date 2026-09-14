@@ -1,5 +1,0 @@
-# shadcn-ui (`google-labs-code/stitch-skills/shadcn-ui`)
-
-## cover
-
-A young developer in a dark hoodie sitting at a tidy desk, dragging a card component into an interface layout on dual monitors, surrounded by panels of buttons and toggles, keyboard and coffee mug nearby, modern workspace

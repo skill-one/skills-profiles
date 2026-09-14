@@ -1,5 +1,0 @@
-# ui-ux-pro-max (`nextlevelbuilder/ui-ux-pro-max-skill/ui-ux-pro-max`)
-
-## cover
-
-A bespectacled designer in a plain sweater, holding an open laptop showing color swatches and layout grids, leaning toward a large monitor with a finished app interface, sticky notes along its edge, desk lamp glowing in a dim late-night studio

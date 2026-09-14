@@ -1,5 +1,0 @@
-# deprecation-and-migration (`addyosmani/agent-skills/deprecation-and-migration`)
-
-## cover
-
-A migration worker in hard hat and reflective vest, carefully unplugging cables from an old cracked pillar-shaped server column wrapped in caution tape, a new identical column glowing beside it, live data streams still flowing through tubes

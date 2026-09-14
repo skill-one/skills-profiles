@@ -1,5 +1,0 @@
-# clerk-nextjs-patterns (`clerk/skills/clerk-nextjs-patterns`)
-
-## cover
-
-A tired developer in a dark hoodie with headphones around his neck, at a late-night desk with dual monitors, placing a glowing padlock onto abstract interface panels on the screen, finished webpage wireframes beside, coffee cup and sticky notes nearby

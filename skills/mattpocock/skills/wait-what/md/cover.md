@@ -1,5 +1,0 @@
-# wait-what (`mattpocock/skills/wait-what`)
-
-## cover
-
-A meticulous language inspector in a clean work tunic stands beside a jammed conveyor of blank speech bubbles, holding an unmarked manila document and a magnifying glass, checking one bubble stopped mid-air above an empty tray

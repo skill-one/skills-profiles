@@ -1,5 +1,0 @@
-# wecomcli-msg (`wecomteam/wecom-cli/wecomcli-msg`)
-
-## cover
-
-A young office worker in glasses and a checked shirt sits at his desk, scratching his head while scrolling up through message history on a laptop terminal window, smartphone in his other hand, coffee cup beside, ready to reply

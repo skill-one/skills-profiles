@@ -1,5 +1,0 @@
-# argent-test-ui-flow (`software-mansion/argent/argent-test-ui-flow`)
-
-## cover
-
-An app tester in a hoodie and lanyard badge leaning over a desk, holding a smartphone and tapping its screen, a second test phone on a stand beside a laptop, blank checklist cards pinned nearby, quiet late-night software studio

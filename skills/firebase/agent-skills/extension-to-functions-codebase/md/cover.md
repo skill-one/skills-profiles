@@ -1,5 +1,0 @@
-# extension-to-functions-codebase (`firebase/agent-skills/extension-to-functions-codebase`)
-
-## cover
-
-A focused backend developer in a hoodie and headphones, holding an open software kit he is disassembling, reassembling modular glowing code blocks on his desk into a new package, monitors showing function scripts around him, dim home office at night

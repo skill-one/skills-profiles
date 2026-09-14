@@ -1,5 +1,0 @@
-# sandbox-next (`cloudflare/skills/sandbox-next`)
-
-## cover
-
-Engineer in a dark hoodie with headphones around his neck, tapping a laptop keyboard, launching a small glowing glass cube enclosing a miniature server rack, sealed container crates floating around him inside a cloud data center

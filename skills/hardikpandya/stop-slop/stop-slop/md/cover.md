@@ -1,5 +1,0 @@
-# stop-slop (`hardikpandya/stop-slop/stop-slop`)
-
-## cover
-
-A bespectacled editor in a rolled-sleeve linen shirt hunches over a paper-strewn desk late at night, red pen hovering above a printed manuscript, frowning at one paragraph, crossed-out ink marks covering nearby pages, warm desk lamp beside him

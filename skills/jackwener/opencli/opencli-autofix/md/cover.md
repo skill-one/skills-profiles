@@ -1,5 +1,0 @@
-# opencli-autofix (`jackwener/opencli/opencli-autofix`)
-
-## cover
-
-A repair technician in a tool vest leans over a cluttered workbench, fitting a small adapter plug into a laptop with a screwdriver, monitors behind showing a half-loaded webpage and red warning icons, tangled cables and a wrench nearby

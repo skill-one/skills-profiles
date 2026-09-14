@@ -1,5 +1,0 @@
-# supabase-postgres-best-practices (`supabase/agent-skills/supabase-postgres-best-practices`)
-
-## cover
-
-A tired database administrator in a hoodie and glasses, typing at a glowing terminal screen, a browser window beside showing a spinning loading circle, blinking server racks behind, coffee mug on the desk in a dim data center

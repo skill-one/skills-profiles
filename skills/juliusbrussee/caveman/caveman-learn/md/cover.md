@@ -1,5 +1,0 @@
-# caveman-learn (`juliusbrussee/caveman/caveman-learn`)
-
-## cover
-
-A focused token auditor in a green visor and suspenders, holding a magnifying glass over a laptop showing glowing charts of burning coin tokens, beside a cave wall painted with bar-chart symbols, stacks of golden coins, a few aflame

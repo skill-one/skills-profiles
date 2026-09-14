@@ -1,5 +1,0 @@
-# finishing-a-development-branch (`obra/superpowers/finishing-a-development-branch`)
-
-## cover
-
-A bearded programmer in a dark hoodie pausing at his desk, hands hovering over a keyboard, monitors glowing with green check dots and a branching line diagram, a tiny three-arrow signpost beside the keyboard, desk lamp lit

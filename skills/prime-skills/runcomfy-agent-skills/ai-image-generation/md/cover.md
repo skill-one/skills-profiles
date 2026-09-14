@@ -1,5 +1,0 @@
-# ai-image-generation (`prime-skills/runcomfy-agent-skills/ai-image-generation`)
-
-## cover
-
-A young image artist in a hoodie and headphones sitting at a desk, four monitors showing different portrait variations, one hand on his chin, the other typing into a terminal, a pencil sketch pinned beside the keyboard

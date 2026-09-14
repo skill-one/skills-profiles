@@ -1,5 +1,0 @@
-# flutter-build-responsive-layout (`flutter/agent-plugins/flutter-build-responsive-layout`)
-
-## cover
-
-An interface engineer in a tool vest stretching a desktop app window wider, caliper in hand, straightening an overstretched deformed button row and card grid on the monitor, phones and tablets lined up beside the desk

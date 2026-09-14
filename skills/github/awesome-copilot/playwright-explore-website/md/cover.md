@@ -1,5 +1,0 @@
-# playwright-explore-website (`github/awesome-copilot/playwright-explore-website`)
-
-## cover
-
-A focused tester in a hoodie at a desk covered with sticky notes, typing in a terminal next to a laptop where an automated browser clicks through a freshly redesigned website, pausing mid-action before launch

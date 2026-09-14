@@ -1,5 +1,0 @@
-# mediabunny (`remotion-dev/skills/mediabunny`)
-
-## cover
-
-A media inspector in a utility vest, headphones around his neck, holding a measuring tape and stopwatch, sizing a floating video frame and audio waveform inside a giant glowing browser window, a small white rabbit perched on his shoulder

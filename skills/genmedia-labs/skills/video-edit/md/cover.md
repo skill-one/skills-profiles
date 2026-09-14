@@ -1,5 +1,0 @@
-# video-edit (`genmedia-labs/skills/video-edit`)
-
-## cover
-
-A video editor in a hoodie with headphones around his neck, holding a stylus, dragging a new city backdrop behind a recorded dancer on his widescreen monitor, camera and footage drives beside the keyboard

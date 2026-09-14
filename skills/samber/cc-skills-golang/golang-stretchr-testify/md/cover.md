@@ -1,5 +1,0 @@
-# golang-stretchr-testify (`samber/cc-skills-golang/golang-stretchr-testify`)
-
-## cover
-
-A focused Go quality inspector in a rolled-sleeve work shirt and lanyard, stamping green checkmarks onto a paper checklist, magnifying glass hovering over a cluttered desk terminal, monitors glowing with dense code, one small lamp blinking red beside the keyboard

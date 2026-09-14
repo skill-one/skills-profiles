@@ -1,5 +1,0 @@
-# threejs-animation (`cloudai-x/threejs-skills/threejs-animation`)
-
-## cover
-
-A young animator in a hoodie and headphones, leaning toward a monitor showing a lifelike character frozen mid-pose with a glowing bone rig overlay, typing keyframes into an animation timeline on a second screen

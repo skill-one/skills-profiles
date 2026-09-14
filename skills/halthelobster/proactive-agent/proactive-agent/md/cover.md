@@ -1,5 +1,0 @@
-# proactive-agent (`halthelobster/proactive-agent/proactive-agent`)
-
-## cover
-
-A night-shift log keeper in a vest scribbling notes on a clipboard, seated at a control desk as glowing conversation lines on a large screen dissolve and cut off behind him, scattered papers and a small desk lamp nearby

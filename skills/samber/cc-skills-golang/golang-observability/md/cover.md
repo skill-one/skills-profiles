@@ -1,5 +1,0 @@
-# golang-observability (`samber/cc-skills-golang/golang-observability`)
-
-## cover
-
-An observability engineer in glasses and a hoodie, standing at a late-night desk, pointing at glowing metric graphs on a large monitor, second screen showing code, laptop open, hand hovering over keyboard, coffee mug beside

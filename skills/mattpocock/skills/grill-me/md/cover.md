@@ -1,5 +1,0 @@
-# grill-me (`mattpocock/skills/grill-me`)
-
-## cover
-
-A stern bespectacled man in a dark suit, leaning far across a small wooden table, finger raised mid-question, open notebook and pen in hand, a single empty chair opposite him, bare minimalist office

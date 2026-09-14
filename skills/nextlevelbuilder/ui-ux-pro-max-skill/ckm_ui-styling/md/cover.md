@@ -1,5 +1,0 @@
-# ckm:ui-styling (`nextlevelbuilder/ui-ux-pro-max-skill/ckm:ui-styling`)
-
-## cover
-
-A young developer in a hoodie and headphones, holding a fan of color swatches, repainting a dull gray wireframe interface on his monitor, sticky notes and empty coffee cups on a cluttered desk

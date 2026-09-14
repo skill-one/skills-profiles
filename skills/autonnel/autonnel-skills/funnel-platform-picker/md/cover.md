@@ -1,5 +1,0 @@
-# funnel-platform-picker (`autonnel/autonnel-skills/funnel-platform-picker`)
-
-## cover
-
-A bespectacled cost-comparison analyst in a rolled-sleeve shirt hunches at a cluttered desk, pressing a calculator while staring at a laptop showing a subscription billing dashboard, printed invoices and sticky notes scattered around, coffee cup steaming, quiet late office

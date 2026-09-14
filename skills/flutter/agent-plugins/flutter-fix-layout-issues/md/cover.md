@@ -1,5 +1,0 @@
-# flutter-fix-layout-issues (`flutter/agent-plugins/flutter-fix-layout-issues`)
-
-## cover
-
-A programmer in a hoodie with earbuds at a dim night desk, finger pressing a keyboard key to hot-reload his app, a phone emulator beside the laptop showing a broken app layout with yellow-black striped overflow warning bands

@@ -1,5 +1,0 @@
-# higgsfield-marketplace-cards (`higgsfield-ai/skills/higgsfield-marketplace-cards`)
-
-## cover
-
-A marketplace listing designer in a rolled-sleeve shirt typing at a terminal on his cluttered desk, surrounded by skincare bottles, a soda can and shipping boxes, monitor displaying product card layouts, small lightbox glowing beside the keyboard

@@ -1,5 +1,0 @@
-# convex-test (`get-convex/agent-skills/convex-test`)
-
-## cover
-
-A software tester with glasses and a hoodie, headphones around his neck, typing on a mechanical keyboard, holding a clipboard of ticked checkboxes, two glowing monitors behind, coffee mug, cables and sticky notes on a cluttered desk, dim late-night office

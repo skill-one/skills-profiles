@@ -1,5 +1,0 @@
-# writing-plans (`obra/superpowers/writing-plans`)
-
-## cover
-
-A bespectacled software planner in rolled-up sleeves sketches a flowchart of boxes and arrows in a notebook, desk with checklist drafts and empty checkboxes, a laptop showing a blank editor, blank sticky notes on a whiteboard behind him

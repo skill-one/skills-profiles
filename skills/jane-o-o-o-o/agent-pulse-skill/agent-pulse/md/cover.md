@@ -1,5 +1,0 @@
-# agent-pulse (`jane-o-o-o-o/agent-pulse-skill/agent-pulse`)
-
-## cover
-
-A bespectacled auditor in a cardigan sits at a late-night desk, holding a laptop open to terminal windows, surrounded by monitors full of bar charts and pie graphs, coffee mug and sticky notes nearby, cross-checking spending across screens

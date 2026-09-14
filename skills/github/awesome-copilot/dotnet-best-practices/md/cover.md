@@ -1,5 +1,0 @@
-# dotnet-best-practices (`github/awesome-copilot/dotnet-best-practices`)
-
-## cover
-
-A bespectacled software inspector in a plaid shirt, holding a magnifying glass over his keyboard, examining glowing code on dual monitors, stamped checklist and coffee mug on the desk, dim late-night office

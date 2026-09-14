@@ -1,5 +1,0 @@
-# design-an-interface (`mattpocock/skills/design-an-interface`)
-
-## cover
-
-A software architect in a hoodie at his desk, one hand reaching toward ghostly duplicate task windows fanning out from his monitor, other hand sketching two competing interface drafts side by side, doubtful frown, crumpled papers nearby

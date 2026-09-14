@@ -1,5 +1,0 @@
-# taste-design (`google-labs-code/stitch-skills/taste-design`)
-
-## cover
-
-A bespectacled designer in a black turtleneck, holding a bound design document, shielding his eyes from a monitor glowing with a purple neon gradient interface, minimal studio desk, blank color swatch cards, single desk lamp

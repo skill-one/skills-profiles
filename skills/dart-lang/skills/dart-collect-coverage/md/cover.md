@@ -1,5 +1,0 @@
-# dart-collect-coverage (`dart-lang/skills/dart-collect-coverage`)
-
-## cover
-
-A focused programmer in a plaid shirt with headphones around his neck, sitting at a desk, pointing a pen at a monitor showing green-filled bar graphs, second screen glowing with terminal panels, sticky notes scattered on the desk

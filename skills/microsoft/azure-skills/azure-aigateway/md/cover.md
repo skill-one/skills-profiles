@@ -1,5 +1,0 @@
-# azure-aigateway (`microsoft/azure-skills/azure-aigateway`)
-
-## cover
-
-A cloud engineer in a zip hoodie typing in a terminal, dual monitors showing a steep rising cost graph, floating panels shaped like a cache vault, a throttling valve and a safety gate, late-night office

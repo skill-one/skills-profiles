@@ -1,5 +1,0 @@
-# ai-research-explore (`lllllllama/rigorpilot-skills/ai-research-explore`)
-
-## cover
-
-A tired deep-learning researcher in a worn hoodie hovers his hand over a laptop keyboard, twin monitors glowing with descending training curves, humming GPU tower at his side, cold coffee and a sketched notebook on the midnight desk

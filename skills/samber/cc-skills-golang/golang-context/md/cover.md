@@ -1,5 +1,0 @@
-# golang-context (`samber/cc-skills-golang/golang-context`)
-
-## cover
-
-A wiry engineer in a rumpled shirt and cable-tied tool belt, crouching between stacked translucent server layers, tracing a single glowing rope threaded through them, gripping a snapped link with pliers, a stopwatch dangling from his wrist

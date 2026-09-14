@@ -1,5 +1,0 @@
-# firebase-basics (`firebase/agent-skills/firebase-basics`)
-
-## cover
-
-A focused developer in a hoodie, headphones around his neck, typing commands into a glowing terminal, smartphone with a finished app beside his keyboard, cables running from the laptop to a glowing cloud-server rack behind him

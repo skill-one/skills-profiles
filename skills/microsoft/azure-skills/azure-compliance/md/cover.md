@@ -1,5 +1,0 @@
-# azure-compliance (`microsoft/azure-skills/azure-compliance`)
-
-## cover
-
-Bespectacled auditor in rolled-sleeve shirt and lanyard badge types on a laptop at a cluttered desk, monitors glowing with cloud diagrams and padlock icons, stacked audit binders and coffee mug beside him, sticky notes marking deadline on the wall

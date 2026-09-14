@@ -1,5 +1,0 @@
-# ai-avatar-video (`prime-skills/runcomfy-agent-skills/ai-avatar-video`)
-
-## cover
-
-A talking-head video producer in a hoodie, headphones around his neck, holding a printed script and adjusting a studio microphone at his desk, monitor glowing with an audio waveform, a portrait photograph lying face-down beside the keyboard

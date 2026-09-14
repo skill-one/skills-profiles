@@ -1,5 +1,0 @@
-# smart-search (`jackwener/opencli/smart-search`)
-
-## cover
-
-A focused dispatcher in a headset and rolled-sleeve shirt sits at a curved desk, typing one command into a glowing dark terminal, routing tangled cable lines toward a wall of monitors tiled with website thumbnail grids, steaming mug beside keyboard

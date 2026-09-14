@@ -1,5 +1,0 @@
-# vercel-cli-with-tokens (`vercel-labs/agent-skills/vercel-cli-with-tokens`)
-
-## cover
-
-A young developer in a hoodie with headphones around the neck, typing on a laptop at a dim late-night desk, dark screen glowing, a paper card beside the mouse, glowing cloud-shaped lamp above, coffee mug and tangled cables nearby

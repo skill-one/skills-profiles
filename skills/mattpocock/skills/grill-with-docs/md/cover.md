@@ -1,5 +1,0 @@
-# grill-with-docs (`mattpocock/skills/grill-with-docs`)
-
-## cover
-
-A journalist with a press badge and rolled-up sleeves, leaning over an open draft plan on a table, holding a question-outline clipboard, ticking lines with a pen, voice recorder and notebook at hand, one empty chair across

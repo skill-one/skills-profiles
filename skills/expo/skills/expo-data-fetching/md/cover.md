@@ -1,5 +1,0 @@
-# expo-data-fetching (`expo/skills/expo-data-fetching`)
-
-## cover
-
-A cable technician in a utility vest crouches before a giant smartphone with a blank screen and circular loading spinner, plugging one glowing cable into its side, data orbs streaming through the wire from a distant cloud

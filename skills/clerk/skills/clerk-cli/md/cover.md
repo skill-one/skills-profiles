@@ -1,5 +1,0 @@
-# clerk-cli (`clerk/skills/clerk-cli`)
-
-## cover
-
-A focused auth operations engineer in a hoodie and keycard lanyard, typing into a glowing terminal, a crumpled paper tangled with cables in the wastebasket, rows of unlabeled key fobs on the desk, humming server racks behind

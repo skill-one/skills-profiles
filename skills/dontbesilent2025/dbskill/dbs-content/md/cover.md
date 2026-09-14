@@ -1,5 +1,0 @@
-# dbs-content (`dontbesilent2025/dbskill/dbs-content`)
-
-## cover
-
-A bespectacled editor in a collared shirt with rolled-up sleeves, hunched at a lamp-lit desk late at night, red pen mid-stroke over a printed manuscript draft, red-marked pages stacked nearby, other hand hovering over a laptop trackpad

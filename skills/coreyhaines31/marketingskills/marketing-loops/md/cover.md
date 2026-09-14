@@ -1,5 +1,0 @@
-# marketing-loops (`coreyhaines31/marketingskills/marketing-loops`)
-
-## cover
-
-A bespectacled man in a hoodie with headphones around his neck, winding a mechanical desk timer, dual monitors glowing with charts and a wall calendar pinned with task cards, in a small home office

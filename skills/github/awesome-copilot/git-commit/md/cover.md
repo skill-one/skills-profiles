@@ -1,5 +1,0 @@
-# git-commit (`github/awesome-copilot/git-commit`)
-
-## cover
-
-Bearded programmer in a hoodie slumped at a desk late at night, right hand hovering over laptop keyboard, terminal window open on screen, left hand scratching head in hesitation, empty coffee mugs and scattered sticky notes around him

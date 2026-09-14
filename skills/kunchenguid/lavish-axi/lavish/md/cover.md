@@ -1,5 +1,0 @@
-# lavish (`kunchenguid/lavish-axi/lavish`)
-
-## cover
-
-A meticulous framer in a linen apron and round glasses, holding an ornate frame shaped like a browser window, mounting it over a giant glowing screen covered in dense tiny lines, document sheets scattered across his workshop bench

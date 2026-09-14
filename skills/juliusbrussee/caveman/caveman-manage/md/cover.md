@@ -1,5 +1,0 @@
-# caveman-manage (`juliusbrussee/caveman/caveman-manage`)
-
-## cover
-
-A fur-clad caveman leaning over a stone control console, wooden club in one hand, finger of his other hand hovering above a large carved stone button, glowing screen beside him showing finished experiment graphs, dim torch-lit cave chamber

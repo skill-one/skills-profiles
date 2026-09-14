@@ -1,5 +1,0 @@
-# better-layout (`jakubkrehel/skills/better-layout`)
-
-## cover
-
-A bespectacled designer in a hoodie leaning toward a glowing monitor, one hand on a mouse nudging blank rounded buttons and placeholder blocks into alignment on a webpage wireframe, printed screenshots of crooked layouts pinned beside the keyboard

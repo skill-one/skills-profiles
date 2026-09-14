@@ -1,5 +1,0 @@
-# e2e-testing-patterns (`wshobson/agents/e2e-testing-patterns`)
-
-## cover
-
-A focused software tester in a dark hoodie and headphones, sitting at a desk with dual monitors showing web browser windows, watching an automated cursor click through pages on screen, small robot toy beside keyboard, dim office at night

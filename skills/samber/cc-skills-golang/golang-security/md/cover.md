@@ -1,5 +1,0 @@
-# golang-security (`samber/cc-skills-golang/golang-security`)
-
-## cover
-
-A Go security auditor in a dark hoodie and glasses, hunched over a laptop running a vulnerability scan, glowing terminal on screen, second monitor and network cables behind him, coffee mug at hand, quiet office before a code merge

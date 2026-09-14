@@ -1,5 +1,0 @@
-# prisma-database-setup (`prisma/skills/prisma-database-setup`)
-
-## cover
-
-A focused developer in a dark hoodie, headphones around his neck, crouching at a desk, plugging a glowing cable from his laptop into a database server tower, holographic database cylinder icons hovering above the keyboard, dim night office

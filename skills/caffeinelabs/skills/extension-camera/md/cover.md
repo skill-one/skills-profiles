@@ -1,5 +1,0 @@
-# extension-camera (`caffeinelabs/skills/extension-camera`)
-
-## cover
-
-Hooded developer hunched at a laptop in a dim room, screen showing a black camera preview, one hand typing, the other reaching toward a webcam above the screen, tangled cables and a coffee mug on the desk

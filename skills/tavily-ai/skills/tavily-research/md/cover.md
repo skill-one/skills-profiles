@@ -1,5 +1,0 @@
-# tavily-research (`tavily-ai/skills/tavily-research`)
-
-## cover
-
-A bespectacled analyst with rolled-up sleeves typing on a laptop terminal at a desk piled with printed reports and sticky notes, pinned documents linked by strings behind him, one hand pulling a thread toward the screen

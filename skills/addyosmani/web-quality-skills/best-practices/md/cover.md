@@ -1,5 +1,0 @@
-# best-practices (`addyosmani/web-quality-skills/best-practices`)
-
-## cover
-
-A focused web auditor in a utility vest and headlamp, clipboard in hand, inspecting a glowing website dashboard on curved monitors, in a dim office the night before launch, cables and servers around

@@ -1,5 +1,0 @@
-# lead-magnets (`coreyhaines31/marketingskills/lead-magnets`)
-
-## cover
-
-A bespectacled marketer in a casual blazer sketching a webpage wireframe on paper, drawing a gift box and envelope icons beside a big button, desk with sticky notes and a laptop showing a landing page mockup, cozy home studio

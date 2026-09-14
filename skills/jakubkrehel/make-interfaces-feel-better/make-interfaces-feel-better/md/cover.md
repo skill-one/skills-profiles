@@ -1,5 +1,0 @@
-# make-interfaces-feel-better (`jakubkrehel/make-interfaces-feel-better/make-interfaces-feel-better`)
-
-## cover
-
-A bespectacled designer in a hoodie squinting at a large monitor showing an app interface, holding a magnifying loupe over slightly misaligned buttons, one hand resting on the keyboard, sticky notes and a steel ruler on the desk

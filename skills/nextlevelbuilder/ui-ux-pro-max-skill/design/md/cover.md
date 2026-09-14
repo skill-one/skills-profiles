@@ -1,5 +1,0 @@
-# design (`nextlevelbuilder/ui-ux-pro-max-skill/design`)
-
-## cover
-
-A brand designer in a black turtleneck and round glasses, holding a glowing tablet casting twin-star Gemini light, sketching shapes in a sketchbook, surrounded by blank packaging boxes, an empty storefront and a bare launch backdrop

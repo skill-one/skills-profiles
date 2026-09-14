@@ -1,5 +1,0 @@
-# verification-before-completion (`obra/superpowers/verification-before-completion`)
-
-## cover
-
-A tired programmer in a hoodie and headphones at a cluttered late-night desk, hand hovering above one final key, eyes locked on the glowing terminal window filling the monitor, slight lean forward, cold coffee beside the keyboard

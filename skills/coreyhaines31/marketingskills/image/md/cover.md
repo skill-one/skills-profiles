@@ -1,5 +1,0 @@
-# image (`coreyhaines31/marketingskills/image`)
-
-## cover
-
-A marketing visual designer in rolled-up sleeves, headphones around neck, typing on a laptop displaying a grid of generated artwork previews, an empty picture frame propped beside the monitor, stacked manuscripts and a launch checklist covering the desk

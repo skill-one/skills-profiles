@@ -1,5 +1,0 @@
-# impeccable (`pbakaus/impeccable/impeccable`)
-
-## cover
-
-A bespectacled designer in a turtleneck leaning toward a monitor showing a browser window of blank wireframe blocks, squinting, holding a ruler up to the screen, other hand on the mouse, paper layout sketches and sticky notes nearby

@@ -1,5 +1,0 @@
-# golang-swagger (`samber/cc-skills-golang/golang-swagger`)
-
-## cover
-
-A bearded backend developer in a navy hoodie, headphones around his neck, leaning back from his keyboard and pointing at a monitor showing an API documentation page, terminal window open beside the code editor, late-night desk with coffee mug

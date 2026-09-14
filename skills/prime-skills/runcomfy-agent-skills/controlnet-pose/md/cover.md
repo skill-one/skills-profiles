@@ -1,5 +1,0 @@
-# controlnet-pose (`prime-skills/runcomfy-agent-skills/controlnet-pose`)
-
-## cover
-
-Motion-transfer artist in a hoodie and headphones, standing in a motion-capture studio, holding a printed character portrait, pointing at a screen showing a glowing pose skeleton over a dancing figure, reference footage paused on another monitor

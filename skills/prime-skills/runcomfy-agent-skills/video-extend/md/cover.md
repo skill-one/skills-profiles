@@ -1,5 +1,0 @@
-# video-extend (`prime-skills/runcomfy-agent-skills/video-extend`)
-
-## cover
-
-A focused video craftsman in a hoodie sits at an editing workstation, typing on a keyboard, pointing at a monitor showing a single frozen clip frame with an empty filmstrip trailing beside it, headphones around his neck

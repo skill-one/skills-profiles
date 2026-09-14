@@ -1,5 +1,0 @@
-# customer-research (`coreyhaines31/marketingskills/customer-research`)
-
-## cover
-
-A focused female customer researcher in glasses and a soft cardigan leaning over a desk piled with highlighted interview transcripts, sweeping a highlighter across a page, corkboard behind her pinned with candid photos and note cards

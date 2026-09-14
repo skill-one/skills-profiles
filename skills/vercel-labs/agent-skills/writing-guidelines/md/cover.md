@@ -1,5 +1,0 @@
-# writing-guidelines (`vercel-labs/agent-skills/writing-guidelines`)
-
-## cover
-
-A bespectacled technical editor in a rolled-sleeve shirt, red pen in hand, circling a smoother rewrite on a printed page, open style-guide handbook and laptop beside the keyboard, stack of drafts ready to publish, tidy desk, focused expression

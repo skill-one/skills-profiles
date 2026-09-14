@@ -1,5 +1,0 @@
-# convex-billing (`get-convex/agent-skills/convex-billing`)
-
-## cover
-
-A software engineer in a hoodie plugs a cable from a card reader into his laptop showing a finished app, checkout code on the screen, sticky notes and energy drink cans on the desk, dim night office

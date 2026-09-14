@@ -1,5 +1,0 @@
-# expo-dev-client (`expo/skills/expo-dev-client`)
-
-## cover
-
-A bearded developer in a hoodie with headphones around his neck holds an iPhone plugged into his laptop by a cable, lit by the terminal glow, coffee mug and notebook on the desk, home office at night

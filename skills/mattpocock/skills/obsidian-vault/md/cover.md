@@ -1,5 +1,0 @@
-# obsidian-vault (`mattpocock/skills/obsidian-vault`)
-
-## cover
-
-A bespectacled librarian in a knitted cardigan and lanyard leans over a desk buried under towering stacks of paper notes, holding a laptop displaying a constellation-like graph of connected dots, squinting while riffling through loose index cards

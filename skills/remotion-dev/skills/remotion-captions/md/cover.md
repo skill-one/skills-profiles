@@ -1,5 +1,0 @@
-# remotion-captions (`remotion-dev/skills/remotion-captions`)
-
-## cover
-
-A captioner wearing headphones, typing on a keyboard at an editing desk, monitor showing a video frame and an audio waveform, editing timeline on a second screen, dim studio room, focused expression, desk lamp glowing

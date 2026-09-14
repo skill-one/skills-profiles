@@ -1,5 +1,0 @@
-# clerk-react-patterns (`clerk/skills/clerk-react-patterns`)
-
-## cover
-
-A developer in a hoodie sitting alone at a desk at night, holding a glowing key card toward a laptop screen showing a browser window and a circular refresh arrow, a padlock icon lighting up on the page

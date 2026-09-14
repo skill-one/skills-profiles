@@ -1,5 +1,0 @@
-# swift-concurrency (`avdlee/swift-concurrency-agent-skill/swift-concurrency`)
-
-## cover
-
-A weary bearded developer in a dark hoodie, cornered in a dim office, glaring at a monitor covered in red error markers, fingers hovering above the keyboard, corkboard of tangled red string behind him, coffee cups on the desk

@@ -1,5 +1,0 @@
-# ai-video-generation (`101-skills/superpowers/ai-video-generation`)
-
-## cover
-
-A young video director in a hoodie with headphones around his neck, typing on a laptop at a desk, glowing monitors playing half-finished film clips beside him, storyboard sketches pinned on the wall, dim home studio at night

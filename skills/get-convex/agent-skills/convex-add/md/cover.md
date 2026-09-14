@@ -1,5 +1,0 @@
-# convex-add (`get-convex/agent-skills/convex-add`)
-
-## cover
-
-A technician in a work vest plugging a coiled cable into a humming, running server machine, attaching a small clock module, a padlock module and a globe module, tools hanging from his belt, workshop benches and cables around

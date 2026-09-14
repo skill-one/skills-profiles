@@ -1,5 +1,0 @@
-# explore-code (`lllllllama/rigorpilot-skills/explore-code`)
-
-## cover
-
-Developer in a worn hoodie and glasses, headphones around neck, hands hovering over a mechanical keyboard facing a glowing terminal screen, whiteboard with a branching git diagram behind, server racks, quiet research lab, coffee mug and desk plant

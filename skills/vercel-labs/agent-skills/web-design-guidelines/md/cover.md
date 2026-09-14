@@ -1,5 +1,0 @@
-# web-design-guidelines (`vercel-labs/agent-skills/web-design-guidelines`)
-
-## cover
-
-An interface auditor in a hooded sweatshirt with headphones around his neck, sitting late at a cluttered desk, holding a clipboard, cross-checking a large monitor showing a webpage wireframe, sticky notes scattered around, coffee mug beside the keyboard

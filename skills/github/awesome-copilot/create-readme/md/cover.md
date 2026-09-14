@@ -1,5 +1,0 @@
-# create-readme (`github/awesome-copilot/create-readme`)
-
-## cover
-
-A software engineer in a hoodie and headphones, typing on a laptop next to a monitor showing a blank repository page, a printed document draft beside a coffee cup, scattered sticky notes, cozy home office desk at night

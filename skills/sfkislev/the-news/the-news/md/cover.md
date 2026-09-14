@@ -1,5 +1,0 @@
-# the-news (`sfkislev/the-news/the-news`)
-
-## cover
-
-A weary data journalist in rolled shirt sleeves at a midnight news desk, fingers on the keyboard, coffee mug in the other hand, glancing between glowing monitors and a wall of clocks marking different world times

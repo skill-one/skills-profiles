@@ -1,5 +1,0 @@
-# ponytail-audit (`dietrichgebert/ponytail/ponytail-audit`)
-
-## cover
-
-A wiry code auditor with rolled-up sleeves, leaning over a cluttered desk, holding a magnifying glass above towering stacks of blurred printouts, oversized scissors in his other hand, glowing laptop beside the piles, dim office at night

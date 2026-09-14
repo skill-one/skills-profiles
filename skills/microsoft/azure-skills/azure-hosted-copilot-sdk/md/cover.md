@@ -1,5 +1,0 @@
-# azure-hosted-copilot-sdk (`microsoft/azure-skills/azure-hosted-copilot-sdk`)
-
-## cover
-
-A software engineer in a hoodie typing on a laptop keyboard, terminal window beside a code editor, glowing cloud icon with upload arrow on a second monitor, coffee mug and sticky notes on the desk

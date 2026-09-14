@@ -1,5 +1,0 @@
-# referral-program (`coreyhaines31/marketingskills/referral-program`)
-
-## cover
-
-A friendly growth consultant in a smart-casual blazer standing at a whiteboard sketching a circle-and-arrow viral loop, holding up a smartphone with a glowing chain-link icon on screen, blank sticky notes scattered around a sunlit startup office

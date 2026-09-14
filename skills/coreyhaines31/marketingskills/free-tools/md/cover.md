@@ -1,5 +1,0 @@
-# free-tools (`coreyhaines31/marketingskills/free-tools`)
-
-## cover
-
-A startup marketer in a hoodie standing before a whiteboard covered in funnel sketches, holding a clipboard scorecard, ticking checkboxes with a pen, sticky notes and a small lightbulb sketch beside him

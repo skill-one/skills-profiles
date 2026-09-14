@@ -1,5 +1,0 @@
-# gpt-image-2 (`prime-skills/runcomfy-agent-skills/gpt-image-2`)
-
-## cover
-
-A poster and product-photo retoucher in an apron stands at a studio workbench typing on a laptop, comparing the screen with a printed poster proof pinned behind, a ceramic bottle staged on a light table beside a softbox, focused gaze

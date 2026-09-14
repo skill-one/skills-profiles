@@ -1,5 +1,0 @@
-# better-colors (`jakubkrehel/skills/better-colors`)
-
-## cover
-
-A designer in round glasses holds a fanned color swatch deck up beside a cluttered monitor, comparing one card against a messy screen crowded with clashing colored blocks and overlapping interface panels

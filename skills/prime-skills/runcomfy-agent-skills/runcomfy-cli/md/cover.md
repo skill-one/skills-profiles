@@ -1,5 +1,0 @@
-# runcomfy-cli (`prime-skills/runcomfy-agent-skills/runcomfy-cli`)
-
-## cover
-
-A man in a dark hoodie sitting at a dim desk, typing on a keyboard before a glowing terminal window, a freshly printed photo sliding out of a small printer, coffee mug, cables, headphones around his neck

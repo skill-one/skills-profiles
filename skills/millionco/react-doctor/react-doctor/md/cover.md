@@ -1,5 +1,0 @@
-# react-doctor (`millionco/react-doctor/react-doctor`)
-
-## cover
-
-A bespectacled software doctor in a white lab coat, stethoscope pressed against a glowing laptop screen, sitting at a cluttered developer desk late at night, magnifying glass in one hand, small warning lamp glowing beside the keyboard

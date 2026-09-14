@@ -1,5 +1,0 @@
-# retro (`mattpocock/skills/retro`)
-
-## cover
-
-A bespectacled man in a gray cardigan sits flipping through a thick stack of printed session logs, circling a line with a pen, dual monitors glowing with code behind him, empty coffee cup and sticky notes on the desk

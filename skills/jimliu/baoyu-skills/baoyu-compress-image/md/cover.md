@@ -1,5 +1,0 @@
-# baoyu-compress-image (`jimliu/baoyu-skills/baoyu-compress-image`)
-
-## cover
-
-A sleeves-rolled technician in a work apron typing at a desk laptop, screen showing a huge photo file beside a spinning upload circle, the photo thumbnail shrinking into a smaller one, coffee mug and graphics tablet nearby

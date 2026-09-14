@@ -1,5 +1,0 @@
-# ai-seo (`coreyhaines31/marketingskills/ai-seo`)
-
-## cover
-
-A bespectacled SEO specialist in a hoodie sits at a night desk, holding a plain white document card toward a glowing chat panel with blank speech bubbles on his monitor, his thick stack of polished reports untouched beside him

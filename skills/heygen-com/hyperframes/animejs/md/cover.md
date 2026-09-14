@@ -1,5 +1,0 @@
-# animejs (`heygen-com/hyperframes/animejs`)
-
-## cover
-
-A hoodie-wearing frame-by-frame animator at a desk, hand gripping a mouse to scrub a long timeline of keyframe dots across dual monitors, other hand sketching a bouncing character on a graphics tablet, headphones around neck, focused eyes, cozy studio

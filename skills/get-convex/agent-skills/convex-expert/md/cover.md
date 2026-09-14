@@ -1,5 +1,0 @@
-# convex-expert (`get-convex/agent-skills/convex-expert`)
-
-## cover
-
-A bearded backend developer in a hoodie at a desk late at night, typing on a keyboard, two monitors showing a code editor and a terminal with a red error banner, headphones around his neck, coffee cup nearby

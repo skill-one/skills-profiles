@@ -1,5 +1,0 @@
-# pptx (`anthropics/skills/pptx`)
-
-## cover
-
-A bespectacled slide designer with rolled-up shirt sleeves, typing on a laptop in a dark late-night office, stacks of printed outline pages and coffee cups on the desk, desk lamp lit, blank projector screen behind him

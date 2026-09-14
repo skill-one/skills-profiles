@@ -1,5 +1,0 @@
-# convex (`get-convex/agent-skills/convex`)
-
-## cover
-
-A young developer in a hoodie at a desk covered with blank sticky notes, holding a small glowing data cube, plugging a cable into his laptop while light dots flow between connected screens, whiteboard app sketches behind him

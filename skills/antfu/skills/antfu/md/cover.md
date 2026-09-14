@@ -1,5 +1,0 @@
-# antfu (`antfu/skills/antfu`)
-
-## cover
-
-A young software craftsman in a rolled-sleeve shirt and tool apron, standing on a small wooden scaffold, pressing a tiny two-button handheld remote, facing a monitor surrounded by tall stacks of gear-marked config file folders

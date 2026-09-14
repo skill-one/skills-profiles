@@ -1,5 +1,0 @@
-# review-pr (`warpdotdev/common-skills/review-pr`)
-
-## cover
-
-A bespectacled code reviewer in a plaid shirt, holding a marked-up printed diff document, one hand hovering over a keyboard about to send, desk with dual monitors glowing with code, empty coffee cups, late-night office

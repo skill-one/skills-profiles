@@ -1,5 +1,0 @@
-# caveman-explore (`juliusbrussee/caveman/caveman-explore`)
-
-## cover
-
-A focused programmer in a dark hoodie leaning toward dual monitors glowing with endless lines of code, one hand on the keyboard, the other lifting a magnifying glass, surrounded by towering stacks of file folders

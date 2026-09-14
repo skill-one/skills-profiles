@@ -1,5 +1,0 @@
-# golang-popular-libraries (`samber/cc-skills-golang/golang-popular-libraries`)
-
-## cover
-
-A bespectacled developer in a plaid shirt stands between towering shelves of glowing book spines, comparing a thick book in each hand, laptop glowing under his arm, small blue gopher plushie peeking from his pocket

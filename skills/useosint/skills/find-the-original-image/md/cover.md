@@ -1,5 +1,0 @@
-# find-the-original-image (`useosint/skills/find-the-original-image`)
-
-## cover
-
-Image provenance investigator in a rumpled jacket, glasses reflecting screen glow, dragging a cropped photo into a search page on one of three glowing monitors, grids of matching photographs filling the displays, magnifying loupe in hand, cluttered dim office

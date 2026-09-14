@@ -1,5 +1,0 @@
-# banner-design (`nextlevelbuilder/ui-ux-pro-max-skill/banner-design`)
-
-## cover
-
-A young designer in a hoodie and glasses sits at a desk, hands on a keyboard building blank banner frames on dual monitors, gradient blocks filling empty ad slots, sticky notes and coffee cups around, empty frames pinned behind

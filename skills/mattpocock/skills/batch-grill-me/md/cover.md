@@ -1,5 +1,0 @@
-# batch-grill-me (`mattpocock/skills/batch-grill-me`)
-
-## cover
-
-A focused interviewer with rolled-up sleeves sketching an unlabeled branching tree diagram with markers on a whiteboard, holding a notebook, standing in a meeting room with sticky notes and rough idea drafts pinned to the wall

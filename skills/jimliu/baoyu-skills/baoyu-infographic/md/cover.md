@@ -1,5 +1,0 @@
-# baoyu-infographic (`jimliu/baoyu-skills/baoyu-infographic`)
-
-## cover
-
-An infographic designer with rolled-up sleeves and a pencil behind his ear, holding a stylus over a tablet screen showing a draft grid poster, surrounded by printed article drafts, chart sketches, and sticky notes on a drawing desk

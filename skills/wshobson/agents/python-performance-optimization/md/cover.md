@@ -1,5 +1,0 @@
-# python-performance-optimization (`wshobson/agents/python-performance-optimization`)
-
-## cover
-
-Anxious programmer in a hooded sweatshirt, leaning toward a monitor with a crawling progress bar, one hand pointing at a profiling window with stacked colored bars, coffee cups cluttering the desk

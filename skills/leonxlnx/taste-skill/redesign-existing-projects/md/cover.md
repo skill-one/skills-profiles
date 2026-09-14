@@ -1,5 +1,0 @@
-# redesign-existing-projects (`leonxlnx/taste-skill/redesign-existing-projects`)
-
-## cover
-
-A bespectacled designer in a rolled-sleeve shirt nudges a card block aside on his monitor, screen showing a generic template page of three equal columns, stylesheet open on a second screen, sticky notes and coffee mug on the desk

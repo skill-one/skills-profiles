@@ -1,5 +1,0 @@
-# flutter-animations (`madteacher/mad-agents-skills/flutter-animations`)
-
-## cover
-
-A focused motion engineer in a hoodie with headphones around his neck, turning a large handheld control dial, smoothing a jumpy phone interface mockup on his desk monitor, screen showing a rising ease curve, cluttered workspace with sticky notes

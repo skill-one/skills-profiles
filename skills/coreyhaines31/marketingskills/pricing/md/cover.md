@@ -1,5 +1,0 @@
-# pricing (`coreyhaines31/marketingskills/pricing`)
-
-## cover
-
-A pricing strategist in a blazer and glasses leaning over a laptop showing three pricing plan cards, cursor hovering over one empty box, finger paused above the keyboard, sticky notes, coffee mug and a rocket model on the desk

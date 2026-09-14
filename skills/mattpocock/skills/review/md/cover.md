@@ -1,5 +1,0 @@
-# review (`mattpocock/skills/review`)
-
-## cover
-
-A bearded software engineer in a hoodie and glasses, leaning toward dual monitors showing branching commit graphs, marking a printed code diff with a red pen, headphones around his neck, coffee mug and sticky notes on the desk

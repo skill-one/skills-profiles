@@ -1,5 +1,0 @@
-# hyperframes-creative (`heygen-com/hyperframes/hyperframes-creative`)
-
-## cover
-
-A focused art director in a black turtleneck stands at an editing desk, holding a design spec sheet of color swatches against storyboard frames on a glowing monitor, marking swatches with a pen, swatch fans scattered nearby

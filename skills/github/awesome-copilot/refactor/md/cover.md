@@ -1,5 +1,0 @@
-# refactor (`github/awesome-copilot/refactor`)
-
-## cover
-
-A focused programmer in a hoodie and fingerless gloves leans over an open machine still humming and steaming, holding a branching-diagram chart in one hand, carefully lifting a glowing wire with tweezers, caution cone and blinking lights nearby

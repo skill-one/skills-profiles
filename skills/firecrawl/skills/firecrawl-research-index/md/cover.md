@@ -1,5 +1,0 @@
-# firecrawl-research-index (`firecrawl/skills/firecrawl-research-index`)
-
-## cover
-
-A bespectacled woman in a tweed cardigan sits at a cluttered desk, typing on a laptop streaming glowing result cards, magnifying glass raised over a highlighted line in an open journal, floor-to-ceiling stacks of academic papers behind her

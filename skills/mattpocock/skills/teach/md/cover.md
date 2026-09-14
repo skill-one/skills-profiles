@@ -1,5 +1,0 @@
-# teach (`mattpocock/skills/teach`)
-
-## cover
-
-A patient HTML tutor in round glasses and a knitted cardigan, pointing at a laptop screen, beside a cluttered desk with a large monitor filled with rows of tiny tutorial video thumbnails, stacked programming books and scattered sticky notes

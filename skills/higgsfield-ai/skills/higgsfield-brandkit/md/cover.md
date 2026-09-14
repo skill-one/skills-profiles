@@ -1,5 +1,0 @@
-# higgsfield-brandkit (`higgsfield-ai/skills/higgsfield-brandkit`)
-
-## cover
-
-A visual identity designer in a black turtleneck and round glasses stands at a studio worktable, comparing color swatch cards against blank packaging boxes, paper bags, and tote samples, an open laptop beside her

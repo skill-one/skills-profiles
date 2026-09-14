@@ -1,5 +1,0 @@
-# animate (`pbakaus/impeccable/animate`)
-
-## cover
-
-A motion designer in a hoodie with headphones around her neck, drawing a curved motion trail over a floating interface panel with a stylus, dual monitors showing static app screens behind, sticky notes with hand-drawn arcs on the desk

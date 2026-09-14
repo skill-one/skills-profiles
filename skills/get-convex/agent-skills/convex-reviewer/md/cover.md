@@ -1,5 +1,0 @@
-# convex-reviewer (`get-convex/agent-skills/convex-reviewer`)
-
-## cover
-
-A backend developer in a dark hoodie, headphones around his neck, sitting at a late-night desk, one hand on the keyboard, eyes fixed on two glowing monitors with blurred code, steaming coffee mug, server lights blinking in the background

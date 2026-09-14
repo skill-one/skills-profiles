@@ -1,5 +1,0 @@
-# ponytail (`dietrichgebert/ponytail/ponytail`)
-
-## cover
-
-Gray-haired senior developer in a worn cardigan with rolled sleeves, one hand pushing away a cardboard package box, other hand holding a thick open reference manual, seated at a cluttered desk with laptop and steaming coffee mug, late-night home office

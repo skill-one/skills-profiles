@@ -1,5 +1,0 @@
-# ai-music (`prime-skills/runcomfy-agent-skills/ai-music`)
-
-## cover
-
-A music producer wearing headphones sits at a studio desk, one monitor showing a video editing timeline, another showing an audio waveform, typing on a laptop while nodding to the beat, MIDI keyboard and coffee cup beside him

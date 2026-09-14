@@ -1,5 +1,0 @@
-# code-review (`mattpocock/skills/code-review`)
-
-## cover
-
-A bespectacled coder in a zip-up hoodie at a dim desk, leaning toward two monitors displaying colorful branching lines and green-red striped code rows, one hand on the mouse, the other pointing a pen at the screen, coffee mug nearby

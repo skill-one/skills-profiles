@@ -1,5 +1,0 @@
-# test-driven-development (`addyosmani/agent-skills/test-driven-development`)
-
-## cover
-
-A tester in a yellow safety vest sits at a desk, holding a freshly delivered paper bug report in one hand, typing a failing test into a laptop terminal with the other, a red-and-green signal lamp beside the keyboard

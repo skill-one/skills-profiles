@@ -1,5 +1,0 @@
-# extension-http-outcalls (`caffeinelabs/skills/extension-http-outcalls`)
-
-## cover
-
-A hard-hatted gatekeeper in a utility vest, typing on a rugged laptop with a glowing green terminal, thick cables running from the laptop to a massive open server gate, waiting rocket gantry behind him at dawn

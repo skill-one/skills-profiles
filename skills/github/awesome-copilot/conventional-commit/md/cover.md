@@ -1,5 +1,0 @@
-# conventional-commit (`github/awesome-copilot/conventional-commit`)
-
-## cover
-
-A weary programmer in a gray hoodie, headphones around his neck, typing on a keyboard at a cluttered desk, cursor blinking in an empty commit message box on the monitor, rubbing his forehead, empty coffee cups nearby

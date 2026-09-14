@@ -1,5 +1,0 @@
-# obsidian-bases (`kepano/obsidian-skills/obsidian-bases`)
-
-## cover
-
-A bespectacled archivist in a tweed vest and rolled-up sleeves stands at a desk buried under hundreds of note cards, holding a dossier folder, sorting cards into a neat grid by blank paper tabs, archive boxes piled behind her

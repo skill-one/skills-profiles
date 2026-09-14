@@ -1,5 +1,0 @@
-# ai-avatar-video (`magentosh/superpowers/ai-avatar-video`)
-
-## cover
-
-A video director in a studio, holding a portrait photo in one hand, typing on a laptop with the other, a stack of papers on the desk, softbox light and camera on a tripod behind him, headphones around his neck

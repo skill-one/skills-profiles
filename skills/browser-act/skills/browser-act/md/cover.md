@@ -1,5 +1,0 @@
-# browser-act (`browser-act/skills/browser-act`)
-
-## cover
-
-Man in chauffeur cap and white gloves, seated at a desk steering a small wheel, three monitors showing a spinning loader, a blank login form and a half-rendered webpage, one hand tapping an empty checkbox, glowing browser tabs

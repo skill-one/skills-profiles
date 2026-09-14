@@ -1,5 +1,0 @@
-# mobile-ios-design (`wshobson/agents/mobile-ios-design`)
-
-## cover
-
-A young developer in a gray hoodie and round glasses at a clean desk, holding an iPhone beside a laptop, comparing the live app preview with wireframe sketches pinned behind the monitor, one hand resting on the trackpad

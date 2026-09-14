@@ -1,5 +1,0 @@
-# agent-browser (`vercel-labs/agent-browser/agent-browser`)
-
-## cover
-
-A young web tester in a hoodie, headphones around his neck, typing at a dual-monitor desk while a browser window with a blank form glows on screen, an untouched mouse and a checklist notepad beside his keyboard

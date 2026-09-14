@@ -1,5 +1,0 @@
-# is-this-photo-real (`useosint/skills/is-this-photo-real`)
-
-## cover
-
-A photo fact-checker in glasses and rolled sleeves sits late at night comparing a viral image on his phone against grids of matching thumbnails on two monitors, thumb hovering over the forward button, coffee cups on the cluttered desk

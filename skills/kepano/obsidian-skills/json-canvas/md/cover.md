@@ -1,5 +1,0 @@
-# json-canvas (`kepano/obsidian-skills/json-canvas`)
-
-## cover
-
-A bespectacled craftsman in a worn canvas apron, dragging small rectangular cards across a huge whiteboard, drawing connecting lines between cards with a marker, scattered sticky notes and loose papers strewn across the floor, focused expression

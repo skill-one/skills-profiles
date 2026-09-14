@@ -1,5 +1,0 @@
-# golang-benchmark (`samber/cc-skills-golang/golang-benchmark`)
-
-## cover
-
-A focused engineer in glasses and a hoodie sits at a late-night desk, typing on a mechanical keyboard, comparing two side-by-side bar charts on dual glowing monitors, coffee mug and sticky notes nearby, screen light on his face

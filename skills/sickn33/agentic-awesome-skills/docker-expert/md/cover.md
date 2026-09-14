@@ -1,5 +1,0 @@
-# docker-expert (`sickn33/agentic-awesome-skills/docker-expert`)
-
-## cover
-
-A young engineer in a hoodie kneeling before an open server rack, lifting a small toy shipping container out of a glowing laptop toward the rack, tangled cables and a coffee mug on the desk, blinking warning lights above

@@ -1,5 +1,0 @@
-# aso-audit (`coreyhaines31/marketingskills/aso-audit`)
-
-## cover
-
-A bespectacled app marketing specialist in a hoodie leaning at a desk, squinting at a smartphone showing an app store page, laptop open beside, sticky notes everywhere, declining download curve chalked on the whiteboard, late-night startup office

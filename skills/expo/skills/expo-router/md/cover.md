@@ -1,5 +1,0 @@
-# expo-router (`expo/skills/expo-router`)
-
-## cover
-
-A focused young developer in a hoodie with headphones around his neck, standing before a wall of pinned page cards, furrowing his brow while stretching threads to connect distant cards, holding a smartphone in one hand

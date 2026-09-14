@@ -1,5 +1,0 @@
-# vitest (`antfu/skills/vitest`)
-
-## cover
-
-A focused software craftsman in a hoodie with rolled-up sleeves, pressing one key as his terminal floods with green checkmarks, leaning toward the glowing screen in a late-night workspace, coffee cup beside his mechanical keyboard

@@ -1,5 +1,0 @@
-# prisma-mongodb-upgrade (`prisma/skills/prisma-mongodb-upgrade`)
-
-## cover
-
-Bearded database migration consultant in a hoodie at his desk, holding a printed schema file beside a laptop, a cable plug lying unplugged with no matching socket, database diagrams pinned on the wall

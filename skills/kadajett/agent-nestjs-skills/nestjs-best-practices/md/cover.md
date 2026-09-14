@@ -1,5 +1,0 @@
-# nestjs-best-practices (`kadajett/agent-nestjs-skills/nestjs-best-practices`)
-
-## cover
-
-A bearded programmer in a hoodie works late at a dim desk, circling a node on a glowing module diagram on his monitor, laptop, coffee mug and sticky notes scattered around, whiteboard of boxes and arrows behind him

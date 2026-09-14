@@ -1,5 +1,0 @@
-# create-pr (`warpdotdev/common-skills/create-pr`)
-
-## cover
-
-A developer in a hoodie with headphones around the neck, pressing enter on a keyboard at a desk with two monitors, terminal window with green check marks, git branch graph on screen, coffee mug, dim evening office

@@ -1,5 +1,0 @@
-# expo-upgrade (`expo/skills/expo-upgrade`)
-
-## cover
-
-Software developer in a hoodie typing an install command in a laptop terminal, untangling a knot of charging cables beside dual monitors glowing with red alert panels, sticky notes and energy drink cans on the cluttered desk, late night office

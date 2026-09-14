@@ -1,5 +1,0 @@
-# source-driven-development (`addyosmani/agent-skills/source-driven-development`)
-
-## cover
-
-A bearded programmer in glasses and a plaid shirt, holding an open documentation binder with a magnifying glass, checking his glowing monitor, one hand hovering over the keyboard, stacked binders on a cluttered desk, warm desk lamp glow

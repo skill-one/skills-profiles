@@ -1,5 +1,0 @@
-# prisma-driver-adapter-implementation (`prisma/skills/prisma-driver-adapter-implementation`)
-
-## cover
-
-A bespectacled software craftsman in a rolled-up flannel shirt kneels beside a humming server rack, plugging a glowing cable into his laptop, tracing tangled transaction lines on screen with a magnifying glass, scattered tools and notebooks around him

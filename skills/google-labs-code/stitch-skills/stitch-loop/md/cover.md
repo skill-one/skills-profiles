@@ -1,5 +1,0 @@
-# stitch-loop (`google-labs-code/stitch-skills/stitch-loop`)
-
-## cover
-
-A focused young developer in a hoodie sits at a cluttered desk, hand-stitching a glowing webpage wireframe with a large needle and thread, a folded task note pinned beside a laptop showing blank page drafts waiting to be built

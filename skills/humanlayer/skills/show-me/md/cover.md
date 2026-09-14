@@ -1,5 +1,0 @@
-# show-me (`humanlayer/skills/show-me`)
-
-## cover
-
-A bespectacled man in a hoodie with sleeves pushed up turns from a laptop of dense scribbled paragraphs to sketch a box-and-arrow flowchart on a whiteboard, marker mid-stroke, crumpled notes piled on the desk

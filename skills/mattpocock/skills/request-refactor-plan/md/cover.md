@@ -1,5 +1,0 @@
-# request-refactor-plan (`mattpocock/skills/request-refactor-plan`)
-
-## cover
-
-A bespectacled engineer in a plaid shirt leaning over a cluttered desk, pointing at a laptop screen showing a glowing branching diagram, carefully guiding a knot of tangled wires away from the monitor, sticky notes and coffee cups scattered around

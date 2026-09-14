@@ -1,5 +1,0 @@
-# wrangler (`cloudflare/skills/wrangler`)
-
-## cover
-
-A developer in a worn hoodie, headphones around his neck, fingers hovering over a mechanical keyboard, squinting at a glowing terminal screen, one hand rubbing his temple, steaming coffee mug at his elbow, dim desk lamp, late night

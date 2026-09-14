@@ -1,5 +1,0 @@
-# to-issues (`mattpocock/skills/to-issues`)
-
-## cover
-
-A thoughtful developer in a hoodie and glasses at a cluttered desk, cutting a long printed document into small blank cards with scissors, arranging them into neat columns on a corkboard beside a glowing laptop

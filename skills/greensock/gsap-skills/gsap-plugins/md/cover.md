@@ -1,5 +1,0 @@
-# gsap-plugins (`greensock/gsap-skills/gsap-plugins`)
-
-## cover
-
-A young web motion designer in a hoodie, headphones around his neck, hunched at a night desk, pressing one key with a finger while staring at a monitor showing a frozen webpage, coffee mug and sticky notes nearby

@@ -1,5 +1,0 @@
-# imagegen-frontend-web (`leonxlnx/taste-skill/imagegen-frontend-web`)
-
-## cover
-
-A focused designer in a black turtleneck and round glasses, typing at a monitor filled with generated webpage section previews, a stack of finalized documents beside the keyboard, section thumbnail cards pinned along the wall, late evening studio

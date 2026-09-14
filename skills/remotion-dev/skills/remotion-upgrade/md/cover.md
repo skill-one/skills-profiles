@@ -1,5 +1,0 @@
-# remotion-upgrade (`remotion-dev/skills/remotion-upgrade`)
-
-## cover
-
-Focused developer in glasses and a hoodie holding a glowing terminal, carefully stacking mismatched software package boxes of uneven heights into one aligned row on his desk, shelves of chaotic boxes behind him, dim home office

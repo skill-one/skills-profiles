@@ -1,5 +1,0 @@
-# free-tool-strategy (`coreyhaines31/marketingskills/free-tool-strategy`)
-
-## cover
-
-A focused marketing strategist in a smart-casual blazer, pen hovering between two checkbox rows on a printed scorecard, leaning over a desk with a laptop showing a sketched tool wireframe, whiteboard of sticky notes and funnel sketches behind

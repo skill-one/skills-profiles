@@ -1,5 +1,0 @@
-# caveman-compress (`juliusbrussee/caveman/caveman-compress`)
-
-## cover
-
-A lean craftsman in rolled sleeves and glasses at a cluttered workshop desk, one hand on a glowing laptop terminal, the other squeezing a fat bloated manuscript into a slim booklet, towering stacks of overstuffed file folders behind him

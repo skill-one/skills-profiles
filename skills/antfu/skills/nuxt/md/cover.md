@@ -1,5 +1,0 @@
-# nuxt (`antfu/skills/nuxt`)
-
-## cover
-
-A young full-stack web engineer in a hoodie sits at a desk with dual monitors glowing with webpage layouts and server diagrams, hands typing on a keyboard, a stopwatch and magnifying glass beside him, a humming server rack behind

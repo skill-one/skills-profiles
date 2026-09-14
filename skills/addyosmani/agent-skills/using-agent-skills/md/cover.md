@@ -1,5 +1,0 @@
-# using-agent-skills (`addyosmani/agent-skills/using-agent-skills`)
-
-## cover
-
-A triage nurse in white scrubs and stethoscope sorting branching flowchart diagrams on a hospital triage board, pointing at one glowing path while holding a clipboard of incoming task cards, standing at a clinic intake desk

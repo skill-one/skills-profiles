@@ -1,5 +1,0 @@
-# ad-creative (`coreyhaines31/marketingskills/ad-creative`)
-
-## cover
-
-A weary ad copywriter in a hoodie, headphones around her neck, scrolling a CSV spreadsheet grid on her glowing laptop screen, printed performance charts and an empty coffee cup on the desk, blank notepad waiting, quiet late-night office

@@ -1,5 +1,0 @@
-# writing-for-agents (`mattpocock/skills/writing-for-agents`)
-
-## cover
-
-A bespectacled woman in a rolled-sleeve shirt points at a highlighter-marked printed document, a small robot beside her leaning in to read it, sticky notes and an open laptop around her cluttered home-office desk

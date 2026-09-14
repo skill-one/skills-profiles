@@ -1,5 +1,0 @@
-# golang-pro (`jeffallan/claude-skills/golang-pro`)
-
-## cover
-
-A bearded engineer in a dark hoodie and headphones hunches at a night office desk, typing intently on a keyboard, screens glowing with spiking latency graphs and flame-chart panels, empty coffee cups beside him

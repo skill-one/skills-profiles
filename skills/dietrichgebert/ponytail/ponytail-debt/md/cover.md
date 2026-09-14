@@ -1,5 +1,0 @@
-# ponytail-debt (`dietrichgebert/ponytail/ponytail-debt`)
-
-## cover
-
-A bespectacled programmer with a pen behind the ear, holding a magnifying glass toward a glowing terminal, ticking rows in a thick paper ledger, desk littered with sticky notes and empty coffee cups, lone desk lamp in a dim office

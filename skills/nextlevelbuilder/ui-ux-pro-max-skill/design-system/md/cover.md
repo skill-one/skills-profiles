@@ -1,5 +1,0 @@
-# design-system (`nextlevelbuilder/ui-ux-pro-max-skill/design-system`)
-
-## cover
-
-Tidy designer in a dark turtleneck and round glasses typing on a laptop at a crowded kickoff desk, sticky notes and paint swatches scattered everywhere, mismatched interface mockups pinned on the wall, calmly sorting color chips into a neat row

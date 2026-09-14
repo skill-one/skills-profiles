@@ -1,5 +1,0 @@
-# dbs-restore (`dontbesilent2025/dbskill/dbs-restore`)
-
-## cover
-
-An archivist in round glasses and a vest pulling a thick manila folder from a cabinet drawer, laying it open at a ribbon-bookmarked page on the counter, cold teacup beside an empty visitor stool, quiet record shelves around

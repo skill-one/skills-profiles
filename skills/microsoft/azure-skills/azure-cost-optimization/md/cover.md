@@ -1,5 +1,0 @@
-# azure-cost-optimization (`microsoft/azure-skills/azure-cost-optimization`)
-
-## cover
-
-A bespectacled cloud cost auditor in a rolled-sleeve shirt, squinting at a laptop dashboard showing a steep cost spike, surrounded by scattered billing statements and a coffee mug, alone at a lamp-lit desk on a month-end evening

@@ -1,5 +1,0 @@
-# social (`coreyhaines31/marketingskills/social`)
-
-## cover
-
-A young social media manager with headphones around neck, holding an open paper content calendar planner, staring at a laptop showing a blank empty input box, worried expression, desk cluttered with coffee cup and smartphone, home office

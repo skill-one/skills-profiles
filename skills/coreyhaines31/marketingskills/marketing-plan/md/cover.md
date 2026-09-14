@@ -1,5 +1,0 @@
-# marketing-plan (`coreyhaines31/marketingskills/marketing-plan`)
-
-## cover
-
-A marketing strategist in a smart blazer, standing in a studio office, pinning sticky notes along a long paper timeline on a wall board, scattered printed documents, an open laptop and coffee cups on the desk beside her

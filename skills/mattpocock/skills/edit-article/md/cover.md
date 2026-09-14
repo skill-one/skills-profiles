@@ -1,5 +1,0 @@
-# edit-article (`mattpocock/skills/edit-article`)
-
-## cover
-
-A bespectacled editor in a knit cardigan sits at a wooden desk, red pen hovering over a printed manuscript, frowning at a marked-up draft page, scattered papers and a desk lamp in a quiet study

@@ -1,5 +1,0 @@
-# dbs-hook (`dontbesilent2025/dbskill/dbs-hook`)
-
-## cover
-
-A young copywriter in a hoodie with headphones around his neck, crossing out the first line of a video script with a red pen, crumpled drafts and an hourglass on the desk, phone on a tripod, late-night ring light glow

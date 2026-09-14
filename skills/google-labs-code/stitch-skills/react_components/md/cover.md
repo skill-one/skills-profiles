@@ -1,5 +1,0 @@
-# react:components (`google-labs-code/stitch-skills/react:components`)
-
-## cover
-
-A young frontend developer in a hoodie and glasses, holding a printed webpage mockup and comparing it with a laptop screen of colorful interface blocks, sticky notes and coffee cup on a wooden desk in a bright studio office

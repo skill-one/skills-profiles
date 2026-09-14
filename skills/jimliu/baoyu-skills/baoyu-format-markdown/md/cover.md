@@ -1,5 +1,0 @@
-# baoyu-format-markdown (`jimliu/baoyu-skills/baoyu-format-markdown`)
-
-## cover
-
-Round-glasses typographer with rolled-up sleeves at a late-night desk, red pen in hand, leaning toward a laptop screen of dense unbroken gray line blocks, yellow highlighter and divider cards stacked beside the keyboard, coffee cup steaming

@@ -1,5 +1,0 @@
-# dbs-chatroom (`dontbesilent2025/dbskill/dbs-chatroom`)
-
-## cover
-
-A host in a tailored blazer and headset microphone holding a tablet toward blank placards on a round table, empty chairs around, a whiteboard with tangled flowchart lines behind him, scattered notes covering the desk

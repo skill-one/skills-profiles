@@ -1,5 +1,0 @@
-# web-design-guidelines (`antfu/skills/web-design-guidelines`)
-
-## cover
-
-A focused inspector in round glasses and rolled-up sleeves, holding a clipboard checklist and magnifying glass, leaning toward a laptop screen showing webpage layouts, dual monitors with interface drafts behind, sticky notes scattered, finger hovering over the keyboard

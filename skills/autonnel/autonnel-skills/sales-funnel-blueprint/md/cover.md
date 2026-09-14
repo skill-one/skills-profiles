@@ -1,5 +1,0 @@
-# sales-funnel-blueprint (`autonnel/autonnel-skills/sales-funnel-blueprint`)
-
-## cover
-
-A bespectacled funnel architect in a rolled-sleeve shirt and vest, leaning over a drafting table, tracing a paper blueprint of a funnel narrowing into connected page boxes with a pencil, open laptop and miniature shopping cart beside him

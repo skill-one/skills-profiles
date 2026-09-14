@@ -1,5 +1,0 @@
-# shape (`pbakaus/impeccable/shape`)
-
-## cover
-
-An interaction designer in rolled-up sleeves and glasses, sketching wireframe boxes on a paper design brief, desk scattered with sticky notes and pencil layout sketches, glowing monitors nearby, one hand pointing at an unfinished interface drawing

@@ -1,5 +1,0 @@
-# self-improving-agent (`zhaono1/agent-playbook/self-improving-agent`)
-
-## cover
-
-A meticulous auditor in rolled sleeves and a lanyard, typing a terminal command on a laptop, ticking boxes on a printed checklist, red-flagged sticky note on the monitor, failed report pages stacked beside a desk lamp, quiet night office

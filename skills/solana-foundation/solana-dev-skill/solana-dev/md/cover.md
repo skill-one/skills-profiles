@@ -1,5 +1,0 @@
-# solana-dev (`solana-foundation/solana-dev-skill/solana-dev`)
-
-## cover
-
-A bearded developer in a dark hoodie, hunched at a cluttered desk at night, typing commands on a laptop, eyes fixed on a glowing terminal, red error glow lighting his tired face, empty coffee cups and tangled cables nearby

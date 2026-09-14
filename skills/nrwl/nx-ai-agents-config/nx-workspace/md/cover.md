@@ -1,5 +1,0 @@
-# nx-workspace (`nrwl/nx-ai-agents-config/nx-workspace`)
-
-## cover
-
-A developer in a gray hoodie with headphones around his neck, typing on a laptop in a vast unfamiliar code archive, monitors glowing with a branching diagram of connected projects, towering shelves of crates behind him

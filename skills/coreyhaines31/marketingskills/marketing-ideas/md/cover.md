@@ -1,5 +1,0 @@
-# marketing-ideas (`coreyhaines31/marketingskills/marketing-ideas`)
-
-## cover
-
-A growth strategist in rolled sleeves and casual blazer pinning idea cards on a corkboard wall, blank sticky notes scattered on the desk, a finished product box beside an open laptop, standing alone in a small startup office

@@ -1,5 +1,0 @@
-# schema-markup (`coreyhaines31/marketingskills/schema-markup`)
-
-## cover
-
-Markup specialist in round glasses and grey hoodie typing on a laptop at a tidy desk, glowing code editor on the monitor, golden star icons and speech bubbles floating from the screen into a magnifying-glass search panel

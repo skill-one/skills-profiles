@@ -1,5 +1,0 @@
-# dart-run-static-analysis (`dart-lang/skills/dart-run-static-analysis`)
-
-## cover
-
-A focused Dart developer in a dark hoodie and round glasses, sitting alone at a late-night desk before commit time, holding a magnifying glass toward a glowing monitor, two screens casting colored light on his face, coffee mug and notebooks beside him

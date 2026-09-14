@@ -1,5 +1,0 @@
-# azure-compute (`microsoft/azure-skills/azure-compute`)
-
-## cover
-
-A bespectacled cloud consultant in a checked shirt and lanyard sits at a dual-monitor desk, pointing at screens covered in grids of cloud-shaped server size tiles and rising price bar charts, sticky notes and coffee cup beside the keyboard

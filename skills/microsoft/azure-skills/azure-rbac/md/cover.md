@@ -1,5 +1,0 @@
-# azure-rbac (`microsoft/azure-skills/azure-rbac`)
-
-## cover
-
-A cautious cloud access administrator in a hoodie, glasses and lanyard, typing a terminal command on a laptop, one finger hovering above the enter key, seated before two glowing monitors in a dim glass office at dusk

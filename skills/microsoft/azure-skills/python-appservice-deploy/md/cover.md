@@ -1,5 +1,0 @@
-# python-appservice-deploy (`microsoft/azure-skills/python-appservice-deploy`)
-
-## cover
-
-A focused engineer in a dark hoodie lifts a glowing zip package from his laptop toward a vast luminous cloud of servers above, local web app code bright on screen, morning light through window

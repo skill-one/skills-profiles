@@ -1,5 +1,0 @@
-# auth-implementation-patterns (`wshobson/agents/auth-implementation-patterns`)
-
-## cover
-
-A tired software engineer in a hoodie at a midnight office desk, pressing a glowing brass padlock to seal rows of password cards, a tiny rocket model and empty coffee cups beside his glowing monitors

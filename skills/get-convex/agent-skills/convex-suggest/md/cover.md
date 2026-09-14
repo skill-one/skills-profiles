@@ -1,5 +1,0 @@
-# convex-suggest (`get-convex/agent-skills/convex-suggest`)
-
-## cover
-
-A developer-shopkeeper in a hoodie and apron standing at a cluttered workbench, holding out a glowing cube-shaped package with both hands, beside a freshly built wooden wheel, a packed toolbox and a closing laptop, evening light through the window

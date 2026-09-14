@@ -1,5 +1,0 @@
-# expo-api-routes (`expo/skills/expo-api-routes`)
-
-## cover
-
-A focused developer in a hoodie typing on a laptop at a night desk, plugging a glowing cable from a smartphone into a small locked server box, brass keys hanging on the vault beside

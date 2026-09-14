@@ -1,5 +1,0 @@
-# expo-examples (`expo/skills/expo-examples`)
-
-## cover
-
-A bespectacled archivist in a knitted vest, typing a command in a laptop terminal, pulling a folder from shelves of boxed sample projects, smartphone on a stand beside a credit card, a map and a database cylinder on his desk

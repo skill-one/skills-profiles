@@ -1,5 +1,0 @@
-# openapi-spec-generation (`wshobson/agents/openapi-spec-generation`)
-
-## cover
-
-A focused software architect in a gray knit sweater with headphones around her neck, sketching blank boxes linked by arrows on a whiteboard, two laptops and scattered sticky notes on the desk, eraser smudges and unfinished lines visible

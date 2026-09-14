@@ -1,5 +1,0 @@
-# browser-testing-with-devtools (`addyosmani/agent-skills/browser-testing-with-devtools`)
-
-## cover
-
-A web tester with glasses and a lanyard leaning toward his monitor, hand on mouse after clicking refresh, page reloading beside an inspector panel, one element boxed by a highlight outline, red warning icons glowing in a side log

@@ -1,5 +1,0 @@
-# launch-strategy (`coreyhaines31/marketingskills/launch-strategy`)
-
-## cover
-
-A focused launch strategist in a rolled-sleeve hoodie, ticking checkboxes on a clipboard checklist, standing behind a startup desk with an open laptop, small rocket model, coffee mug, and a whiteboard covered in arrows

@@ -1,5 +1,0 @@
-# ai-video-generation (`genmedia-labs/skills/ai-video-generation`)
-
-## cover
-
-A young video creator in a hoodie with headphones around his neck sits at a studio desk, holding one small printed photo up to a glowing monitor showing the same scene as moving frames, filmstrip strips scattered around

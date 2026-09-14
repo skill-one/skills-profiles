@@ -1,5 +1,0 @@
-# skill-development (`anthropics/claude-code/skill-development`)
-
-## cover
-
-A bespectacled trainer with rolled-up sleeves stands at a cluttered wooden desk, holding a printed document and pointing at an open laptop as if explaining, blank sticky notes and open notebooks scattered around

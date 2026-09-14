@@ -1,5 +1,0 @@
-# cro (`coreyhaines31/marketingskills/cro`)
-
-## cover
-
-A bespectacled analyst in a hoodie leaning toward a large monitor showing a website page under a glowing heatmap overlay, hot zones on the headline, a cold ignored button below, scratching his head, coffee mug on desk

@@ -1,5 +1,0 @@
-# better-interface (`jakubkrehel/skills/better-interface`)
-
-## cover
-
-A bespectacled developer in a flannel shirt and lanyard leaning at a desk, finger hovering over the mouse, eyes fixed on a monitor showing a webpage with an inspection panel and highlighted elements, coffee mug beside the keyboard

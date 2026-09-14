@@ -1,5 +1,0 @@
-# internal-comms (`anthropics/skills/internal-comms`)
-
-## cover
-
-A slouched office editor in a wrinkled shirt and lanyard, hands frozen above a keyboard, staring at a blank document on his monitor, crumpled paper balls and empty coffee cups scattered on the desk, low afternoon sunlight through window blinds

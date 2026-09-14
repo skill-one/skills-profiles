@@ -1,5 +1,0 @@
-# thermo-nuclear-code-quality-review (`cursor/plugins/thermo-nuclear-code-quality-review`)
-
-## cover
-
-A bespectacled developer in a hoodie with headphones around his neck, leaning over dual monitors showing side-by-side glowing code panels, index finger hovering above a large green button on screen, steaming coffee mug beside the mechanical keyboard

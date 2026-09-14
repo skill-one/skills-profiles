@@ -1,5 +1,0 @@
-# architecture-decision-records (`wshobson/agents/architecture-decision-records`)
-
-## cover
-
-A bespectacled software architect in a plaid shirt typing plain-text notes on a laptop in a meeting room just after a heated tech debate, whiteboard covered with sticky notes, arrows and crossed-out option boxes, empty coffee cups, chairs askew

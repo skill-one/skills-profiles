@@ -1,5 +1,0 @@
-# dbs-goal (`dontbesilent2025/dbskill/dbs-goal`)
-
-## cover
-
-A bespectacled goal auditor in a tailored vest with rolled-up sleeves, holding a small blank card, pen hovering mid-air, leaning forward over a wooden desk, empty chair opposite, open notebook and laptop, quiet consultation room

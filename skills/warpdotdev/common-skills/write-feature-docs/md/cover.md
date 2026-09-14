@@ -1,5 +1,0 @@
-# write-feature-docs (`warpdotdev/common-skills/write-feature-docs`)
-
-## cover
-
-A focused technical writer in glasses, headphones around neck, typing a command into a glowing terminal on one monitor, blank documentation page open on the other, paper notes and coffee mug beside the keyboard, quiet office desk

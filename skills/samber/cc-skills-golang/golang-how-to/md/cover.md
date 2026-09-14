@@ -1,5 +1,0 @@
-# golang-how-to (`samber/cc-skills-golang/golang-how-to`)
-
-## cover
-
-A plaid-shirted programmer sits at a desk holding a small gopher plush toy, the other hand reaching toward sticky notes covering the wall, a laptop open before him showing Go code

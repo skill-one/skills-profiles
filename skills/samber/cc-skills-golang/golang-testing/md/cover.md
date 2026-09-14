@@ -1,5 +1,0 @@
-# golang-testing (`samber/cc-skills-golang/golang-testing`)
-
-## cover
-
-A bearded software engineer in a dark hoodie hunched at a late-night office desk, one hand on keyboard, staring at a glowing monitor with a green progress bar, fresh code editor open beside, coffee mug nearby, expectant posture

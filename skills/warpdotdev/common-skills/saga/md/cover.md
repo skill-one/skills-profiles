@@ -1,5 +1,0 @@
-# saga (`warpdotdev/common-skills/saga`)
-
-## cover
-
-A software engineer in a headset and hoodie, seated at a wide desk of glowing monitors showing dashboard panels and network graphs, arms crossed calmly, leaning back with one finger pressed on a large approval button

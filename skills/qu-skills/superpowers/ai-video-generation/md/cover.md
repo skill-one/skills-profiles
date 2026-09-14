@@ -1,5 +1,0 @@
-# ai-video-generation (`qu-skills/superpowers/ai-video-generation`)
-
-## cover
-
-A young video producer in a hoodie with headphones around his neck, typing on a laptop, storyboard sketches and a clapperboard on the desk, an empty camera tripod beside him, a glowing imagined film scene floating above the screen

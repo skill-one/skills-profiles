@@ -1,5 +1,0 @@
-# golang-samber-do (`samber/cc-skills-golang/golang-samber-do`)
-
-## cover
-
-A bearded programmer in a flannel shirt kneels at a cluttered desk, holding a glowing syringe injecting liquid into tangled cables linking stacked server boxes, a long chain of connector plugs stretching across the desk

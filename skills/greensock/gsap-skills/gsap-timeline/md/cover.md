@@ -1,5 +1,0 @@
-# gsap-timeline (`greensock/gsap-skills/gsap-timeline`)
-
-## cover
-
-A motion designer in headphones and a rolled-up-sleeve shirt leans over a glowing monitor of staggered colored timeline bars, one hand dragging a playhead marker, the other tapping a beat on the desk, coffee cup beside the keyboard

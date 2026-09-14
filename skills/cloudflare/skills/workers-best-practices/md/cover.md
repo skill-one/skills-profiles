@@ -1,5 +1,0 @@
-# workers-best-practices (`cloudflare/skills/workers-best-practices`)
-
-## cover
-
-A software engineer in a plaid shirt and cowboy hat pressing a keyboard key with one hand while twirling a lasso overhead, glowing desk monitors beside him, a cloud-shaped server rack rising through the window

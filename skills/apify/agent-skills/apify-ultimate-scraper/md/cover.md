@@ -1,5 +1,0 @@
-# apify-ultimate-scraper (`apify/agent-skills/apify-ultimate-scraper`)
-
-## cover
-
-A laid-back data scraper in a hoodie and slippers, feet up on desk, sipping coffee as glowing streams of chat bubbles, map pins and comment cards flow from surrounding screens into his laptop, cluttered dim home office at night

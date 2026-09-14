@@ -1,5 +1,0 @@
-# vue-best-practices (`antfu/skills/vue-best-practices`)
-
-## cover
-
-A focused craftsman in rolled-up sleeves and work apron at a cluttered wooden workbench, splitting one huge glowing panel into small square tiles, fitting the tiles into a tidy modular frame, desk lamp and floating screen panels around

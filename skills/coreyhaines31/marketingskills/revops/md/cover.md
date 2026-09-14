@@ -1,5 +1,0 @@
-# revops (`coreyhaines31/marketingskills/revops`)
-
-## cover
-
-A revenue operations specialist in business casual shirt pointing at a CRM pipeline chart on a laptop screen, standing in a meeting room, a whiteboard behind with two crossed arrows, empty chairs on both sides

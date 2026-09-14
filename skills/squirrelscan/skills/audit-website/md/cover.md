@@ -1,5 +1,0 @@
-# audit-website (`squirrelscan/skills/audit-website`)
-
-## cover
-
-A weary website auditor in a utility vest and lanyard, holding a small red squirrel up to the monitor, its paw pointing at a declining traffic chart on the glowing screen, worried frown, cluttered late-night desk, empty coffee cup

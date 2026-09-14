@@ -1,5 +1,0 @@
-# agentix-ceo (`agentix-cloud/skills/agentix-ceo`)
-
-## cover
-
-A focused dispatcher in rolled-up sleeves and a headset, sliding task cards into slots on a tall wall board while tapping a glowing tablet, screens with blinking status lights behind him, in a busy dispatch control room

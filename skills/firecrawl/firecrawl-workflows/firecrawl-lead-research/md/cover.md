@@ -1,5 +1,0 @@
-# firecrawl-lead-research (`firecrawl/firecrawl-workflows/firecrawl-lead-research`)
-
-## cover
-
-A tired sales researcher in a rumpled shirt, hunched at a late-night desk, laptop glowing while bright threads reel in floating webpage cards, pen over printed website pages, coffee mug, sticky notes, dark city window behind

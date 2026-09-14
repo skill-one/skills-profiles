@@ -1,5 +1,0 @@
-# php-pro (`jeffallan/claude-skills/php-pro`)
-
-## cover
-
-A bearded PHP backend engineer in a dark hoodie, leaning toward a terminal glowing with analysis output, finger hovering over Enter key, code editor and server status on side monitors, empty coffee mug on desk, late night before deployment

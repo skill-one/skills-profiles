@@ -1,5 +1,0 @@
-# baoyu-image-gen (`jimliu/baoyu-skills/baoyu-image-gen`)
-
-## cover
-
-An image-generation artist in a hoodie and headphones, leaning toward twin monitors showing picture thumbnails, one hand on a compact keyboard about to press enter, printed reference photos pinned on the wall behind, in a small studio at dusk

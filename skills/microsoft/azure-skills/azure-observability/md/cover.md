@@ -1,5 +1,0 @@
-# azure-observability (`microsoft/azure-skills/azure-observability`)
-
-## cover
-
-A weary engineer in a wrinkled hoodie, headphones around his neck, hunched over a keyboard at dead of night, typing a query, eyes on cascading log streams and blinking alert icons across two glowing monitors, screen-lit dark office

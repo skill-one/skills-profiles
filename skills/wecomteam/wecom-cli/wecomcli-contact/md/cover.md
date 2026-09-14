@@ -1,5 +1,0 @@
-# wecomcli-contact (`wecomteam/wecom-cli/wecomcli-contact`)
-
-## cover
-
-A focused office worker in a smart shirt holds a blank note card, typing a search command with the other hand, glowing monitor showing rows of employee profile cards, leaning forward at a tidy desk in a quiet office

@@ -1,5 +1,0 @@
-# replicas-agent (`replicas-group/skill/replicas-agent`)
-
-## cover
-
-A developer in a hoodie at his desk, pressing enter to launch a server on his laptop, monitor showing a web app running in a browser, turning his phone toward the camera to share the live preview, waiting expectantly

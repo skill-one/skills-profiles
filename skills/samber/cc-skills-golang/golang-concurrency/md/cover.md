@@ -1,5 +1,0 @@
-# golang-concurrency (`samber/cc-skills-golang/golang-concurrency`)
-
-## cover
-
-A bespectacled programmer in a dark hoodie, headphones around his neck, holding a magnifying glass over one glowing thread, dozens of tangled luminous threads pouring from his monitors, a few loose threads drifting away, his other hand on a keyboard

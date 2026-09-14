@@ -1,5 +1,0 @@
-# stitch-design (`google-labs-code/stitch-skills/stitch-design`)
-
-## cover
-
-A young designer in a hoodie and round glasses works at a studio desk, a rough hand-drawn page sketch beside a monitor showing UI design software with structured app screen mockups, stylus in hand, sticky notes pinned nearby

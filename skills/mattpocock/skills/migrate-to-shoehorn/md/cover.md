@@ -1,5 +1,0 @@
-# migrate-to-shoehorn (`mattpocock/skills/migrate-to-shoehorn`)
-
-## cover
-
-A craftsman in a leather apron at a workbench with glowing translucent screens, carefully easing a long shoehorn into a small half-stuffed shoe, scattered shoe parts and tools around him, workshop shelves in the background

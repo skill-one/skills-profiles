@@ -1,5 +1,0 @@
-# argent-react-native-profiler (`software-mansion/argent/argent-react-native-profiler`)
-
-## cover
-
-A focused developer in a hoodie leaning toward a monitor, tracing a jagged flame graph while holding a smartphone with a stuttering scroll, surrounded by screens showing spiking timelines and glowing component diagrams

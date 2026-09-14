@@ -1,5 +1,0 @@
-# firecrawl-qa (`firecrawl/firecrawl-workflows/firecrawl-qa`)
-
-## cover
-
-A bespectacled tester in a hoodie, clicking every button and form on a large monitor showing a wireframe website mockup, laptop beside him displaying a branching sitemap diagram, sticky notes flagging broken links, cluttered desk before launch night

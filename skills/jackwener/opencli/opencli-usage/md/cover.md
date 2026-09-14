@@ -1,5 +1,0 @@
-# opencli-usage (`jackwener/opencli/opencli-usage`)
-
-## cover
-
-A dispatcher in a dark zip hoodie with headphones around his neck, seated before two glowing monitors, fingers hovering over the keyboard as he studies a floating panel of command tiles, website windows drifting around him like waiting errands

@@ -1,5 +1,0 @@
-# triage (`mattpocock/skills/triage`)
-
-## cover
-
-A weary maintainer in a hoodie sits at a Monday-morning desk, sorting blank paper tickets into colored trays, a tall screen beside him shows a long column of cards, one hand pinning a colored tag on a fresh report

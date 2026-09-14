@@ -1,5 +1,0 @@
-# ci-cd-and-automation (`addyosmani/agent-skills/ci-cd-and-automation`)
-
-## cover
-
-A focused engineer in a hoodie and headphones sits at a desk at night, finger hovering over the keyboard, monitor showing a branching diagram converging into a single main line, blank sticky notes and an empty coffee mug nearby

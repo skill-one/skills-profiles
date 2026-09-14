@@ -1,5 +1,0 @@
-# langgraph-persistence (`langchain-ai/langchain-skills/langgraph-persistence`)
-
-## cover
-
-A work-aproned archivist in cotton gloves, keys on his belt, kneels beside a slumped robot with its head panel open, inserting a glowing memory capsule into an empty slot inside its head, shelves of identical capsules behind, dim workshop

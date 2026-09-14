@@ -1,5 +1,0 @@
-# ai-video-generation (`prime-skills/runcomfy-agent-skills/ai-video-generation`)
-
-## cover
-
-A video creator in a hoodie, headphones around his neck, sits at a desk with monitors playing film clips, one hand typing on a laptop, the other holding a phone with a photo, camera gear and ring light nearby

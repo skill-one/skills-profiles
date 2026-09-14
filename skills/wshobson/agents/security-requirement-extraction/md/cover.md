@@ -1,5 +1,0 @@
-# security-requirement-extraction (`wshobson/agents/security-requirement-extraction`)
-
-## cover
-
-A focused security analyst wearing glasses and shirt with lanyard, holding a printed threat-model diagram of boxes and arrows, writing a checklist on a whiteboard beside a desk with laptop and sticky notes, small shield emblem on desk

@@ -1,5 +1,0 @@
-# momentic-test (`momentic-ai/skills/momentic-test`)
-
-## cover
-
-A software tester in a hoodie, headphones around her neck, points a pen between two screens, a web app and its failing browser test steps with a warning icon, comparing the changed page against the old test

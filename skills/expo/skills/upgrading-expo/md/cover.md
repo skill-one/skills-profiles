@@ -1,5 +1,0 @@
-# upgrading-expo (`expo/skills/upgrading-expo`)
-
-## cover
-
-A young app developer in a hoodie and tool belt, pressing a stethoscope against a smartphone screen, surrounded by phones and tablets connected by cables to a glowing laptop, toolbox and loose parts scattered across the workbench

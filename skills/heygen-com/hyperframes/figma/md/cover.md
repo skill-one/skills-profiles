@@ -1,5 +1,0 @@
-# figma (`heygen-com/hyperframes/figma`)
-
-## cover
-
-A motion designer in a hoodie and glasses sits at a dual-monitor desk at night, dragging a floating artboard from one glowing screen into a filmstrip timeline on the other, stylus in hand, headphones around the neck

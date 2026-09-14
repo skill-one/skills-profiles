@@ -1,5 +1,0 @@
-# firecrawl-demo-walkthrough (`firecrawl/firecrawl-workflows/firecrawl-demo-walkthrough`)
-
-## cover
-
-A product tester in a hoodie and glasses, standing in a startup office surrounded by large screens showing signup pages and pricing cards, holding a laptop with a small mechanical spider crawler on its keyboard, taking notes on a clipboard

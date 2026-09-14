@@ -1,5 +1,0 @@
-# writing-beats (`mattpocock/skills/writing-beats`)
-
-## cover
-
-A bespectacled writer in a rumpled cardigan stands in a study buried under towering paper stacks, holding a dog-eared document in both hands, squinting at it, a laptop beside him showing only a blank page

@@ -1,5 +1,0 @@
-# dart-generate-test-mocks (`dart-lang/skills/dart-generate-test-mocks`)
-
-## cover
-
-A software tester in a plaid shirt and headphones sits at a cluttered desk in a dim office, holding a dummy mannequin stand-in of a server, unplugged cables hanging beside a wrapped database machine, screens glowing with green checkmarks

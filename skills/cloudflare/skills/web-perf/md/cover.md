@@ -1,5 +1,0 @@
-# web-perf (`cloudflare/skills/web-perf`)
-
-## cover
-
-A website performance auditor in a hoodie, hunched over a laptop at night, hand gripping the mouse, screen showing a half-loaded webpage and a developer panel with a spinning loader and timeline graph, cold coffee mug, sticky notes

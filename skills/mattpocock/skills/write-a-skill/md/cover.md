@@ -1,5 +1,0 @@
-# write-a-skill (`mattpocock/skills/write-a-skill`)
-
-## cover
-
-A technical writer in a knitted vest and glasses, holding a printed draft with blank pages, sitting at a wooden desk before a laptop with an empty screen, sticky notes and a steaming coffee mug nearby, cursor blinking

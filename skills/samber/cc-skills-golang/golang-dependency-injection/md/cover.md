@@ -1,5 +1,0 @@
-# golang-dependency-injection (`samber/cc-skills-golang/golang-dependency-injection`)
-
-## cover
-
-A tired programmer in a plaid shirt and wrist brace, kneeling behind his desk, plugging another patch cable into a crowded patch panel, tangled cords spilling everywhere, glowing laptop open beside him, dim cluttered office corner

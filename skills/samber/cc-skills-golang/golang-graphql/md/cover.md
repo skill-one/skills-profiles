@@ -1,5 +1,0 @@
-# golang-graphql (`samber/cc-skills-golang/golang-graphql`)
-
-## cover
-
-A focused backend engineer in a hoodie at a dual-monitor desk, one screen showing a glowing node-and-line graph, the other showing stacked blocks, hands on keyboard pulling a bright connecting wire between the two screens, coffee mug nearby

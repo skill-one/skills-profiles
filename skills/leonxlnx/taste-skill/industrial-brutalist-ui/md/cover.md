@@ -1,5 +1,0 @@
-# industrial-brutalist-ui (`leonxlnx/taste-skill/industrial-brutalist-ui`)
-
-## cover
-
-A bespectacled draftsman in rolled sleeves and utility apron hunches over a drafting desk, dragging a steel straightedge across a monitor of inflated rounded corners, squaring them into sharp right-angled grid blocks, calipers and rulers scattered nearby

@@ -1,5 +1,0 @@
-# video (`coreyhaines31/marketingskills/video`)
-
-## cover
-
-A video producer in a dark hoodie with headphones around his neck, typing at a keyboard before two glowing monitors stacked with video frames, storyboard cards and a camera on the desk, late-night office light just before launch day

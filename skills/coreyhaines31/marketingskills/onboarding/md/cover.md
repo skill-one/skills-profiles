@@ -1,5 +1,0 @@
-# onboarding (`coreyhaines31/marketingskills/onboarding`)
-
-## cover
-
-A focused data analyst in round glasses and smart-casual blazer, holding a large funnel chart with shrinking layers, pointing at its narrow bottom layer, standing before a desk with laptops and dashboards in a modern startup office

@@ -1,5 +1,0 @@
-# debugging-and-error-recovery (`addyosmani/agent-skills/debugging-and-error-recovery`)
-
-## cover
-
-A tired debugging engineer in a wrinkled hoodie and glasses, holding a glowing red scroll of cascading error alerts, squinting at a monitor showing a freshly modified program, alone at a cluttered late-night desk with empty coffee cups

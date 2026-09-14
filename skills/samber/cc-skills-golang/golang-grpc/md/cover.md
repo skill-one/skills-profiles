@@ -1,5 +1,0 @@
-# golang-grpc (`samber/cc-skills-golang/golang-grpc`)
-
-## cover
-
-An engineer in a dark hoodie with headphones around his neck, crouching in a glowing server room, plugging a luminous cable between two small server boxes, laptop on a crate showing node diagrams, coffee mug beside him

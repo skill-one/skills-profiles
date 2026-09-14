@@ -1,5 +1,0 @@
-# dbs-report (`dontbesilent2025/dbskill/dbs-report`)
-
-## cover
-
-A bespectacled woman in a neat cardigan at a wooden desk, sorting stacks of archived report folders, tucking printed pages into one open binder, quiet study lined with archive boxes, a sealed envelope and lamp beside her

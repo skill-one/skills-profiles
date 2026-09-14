@@ -1,5 +1,0 @@
-# emil-design-eng (`emilkowalski/skills/emil-design-eng`)
-
-## cover
-
-A young man in a hoodie and round glasses hunches over his desk, one hand on a mechanical keyboard, the other holding a stylus fine-tuning an easing curve sketched beside a monitor showing a dropdown frozen mid-animation

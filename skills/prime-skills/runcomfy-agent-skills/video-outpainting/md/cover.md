@@ -1,5 +1,0 @@
-# video-outpainting (`prime-skills/runcomfy-agent-skills/video-outpainting`)
-
-## cover
-
-A young video editor in a hoodie types on a laptop, widescreen monitor showing a vertical smartphone clip centered on a wide horizontal canvas with blank margins on both sides, headphones around neck, dim studio at night

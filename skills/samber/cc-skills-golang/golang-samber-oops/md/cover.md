@@ -1,5 +1,0 @@
-# golang-samber-oops (`samber/cc-skills-golang/golang-samber-oops`)
-
-## cover
-
-A weary on-call engineer in a dark hoodie, headphones around his neck, typing error-wrapping code on a laptop at midnight, monitors glowing with alert charts, server racks humming behind, gopher plush and coffee mug on the desk

@@ -1,5 +1,0 @@
-# contribute-catalog (`heygen-com/hyperframes/contribute-catalog`)
-
-## cover
-
-A hoodie-wearing motion template designer with headphones around her neck, holding a smartphone in one hand and typing on a keyboard with the other, at a desk with dual monitors showing a video-editing timeline and stacked animation preview frames

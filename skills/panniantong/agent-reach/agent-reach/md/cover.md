@@ -1,5 +1,0 @@
-# agent-reach (`panniantong/agent-reach/agent-reach`)
-
-## cover
-
-A researcher in a hoodie with headphones around the neck, typing on a laptop, surrounded by glowing monitors streaming colorful social feeds and video panels, at a cluttered desk in a dim room at night

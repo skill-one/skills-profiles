@@ -1,5 +1,0 @@
-# argent-create-flow (`software-mansion/argent/argent-create-flow`)
-
-## cover
-
-A focused mobile test engineer in a hoodie and lanyard sits at a cluttered desk, thumb tapping a mounted iPhone, connecting a capture cable, three empty coffee cups lined up beside a glowing laptop and a spare test phone

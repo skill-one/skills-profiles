@@ -1,5 +1,0 @@
-# onboarding-cro (`coreyhaines31/marketingskills/onboarding-cro`)
-
-## cover
-
-A professional woman in glasses and a blazer, holding a large translucent funnel chart, tiny user icons spilling from its narrow bottom and dissolving into dust, standing at a desk with an open laptop in a dim office

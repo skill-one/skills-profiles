@@ -1,5 +1,0 @@
-# frontend-design (`pbakaus/impeccable/frontend-design`)
-
-## cover
-
-A web interface designer in round glasses and rolled sleeves, leaning close to a monitor showing a nearly finished webpage, one hand on the mouse adjusting spacing, sticky notes and a coffee mug on the desk

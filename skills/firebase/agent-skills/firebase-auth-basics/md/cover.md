@@ -1,5 +1,0 @@
-# firebase-auth-basics (`firebase/agent-skills/firebase-auth-basics`)
-
-## cover
-
-A lone developer in a hoodie, headphones around his neck, typing into a glowing terminal on his laptop, a smartphone beside him displaying a login screen, scattered app sketches on the desk, late night desk lamp

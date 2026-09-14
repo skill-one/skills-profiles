@@ -1,5 +1,0 @@
-# gsap-utils (`greensock/gsap-skills/gsap-utils`)
-
-## cover
-
-A developer in a hoodie at a cluttered desk, adjusting a large physical slider dial, screen showing a tall webpage wireframe with a floating card misaligned between tick marks, oversized scrollbar gauge beside the monitor, coffee mug nearby

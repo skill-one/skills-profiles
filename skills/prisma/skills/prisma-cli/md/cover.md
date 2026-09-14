@@ -1,5 +1,0 @@
-# prisma-cli (`prisma/skills/prisma-cli`)
-
-## cover
-
-A young developer in glasses and dark hoodie at a late-night desk, one hand hovering over the keyboard, laptop showing a code editor, terminal window with blinking cursor, second monitor displaying an empty database table grid, steaming coffee mug
