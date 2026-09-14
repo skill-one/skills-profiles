@@ -1,9 +1,0 @@
-# ad-creative (`coreyhaines31/marketingskills/ad-creative`)
-
-## persona
-
-**tool**: csv
-
-**role**: 效果广告文案师
-
-**scene**: 上一批广告数据刚跑完、下一批素材还没影时

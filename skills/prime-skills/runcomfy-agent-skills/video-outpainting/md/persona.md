@@ -1,9 +1,0 @@
-# video-outpainting (`prime-skills/runcomfy-agent-skills/video-outpainting`)
-
-## persona
-
-**tool**: runcomfy
-
-**role**: 视频扩画师
-
-**scene**: 竖屏短视频要上横屏大屏、画幅外一片空白时

@@ -1,9 +1,0 @@
-# performance-optimization (`addyosmani/agent-skills/performance-optimization`)
-
-## persona
-
-**tool**: lighthouse
-
-**role**: 性能诊断师
-
-**scene**: 页面卡得让人想关掉、又说不清慢在哪时

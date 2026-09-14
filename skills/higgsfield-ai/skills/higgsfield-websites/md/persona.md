@@ -1,9 +1,0 @@
-# higgsfield-websites (`higgsfield-ai/skills/higgsfield-websites`)
-
-## persona
-
-**tool**: higgsfield
-
-**role**: 建站工程师
-
-**scene**: 从一句"帮我做个网站"到拿到能点开的网址那一刻

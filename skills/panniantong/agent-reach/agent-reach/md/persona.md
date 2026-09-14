@@ -1,9 +1,0 @@
-# agent-reach (`panniantong/agent-reach/agent-reach`)
-
-## persona
-
-**tool**: agent-reach
-
-**role**: 全网调研员
-
-**scene**: 你打出一句「帮我查查 X」、等全网开口时

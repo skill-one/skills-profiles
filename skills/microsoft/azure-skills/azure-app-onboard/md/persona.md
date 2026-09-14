@@ -1,9 +1,0 @@
-# azure-app-onboard (`microsoft/azure-skills/azure-app-onboard`)
-
-## persona
-
-**tool**: az (Azure 命令行)
-
-**role**: 上云包工头
-
-**scene**: 应用写好了, 想搬上 Azure 却不知道该用哪些云服务、每月花多少钱时

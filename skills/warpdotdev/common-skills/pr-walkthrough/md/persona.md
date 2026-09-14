@@ -1,9 +1,0 @@
-# pr-walkthrough (`warpdotdev/common-skills/pr-walkthrough`)
-
-## persona
-
-**tool**: d3
-
-**role**: PR 导览图绘制师
-
-**scene**: reviewer 打开一个大 PR、面对几百行 diff 不知从哪读起时

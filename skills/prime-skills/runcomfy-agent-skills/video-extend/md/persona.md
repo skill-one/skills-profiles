@@ -1,9 +1,0 @@
-# video-extend (`prime-skills/runcomfy-agent-skills/video-extend`)
-
-## persona
-
-**tool**: runcomfy
-
-**role**: 视频续片师
-
-**scene**: 一条 Veo 短片到 8 秒戛然而止, 想让镜头接着往下走时

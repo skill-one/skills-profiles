@@ -1,9 +1,0 @@
-# firecrawl-research-index (`firecrawl/skills/firecrawl-research-index`)
-
-## persona
-
-**tool**: firecrawl research
-
-**role**: 文献检索员
-
-**scene**: 读到一句「研究表明……」、却对不上到底是哪篇论文时

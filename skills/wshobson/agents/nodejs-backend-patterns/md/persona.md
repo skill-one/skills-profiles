@@ -1,9 +1,0 @@
-# nodejs-backend-patterns (`wshobson/agents/nodejs-backend-patterns`)
-
-## persona
-
-**tool**: express
-
-**role**: 接口架子工
-
-**scene**: 新服务要起、路由和报错处理还没理顺时

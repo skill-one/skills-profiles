@@ -1,9 +1,0 @@
-# signup-flow-cro (`coreyhaines31/marketingskills/signup-flow-cro`)
-
-## persona
-
-**tool**: 注册表单
-
-**role**: 注册转化优化师
-
-**scene**: 看到后台数据、发现用户填到一半就流失时

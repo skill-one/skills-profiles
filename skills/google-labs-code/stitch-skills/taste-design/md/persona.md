@@ -1,9 +1,0 @@
-# taste-design (`google-labs-code/stitch-skills/taste-design`)
-
-## persona
-
-**tool**: DESIGN.md
-
-**role**: 设计规格写手
-
-**scene**: 准备让 Stitch 出界面图、又怕生成一屏「AI 味」紫光渐变时

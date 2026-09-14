@@ -1,9 +1,0 @@
-# gpt-image-2 (`gargantuax/openskills/gpt-image-2`)
-
-## persona
-
-**tool**: gpt_image.py
-
-**role**: AI 插画制片
-
-**scene**: 方案定了、文案写完, 就差一张主视觉图时

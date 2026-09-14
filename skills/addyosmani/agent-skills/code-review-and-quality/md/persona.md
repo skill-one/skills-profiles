@@ -1,9 +1,0 @@
-# code-review-and-quality (`addyosmani/agent-skills/code-review-and-quality`)
-
-## persona
-
-**tool**: git
-
-**role**: 提交把关人
-
-**scene**: 代码改完、准备合并进主分支的那一刻

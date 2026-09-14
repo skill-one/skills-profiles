@@ -1,9 +1,0 @@
-# writing-for-agents (`mattpocock/skills/writing-for-agents`)
-
-## persona
-
-**tool**: SKILL.md
-
-**role**: agent 手册撰写人
-
-**scene**: 你希望 AI 真的照做、而不是看过就忘时

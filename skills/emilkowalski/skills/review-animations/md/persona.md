@@ -1,9 +1,0 @@
-# review-animations (`emilkowalski/skills/review-animations`)
-
-## persona
-
-**tool**: devtools
-
-**role**: 动效把关人
-
-**scene**: 动效「能跑」但说不上哪儿不对、马上要提 PR 时

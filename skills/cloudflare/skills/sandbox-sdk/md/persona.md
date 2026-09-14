@@ -1,9 +1,0 @@
-# sandbox-sdk (`cloudflare/skills/sandbox-sdk`)
-
-## persona
-
-**tool**: sandbox
-
-**role**: 沙箱搭建师
-
-**scene**: AI 生成的代码不敢在自己机器上直接跑、想找个隔离环境安全执行时

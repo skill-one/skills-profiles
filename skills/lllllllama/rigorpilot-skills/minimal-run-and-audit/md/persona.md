@@ -1,9 +1,0 @@
-# minimal-run-and-audit (`lllllllama/rigorpilot-skills/minimal-run-and-audit`)
-
-## persona
-
-**tool**: run_command.py
-
-**role**: 跑况记录员
-
-**scene**: 命令刚跑完、该把这次运行留档的时候

@@ -1,9 +1,0 @@
-# baoyu-compress-image (`jimliu/baoyu-skills/baoyu-compress-image`)
-
-## persona
-
-**tool**: cwebp
-
-**role**: 图片压缩师
-
-**scene**: 导出的图片好几 MB、上传一直转圈时

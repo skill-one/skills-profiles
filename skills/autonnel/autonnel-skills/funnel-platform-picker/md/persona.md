@@ -1,9 +1,0 @@
-# funnel-platform-picker (`autonnel/autonnel-skills/funnel-platform-picker`)
-
-## persona
-
-**tool**: 计算器
-
-**role**: 采购比价员
-
-**scene**: 盯着 ClickFunnels 的月度账单, 琢磨要不要换平台时

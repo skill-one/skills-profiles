@@ -1,9 +1,0 @@
-# convex-test (`get-convex/agent-skills/convex-test`)
-
-## persona
-
-**tool**: vitest
-
-**role**: 函数质检员
-
-**scene**: Convex 函数刚写完、还没人敢保证它跑得对的时候

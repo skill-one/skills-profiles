@@ -1,9 +1,0 @@
-# summarize (`openclaw/openclaw/summarize`)
-
-## persona
-
-**tool**: summarize
-
-**role**: 内容速读员
-
-**scene**: 别人甩来一个长链接或一小时的视频, 你只想三分钟知道讲什么时

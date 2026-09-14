@@ -1,9 +1,0 @@
-# golang-samber-slog (`samber/cc-skills-golang/golang-samber-slog`)
-
-## persona
-
-**tool**: slog
-
-**role**: 日志管道架构师
-
-**scene**: 服务上线后日志又吵又贵、报错淹没在海量输出里时

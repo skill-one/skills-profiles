@@ -1,9 +1,0 @@
-# clerk-testing (`clerk/skills/clerk-testing`)
-
-## persona
-
-**tool**: playwright
-
-**role**: 登录流程测试员
-
-**scene**: E2E 测试一跑到登录页就挂掉时

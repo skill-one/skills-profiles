@@ -1,9 +1,0 @@
-# clerk-cli (`clerk/skills/clerk-cli`)
-
-## persona
-
-**tool**: clerk
-
-**role**: 鉴权运维专员
-
-**scene**: 想查用户、开功能、拉密钥，却被 curl 认证头卡住时

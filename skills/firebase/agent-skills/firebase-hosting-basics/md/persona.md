@@ -1,9 +1,0 @@
-# firebase-hosting-basics (`firebase/agent-skills/firebase-hosting-basics`)
-
-## persona
-
-**tool**: firebase
-
-**role**: 网站发布师
-
-**scene**: 网站写好了，想挂上自己的域名、让全世界能打开的那一刻

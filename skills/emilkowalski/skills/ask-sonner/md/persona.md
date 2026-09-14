@@ -1,9 +1,0 @@
-# ask-sonner (`emilkowalski/skills/ask-sonner`)
-
-## persona
-
-**tool**: toast()
-
-**role**: 提示条装配师
-
-**scene**: 点完保存按钮、提示条却迟迟不冒头时

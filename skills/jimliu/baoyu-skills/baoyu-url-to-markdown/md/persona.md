@@ -1,9 +1,0 @@
-# baoyu-url-to-markdown (`jimliu/baoyu-skills/baoyu-url-to-markdown`)
-
-## persona
-
-**tool**: baoyu-fetch
-
-**role**: 网页摘录师
-
-**scene**: 刷到一篇好文章、想原样存档进笔记时

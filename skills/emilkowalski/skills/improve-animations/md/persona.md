@@ -1,9 +1,0 @@
-# improve-animations (`emilkowalski/skills/improve-animations`)
-
-## persona
-
-**tool**: grep
-
-**role**: 动效审计师
-
-**scene**: 应用动效说不上哪里不对、想让整个 app 「手感」变好时

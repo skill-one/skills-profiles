@@ -1,9 +1,0 @@
-# mcp-builder (`anthropics/skills/mcp-builder`)
-
-## persona
-
-**tool**: mcp-sdk
-
-**role**: 模型接线员
-
-**scene**: 手里攥着一个 API、想让 AI 直接调用它干活时

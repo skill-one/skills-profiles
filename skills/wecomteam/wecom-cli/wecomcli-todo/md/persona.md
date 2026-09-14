@@ -1,9 +1,0 @@
-# wecomcli-todo (`wecomteam/wecom-cli/wecomcli-todo`)
-
-## persona
-
-**tool**: wecom-cli
-
-**role**: 待办管家
-
-**scene**: 开完会、手头一堆事怕漏时，替你把每件事记进企业微信并盯着截止时间

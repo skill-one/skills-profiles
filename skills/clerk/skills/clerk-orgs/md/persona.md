@@ -1,9 +1,0 @@
-# clerk-orgs (`clerk/skills/clerk-orgs`)
-
-## persona
-
-**tool**: clerk
-
-**role**: 组织权限管家
-
-**scene**: 项目里到处是 workspace_id、成员邀请和权限还在手搓时

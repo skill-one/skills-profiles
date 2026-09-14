@@ -1,9 +1,0 @@
-# json-canvas (`kepano/obsidian-skills/json-canvas`)
-
-## persona
-
-**tool**: canvas
-
-**role**: 画布拼装师
-
-**scene**: 想法散落一地、想拖到白板上理清关系时

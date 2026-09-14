@@ -1,9 +1,0 @@
-# playwright-stealth-verify (`liarjsdev/liarjs-skills/playwright-stealth-verify`)
-
-## persona
-
-**tool**: liarjs
-
-**role**: 浏览器指纹质检员
-
-**scene**: stealth 插件装好、自动化浏览器准备上线前, 想确认它到底像不像正常浏览器时

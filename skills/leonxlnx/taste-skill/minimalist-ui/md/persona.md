@@ -1,9 +1,0 @@
-# minimalist-ui (`leonxlnx/taste-skill/minimalist-ui`)
-
-## persona
-
-**tool**: CSS
-
-**role**: 界面排版师
-
-**scene**: 功能都写完了, 页面却看着像随手套的模板时

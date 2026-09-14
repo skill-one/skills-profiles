@@ -1,9 +1,0 @@
-# web-design-guidelines (`antfu/skills/web-design-guidelines`)
-
-## persona
-
-**tool**: web-interface-guidelines 清单
-
-**role**: 界面质检员
-
-**scene**: 页面代码写完、准备上线前的最后一道检查

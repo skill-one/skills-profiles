@@ -1,9 +1,0 @@
-# obsidian-vault (`mattpocock/skills/obsidian-vault`)
-
-## persona
-
-**tool**: Obsidian
-
-**role**: 图书管理员
-
-**scene**: 笔记越攒越多、想找某条却不知藏在哪时

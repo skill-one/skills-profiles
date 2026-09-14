@@ -1,9 +1,0 @@
-# dbs-good-question (`dontbesilent2025/dbskill/dbs-good-question`)
-
-## persona
-
-**tool**: 问题说明书
-
-**role**: 问题审计师
-
-**scene**: 想把「为什么没人买」这类模糊困惑丢给 AI 分析时

@@ -1,9 +1,0 @@
-# ponytail-debt (`dietrichgebert/ponytail/ponytail-debt`)
-
-## persona
-
-**tool**: grep
-
-**role**: 技术欠账登记员
-
-**scene**: 代码里留了一堆"以后再说"，想查清到底欠了哪些账时

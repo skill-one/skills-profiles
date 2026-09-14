@@ -1,9 +1,0 @@
-# referral-program (`coreyhaines31/marketingskills/referral-program`)
-
-## persona
-
-**tool**: referral link（专属推荐链接）
-
-**role**: 裂变增长顾问
-
-**scene**: 想让老用户带来新客、却不知奖励和分享机制怎么设计时

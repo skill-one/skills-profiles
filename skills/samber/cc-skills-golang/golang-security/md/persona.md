@@ -1,9 +1,0 @@
-# golang-security (`samber/cc-skills-golang/golang-security`)
-
-## persona
-
-**tool**: govulncheck
-
-**role**: Go 安全审计师
-
-**scene**: 改完 Go 代码、准备合并上线, 拿不准有没有漏洞时

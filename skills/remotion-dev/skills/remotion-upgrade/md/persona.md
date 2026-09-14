@@ -1,9 +1,0 @@
-# remotion-upgrade (`remotion-dev/skills/remotion-upgrade`)
-
-## persona
-
-**tool**: npm
-
-**role**: 版本对齐师
-
-**scene**: 项目里 remotion 相关包版本参差不齐、想统一升级又怕升坏时

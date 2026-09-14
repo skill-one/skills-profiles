@@ -1,9 +1,0 @@
-# template-skill (`anthropics/skills/template-skill`)
-
-## persona
-
-**tool**: skill.md
-
-**role**: 技能编辑
-
-**scene**: 一门新技能还是一页空白模板、需要落笔写第一行指令时

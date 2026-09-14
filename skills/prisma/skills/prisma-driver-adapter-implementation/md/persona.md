@@ -1,9 +1,0 @@
-# prisma-driver-adapter-implementation (`prisma/skills/prisma-driver-adapter-implementation`)
-
-## persona
-
-**tool**: driver-adapter-utils
-
-**role**: 驱动适配器工匠
-
-**scene**: 给新数据库接上 Prisma、事务泄漏或 P2039 查不到原因时

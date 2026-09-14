@@ -1,9 +1,0 @@
-# canvas-design (`anthropics/skills/canvas-design`)
-
-## persona
-
-**tool**: canvas
-
-**role**: 海报设计师
-
-**scene**: 内容都定了，就差一张海报让它被看见时

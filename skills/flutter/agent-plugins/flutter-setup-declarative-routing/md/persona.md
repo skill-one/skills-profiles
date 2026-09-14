@@ -1,9 +1,0 @@
-# flutter-setup-declarative-routing (`flutter/agent-plugins/flutter-setup-declarative-routing`)
-
-## persona
-
-**tool**: go_router
-
-**role**: 导航接线员
-
-**scene**: 页面越写越多、分享出去的链接点开却回不到那一页时

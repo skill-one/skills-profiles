@@ -1,9 +1,0 @@
-# optimize (`pbakaus/impeccable/optimize`)
-
-## persona
-
-**tool**: Lighthouse
-
-**role**: 性能优化师
-
-**scene**: 页面打开转圈、滑动掉帧,用户开始抱怨「怎么这么卡」的那一刻

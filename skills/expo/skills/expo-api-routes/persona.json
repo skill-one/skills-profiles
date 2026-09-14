@@ -1,1 +1,0 @@
-{"tool": "+api.ts", "role": "接口接线员", "scene": "App 要调 OpenAI、Stripe 这类服务, 密钥又不能放进手机里时"}

@@ -1,9 +1,0 @@
-# tavily-best-practices (`tavily-ai/skills/tavily-best-practices`)
-
-## persona
-
-**tool**: tavily
-
-**role**: 联网搜索接线员
-
-**scene**: AI 应用答不了最新信息、需要接上实时网页数据时

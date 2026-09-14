@@ -1,9 +1,0 @@
-# convex-add (`get-convex/agent-skills/convex-add`)
-
-## persona
-
-**tool**: curl
-
-**role**: 功能加装师
-
-**scene**: 应用已经能跑, 想补上发布、定时任务、登录这类后端能力时

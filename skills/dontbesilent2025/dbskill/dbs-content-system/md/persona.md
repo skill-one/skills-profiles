@@ -1,9 +1,0 @@
-# dbs-content-system (`dontbesilent2025/dbskill/dbs-content-system`)
-
-## persona
-
-**tool**: node
-
-**role**: 内容工程师
-
-**scene**: 手里囤了几百篇旧稿，想整理成资产却不知从哪下手时

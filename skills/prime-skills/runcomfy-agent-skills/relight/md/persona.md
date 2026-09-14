@@ -1,9 +1,0 @@
-# relight (`prime-skills/runcomfy-agent-skills/relight`)
-
-## persona
-
-**tool**: runcomfy
-
-**role**: 照片布光师
-
-**scene**: 照片拍完了、光线不对劲, 又不想重拍的那一刻

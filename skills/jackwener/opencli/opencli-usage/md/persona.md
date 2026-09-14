@@ -1,9 +1,0 @@
-# opencli-usage (`jackwener/opencli/opencli-usage`)
-
-## persona
-
-**tool**: opencli
-
-**role**: 浏览器调度员
-
-**scene**: 新任务开场, 想让网站替你跑腿却不知从哪条命令下手时

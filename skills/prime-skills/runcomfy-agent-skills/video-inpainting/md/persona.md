@@ -1,9 +1,0 @@
-# video-inpainting (`prime-skills/runcomfy-agent-skills/video-inpainting`)
-
-## persona
-
-**tool**: runcomfy
-
-**role**: 视频擦除师
-
-**scene**: 回看素材发现穿帮——路人、电线、水印混进画面，想整段干净抹掉时

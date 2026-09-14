@@ -1,9 +1,0 @@
-# shadcn-ui (`google-labs-code/stitch-skills/shadcn-ui`)
-
-## persona
-
-**tool**: shadcn
-
-**role**: 组件装配师
-
-**scene**: 项目要搭界面、想快速装上现成又好看的组件时

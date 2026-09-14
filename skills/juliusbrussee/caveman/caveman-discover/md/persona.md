@@ -1,9 +1,0 @@
-# caveman-discover (`juliusbrussee/caveman/caveman-discover`)
-
-## persona
-
-**tool**: x-cave-workflow
-
-**role**: 仓库贴标员
-
-**scene**: 打开账单，发现所有 AI 花销都堆在 unlabeled-workflow 一个桶里、想看清谁花的时候

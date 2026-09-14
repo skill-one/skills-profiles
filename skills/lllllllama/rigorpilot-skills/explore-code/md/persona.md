@@ -1,9 +1,0 @@
-# explore-code (`lllllllama/rigorpilot-skills/explore-code`)
-
-## persona
-
-**tool**: git
-
-**role**: 试制工程师
-
-**scene**: 研究员点头授权"在隔离分支上试改一把"的那一刻

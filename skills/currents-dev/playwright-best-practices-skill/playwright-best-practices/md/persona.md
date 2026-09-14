@@ -1,9 +1,0 @@
-# playwright-best-practices (`currents-dev/playwright-best-practices-skill/playwright-best-practices`)
-
-## persona
-
-**tool**: playwright
-
-**role**: 网页质检师
-
-**scene**: 功能开发完准备上线, 自动化用例却时红时绿、说不清原因时

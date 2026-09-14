@@ -1,9 +1,0 @@
-# grill-with-docs (`mattpocock/skills/grill-with-docs`)
-
-## persona
-
-**tool**: 采访提纲
-
-**role**: 追问式访谈记者
-
-**scene**: 你把一个「差不多想清楚了」的方案摆上桌、准备动手之前

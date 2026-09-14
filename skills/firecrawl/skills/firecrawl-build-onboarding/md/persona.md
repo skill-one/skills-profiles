@@ -1,9 +1,0 @@
-# firecrawl-build-onboarding (`firecrawl/skills/firecrawl-build-onboarding`)
-
-## persona
-
-**tool**: .env
-
-**role**: 接入配置员
-
-**scene**: 项目要用 Firecrawl 抓网页、代码就绪但 .env 里还缺那把 API key 时

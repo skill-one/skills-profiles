@@ -1,9 +1,0 @@
-# ai-music (`genmedia-labs/skills/ai-music`)
-
-## persona
-
-**tool**: runcomfy
-
-**role**: AI 编曲师
-
-**scene**: 视频剪好了、游戏做完了, 就差一段配乐时

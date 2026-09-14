@@ -1,9 +1,0 @@
-# image-to-video (`prime-skills/runcomfy-agent-skills/image-to-video`)
-
-## persona
-
-**tool**: runcomfy
-
-**role**: 图生视频导演
-
-**scene**: 手里攥着一张静态图、想让它动起来却不知道选哪个模型时

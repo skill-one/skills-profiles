@@ -1,9 +1,0 @@
-# golang-google-wire (`samber/cc-skills-golang/golang-google-wire`)
-
-## persona
-
-**tool**: wire
-
-**role**: 编译期装配工
-
-**scene**: 新增了一个服务、不知道怎么接进应用启动流程时

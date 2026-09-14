@@ -1,9 +1,0 @@
-# firecrawl-research-papers (`firecrawl/firecrawl-workflows/firecrawl-research-papers`)
-
-## persona
-
-**tool**: firecrawl research
-
-**role**: 文献综述员
-
-**scene**: 开题要写综述, 对着一堆关键词不知从哪篇论文读起时

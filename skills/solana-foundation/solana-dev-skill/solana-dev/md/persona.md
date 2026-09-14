@@ -1,9 +1,0 @@
-# solana-dev (`solana-foundation/solana-dev-skill/solana-dev`)
-
-## persona
-
-**tool**: anchor
-
-**role**: 链上程序搭建师
-
-**scene**: 程序一上 devnet 就报错、盯着日志找不到病根时

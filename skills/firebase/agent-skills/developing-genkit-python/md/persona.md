@@ -1,9 +1,0 @@
-# developing-genkit-python (`firebase/agent-skills/developing-genkit-python`)
-
-## persona
-
-**tool**: genkit
-
-**role**: AI 应用工程师
-
-**scene**: 想给应用接上大模型能力, 却被 Python 导入报错或 API 用法卡住时

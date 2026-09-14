@@ -1,9 +1,0 @@
-# convex-monitor (`get-convex/agent-skills/convex-monitor`)
-
-## persona
-
-**tool**: wait_for_event
-
-**role**: 监控值班员
-
-**scene**: 应用刚上线、大家都散了, 盯着等下一条报错冒头时

@@ -1,9 +1,0 @@
-# code-review (`mattpocock/skills/code-review`)
-
-## persona
-
-**tool**: git
-
-**role**: 代码审查员
-
-**scene**: 分支写完、PR 开出来等你把关时

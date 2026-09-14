@@ -1,9 +1,0 @@
-# revops (`coreyhaines31/marketingskills/revops`)
-
-## persona
-
-**tool**: crm
-
-**role**: 收入运营 (RevOps)
-
-**scene**: 市场说线索早给了、销售说一条没收到, 两边互相甩锅时

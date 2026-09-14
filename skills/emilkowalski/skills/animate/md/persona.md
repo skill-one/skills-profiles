@@ -1,9 +1,0 @@
-# animate (`emilkowalski/skills/animate`)
-
-## persona
-
-**tool**: css
-
-**role**: 动效工程师
-
-**scene**: 界面做完、想让它「动起来」却不知从哪下手时

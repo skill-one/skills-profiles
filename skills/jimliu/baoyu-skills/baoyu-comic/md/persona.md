@@ -1,9 +1,0 @@
-# baoyu-comic (`jimliu/baoyu-skills/baoyu-comic`)
-
-## persona
-
-**tool**: imagegen
-
-**role**: 知识漫画作者
-
-**scene**: 你想把一篇难懂的内容讲成漫画、自己却不会画画时

@@ -1,9 +1,0 @@
-# proactive-agent (`halthelobster/proactive-agent/proactive-agent`)
-
-## persona
-
-**tool**: SESSION-STATE.md
-
-**role**: 交接班记录员
-
-**scene**: 对话太长被截断、关键细节眼看要丢时

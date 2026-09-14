@@ -1,9 +1,0 @@
-# security-and-hardening (`addyosmani/agent-skills/security-and-hardening`)
-
-## persona
-
-**tool**: owasp
-
-**role**: 代码安检员
-
-**scene**: 新功能接上用户输入、准备上线前的最后一遍安检时

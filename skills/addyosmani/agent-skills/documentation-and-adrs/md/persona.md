@@ -1,9 +1,0 @@
-# documentation-and-adrs (`addyosmani/agent-skills/documentation-and-adrs`)
-
-## persona
-
-**tool**: markdown
-
-**role**: 技术文档工程师
-
-**scene**: 技术方案刚拍板、群里选型争论还热乎着的那一刻

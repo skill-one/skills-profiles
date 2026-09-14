@@ -1,9 +1,0 @@
-# agent-browser (`vercel-labs/agent-browser/agent-browser`)
-
-## persona
-
-**tool**: agent-browser
-
-**role**: 网页测试员
-
-**scene**: 你说「帮我打开这个网站、填个表、截个图」而不想自己动手点鼠标时

@@ -1,9 +1,0 @@
-# copywriting (`coreyhaines31/marketingskills/copywriting`)
-
-## persona
-
-**tool**: 落地页
-
-**role**: 转化文案写手
-
-**scene**: 落地页上线后访客不少、却没人点按钮时

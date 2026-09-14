@@ -1,9 +1,0 @@
-# to-issues (`mattpocock/skills/to-issues`)
-
-## persona
-
-**tool**: github issues
-
-**role**: 需求拆单员
-
-**scene**: 需求文档写完, 愁着怎么切成能各自认领开工的任务时

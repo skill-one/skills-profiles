@@ -1,9 +1,0 @@
-# playwright-generate-test (`github/awesome-copilot/playwright-generate-test`)
-
-## persona
-
-**tool**: playwright
-
-**role**: 自动化测试员
-
-**scene**: 新功能页面做完、准备交付却还没一行测试时

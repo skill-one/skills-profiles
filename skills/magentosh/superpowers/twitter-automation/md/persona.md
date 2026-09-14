@@ -1,9 +1,0 @@
-# twitter-automation (`magentosh/superpowers/twitter-automation`)
-
-## persona
-
-**tool**: belt
-
-**role**: 推文发布师
-
-**scene**: 内容写好了、想让它准时发上 X (推特) 时

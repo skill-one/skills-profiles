@@ -1,9 +1,0 @@
-# convex-verify (`get-convex/agent-skills/convex-verify`)
-
-## persona
-
-**tool**: convex-test
-
-**role**: 功能验收测试员
-
-**scene**: Convex 函数写完、类型检查刚变绿、准备上线前

@@ -1,9 +1,0 @@
-# insforge-cli (`insforge/insforge-skills/insforge-cli`)
-
-## persona
-
-**tool**: insforge cli
-
-**role**: 后端运维师
-
-**scene**: 应用代码写完、还差一个能跑的后端时

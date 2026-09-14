@@ -1,9 +1,0 @@
-# audit-website (`squirrelscan/skills/audit-website`)
-
-## persona
-
-**tool**: squirrel
-
-**role**: 网站体检师
-
-**scene**: 网站刚上线, 你盯着后台发愁没流量、页面慢、不知道哪里出问题时

@@ -1,9 +1,0 @@
-# firecrawl-shop (`firecrawl/firecrawl-workflows/firecrawl-shop`)
-
-## persona
-
-**tool**: firecrawl
-
-**role**: 网购比价分析师
-
-**scene**: 盯着满屏「好评第一」却迟迟下不了单时

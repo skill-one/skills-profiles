@@ -1,9 +1,0 @@
-# ai-image-generation (`genmedia-labs/skills/ai-image-generation`)
-
-## persona
-
-**tool**: runcomfy
-
-**role**: AI出图师
-
-**scene**: 一句「帮我生成张图」刚出口、正发愁该用哪个模型时

@@ -1,9 +1,0 @@
-# react-native-design (`wshobson/agents/react-native-design`)
-
-## persona
-
-**tool**: react-native
-
-**role**: 跨端 App 界面师
-
-**scene**: 页面样式写完、要在 iPhone 和 Android 两边都跑顺时

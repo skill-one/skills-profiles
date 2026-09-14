@@ -1,9 +1,0 @@
-# gpt-image-2 (`pilioai/skills/gpt-image-2`)
-
-## persona
-
-**tool**: pilio cli
-
-**role**: 出图师
-
-**scene**: 文案写好了, 就差一张配图时

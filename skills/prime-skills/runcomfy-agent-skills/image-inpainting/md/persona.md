@@ -1,9 +1,0 @@
-# image-inpainting (`prime-skills/runcomfy-agent-skills/image-inpainting`)
-
-## persona
-
-**tool**: runcomfy
-
-**role**: 图像修版师
-
-**scene**: 照片里闯进了路人、水印或杂物, 想抹得干干净净又怕留痕的那一刻

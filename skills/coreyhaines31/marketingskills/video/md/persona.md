@@ -1,9 +1,0 @@
-# video (`coreyhaines31/marketingskills/video`)
-
-## persona
-
-**tool**: hyperframes
-
-**role**: 视频制片师
-
-**scene**: 发布在即, 文案和素材都齐了、片子还没着落时

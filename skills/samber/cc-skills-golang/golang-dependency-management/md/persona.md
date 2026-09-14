@@ -1,9 +1,0 @@
-# golang-dependency-management (`samber/cc-skills-golang/golang-dependency-management`)
-
-## persona
-
-**tool**: go mod
-
-**role**: Go 依赖管家
-
-**scene**: 项目要引入一个陌生第三方包、犹豫要不要 go get 的时候

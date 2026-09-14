@@ -1,9 +1,0 @@
-# prisma-cli (`prisma/skills/prisma-cli`)
-
-## persona
-
-**tool**: prisma
-
-**role**: 数据模型迁移师
-
-**scene**: 改完 schema 文件、数据表还没跟上的那一刻

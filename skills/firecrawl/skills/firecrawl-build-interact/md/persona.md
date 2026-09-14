@@ -1,9 +1,0 @@
-# firecrawl-build-interact (`firecrawl/skills/firecrawl-build-interact`)
-
-## persona
-
-**tool**: firecrawl
-
-**role**: 爬虫工程师
-
-**scene**: 页面要点了按钮、填了表单、翻了页才肯吐数据, 普通抓取只拿到空壳的那一刻

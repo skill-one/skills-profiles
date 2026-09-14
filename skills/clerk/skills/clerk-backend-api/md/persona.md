@@ -1,9 +1,0 @@
-# clerk-backend-api (`clerk/skills/clerk-backend-api`)
-
-## persona
-
-**tool**: curl
-
-**role**: Clerk 后台操作员
-
-**scene**: 用户在 Clerk 里要查人、建组织、发邀请、改账号数据, 却不想手写 API 调用时

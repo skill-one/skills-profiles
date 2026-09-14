@@ -1,9 +1,0 @@
-# baoyu-diagram (`jimliu/baoyu-skills/baoyu-diagram`)
-
-## persona
-
-**tool**: svg
-
-**role**: 图表制图师
-
-**scene**: 事情在脑子里很清楚、讲给别人却总说不明白时

@@ -1,9 +1,0 @@
-# threejs-animation (`cloudai-x/threejs-skills/threejs-animation`)
-
-## persona
-
-**tool**: three.js
-
-**role**: 3D 动画师
-
-**scene**: GLTF 模型加载完、却呆立不动时

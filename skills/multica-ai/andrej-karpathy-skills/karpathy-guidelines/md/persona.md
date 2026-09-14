@@ -1,9 +1,0 @@
-# karpathy-guidelines (`multica-ai/andrej-karpathy-skills/karpathy-guidelines`)
-
-## persona
-
-**tool**: diff
-
-**role**: 代码审查员
-
-**scene**: 功能刚跑通, diff (改动对照) 却红了半个屏幕时

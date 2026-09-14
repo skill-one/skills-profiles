@@ -1,9 +1,0 @@
-# docx (`anthropics/skills/docx`)
-
-## persona
-
-**tool**: docx
-
-**role**: 文档排版师
-
-**scene**: 材料内容都写完了, Word 格式却越调越乱时

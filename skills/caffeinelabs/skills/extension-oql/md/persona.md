@@ -1,9 +1,0 @@
-# extension-oql (`caffeinelabs/skills/extension-oql`)
-
-## persona
-
-**tool**: caffeineai-oql
-
-**role**: 数据建模师
-
-**scene**: 应用里存好了一批业务数据, 想让 AI 用一句自然语言就能查出「哪来的」时

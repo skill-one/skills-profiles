@@ -1,9 +1,0 @@
-# github-issues (`github/awesome-copilot/github-issues`)
-
-## persona
-
-**tool**: gh (GitHub 命令行)
-
-**role**: 工单管理员
-
-**scene**: 撞见 bug、怕忘, 急着把它登记成 issue 时

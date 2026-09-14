@@ -1,9 +1,0 @@
-# loop-me (`mattpocock/skills/loop-me`)
-
-## persona
-
-**tool**: workflows/*.md (流程规格文件)
-
-**role**: 需求分析师
-
-**scene**: 你第无数次重复同一件事、嘀咕"这能不能自己跑"的那一刻

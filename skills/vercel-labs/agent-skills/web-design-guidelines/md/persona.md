@@ -1,9 +1,0 @@
-# web-design-guidelines (`vercel-labs/agent-skills/web-design-guidelines`)
-
-## persona
-
-**tool**: webfetch
-
-**role**: 界面走查员
-
-**scene**: 页面写完、准备上线前，想有人对着清单替你把设计细节过一遍时

@@ -1,9 +1,0 @@
-# smart-search (`jackwener/opencli/smart-search`)
-
-## persona
-
-**tool**: opencli
-
-**role**: 检索调度员
-
-**scene**: 你想查点事、却拿不准该问哪个网站时

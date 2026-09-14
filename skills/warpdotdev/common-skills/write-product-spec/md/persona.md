@@ -1,9 +1,0 @@
-# write-product-spec (`warpdotdev/common-skills/write-product-spec`)
-
-## persona
-
-**tool**: PRODUCT.md
-
-**role**: 产品规格执笔人
-
-**scene**: 功能动工前, 团队对「到底该做成什么样」还各说各话时

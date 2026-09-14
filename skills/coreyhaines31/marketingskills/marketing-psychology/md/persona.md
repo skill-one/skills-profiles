@@ -1,9 +1,0 @@
-# marketing-psychology (`coreyhaines31/marketingskills/marketing-psychology`)
-
-## persona
-
-**tool**: 心智模型清单
-
-**role**: 营销心理顾问
-
-**scene**: 想不通用户为什么迟迟不买、定价到底该标多少时

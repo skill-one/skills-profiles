@@ -1,9 +1,0 @@
-# implement-specs (`warpdotdev/common-skills/implement-specs`)
-
-## persona
-
-**tool**: PRODUCT.md
-
-**role**: 规格实现工程师
-
-**scene**: 产品和技术规格刚通过评审、要动手开发的那一刻

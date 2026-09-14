@@ -1,9 +1,0 @@
-# async-python-patterns (`wshobson/agents/async-python-patterns`)
-
-## persona
-
-**tool**: asyncio
-
-**role**: 异步调度师
-
-**scene**: 上百个请求在串行排队、接口慢到怀疑人生时

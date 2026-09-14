@@ -1,9 +1,0 @@
-# extension-camera (`caffeinelabs/skills/extension-camera`)
-
-## persona
-
-**tool**: useCamera
-
-**role**: 摄像头接入工
-
-**scene**: 网页应用要开摄像头、画面却迟迟黑着的时候

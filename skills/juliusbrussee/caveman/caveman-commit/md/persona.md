@@ -1,9 +1,0 @@
-# caveman-commit (`juliusbrussee/caveman/caveman-commit`)
-
-## persona
-
-**tool**: git
-
-**role**: 提交信息把关人
-
-**scene**: 代码改完、光标停在 commit message 输入框里发愁的那一刻

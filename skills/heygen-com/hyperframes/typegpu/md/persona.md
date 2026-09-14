@@ -1,9 +1,0 @@
-# typegpu (`heygen-com/hyperframes/typegpu`)
-
-## persona
-
-**tool**: WebGPU
-
-**role**: 着色器工程师
-
-**scene**: 时间轴拖到某一帧、等着 GPU 画面精确重绘的那一刻

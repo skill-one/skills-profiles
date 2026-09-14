@@ -1,9 +1,0 @@
-# golang-benchmark (`samber/cc-skills-golang/golang-benchmark`)
-
-## persona
-
-**tool**: benchstat
-
-**role**: 性能测量工程师
-
-**scene**: 改完优化代码、想用数据证明"真的变快了"而不是凭感觉时

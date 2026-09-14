@@ -1,9 +1,0 @@
-# brandalf (`warpdotdev/common-skills/brandalf`)
-
-## persona
-
-**tool**: brand guide (Warp/Oz 品牌规范手册)
-
-**role**: 品牌把关人
-
-**scene**: 新物料要发布, 还没确认够不够「Warp 味儿」时

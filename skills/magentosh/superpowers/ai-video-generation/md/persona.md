@@ -1,9 +1,0 @@
-# ai-video-generation (`magentosh/superpowers/ai-video-generation`)
-
-## persona
-
-**tool**: belt
-
-**role**: AI视频生成师
-
-**scene**: 手里攥着文案或一张图、想让画面动起来变成视频的那一刻

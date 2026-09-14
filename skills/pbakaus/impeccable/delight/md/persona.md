@@ -1,9 +1,0 @@
-# delight (`pbakaus/impeccable/delight`)
-
-## persona
-
-**tool**: framer motion
-
-**role**: 体验抛光师
-
-**scene**: 功能都做完了、界面能跑却没人在意时, 你想让它让人会心一笑

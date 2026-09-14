@@ -1,9 +1,0 @@
-# adapt (`pbakaus/impeccable/adapt`)
-
-## persona
-
-**tool**: chrome devtools
-
-**role**: 多端适配师
-
-**scene**: 设计稿在电脑上完美, 一到手机上挤成一团时

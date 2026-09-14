@@ -1,9 +1,0 @@
-# receiving-code-review (`obra/superpowers/receiving-code-review`)
-
-## persona
-
-**tool**: gh
-
-**role**: 评审意见核查员
-
-**scene**: 收到一串 code review 意见、分不清哪条该改哪条该顶回去时

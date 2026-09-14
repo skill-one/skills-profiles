@@ -1,9 +1,0 @@
-# ai-research-explore (`lllllllama/rigorpilot-skills/ai-research-explore`)
-
-## persona
-
-**tool**: pytorch
-
-**role**: 实验把关人
-
-**scene**: 基线刚跑通、对着一个新点子犹豫要不要烧一轮训练时

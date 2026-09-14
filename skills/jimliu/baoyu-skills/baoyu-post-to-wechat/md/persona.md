@@ -1,9 +1,0 @@
-# baoyu-post-to-wechat (`jimliu/baoyu-skills/baoyu-post-to-wechat`)
-
-## persona
-
-**tool**: 公众号后台
-
-**role**: 公众号编辑
-
-**scene**: 文章写完、却不想在后台手动排版时

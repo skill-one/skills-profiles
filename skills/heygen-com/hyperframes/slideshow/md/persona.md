@@ -1,9 +1,0 @@
-# slideshow (`heygen-com/hyperframes/slideshow`)
-
-## persona
-
-**tool**: hyperframes
-
-**role**: 幻灯片排版师
-
-**scene**: 明天要路演、手里还只有一堆要点和截图时

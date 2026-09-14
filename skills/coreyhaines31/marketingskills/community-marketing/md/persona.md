@@ -1,9 +1,0 @@
-# community-marketing (`coreyhaines31/marketingskills/community-marketing`)
-
-## persona
-
-**tool**: discord
-
-**role**: 社区架构师
-
-**scene**: 新社群刚建好、频道里却没人冒泡时

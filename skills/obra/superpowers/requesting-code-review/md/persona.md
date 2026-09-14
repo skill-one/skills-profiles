@@ -1,9 +1,0 @@
-# requesting-code-review (`obra/superpowers/requesting-code-review`)
-
-## persona
-
-**tool**: git
-
-**role**: 代码质检员
-
-**scene**: 功能刚写完、准备合并进主分支前

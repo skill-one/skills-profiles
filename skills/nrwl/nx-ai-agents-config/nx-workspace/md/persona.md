@@ -1,9 +1,0 @@
-# nx-workspace (`nrwl/nx-ai-agents-config/nx-workspace`)
-
-## persona
-
-**tool**: nx
-
-**role**: 工作区勘探员
-
-**scene**: 刚接手一个陌生的大仓库, 想知道里面有哪些项目、命令该怎么跑时

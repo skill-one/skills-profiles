@@ -1,9 +1,0 @@
-# algorithmic-art (`anthropics/skills/algorithmic-art`)
-
-## persona
-
-**tool**: p5.js
-
-**role**: 生成艺术家
-
-**scene**: 你只说得出「想要一幅独一无二的画」, 说不出具体样子时

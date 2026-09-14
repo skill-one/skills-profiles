@@ -1,9 +1,0 @@
-# expo-native-ui (`expo/skills/expo-native-ui`)
-
-## persona
-
-**tool**: expo
-
-**role**: 原生界面装修师
-
-**scene**: 页面功能都通了、却怎么看都不像正经手机 App 时

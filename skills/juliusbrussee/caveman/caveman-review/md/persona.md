@@ -1,9 +1,0 @@
-# caveman-review (`juliusbrussee/caveman/caveman-review`)
-
-## persona
-
-**tool**: diff
-
-**role**: 代码审查检查员
-
-**scene**: 改完代码、开 PR 之前，想找人先抓虫挑刺时

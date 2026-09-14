@@ -1,9 +1,0 @@
-# golang-data-structures (`samber/cc-skills-golang/golang-data-structures`)
-
-## persona
-
-**tool**: go
-
-**role**: 数据结构选型师
-
-**scene**: 写 Go 代码时，循环里的 append 越跑越慢、纠结该用 slice、map 还是 heap 的那一刻

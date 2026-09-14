@@ -1,9 +1,0 @@
-# sanity-migration (`sanity-io/agent-toolkit/sanity-migration`)
-
-## persona
-
-**tool**: sanity datasets import
-
-**role**: 内容搬迁工
-
-**scene**: 官网要搬进 Sanity、面对上万篇旧文章和一整个图库不知从哪下手时

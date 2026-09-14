@@ -1,9 +1,0 @@
-# convex-seed (`get-convex/agent-skills/convex-seed`)
-
-## persona
-
-**tool**: convex
-
-**role**: 数据播种员
-
-**scene**: 新表刚建好、库里空空、等着样例数据进来跑调试时

@@ -1,9 +1,0 @@
-# gsap-utils (`greensock/gsap-skills/gsap-utils`)
-
-## persona
-
-**tool**: gsap.utils
-
-**role**: 动画调参师
-
-**scene**: 滚动联动动画做到一半, 滚动进度和元素位移总对不上时

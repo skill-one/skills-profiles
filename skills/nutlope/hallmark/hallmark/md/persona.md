@@ -1,9 +1,0 @@
-# hallmark (`nutlope/hallmark/hallmark`)
-
-## persona
-
-**tool**: css
-
-**role**: 界面把关人
-
-**scene**: 页面刚做完、怕一眼像 AI 批量模板时

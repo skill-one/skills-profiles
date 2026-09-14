@@ -1,9 +1,0 @@
-# customer-research (`coreyhaines31/marketingskills/customer-research`)
-
-## persona
-
-**tool**: transcripts
-
-**role**: 客户研究员
-
-**scene**: 要写文案、定卖点, 却说不清客户到底怎么想时

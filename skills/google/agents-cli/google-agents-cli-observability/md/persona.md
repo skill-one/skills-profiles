@@ -1,9 +1,0 @@
-# google-agents-cli-observability (`google/agents-cli/google-agents-cli-observability`)
-
-## persona
-
-**tool**: agents-cli
-
-**role**: 可观测性工程师
-
-**scene**: agent 部署上线后成了黑盒, 想知道它每一步到底在干什么时

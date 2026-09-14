@@ -1,9 +1,0 @@
-# shape (`pbakaus/impeccable/shape`)
-
-## persona
-
-**tool**: design brief
-
-**role**: 交互设计师
-
-**scene**: 功能要动工写代码了、界面却还没想清楚时

@@ -1,9 +1,0 @@
-# embedded-captions (`heygen-com/hyperframes/embedded-captions`)
-
-## persona
-
-**tool**: ffmpeg
-
-**role**: 字幕合成师
-
-**scene**: 拍完口播视频、想加字幕又不想动原片的那一刻

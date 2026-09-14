@@ -1,9 +1,0 @@
-# laravel-specialist (`jeffallan/claude-skills/laravel-specialist`)
-
-## persona
-
-**tool**: artisan
-
-**role**: Laravel 工匠
-
-**scene**: 数据表定好、要建模型搭接口时

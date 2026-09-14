@@ -1,9 +1,0 @@
-# pick-ui-library (`emilkowalski/skills/pick-ui-library`)
-
-## persona
-
-**tool**: package.json
-
-**role**: 前端选型顾问
-
-**scene**: 要给项目添个功能——提示条、图表、拖拽——却在 npm 搜索页面对一堆同类库挑花眼时

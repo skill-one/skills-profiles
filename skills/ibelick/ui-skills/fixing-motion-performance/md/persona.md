@@ -1,9 +1,0 @@
-# fixing-motion-performance (`ibelick/ui-skills/fixing-motion-performance`)
-
-## persona
-
-**tool**: DevTools
-
-**role**: 动效调优师
-
-**scene**: 页面一滚动、动画一跑就掉帧卡顿时

@@ -1,9 +1,0 @@
-# flutter-use-http-package (`flutter/agent-plugins/flutter-use-http-package`)
-
-## persona
-
-**tool**: http
-
-**role**: App 联网接线员
-
-**scene**: 你的 App 打开后一直转圈、数据迟迟不来时

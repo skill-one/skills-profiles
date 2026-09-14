@@ -1,9 +1,0 @@
-# zoom-out (`mattpocock/skills/zoom-out`)
-
-## persona
-
-**tool**: codebase
-
-**role**: 代码制图师
-
-**scene**: 打开一片陌生代码、越读越迷路时

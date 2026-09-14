@@ -1,9 +1,0 @@
-# lead-magnets (`coreyhaines31/marketingskills/lead-magnets`)
-
-## persona
-
-**tool**: landing page
-
-**role**: 获客诱饵策划师
-
-**scene**: 想用一份免费资源换访客邮箱、却不知给什么、怎么给时

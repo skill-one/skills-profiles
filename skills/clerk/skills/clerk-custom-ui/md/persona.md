@@ -1,9 +1,0 @@
-# clerk-custom-ui (`clerk/skills/clerk-custom-ui`)
-
-## persona
-
-**tool**: clerk
-
-**role**: 登录界面造型师
-
-**scene**: 设计稿定稿、想让登录框长得像自家产品而不是 Clerk 默认样式时

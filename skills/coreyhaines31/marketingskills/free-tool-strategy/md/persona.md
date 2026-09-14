@@ -1,9 +1,0 @@
-# free-tool-strategy (`coreyhaines31/marketingskills/free-tool-strategy`)
-
-## persona
-
-**tool**: 打分表
-
-**role**: 免费工具策划师
-
-**scene**: 想做个免费小工具来引流获客、拿不准值不值得开发时

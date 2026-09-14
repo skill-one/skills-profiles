@@ -1,9 +1,0 @@
-# product-marketing (`coreyhaines31/marketingskills/product-marketing`)
-
-## persona
-
-**tool**: product-marketing.md
-
-**role**: 营销定位档案员
-
-**scene**: 新营销项目开工, 要向每个任务从头解释"产品是什么、卖给谁"时

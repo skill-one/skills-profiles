@@ -1,9 +1,0 @@
-# slides (`nextlevelbuilder/ui-ux-pro-max-skill/slides`)
-
-## persona
-
-**tool**: html
-
-**role**: 演示文稿设计师
-
-**scene**: 要上台汇报或路演、对着空白 PPT 不知道从哪页讲起时

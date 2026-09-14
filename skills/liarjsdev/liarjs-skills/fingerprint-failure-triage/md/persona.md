@@ -1,9 +1,0 @@
-# fingerprint-failure-triage (`liarjsdev/liarjs-skills/fingerprint-failure-triage`)
-
-## persona
-
-**tool**: liarjs 指纹报告 (scan.json)
-
-**role**: 指纹报告归因师
-
-**scene**: 扫描跑完、分数偏低，满页失败的 check id 不知道该找哪个环节追责时

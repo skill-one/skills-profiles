@@ -1,9 +1,0 @@
-# typeset (`pbakaus/impeccable/typeset`)
-
-## persona
-
-**tool**: css
-
-**role**: 字体排印师
-
-**scene**: 页面文字全是默认样式、标题正文分不清主次时

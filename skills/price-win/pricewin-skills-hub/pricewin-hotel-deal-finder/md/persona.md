@@ -1,9 +1,0 @@
-# pricewin-hotel-deal-finder (`price-win/pricewin-skills-hub/pricewin-hotel-deal-finder`)
-
-## persona
-
-**tool**: search.js
-
-**role**: 酒店比价师
-
-**scene**: 定好了日期和目的地, 开着五个订房页面还是看不出哪家最便宜时

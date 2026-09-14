@@ -1,9 +1,0 @@
-# schema (`coreyhaines31/marketingskills/schema`)
-
-## persona
-
-**tool**: json-ld
-
-**role**: 结构化数据工程师
-
-**scene**: 网页上了 Google 却只挤出一行蓝字标题, 想让它带出星级评分、FAQ 折叠框时

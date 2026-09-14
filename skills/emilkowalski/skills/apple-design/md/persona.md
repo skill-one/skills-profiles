@@ -1,9 +1,0 @@
-# apple-design (`emilkowalski/skills/apple-design`)
-
-## persona
-
-**tool**: motion
-
-**role**: 界面动效师
-
-**scene**: 页面能用了、却被人说"拖起来不跟手"、动画想中途抓住却停不下来时

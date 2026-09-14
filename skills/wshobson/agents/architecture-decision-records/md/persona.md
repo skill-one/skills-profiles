@@ -1,9 +1,0 @@
-# architecture-decision-records (`wshobson/agents/architecture-decision-records`)
-
-## persona
-
-**tool**: markdown
-
-**role**: 架构决策记录员
-
-**scene**: 团队刚为选型吵完架、拍板的那一刻, 决定还没落进文档前

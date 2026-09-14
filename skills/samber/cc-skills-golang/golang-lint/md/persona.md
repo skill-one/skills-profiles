@@ -1,9 +1,0 @@
-# golang-lint (`samber/cc-skills-golang/golang-lint`)
-
-## persona
-
-**tool**: golangci-lint
-
-**role**: Go 代码质检员
-
-**scene**: 代码写完准备提交、满屏 lint 告警不知哪条该修哪条该压时

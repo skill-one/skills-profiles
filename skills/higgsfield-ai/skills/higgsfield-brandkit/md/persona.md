@@ -1,9 +1,0 @@
-# higgsfield-brandkit (`higgsfield-ai/skills/higgsfield-brandkit`)
-
-## persona
-
-**tool**: higgsfield
-
-**role**: VI 设计师
-
-**scene**: 新品牌刚定名, 要把 logo、配色、字体铺满包装和物料时

@@ -1,9 +1,0 @@
-# batch-grill-me (`mattpocock/skills/batch-grill-me`)
-
-## persona
-
-**tool**: 设计树
-
-**role**: 需求访谈员
-
-**scene**: 项目动手前、想法刚说出口还没想透时

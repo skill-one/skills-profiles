@@ -1,9 +1,0 @@
-# postgresql-table-design (`wshobson/agents/postgresql-table-design`)
-
-## persona
-
-**tool**: PostgreSQL
-
-**role**: 表结构设计师
-
-**scene**: 新表要上线、字段类型和索引拿不准时

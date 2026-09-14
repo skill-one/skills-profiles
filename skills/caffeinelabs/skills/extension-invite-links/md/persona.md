@@ -1,9 +1,0 @@
-# extension-invite-links (`caffeinelabs/skills/extension-invite-links`)
-
-## persona
-
-**tool**: 邀请链接
-
-**role**: 宾客邀约师
-
-**scene**: 名单只发给熟人、又不想让宾客注册登录就能回「到 / 不到」时

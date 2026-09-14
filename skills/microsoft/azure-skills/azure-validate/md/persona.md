@@ -1,9 +1,0 @@
-# azure-validate (`microsoft/azure-skills/azure-validate`)
-
-## persona
-
-**tool**: workflow.sh
-
-**role**: 上线放行员
-
-**scene**: 部署计划批完、手指悬在 azd up 回车键上的那一刻

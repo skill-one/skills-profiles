@@ -1,9 +1,0 @@
-# wonda-cli (`degausai/wonda/wonda-cli`)
-
-## persona
-
-**tool**: wonda
-
-**role**: 新媒体操盘手
-
-**scene**: 账号要日更、人却没空拍没空剪的那天

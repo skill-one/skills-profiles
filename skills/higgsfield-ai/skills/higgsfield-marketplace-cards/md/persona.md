@@ -1,9 +1,0 @@
-# higgsfield-marketplace-cards (`higgsfield-ai/skills/higgsfield-marketplace-cards`)
-
-## persona
-
-**tool**: higgsfield CLI
-
-**role**: 电商上架图设计师
-
-**scene**: 商品要上架、还缺一套合规主图和详情图时

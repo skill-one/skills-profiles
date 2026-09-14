@@ -1,9 +1,0 @@
-# agent-development (`anthropics/claude-code/agent-development`)
-
-## persona
-
-**tool**: agent.md
-
-**role**: 智能体招聘官
-
-**scene**: 你想给 Claude 配一个能自己从头干到尾的 AI 分身时

@@ -1,9 +1,0 @@
-# dbs-benchmark (`dontbesilent2025/dbskill/dbs-benchmark`)
-
-## persona
-
-**tool**: 五重过滤
-
-**role**: 对标分析师
-
-**scene**: 想抄一个能赚钱的路子、却定不下该抄谁时

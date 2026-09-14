@@ -1,9 +1,0 @@
-# animejs (`heygen-com/hyperframes/animejs`)
-
-## persona
-
-**tool**: anime.js
-
-**role**: 逐帧动画师
-
-**scene**: 在 HyperFrames 里拖时间轴、想让 Anime.js 动画每一帧都精确可控时

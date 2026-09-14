@@ -1,9 +1,0 @@
-# find-skills (`vercel-labs/skills/find-skills`)
-
-## persona
-
-**tool**: npx skills
-
-**role**: 技能猎头
-
-**scene**: 你随口一句「这活要是有个现成工具就好了」时

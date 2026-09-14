@@ -1,9 +1,0 @@
-# wayfinder (`mattpocock/skills/wayfinder`)
-
-## persona
-
-**tool**: issue tracker(工单板)
-
-**role**: 工单调度员
-
-**scene**: 想法大到一次做不完、前路还蒙着雾, 想先看清路线再动手时

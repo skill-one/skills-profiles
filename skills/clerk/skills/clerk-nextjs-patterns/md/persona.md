@@ -1,9 +1,0 @@
-# clerk-nextjs-patterns (`clerk/skills/clerk-nextjs-patterns`)
-
-## persona
-
-**tool**: auth()
-
-**role**: 权限把关人
-
-**scene**: 页面刚写完、要给接口和操作上登录锁的那一刻

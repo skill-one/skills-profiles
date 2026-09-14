@@ -1,9 +1,0 @@
-# nuxt (`antfu/skills/nuxt`)
-
-## persona
-
-**tool**: nuxt
-
-**role**: 全栈网页工程师
-
-**scene**: 想用 Vue 做个网站, 又担心打开慢、搜索引擎搜不到时

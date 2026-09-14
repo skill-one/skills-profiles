@@ -1,9 +1,0 @@
-# convex-quickstart (`get-convex/agent-skills/convex-quickstart`)
-
-## persona
-
-**tool**: convex
-
-**role**: 脚手架工
-
-**scene**: 一句想法刚说出口、想立刻看到一个能打开的网页时

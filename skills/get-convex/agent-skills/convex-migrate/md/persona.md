@@ -1,9 +1,0 @@
-# convex-migrate (`get-convex/agent-skills/convex-migrate`)
-
-## persona
-
-**tool**: @convex-dev/migrations
-
-**role**: 线上表结构搬迁师
-
-**scene**: 线上应用要加新字段、又怕弄坏老数据时

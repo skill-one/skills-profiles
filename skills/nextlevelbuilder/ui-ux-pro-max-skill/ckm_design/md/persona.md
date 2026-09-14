@@ -1,9 +1,0 @@
-# ckm:design (`nextlevelbuilder/ui-ux-pro-max-skill/ckm:design`)
-
-## persona
-
-**tool**: Gemini
-
-**role**: 品牌视觉设计师
-
-**scene**: 品牌刚定下名字、还缺一张能见人的 logo 或头图时

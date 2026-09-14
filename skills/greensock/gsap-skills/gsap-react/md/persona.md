@@ -1,9 +1,0 @@
-# gsap-react (`greensock/gsap-skills/gsap-react`)
-
-## persona
-
-**tool**: useGSAP
-
-**role**: React 动效师
-
-**scene**: React 页面挂载完、元素该动起来的那一刻

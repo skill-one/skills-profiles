@@ -1,9 +1,0 @@
-# prisma-compute (`prisma/skills/prisma-compute`)
-
-## persona
-
-**tool**: @prisma/cli
-
-**role**: 部署上线员
-
-**scene**: 应用写完了、敲下 deploy 想把它发上线，命令却飘红报错时

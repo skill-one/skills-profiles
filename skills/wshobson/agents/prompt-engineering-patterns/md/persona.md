@@ -1,9 +1,0 @@
-# prompt-engineering-patterns (`wshobson/agents/prompt-engineering-patterns`)
-
-## persona
-
-**tool**: prompt
-
-**role**: 提示词工程师
-
-**scene**: AI 输出时好时坏、提示词改了又改仍不见效时

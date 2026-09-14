@@ -1,9 +1,0 @@
-# contribute-catalog (`heygen-com/hyperframes/contribute-catalog`)
-
-## persona
-
-**tool**: hyperframes
-
-**role**: 动效模板设计师
-
-**scene**: 刷到一个心水的字幕特效，想把它做成模板、提交进公共目录时

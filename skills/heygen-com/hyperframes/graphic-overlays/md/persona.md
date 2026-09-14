@@ -1,9 +1,0 @@
-# graphic-overlays (`heygen-com/hyperframes/graphic-overlays`)
-
-## persona
-
-**tool**: hyperframes
-
-**role**: 视频包装师
-
-**scene**: 口播或访谈视频录完、想让干巴巴的画面长出标题卡和数据标注时

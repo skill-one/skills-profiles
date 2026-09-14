@@ -1,9 +1,0 @@
-# higgsfield-game-generation (`higgsfield-ai/skills/higgsfield-game-generation`)
-
-## persona
-
-**tool**: higgsfield
-
-**role**: 独立游戏制作人
-
-**scene**: 你刚说出"想做个游戏"、还没拿到能点开就玩的网址时

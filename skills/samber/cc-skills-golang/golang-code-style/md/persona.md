@@ -1,9 +1,0 @@
-# golang-code-style (`samber/cc-skills-golang/golang-code-style`)
-
-## persona
-
-**tool**: .go 源文件
-
-**role**: Go 代码风格评审员
-
-**scene**: 功能刚写完、能跑了, 准备提交前想确认代码够不够「Go 味」的那一刻

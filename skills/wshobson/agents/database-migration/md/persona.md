@@ -1,9 +1,0 @@
-# database-migration (`wshobson/agents/database-migration`)
-
-## persona
-
-**tool**: prisma
-
-**role**: 数据库迁移工
-
-**scene**: 线上要改表结构、又怕把服务改停机时

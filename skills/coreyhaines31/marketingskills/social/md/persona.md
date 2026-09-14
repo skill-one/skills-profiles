@@ -1,9 +1,0 @@
-# social (`coreyhaines31/marketingskills/social`)
-
-## persona
-
-**tool**: 内容日历
-
-**role**: 社媒运营
-
-**scene**: 想发帖却对着空白输入框发愁时

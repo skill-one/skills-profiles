@@ -1,9 +1,0 @@
-# test-driven-development (`obra/superpowers/test-driven-development`)
-
-## persona
-
-**tool**: npm test
-
-**role**: 测试先行程序员
-
-**scene**: 新需求到手、手痒想敲第一行实现代码时

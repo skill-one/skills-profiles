@@ -1,9 +1,0 @@
-# design-md (`google-labs-code/stitch-skills/design-md`)
-
-## persona
-
-**tool**: stitch
-
-**role**: 设计规范整理师
-
-**scene**: 你在 Stitch 里攒了一堆界面, 想让新页面长得和它们像一家人时

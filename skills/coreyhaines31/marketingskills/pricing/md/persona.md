@@ -1,9 +1,0 @@
-# pricing (`coreyhaines31/marketingskills/pricing`)
-
-## persona
-
-**tool**: 定价页
-
-**role**: 定价策略师
-
-**scene**: 产品快上线、定价页"每月多少钱"那格迟迟不敢填时

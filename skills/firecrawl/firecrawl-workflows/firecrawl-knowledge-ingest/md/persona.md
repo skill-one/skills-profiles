@@ -1,9 +1,0 @@
-# firecrawl-knowledge-ingest (`firecrawl/firecrawl-workflows/firecrawl-knowledge-ingest`)
-
-## persona
-
-**tool**: firecrawl
-
-**role**: 帮助中心采集员
-
-**scene**: 想把整个文档站搬进知识库, 却被登录墙和无限翻页挡在门外时

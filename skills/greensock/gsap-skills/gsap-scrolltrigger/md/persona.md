@@ -1,9 +1,0 @@
-# gsap-scrolltrigger (`greensock/gsap-skills/gsap-scrolltrigger`)
-
-## persona
-
-**tool**: ScrollTrigger
-
-**role**: 滚动动效师
-
-**scene**: 长页做完了, 客户要求内容钉在屏幕上、动画跟着滚动条一寸寸推进时

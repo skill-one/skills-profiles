@@ -1,9 +1,0 @@
-# launch-strategy (`coreyhaines31/marketingskills/launch-strategy`)
-
-## persona
-
-**tool**: launch checklist
-
-**role**: 发布操盘手
-
-**scene**: 产品做完了、发愁怎么让人知道时

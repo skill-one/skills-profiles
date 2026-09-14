@@ -1,9 +1,0 @@
-# flutter-build-responsive-layout (`flutter/agent-plugins/flutter-build-responsive-layout`)
-
-## persona
-
-**tool**: LayoutBuilder
-
-**role**: 界面适配师
-
-**scene**: 应用窗体一拉大、列表和按钮跟着被撑爆变形时

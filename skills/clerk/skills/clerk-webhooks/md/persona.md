@@ -1,9 +1,0 @@
-# clerk-webhooks (`clerk/skills/clerk-webhooks`)
-
-## persona
-
-**tool**: verifyWebhook
-
-**role**: 事件接线员
-
-**scene**: 用户刚在 Clerk 注册、自己的数据库却还查无此人时

@@ -1,9 +1,0 @@
-# browser-act-skill-forge (`browser-act/skills/browser-act-skill-forge`)
-
-## persona
-
-**tool**: browser-act
-
-**role**: 爬虫工程师
-
-**scene**: 你指着一个网页说"这几百条数据，总不能一条条手抄"时

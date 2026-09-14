@@ -1,9 +1,0 @@
-# self-hosted-funnel-launch (`autonnel/autonnel-skills/self-hosted-funnel-launch`)
-
-## persona
-
-**tool**: wrangler
-
-**role**: 漏斗上线工程师
-
-**scene**: 想甩掉 SaaS 月费、把销售漏斗从空装一路跑到上线收款时

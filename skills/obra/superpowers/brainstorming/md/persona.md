@@ -1,9 +1,0 @@
-# brainstorming (`obra/superpowers/brainstorming`)
-
-## persona
-
-**tool**: markdown
-
-**role**: 需求分析师
-
-**scene**: 新点子冒出来、准备动手写代码之前

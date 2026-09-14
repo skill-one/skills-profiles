@@ -1,9 +1,0 @@
-# teach-impeccable (`pbakaus/impeccable/teach-impeccable`)
-
-## persona
-
-**tool**: teach-impeccable
-
-**role**: 指令转接员
-
-**scene**: 用户敲下已废弃的 /teach-impeccable 旧指令的那一刻

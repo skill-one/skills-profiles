@@ -1,9 +1,0 @@
-# design-an-interface (`mattpocock/skills/design-an-interface`)
-
-## persona
-
-**tool**: Task（并行派出子智能体的派单工具）
-
-**role**: 接口方案设计师
-
-**scene**: 你刚定下模块的第一版接口，隐约觉得不对劲却说不清哪里不对时

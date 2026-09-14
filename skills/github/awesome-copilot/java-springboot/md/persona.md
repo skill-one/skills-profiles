@@ -1,9 +1,0 @@
-# java-springboot (`github/awesome-copilot/java-springboot`)
-
-## persona
-
-**tool**: spring boot
-
-**role**: Spring Boot 后端工程师
-
-**scene**: 新建一个后端服务、对着空白项目不知从哪下手时

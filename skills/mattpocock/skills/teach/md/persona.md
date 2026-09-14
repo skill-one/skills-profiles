@@ -1,9 +1,0 @@
-# teach (`mattpocock/skills/teach`)
-
-## persona
-
-**tool**: html
-
-**role**: 私人教师
-
-**scene**: 想学门新东西、面对满屏教程不知从哪下手时

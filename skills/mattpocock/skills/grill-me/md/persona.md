@@ -1,9 +1,0 @@
-# grill-me (`mattpocock/skills/grill-me`)
-
-## persona
-
-**tool**: 追问
-
-**role**: 方案面试官
-
-**scene**: 你带着一份自认为已经想清楚的方案、准备动手之前

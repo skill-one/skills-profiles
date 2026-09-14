@@ -1,9 +1,0 @@
-# expo-module (`expo/skills/expo-module`)
-
-## persona
-
-**tool**: swift
-
-**role**: 原生桥接师
-
-**scene**: 想让 Expo App 调用相机、传感器这类系统能力, 而 JS 这层够不着原生代码时

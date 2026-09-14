@@ -1,9 +1,0 @@
-# onboard (`pbakaus/impeccable/onboard`)
-
-## persona
-
-**tool**: figma
-
-**role**: 新手引导设计师
-
-**scene**: 新用户第一次打开产品、面对一片空白页面不知从哪下手时

@@ -1,9 +1,0 @@
-# lottie (`heygen-com/hyperframes/lottie`)
-
-## persona
-
-**tool**: window.__hfLottie
-
-**role**: 动效对帧师
-
-**scene**: 把 AE 导出的 Lottie 动画嵌进 HyperFrames 视频、要它随时间轴逐帧准点出现时

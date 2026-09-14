@@ -1,9 +1,0 @@
-# explore-run (`lllllllama/rigorpilot-skills/explore-run`)
-
-## persona
-
-**tool**: plan_variants.py
-
-**role**: 试跑规划师
-
-**scene**: 想一次试几个点子、又不敢直接烧全量训练时

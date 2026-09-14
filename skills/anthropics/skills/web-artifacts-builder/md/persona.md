@@ -1,9 +1,0 @@
-# web-artifacts-builder (`anthropics/skills/web-artifacts-builder`)
-
-## persona
-
-**tool**: parcel (把一整套代码打包成一个可直接打开的 HTML 文件的工具)
-
-**role**: 前端工程师
-
-**scene**: 用户要的不只是一个静态页面, 而是能点击、能切换、能记住状态的完整网页应用时

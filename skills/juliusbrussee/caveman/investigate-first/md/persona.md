@@ -1,9 +1,0 @@
-# investigate-first (`juliusbrussee/caveman/investigate-first`)
-
-## persona
-
-**tool**: log
-
-**role**: 故障调查员
-
-**scene**: 线上出了怪问题、没人说得清原因,正要瞎改代码时

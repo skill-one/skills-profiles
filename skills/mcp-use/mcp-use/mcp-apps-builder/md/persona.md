@@ -1,9 +1,0 @@
-# mcp-apps-builder (`mcp-use/mcp-use/mcp-apps-builder`)
-
-## persona
-
-**tool**: mcp-use
-
-**role**: MCP 应用搭建师
-
-**scene**: 想让 AI 助手连上自家系统、却对着接口规范发愁时

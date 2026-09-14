@@ -1,9 +1,0 @@
-# caveman-compress (`juliusbrussee/caveman/caveman-compress`)
-
-## persona
-
-**tool**: python3 -m scripts
-
-**role**: 记忆文件压缩机
-
-**scene**: CLAUDE.md 越长越胖，每次对话都白白烧 token 时

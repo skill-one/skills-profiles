@@ -1,9 +1,0 @@
-# golang-documentation (`samber/cc-skills-golang/golang-documentation`)
-
-## persona
-
-**tool**: godoc
-
-**role**: Go 技术文档作家
-
-**scene**: 代码写完准备交付, 导出函数的注释和 README 还空着时

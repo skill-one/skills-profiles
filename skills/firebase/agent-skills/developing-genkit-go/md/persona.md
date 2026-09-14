@@ -1,9 +1,0 @@
-# developing-genkit-go (`firebase/agent-skills/developing-genkit-go`)
-
-## persona
-
-**tool**: genkit
-
-**role**: AI 应用装配师
-
-**scene**: 产品要在 Go 服务里加 AI 功能, 而你盯着空白的 main.go 不知从哪下手时

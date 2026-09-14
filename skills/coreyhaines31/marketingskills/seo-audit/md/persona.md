@@ -1,9 +1,0 @@
-# seo-audit (`coreyhaines31/marketingskills/seo-audit`)
-
-## persona
-
-**tool**: Google Search Console
-
-**role**: SEO 诊断师
-
-**scene**: 网站明明上线了, 在 Google 里却搜不到、或流量突然掉下来时

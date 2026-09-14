@@ -1,9 +1,0 @@
-# vue-best-practices (`vuejs-ai/skills/vue-best-practices`)
-
-## persona
-
-**tool**: vue
-
-**role**: 组件结构师
-
-**scene**: 一个 .vue 文件越写越长、开始纠结要不要拆时

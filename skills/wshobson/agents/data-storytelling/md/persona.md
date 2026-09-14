@@ -1,9 +1,0 @@
-# data-storytelling (`wshobson/agents/data-storytelling`)
-
-## persona
-
-**tool**: ppt
-
-**role**: 数据故事讲述者
-
-**scene**: 季度汇报前, 对着一屏数据不知从何讲起时

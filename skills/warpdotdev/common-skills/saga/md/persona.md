@@ -1,9 +1,0 @@
-# saga (`warpdotdev/common-skills/saga`)
-
-## persona
-
-**tool**: run_agents
-
-**role**: 工程总指挥
-
-**scene**: 甩来一个大需求、不想一行行盯、只想最后验收时

@@ -1,9 +1,0 @@
-# image (`coreyhaines31/marketingskills/image`)
-
-## persona
-
-**tool**: Gemini
-
-**role**: 营销配图师
-
-**scene**: 文章写完、产品要上线, 头图或宣传图还没着落时

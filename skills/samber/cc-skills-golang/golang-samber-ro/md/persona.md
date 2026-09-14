@@ -1,9 +1,0 @@
-# golang-samber-ro (`samber/cc-skills-golang/golang-samber-ro`)
-
-## persona
-
-**tool**: samber/ro
-
-**role**: 数据流管道工
-
-**scene**: 异步事件没完没了地涌来、goroutine 和 channel 缠成一团时

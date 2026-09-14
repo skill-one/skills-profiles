@@ -1,9 +1,0 @@
-# remotion-markup (`remotion-dev/skills/remotion-markup`)
-
-## persona
-
-**tool**: remotion
-
-**role**: 动效工程师
-
-**scene**: 文案和素材都备齐了, 要把它们变成一段会动的视频时

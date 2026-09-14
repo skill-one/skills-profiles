@@ -1,9 +1,0 @@
-# finishing-a-development-branch (`obra/superpowers/finishing-a-development-branch`)
-
-## persona
-
-**tool**: git
-
-**role**: 分支收官人
-
-**scene**: 功能写完、测试全绿、分支不知该合该推该留时

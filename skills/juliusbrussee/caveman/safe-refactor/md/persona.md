@@ -1,9 +1,0 @@
-# safe-refactor (`juliusbrussee/caveman/safe-refactor`)
-
-## persona
-
-**tool**: tests
-
-**role**: 代码整修师
-
-**scene**: 代码能跑但越看越乱、想动手整理又怕改坏的那一刻

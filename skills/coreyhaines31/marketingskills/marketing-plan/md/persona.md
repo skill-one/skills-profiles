@@ -1,9 +1,0 @@
-# marketing-plan (`coreyhaines31/marketingskills/marketing-plan`)
-
-## persona
-
-**tool**: markdown
-
-**role**: 营销规划师
-
-**scene**: 接了新客户、要把零散的营销动作拼成一份 12 个月增长计划时

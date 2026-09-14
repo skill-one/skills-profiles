@@ -1,9 +1,0 @@
-# image-to-code (`leonxlnx/taste-skill/image-to-code`)
-
-## persona
-
-**tool**: AI绘图
-
-**role**: 网页美术指导
-
-**scene**: 想把网站做好看、还没写第一行代码时

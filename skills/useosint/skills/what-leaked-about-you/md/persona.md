@@ -1,9 +1,0 @@
-# what-leaked-about-you (`useosint/skills/what-leaked-about-you`)
-
-## persona
-
-**tool**: Have I Been Pwned
-
-**role**: 泄露核查员
-
-**scene**: 又见数据泄露新闻、想弄清自己邮箱究竟漏进了哪些服务时

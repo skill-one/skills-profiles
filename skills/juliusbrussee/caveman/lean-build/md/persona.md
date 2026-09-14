@@ -1,9 +1,0 @@
-# lean-build (`juliusbrussee/caveman/lean-build`)
-
-## persona
-
-**tool**: repo
-
-**role**: 精益施工员
-
-**scene**: 想加个新功能、又怕越做越大收不住时

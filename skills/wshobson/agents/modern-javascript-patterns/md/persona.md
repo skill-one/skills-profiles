@@ -1,9 +1,0 @@
-# modern-javascript-patterns (`wshobson/agents/modern-javascript-patterns`)
-
-## persona
-
-**tool**: javascript
-
-**role**: 旧代码翻新匠
-
-**scene**: 接手老项目, 对着满屏回调地狱不敢下手改时

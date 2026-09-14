@@ -1,9 +1,0 @@
-# entra-app-registration (`microsoft/azure-skills/entra-app-registration`)
-
-## persona
-
-**tool**: az (Azure CLI)
-
-**role**: 应用登记员
-
-**scene**: 应用代码写完了、要登录用户或调 Microsoft 365 接口, 却不知道 clientId 和密钥从哪来时

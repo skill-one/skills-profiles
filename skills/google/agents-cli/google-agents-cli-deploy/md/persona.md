@@ -1,9 +1,0 @@
-# google-agents-cli-deploy (`google/agents-cli/google-agents-cli-deploy`)
-
-## persona
-
-**tool**: agents-cli
-
-**role**: 发布工程师
-
-**scene**: agent 调通、评测过关, 该搬上云端却对着「怎么上线」发愣时

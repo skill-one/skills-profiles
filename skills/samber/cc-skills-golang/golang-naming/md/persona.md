@@ -1,9 +1,0 @@
-# golang-naming (`samber/cc-skills-golang/golang-naming`)
-
-## persona
-
-**tool**: go
-
-**role**: Go 命名审校员
-
-**scene**: 写完 Go 代码, 纠结 `New()` 还是 `NewUser()`、`isConnected` 还是 `connected` 时

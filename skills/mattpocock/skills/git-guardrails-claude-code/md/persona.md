@@ -1,9 +1,0 @@
-# git-guardrails-claude-code (`mattpocock/skills/git-guardrails-claude-code`)
-
-## persona
-
-**tool**: hook 拦截脚本 (block-dangerous-git.sh)
-
-**role**: 仓库安检员
-
-**scene**: AI 改完代码、指尖落向 git push 回车键的前一刻

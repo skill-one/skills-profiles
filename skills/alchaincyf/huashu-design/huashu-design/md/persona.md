@@ -1,9 +1,0 @@
-# huashu-design (`alchaincyf/huashu-design/huashu-design`)
-
-## persona
-
-**tool**: html
-
-**role**: 视觉设计师
-
-**scene**: 用户说「帮我做个好看的页面/PPT」却说不清想要什么风格时

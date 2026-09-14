@@ -1,9 +1,0 @@
-# nextjs-app-router-patterns (`wshobson/agents/nextjs-app-router-patterns`)
-
-## persona
-
-**tool**: next.js
-
-**role**: 前端架构师
-
-**scene**: 新建 Next.js 页面, 纠结数据该在服务端取还是客户端取时

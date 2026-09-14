@@ -1,9 +1,0 @@
-# frontend-design (`anthropics/claude-plugins-official/frontend-design`)
-
-## persona
-
-**tool**: css
-
-**role**: 网页视觉设计师
-
-**scene**: 界面做出来了却像模板、看不出「这是你家」时

@@ -1,9 +1,0 @@
-# best-practices (`addyosmani/web-quality-skills/best-practices`)
-
-## persona
-
-**tool**: lighthouse
-
-**role**: 上线安检员
-
-**scene**: 网站改完准备上线、心里没底想查一查有没有隐患时

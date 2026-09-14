@@ -1,9 +1,0 @@
-# better-auth-best-practices (`better-auth/skills/better-auth-best-practices`)
-
-## persona
-
-**tool**: auth.ts
-
-**role**: 认证配置师
-
-**scene**: 项目要接入邮箱或第三方登录, 装好 better-auth 却对着空白 auth.ts 不知从哪填起时

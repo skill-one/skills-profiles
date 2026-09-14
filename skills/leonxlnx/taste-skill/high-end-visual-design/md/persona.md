@@ -1,9 +1,0 @@
-# high-end-visual-design (`leonxlnx/taste-skill/high-end-visual-design`)
-
-## persona
-
-**tool**: tailwind
-
-**role**: 设计工程师
-
-**scene**: 页面能跑、却总被说"像模板"时

@@ -1,9 +1,0 @@
-# caveman-learn (`juliusbrussee/caveman/caveman-learn`)
-
-## persona
-
-**tool**: caveman
-
-**role**: Token 审计师
-
-**scene**: AI 助手越用越贵、想知道 token 都烧在哪时

@@ -1,9 +1,0 @@
-# baoyu-post-to-x (`jimliu/baoyu-skills/baoyu-post-to-x`)
-
-## persona
-
-**tool**: chrome
-
-**role**: X 发布员
-
-**scene**: 稿子写好、想发上 X 的那一刻

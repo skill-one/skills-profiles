@@ -1,9 +1,0 @@
-# golang-samber-lo (`samber/cc-skills-golang/golang-samber-lo`)
-
-## persona
-
-**tool**: lo
-
-**role**: Go 机械师
-
-**scene**: 手边刚写下第 N 个遍历切片取字段的 for 循环时

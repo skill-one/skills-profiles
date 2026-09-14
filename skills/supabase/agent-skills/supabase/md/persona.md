@@ -1,9 +1,0 @@
-# supabase (`supabase/agent-skills/supabase`)
-
-## persona
-
-**tool**: supabase mcp
-
-**role**: 数据库守门人
-
-**scene**: 查询莫名返回空行、不知被 RLS 拦在哪一步时

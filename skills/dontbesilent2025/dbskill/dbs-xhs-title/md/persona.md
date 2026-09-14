@@ -1,9 +1,0 @@
-# dbs-xhs-title (`dontbesilent2025/dbskill/dbs-xhs-title`)
-
-## persona
-
-**tool**: 75 公式库
-
-**role**: 标题公式匹配师
-
-**scene**: 笔记写好了、标题改到第 8 版还不满意时

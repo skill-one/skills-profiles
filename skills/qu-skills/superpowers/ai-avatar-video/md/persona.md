@@ -1,9 +1,0 @@
-# ai-avatar-video (`qu-skills/superpowers/ai-avatar-video`)
-
-## persona
-
-**tool**: belt
-
-**role**: 数字人口播导演
-
-**scene**: 需要一段真人出镜口播、却找不到人出镜时

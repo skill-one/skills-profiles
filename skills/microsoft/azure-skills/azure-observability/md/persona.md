@@ -1,9 +1,0 @@
-# azure-observability (`microsoft/azure-skills/azure-observability`)
-
-## persona
-
-**tool**: KQL
-
-**role**: 线上排障工程师
-
-**scene**: 凌晨告警炸响、要在一堆日志里找出"哪里坏了、为什么"的那一刻

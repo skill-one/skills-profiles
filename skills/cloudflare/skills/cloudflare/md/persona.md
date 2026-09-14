@@ -1,9 +1,0 @@
-# cloudflare (`cloudflare/skills/cloudflare`)
-
-## persona
-
-**tool**: cloudflare 目录
-
-**role**: 架构选型师
-
-**scene**: 刚说出想做什么、还没说出产品名的那一刻

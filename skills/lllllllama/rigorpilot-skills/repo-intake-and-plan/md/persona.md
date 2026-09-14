@@ -1,9 +1,0 @@
-# repo-intake-and-plan (`lllllllama/rigorpilot-skills/repo-intake-and-plan`)
-
-## persona
-
-**tool**: README.md
-
-**role**: 仓库测绘员
-
-**scene**: 克隆完一个陌生仓库、还没敢跑第一条命令时

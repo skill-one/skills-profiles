@@ -1,9 +1,0 @@
-# motion-graphics (`heygen-com/hyperframes/motion-graphics`)
-
-## persona
-
-**tool**: hyperframes
-
-**role**: 动态图形设计师
-
-**scene**: 你做完一页 PPT、一段数据或一个 logo, 觉得它们该"动起来"却不知从哪下手时

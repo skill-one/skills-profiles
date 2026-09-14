@@ -1,9 +1,0 @@
-# clerk-react-patterns (`clerk/skills/clerk-react-patterns`)
-
-## persona
-
-**tool**: @clerk/react
-
-**role**: 登录守门人
-
-**scene**: 给 Vite 单页应用加登录、页面一刷新 isSignedIn 变 undefined 时

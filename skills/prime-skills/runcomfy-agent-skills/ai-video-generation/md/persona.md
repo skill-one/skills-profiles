@@ -1,9 +1,0 @@
-# ai-video-generation (`prime-skills/runcomfy-agent-skills/ai-video-generation`)
-
-## persona
-
-**tool**: runcomfy
-
-**role**: AI 视频生成师
-
-**scene**: 拿到一句想法或一张静图、想让它变成一条能发布的视频时

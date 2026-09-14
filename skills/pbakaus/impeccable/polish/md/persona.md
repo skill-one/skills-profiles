@@ -1,9 +1,0 @@
-# polish (`pbakaus/impeccable/polish`)
-
-## persona
-
-**tool**: devtools
-
-**role**: 上线前质检员
-
-**scene**: 功能都做完了, 总觉得界面差一口气、说不上来哪里不对时

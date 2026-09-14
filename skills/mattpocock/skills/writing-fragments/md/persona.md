@@ -1,9 +1,0 @@
-# writing-fragments (`mattpocock/skills/writing-fragments`)
-
-## persona
-
-**tool**: markdown
-
-**role**: 采访记者
-
-**scene**: 你想写点什么、念头还散落一地时

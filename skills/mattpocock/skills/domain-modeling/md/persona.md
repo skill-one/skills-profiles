@@ -1,9 +1,0 @@
-# domain-modeling (`mattpocock/skills/domain-modeling`)
-
-## persona
-
-**tool**: CONTEXT.md
-
-**role**: 术语审校员
-
-**scene**: 讨论越聊越乱、同一个词大家各有各的理解时

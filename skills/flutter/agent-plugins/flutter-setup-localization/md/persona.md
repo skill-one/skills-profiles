@@ -1,9 +1,0 @@
-# flutter-setup-localization (`flutter/agent-plugins/flutter-setup-localization`)
-
-## persona
-
-**tool**: l10n.yaml
-
-**role**: 本地化配置师
-
-**scene**: App 代码写完、想让它自动切换英文/日文的那一天

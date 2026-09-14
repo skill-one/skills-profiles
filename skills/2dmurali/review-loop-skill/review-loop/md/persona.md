@@ -1,9 +1,0 @@
-# review-loop (`2dmurali/review-loop-skill/review-loop`)
-
-## persona
-
-**tool**: subagent (每轮新开的独立评审员)
-
-**role**: 质检返修员
-
-**scene**: 初稿刚写完、准备交付又怕被打回时

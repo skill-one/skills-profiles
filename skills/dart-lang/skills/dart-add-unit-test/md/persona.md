@@ -1,9 +1,0 @@
-# dart-add-unit-test (`dart-lang/skills/dart-add-unit-test`)
-
-## persona
-
-**tool**: package:test (Dart 官方测试库)
-
-**role**: 代码质检员
-
-**scene**: 新逻辑刚写完、bug 刚修好、正准备提交代码的那一刻

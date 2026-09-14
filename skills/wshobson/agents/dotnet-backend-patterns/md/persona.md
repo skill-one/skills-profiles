@@ -1,9 +1,0 @@
-# dotnet-backend-patterns (`wshobson/agents/dotnet-backend-patterns`)
-
-## persona
-
-**tool**: c#
-
-**role**: .NET 后端工程师
-
-**scene**: 接口一上量就变慢、翻着异步代码找阻塞点时

@@ -1,9 +1,0 @@
-# gh-cli (`github/awesome-copilot/gh-cli`)
-
-## persona
-
-**tool**: gh
-
-**role**: GitHub 代办员
-
-**scene**: 代码刚推上 GitHub, 要开 PR、盯检查、发版, 却不想离开终端时

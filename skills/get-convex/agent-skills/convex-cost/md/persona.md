@@ -1,9 +1,0 @@
-# convex-cost (`get-convex/agent-skills/convex-cost`)
-
-## persona
-
-**tool**: insights
-
-**role**: 成本审计师
-
-**scene**: 看到 Convex 账单往上爬、想知道钱烧在哪个函数上时

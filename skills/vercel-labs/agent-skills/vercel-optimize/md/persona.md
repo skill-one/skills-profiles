@@ -1,9 +1,0 @@
-# vercel-optimize (`vercel-labs/agent-skills/vercel-optimize`)
-
-## persona
-
-**tool**: vercel
-
-**role**: 成本审计师
-
-**scene**: 月底打开 Vercel 账单、想找出哪个页面在偷偷烧钱时

@@ -1,9 +1,0 @@
-# guizang-ppt-skill (`op7418/guizang-ppt-skill/guizang-ppt-skill`)
-
-## persona
-
-**tool**: html
-
-**role**: 网页 PPT 排版师
-
-**scene**: 要做一场分享、对着空白 PPT 不知从哪页下手时

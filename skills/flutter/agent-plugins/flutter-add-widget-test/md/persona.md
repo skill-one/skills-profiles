@@ -1,9 +1,0 @@
-# flutter-add-widget-test (`flutter/agent-plugins/flutter-add-widget-test`)
-
-## persona
-
-**tool**: WidgetTester
-
-**role**: 部件质检员
-
-**scene**: 界面刚改完、不确定按钮点了到底有没有反应时

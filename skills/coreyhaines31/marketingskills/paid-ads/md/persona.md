@@ -1,9 +1,0 @@
-# paid-ads (`coreyhaines31/marketingskills/paid-ads`)
-
-## persona
-
-**tool**: Google Ads
-
-**role**: 广告优化师
-
-**scene**: 广告跑了一周, 后台 CPA 超标、不知先动哪一刀时

@@ -1,9 +1,0 @@
-# airunway-aks-setup (`microsoft/azure-skills/airunway-aks-setup`)
-
-## persona
-
-**tool**: kubectl
-
-**role**: 模型部署工程师
-
-**scene**: 手里攥着一个空 AKS 集群、想让大模型在上面跑起来时

@@ -1,9 +1,0 @@
-# spec-driven-implementation (`warpdotdev/common-skills/spec-driven-implementation`)
-
-## persona
-
-**tool**: markdown
-
-**role**: 需求分析师
-
-**scene**: 上千行的大功能要动工、想法还悬在半空没落纸之前

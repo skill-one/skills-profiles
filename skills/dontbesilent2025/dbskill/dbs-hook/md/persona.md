@@ -1,9 +1,0 @@
-# dbs-hook (`dontbesilent2025/dbskill/dbs-hook`)
-
-## persona
-
-**tool**: 文案
-
-**role**: 开头诊断师
-
-**scene**: 视频发出去前 3 秒就被划走、回头想改开头却无从下手时

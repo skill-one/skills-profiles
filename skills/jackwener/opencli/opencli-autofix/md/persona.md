@@ -1,9 +1,0 @@
-# opencli-autofix (`jackwener/opencli/opencli-autofix`)
-
-## persona
-
-**tool**: opencli
-
-**role**: 适配器修理工
-
-**scene**: opencli 命令突然报错、网页数据抓不出来时

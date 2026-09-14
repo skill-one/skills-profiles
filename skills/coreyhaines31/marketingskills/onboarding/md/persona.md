@@ -1,9 +1,0 @@
-# onboarding (`coreyhaines31/marketingskills/onboarding`)
-
-## persona
-
-**tool**: 漏斗图
-
-**role**: 转化率优化师
-
-**scene**: 新用户注册完就不动了、想知道卡在哪一步流失时

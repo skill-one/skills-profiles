@@ -1,9 +1,0 @@
-# marketing-ideas (`coreyhaines31/marketingskills/marketing-ideas`)
-
-## persona
-
-**tool**: 点子库
-
-**role**: SaaS 增长顾问
-
-**scene**: 产品做出来了、却不知道怎么推广时

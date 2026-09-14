@@ -1,9 +1,0 @@
-# convex-suggest (`get-convex/agent-skills/convex-suggest`)
-
-## persona
-
-**tool**: npm install
-
-**role**: 组件导购
-
-**scene**: 你的轮子刚手搓成型、正准备收工时

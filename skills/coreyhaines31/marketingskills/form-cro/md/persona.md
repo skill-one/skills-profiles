@@ -1,9 +1,0 @@
-# form-cro (`coreyhaines31/marketingskills/form-cro`)
-
-## persona
-
-**tool**: 表单
-
-**role**: 表单优化师
-
-**scene**: 表单提交率上不去、用户填到一半就走人时

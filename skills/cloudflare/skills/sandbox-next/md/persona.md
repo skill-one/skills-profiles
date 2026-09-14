@@ -1,9 +1,0 @@
-# sandbox-next (`cloudflare/skills/sandbox-next`)
-
-## persona
-
-**tool**: @cloudflare/sandbox
-
-**role**: 云沙箱工程师
-
-**scene**: 想从 Worker 里起一个隔离 Linux 环境跑代码、却对 exec 和进程 handle 无从下手时

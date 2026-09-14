@@ -1,9 +1,0 @@
-# claude-handoff (`mattpocock/skills/claude-handoff`)
-
-## persona
-
-**tool**: claude --bg
-
-**role**: 交接调度员
-
-**scene**: 对话越拉越长、活儿还没干完,你不得不开新会话时

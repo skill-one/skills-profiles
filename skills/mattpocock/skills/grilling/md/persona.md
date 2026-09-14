@@ -1,9 +1,0 @@
-# grilling (`mattpocock/skills/grilling`)
-
-## persona
-
-**tool**: 决策树
-
-**role**: 方案质询官
-
-**scene**: 方案讲得头头是道、正要拍板动手之前

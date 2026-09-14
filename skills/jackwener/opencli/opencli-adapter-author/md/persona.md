@@ -1,9 +1,0 @@
-# opencli-adapter-author (`jackwener/opencli/opencli-adapter-author`)
-
-## persona
-
-**tool**: opencli
-
-**role**: 站点接线员
-
-**scene**: 你想让某个网站的数据一条命令就能查、却发现它还没被接入时

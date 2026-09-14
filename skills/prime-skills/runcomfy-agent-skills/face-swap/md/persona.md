@@ -1,9 +1,0 @@
-# face-swap (`prime-skills/runcomfy-agent-skills/face-swap`)
-
-## persona
-
-**tool**: runcomfy
-
-**role**: AI换脸师
-
-**scene**: 想把自己的脸或角色换进照片、视频里, 却不知道选哪个模型时

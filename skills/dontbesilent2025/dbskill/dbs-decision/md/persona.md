@@ -1,9 +1,0 @@
-# dbs-decision (`dontbesilent2025/dbskill/dbs-decision`)
-
-## persona
-
-**tool**: markdown
-
-**role**: 决策档案管理员
-
-**scene**: 说完「最近变化是……」、想把状态和判断落成文件时

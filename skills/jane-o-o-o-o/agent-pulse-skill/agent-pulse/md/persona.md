@@ -1,9 +1,0 @@
-# agent-pulse (`jane-o-o-o-o/agent-pulse-skill/agent-pulse`)
-
-## persona
-
-**tool**: agent-pulse
-
-**role**: AI 用量稽核员
-
-**scene**: 想不起来这周各个 AI 干了多少活、烧了多少 token 时

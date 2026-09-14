@@ -1,9 +1,0 @@
-# azure-compliance (`microsoft/azure-skills/azure-compliance`)
-
-## persona
-
-**tool**: azqr
-
-**role**: 云上合规体检师
-
-**scene**: 季度审计临近、想知道云里有没有过期证书和违规资源时

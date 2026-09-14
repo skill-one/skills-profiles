@@ -1,9 +1,0 @@
-# triage (`mattpocock/skills/triage`)
-
-## persona
-
-**tool**: issue tracker
-
-**role**: issue 分诊台
-
-**scene**: 周一早上打开 issue 列表、一排没贴标签的新报告等着分诊时

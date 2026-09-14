@@ -1,9 +1,0 @@
-# ai-video-generation (`101-skills/superpowers/ai-video-generation`)
-
-## persona
-
-**tool**: belt
-
-**role**: AI 视频导演
-
-**scene**: 脑子里有画面、手里却没有摄影机时

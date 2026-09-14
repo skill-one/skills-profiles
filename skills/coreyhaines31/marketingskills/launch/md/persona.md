@@ -1,9 +1,0 @@
-# launch (`coreyhaines31/marketingskills/launch`)
-
-## persona
-
-**tool**: launch checklist (上线清单)
-
-**role**: 发布策划师
-
-**scene**: 产品能用了、却又想「再憋一个功能」不敢发布时

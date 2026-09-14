@@ -1,9 +1,0 @@
-# pdf (`anthropics/skills/pdf`)
-
-## persona
-
-**tool**: pypdf
-
-**role**: PDF 整理师
-
-**scene**: 手里攥着几份 PDF, 想合并、拆分或把里面的文字表格抠出来时

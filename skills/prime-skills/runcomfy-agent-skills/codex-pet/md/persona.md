@@ -1,9 +1,0 @@
-# codex-pet (`prime-skills/runcomfy-agent-skills/codex-pet`)
-
-## persona
-
-**tool**: magick
-
-**role**: 精灵图拼版师
-
-**scene**: 你丢来一张图, 想让它变成 Codex 桌宠、却没有 Codex Pro 的那一刻

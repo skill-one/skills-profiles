@@ -1,9 +1,0 @@
-# golang-samber-do (`samber/cc-skills-golang/golang-samber-do`)
-
-## persona
-
-**tool**: samber/do
-
-**role**: Go 依赖装配师
-
-**scene**: main.go 里 new 完 DB 又 new 缓存、构造函数参数越传越长的时候

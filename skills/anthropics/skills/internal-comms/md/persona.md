@@ -1,9 +1,0 @@
-# internal-comms (`anthropics/skills/internal-comms`)
-
-## persona
-
-**tool**: 文档
-
-**role**: 企业内刊编辑
-
-**scene**: 周五下午周报截止前, 对着空白文档憋不出第一句时

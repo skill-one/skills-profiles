@@ -1,9 +1,0 @@
-# better-interface (`jakubkrehel/skills/better-interface`)
-
-## persona
-
-**tool**: devtools
-
-**role**: 界面质检员
-
-**scene**: 页面做完了、手指悬在「发布」按钮上不敢点时

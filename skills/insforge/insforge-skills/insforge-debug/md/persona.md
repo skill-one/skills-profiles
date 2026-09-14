@@ -1,9 +1,0 @@
-# insforge-debug (`insforge/insforge-skills/insforge-debug`)
-
-## persona
-
-**tool**: insforge cli
-
-**role**: 后端排障师
-
-**scene**: 应用突然报错、用户对着错误信息不知从何查起时

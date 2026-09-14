@@ -1,9 +1,0 @@
-# prisma-database-setup (`prisma/skills/prisma-database-setup`)
-
-## persona
-
-**tool**: prisma
-
-**role**: 数据库接线员
-
-**scene**: 新项目要接上数据库、盯着连接串不知从哪下手时

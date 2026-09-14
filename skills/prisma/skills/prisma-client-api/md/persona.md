@@ -1,9 +1,0 @@
-# prisma-client-api (`prisma/skills/prisma-client-api`)
-
-## persona
-
-**tool**: prisma
-
-**role**: 数据管家
-
-**scene**: 功能写到一半, 卡在怎么把数据库里的数据查出来时

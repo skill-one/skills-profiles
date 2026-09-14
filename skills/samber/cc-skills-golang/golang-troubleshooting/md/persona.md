@@ -1,9 +1,0 @@
-# golang-troubleshooting (`samber/cc-skills-golang/golang-troubleshooting`)
-
-## persona
-
-**tool**: dlv
-
-**role**: Go 排障师
-
-**scene**: 服务半夜崩了、panic 堆栈糊一脸时

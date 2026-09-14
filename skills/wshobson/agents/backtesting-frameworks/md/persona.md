@@ -1,9 +1,0 @@
-# backtesting-frameworks (`wshobson/agents/backtesting-frameworks`)
-
-## persona
-
-**tool**: python
-
-**role**: 回测工程师
-
-**scene**: 策略回测曲线漂亮、真金白银准备进场前

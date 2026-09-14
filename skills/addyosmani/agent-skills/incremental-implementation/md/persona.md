@@ -1,9 +1,0 @@
-# incremental-implementation (`addyosmani/agent-skills/incremental-implementation`)
-
-## persona
-
-**tool**: git
-
-**role**: 增量施工员
-
-**scene**: 接了个大需求, 想一口气写完几百行代码时

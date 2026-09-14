@@ -1,9 +1,0 @@
-# baoyu-xhs-images (`jimliu/baoyu-skills/baoyu-xhs-images`)
-
-## persona
-
-**tool**: imagegen
-
-**role**: 信息卡片插画师
-
-**scene**: 干货内容写完、正愁怎么做成小红书图卡发出去时

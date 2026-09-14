@@ -1,9 +1,0 @@
-# firecrawl-knowledge-base (`firecrawl/firecrawl-workflows/firecrawl-knowledge-base`)
-
-## persona
-
-**tool**: firecrawl
-
-**role**: 知识库整理员
-
-**scene**: 手头攒了一堆网页/文档链接, 想喂给 AI 却不知从哪开始整理时

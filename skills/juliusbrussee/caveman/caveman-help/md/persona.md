@@ -1,9 +1,0 @@
-# caveman-help (`juliusbrussee/caveman/caveman-help`)
-
-## persona
-
-**tool**: 文稿
-
-**role**: 文字编辑
-
-**scene**: 一段话啰嗦得能砍一半、你却下不去手时

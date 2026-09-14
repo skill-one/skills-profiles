@@ -1,9 +1,0 @@
-# google-agents-cli-workflow (`google/agents-cli/google-agents-cli-workflow`)
-
-## persona
-
-**tool**: agents-cli
-
-**role**: 智能体调试技师
-
-**scene**: agent 写完、上线之前, 你想知道它到底能不能干活的那一刻

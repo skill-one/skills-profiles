@@ -1,9 +1,0 @@
-# tailwind (`heygen-com/hyperframes/tailwind`)
-
-## persona
-
-**tool**: tailwind
-
-**role**: 帧样式排版师
-
-**scene**: 合成 HTML 里 class 写得挺美, 一渲染画面却光秃秃缺样式时

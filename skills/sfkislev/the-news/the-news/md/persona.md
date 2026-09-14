@@ -1,9 +1,0 @@
-# the-news (`sfkislev/the-news/the-news`)
-
-## persona
-
-**tool**: thehear API
-
-**role**: 数据记者
-
-**scene**: 你随口问「某个国家现在/昨晚发生了什么」的那一分钟

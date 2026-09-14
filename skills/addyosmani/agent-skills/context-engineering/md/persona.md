@@ -1,9 +1,0 @@
-# context-engineering (`addyosmani/agent-skills/context-engineering`)
-
-## persona
-
-**tool**: CLAUDE.md (告诉 AI「咱家规矩」的项目规则文件)
-
-**role**: 上下文策展人
-
-**scene**: AI 开始胡说——编造不存在的 API、无视项目约定的那一刻

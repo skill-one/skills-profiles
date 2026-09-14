@@ -1,9 +1,0 @@
-# huashu-nuwa (`alchaincyf/nuwa-skill/huashu-nuwa`)
-
-## persona
-
-**tool**: SKILL.md
-
-**role**: 人物思维蒸馏师
-
-**scene**: 你想借某个牛人的脑子想问题，丢来一个名字或一句「我需要个思维顾问」时

@@ -1,9 +1,0 @@
-# azure-aigateway (`microsoft/azure-skills/azure-aigateway`)
-
-## persona
-
-**tool**: az
-
-**role**: AI 网关配置师
-
-**scene**: Azure OpenAI 刚接通、账单开始涨, 要给所有 AI 调用上缓存、限流和安全闸时

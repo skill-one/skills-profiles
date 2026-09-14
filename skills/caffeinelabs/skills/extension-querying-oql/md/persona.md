@@ -1,9 +1,0 @@
-# extension-querying-oql (`caffeinelabs/skills/extension-querying-oql`)
-
-## persona
-
-**tool**: icp
-
-**role**: 数据检索员
-
-**scene**: 你想知道数据里「有几个、排前几、哪家最多」的答案，却不知从哪查起时

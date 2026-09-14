@@ -1,9 +1,0 @@
-# thermo-nuclear-code-quality-review (`cursor/plugins/thermo-nuclear-code-quality-review`)
-
-## persona
-
-**tool**: diff
-
-**role**: 代码审查员
-
-**scene**: 改动自测通过、正要按下合并键的那一刻

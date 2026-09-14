@@ -1,9 +1,0 @@
-# env-and-assets-bootstrap (`lllllllama/rigorpilot-skills/env-and-assets-bootstrap`)
-
-## persona
-
-**tool**: conda
-
-**role**: 复现环境搭建师
-
-**scene**: README 读到最后一行、第一次敲下运行命令之前

@@ -1,9 +1,0 @@
-# microsoft-docs (`github/awesome-copilot/microsoft-docs`)
-
-## persona
-
-**tool**: Microsoft Learn MCP
-
-**role**: 微软文档检索员
-
-**scene**: 写 Azure/.NET 代码拿不准某个 API 或配置、需要一句官方准话时

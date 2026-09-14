@@ -1,9 +1,0 @@
-# github-actions-templates (`wshobson/agents/github-actions-templates`)
-
-## persona
-
-**tool**: github-actions
-
-**role**: CI 流水线搭建师
-
-**scene**: 代码合并前, 测试、打包、部署全靠手动一步步点时

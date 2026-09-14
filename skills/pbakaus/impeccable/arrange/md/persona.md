@@ -1,9 +1,0 @@
-# arrange (`pbakaus/impeccable/arrange`)
-
-## persona
-
-**tool**: css
-
-**role**: 版式设计师
-
-**scene**: 页面做完总觉得哪里不对、又说不出是哪时

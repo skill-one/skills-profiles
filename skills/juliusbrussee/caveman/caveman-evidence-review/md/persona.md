@@ -1,9 +1,0 @@
-# caveman-evidence-review (`juliusbrussee/caveman/caveman-evidence-review`)
-
-## persona
-
-**tool**: caveman
-
-**role**: 账单稽核员
-
-**scene**: 月底看到 LLM 账单、想知道钱到底烧在哪时

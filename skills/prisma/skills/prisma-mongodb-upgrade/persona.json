@@ -1,1 +1,0 @@
-{"tool": "schema.prisma", "role": "数据库迁移顾问", "scene": "MongoDB 项目想升级 Prisma 7、却发现 v7 根本没有 MongoDB 连接器时"}

@@ -1,9 +1,0 @@
-# extension-openai (`caffeinelabs/skills/extension-openai`)
-
-## persona
-
-**tool**: openai-client
-
-**role**: OpenAI 接线员
-
-**scene**: 想给应用接上 ChatGPT、攥着 sk- 密钥 (OpenAI 的计费钥匙) 不知往哪藏时

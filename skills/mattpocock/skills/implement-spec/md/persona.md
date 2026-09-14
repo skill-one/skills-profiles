@@ -1,9 +1,0 @@
-# implement-spec (`mattpocock/skills/implement-spec`)
-
-## persona
-
-**tool**: git
-
-**role**: 并行施工包工头
-
-**scene**: 一份需求拆成工单、几路人马要同时开工时

@@ -1,9 +1,0 @@
-# to-tickets (`mattpocock/skills/to-tickets`)
-
-## persona
-
-**tool**: GitHub
-
-**role**: 拆票师
-
-**scene**: 方案敲定、团队等着开工, 却不知道第一张票该做哪个时

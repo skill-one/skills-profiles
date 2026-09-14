@@ -1,9 +1,0 @@
-# diagnosing-bugs (`mattpocock/skills/diagnosing-bugs`)
-
-## persona
-
-**tool**: repro 脚本
-
-**role**: 疑难 Bug 诊断师
-
-**scene**: 程序偶发报错、原因说不清、快砸键盘时

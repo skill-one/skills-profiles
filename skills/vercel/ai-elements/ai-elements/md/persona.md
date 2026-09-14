@@ -1,9 +1,0 @@
-# ai-elements (`vercel/ai-elements/ai-elements`)
-
-## persona
-
-**tool**: ai-elements
-
-**role**: AI 对话界面装配师
-
-**scene**: AI 后端已经调通、聊天界面却还是一片空白时

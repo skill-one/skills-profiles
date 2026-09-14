@@ -1,9 +1,0 @@
-# firebase-ai-logic (`firebase/agent-skills/firebase-ai-logic`)
-
-## persona
-
-**tool**: firebase
-
-**role**: AI 集成工程师
-
-**scene**: 想给应用加上 AI 功能、却不想自建后端时

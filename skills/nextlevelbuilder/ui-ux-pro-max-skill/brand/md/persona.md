@@ -1,9 +1,0 @@
-# brand (`nextlevelbuilder/ui-ux-pro-max-skill/brand`)
-
-## persona
-
-**tool**: brand-guidelines.md
-
-**role**: 品牌规范管理员
-
-**scene**: 文案配色刚做完、拿不准像不像自家品牌时

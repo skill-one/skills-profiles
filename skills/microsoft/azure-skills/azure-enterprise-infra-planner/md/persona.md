@@ -1,9 +1,0 @@
-# azure-enterprise-infra-planner (`microsoft/azure-skills/azure-enterprise-infra-planner`)
-
-## persona
-
-**tool**: bicep
-
-**role**: 云架构师
-
-**scene**: 业务系统要上 Azure、面对一整套网络与资源不知从何落地时

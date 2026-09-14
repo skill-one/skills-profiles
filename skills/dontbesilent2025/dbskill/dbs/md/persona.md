@@ -1,9 +1,0 @@
-# dbs (`dontbesilent2025/dbskill/dbs`)
-
-## persona
-
-**tool**: marketplace.json
-
-**role**: 任务编排师
-
-**scene**: 手里有件真事要办、却不知道该用哪个 Skill 时

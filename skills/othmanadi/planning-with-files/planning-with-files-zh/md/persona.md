@@ -1,9 +1,0 @@
-# planning-with-files-zh (`othmanadi/planning-with-files/planning-with-files-zh`)
-
-## persona
-
-**tool**: task_plan.md
-
-**role**: 任务规划师
-
-**scene**: 接了多步骤的大活、怕做到一半忘了来龙去脉时

@@ -1,9 +1,0 @@
-# aso-audit (`coreyhaines31/marketingskills/aso-audit`)
-
-## persona
-
-**tool**: 应用商店详情页
-
-**role**: ASO 优化师
-
-**scene**: 开发者发来自家 App 的商店链接, 疑惑「为什么没人下载」时

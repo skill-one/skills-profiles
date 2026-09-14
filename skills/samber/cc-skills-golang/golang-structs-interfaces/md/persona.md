@@ -1,9 +1,0 @@
-# golang-structs-interfaces (`samber/cc-skills-golang/golang-structs-interfaces`)
-
-## persona
-
-**tool**: go
-
-**role**: Go 类型设计师
-
-**scene**: 定义好 struct 和 interface、在指针还是值接收者之间纠结时

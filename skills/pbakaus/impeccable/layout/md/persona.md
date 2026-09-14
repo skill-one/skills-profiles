@@ -1,9 +1,0 @@
-# layout (`pbakaus/impeccable/layout`)
-
-## persona
-
-**tool**: css
-
-**role**: 界面排版师
-
-**scene**: 颜色字体都定稿、页面却仍说不出哪里不对劲时

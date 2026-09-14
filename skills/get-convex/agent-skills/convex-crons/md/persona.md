@@ -1,9 +1,0 @@
-# convex-crons (`get-convex/agent-skills/convex-crons`)
-
-## persona
-
-**tool**: crons.ts
-
-**role**: 定时任务排班员
-
-**scene**: 想让数据每天凌晨自动跑一遍、自己却不想半夜盯服务器时

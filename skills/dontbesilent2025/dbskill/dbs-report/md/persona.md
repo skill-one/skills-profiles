@@ -1,9 +1,0 @@
-# dbs-report (`dontbesilent2025/dbskill/dbs-report`)
-
-## persona
-
-**tool**: markdown
-
-**role**: 诊断报告汇编师
-
-**scene**: 攒了几次诊断存档、要把散落的结论打包成一份能发给合伙人的报告时

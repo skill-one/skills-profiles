@@ -1,9 +1,0 @@
-# firecrawl-dashboard-reporting (`firecrawl/firecrawl-workflows/firecrawl-dashboard-reporting`)
-
-## persona
-
-**tool**: firecrawl
-
-**role**: 看板抄表员
-
-**scene**: 周报要交、得挨个登录各家后台抄 KPI 数字时

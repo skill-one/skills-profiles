@@ -1,9 +1,0 @@
-# baoyu-slide-deck (`jimliu/baoyu-skills/baoyu-slide-deck`)
-
-## persona
-
-**tool**: imagegen
-
-**role**: 幻灯片绘制师
-
-**scene**: 内容写完了、要拿去汇报或分享, 却没时间做出像样的幻灯片时

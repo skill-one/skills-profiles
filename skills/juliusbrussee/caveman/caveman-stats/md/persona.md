@@ -1,9 +1,0 @@
-# caveman-stats (`juliusbrussee/caveman/caveman-stats`)
-
-## persona
-
-**tool**: session log
-
-**role**: 成本核算员
-
-**scene**: 敲下 /caveman-stats、想知道这一轮到底是省了还是亏了的那一刻

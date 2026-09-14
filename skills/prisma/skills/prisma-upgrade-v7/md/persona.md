@@ -1,9 +1,0 @@
-# prisma-upgrade-v7 (`prisma/skills/prisma-upgrade-v7`)
-
-## persona
-
-**tool**: prisma
-
-**role**: 数据库升级迁移师
-
-**scene**: 项目刚从 Prisma 6 升到 7, 跑起来报错一屏接一屏、不知从哪改起时

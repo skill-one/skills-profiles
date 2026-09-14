@@ -1,9 +1,0 @@
-# firecrawl-workflows (`firecrawl/firecrawl-workflows/firecrawl-workflows`)
-
-## persona
-
-**tool**: firecrawl
-
-**role**: 网络调研师
-
-**scene**: 明天要交一份有出处的调研报告、信息却还散落在几十个网页里时

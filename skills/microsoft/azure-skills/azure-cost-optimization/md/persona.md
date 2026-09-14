@@ -1,9 +1,0 @@
-# azure-cost-optimization (`microsoft/azure-skills/azure-cost-optimization`)
-
-## persona
-
-**tool**: Azure Cost Management
-
-**role**: 云成本审计师
-
-**scene**: 月底 Azure 账单一出、开销看着不对劲时

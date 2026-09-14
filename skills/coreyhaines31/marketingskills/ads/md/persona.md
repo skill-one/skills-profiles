@@ -1,9 +1,0 @@
-# ads (`coreyhaines31/marketingskills/ads`)
-
-## persona
-
-**tool**: google ads
-
-**role**: 投放优化师
-
-**scene**: 广告跑了一周, 盯着惨淡的数据纠结哪条该关、哪条该留时

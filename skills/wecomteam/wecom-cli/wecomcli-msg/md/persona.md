@@ -1,9 +1,0 @@
-# wecomcli-msg (`wecomteam/wecom-cli/wecomcli-msg`)
-
-## persona
-
-**tool**: wecom-cli
-
-**role**: 消息收发员
-
-**scene**: 想不起对方上次说了什么、正要回消息时

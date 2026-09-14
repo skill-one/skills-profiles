@@ -1,9 +1,0 @@
-# performance (`addyosmani/web-quality-skills/performance`)
-
-## persona
-
-**tool**: devtools
-
-**role**: 网站提速师
-
-**scene**: 页面加载一直转圈、用户快要关掉走人时

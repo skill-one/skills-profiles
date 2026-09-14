@@ -1,9 +1,0 @@
-# cloudflare-one-migrations (`cloudflare/skills/cloudflare-one-migrations`)
-
-## persona
-
-**tool**: 映射表
-
-**role**: 迁移规划师
-
-**scene**: 从 Zscaler / 老旧 VPN 切到 Cloudflare One, 面对几百条旧规则、不知道敢不敢按下切换键时

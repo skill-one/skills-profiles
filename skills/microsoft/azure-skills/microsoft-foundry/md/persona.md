@@ -1,9 +1,0 @@
-# microsoft-foundry (`microsoft/azure-skills/microsoft-foundry`)
-
-## persona
-
-**tool**: azd
-
-**role**: AI 智能体交付工程师
-
-**scene**: 智能体代码写完了, 卡在部署上线那一步时

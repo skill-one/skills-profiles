@@ -1,9 +1,0 @@
-# tavily-extract (`tavily-ai/skills/tavily-extract`)
-
-## persona
-
-**tool**: tvly
-
-**role**: 网页取文师
-
-**scene**: 你甩来一串链接、只要正文不要广告时

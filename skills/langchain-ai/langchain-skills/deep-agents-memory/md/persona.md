@@ -1,9 +1,0 @@
-# deep-agents-memory (`langchain-ai/langchain-skills/deep-agents-memory`)
-
-## persona
-
-**tool**: StoreBackend (跨会话持久记忆仓库)
-
-**role**: 记忆仓管员
-
-**scene**: Agent 开了新会话、想不起上次聊到哪时

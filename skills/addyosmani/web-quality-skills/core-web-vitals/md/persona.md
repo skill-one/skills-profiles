@@ -1,9 +1,0 @@
-# core-web-vitals (`addyosmani/web-quality-skills/core-web-vitals`)
-
-## persona
-
-**tool**: devtools
-
-**role**: 网页性能工程师
-
-**scene**: 页面半天不出内容、或加载时跳来跳去、用户开始流失时
