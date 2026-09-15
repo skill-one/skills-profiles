@@ -71,7 +71,9 @@ Design decisions:
   schemas and the 13-value `Domain` taxonomy live in `models.py`.
 - **File-based resume** — a prompt's output is its own `<prompt_id>.json` (markdown copy in `md/`),
   written the moment it is generated: present and schema-valid means no LLM call. Markdown first, json
-  last, so a crash cannot leave a json without its copy. Resume granularity is per prompt.
+  last, so a crash cannot leave a json without its copy. Resume granularity is per prompt. Reading that
+  cache is a pure query — selecting and reporting never delete — and the invalidation a regeneration
+  implies is applied only by the run that is about to generate.
 - **The index is a projection** — `skills.jsonl` is rewritten in full from disk, so a row can never
   drift from the files; it is what `invalidate --stale` compares hashes against.
 - **A cover is a recipe plus a render** — one DAG prompt (`cover`, fed by `persona.tool`) turns the
@@ -88,7 +90,10 @@ Design decisions:
   pointer names a tag that is not on disk yet; in CI the snapshot is restored from our own `dist`.
 - **Prompts as files** — one markdown file per prompt under `prompts/`, the file name being the prompt
   id: YAML frontmatter for metadata, a jinja2 user-prompt template as the body, `_system.md` for the
-  shared system prompt.
+  shared system prompt. Frontmatter `use_system: false` skips the shared system prompt for
+  self-contained tasks — only `cover` uses it: its call needs no skill context (it translates
+  `persona.tool`), and the sales framing would pull the recipe toward the marketing prose the
+  `ImagePrompt` validator exists to reject.
 
 ### Partial regeneration
 
@@ -104,7 +109,8 @@ recipe (and persona, when missing) and renders the picture in the same invocatio
 ## Adding a prompt
 
 One markdown file is one prompt — no code change unless you need a new output schema (then register the
-model in `models.py`):
+model in `models.py`). Only `output`, `depends_on` and `use_system` are read from the frontmatter; any
+other key (such as `description`) is there for whoever reads the file:
 
 ```markdown
 ---
@@ -117,9 +123,10 @@ depends_on: [scenario] # DAG edges; omit for root prompts
 {{ deps.scenario.text }} # deps maps prompt ids to their parsed output objects
 ```
 
-`_system.md` provides `{{ skill.name }}`, `{{ skill.description }}` and the full `{{ skill_md }}`
-(capped at 20,000 characters), so a prompt file only has to describe the task. Then fill the angle in
-for every skill — cached angles are reused, so only the new one costs calls:
+`_system.md` gives every text prompt the skill's `SKILL.md` as `{{ skill_md }}` (capped at 20,000
+characters), so a prompt file only has to describe the task: nothing else about the skill is injected,
+because the source already carries it. Then fill the angle in for every skill — cached angles are
+reused, so only the new one costs calls:
 
 ```bash
 skills-profiles run --prompts my_angle --limit 0
@@ -136,7 +143,7 @@ prompts/             # one markdown file per prompt (+ _system.md)
 src/skills_profiles/
 ├── data.py          # mirror pointer + tarball + index parsing + stale detection
 ├── models.py        # Domain taxonomy + output schemas
-├── prompts.py       # frontmatter + DAG ordering + jinja2 rendering
+├── prompts.py       # frontmatter + DAG (order + both closures) + jinja2 rendering
 ├── generate.py      # async DAG execution + resume + coverage
 ├── outputs.py       # json/md outputs + assets + index + invalidation
 ├── layout.py        # file/dir names shared by the snapshot and the artifacts
@@ -157,13 +164,15 @@ Resolution order (highest first): `SKILLS_PROFILES_*` env vars → local `.env` 
 | `SKILLS_PROFILES_LIMIT`            | `10`                             | Skills per run (`0` = all; cached ones are skipped, not counted)                                              |
 | `SKILLS_PROFILES_TOTAL_LIMIT`      | `1000`                           | Skills the whole pipeline serves, most installed first — a ceiling on the dataset, not on one run (`0` = all) |
 | `SKILLS_PROFILES_CONCURRENCY`      | `2`                              | Max concurrent LLM calls / image requests, shared across skills and prompts                                   |
+| `SKILLS_PROFILES_MAX_RETRIES`      | `3`                              | Extra attempts per LLM call and per image request (`0` = a single try)                                        |
+| `SKILLS_PROFILES_LLM_RATE_LIMIT`   | `20`                             | Max LLM request starts per minute, shared by the whole run (Agnes documents 20 RPM; `0` = unbounded)          |
 | `SKILLS_PROFILES_OUTPUT_DIR`       | `output`                         | Artifacts directory                                                                                           |
 | `SKILLS_PROFILES_DATA_DIR`         | `cache/skills-sh`                | Upstream data directory                                                                                       |
 | `SKILLS_PROFILES_PROMPTS_DIR`      | `prompts`                        | Prompt markdown directory (plus `_system.md`)                                                                 |
 | `SKILLS_PROFILES_IMAGE_BASE_URL`   | `https://apihub.agnes-ai.com/v1` | Text-to-image endpoint; covers are drawn from a service of their own                                          |
 | `SKILLS_PROFILES_IMAGE_API_KEY`    | –                                | Its key (without one, `run` skips the render pass with a warning; `--dry-run` needs none)                     |
 | `SKILLS_PROFILES_IMAGE_API_KEYS`   | –                                | Extra keys, comma-separated: each key holds its own per-minute quota, so N keys render N times as fast        |
-| `SKILLS_PROFILES_IMAGE_RATE_LIMIT` | `0`                              | Max images per minute **per key**; the endpoint announces no quota, so the default is unbounded               |
+| `SKILLS_PROFILES_IMAGE_RATE_LIMIT` | `20`                             | Max images per minute **per key** (Agnes documents 20 RPM; `0` = unbounded)                                   |
 | `SKILLS_PROFILES_IMAGE_MODEL`      | `agnes-image-2.5-flash`          | Any model the endpoint serves                                                                                 |
 | `SKILLS_PROFILES_IMAGE_SIZE`       | `1024x1024`                      | Exact size; the endpoint also takes `1K`/`2K`/`3K`/`4K` tiers and normalizes exotic sizes                     |
 
@@ -216,10 +225,11 @@ Required configuration (Settings → Secrets and variables → Actions):
 
 The pipeline is verified offline: dataset parsing, the `latest` pointer's parsing and its refusal of
 junk, the publish stamp's round trip (`stats.json` with `publishedAt` / `upstream` added and stripped
-back off, so a no-op run stays recognisable), DAG ordering, template rendering, resume skip,
-invalidation, dependency passing, markdown
-rendering, the cover recipe's prompt/seed/payload construction, the endpoint's retry rules, the per-key
-rate limiter, and a full CLI dry-run of `run` — no network access (`conftest.py` replaces
+back off, so a no-op run stays recognisable), DAG ordering and both closures over it, template
+rendering, resume skip, the pending/drop split (reading a cache writes nothing), invalidation,
+dependency passing, markdown rendering, the cover recipe's prompt/seed/payload construction, the
+endpoint's retry rules, the per-key rate limiter, and a full CLI dry-run of `run` — no network access
+(`conftest.py` replaces
 `data.download_file` with a fake serving a snapshot tarball built from the fixtures, and the upstream
 pointer plus the image endpoint are reached only through a stubbed `httpx` call).
 

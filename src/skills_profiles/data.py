@@ -25,7 +25,7 @@ from pathlib import Path
 import httpx
 
 from .config import DIST_BRANCH, LATEST_URL, TARBALL_URL, Settings, tarball_url
-from .layout import INDEX_NAME, SKILLS_SUBDIR
+from .layout import INDEX_NAME, SKILLS_SUBDIR, skill_dir_name
 from .models import SkillRecord
 from .outputs import load_hashes
 
@@ -275,15 +275,13 @@ def load_skills(settings: Settings) -> list[SkillRecord]:
         # content is saved iff the scraper recorded a content hash
         if not entry.get("hash"):
             continue
+        # the index's prose fields (name, description, source) are ignored: the
+        # prompt template reads SKILL.md, which already carries them
         records.append(
             SkillRecord(
                 id=entry["id"],
-                name=entry.get("name") or entry["id"],
                 installs=int(entry.get("installs") or 0),
-                source=entry.get("source", ""),
                 hash=entry.get("hash", ""),
-                # collapsed to one line for the system-prompt template
-                description=" ".join((entry.get("description") or "").split()),
             )
         )
     records.sort(key=lambda r: r.installs, reverse=True)
@@ -310,7 +308,7 @@ def portfolio(settings: Settings, skills: list[SkillRecord]) -> list[SkillRecord
 
 def skill_md_path(settings: Settings, skill: SkillRecord) -> Path:
     """Where one skill's SKILL.md sits in the snapshot."""
-    return settings.data_dir / SKILLS_SUBDIR / skill.id.replace(":", "_") / SKILL_MD
+    return settings.data_dir / SKILLS_SUBDIR / skill_dir_name(skill.id) / SKILL_MD
 
 
 def read_skill_md(settings: Settings, skill: SkillRecord) -> str | None:

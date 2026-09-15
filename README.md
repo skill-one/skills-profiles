@@ -72,6 +72,7 @@ items `{user, category, comment}`. Everything but ids, paths and field names is 
   "prompts": {
     "blackbox": 1000,
     "comments": 1000,
+    "cover": 1000,
     "domain": 1000,
     "persona": 1000,
     "scenario": 1000,
@@ -84,9 +85,9 @@ items `{user, category, comment}`. Everything but ids, paths and field names is 
 }
 ```
 
-- `prompts` counts the cached outputs of each angle; `covers.rendered` counts the pictures rendered
-  from the cover recipe (an LLM-written English subject line derived from `persona.tool`).
-  Treat `cover.png` (~200 KB after the automatic palette-quantization) as present-or-absent per skill.
+- `prompts` counts the cached outputs of every prompt — the seven text angles plus `cover`, the image
+  recipe; `covers.rendered` counts how many of those recipes have become a picture. Treat `cover.png`
+  (~200 KB after the automatic palette-quantization) as present-or-absent per skill.
 - `skills.profiled` counts skills with every angle cached (the text half); `skills.complete` the subset
   whose `cover.png` is drawn too — the sense `run --limit` spends budget on, so a key-less run can
   reach `profiled == total` with `complete` still catching up.
@@ -106,8 +107,8 @@ when it was published and from which mirror tag, because publishing fails unless
 commit agree — or a published snapshot turns out to have lost its stamp.
 
 One image-recipe prompt (`cover`, fed by `persona.tool`) turns the Chinese tool name into an English
-subject description; `cover.png` is then rendered from that text, with the avatar framing, the unified
-premium 3D illustration style and the "no text / no person" bans appended by the generator. Recipe and
+subject description; `cover.png` is then rendered from that text, with the avatar framing, the one
+shared flat-illustration style and the "no text / no person" bans appended by the generator. Recipe and
 picture travel as one unit: `run --prompts cover` fills the recipe (and persona, when missing) and
 renders the picture in the same invocation, and `invalidate --prompts cover` — like invalidating
 `persona`, which cascades to the recipe — drops both halves together. Full detail:

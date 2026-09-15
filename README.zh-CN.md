@@ -70,6 +70,7 @@ English: [README.md](README.md) · 开发指南：[DEVELOPING.zh-CN.md](DEVELOPI
   "prompts": {
     "blackbox": 1000,
     "comments": 1000,
+    "cover": 1000,
     "domain": 1000,
     "persona": 1000,
     "scenario": 1000,
@@ -82,8 +83,8 @@ English: [README.md](README.md) · 开发指南：[DEVELOPING.zh-CN.md](DEVELOPI
 }
 ```
 
-- `prompts` 数的是每个角度已缓存的输出数；`covers.rendered` 数的是据 cover 配方（由 `persona.tool`
-  派生、LLM 撰写的英文画面主体描述）渲染出的配图数。把 `cover.png`（自动调色板量化后约 200 KB）当作每个 skill 上「有则有、无则无」的东西。
+- `prompts` 数的是每个 prompt 已缓存的输出数——七个文字角度，加上 `cover` 这个生图配方；`covers.rendered`
+  数的是这些配方里已经画成配图的数量。把 `cover.png`（自动调色板量化后约 200 KB）当作每个 skill 上「有则有、无则无」的东西。
 - `skills.profiled` 数的是每个角度都已缓存的 skill（文字那一半）；`skills.complete` 是其子集，要求
   `cover.png` 也已画出——也就是 `run --limit` 会占用预算的那个口径，所以没有配图 key 的一轮可以让
   `profiled == total` 而 `complete` 仍在追赶。
@@ -101,7 +102,7 @@ English: [README.md](README.md) · 开发指南：[DEVELOPING.zh-CN.md](DEVELOPI
 丢了章，发布都算失败。
 
 配图有一个配方 prompt（`cover`，输入 `persona.tool`）把中文工具名翻译成英文画面主体描述；`cover.png`
-随后据这段文案渲染，生成器会追加头像级取景、统一的高级 3D 插画画风以及「无文字 / 无人脸」禁令。配方与
+随后据这段文案渲染，生成器会追加头像级取景、统一的扁平插画画风以及「无文字 / 无人脸」禁令。配方与
 配图作为一个整体进出：`run --prompts cover` 一条命令补齐配方（缺 persona 时连带补上）并渲染图片；
 `invalidate --prompts cover`（以及会级联到配方的 `invalidate --prompts persona`）则把两半一起删掉。
 细节见 [DEVELOPING.zh-CN.md](DEVELOPING.zh-CN.md)。

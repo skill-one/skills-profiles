@@ -11,8 +11,9 @@ from collections.abc import Iterable, Mapping
 from pathlib import Path
 
 from .config import Settings
-from .layout import INDEX_NAME, MD_SUBDIR, SKILLS_SUBDIR
+from .layout import INDEX_NAME, MD_SUBDIR, SKILLS_SUBDIR, skill_dir_name
 from .models import Domain
+from .prompts import PromptSet, load_prompt_set
 
 AGGREGATED_PROMPTS = ("domain", "persona")  # prompts folded into the index lines, derived from disk
 # asset filenames (relative to a skill's artifact dir) owned by a prompt: they
@@ -27,7 +28,7 @@ logger = logging.getLogger(__name__)
 def skill_result_dir(settings: Settings, skill_id: str) -> Path:
     """Per-skill artifacts live under <output_dir>/skills/<owner>/<repo>/<slug>/
     (id-based, mirroring the upstream data/skills/ layout)."""
-    return settings.output_dir / SKILLS_SUBDIR / skill_id.replace(":", "_")
+    return settings.output_dir / SKILLS_SUBDIR / skill_dir_name(skill_id)
 
 
 def prompt_result_path(settings: Settings, skill_id: str, prompt_id: str) -> Path:
@@ -155,7 +156,8 @@ def write_prompt_output(settings: Settings, skill_id: str, prompt_id: str, outpu
 
 
 def invalidate(settings: Settings, skill_ids: Iterable[str] | None = None,
-               prompt_ids: Iterable[str] | None = None) -> int:
+               prompt_ids: Iterable[str] | None = None,
+               prompts: PromptSet | None = None) -> int:
     """Delete cached prompt outputs (and the assets they own) so the next run refills them.
 
     `skill_ids` None means every skill on record; `prompt_ids` None
@@ -171,11 +173,17 @@ def invalidate(settings: Settings, skill_ids: Iterable[str] | None = None,
     match what is left on disk. This is the only invalidation path:
     `invalidate --stale` uses it for skills whose upstream hash changed. Returns
     the number of removed prompt outputs and assets.
+
+    `prompts` is the DAG the downstream cascade is read from. A caller that
+    already holds a loaded prompt set passes it — a run does, once per skill, and
+    reloading `prompts/` here would re-read and re-parse every prompt file for
+    every skill. Omitted, it is loaded from disk.
     """
     index = load_index(settings)
     targets = sorted(index) if skill_ids is None else list(dict.fromkeys(skill_ids))
     if prompt_ids is not None:  # a dropped prompt takes its dependents with it
-        prompt_ids = _with_dependents(settings, set(prompt_ids))
+        prompt_ids = (prompts or load_prompt_set(settings.prompts_dir)).dependents_ids(
+            set(prompt_ids))
     removed = 0
     dropped = False
     for skill_id in targets:
@@ -192,29 +200,6 @@ def invalidate(settings: Settings, skill_ids: Iterable[str] | None = None,
     if removed or dropped:
         write_index(settings, index)
     return removed
-
-
-def _with_dependents(settings: Settings, prompt_ids: set[str]) -> set[str]:
-    """`prompt_ids` plus every prompt that transitively depends on one of them.
-
-    Read from the prompt DAG (prompts/ frontmatter), so invalidating an upstream
-    output never leaves a downstream one stale on disk.
-    """
-    from .prompts import load_prompt_set  # imported here: prompts.py has no use for outputs.py
-
-    by_id = load_prompt_set(settings.prompts_dir).by_id
-    dependents: dict[str, set[str]] = {pid: set() for pid in by_id}
-    for spec in by_id.values():
-        for dep in spec.depends_on:
-            dependents[dep].add(spec.id)
-    seen = set(prompt_ids)
-    stack = list(prompt_ids)
-    while stack:
-        for child in dependents.get(stack.pop(), ()):
-            if child not in seen:
-                seen.add(child)
-                stack.append(child)
-    return seen
 
 
 def _stored_jsons(settings: Settings, skill_id: str) -> list[Path]:

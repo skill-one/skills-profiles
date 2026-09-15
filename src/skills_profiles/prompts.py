@@ -1,16 +1,21 @@
 """Prompt DAG loaded from one markdown file per prompt in a prompts/ directory.
 
-Each `<id>.md` has YAML frontmatter (description, output, depends_on) followed by
-the user-prompt template as the body; the prompt id is the file name (stem).
-`_system.md` holds the shared system prompt as a per-skill template: it renders
-the skill context (name, description, SKILL.md source) every text prompt sees.
+Each `<id>.md` has YAML frontmatter followed by the user-prompt template as the
+body; the prompt id is the file name (stem). `_system.md` holds the shared system
+prompt as a per-skill template: it renders the skill's `SKILL.md` source, which
+every text prompt sees.
 
-Templates are rendered with jinja2; the DAG is ordered with the stdlib
-graphlib.TopologicalSorter. The prompts directory defaults to `./prompts` and
-can be overridden with SKILLS_PROFILES_PROMPTS_DIR.
+Templates are rendered with jinja2. The DAG is ordered with the stdlib
+graphlib.TopologicalSorter, and both directions over it are answered here, so the
+edges are read in exactly one place: `PromptSet.closure_ids` walks up (what a
+prompt needs to run) and `PromptSet.dependents_ids` walks down (what derives from
+a prompt, i.e. what must be dropped with it). The prompts directory defaults to
+`./prompts` and can be overridden with SKILLS_PROFILES_PROMPTS_DIR.
 """
 
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field
+from functools import cached_property
 from graphlib import TopologicalSorter
 from pathlib import Path
 from typing import Any
@@ -38,28 +43,50 @@ OUTPUT_MODELS: dict[str, type[BaseModel]] = {
                 Taglines, Persona, SkillComments, ImagePrompt)
 }
 
-# Template contexts. System prompt (per skill): `skill` (SkillRecord) and
-# `skill_md` (its source text). User prompts: `deps` (dict of prompt_id ->
-# parsed output of upstream prompts), `domain_taxonomy` (rendered
+# Template contexts. System prompt (per skill): `skill` (the SkillRecord: id,
+# installs, hash) and `skill_md` (its source text). User prompts: `deps` (dict of
+# prompt_id -> parsed output of upstream prompts), `domain_taxonomy` (rendered
 # '- name: description' lines from models.Domain).
 
 
 @dataclass(frozen=True)
 class PromptSpec:
     id: str
-    description: str
     output_model: type[BaseModel]
     template: str
     depends_on: frozenset[str] = field(default_factory=frozenset)
+    # `use_system: false` in frontmatter skips the shared _system.md: for prompts
+    # whose task needs no skill context (the cover recipe only translates
+    # persona.tool, and the sales framing pulls its output toward marketing prose)
+    use_system: bool = True
 
 
-@dataclass(frozen=True)
+@dataclass
 class PromptSet:
-    """All prompts loaded from one directory, plus the shared system template."""
+    """All prompts loaded from one directory, plus the shared system template.
 
-    directory: Path
+    The DAG is read-only once loaded, so its order and its reversed edges are
+    derived once per set rather than once per lookup — a run asks for them for
+    every skill it touches, and a prompt file's frontmatter never changes mid-run.
+    """
+
     system_template: str
     by_id: dict[str, PromptSpec]
+
+    @cached_property
+    def _order(self) -> tuple[str, ...]:
+        """Topologically ordered prompt ids; raises CircularDependencyError on a bad DAG."""
+        sorter = TopologicalSorter({p.id: set(p.depends_on) for p in self.by_id.values()})
+        return tuple(sorter.static_order())
+
+    @cached_property
+    def _dependents(self) -> dict[str, set[str]]:
+        """prompt id -> the prompts depending on it directly (the reversed DAG)."""
+        dependents: dict[str, set[str]] = {pid: set() for pid in self.by_id}
+        for spec in self.by_id.values():
+            for dep in spec.depends_on:
+                dependents[dep].add(spec.id)
+        return dependents
 
     def render_system_prompt(self, skill: Any) -> str:
         """The shared system prompt for one skill: identity + SKILL.md source."""
@@ -69,20 +96,28 @@ class PromptSet:
 
     def ordered_ids(self) -> list[str]:
         """Topologically ordered prompt ids; raises CircularDependencyError on bad DAG."""
-        sorter = TopologicalSorter({p.id: set(p.depends_on) for p in self.by_id.values()})
-        return list(sorter.static_order())
+        return list(self._order)
 
     def closure_ids(self, ids: set[str]) -> set[str]:
         """The given ids plus every transitive dependency needed to run them."""
-        seen: set[str] = set()
-        stack = list(ids)
-        while stack:
-            pid = stack.pop()
-            if pid in seen:
-                continue
-            seen.add(pid)
-            stack.extend(self.by_id[pid].depends_on)
-        return seen
+        return _reachable(ids, lambda pid: self.by_id[pid].depends_on)
+
+    def dependents_ids(self, ids: set[str]) -> set[str]:
+        """The given ids plus every prompt that transitively depends on them."""
+        return _reachable(ids, lambda pid: self._dependents.get(pid, ()))
+
+
+def _reachable(ids: Iterable[str], neighbours: Callable[[str], Iterable[str]]) -> set[str]:
+    """`ids` plus everything reachable from them by following `neighbours`."""
+    seen: set[str] = set()
+    stack = list(ids)
+    while stack:
+        pid = stack.pop()
+        if pid in seen:
+            continue
+        seen.add(pid)
+        stack.extend(neighbours(pid))
+    return seen
 
 
 def _parse_frontmatter(path: Path) -> tuple[dict, str]:
@@ -110,10 +145,10 @@ def _load_prompt(path: Path) -> PromptSpec:
     _validate_template(template, path.name)
     return PromptSpec(
         id=path.stem,
-        description=meta.get("description", ""),
         output_model=OUTPUT_MODELS[output_name],
         template=template,
         depends_on=frozenset(meta.get("depends_on") or []),
+        use_system=bool(meta.get("use_system", True)),
     )
 
 
@@ -135,11 +170,7 @@ def load_prompt_set(directory: Path) -> PromptSet:
             raise ValueError(f"{spec.id}: depends on unknown prompts {sorted(unknown)}")
     system_template = (directory / "_system.md").read_text(encoding="utf-8").strip()
     _validate_template(system_template, "_system.md")
-    return PromptSet(
-        directory=directory,
-        system_template=system_template,
-        by_id=by_id,
-    )
+    return PromptSet(system_template=system_template, by_id=by_id)
 
 
 _env = Environment(autoescape=False, keep_trailing_newline=True)

@@ -49,19 +49,22 @@ logger = logging.getLogger(__name__)
 COVER_PROMPT_ID = "cover"  # its `text` field supplies the picture's subject
 COVER_FILENAME = "cover.png"  # the rendered cover, next to the prompt jsons
 # The one shared look every cover gets, kept English: diffusion training
-# captions are comma-separated English short phrases.
-COVER_STYLE = ("premium flat illustration style, rounded, refined, friendly, "
-               "well-designed, avatar composition, subject prominent, "
-               "plain background")
+# captions are comma-separated English short phrases. Cyberpunk flat: neon
+# glow does the drama, the dark backdrop does the contrast, and everything
+# else stays minimal. "single centered object" states positively what the
+# negatives below only forbid — positive phrasing obeys better — and makes
+# the recipe's own job (one tool, no layout talk) redundantly safe.
+COVER_STYLE = ("cyberpunk flat illustration, neon cyan and magenta glow, "
+               "dark plain background, bold minimal shapes, "
+               "single centered object")
 # What no cover may contain: letters render as garbage, and anything alive or
 # busy would turn the tool avatar into an illustration of a scene. The endpoint
 # takes no negative_prompt field, so the bans are restated as positive "no ..."
-# phrases and ride in the prompt itself ("duplicates, second tool" — diffusion
-# models love the crossed-tools icon and will draw two unless told not to).
-NEGATIVE_PROMPT = ("no text, no letters, no numbers, no logo, no watermark, "
-                   "no person, no face, no hands, no duplicates, no second tool, "
-                   "no multiple objects, no busy background, no complex scene, "
-                   "not photorealistic")
+# phrases and ride in the prompt itself. Kept short on purpose — one phrase per
+# failure mode, word-family synonyms (letters/numbers/logo ≈ text) dropped:
+# diffusion obeys "no X" weakly and mentioning extra X's only invites them.
+NEGATIVE_PROMPT = ("no text, no watermark, no person, no hands, "
+                   "no duplicates, not photorealistic")
 # a stalled endpoint must become a timeout, not a hung CI job (a slow generation
 # takes ~20s; the timeout leaves room for the retry backoff on top)
 REQUEST_TIMEOUT_SECONDS = 300
@@ -363,10 +366,8 @@ async def run_covers(
     Per-key pacing happens inside the images client (see KeyPool).
     """
     sem = asyncio.Semaphore(settings.concurrency)
-    done = 0
 
     async def _one(skill: SkillRecord) -> str | None:
-        nonlocal done
         try:
             seconds, written = await render_cover(images, settings, skill, sem)
         except Exception as e:
@@ -380,7 +381,6 @@ async def run_covers(
             on_skill_done(skill, written)
         if stats is not None:
             stats.rendered += 1
-        done += 1
         logger.debug("%s: %.1fs, %.0f KB", skill.id, seconds, written / 1024)
         return skill.id
 

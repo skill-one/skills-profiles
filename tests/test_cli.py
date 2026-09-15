@@ -3,9 +3,13 @@
 import json
 import re
 
+from conftest import DeadLLM, FailingForAlpha
 from typer.testing import CliRunner
 
 from skills_profiles.cli import app
+from skills_profiles.data import SyncReport
+from skills_profiles.images import cover_path
+from skills_profiles.outputs import load_hashes, prompt_result_path, skill_result_dir
 
 runner = CliRunner()
 
@@ -48,8 +52,6 @@ def test_run_serves_only_the_top_installed_skills(settings, monkeypatch):
 
     stats = json.loads((settings.output_dir / "stats.json").read_text(encoding="utf-8"))
     assert stats["skills"] == {"total": 2, "profiled": 2, "complete": 2}
-
-    from skills_profiles.outputs import prompt_result_path
 
     assert prompt_result_path(settings, "owner-c/repo-c/gamma", "domain").exists() is False
     assert prompt_result_path(settings, "owner-h/repo-h/hotel:sub", "domain").exists() is False
@@ -155,8 +157,6 @@ def test_run_reports_stale_skills(settings, monkeypatch):
 
 def test_sync_reports_tag_and_download(settings, monkeypatch):
     """The sync summary names the tag and whether it downloaded."""
-    from skills_profiles.data import SyncReport
-
     monkeypatch.setattr("skills_profiles.cli.Settings", lambda: settings)
     monkeypatch.setattr(
         "skills_profiles.cli.sync_data",
@@ -192,8 +192,6 @@ def test_invalidate_stale_drops_hash_changed_skills(settings, monkeypatch):
     assert "2 stale skill(s)" in result.output
 
     # alpha and hotel are gone; beta and gamma are untouched
-    from skills_profiles.outputs import load_hashes, prompt_result_path, skill_result_dir
-
     assert load_hashes(settings) == {
         "owner-b/repo-b/beta": "b" * 64, "owner-c/repo-c/gamma": "c" * 64,
     }
@@ -241,9 +239,6 @@ def test_run_with_prompts_cover_fills_recipe_and_picture_together(settings, monk
     monkeypatch.setattr("skills_profiles.cli.Settings", lambda: settings)
     runner.invoke(app, ["run", "--limit", "2", "--dry-run"])
 
-    from skills_profiles.images import cover_path
-    from skills_profiles.outputs import prompt_result_path
-
     skill_id = "owner-a/repo-a/alpha"
     prompt_result_path(settings, skill_id, "cover").unlink()
     cover_path(settings, skill_id).unlink()
@@ -263,9 +258,6 @@ def test_invalidate_prompt_cover_drops_recipe_and_picture(settings, monkeypatch)
     together, and no picture outlives its recipe."""
     monkeypatch.setattr("skills_profiles.cli.Settings", lambda: settings)
     runner.invoke(app, ["run", "--limit", "2", "--dry-run"])
-
-    from skills_profiles.images import cover_path
-    from skills_profiles.outputs import prompt_result_path
 
     result = runner.invoke(app, ["invalidate", "--prompts", "cover"])
     assert result.exit_code == 0, result.output
@@ -301,28 +293,6 @@ def test_invalidate_rewrites_stats(settings, monkeypatch):
     assert stats["covers"] == {"rendered": 0}, "no picture outlives its recipe"
 
 
-class FailingForAlpha:
-    """LLM that raises for Alpha (matched via its SKILL.md text), delegates the rest."""
-
-    def __init__(self):
-        from skills_profiles.llm import FakeLLM
-
-        self.inner = FakeLLM()
-
-    async def create(self, response_model=None, messages=None, **kwargs):
-        system = messages[0]["content"] if messages else ""
-        if "Alpha does useful things." in system:
-            raise RuntimeError("quota exceeded")
-        return await self.inner.create(response_model, messages, **kwargs)
-
-
-class DeadLLM:
-    """LLM that fails for every call: a systemic error (bad key, endpoint down)."""
-
-    async def create(self, response_model=None, messages=None, **kwargs):
-        raise RuntimeError("endpoint down")
-
-
 def test_run_survives_partial_skill_failures(settings, monkeypatch):
     """A skill whose generation fails is isolated: the run still exits 0 so CI
     publishes the completed skills; the failure is counted and reported."""
@@ -333,8 +303,6 @@ def test_run_survives_partial_skill_failures(settings, monkeypatch):
     assert result.exit_code == 0, result.output
     assert "1 failed" in result.output
     assert "owner-a/repo-a/alpha: (failed)" in result.output
-
-    from skills_profiles.outputs import load_hashes, prompt_result_path
 
     assert set(load_hashes(settings)) == {
         "owner-b/repo-b/beta", "owner-c/repo-c/gamma", "owner-h/repo-h/hotel:sub",

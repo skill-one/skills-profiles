@@ -25,6 +25,9 @@ def test_built_in_defaults(tmp_path, monkeypatch):
     assert settings.api_key is None
     assert settings.limit == 10
     assert settings.concurrency == 2
+    # Agnes documents 20 RPM for its chat and image models alike
+    assert settings.llm_rate_limit == 20
+    assert settings.image_rate_limit == 20
 
 
 def test_env_var_overrides_dotenv(tmp_path, monkeypatch):
@@ -61,3 +64,11 @@ def test_rejects_negative_max_retries(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     with pytest.raises(ValueError, match="max_retries"):
         Settings(max_retries=-1, _env_file=None)
+
+
+def test_rejects_negative_rate_limits(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    with pytest.raises(ValueError, match="llm_rate_limit"):
+        Settings(llm_rate_limit=-1, _env_file=None)
+    with pytest.raises(ValueError, match="image_rate_limit"):
+        Settings(image_rate_limit=-1, _env_file=None)

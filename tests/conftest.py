@@ -11,6 +11,7 @@ import pytest
 
 import skills_profiles.data as data_mod
 from skills_profiles.config import TARBALL_URL, Settings
+from skills_profiles.llm import FakeLLM
 from skills_profiles.prompts import load_prompt_set
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -134,3 +135,26 @@ def settings(tmp_path) -> Settings:
 @pytest.fixture
 def prompt_set():
     return load_prompt_set(PROJECT_ROOT / "prompts")
+
+
+# LLM doubles shared by the CLI and generation suites. They are keyed on the
+# rendered prompt, so they fail exactly the skills a test means them to.
+
+class FailingForAlpha:
+    """Answers like the fake, except for Alpha: quota errors, one skill only."""
+
+    def __init__(self) -> None:
+        self.inner = FakeLLM()
+
+    async def create(self, response_model=None, messages=None, **kwargs):
+        system = messages[0]["content"] if messages else ""
+        if "Alpha does useful things." in system:
+            raise RuntimeError("quota exceeded")
+        return await self.inner.create(response_model, messages, **kwargs)
+
+
+class DeadLLM:
+    """Fails every call: a systemic error (bad key, endpoint down)."""
+
+    async def create(self, response_model=None, messages=None, **kwargs):
+        raise RuntimeError("endpoint down")

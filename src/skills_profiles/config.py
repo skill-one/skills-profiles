@@ -42,6 +42,11 @@ class Settings(BaseSettings):
     total_limit: int = 1000
     concurrency: int = 2
     max_retries: int = 3
+    # max LLM request starts per minute, shared by the whole run: Agnes
+    # documents 20 RPM for its chat models, so 20 is the default and 0 lifts
+    # the cap (own-key endpoints may allow more). A start-time budget, on top
+    # of the concurrency semaphore's in-flight ceiling.
+    llm_rate_limit: int = 20
     # generated profiles: skills.jsonl + skills/<id>/<prompt>.json (with md/ copies)
     output_dir: Path = Path("output")
     # the unpacked dist branch: skills.jsonl + skills/<id>/SKILL.md
@@ -58,9 +63,9 @@ class Settings(BaseSettings):
     image_api_keys: Annotated[list[str], NoDecode] = []
     image_model: str = "agnes-image-2.5-flash"
     image_size: str = "1024x1024"  # exact sizes work too (1K/2K tiers map to them)
-    # max images per minute per key; the endpoint announces no quota, so the
-    # default is unbounded and the knob exists for when it starts answering 429
-    image_rate_limit: int = 0
+    # max images per minute per key; Agnes documents 20 RPM for the image
+    # models too, so 20 is the default and 0 would mean unbounded
+    image_rate_limit: int = 20
 
     @field_validator("image_api_keys", mode="before")
     @classmethod
@@ -103,6 +108,8 @@ class Settings(BaseSettings):
             raise ValueError("concurrency must be >= 1")
         if self.max_retries < 0:
             raise ValueError("max_retries must be >= 0")
+        if self.llm_rate_limit < 0:
+            raise ValueError("llm_rate_limit must be >= 0")
         if self.total_limit < 0:
             raise ValueError("total_limit must be >= 0")
         if self.image_rate_limit < 0:

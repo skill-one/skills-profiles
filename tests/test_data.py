@@ -23,7 +23,10 @@ from skills_profiles.outputs import load_hashes, write_index
 
 def test_loads_only_valid_skills_sorted_by_installs(settings):
     skills = load_skills(settings)
-    assert [s.name for s in skills] == ["Alpha", "Beta", "Gamma", "Hotel"]
+    assert [s.id for s in skills] == [
+        "owner-a/repo-a/alpha", "owner-b/repo-b/beta",
+        "owner-c/repo-c/gamma", "owner-h/repo-h/hotel:sub",
+    ]
     assert skills[0].installs == 300
 
 
@@ -34,26 +37,11 @@ def test_skill_md_empty_until_read(settings):
     assert "Alpha does useful things" in read_skill_md(settings, skills[0])
 
 
-def test_description_loaded_from_skills_jsonl(settings):
-    skills = load_skills(settings)
-    assert skills[0].description == "Alpha 的官方技能描述"
-
-
-def test_description_collapsed_to_one_line(settings):
-    """Multiline index descriptions must not break the one-line prompt format."""
-    path = settings.data_dir / "skills.jsonl"
-    entries = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
-    entries[0]["description"] = "第一行\n第二行"
-    path.write_text(
-        "\n".join(json.dumps(e) for e in entries) + "\n", encoding="utf-8"
-    )
-    assert load_skills(settings)[0].description == "第一行 第二行"
-
-
-def test_description_empty_when_jsonl_lacks_it(settings):
-    """Entries without a description still load, with '' as fallback."""
-    hotel = next(s for s in load_skills(settings) if s.id == "owner-h/repo-h/hotel:sub")
-    assert hotel.description == ""
+def test_prose_fields_in_the_index_are_ignored(settings):
+    """Only what a run acts on is kept: the index's name/description/source are
+    in the mirror's data but never reach a prompt, which reads SKILL.md instead."""
+    skill = load_skills(settings)[0]
+    assert set(skill.model_dump()) == {"id", "installs", "hash", "skill_md"}
 
 
 def test_colon_slug_read_from_underscore_directory(settings):
@@ -67,7 +55,7 @@ def test_skill_md_lives_at_the_snapshot_path(settings):
     assert skill_md_path(settings, skill).relative_to(settings.data_dir) == expected
     assert skill_md_path(settings, skill).read_text(
         encoding="utf-8"
-    ) == skill_md_text({"name": skill.name, "hash": skill.hash})
+    ) == skill_md_text({"id": skill.id, "name": "Alpha", "hash": skill.hash})
 
 
 def test_skill_md_missing_in_snapshot_returns_none(settings):
@@ -129,7 +117,7 @@ def test_sync_unpacks_only_what_a_run_reads(tmp_path, monkeypatch):
     assert report.downloaded
     assert report.tag == DIST_BRANCH  # no tags upstream: the branch itself
     assert report.seconds > 0
-    assert load_skills(settings)[0].name == "s"
+    assert load_skills(settings)[0].id == "o/r/s"
     assert read_skill_md(settings, load_skills(settings)[0]) is not None
 
 

@@ -4,6 +4,7 @@ import asyncio
 import json
 
 import pytest
+from conftest import FailingForAlpha
 
 from skills_profiles.data import load_skills, skill_md_path
 from skills_profiles.generate import (
@@ -14,7 +15,7 @@ from skills_profiles.generate import (
     select_skills,
 )
 from skills_profiles.images import FakeImages, cover_needed, run_covers
-from skills_profiles.llm import FakeLLM
+from skills_profiles.llm import FakeLLM, RateLimitedLLM
 from skills_profiles.outputs import (
     index_path,
     invalidate,
@@ -366,19 +367,6 @@ async def test_run_one_rejects_unknown_only(settings, prompt_set):
         await run_all(FakeLLM(), settings, skills[:1], prompt_set, only={"nope"})
 
 
-class FailingForAlpha:
-    """Delegates to FakeLLM but raises for Alpha (matched via its SKILL.md text)."""
-
-    def __init__(self):
-        self.inner = FakeLLM()
-
-    async def create(self, response_model=None, messages=None, **kwargs):
-        system = messages[0]["content"] if messages else ""
-        if "Alpha does useful things." in system:
-            raise RuntimeError("quota exceeded")
-        return await self.inner.create(response_model, messages, **kwargs)
-
-
 async def test_run_all_isolates_skill_failures(settings, prompt_set):
     """One skill's LLM failure (quota, connection) does not abort the run:
     the other skills still generate, the failure is tallied, the index records
@@ -452,10 +440,6 @@ async def test_coverage_counts_complete_and_remaining_skills(settings, prompt_se
 
 async def test_coverage_matches_run_cache_rules(settings, prompt_set):
     """A schema-stale output is not coverage-cached, same as a run regenerates it."""
-    import json
-
-    from skills_profiles.outputs import prompt_result_path
-
     skills = load_skills(settings)
     await run_all(FakeLLM(), settings, skills[:1], prompt_set)
     domain_path = prompt_result_path(settings, skills[0].id, "domain")
@@ -518,10 +502,6 @@ async def test_run_one_standalone_gets_its_own_pool(settings, prompt_set):
 
 async def test_run_stats_count_stale_caches(settings, prompt_set):
     """A cached output failing the current schema is regenerated and counted stale."""
-    import json
-
-    from skills_profiles.outputs import prompt_result_path
-
     skills = load_skills(settings)
     await run_all(FakeLLM(), settings, skills[:1], prompt_set)
     domain_path = prompt_result_path(settings, skills[0].id, "domain")
@@ -578,14 +558,105 @@ async def test_model_and_system_prompt_passed_to_llm(settings, prompt_set):
             return await FakeLLM().create(response_model, messages, **kwargs)
 
     await run_one(RecordingLLM(), settings, prompt_set, skill)
-    # every text prompt carries the same system message: sales framing + SKILL.md
     expected = {spec.output_model.__name__ for spec in prompt_set.by_id.values()}
     assert set(seen) == expected
-    for kwargs, messages in seen.values():
+    for kwargs, _ in seen.values():
         assert kwargs["model"] == settings.model
-        assert [m["role"] for m in messages] == ["system", "user"]
-        assert "推销自己" in messages[0]["content"]
-        assert "Alpha does useful things" in messages[0]["content"]
+    # every skill-context prompt carries the same system message: sales framing
+    # + SKILL.md; cover (use_system: false) runs user-only
+    for _, messages in seen.values():
+        assert messages[-1]["role"] == "user"
+    cover = seen["ImagePrompt"]
+    assert [m["role"] for m in cover[1]] == ["user"]
+
+
+async def test_cover_prompt_skips_system_prompt(settings, prompt_set):
+    """use_system: false in cover.md keeps its call self-contained: user-only,
+    no SKILL.md, no sales framing — a translation task needs neither."""
+    skill = load_skills(settings)[0]
+    seen = {}
+
+    class RecordingLLM:
+        async def create(self, response_model=None, messages=None, **kwargs):
+            seen[response_model.__name__] = messages
+            return await FakeLLM().create(response_model, messages, **kwargs)
+
+    await run_one(RecordingLLM(), settings, prompt_set, skill)
+    assert [m["role"] for m in seen["ImagePrompt"]] == ["user"]
+    assert "Alpha does useful things" not in seen["ImagePrompt"][0]["content"]
+
+
+async def test_rate_limited_llm_is_transparent(settings, prompt_set):
+    """The RPM wrapper passes calls through untouched; a limiter is the only
+    thing it adds, so a rate of 0 degrades to the plain inner client."""
+    skill = load_skills(settings)[0]
+    llm = RateLimitedLLM(FakeLLM(), rate=0)
+    outputs, _ = await run_one(llm, settings, prompt_set, skill)
+    assert not outputs.get("skipped") and not outputs.get("failed")
+    assert outputs["intros"]
+
+
+async def test_regenerated_cover_drops_its_stale_picture(settings, prompt_set):
+    """A regenerated recipe must not sit next to the picture of the old one:
+    the asset dies with the output that produced it, or the render pass would
+    keep a cover.png that matches nothing on disk."""
+    skill = load_skills(settings)[0]
+    skill_dir = skill_result_dir(settings, skill.id)
+    skill_dir.mkdir(parents=True, exist_ok=True)
+    (skill_dir / "persona.json").write_text(
+        json.dumps({"tool": "扳手", "pitch": "x"}), encoding="utf-8")
+    (skill_dir / "cover.json").write_text(
+        json.dumps({"text": "a sturdy chrome wrench"}), encoding="utf-8")  # no "one " prefix
+    (skill_dir / "cover.png").write_bytes(b"stale picture")
+
+    record, _ = await run_one(FakeLLM(), settings, prompt_set, skill)
+
+    assert not (skill_dir / "cover.png").exists(), "stale picture survived its recipe"
+    assert json.loads((skill_dir / "cover.json").read_text(encoding="utf-8"))["text"] \
+        .startswith("one ")
+    assert record["stale"] == ["cover"]
+
+
+async def test_fully_cached_skill_keeps_its_picture(settings, prompt_set):
+    """A skill with valid outputs and its render keeps both: the invalidation
+    on regeneration only fires when something is actually regenerated."""
+    skill = load_skills(settings)[0]
+    await complete(settings, prompt_set, [skill])
+    png = skill_result_dir(settings, skill.id) / "cover.png"
+    before = png.read_bytes()
+
+    record, reused = await run_one(FakeLLM(), settings, prompt_set, skill)
+
+    assert reused
+    assert "generated" not in record
+    assert png.read_bytes() == before
+
+
+async def test_selecting_and_reporting_never_touch_the_disk(settings, prompt_set):
+    """Selecting skills and reporting coverage apply the run's cache rules without
+    deleting anything: the invalidation a regeneration implies is `run_one`'s job,
+    so a skill the budget never reaches keeps its files exactly as they were."""
+    skill = load_skills(settings)[0]
+    skill_dir = skill_result_dir(settings, skill.id)
+    skill_dir.mkdir(parents=True, exist_ok=True)
+    (skill_dir / "persona.json").write_text('{"tool": 42}', encoding="utf-8")  # invalid
+    (skill_dir / "cover.json").write_text('{"text": "one chrome wrench"}', encoding="utf-8")
+    picture = skill_dir / "cover.png"
+    picture.write_bytes(b"the picture of the old recipe")
+
+    assert [s.id for s in select_skills(settings, prompt_set, [skill], limit=1)] == [skill.id]
+    coverage(settings, prompt_set, [skill])
+
+    assert (skill_dir / "cover.json").is_file(), "reading must not drop what it only planned"
+    assert picture.read_bytes() == b"the picture of the old recipe"
+    assert not index_path(settings).exists(), "nothing was generated, so nothing was recorded"
+
+    # generating is what applies the plan: the persona is redone, and the cover
+    # recipe plus the picture of the old one go with it
+    record, _ = await run_one(FakeLLM(), settings, prompt_set, skill)
+    assert {"persona", "cover"} <= set(record["generated"])
+    assert record["stale"] == ["persona"]
+    assert not picture.exists()
 
 
 async def test_debug_dumps_rendered_messages(settings, prompt_set, capfd):

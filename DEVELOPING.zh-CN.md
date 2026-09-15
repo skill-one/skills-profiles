@@ -68,7 +68,8 @@ domain   scenario   blackbox   whitebox   tagline   persona   comments   （全�
   `Domain` 分类体系都在 `models.py`。
 - **基于文件的断点续跑** —— 每个 prompt 的输出是自己的 `<prompt_id>.json`（`md/` 下有 markdown
   副本），一生成即落盘：存在且通过 schema 校验就不调 LLM。先写 markdown 再写 json，所以崩溃只会留下
-  多余的 markdown，不会出现没有副本的 json。续跑粒度是 prompt 级。
+  多余的 markdown，不会出现没有副本的 json。续跑粒度是 prompt 级。读缓存是纯查询——选片与统计都不会
+  删任何东西——重算所隐含的失效，只由即将生成的那一轮执行。
 - **索引是投影** —— `skills.jsonl` 每次全量重写、内容来自磁盘，所以行不可能与文件漂移；它是
   `invalidate --stale` 比对 hash 的依据。
 - **配图 = 配方 + 渲染** —— DAG 里有一个配方 prompt（`cover`，输入 `persona.tool`），把中文工具名
@@ -83,6 +84,9 @@ domain   scenario   blackbox   whitebox   tagline   persona   comments   （全�
   重复 sync 只有当指针指向的 tag 本地还没有时才下载；在 CI 里快照从我们自己的 `dist` 恢复。
 - **Prompt 即文件** —— `prompts/` 下一个 markdown 文件一个 prompt，文件名即 prompt id：YAML
   frontmatter 存元数据，正文是 jinja2 用户提示词模板，`_system.md` 是共享 system prompt。
+  frontmatter 写 `use_system: false` 可跳过共享 system prompt，供自包含任务使用——目前只有
+  `cover` 用到：它的调用不需要 skill 上下文（只翻译 `persona.tool`），而「推销自己」的营销
+  人格会把配方带向营销散文——那正是 `ImagePrompt` 校验器要拦下的东西。
 
 ### 局部重跑
 
@@ -95,7 +99,9 @@ json，仅在缺失或 schema 校验失败时重算。闭包之外完全不动�
 
 ## 新增一个 prompt
 
-一个 markdown 文件就是一个 prompt——除非需要新的输出 schema（那就在 `models.py` 注册），不必改代码：
+一个 markdown 文件就是一个 prompt——除非需要新的输出 schema（那就在 `models.py` 注册），不必改代码。
+frontmatter 里只有 `output`、`depends_on`、`use_system` 会被读取，其他键（例如 `description`）是留给
+读这个文件的人看的：
 
 ```markdown
 ---
@@ -108,9 +114,9 @@ depends_on: [scenario] # DAG 依赖; 根节点可省略
 {{ deps.scenario.text }} # deps 将 prompt id 映射到其解析后的输出对象
 ```
 
-`_system.md` 提供 `{{ skill.name }}`、`{{ skill.description }}` 和完整的 `{{ skill_md }}`
-（截断到 20,000 字符），因此 prompt 文件只需描述任务本身。然后为所有 skill
-补这一角度——已缓存的角度会复用，只有新角度花钱：
+`_system.md` 把该 skill 的 `SKILL.md` 作为 `{{ skill_md }}`（截断到 20,000 字符）交给每个文字
+prompt，因此 prompt 文件只需描述任务本身；skill 的其他信息都不注入，因为 SKILL.md 里已经有了。然后为
+所有 skill 补这一角度——已缓存的角度会复用，只有新角度花钱：
 
 ```bash
 skills-profiles run --prompts my_angle --limit 0
@@ -127,7 +133,7 @@ prompts/             # 每个 prompt 一个 md 文件（+ _system.md）
 src/skills_profiles/
 ├── data.py          # 镜像指针 + tarball + 索引解析 + 过期判定
 ├── models.py        # Domain 分类体系 + 输出 schema
-├── prompts.py       # frontmatter + DAG 排序 + jinja2 渲染
+├── prompts.py       # frontmatter + DAG（排序 + 两个方向的闭包）+ jinja2 渲染
 ├── generate.py      # 异步 DAG 执行 + 断点续跑 + 覆盖率
 ├── outputs.py       # json/md 输出 + 附带文件 + 索引 + 失效
 ├── layout.py        # 快照与产物共用的文件/目录名
@@ -148,13 +154,15 @@ tests/               # 离线 fixture + 端到端 CLI 测试
 | `SKILLS_PROFILES_LIMIT`            | `10`                             | 每次 run 生成的 skill 数（`0` = 全部；已缓存的跳过不计数）                              |
 | `SKILLS_PROFILES_TOTAL_LIMIT`      | `1000`                           | 整条管道服务的 skill 数，按安装量从高到低——是对数据集的封顶、不是单次 run（`0` = 全部） |
 | `SKILLS_PROFILES_CONCURRENCY`      | `2`                              | LLM 调用 / 图像请求的最大并发数，跨 skill 及 skill 内 prompt 共享                       |
+| `SKILLS_PROFILES_MAX_RETRIES`      | `3`                              | 单次 LLM 调用 / 图像请求的重试次数（`0` = 只试一次）                                    |
 | `SKILLS_PROFILES_OUTPUT_DIR`       | `output`                         | 产物目录                                                                                |
 | `SKILLS_PROFILES_DATA_DIR`         | `cache/skills-sh`                | 上游数据目录                                                                            |
 | `SKILLS_PROFILES_PROMPTS_DIR`      | `prompts`                        | prompt markdown 目录（含 `_system.md`）                                                 |
 | `SKILLS_PROFILES_IMAGE_BASE_URL`   | `https://apihub.agnes-ai.com/v1` | 文生图端点；配图由一个自成一套的服务绘制                                                |
 | `SKILLS_PROFILES_IMAGE_API_KEY`    | 无                               | 它的 key（没有时 `run` 会告警并跳过渲染阶段；`--dry-run` 则不需要）                     |
 | `SKILLS_PROFILES_IMAGE_API_KEYS`   | 无                               | 追加的 key，逗号分隔：每个 key 独享自己的每分钟配额，N 个 key 即 N 倍速率               |
-| `SKILLS_PROFILES_IMAGE_RATE_LIMIT` | `0`                              | 每分钟每 key 允许的最多图像张数；端点未公布配额，默认不限速                             |
+| `SKILLS_PROFILES_LLM_RATE_LIMIT`   | `20`                             | 每分钟最多 LLM 请求发起数，整个 run 共享（Agnes 文档为 20 RPM；`0` 表示不限速）         |
+| `SKILLS_PROFILES_IMAGE_RATE_LIMIT` | `20`                             | 每分钟每 key 最多图像张数（Agnes 文档为每 key 20 RPM；`0` 表示不限速）                  |
 | `SKILLS_PROFILES_IMAGE_MODEL`      | `agnes-image-2.5-flash`          | 端点提供的任意模型                                                                      |
 | `SKILLS_PROFILES_IMAGE_SIZE`       | `1024x1024`                      | 精确尺寸；端点也接受 `1K`/`2K`/`3K`/`4K` 档位，冷门尺寸会被自动归一化                   |
 
@@ -203,8 +211,9 @@ gh workflow run invalidate.yml -f prompts=persona            # 重做全部 pers
 ## 测试
 
 整条管道均离线验证：数据解析、`latest` 指针的解析与对垃圾内容的拒绝、发布盖章的往返（给 `stats.json`
-加上 `publishedAt` / `upstream` 再剥回去，因此「什么都没改」的一轮仍然认得出来）、DAG 排序、模板渲染、续跑跳过、
-失效、依赖传递、markdown 渲染、直接据 persona 渲染配图的 prompt/种子/请求体构造、端点的重试规则、按 key 的限流器，
+加上 `publishedAt` / `upstream` 再剥回去，因此「什么都没改」的一轮仍然认得出来）、DAG 排序与两个方向的闭包、
+模板渲染、续跑跳过、「待生成 / 待删除」的拆分（读缓存不写盘）、失效、依赖传递、markdown 渲染、
+cover 配方的 prompt/种子/请求体构造、端点的重试规则、按 key 的限流器，
 以及 `run` 的完整 CLI dry-run——都不需要网络（`conftest.py` 把 `data.download_file` 换成由 fixture
 构造快照 tarball 的假服务，上游指针与图像端点则都只通过一个打了桩的 `httpx` 调用触达）。
 

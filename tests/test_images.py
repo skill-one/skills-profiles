@@ -5,10 +5,12 @@ stubbed `httpx.post`, and dry-runs through FakeImages."""
 
 import asyncio
 import json
+import random
 from pathlib import Path
 
 import httpx
 import pytest
+from PIL import Image as PILImage
 from typer.testing import CliRunner
 
 import skills_profiles.images as images_mod
@@ -29,6 +31,7 @@ from skills_profiles.images import (
     run_covers,
     seed_for,
 )
+from skills_profiles.llm import FakeLLM
 from skills_profiles.outputs import invalidate, write_prompt_output
 
 runner = CliRunner()
@@ -244,10 +247,6 @@ async def test_client_stores_the_bytes_behind_the_expiring_url(settings, with_pr
 def test_compress_png_reduces_a_full_color_cover(tmp_path):
     """A downloaded full-color cover is downscaled and re-encoded as a palette
     PNG, in place."""
-    import random
-
-    from PIL import Image as PILImage
-
     dest = tmp_path / "cover.png"
     rng = random.Random(7)
     img = PILImage.new("RGB", (1024, 1024))
@@ -536,8 +535,6 @@ def test_run_renders_the_covers_its_personas_are_ready_for(settings, monkeypatch
 def test_run_without_an_image_key_skips_covers(settings, monkeypatch):
     """A key-less run degrades to text-only with a warning instead of failing;
     a later run picks the backlog up once the key is set."""
-    from skills_profiles.llm import FakeLLM
-
     monkeypatch.setattr("skills_profiles.cli.Settings", lambda: settings)
     monkeypatch.setattr("skills_profiles.cli.make_llm", lambda s: FakeLLM())
     result = runner.invoke(app, ["run", "--limit", "0"])

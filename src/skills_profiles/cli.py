@@ -148,14 +148,14 @@ def invalidate(
     for skill_id in skill_ids:
         if skill_id not in recorded:
             logger.warning("%s has no cached results", skill_id)
-    removed = invalidate_cache(settings, skill_ids or None, prompt_ids)
+    removed = invalidate_cache(settings, skill_ids or None, prompt_ids, prompt_set)
     targets = sorted(skill_ids) if skill_ids else sorted(recorded)
     logger.info("Invalidated %d output(s) across %d skill(s)", removed, len(targets))
     # stats.json is the artifact's state, same sense as `run` writes it: recompute
     # it over what survived so the publish that follows an invalidation does not
     # report skills and covers that are no longer there
-    cov = coverage(settings, prompt_set, served_skills(settings)[1])
-    write_artifact_stats(settings, cov)
+    _, window = served_skills(settings)
+    write_artifact_stats(settings, coverage(settings, prompt_set, window))
 
 
 @app.command()
@@ -180,7 +180,8 @@ def run(
              "command, recipe and cover.png together. Cached outputs are reused "
              "under the same rules as a full run; use `invalidate` to drop them",
     ),
-    dry_run: bool = typer.Option(False, "--dry-run", help="Use a fake LLM, no API calls"),
+    dry_run: bool = typer.Option(
+        False, "--dry-run", help="Use a fake LLM and image client: no API calls"),
     debug: bool = typer.Option(
         False, "--debug",
         help="Debug logging, plus the rendered system/user prompts and the final image "
@@ -193,8 +194,8 @@ def run(
     that is missing any prompt or whose cover.png has not been drawn yet, and
     the run fills both halves for exactly the skills it selected. Rendering is
     paced at `SKILLS_PROFILES_IMAGE_RATE_LIMIT` images/minute per key (0 =
-    unbounded, the default); without an image key the post-pass is skipped with
-    a warning and picked up by a later run once the key is set.
+    unbounded); without an image key the post-pass is skipped with a warning and
+    picked up by a later run once the key is set.
     """
     setup_logging(debug)
     settings = Settings()
@@ -294,10 +295,6 @@ def run(
     if stats.skills_failed and stats.skills_failed == len(selected):
         logger.error("Every selected skill failed - refusing to report success")
         raise typer.Exit(1)
-
-
-def main() -> None:  # pragma: no cover
-    app()
 
 
 if __name__ == "__main__":

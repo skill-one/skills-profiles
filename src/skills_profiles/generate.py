@@ -15,6 +15,7 @@ from .data import read_skill_md, skill_md_path
 from .images import cover_needed, covers_on_disk
 from .models import SkillRecord
 from .outputs import (
+    invalidate,
     load_index,
     read_prompt_output,
     write_index,
@@ -74,15 +75,44 @@ def _dump(outputs: dict[str, Any]) -> dict[str, Any]:
     return {pid: out.model_dump(mode="json") for pid, out in outputs.items()}
 
 
+@dataclass
+class Cached:
+    """One skill's cache state, derived from disk and never written back.
+
+    `outputs` are the stored outputs a run can reuse; `pending` the prompt ids it
+    must generate, in topological order; `stale` the pending ones that had a
+    stored json which no longer validates (the same work, counted apart); `drop`
+    everything a regeneration must delete first — the pending prompts plus the
+    stored outputs derived from them, since a new cover recipe must not sit next
+    to the picture of the old one.
+
+    Reading never mutates: `drop` is a plan, and only the caller that is about to
+    generate hands it to `invalidate`. Selection and coverage apply the very same
+    rules without touching the disk.
+    """
+
+    outputs: dict[str, Any]
+    pending: list[str]
+    stale: list[str]
+    drop: set[str]
+
+
 def _load_cached(
     settings: Settings, prompts: PromptSet, skill: SkillRecord, only: set[str] | None = None,
-) -> tuple[dict[str, Any], list[str], list[str]]:
-    """Split the selection into (cached outputs, prompt ids still to generate, stale ids).
+) -> Cached:
+    """One skill's cache state: what is reusable, what to generate, what dies with it.
 
     A prompt belongs to the selection when it is in `prompts` and (with `only`)
     in the closure of the requested ids. Its stored json is trusted as-is, but
-    must still validate against the current schema — missing prompts come back
-    as pending, schema-stale ones as stale (also pending, but counted apart).
+    must still validate against the current schema — missing prompts come back as
+    pending, schema-stale ones as stale (also pending, but counted apart).
+
+    Regeneration invalidation follows the same contract the CLI's `invalidate`
+    uses: what is about to be (re)generated takes what the old outputs left
+    behind with it — the owned assets of pending prompts (a cover.png can only
+    have been rendered from the recipe being replaced) and the downstream jsons
+    of a stale one. Without it, a regenerated recipe would sit next to the
+    picture of the old one and the render pass would never repair the pair.
     """
     targets = prompts.closure_ids(only) if only is not None else set(prompts.by_id)
     outputs: dict[str, Any] = {}
@@ -98,8 +128,12 @@ def _load_cached(
         except ValidationError:
             logger.debug("%s: stored %s no longer validates - regenerating", skill.id, spec_id)
             stale.append(spec_id)
+    # the DAG decides what a regeneration invalidates, not the selection: a
+    # dependent outside `only` still goes with the upstream output it derives from
+    drop = prompts.dependents_ids({pid for pid in targets if pid not in outputs})
+    outputs = {pid: out for pid, out in outputs.items() if pid not in drop}
     pending = [pid for pid in prompts.ordered_ids() if pid in targets and pid not in outputs]
-    return outputs, pending, stale
+    return Cached(outputs=outputs, pending=pending, stale=stale, drop=drop)
 
 
 def select_skills(
@@ -129,7 +163,7 @@ def select_skills(
     def _needs_work(skill: SkillRecord) -> bool:
         if not skill_md_path(settings, skill).is_file():
             return False
-        return bool(_load_cached(settings, prompts, skill, only)[1]) \
+        return bool(_load_cached(settings, prompts, skill, only).pending) \
             or cover_needed(settings, skill.id)
 
     if limit <= 0:
@@ -154,20 +188,20 @@ def coverage(
     `profiled` = every selected prompt is cached; `complete` = profiled and its
     cover is drawn too (the sense `--limit` spends budget on, see select_skills);
     `remaining` = skills a run would still work on; and, per prompt id, how many
-    skills have it cached. Only called once per run: it re-reads every stored
-    output.
+    skills have it cached. Purely a read: it never drops what it finds stale.
+    Only called once per run: it re-reads every stored output.
     """
     targets = prompts.closure_ids(only) if only is not None else set(prompts.by_id)
     profiled = 0
     complete = 0
     per_prompt = dict.fromkeys(sorted(targets), 0)
     for skill in skills:
-        outputs, pending, _ = _load_cached(settings, prompts, skill, only)
-        if not pending:
+        cached = _load_cached(settings, prompts, skill, only)
+        if not cached.pending:
             profiled += 1
             if not cover_needed(settings, skill.id):
                 complete += 1
-        for pid in outputs:
+        for pid in cached.outputs:
             per_prompt[pid] += 1
     return {
         "skills": len(skills),
@@ -205,10 +239,13 @@ async def run_prompt(
     llm, settings: Settings, prompts: PromptSet, spec: PromptSpec, skill: SkillRecord, deps: dict,
     debug: bool = False,
 ) -> Any:
-    messages = [
-        {"role": "system", "content": prompts.render_system_prompt(skill)},
-        {"role": "user", "content": render_user_prompt(spec, deps)},
-    ]
+    messages: list[dict] = []
+    # the shared system prompt is opt-in per prompt: self-contained tasks (cover)
+    # run user-only, saving the whole SKILL.md round-trip and its sales framing
+    if spec.use_system:
+        messages.append(
+            {"role": "system", "content": prompts.render_system_prompt(skill)})
+    messages.append({"role": "user", "content": render_user_prompt(spec, deps)})
     if debug:
         _dump_messages(skill, spec, messages)
     return await llm.create(
@@ -236,7 +273,10 @@ async def run_one(
     `sync`'s and `invalidate`'s job), but every reused output must still
     validate against its current schema — missing or invalid prompts are
     regenerated, and prompts outside the selection (`only`, plus the closure of
-    their dependencies) are simply not touched.
+    their dependencies) are simply not touched. Reading the cache is a pure
+    query (see `Cached`); the deletion a regeneration implies is applied here,
+    just before the first new output is written, so selecting and reporting
+    never touch the disk.
 
     The skill's SKILL.md is read from the local snapshot only once something has
     to be generated, so a fully cached skill reads nothing at all.
@@ -251,7 +291,8 @@ async def run_one(
     `seconds` (wall time of the generation phase), `prompt_seconds` (per-prompt
     LLM seconds) and `skipped` (no SKILL.md).
     """
-    outputs, generated, stale = _load_cached(settings, prompts, skill, only)
+    cached = _load_cached(settings, prompts, skill, only)
+    outputs, generated, stale = cached.outputs, cached.pending, cached.stale
     if not generated:
         return {"skill": skill.model_dump(), "intros": _dump(outputs)}, True
 
@@ -260,6 +301,10 @@ async def run_one(
         logger.warning("%s: no SKILL.md in the snapshot - skipped", skill.id)
         return {"skill": skill.model_dump(), "intros": _dump(outputs), "skipped": True}, True
     skill = skill.model_copy(update={"skill_md": skill_md})
+    # the jsons about to be replaced go first, with the assets and dependents
+    # they own: a new recipe must not be written beside the old picture
+    if cached.drop:
+        invalidate(settings, [skill.id], cached.drop, prompts)
 
     sem = sem or asyncio.Semaphore(settings.concurrency)
     tasks: dict[str, asyncio.Task] = {}

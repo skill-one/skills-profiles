@@ -10,8 +10,9 @@ class Domain(StrEnum):
 
     Each member carries (value, emoji, description); the description doubles as
     the classification hint injected into the domain prompt. Covers no longer
-    take a per-category look: every cover is one tool avatar in a single unified
-    3D style (see images.py), so the taxonomy carries no visual settings.
+    take a per-category look: every cover is one tool avatar in a single shared
+    illustration style (see images.COVER_STYLE), so the taxonomy carries no
+    visual settings.
     """
 
     def __new__(cls, value: str, emoji: str, description: str) -> "Domain":
@@ -171,6 +172,8 @@ class ImagePrompt(BaseModel):
             raise ValueError("不能为空")
         if not value.isascii():
             raise ValueError("必须是纯英文 (ASCII), 不要出现中文")
+        if not value.lower().startswith("one "):
+            raise ValueError("第一个短语必须是 one <工具的英文名>, 明确单数主体")
         if len(value.split()) > 40:
             raise ValueError("超过 40 个英文单词, 请精简成逗号短语")
         if any(mark in value for mark in "!?\"'()"):
@@ -193,13 +196,18 @@ class SkillComments(BaseModel):
 
 
 class SkillRecord(BaseModel):
-    """A single skill loaded from the scraper index."""
+    """A single skill loaded from the scraper index.
+
+    Only what a run acts on: the id (paths and the index), the content hash
+    (freshness) and the install count (the rank window). Every word a prompt
+    reads comes from `SKILL.md` itself, so the index's prose fields (name,
+    description, source) are ignored rather than mirrored — the source already
+    carries them, and a second copy could only drift.
+    """
+
     model_config = ConfigDict(frozen=True)
 
     id: str
-    name: str
     installs: int
-    source: str
     hash: str
     skill_md: str = ""  # filled in by data.read_skill_md when a run needs it
-    description: str = ""

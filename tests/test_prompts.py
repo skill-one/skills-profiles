@@ -17,9 +17,11 @@ def prompts():
 
 
 class FakeSkill:
+    """The context `_system.md` renders: the SkillRecord fields that exist."""
+
     id = "a/b/c"
-    name = "Alpha"
-    description = "Alpha 的技能描述"
+    installs = 10
+    hash = "h" * 64
     skill_md = "Alpha does useful things."
 
 
@@ -43,19 +45,17 @@ def test_system_prompt_renders_skill_context(prompts):
     assert "Alpha does useful things." in system
 
 
-def test_system_prompt_omits_empty_description(prompts):
-    class NoDescription(FakeSkill):
-        description = ""
-
-    system = prompts.render_system_prompt(NoDescription())
-    assert "skill 描述" not in system
-    assert "Alpha does useful things." in system
-
-
 def test_all_dependencies_resolve(prompts):
     for spec in prompts.by_id.values():
         for dep in spec.depends_on:
             assert dep in prompts.by_id, f"{spec.id} depends on unknown {dep}"
+
+
+def test_cover_opts_out_of_system_prompt(prompts):
+    """cover.md sets use_system: false; every other prompt defaults to true."""
+    assert prompts.by_id["cover"].use_system is False
+    assert all(spec.use_system for pid, spec in prompts.by_id.items()
+               if pid != "cover")
 
 
 def test_template_syntax_error_names_the_file(tmp_path):
@@ -82,6 +82,21 @@ def test_ordering_puts_dependencies_first(tmp_path):
     _write(tmp_path, "b.md", "---\noutput: Taglines\ndepends_on: [a]\n---\nB")
     order = load_prompt_set(tmp_path).ordered_ids()
     assert order.index("a") < order.index("b")
+
+
+def test_both_dag_directions_answer_from_one_place(tmp_path):
+    """`closure_ids` walks up (what a prompt needs) and `dependents_ids` walks
+    down (what a dropped prompt takes with it), over the same edges."""
+    _write(tmp_path, "_system.md", "system prompt")
+    _write(tmp_path, "a.md", "---\noutput: IntroText\n---\nA")
+    _write(tmp_path, "b.md", "---\noutput: Taglines\ndepends_on: [a]\n---\nB")
+    _write(tmp_path, "c.md", "---\noutput: IntroText\ndepends_on: [b]\n---\nC")
+    prompts = load_prompt_set(tmp_path)
+
+    assert prompts.closure_ids({"c"}) == {"a", "b", "c"}
+    assert prompts.closure_ids({"a"}) == {"a"}
+    assert prompts.dependents_ids({"a"}) == {"a", "b", "c"}
+    assert prompts.dependents_ids({"c"}) == {"c"}
 
 
 def test_user_prompts_are_task_only(prompts):
@@ -121,7 +136,7 @@ description: D
 output: IntroText
 ---
 
-Body {{ skill.name }}
+Body {{ skill.id }}
 """
 
 VALID_DEPENDENT = """\
