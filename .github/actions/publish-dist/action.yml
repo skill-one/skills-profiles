@@ -1,34 +1,26 @@
 name: publish-dist
 description: >-
-  Publish a local directory to the `dist` branch, prune history, and tag the
-  release. `tag-mode: date` writes `dist-YYYY-MM-DD` (force-updated within a
-  day, used by sync). `tag-mode: date-counter` writes `dist-<base>-N` where
-  base is the newest bare date tag (or today, when none) and N increments
-  across that base's publishes (used by generate). The branch root also gets a
-  one-line `latest` pointer naming that tag — the same way upstream publishes
-  its newest snapshot — and stats.json gets stamped with what only this step
-  knows: `publishedAt` and the `upstream` mirror tag the bundled dataset came
-  from. The run fails unless pointer, tag and HEAD agree, or a published
-  snapshot lost its stamp. Nothing new (stamp aside) publishes nothing.
+  Publish a local directory as the `dist` branch, prune history by age, and tag the release.
+  `tag-mode: date` writes `dist-YYYY-MM-DD`, force-updated within a day, so the bare date tag always
+  names the newest publish of that day (used by sync). `tag-mode: date-counter` writes
+  `dist-<base>-N`, where base is the newest bare date tag (or today, when there is none) and N
+  increments across that base's publishes (used by publish). The branch root also gets a one-line
+  `latest` pointer naming that tag — the same way upstream publishes its newest snapshot — and the
+  run fails unless pointer, tag and HEAD agree. Nothing new publishes nothing: the tree is compared
+  with the branch before a tag is chosen, so a run with nothing to show spends no version number.
 
 inputs:
+  dir:
+    description: Local directory whose contents become the dist branch root
+    default: output
   tag-mode:
     description: "'date' or 'date-counter'"
     required: true
-  output-dir:
-    description: Local directory whose contents become the dist branch root (profiles)
-    default: output
-  data-dir:
-    description: >-
-      Optional local directory (the dataset mirror, e.g. cache) published into
-      dist under the same name, beside the profiles. Skipped when it is absent.
-    default: cache
   retention:
     description: >-
-      Time window for dist commits and tags, in GNU date syntax
-      (e.g. "1 month", "30 days", "4 weeks"). The newest commit and the
-      newest tag of each pattern are always kept, even when everything is
-      older than the cutoff.
+      Time window for dist commits and tags, in GNU date syntax (e.g. "1 month", "30 days",
+      "4 weeks"). The newest commit and the newest tag of each pattern are always kept, even when
+      everything is older than the cutoff.
     default: 1 month
   token:
     description: GitHub token with contents:write
@@ -45,8 +37,7 @@ runs:
     - id: publish
       env:
         GH_TOKEN: ${{ inputs.token }}
-        OUTPUT_DIR: ${{ inputs.output-dir }}
-        DATA_DIR: ${{ inputs.data-dir }}
+        DIR: ${{ inputs.dir }}
         TAG_MODE: ${{ inputs.tag-mode }}
         RETENTION: ${{ inputs.retention }}
       shell: bash
@@ -64,15 +55,19 @@ runs:
           git -C "$dist" remote add origin "$remote"
         fi
         find "$dist" -mindepth 1 -maxdepth 1 -not -name .git -exec rm -rf {} +
-        cp -a "${OUTPUT_DIR}/." "$dist/"
-        # mirror the dataset (e.g. cache/skills-sh) beside the profiles, when present
-        if [ -n "$DATA_DIR" ] && [ -d "$DATA_DIR" ] && [ -n "$(ls -A "$DATA_DIR" 2>/dev/null)" ]; then
-          mkdir -p "$dist/$DATA_DIR"
-          cp -a "${DATA_DIR}/." "$dist/$DATA_DIR/"
-        fi
+        cp -a "${DIR}/." "$dist/"
         cd "$dist"
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+        # Nothing-new is judged before a tag is chosen: `latest` is the only file a publish writes
+        # on its own, so the comparison leaves it out and a no-op run costs no version number.
+        git add -A
+        if git diff --cached --quiet -- . ':(exclude)latest'; then
+          echo "Nothing new to publish"
+          echo "tag=" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
 
         list_tags() {
           git ls-remote --tags origin 'refs/tags/dist-*' \
@@ -100,66 +95,16 @@ runs:
           exit 1
         fi
 
-        # The version pointer, same idea as upstream's: one line at the branch
-        # root naming this publish's tag. Written before the commit so the
-        # snapshot and its name ship as one, and read by `sync` so a repeat sync
-        # costs one tiny request instead of the whole branch.
+        # The version pointer, same idea as upstream's: one line at the branch root naming this
+        # publish's tag. Written before the commit so the snapshot and its name ship as one.
         printf '%s\n' "$tag" > latest
-
-        # Provenance, by contrast, is not a sibling pointer: it goes into
-        # stats.json, so the one file a consumer already reads also tells it
-        # which mirror tag to join hashes on and when the snapshot was published.
-        # The ref is derived from the bundled dataset's own marker, so whichever
-        # workflow publishes it cannot lag the data; empty when no dataset rides
-        # along (then only `publishedAt` is stamped).
-        marker=$(ls "${dist}/${DATA_DIR}"/*/SNAPSHOT.json 2>/dev/null | head -1 || true)
-        upstream_ref=""
-        if [ -n "$marker" ]; then
-          upstream_ref=$(jq -r '.ref // empty' "$marker")
-        fi
-
-        # Nothing-new is judged on content, not on the stamp: the snapshot being
-        # replaced already carries a publishedAt this run has not earned, so both
-        # sides are compared with the stamped fields off.
-        stats_core=""
-        head_core=""
-        if [ -f stats.json ]; then
-          stats_core=$("${GITHUB_ACTION_PATH}/stamp-stats.sh" core stats.json)
-          if git rev-parse -q --verify HEAD >/dev/null; then
-            # best-effort: a previous snapshot with no readable stats.json is an
-            # empty baseline, i.e. a difference — which is a publish, not an error
-            head_core=$(git show HEAD:stats.json 2>/dev/null \
-              | "${GITHUB_ACTION_PATH}/stamp-stats.sh" core - || true)
-          fi
-        fi
-
-        git add -A
-        if git diff --cached --quiet; then
-          echo "Nothing new to publish"
-          echo "tag=" >> "$GITHUB_OUTPUT"
-          exit 0
-        fi
-        # The unrestricted compare above cannot call a stamp-only difference no-op
-        # (the previous snapshot's stamp is inside the file it staged against), so
-        # stats.json is weighed a second time with both stamps removed.
-        if [ -n "$stats_core" ] && [ "$stats_core" = "$head_core" ] \
-          && git diff --cached --quiet -- . ':(exclude)stats.json'; then
-          echo "Nothing new to publish"
-          echo "tag=" >> "$GITHUB_OUTPUT"
-          exit 0
-        fi
         published_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)
-        if [ -n "$stats_core" ]; then
-          # stamped into the tree, not staged over it: the snapshot must carry the
-          # time and ref it was published with, since neither can be derived later
-          "${GITHUB_ACTION_PATH}/stamp-stats.sh" stamp stats.json "$published_at" "$upstream_ref"
-          git add stats.json
-        fi
-        git commit -q -m "profiles: ${GITHUB_RUN_ID} at ${published_at}"
+        git add latest
+        git commit -q -m "snapshot: run ${GITHUB_RUN_ID} at ${published_at}"
 
-        # Prune dist history by age. Author timestamps survive `rebase` (which
-        # preserves %at) and the squashed root gets a fresh author date, so
-        # %at is a stable "when was this snapshot published" signal.
+        # Prune dist history by age. Author timestamps survive `rebase` (which preserves %at) and
+        # the squashed root gets a fresh author date, so %at is a stable "when was this snapshot
+        # published" signal.
         cutoff_epoch=$(date -u -d "${RETENTION} ago" +%s)
         cutoff_date=$(date -u -d "${RETENTION} ago" +%Y-%m-%d)
 
@@ -183,9 +128,8 @@ runs:
         git tag $force "$tag" HEAD
         git push $force origin "refs/tags/${tag}"
 
-        # The pointer is what consumers resolve, so it must name exactly the tag
-        # that points at what was just published — never a tag this run did not
-        # create, and never a commit other than HEAD.
+        # The pointer is what consumers resolve, so it must name exactly the tag that points at
+        # what was just published — never a tag this run did not create, and never another commit.
         [ "$(git show HEAD:latest)" = "$tag" ] || {
           echo "latest holds '$(git show HEAD:latest)', expected '${tag}'" >&2
           exit 1
@@ -195,28 +139,9 @@ runs:
           exit 1
         }
 
-        # And the stamp has to be inside the snapshot consumers pin to: a publish
-        # that lost it would leave a freshness probe unable to tell two snapshots
-        # apart, and a hash join unable to say which mirror version the profiles
-        # describe. An empty ref means no `upstream` field, so the two sides are
-        # compared as strings.
-        if [ -n "$stats_core" ]; then
-          raw=$(git show "${tag}:stats.json")
-          served_at=$(jq -r '.publishedAt // empty' <<<"$raw")
-          served_upstream=$(jq -r '.upstream // empty' <<<"$raw")
-          [ "$served_at" = "$published_at" ] || {
-            echo "published stats.json carries '${served_at}', expected '${published_at}'" >&2
-            exit 1
-          }
-          [ "$served_upstream" = "$upstream_ref" ] || {
-            echo "published stats.json upstream is '${served_upstream}', expected '${upstream_ref}'" >&2
-            exit 1
-          }
-        fi
-
-        # Prune: drop tags whose embedded date is older than the cutoff.
-        # Always keep the newest of each pattern as a floor, so a repo that
-        # has been dormant for > retention still exposes its latest snapshot.
+        # Prune: drop tags whose embedded date is older than the cutoff. Always keep the newest of
+        # each pattern as a floor, so a repo dormant for longer than the window still exposes its
+        # latest snapshot.
         all=$(list_tags)
         cutoff_int=${cutoff_date//-/}
         newest_bare=$(echo "$all" | grep -E "$bare_re" | sort -Vr | head -1 || true)

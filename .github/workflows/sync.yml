@@ -1,18 +1,17 @@
 name: sync
 
-# Manual: refresh the upstream dataset, invalidate cached outputs whose upstream
-# content hash changed, and publish the result (profiles + the dataset mirror) as
-# `dist-YYYY-MM-DD` (force-updated within a day, so the bare date tag always
-# points at the newest sync of that day).
+# Manual: refresh the upstream dataset and publish it.
 #
-# The `dist` branch is the single atomic snapshot: profiles at its root plus the
-# `cache/skills-sh` dataset mirror. Restoring it back is what lets a later
-# `generate` run without ever touching upstream. `sync` re-downloads only when
-# the restored snapshot's marker lags the newest upstream tag.
+# The snapshot is replaced wholesale, and the profiles whose source changed with it are retired
+# here: `just refresh` compares the index that was published with the one the new snapshot brought,
+# so a skill upstream rewrote is rebuilt by the next publish run instead of keeping a profile of
+# text that is no longer there. A skill that vanished upstream keeps its profiles — they were paid
+# for, and nothing is left to rebuild them from.
 #
-# Repository configuration (Settings -> Secrets and variables -> Actions):
-#   Secret:   SKILLS_PROFILES_API_KEY
-#   Variable: SKILLS_PROFILES_BASE_URL, SKILLS_PROFILES_MODEL
+# No model calls and no credentials: this run only moves data.
+#
+# The `dist` branch is the single atomic snapshot — the profiles at its root, the dataset mirror
+# under `cache/`, and a `latest` pointer naming the tag it was published as.
 
 on:
   workflow_dispatch:
@@ -24,17 +23,13 @@ concurrency:
   group: publish-dist
   cancel-in-progress: false # never cancel a run that is about to push
 
-env:
-  # credentials only; every tunable is passed as a CLI argument
-  SKILLS_PROFILES_API_KEY: ${{ secrets.SKILLS_PROFILES_API_KEY }}
-  SKILLS_PROFILES_BASE_URL: ${{ vars.SKILLS_PROFILES_BASE_URL }}
-  SKILLS_PROFILES_MODEL: ${{ vars.SKILLS_PROFILES_MODEL }}
-
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+
+      - uses: extractions/setup-just@v4
 
       - uses: astral-sh/setup-uv@v5
         with:
@@ -43,17 +38,14 @@ jobs:
       - name: Install
         run: uv sync
 
-      - name: Restore dist snapshot (profiles + dataset)
+      - name: Restore the published snapshot (profiles + sources)
         uses: ./.github/actions/restore-dist
 
-      - name: Sync dataset
-        # pulls the newest upstream tag only when the restored snapshot lags it
-        run: uv run skills-profiles sync
+      - name: Refresh the dataset and retire what it invalidates
+        run: just refresh
 
-      - name: Invalidate stale results
-        # results whose upstream content hash changed (or whose skill vanished)
-        # are dropped here, explicitly — sync itself never touches results
-        run: uv run skills-profiles invalidate --stale
+      - name: Rewrite the index
+        run: just index
 
       - name: Publish to dist
         uses: ./.github/actions/publish-dist

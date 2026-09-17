@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["comments"],
+  "properties": {
+    "comments": {
+      "type": "array",
+      "description": "4~6 条来自不同背景用户的评论",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["user", "category", "comment"],
+        "properties": {
+          "user": {
+            "type": "string",
+            "description": "评论者身份, 简短具体, 如 后端老兵、第一次用的新手"
+          },
+          "category": {
+            "type": "string",
+            "description": "评论类型, 通常为 妙用 / 坑 / 注意 / 启发 之一, 也可自拟"
+          },
+          "comment": {
+            "type": "string",
+            "description": "评论正文, 第一人称, 有实质性帮助, 60 字以内"
+          }
+        }
+      }
+    }
+  }
+}

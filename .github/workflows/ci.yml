@@ -21,6 +21,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      # The justfile is under test, not just used, so the suite needs the tool: without it
+      # tests/test_just.py skips itself and the build goes unverified.
+      - uses: extractions/setup-just@v4
+
       - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true

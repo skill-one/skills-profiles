@@ -2,9 +2,9 @@
 __pycache__/
 *.py[cod]
 
-# Generated profiles (output/) & upstream dataset cache (cache/skills-sh)
+# Everything generated lives under output/: the profiles, the index, and the snapshot they were
+# built from. The publish step copies that directory to the `dist` branch; it is not committed here.
 output/
-cache/
 
 # Local-only dotfiles: .env, .venv, .vscode, .pytest_cache, ... — all of them.
 # Keep the workflows, and the committed .env.example template.

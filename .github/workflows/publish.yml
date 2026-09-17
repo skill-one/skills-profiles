@@ -1,0 +1,86 @@
+name: publish
+
+# Manual: produce more profiles against the dataset already published in `dist`, and publish as
+# `dist-<base>-N`, where base is the newest bare `dist-YYYY-MM-DD` sync tag (or today, when there is
+# none) and N increments across that base's publishes.
+#
+# Every run starts on a fresh runner, and `restore-dist` pulls the published snapshot back — the
+# profiles (so `just` treats them as the cache and only fills what is missing) and the sources they
+# were built from, in one request. This run never touches upstream: the dataset is exactly what the
+# last `sync` published. The window is the snapshot's own order, most installed first, so repeated
+# runs walk down the dataset instead of over it, and `limit` bounds what each run does.
+#
+# Repository configuration (Settings -> Secrets and variables -> Actions), mirroring a local
+# `.env`: the endpoint, its key, and the two knobs that are about the endpoint rather than the
+# batch. Unset means unset - an empty value is ignored, so a missing variable falls back to the
+# default instead of overriding it.
+#
+#   Secret:   SKILLS_PROFILES_API_KEY
+#   Variable: SKILLS_PROFILES_BASE_URL, SKILLS_PROFILES_MODEL,
+#             SKILLS_PROFILES_THINKING, SKILLS_PROFILES_MAX_RETRIES
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: How many skills to complete this run
+        default: "10"
+      jobs:
+        description: Generations in flight at once
+        default: "8"
+      rpm:
+        description: Calls a minute the endpoint allows; 0 = no pace
+        default: "0"
+      prompt:
+        description: One prompt id to build, or empty for every prompt
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-dist
+  cancel-in-progress: false # never cancel a run that is about to push
+
+env:
+  # the endpoint and how to talk to it; the batch's own tunables are `just` knobs instead
+  SKILLS_PROFILES_API_KEY: ${{ secrets.SKILLS_PROFILES_API_KEY }}
+  SKILLS_PROFILES_BASE_URL: ${{ vars.SKILLS_PROFILES_BASE_URL }}
+  SKILLS_PROFILES_MODEL: ${{ vars.SKILLS_PROFILES_MODEL }}
+  SKILLS_PROFILES_THINKING: ${{ vars.SKILLS_PROFILES_THINKING }}
+  SKILLS_PROFILES_MAX_RETRIES: ${{ vars.SKILLS_PROFILES_MAX_RETRIES }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    # the run is bounded by `limit` generations at `rpm`, so the timeout has to cover the pace and
+    # not just the work: 1000 skills at 20 a minute is 300 minutes, and every request is bounded on
+    # its own by the client's timeout
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: extractions/setup-just@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install
+        run: uv sync
+
+      - name: Restore the published snapshot (profiles + sources)
+        uses: ./.github/actions/restore-dist
+
+      - name: Build the missing profiles
+        run: >-
+          just limit="${{ inputs.limit }}" jobs="${{ inputs.jobs }}"
+          rpm="${{ inputs.rpm }}" prompt="${{ inputs.prompt }}"
+
+      - name: Rewrite the index
+        run: just index
+
+      - name: Publish to dist
+        uses: ./.github/actions/publish-dist
+        with:
+          tag-mode: date-counter

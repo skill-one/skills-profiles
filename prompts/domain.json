@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["domain", "reason"],
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "按使用场景找到你最贴合的分类",
+      "enum": [
+        "开发编程", "测试与质量", "数据分析", "运维与安全", "办公效率",
+        "内容创作", "设计多媒体", "知识管理", "商业运营", "支付金融",
+        "教育学习", "生活服务", "其他"
+      ]
+    },
+    "reason": {
+      "type": "string",
+      "description": "分类理由, 极简一句话"
+    }
+  }
+}

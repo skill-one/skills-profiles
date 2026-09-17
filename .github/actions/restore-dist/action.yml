@@ -1,18 +1,13 @@
 name: restore-dist
 description: >-
-  Pull the published `dist` branch back into the working directories: profiles
-  at the branch root go to `output-dir`, the dataset mirror (`cache/…`) goes to
-  `data-dir`. The branch-root `latest` pointer is left out — a publish rewrites
-  it and the pipeline never reads it. One codeload request; no-op when the
-  branch does not exist yet.
+  Pull the published `dist` branch back into the output directory: profiles, the index beside them
+  and the snapshot they were built from, in one request. The branch-root `latest` pointer is left
+  out — a publish rewrites it, and a run never reads it. No-op when the branch does not exist yet.
 
 inputs:
-  output-dir:
-    description: Where the published profiles land (mirrors the CLI's output dir)
+  dir:
+    description: The output root, mirrored from the branch root
     default: output
-  data-dir:
-    description: Where the dataset mirror lands (the CLI's data dir, e.g. cache)
-    default: cache
 
 outputs:
   restored:
@@ -24,34 +19,24 @@ runs:
   steps:
     - id: r
       env:
-        OUTPUT_DIR: ${{ inputs.output-dir }}
-        DATA_DIR: ${{ inputs.data-dir }}
+        DIR: ${{ inputs.dir }}
       shell: bash
       run: |
         set -euo pipefail
-        mkdir -p "$OUTPUT_DIR" "$DATA_DIR"
+        mkdir -p "$DIR"
         tmp="${RUNNER_TEMP}/dist-restore"
         rm -rf "$tmp"
         mkdir -p "$tmp"
         if curl -fsSL "https://codeload.github.com/${GITHUB_REPOSITORY}/tar.gz/dist" \
             -o "${RUNNER_TEMP}/dist.tar.gz" \
            && tar -xzf "${RUNNER_TEMP}/dist.tar.gz" -C "$tmp" --strip-components=1; then
-          # the dataset mirror (e.g. cache/) -> DATA_DIR, everything else -> OUTPUT_DIR
-          if [ -d "$tmp/$DATA_DIR" ]; then
-            cp -a "$tmp/$DATA_DIR/." "$DATA_DIR/"
-            rm -rf "${tmp:?}/${DATA_DIR:?}"
-          fi
-          for item in "$tmp"/*; do
-            [ -e "$item" ] || continue
-            # the branch-root pointers are what a publish writes, not what the
-            # pipeline reads: restoring them would let a snapshot's own metadata
-            # ride into the next publish as if it were generated output
-            case "$(basename "$item")" in latest | upstream) continue ;; esac
-            cp -a "$item" "$OUTPUT_DIR/"
-          done
+          # the pointer is what a publish writes, not what a run reads: restoring it would let a
+          # snapshot's own name ride into the next publish as if a run had produced it
+          rm -f "$tmp/latest"
+          cp -a "$tmp/." "$DIR/"
           echo "restored=true" >> "$GITHUB_OUTPUT"
-          echo "Restored $(find "$OUTPUT_DIR" -name '*.json' 2>/dev/null | wc -l) profile(s), $(find "$DATA_DIR" -name 'SKILL.md' 2>/dev/null | wc -l) SKILL.md"
+          echo "Restored $(du -sh "$DIR" | cut -f1) of profiles and sources"
         else
           echo "restored=false" >> "$GITHUB_OUTPUT"
-          echo "No dist branch yet: starting from empty $OUTPUT_DIR/ and $DATA_DIR/"
+          echo "No dist branch yet: starting from an empty $DIR/"
         fi

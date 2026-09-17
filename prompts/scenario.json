@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["text"],
+  "properties": {
+    "text": {
+      "type": "string",
+      "description": "介绍词正文, 100 个字以内"
+    }
+  }
+}

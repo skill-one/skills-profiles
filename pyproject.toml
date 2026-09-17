@@ -5,36 +5,25 @@ description = "Generate multi-angle Chinese profiles for agent skills collected 
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "aiolimiter>=1.3.0",
     "httpx>=0.28.1",
-    "instructor>=1.16.0",
     "jinja2>=3.1.6",
     "openai>=2.54.0",
-    "pillow>=12.3.0",
     "pydantic>=2.13.5",
     "pydantic-settings>=2.15.0",
-    "pyyaml>=6.0.3",
-    "typer>=0.27.2",
 ]
 
-[project.scripts]
-skills-profiles = "skills_profiles.cli:app"
-
-[build-system]
-requires = ["uv_build>=0.11.21,<0.12.0"]
-build-backend = "uv_build"
+# There is no package to build or install: the scripts sit at the root, `just` is
+# the entry point, and uv only has to resolve the dependencies above.
+[tool.uv]
+package = false
 
 [dependency-groups]
-dev = [
-    "mypy>=1.18.0",
-    "pytest>=9.1.1",
-    "pytest-asyncio>=1.4.0",
-    "ruff>=0.14.0",
-]
+dev = ["mypy>=1.18.0", "pytest>=9.1.1", "ruff>=0.14.0"]
 
 [tool.pytest.ini_options]
-asyncio_mode = "auto"
 testpaths = ["tests"]
+# so `import gen` in the tests finds the script at the project root
+pythonpath = ["."]
 
 [tool.ruff]
 line-length = 100
@@ -44,11 +33,13 @@ target-version = "py312"
 select = ["E", "F", "I", "UP", "B", "SIM"]
 ignore = [
     "E501",  # line length is a formatter concern; long doc/comment lines are kept
-    "B008",  # typer.Option in defaults is the framework's required style
 ]
+
+[tool.ruff.lint.isort]
+known-first-party = ["gen", "conftest"]
 
 [tool.mypy]
 python_version = "3.12"
 ignore_missing_imports = true
 warn_unused_ignores = true
-files = ["src"]
+files = ["gen.py", "index.py", "stale.py"]
