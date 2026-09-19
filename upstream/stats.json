@@ -1,0 +1,18 @@
+{
+  "startedAt": "2026-09-19T10:07:27.689Z",
+  "finishedAt": "2026-09-19T10:37:30.735Z",
+  "durationMs": 1803046,
+  "limit": null,
+  "audits": false,
+  "leaderboardTotal": 9085,
+  "nonGithub": 742,
+  "githubRepos": 1128,
+  "indexedRows": 9029,
+  "changed": 113,
+  "added": 58,
+  "removed": 8,
+  "dropped": 56,
+  "failed": 0,
+  "carriedOver": 0,
+  "failedIds": []
+}
