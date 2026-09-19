@@ -3,15 +3,17 @@ name: sync
 # Manual: refresh the upstream dataset and publish it.
 #
 # The snapshot is replaced wholesale, and the profiles whose source changed with it are retired
-# here: `just refresh` compares the index that was published with the one the new snapshot brought,
-# so a skill upstream rewrote is rebuilt by the next publish run instead of keeping a profile of
-# text that is no longer there. A skill that vanished upstream keeps its profiles — they were paid
-# for, and nothing is left to rebuild them from.
+# here: `just refresh` compares the catalog that was published with the one the new snapshot
+# produces, so a skill upstream rewrote is rebuilt by the next publish run instead of keeping a
+# profile of text that is no longer there. A skill that vanished upstream keeps its profiles — they
+# were paid for, and nothing is left to rebuild them from.
 #
-# No model calls and no credentials: this run only moves data.
+# No model calls and no credentials: this run only moves data. `just refresh` rewrites the catalog
+# itself, because a sync moves the source layer under it.
 #
-# The `dist` branch is the single atomic snapshot — the profiles at its root, the dataset mirror
-# under `cache/`, and a `latest` pointer naming the tag it was published as.
+# The `dist` branch is the single atomic snapshot — the skills at its root, the profiles written
+# about them beside them, the mirror's own files under `upstream/`, the catalog, and a `latest`
+# pointer naming the tag it was published as.
 
 on:
   workflow_dispatch:
@@ -38,14 +40,11 @@ jobs:
       - name: Install
         run: uv sync
 
-      - name: Restore the published snapshot (profiles + sources)
+      - name: Restore the published snapshot (skills, profiles, upstream)
         uses: ./.github/actions/restore-dist
 
-      - name: Refresh the dataset and retire what it invalidates
+      - name: Refresh the dataset, retire what it invalidates, rewrite the catalog
         run: just refresh
-
-      - name: Rewrite the index
-        run: just index
 
       - name: Publish to dist
         uses: ./.github/actions/publish-dist

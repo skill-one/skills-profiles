@@ -22,7 +22,9 @@ def scratch_prompts(tmp_path: Path, name: str, body: str,
     """
     directory = tmp_path / "prompts"
     directory.mkdir(exist_ok=True)
-    (directory / "_system.md").write_text("<skill_md>{{ skill_md }}</skill_md>", encoding="utf-8")
+    (directory / "_system.md").write_text(
+        "<name>{{ name }}</name><description>{{ description }}</description>"
+        "<skill_body>{{ skill_body }}</skill_body>", encoding="utf-8")
     (directory / f"{name}.md").write_text(body, encoding="utf-8")
     if schema is not None:
         (directory / f"{name}.json").write_text(schema, encoding="utf-8")
@@ -69,7 +71,7 @@ def test_every_prompt_file_has_its_schema_next_to_it(config):
 
 def test_load_prompt_reads_the_pair(config):
     template, schema = gen.load_prompt(config, "domain")
-    assert template.startswith("有以下这些使用场景分类")
+    assert template.startswith("请判断这项技能的主要用途")
     assert schema["properties"]["domain"]["enum"][0] == "开发编程"
 
 
@@ -114,24 +116,91 @@ def test_the_domain_taxonomy_matches_the_schema_enum(config):
     decoder is constrained by. This is what keeps the two honest."""
     template, schema = gen.load_prompt(config, "domain")
     enum = schema["properties"]["domain"]["enum"]
-    body = gen.render(template, "SOURCE")
+    body = gen.render(template, "SOURCE", "", "AN ID")
     assert len(enum) == len(set(enum)) == 13
     for category in enum:
         assert f" {category}:" in body, f"the taxonomy is missing {category}"
 
 
-def test_render_gives_the_template_the_skill_source(config):
-    assert gen.render("{{ skill_md }}!", "SOURCE") == "SOURCE!"
-    assert gen.render("no variables here", "SOURCE") == "no variables here"
+def test_render_gives_the_template_the_body_the_description_and_the_name(config):
+    """The three variables a system prompt may name, and nothing else."""
+    assert gen.render("{{ skill_body }}!", "SOURCE", "ONE LINE", "AN ID") == "SOURCE!"
+    assert gen.render("{{ description }}", "SOURCE", "ONE LINE", "AN ID") == "ONE LINE"
+    assert gen.render("{{ name }}", "SOURCE", "ONE LINE", "AN ID") == "AN ID"
+    assert gen.render("no variables here", "SOURCE", "ONE LINE", "AN ID") == "no variables here"
 
 
 # ------------------------------------------------------------- the skill source
 
 
 def test_a_short_source_is_passed_through_untouched(config):
-    """No note, no reflow: what is on disk is what the model reads."""
-    assert gen.skill_source(config, ALPHA) == (
-        "---\nname: owner-a/repo-a/alpha\n---\n\nowner-a/repo-a/alpha does useful things.\n")
+    """No note, no reflow: the cap is the only thing that ever changes a source, and dropping the
+    front matter is `skill_body`'s job rather than this one's."""
+    source = gen.skill_source(config, ALPHA)
+    assert source.startswith("---\nname: owner-a/repo-a/alpha\ndescription: Tidies a note list")
+    assert source.endswith("---\n\nowner-a/repo-a/alpha does useful things.\n")
+
+
+def test_the_sent_body_leaves_the_front_matter_behind(config):
+    """The name and the description lead the message, so the copy of them at the top of the file
+    is not sent a second time: the body starts at the first line that says something new."""
+    body = gen.skill_body(gen.skill_source(config, ALPHA))
+
+    assert body == "owner-a/repo-a/alpha does useful things.\n"
+
+
+def test_a_source_with_no_front_matter_is_sent_as_it_is(workdir):
+    """A file with nothing to drop is not a file to guess about, and a rule further down a body is
+    not a header: the strip is anchored at the top, and what upstream wrote is what the model
+    reads - a header arriving twice is not a failure, a body cut in half is."""
+    text = "Just a body.\n\n---\n\nStill the body.\n"
+    gen.skill_source_path(gen.Config(), ALPHA).write_text(text, encoding="utf-8")
+
+    assert gen.skill_body(gen.skill_source(gen.Config(), ALPHA)) == text
+
+
+# --------------------------------------------------------------- the description
+
+
+def test_the_description_comes_from_the_skills_own_front_matter(config):
+    """The index upstream publishes no longer carries one, so the file is the source."""
+    assert gen.skill_description(gen.skill_source(config, ALPHA)).startswith("Tidies a note list")
+
+
+def test_a_description_is_read_as_yaml_not_off_the_line(workdir):
+    """A `description:` is a YAML value: `>` folds its lines and quotes unescape theirs, so what
+    reaches the prompt is the text rather than the notation around it."""
+    config = gen.Config()
+    path = gen.skill_source_path(config, ALPHA)
+
+    path.write_text("---\nname: alpha\ndescription: >-\n  Folds two lines\n  into one.\n---\n\nbody\n",
+                    encoding="utf-8")
+    assert gen.skill_description(gen.skill_source(config, ALPHA)) == "Folds two lines into one."
+
+    path.write_text('---\nname: alpha\ndescription: "Says \\"hi\\" and stops."\n---\n\nbody\n',
+                    encoding="utf-8")
+    assert gen.skill_description(gen.skill_source(config, ALPHA)) == 'Says "hi" and stops.'
+
+
+def test_a_skill_whose_front_matter_yields_no_description_is_dropped(workdir, capsys):
+    """Nothing to lead a prompt with is nothing to build a profile from, so the skill is dropped
+    - no call, no file - rather than answered from its body alone.
+
+    The three ways to have nothing: no header at all, a header with no `description:` in it, and a
+    header that is not YAML (`description: DEPRECATED: renamed elsewhere` - a bare colon and space
+    is a mapping, and two skills in the current snapshot are written that way).
+    """
+    config = gen.Config()
+    path = gen.skill_source_path(config, ALPHA)
+
+    for text in ["Just a body, no header.\n",
+                 "---\nname: alpha\n---\n\nA header with no description.\n",
+                 "---\nname: alpha\ndescription: DEPRECATED: renamed elsewhere\n---\n\nBody.\n"]:
+        path.write_text(text, encoding="utf-8")
+        assert gen.skill_description(gen.skill_source(config, ALPHA)) == ""
+        assert gen.main(["domain", ALPHA]) == 1
+        assert not gen.json_path(config, "domain", ALPHA).exists()
+        assert "no description in its front matter" in capsys.readouterr().err
 
 
 def test_a_long_source_is_cut_on_a_line_break_and_says_so(workdir):
@@ -266,24 +335,46 @@ def test_main_passes_the_source_and_the_task(workdir, monkeypatch):
     assert gen.main(["domain", ALPHA]) == 0
 
     system, user = seen["messages"]
-    assert system["role"] == "system" and "<skill_md>" in system["content"]
-    assert f"{ALPHA} does useful things." in system["content"]
+    assert system["role"] == "system"
+    assert "先读 description" in system["content"]
+    assert f"<name>\n{ALPHA}\n</name>" in system["content"]  # the handle the tree calls it by
+    assert "Tidies a note list" in system["content"]  # the skill's own one line
+    assert f"{ALPHA} does useful things." in system["content"]  # and the body under it
+    assert "name: owner-a/repo-a/alpha" not in system["content"]  # said once, not twice
     assert user["role"] == "user" and "办公效率" in user["content"]
     assert seen["schema"] == gen.load_prompt(gen.Config(), "domain")[1]
 
 
-def test_a_task_template_cannot_ask_for_the_source(workdir, monkeypatch, tmp_path):
-    """The source reaches the system message only, so a task template that names `{{ skill_md }}`
-    is an error when it is loaded - not an empty string when it is called."""
+@pytest.mark.parametrize("variable", ["skill_body", "description", "name"])
+def test_a_task_template_cannot_ask_for_a_system_variable(workdir, monkeypatch, tmp_path, variable):
+    """The name, the description and the body reach the system message only, so a task template
+    that names one is an error when it is loaded - not an empty string when it is called."""
     prompts = tmp_path / "prompts"
     prompts.mkdir()
     real = gen.Config().prompts_dir
     (prompts / "domain.json").write_text((real / "domain.json").read_text(), encoding="utf-8")
-    (prompts / "domain.md").write_text("{{ skill_md }}", encoding="utf-8")
+    (prompts / "domain.md").write_text(f"{{{{ {variable} }}}}", encoding="utf-8")
     monkeypatch.setenv("SKILLS_PROFILES_PROMPTS_DIR", str(prompts))
 
     with pytest.raises(SystemExit, match="is undefined"):
         gen.load_prompt(gen.Config(), "domain")
+
+
+def test_a_system_prompt_that_names_an_unknown_variable_is_a_message(workdir, monkeypatch,
+                                                                    tmp_path, capsys):
+    """`_system.md` is the one template rendered with variables, so a name it does not have is
+    answered with the file it is in rather than a traceback out of the run."""
+    prompts = tmp_path / "prompts"
+    prompts.mkdir()
+    real = gen.Config().prompts_dir
+    for name in ("_system.md", "domain.md", "domain.json"):
+        (prompts / name).write_text((real / name).read_text(encoding="utf-8"), encoding="utf-8")
+    (prompts / "_system.md").write_text("{{ nosuchvar }}", encoding="utf-8")
+    monkeypatch.setenv("SKILLS_PROFILES_PROMPTS_DIR", str(prompts))
+
+    assert gen.main(["domain", ALPHA]) == 1
+
+    assert "_system.md: 'nosuchvar' is undefined" in capsys.readouterr().err
 
 
 def test_print_shows_the_request_and_calls_nothing(workdir, monkeypatch, capsys):

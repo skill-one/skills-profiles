@@ -22,13 +22,14 @@ import pytest
 import gen
 from conftest import (
     ARCHIVE_ROOT,
-    DATA_ROOT,
+    OUTPUT,
     PROJECT_ROOT,
     SCRIPTS,
     SKILLS,
     make_tarball,
+    profile_path,
     skill_path,
-    write_dataset,
+    write_snapshot,
 )
 
 pytestmark = pytest.mark.skipif(shutil.which("just") is None, reason="just is not installed")
@@ -36,19 +37,27 @@ pytestmark = pytest.mark.skipif(shutil.which("just") is None, reason="just is no
 ALPHA = "owner-a/repo-a/alpha"
 BETA = "owner-b/repo-b/beta"
 GAMMA = "owner-c/repo-c/gamma"
+HOTEL = "owner-h/repo-h/hotel:sub"
+DOT = "owner-e/.dotcfg/settings"
+DELTA = "owner-d/repo-d/delta"
 ANGLES = ("blackbox", "comments", "domain", "scenario", "tagline", "whitebox")
 
 
 @pytest.fixture
 def project(tmp_path) -> Path:
-    """A throwaway copy of the project: the justfile, the script, prompts/ and a fake
-    snapshot, so a test can run `just` without touching the real tree."""
+    """A throwaway copy of the project: the justfile, the scripts, prompts/ and a fake snapshot,
+    so a test can run `just` without touching the real tree.
+
+    The snapshot is written the way `just sync` leaves one, and the catalog is built from it once:
+    the window reads the catalog, so a test that wants the mirror's order needs it there.
+    """
     project = tmp_path / "project"
     project.mkdir()
     for name in SCRIPTS:
         shutil.copy(PROJECT_ROOT / name, project)
     shutil.copytree(PROJECT_ROOT / "prompts", project / "prompts")
-    write_dataset(project / DATA_ROOT)
+    write_snapshot(project / OUTPUT)
+    assert just(project, "index").returncode == 0
     return project
 
 
@@ -66,11 +75,22 @@ def just(project: Path, *args: str, dry_run: bool = True) -> subprocess.Complete
 
 
 def outputs(project: Path, skill_id: str) -> Path:
-    return project / "output" / "skills" / gen.skill_dir_name(skill_id)
+    return profile_path(project / OUTPUT, skill_id)
 
 
 def json_names(project: Path, skill_id: str) -> list[str]:
     return sorted(p.name for p in outputs(project, skill_id).glob("*.json"))
+
+
+def snapshot(output: Path, skill_id: str) -> Path:
+    """The skill's own directory, as published: what a user downloads and installs."""
+    return skill_path(output, skill_id)
+
+
+def resync(project: Path, entries: list[dict]) -> None:
+    """Put another snapshot in the tree, and rebuild the catalog that lists it."""
+    write_snapshot(project / OUTPUT, entries)
+    assert just(project, "index").returncode == 0
 
 
 # ------------------------------------------------------------------ the batch
@@ -86,16 +106,46 @@ def test_just_builds_every_missing_output(project):
 
 
 def test_just_skips_what_already_exists(project):
+    """The window counts work, so a second bounded run takes the next skill instead of redoing this
+    one - and every file that is already there is left exactly as it was."""
     assert just(project, "limit=1").returncode == 0
     built = json_names(project, ALPHA)
     stamps = {p.name: p.stat().st_mtime_ns for p in outputs(project, ALPHA).glob("*.json")}
 
     again = just(project, "limit=1")
+
     assert again.returncode == 0
-    assert "built " not in again.stderr
+    assert ALPHA not in again.stderr
     assert json_names(project, ALPHA) == built
     assert {p.name: p.stat().st_mtime_ns
             for p in outputs(project, ALPHA).glob("*.json")} == stamps
+    assert json_names(project, BETA) == sorted(f"{angle}.json" for angle in ANGLES)
+
+
+def test_the_window_walks_down_the_snapshot(project):
+    """`limit` is a count of work, not a position: three one-skill runs build three skills, and the
+    next window starts where the last one stopped."""
+    for _ in range(2):
+        assert just(project, "limit=1").returncode == 0
+
+    assert json_names(project, ALPHA) == sorted(f"{angle}.json" for angle in ANGLES)
+    assert json_names(project, BETA) == sorted(f"{angle}.json" for angle in ANGLES)
+
+    assert just(project, "limit=1").returncode == 0
+
+    assert json_names(project, GAMMA) == sorted(f"{angle}.json" for angle in ANGLES)
+
+
+def test_a_snapshot_that_is_all_built_has_nothing_to_do(project):
+    """An empty window is a normal outcome rather than the error it used to be, and it says which
+    one it is: every skill already has its angles, and nothing was dispatched."""
+    assert just(project, "limit=0").returncode == 0
+
+    again = just(project, "limit=1")
+
+    assert again.returncode == 0
+    assert "nothing to build" in again.stderr
+    assert "built " not in again.stderr
 
 
 def test_deleting_an_output_rebuilds_exactly_that_one(project):
@@ -120,7 +170,7 @@ def test_a_call_that_fails_does_not_end_the_run(project, monkeypatch):
     """
     monkeypatch.setenv("FAIL_LOG", str(project / "failures.txt"))
     monkeypatch.setenv("GEN_ERR_LOG", str(project / "errors.log"))
-    (skill_path(project / DATA_ROOT, ALPHA) / "SKILL.md").chmod(0o000)
+    (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").chmod(0o000)
 
     result = just(project, "limit=2", "jobs=4")
 
@@ -177,7 +227,7 @@ def test_a_repo_whose_name_starts_with_a_dot_is_still_a_skill(project):
     """A shell glob does not match a leading dot, so `skills/*/*/*/SKILL.md` silently drops
     every skill under a repo like `.claude` - which is why the graph is a `find`."""
     assert just(project, "limit=0", "jobs=4").returncode == 0
-    assert (outputs(project, "owner-e/.dotcfg/settings") / "domain.json").is_file()
+    assert (outputs(project, DOT) / "domain.json").is_file()
 
 
 def test_a_bare_just_builds_one_skill(project):
@@ -188,65 +238,81 @@ def test_a_bare_just_builds_one_skill(project):
     assert not outputs(project, BETA).exists()
 
 
-def test_limit_windows_the_skills_and_keeps_what_is_already_built(project):
-    """LIMIT is a window over the snapshot in path order.
-
-    The build graph is read off the directory listing, so there are no install counts left
-    to rank by; what the window is *for* is unchanged - a bounded batch, and a bigger
-    window only ever adds work.
-    """
+def test_a_bigger_window_reaches_further_down(project):
+    """The window is a count of work in the snapshot's own order, so a bigger one only ever adds:
+    the second skill's window takes the two after the first window's one."""
     assert just(project, "limit=1").returncode == 0
     assert outputs(project, ALPHA).is_dir()
     assert not outputs(project, BETA).exists()
 
-    # raising the window brings the next skill in; what is already built stays
     assert just(project, "limit=2").returncode == 0
+
     assert outputs(project, BETA).is_dir()
+    assert outputs(project, GAMMA).is_dir()  # the one already built is not counted again
+    assert not outputs(project, HOTEL).exists()
 
 
 def test_limit_zero_is_the_whole_snapshot(project):
     """0 = every skill, including one whose id carries a colon: the directory it lives in
     is the sanitized spelling, and that is what gen.py is handed."""
     assert just(project, "limit=0", "jobs=4").returncode == 0
-    assert (outputs(project, "owner-h/repo-h/hotel:sub") / "domain.json").is_file()
+    assert (outputs(project, HOTEL) / "domain.json").is_file()
 
 
 def test_the_window_follows_the_snapshots_own_order(project):
-    """`limit` counts down the snapshot's index, which upstream writes installs-descending: a
-    bounded run does the most installed skills first, not the alphabetically first. This index
-    leads with `delta`, which has no SKILL.md, and the window still fills from the next entry."""
-    write_dataset(project / DATA_ROOT, list(reversed(SKILLS)))
+    """`limit` counts down the mirror's rows, which upstream writes installs-descending: a bounded
+    run does the most installed skills first, not the alphabetically first. This listing leads with
+    `delta`, which has no SKILL.md, and the window still fills from the next entry."""
+    resync(project, list(reversed(SKILLS)))
 
     assert just(project, "limit=1", "jobs=4").returncode == 0
 
-    assert outputs(project, "owner-e/.dotcfg/settings").is_dir()
+    assert outputs(project, DOT).is_dir()
     assert not outputs(project, ALPHA).exists()
 
 
 def test_a_skill_with_no_source_on_disk_is_not_a_target(project):
-    """The index names `delta` but upstream saved no SKILL.md for it. The window is filtered by
-    what is on disk, so it is not a target and a batch cannot fail on it forever."""
+    """The mirror lists `delta` but saved no source for it, so its row carries no description. The
+    window is filtered by what is on disk, so it is not a target and a batch cannot fail on it
+    forever."""
     assert just(project, "limit=0", "jobs=4").returncode == 0
-    assert not outputs(project, "owner-d/repo-d/delta").exists()
+    assert not outputs(project, DELTA).exists()
 
 
-def test_without_an_index_the_window_is_path_order(project):
-    """The index is the order, not a requirement: with none the listing is the order, which is
+def test_a_skill_nothing_can_be_read_from_is_not_a_target(project):
+    """A header that is not YAML is a skill no prompt can lead with, so the catalog says
+    `description: null` and the window skips the row: no call, no file, no failure logged."""
+    (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").write_text(
+        "---\nname: alpha\ndescription: DEPRECATED: renamed elsewhere\n---\n\nBody.\n",
+        encoding="utf-8")
+    assert just(project, "index").returncode == 0
+
+    result = just(project, "limit=0", "jobs=4")
+
+    assert result.returncode == 0, result.stderr
+    assert not outputs(project, ALPHA).exists()
+    assert not (outputs(project, ALPHA) / "domain.json").exists()
+    assert json_names(project, BETA) == sorted(f"{angle}.json" for angle in ANGLES)
+    assert "failed" not in result.stderr
+
+
+def test_without_a_catalog_the_window_is_path_order(project):
+    """The catalog is the order, not a requirement: with none the listing is the order, which is
     the one order that needs nothing but the tree. The first skill is then the alphabetical one,
-    not the entry the index would have put first."""
-    write_dataset(project / DATA_ROOT, list(reversed(SKILLS)))
-    (project / DATA_ROOT / "skills.jsonl").unlink()
+    not the entry the catalog would have put first."""
+    write_snapshot(project / OUTPUT, list(reversed(SKILLS)))
+    (project / OUTPUT / "skills.jsonl").unlink()
 
     assert just(project, "limit=1", "jobs=4").returncode == 0
 
     assert outputs(project, ALPHA).is_dir()
-    assert not outputs(project, "owner-e/.dotcfg/settings").exists()
+    assert not outputs(project, DOT).exists()
 
 
-def test_an_index_whose_ids_do_not_parse_is_no_index(project):
-    """An index that arrives in another shape must not empty the window and silently build
+def test_a_catalog_whose_ids_do_not_parse_is_no_catalog(project):
+    """A catalog that arrives in another shape must not empty the window and silently build
     nothing: it is treated as one that is not there, and the listing carries the run."""
-    (project / DATA_ROOT / "skills.jsonl").write_text(
+    (project / OUTPUT / "skills.jsonl").write_text(
         "".join(f'{{"installs": 1, "id": "{entry["id"]}"}}\n' for entry in SKILLS),
         encoding="utf-8")
 
@@ -303,36 +369,39 @@ def test_invalidate_forgets_exactly_one_prompt(project):
     assert (outputs(project, ALPHA) / "domain.json").is_file()
 
 
-def test_just_clean_drops_the_profiles_and_keeps_the_snapshot(project):
-    """`clean` is about the generated profiles. The snapshot sits in the same root so that the
-    whole of it can be published as one directory, but re-fetching it is still the expensive
-    part - so it survives."""
+def test_just_clean_drops_the_profiles_and_keeps_the_sources(project):
+    """`clean` is about what was generated: the profiles and the catalog. The skill directories and
+    the mirror's own files stay - they are what a profile is built from, and re-fetching them is the
+    expensive part."""
     assert just(project, "limit=1").returncode == 0
     assert just(project, "index").returncode == 0
-    assert (project / "output" / "skills").is_dir()
+    assert outputs(project, ALPHA).is_dir()
 
     assert just(project, "clean").returncode == 0
 
-    assert not (project / "output" / "skills").exists()
-    assert not (project / "output" / "skills.jsonl").exists()
-    assert (project / DATA_ROOT / "skills.jsonl").is_file()
+    assert not (project / OUTPUT / gen.PROFILES_DIR).exists()
+    assert not (project / OUTPUT / "skills.jsonl").exists()
+    assert (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").is_file()
+    assert (project / OUTPUT / gen.UPSTREAM_DIR / "skills.jsonl").is_file()
 
 
-def test_just_index_is_the_tree_in_one_file(project):
-    """`just index` flattens the domain over the skills it finds: in path order, with the colon
-    in an id spelled the way its directory spells it, and with a skill whose domain was deleted
-    left out rather than written as an empty row."""
+def test_just_index_joins_the_mirror_with_the_profiles(project):
+    """`just index` writes the catalog: a row per skill the mirror lists, in the mirror's order,
+    carrying what was read out of the skill and what was decided about it - and `null` where neither
+    has happened. A row keeps the mirror's spelling of the id; its directory is the other one."""
     assert just(project, "limit=0", "jobs=4").returncode == 0
     (outputs(project, ALPHA) / "domain.json").unlink()
 
     result = just(project, "index")
 
     assert result.returncode == 0, result.stderr
-    path = project / "output" / "skills.jsonl"
-    lines = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+    lines = [json.loads(line) for line in
+             (project / OUTPUT / "skills.jsonl").read_text(encoding="utf-8").splitlines()]
     assert [line["id"] for line in lines] == [
-        BETA, GAMMA, "owner-e/.dotcfg/settings", "owner-h/repo-h/hotel_sub"]
-    assert lines[0] == {"id": BETA, "domain": "开发编程", "reason": "离线演示占位内容"}
+        ALPHA, BETA, GAMMA, HOTEL, DOT, DELTA]
+    assert lines[0]["description"].startswith("Tidies a note list")
+    assert lines[0]["domain"] is None  # the profile was deleted; the skill is still listed
+    assert lines[5]["description"] is None  # no source to read a description from
 
 
 def test_just_without_a_snapshot_says_what_to_run(tmp_path):
@@ -352,19 +421,35 @@ def test_just_without_a_snapshot_says_what_to_run(tmp_path):
 # ------------------------------------------------------------------- just sync
 
 
-def test_just_sync_unpacks_the_branch(project, tmp_path):
-    """`just sync` is the whole fetch: one tarball, unpacked into the data dir."""
+def test_just_sync_unpacks_the_branch_into_its_two_layers(project, tmp_path):
+    """`just sync` is the whole fetch: one tarball, whose skill directories land at the root of the
+    tree - complete, because that is what a user installs - and whose other files, its own index
+    above all, land beside them."""
     tarball = tmp_path / "snapshot.tar.gz"
     make_tarball(tarball)
     result = just(project, f"snapshot=file://{tarball}", "sync")
     assert result.returncode == 0, result.stderr
 
-    data_dir = project / DATA_ROOT
-    assert (skill_path(data_dir, ALPHA) / "SKILL.md").is_file()
-    # the whole branch lands now, not only the index and the SKILL.md files
-    assert (skill_path(data_dir, ALPHA) / "extra.md").is_file()
+    assert (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").is_file()
+    # the whole skill directory lands now, not only the SKILL.md
+    assert (snapshot(project / OUTPUT, ALPHA) / "extra.md").is_file()
+    assert (project / OUTPUT / gen.UPSTREAM_DIR / "skills.jsonl").is_file()
+    assert (project / OUTPUT / gen.UPSTREAM_DIR / "repos.jsonl").is_file()
     # and GitHub's <repo>-<branch>/ wrapper is stripped, not nested
-    assert not (data_dir / ARCHIVE_ROOT).exists()
+    assert not (project / OUTPUT / ARCHIVE_ROOT).exists()
+
+
+def test_just_sync_rewrites_the_catalog_it_moved_the_sources_under(project, tmp_path):
+    """A sync leaves a catalog that names the skills it just fetched, so a run after a bare
+    `just sync` is ordered and windowed the same way a run after `just index` is."""
+    tarball = tmp_path / "snapshot.tar.gz"
+    make_tarball(tarball)
+    (project / OUTPUT / "skills.jsonl").unlink()
+
+    assert just(project, f"snapshot=file://{tarball}", "sync").returncode == 0
+
+    lines = (project / OUTPUT / "skills.jsonl").read_text(encoding="utf-8").splitlines()
+    assert [json.loads(line)["id"] for line in lines] == [entry["id"] for entry in SKILLS]
 
 
 def test_just_sync_replaces_the_snapshot_wholesale(project, tmp_path):
@@ -372,7 +457,7 @@ def test_just_sync_replaces_the_snapshot_wholesale(project, tmp_path):
     tarball = tmp_path / "snapshot.tar.gz"
     make_tarball(tarball)
     assert just(project, f"snapshot=file://{tarball}", "sync").returncode == 0
-    gone = skill_path(project / DATA_ROOT, ALPHA)
+    gone = snapshot(project / OUTPUT, ALPHA)
     assert gone.is_dir()
 
     make_tarball(tarball, [entry for entry in SKILLS if entry["id"] != ALPHA])
@@ -382,10 +467,10 @@ def test_just_sync_replaces_the_snapshot_wholesale(project, tmp_path):
 
 def test_a_failed_download_leaves_the_previous_snapshot_alone(project):
     """The new tree is unpacked beside the old one, so a broken fetch changes nothing."""
-    before = (skill_path(project / DATA_ROOT, ALPHA) / "SKILL.md").read_bytes()
+    before = (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").read_bytes()
     result = just(project, "snapshot=file:///nowhere/snapshot.tar.gz", "sync")
     assert result.returncode != 0
-    assert (skill_path(project / DATA_ROOT, ALPHA) / "SKILL.md").read_bytes() == before
+    assert (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").read_bytes() == before
 
 
 def test_just_sync_refuses_a_directory_that_is_not_a_snapshot(tmp_path):
@@ -395,18 +480,18 @@ def test_just_sync_refuses_a_directory_that_is_not_a_snapshot(tmp_path):
     for name in SCRIPTS:
         shutil.copy(PROJECT_ROOT / name, project)
     stray = tmp_path / "stray"
-    (stray / "junk").mkdir(parents=True)
+    (stray / "skills" / "junk").mkdir(parents=True)
 
-    result = just(project, f"data_dir={stray}", "sync")
+    result = just(project, f"output_dir={stray}", "sync")
     assert result.returncode != 0
     assert "is not a snapshot" in result.stderr
-    assert (stray / "junk").is_dir()  # and nothing was deleted
+    assert (stray / "skills" / "junk").is_dir()  # and nothing was deleted
 
 
 def test_a_snapshot_fetched_by_just_is_what_the_batch_reads(project, tmp_path):
-    """The seam between the justfile and the script is the data dir layout, so the only way
+    """The seam between the justfile and the scripts is the tree layout, so the only way
     to test it is to fetch a snapshot and then build from it."""
-    shutil.rmtree(project / DATA_ROOT)
+    shutil.rmtree(project / OUTPUT)
     tarball = tmp_path / "snapshot.tar.gz"
     make_tarball(tarball)
     assert just(project, f"snapshot=file://{tarball}", "sync").returncode == 0
@@ -430,5 +515,5 @@ def test_just_refresh_retires_only_what_the_new_snapshot_changed(project, tmp_pa
     assert not outputs(project, ALPHA).exists()  # upstream changed it
     assert outputs(project, BETA).is_dir()  # untouched upstream
     assert outputs(project, GAMMA).is_dir()  # gone upstream, but already paid for
-    assert not (project / ".snapshot-index").exists()  # the scratch the comparison used is gone
-    assert "retired 1 skill(s)" in result.stderr
+    assert not (project / ".previous-index").exists()  # the scratch the comparison used is gone
+    assert "retired 1 profile(s)" in result.stderr

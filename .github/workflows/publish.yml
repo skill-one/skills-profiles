@@ -4,16 +4,18 @@ name: publish
 # `dist-<base>-N`, where base is the newest bare `dist-YYYY-MM-DD` sync tag (or today, when there is
 # none) and N increments across that base's publishes.
 #
-# Every run starts on a fresh runner, and `restore-dist` pulls the published snapshot back — the
-# profiles (so `just` treats them as the cache and only fills what is missing) and the sources they
-# were built from, in one request. This run never touches upstream: the dataset is exactly what the
-# last `sync` published. The window is the snapshot's own order, most installed first, so repeated
-# runs walk down the dataset instead of over it, and `limit` bounds what each run does.
+# Every run starts on a fresh runner, and `restore-dist` pulls the published tree back — the skills,
+# the profiles written about them, the mirror's own files and the catalog, in one request. The
+# profiles are the cache (so `just` only fills what is missing) and the skills are what it builds
+# from. This run never touches upstream: the dataset is exactly what the last `sync` published.
+# `limit` counts work rather than positions - the next skills that still need something, in the
+# catalog's order, most installed first - so repeated runs walk down the dataset instead of redoing
+# the top of it.
 #
 # Repository configuration (Settings -> Secrets and variables -> Actions), mirroring a local
-# `.env`: the endpoint, its key, and the two knobs that are about the endpoint rather than the
-# batch. Unset means unset - an empty value is ignored, so a missing variable falls back to the
-# default instead of overriding it.
+# `.env`: the endpoint, its key, and the knobs that are about the endpoint rather than the batch.
+# Unset means unset - an empty value is ignored, so a missing variable falls back to the default
+# instead of overriding it.
 #
 #   Secret:   SKILLS_PROFILES_API_KEY
 #   Variable: SKILLS_PROFILES_BASE_URL, SKILLS_PROFILES_MODEL,

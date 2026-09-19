@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Retire the profiles a new snapshot invalidates: those whose source content hash changed.
 
-`just refresh` is the only caller. It keeps the index of the snapshot it is about to replace,
-syncs, and hands that index here; comparing it with the one the new snapshot brought names every
-skill whose `SKILL.md` upstream has since changed - the profiles of those were built from text that
-is no longer there, so they are deleted and the next batch rebuilds them.
+`just refresh` is the only caller. It keeps the catalog of the tree it is about to replace, syncs,
+and hands that copy here; comparing it with the catalog the sync rewrote names every skill whose
+`SKILL.md` upstream has since changed - the profiles of those were built from text that is no
+longer there, so they are deleted and the next batch rebuilds them.
 
-A skill that vanished from the index keeps its profiles: they were paid for, and nothing is left to
+A skill that vanished from the mirror keeps its profiles: they were paid for, and nothing is left to
 rebuild them from. One hash covers a whole directory, because all six angles come from one source.
 """
 
@@ -18,11 +18,11 @@ from pathlib import Path
 
 import gen
 
-INDEX = "skills.jsonl"  # the snapshot's own listing, at the root of the unpacked branch
+INDEX = gen.INDEX  # the catalog: two copies of it, before and after a sync, are the whole input
 
 
 def hashes(path: Path) -> dict[str, str]:
-    """`id -> content hash` from a snapshot index; a skill with no hash saved is left out."""
+    """`id -> content hash` from a catalog; a skill whose hash cannot be read is left out."""
     entries = (json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line)
     return {entry["id"]: entry["hash"] for entry in entries if entry.get("hash")}
 
@@ -51,16 +51,18 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     config = gen.Config()
-    after = config.data_dir / INDEX
+    after = config.output_dir / INDEX
     # a first sync has nothing to compare, and a sync that never completed has nothing to say
     if not args.before.is_file() or not after.is_file():
         print("no previous index - nothing to retire", file=sys.stderr)
         return 0
 
-    retired = retire(config, changed(hashes(args.before), hashes(after)))
+    ids = changed(hashes(args.before), hashes(after))
+    retired = retire(config, ids)
     if retired:
         print("\n".join(retired))
-    print(f"retired {len(retired)} skill(s) whose source changed", file=sys.stderr)
+    print(f"retired {len(retired)} profile(s) for {len(ids)} skill(s) whose source changed",
+          file=sys.stderr)
     return 0
 
 

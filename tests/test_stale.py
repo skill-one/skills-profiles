@@ -13,8 +13,8 @@ DOMAIN = {"domain": "办公效率", "reason": "因为"}
 
 
 def index_of(config: gen.Config) -> Path:
-    """The new snapshot's own listing, which is what a comparison is made against."""
-    return config.data_dir / stale.INDEX
+    """The catalog the sync has just rewritten, which is what a comparison is made against."""
+    return config.output_dir / gen.INDEX
 
 
 def write_index(path: Path, entries: list[dict]) -> None:
@@ -23,7 +23,7 @@ def write_index(path: Path, entries: list[dict]) -> None:
 
 
 def previous(path: Path, entries: list[dict]) -> Path:
-    """The index of the snapshot that was replaced."""
+    """The catalog as it was before the sync: the copy `just refresh` keeps of it."""
     write_index(path, entries)
     return path
 
@@ -46,7 +46,7 @@ def test_a_changed_hash_retires_that_skill_only(workdir, capsys):
     assert gen.skill_dir(config, BETA).is_dir()
     captured = capsys.readouterr()
     assert captured.out.split() == [ALPHA]
-    assert "retired 1 skill(s)" in captured.err
+    assert "retired 1 profile(s)" in captured.err
 
 
 def test_a_skill_that_vanished_keeps_its_profiles(workdir, capsys):
@@ -62,7 +62,7 @@ def test_a_skill_that_vanished_keeps_its_profiles(workdir, capsys):
     assert gen.skill_dir(config, ALPHA).is_dir()
     captured = capsys.readouterr()
     assert captured.out == ""
-    assert "retired 0 skill(s)" in captured.err
+    assert "retired 0 profile(s)" in captured.err
 
 
 def test_a_skill_with_no_hash_saved_is_not_compared(workdir):
@@ -103,9 +103,9 @@ def test_the_first_sync_has_nothing_to_compare(workdir, capsys):
     assert "nothing to retire" in capsys.readouterr().err
 
 
-def test_a_snapshot_without_an_index_has_nothing_to_compare(workdir, capsys):
-    config = gen.Config()
-    index_of(config).unlink()
+def test_a_tree_without_a_catalog_has_nothing_to_compare(workdir, capsys):
+    """A cold start on this side too: a sync rewrites the catalog, and one that never wrote it
+    leaves nothing to compare against."""
     before = previous(workdir / "previous.jsonl", [{"id": ALPHA, "hash": "old"}])
 
     assert stale.main([str(before)]) == 0

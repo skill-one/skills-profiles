@@ -1,8 +1,9 @@
 name: restore-dist
 description: >-
-  Pull the published `dist` branch back into the output directory: profiles, the index beside them
-  and the snapshot they were built from, in one request. The branch-root `latest` pointer is left
-  out — a publish rewrites it, and a run never reads it. No-op when the branch does not exist yet.
+  Pull the published `dist` branch back into the output directory: the skills, the profiles written
+  about them, the mirror's own files and the catalog, in one request. The branch-root `latest`
+  pointer is left out — a publish rewrites it, and a run never reads it. No-op when the branch does
+  not exist yet.
 
 inputs:
   dir:

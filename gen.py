@@ -6,20 +6,38 @@ Driven by the justfile (`just one`) - DEVELOPING.md describes the interface it i
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
+import yaml
 from jinja2 import Environment, StrictUndefined, TemplateSyntaxError, UndefinedError
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _env = Environment(autoescape=False, keep_trailing_newline=True, undefined=StrictUndefined)
+# The output root holds three layers, and they do not overlap: the skill directories the mirror
+# publishes and a user installs, the profiles this project writes about them, and the rest of the
+# mirror (its index, repositories, avatars) that the sources were taken from.
 SKILLS_DIR = "skills"
+PROFILES_DIR = "profiles"
+UPSTREAM_DIR = "upstream"
 SKILL_MD = "SKILL.md"
+SYSTEM_MD = "_system.md"
+INDEX = "skills.jsonl"
 MAX_SKILL_MD_CHARS = 20000
+# libyaml where there is one, which every PyYAML wheel carries, and the pure-Python loader where a
+# source build left it out: the block is a few hundred bytes, and a skill is one process.
+YAML_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+# The header is where a skill's name and description are written down, and both of them are the
+# first two parts of the system message already; what sits beside them - `license`, `allowed-tools`,
+# a version - is about installing a skill rather than about what it is for. It is cut as one block
+# for the body and read as YAML once for the description: a `description:` can be a block scalar or
+# a quoted string, so a line-wise read of a header is half a header.
+FRONT_MATTER = re.compile(r"\A\s*---\r?\n(.*?)\r?\n---\r?\n", re.S)
 # A source that just stops reads as one that ended, and an answer can then be
 # confidently wrong about the part that was never sent. Said in the prompt's language,
 # and inside the source, so it travels with it.
-TRUNCATION_NOTE = "[注: 这份 skill.md 过长, 以上仅为开头, 余下内容已省略]"
+TRUNCATION_NOTE = "[注: 这份正文过长, 以上仅为开头, 余下内容已省略]"
 
 
 class Config(BaseSettings):
@@ -35,7 +53,6 @@ class Config(BaseSettings):
     thinking: bool = False
     dry_run: bool = False
 
-    data_dir: Path = Path("output/cache/skills-sh")
     prompts_dir: Path = Path("prompts")
     output_dir: Path = Path("output")
 
@@ -46,7 +63,7 @@ def skill_dir_name(skill: str) -> str:
 
 
 def skill_dir(config: Config, skill: str) -> Path:
-    return config.output_dir / SKILLS_DIR / skill_dir_name(skill)
+    return config.output_dir / PROFILES_DIR / skill_dir_name(skill)
 
 
 def json_path(config: Config, prompt: str, skill: str) -> Path:
@@ -58,7 +75,8 @@ def markdown_path(config: Config, prompt: str, skill: str) -> Path:
 
 
 def skill_source_path(config: Config, skill: str) -> Path:
-    return config.data_dir / SKILLS_DIR / skill_dir_name(skill) / SKILL_MD
+    """The skill's own directory as the mirror published it, beside the profile written from it."""
+    return config.output_dir / SKILLS_DIR / skill_dir_name(skill) / SKILL_MD
 
 
 def skill_source(config: Config, skill: str) -> str:
@@ -77,6 +95,36 @@ def skill_source(config: Config, skill: str) -> str:
     cut = text.rfind("\n", 0, MAX_SKILL_MD_CHARS)
     head = text[:cut] if cut > 0 else text[:MAX_SKILL_MD_CHARS]
     return f"{head.rstrip()}\n\n{TRUNCATION_NOTE}\n"
+
+
+def skill_body(source: str) -> str:
+    """The source without its front matter: the part that is not said above it already.
+
+    The name and the description lead the system message, so the copy of them at the top of the file
+    is not sent a second time; what sits beside them in the block is metadata about installing a
+    skill rather than about what it is for. A source with no front matter to drop is sent as it is: a
+    header arriving twice is not a failure, and this is not the place to guess.
+    """
+    return FRONT_MATTER.sub("", source, count=1).lstrip("\n")
+
+
+def skill_description(source: str) -> str:
+    """The skill's own one-line description: its front matter's `description`, as YAML.
+
+    It is the one part of a skill written to be read on its own, and it is what a prompt leads with,
+    so empty means nothing to lead with rather than a description that happens to be short. No front
+    matter, a block that is not YAML, and a block with no `description:` all read the same way here,
+    and `main` drops the skill on it.
+    """
+    block = FRONT_MATTER.match(source)
+    if block is None:
+        return ""
+    try:
+        front = yaml.load(block.group(1), Loader=YAML_LOADER)
+    except yaml.YAMLError:
+        return ""
+    description = front.get("description") if isinstance(front, dict) else None
+    return description.strip() if isinstance(description, str) else ""
 
 
 def load_prompt(config: Config, prompt: str) -> tuple[str, dict]:
@@ -98,8 +146,8 @@ def load_prompt(config: Config, prompt: str) -> tuple[str, dict]:
     return template, schema
 
 
-def render(template: str, source: str) -> str:
-    return _env.from_string(template).render(skill_md=source)
+def render(template: str, body: str, description: str, name: str) -> str:
+    return _env.from_string(template).render(skill_body=body, description=description, name=name)
 
 
 def call(config: Config, schema: dict, messages: list[dict]) -> dict:
@@ -184,16 +232,28 @@ def main(argv: list[str] | None = None) -> int:
     try:
         template, schema = load_prompt(config, args.prompt)
         source = skill_source(config, args.skill)
-        system = (config.prompts_dir / "_system.md").read_text(encoding="utf-8").strip()
+        # The description is the gate on a skill rather than one of its fields: a profile is written
+        # from the line saying what the skill is for, so a skill whose own header does not yield one
+        # is dropped here - no call, no file - instead of being built from its body alone.
+        description = skill_description(source)
+        if not description:
+            print(f"{args.skill}: no description in its front matter", file=sys.stderr)
+            return 1
+        # the system prompt is the only template with variables, and it is rendered here rather
+        # than in `call`: a name it does not have is a message about that file, not a traceback.
+        # The name it leads with is the id - the one handle the tree, the index and a query all
+        # use - where the front matter's own `name:` is now and then a shorter spelling of it
+        system = render((config.prompts_dir / SYSTEM_MD).read_text(encoding="utf-8").strip(),
+                        skill_body(source), description, args.skill)
     except FileNotFoundError as e:
         print(f"{e.filename}: not found", file=sys.stderr)
         return 1
     except UndefinedError as e:
-        print(f"_system.md: {e}", file=sys.stderr)
+        print(f"{SYSTEM_MD}: {e}", file=sys.stderr)
         return 1
 
     messages = [
-        {"role": "system", "content": render(system, source)},
+        {"role": "system", "content": system},
         {"role": "user", "content": _env.from_string(template).render()},
     ]
     if args.print_request:
