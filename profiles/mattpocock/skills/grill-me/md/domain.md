@@ -1,0 +1,11 @@
+# grill-me (`mattpocock/skills/grill-me`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Interview-style pressure-testing of a plan or design is a developer working method, not teaching.

@@ -1,0 +1,11 @@
+# tdd (`mattpocock/skills/tdd`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+The skill is a test-writing methodology: good-test criteria, seam placement, anti-patterns, and the red-green loop.
