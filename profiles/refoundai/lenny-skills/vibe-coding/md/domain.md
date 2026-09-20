@@ -1,0 +1,11 @@
+# vibe-coding (`refoundai/lenny-skills/vibe-coding`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Guides users to build, iterate, and debug software via AI-generated code.

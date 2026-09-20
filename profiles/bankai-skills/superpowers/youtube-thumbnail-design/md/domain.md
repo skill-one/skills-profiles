@@ -1,0 +1,11 @@
+# youtube-thumbnail-design (`bankai-skills/superpowers/youtube-thumbnail-design`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Image generation, color/composition rules, and visual design principles for YouTube thumbnails.

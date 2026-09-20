@@ -1,0 +1,11 @@
+# firecrawl-download (`firecrawl/skills/firecrawl-download`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Web scraping tool that downloads site pages into local markdown/screenshot files via CLI.

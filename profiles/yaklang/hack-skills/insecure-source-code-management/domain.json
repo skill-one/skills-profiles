@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Detects exposed VCS/backup/config misconfigurations during authorized security assessments."}

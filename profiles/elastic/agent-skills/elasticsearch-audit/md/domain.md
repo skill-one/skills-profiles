@@ -1,0 +1,11 @@
+# elasticsearch-audit (`elastic/agent-skills/elasticsearch-audit`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Configures and queries Elasticsearch security audit logs for incident investigation and compliance.

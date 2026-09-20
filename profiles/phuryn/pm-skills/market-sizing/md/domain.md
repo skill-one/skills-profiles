@@ -1,0 +1,11 @@
+# market-sizing (`phuryn/pm-skills/market-sizing`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Market sizing (TAM/SAM/SOM) is a strategic activity for evaluating market entry and investor pitches, squarely in business growth.

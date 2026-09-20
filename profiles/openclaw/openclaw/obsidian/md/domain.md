@@ -1,0 +1,11 @@
+# obsidian (`openclaw/openclaw/obsidian`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+The skill is explicitly about Obsidian vault notes, links, search, and organization via CLI.

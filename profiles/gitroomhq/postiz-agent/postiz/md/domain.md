@@ -1,0 +1,11 @@
+# postiz (`gitroomhq/postiz-agent/postiz`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+Postiz schedules and publishes social media content across 28+ platforms.

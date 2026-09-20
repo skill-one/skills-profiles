@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Configures GCP cloud infrastructure (log buckets, sinks, IAM) across projects via gcloud CLI."}

@@ -1,0 +1,11 @@
+# app-observability (`grafana/skills/app-observability`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Setting up and operating monitoring/observability infrastructure (APM, RUM, AI) on Grafana Cloud is classic SRE/monitoring work.

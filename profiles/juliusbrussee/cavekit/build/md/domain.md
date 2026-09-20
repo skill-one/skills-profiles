@@ -1,0 +1,11 @@
+# build (`juliusbrussee/cavekit/build`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Plans and executes code implementation against a spec, runs builds/tests, and commits.

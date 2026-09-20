@@ -1,0 +1,11 @@
+# bpmn (`markdown-viewer/skills/bpmn`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Generates software process/architecture diagrams (BPMN, EIP, integration patterns) via PlantUML, a developer design tool.

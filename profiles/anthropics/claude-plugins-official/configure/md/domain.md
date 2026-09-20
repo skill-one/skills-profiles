@@ -1,0 +1,11 @@
+# configure (`anthropics/claude-plugins-official/configure`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Configures Discord bot credentials and access-control policy for a running service.

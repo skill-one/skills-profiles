@@ -1,0 +1,11 @@
+# slack-search (`anthropics/knowledge-work-plugins/slack-search`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+The skill's core purpose is information retrieval—locating messages, files, channels, and people within Slack.

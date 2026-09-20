@@ -1,0 +1,12 @@
+# adk-scaffold (`google/adk-docs/adk-scaffold`)
+
+## domain
+
+### domain
+
+- development
+- devops-security
+
+### reason
+
+Scaffolds ADK agent projects via CLI, covering code generation through deployment and CI/CD infrastructure.

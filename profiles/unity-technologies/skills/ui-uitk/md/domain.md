@@ -1,0 +1,11 @@
+# ui-uitk (`unity-technologies/skills/ui-uitk`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Generates and edits Unity UI Toolkit code files (UXML, USS, C#) as framework-specific development work.

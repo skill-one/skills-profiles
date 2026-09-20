@@ -1,0 +1,12 @@
+# code-polish (`paulrberg/agent-skills/code-polish`)
+
+## domain
+
+### domain
+
+- testing
+- development
+
+### reason
+
+Post-implementation code review, defect detection, and refactoring over a fixed git scope.

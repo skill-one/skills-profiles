@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Implements Terraform Plugin Framework resources (CRUD, schema, plan modifiers) in Go code."}

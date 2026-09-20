@@ -1,0 +1,11 @@
+# notion-knowledge-capture (`openai/skills/notion-knowledge-capture`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Structures conversations and decisions into linked Notion pages, a core knowledge-base organization task.

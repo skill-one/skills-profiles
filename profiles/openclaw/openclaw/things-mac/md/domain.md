@@ -1,0 +1,11 @@
+# things-mac (`openclaw/openclaw/things-mac`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Manages personal todos, tasks, and projects in the Things 3 app.

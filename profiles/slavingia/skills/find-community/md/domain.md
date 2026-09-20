@@ -1,0 +1,11 @@
+# find-community (`slavingia/skills/find-community`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Identifying a target community and recurring problems to build a minimalist business around is early-stage business/customer strategy.

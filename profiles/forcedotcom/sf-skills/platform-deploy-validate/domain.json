@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Pre-deployment validation gate for Salesforce metadata, routing prod/sandbox targets and producing release job IDs."}

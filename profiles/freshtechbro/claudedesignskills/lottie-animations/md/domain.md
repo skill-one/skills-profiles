@@ -1,0 +1,11 @@
+# lottie-animations (`freshtechbro/claudedesignskills/lottie-animations`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Implements Lottie animation libraries in web/React/Vue/Svelte code with performance optimization.

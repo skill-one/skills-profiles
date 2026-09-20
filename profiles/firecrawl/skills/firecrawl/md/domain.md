@@ -1,0 +1,11 @@
+# firecrawl (`firecrawl/skills/firecrawl`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+CLI-based web scraping and browser automation tool for extracting and interacting with live web content.

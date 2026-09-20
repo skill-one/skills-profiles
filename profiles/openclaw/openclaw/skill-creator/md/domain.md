@@ -1,0 +1,11 @@
+# skill-creator (`openclaw/openclaw/skill-creator`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Authoring and validating structured agent-skill files (SKILL.md, frontmatter, scripts) is a developer workflow.

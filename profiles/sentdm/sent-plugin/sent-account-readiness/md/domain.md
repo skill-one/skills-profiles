@@ -1,0 +1,11 @@
+# sent-account-readiness (`sentdm/sent-plugin/sent-account-readiness`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Preflight readiness check for a messaging platform's account, KYC, and balance before channel launch.

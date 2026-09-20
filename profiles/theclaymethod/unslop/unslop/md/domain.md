@@ -1,0 +1,11 @@
+# unslop (`theclaymethod/unslop/unslop`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+Edits prose to strip AI tells and restore a human voice; purely text-centric.

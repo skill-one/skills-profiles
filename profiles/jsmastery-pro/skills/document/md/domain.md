@@ -1,0 +1,11 @@
+# document (`jsmastery-pro/skills/document`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Generates developer-facing prose (PRs, changelogs, release notes, postmortems) directly from git commits and diffs.

@@ -1,0 +1,11 @@
+# journal-entry-prep (`anthropics/knowledge-work-plugins/journal-entry-prep`)
+
+## domain
+
+### domain
+
+- finance-payment
+
+### reason
+
+Journal entry preparation (accruals, depreciation, payroll, revenue) is core accounting/finance work.

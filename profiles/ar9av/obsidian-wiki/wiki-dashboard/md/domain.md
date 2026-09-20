@@ -1,0 +1,11 @@
+# wiki-dashboard (`ar9av/obsidian-wiki/wiki-dashboard`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Builds queryable dashboard views over an Obsidian vault for organizing and retrieving notes.

@@ -1,0 +1,11 @@
+# donation-place-search (`nomadamas/k-skill/donation-place-search`)
+
+## domain
+
+### domain
+
+- lifestyle
+
+### reason
+
+Locates Korean donation organizations by area and category as a personal charitable errand.

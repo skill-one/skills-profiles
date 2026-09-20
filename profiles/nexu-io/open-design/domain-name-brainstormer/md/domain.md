@@ -1,0 +1,11 @@
+# domain-name-brainstormer (`nexu-io/open-design/domain-name-brainstormer`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Domain name selection is a marketing/brand-launch activity aimed at establishing an online business presence.

@@ -1,0 +1,11 @@
+# reddit (`resciencelab/opc-skills/reddit`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Retrieves Reddit posts, comments, and profiles via public JSON API for information retrieval.

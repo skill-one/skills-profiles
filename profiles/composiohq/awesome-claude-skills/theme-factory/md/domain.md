@@ -1,0 +1,11 @@
+# theme-factory (`composiohq/awesome-claude-skills/theme-factory`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Applies color palettes, font pairings, and visual identity themes to artifacts like slides and landing pages.

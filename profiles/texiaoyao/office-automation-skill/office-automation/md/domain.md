@@ -1,0 +1,11 @@
+# office-automation (`texiaoyao/office-automation-skill/office-automation`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Automates docx/xlsx reading, writing, template filling, merging, and format conversion.

@@ -1,0 +1,11 @@
+# identify-assumptions-new (`phuryn/pm-skills/identify-assumptions-new`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Evaluates venture risks, go-to-market, and strategic assumptions for a new product concept.

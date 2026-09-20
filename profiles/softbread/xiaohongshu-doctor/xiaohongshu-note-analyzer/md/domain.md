@@ -1,0 +1,11 @@
+# xiaohongshu-note-analyzer (`softbread/xiaohongshu-doctor/xiaohongshu-note-analyzer`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+Analyzes and optimizes social media (Xiaohongshu) note content across keywords, titles, sensitivity, and engagement.

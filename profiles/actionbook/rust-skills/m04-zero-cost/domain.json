@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Rust generics, trait dispatch, and monomorphization decisions are core language-level code design."}

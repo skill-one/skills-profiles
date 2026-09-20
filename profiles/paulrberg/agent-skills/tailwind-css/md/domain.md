@@ -1,0 +1,11 @@
+# tailwind-css (`paulrberg/agent-skills/tailwind-css`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Writing/fixing utility CSS classes and configuring the Tailwind v4 framework in code.

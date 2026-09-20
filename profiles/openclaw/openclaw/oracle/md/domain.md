@@ -1,0 +1,11 @@
+# oracle (`openclaw/openclaw/oracle`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+CLI tool for AI-assisted code review, debugging, and refactoring in developer workflows.

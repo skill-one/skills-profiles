@@ -1,0 +1,11 @@
+# microcopy (`lobehub/lobehub/microcopy`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+The skill governs UI copywriting, microcopy, and i18n wording—text-centered creation.

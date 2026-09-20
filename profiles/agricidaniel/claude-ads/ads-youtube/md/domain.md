@@ -1,0 +1,11 @@
+# ads-youtube (`agricidaniel/claude-ads/ads-youtube`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Auditing and optimizing YouTube ad campaigns is paid-media marketing aimed at business growth.

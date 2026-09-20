@@ -1,0 +1,11 @@
+# trailmark (`trailofbits/skills/trailmark`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Static security analysis: attack surface mapping, taint propagation, privilege boundaries, and vulnerability audit prioritization.

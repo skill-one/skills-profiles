@@ -1,0 +1,11 @@
+# netlify-forms (`netlify/context-and-tools/netlify-forms`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Writing and integrating form code across frontend frameworks with Netlify's deploy-time detection.

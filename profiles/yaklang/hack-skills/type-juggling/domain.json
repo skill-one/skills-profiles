@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Exploits PHP weak-comparison and hash-collision vulnerabilities to bypass auth and HMAC checks."}

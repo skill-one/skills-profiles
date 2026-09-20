@@ -1,0 +1,11 @@
+# prometheus-cardinality-troubleshooter (`grafana/skills/prometheus-cardinality-troubleshooter`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Diagnosing live Prometheus/Grafana Cloud cardinality fires is core SRE and monitoring operations.

@@ -1,0 +1,12 @@
+# timestream-influxdb (`aws/agent-toolkit-for-aws/timestream-influxdb`)
+
+## domain
+
+### domain
+
+- development
+- devops-security
+
+### reason
+
+Managed time-series database selection, schema design, and troubleshooting, with substantial cloud provisioning, networking, and security content.

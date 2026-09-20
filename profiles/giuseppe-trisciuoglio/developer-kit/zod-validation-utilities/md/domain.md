@@ -1,0 +1,11 @@
+# zod-validation-utilities (`giuseppe-trisciuoglio/developer-kit/zod-validation-utilities`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Creates Zod v4 validation schemas and type-safe parsing for TypeScript APIs and forms.

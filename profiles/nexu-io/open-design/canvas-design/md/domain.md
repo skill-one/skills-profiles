@@ -1,0 +1,11 @@
+# canvas-design (`nexu-io/open-design/canvas-design`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Creates posters, illustrations, and static visual art in PNG/PDF using design philosophy.

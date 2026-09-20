@@ -1,0 +1,11 @@
+# image-enhancer (`nexu-io/open-design/image-enhancer`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Enhances image resolution, sharpness, and clarity, which is core image editing.

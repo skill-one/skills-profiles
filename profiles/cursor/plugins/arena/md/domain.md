@@ -1,0 +1,11 @@
+# arena (`cursor/plugins/arena`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Parallel artifact generation and synthesis workflow for software development.

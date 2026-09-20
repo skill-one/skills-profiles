@@ -1,0 +1,11 @@
+# debugger (`shubhamsaboo/awesome-llm-apps/debugger`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Systematic debugging and root-cause analysis to fix broken code is core development work.

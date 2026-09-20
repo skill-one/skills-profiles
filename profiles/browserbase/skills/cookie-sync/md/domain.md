@@ -1,0 +1,11 @@
+# cookie-sync (`browserbase/skills/cookie-sync`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Browser-automation CLI that syncs auth cookies for authenticated cloud browsing sessions.

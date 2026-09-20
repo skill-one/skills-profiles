@@ -1,0 +1,11 @@
+# process-doc (`anthropics/knowledge-work-plugins/process-doc`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+The skill's core task is authoring a structured SOP document with flowcharts, RACI, and step-by-step instructions.

@@ -1,0 +1,11 @@
+# trello (`openclaw/openclaw/trello`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Trello boards/lists/cards are todo and task management, squarely in work management.

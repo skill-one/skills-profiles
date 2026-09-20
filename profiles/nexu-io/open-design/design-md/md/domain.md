@@ -1,0 +1,11 @@
+# design-md (`nexu-io/open-design/design-md`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Captures design direction, tokens, and visual rules as a design-system source of truth.

@@ -1,0 +1,11 @@
+# generating-mermaid-diagrams (`forcedotcom/sf-skills/generating-mermaid-diagrams`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Generates Mermaid code blocks for system architecture, ERDs, and integration flows for developer documentation.

@@ -1,0 +1,11 @@
+# propagate (`juxt/allium/propagate`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Generates unit, property-based, state-machine, and integration test files from spec obligations.

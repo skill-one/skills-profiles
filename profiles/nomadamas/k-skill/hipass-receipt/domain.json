@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Reuses a logged-in Chrome session to automate browsing a toll website and retrieve receipts (browser automation)."}

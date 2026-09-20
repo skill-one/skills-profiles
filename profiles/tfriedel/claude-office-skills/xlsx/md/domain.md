@@ -1,0 +1,12 @@
+# xlsx (`tfriedel/claude-office-skills/xlsx`)
+
+## domain
+
+### domain
+
+- office-productivity
+- data-analysis
+
+### reason
+
+Core purpose is xlsx document creation/editing/formatting; data analysis and visualization are a substantial secondary use.

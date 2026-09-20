@@ -1,0 +1,11 @@
+# biz-health-check (`nomadamas/k-skill/biz-health-check`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Cross-references six public government databases and organizes findings into a factual report.

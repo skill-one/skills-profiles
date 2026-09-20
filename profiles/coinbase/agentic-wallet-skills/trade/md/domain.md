@@ -1,0 +1,11 @@
+# trade (`coinbase/agentic-wallet-skills/trade`)
+
+## domain
+
+### domain
+
+- finance-payment
+
+### reason
+
+Swaps and trades crypto tokens (USDC, ETH, POL) on Base/Polygon networks.

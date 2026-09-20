@@ -1,0 +1,11 @@
+# beyla (`grafana/skills/beyla`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+eBPF-based observability: Prometheus metrics, OTLP tracing, and Kubernetes DaemonSet deployment for SRE monitoring.

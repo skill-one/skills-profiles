@@ -1,0 +1,11 @@
+# privacy-policy (`phuryn/pm-skills/privacy-policy`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+Drafts a structured legal/compliance text document (privacy policy) with defined sections and plain-language prose.

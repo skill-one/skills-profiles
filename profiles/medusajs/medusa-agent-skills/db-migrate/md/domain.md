@@ -1,0 +1,11 @@
+# db-migrate (`medusajs/medusa-agent-skills/db-migrate`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Executing a database migration CLI command is a core developer workflow task.

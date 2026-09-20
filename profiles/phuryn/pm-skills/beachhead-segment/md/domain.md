@@ -1,0 +1,11 @@
+# beachhead-segment (`phuryn/pm-skills/beachhead-segment`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Go-to-market strategy for selecting initial customer segments to drive business growth.

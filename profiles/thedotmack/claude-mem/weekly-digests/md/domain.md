@@ -1,0 +1,11 @@
+# weekly-digests (`thedotmack/claude-mem/weekly-digests`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+The skill's core output is a serialized narrative digest (story chapters with arcs, cast, cliffhangers) from project data.

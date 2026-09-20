@@ -1,0 +1,11 @@
+# ljg-book (`lijigang/ljg-skills/ljg-book`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Produces structured Org notes that organize and explain a book's full argumentation as a knowledge reference.

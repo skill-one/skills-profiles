@@ -1,0 +1,11 @@
+# context-mode (`mksglu/context-mode/context-mode`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Meta-tool for processing large outputs across developer workflows: CLI, git, tests, browser, APIs.

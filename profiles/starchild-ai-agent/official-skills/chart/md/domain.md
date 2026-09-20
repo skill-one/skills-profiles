@@ -1,0 +1,11 @@
+# chart (`starchild-ai-agent/official-skills/chart`)
+
+## domain
+
+### domain
+
+- data-analysis
+
+### reason
+
+Generates interactive data-visualization charts (line, bar, candle, scatter) for analysis and BI reporting.

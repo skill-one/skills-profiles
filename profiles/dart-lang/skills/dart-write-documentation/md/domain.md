@@ -1,0 +1,11 @@
+# dart-write-documentation (`dart-lang/skills/dart-write-documentation`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Writing `///` doc comments in Dart source files is a code-authoring convention, not standalone doc creation.

@@ -1,0 +1,11 @@
+# sh-notice-search (`nomadamas/k-skill/sh-notice-search`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Retrieves public government housing notices and announcement details for the user.

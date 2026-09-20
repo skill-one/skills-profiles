@@ -1,0 +1,11 @@
+# slides (`nexu-io/open-design/slides`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Creates and edits .pptx presentation files, which is explicit PPT document processing.

@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Implementing BLE GATT communication via Core Bluetooth API is mobile framework integration."}

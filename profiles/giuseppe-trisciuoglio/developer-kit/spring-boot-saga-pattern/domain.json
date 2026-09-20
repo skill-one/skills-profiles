@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Implements distributed transaction code patterns using Spring Boot, Kafka, and Axon Framework."}

@@ -1,0 +1,11 @@
+# flight-ticket-search (`nomadamas/k-skill/flight-ticket-search`)
+
+## domain
+
+### domain
+
+- lifestyle
+
+### reason
+
+Queries Google Flights for fare comparisons and booking links to support personal travel planning.

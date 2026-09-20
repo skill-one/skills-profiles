@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Browsing and installing pre-built Go CLIs for API wrappers is a terminal/CLI developer workflow."}

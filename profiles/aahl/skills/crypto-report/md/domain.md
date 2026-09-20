@@ -1,0 +1,11 @@
+# crypto-report (`aahl/skills/crypto-report`)
+
+## domain
+
+### domain
+
+- finance-payment
+
+### reason
+
+Fetches crypto market analysis and blockchain news for investment and trading decisions.

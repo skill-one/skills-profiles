@@ -1,0 +1,11 @@
+# tanstack-query (`jezweb/claude-skills/tanstack-query`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+React framework integration for server-state data fetching, caching, and v4→v5 code migration.

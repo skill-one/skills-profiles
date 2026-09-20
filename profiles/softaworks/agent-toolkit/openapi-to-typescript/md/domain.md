@@ -1,0 +1,11 @@
+# openapi-to-typescript (`softaworks/agent-toolkit/openapi-to-typescript`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Generates TypeScript interfaces and type guards from OpenAPI specs, a pure developer code-generation task.

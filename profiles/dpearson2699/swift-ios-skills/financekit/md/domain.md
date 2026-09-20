@@ -1,0 +1,11 @@
+# financekit (`dpearson2699/swift-ios-skills/financekit`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+iOS framework integration guide for querying Apple Wallet financial data via FinanceKit APIs.

@@ -1,0 +1,11 @@
+# camsnap (`openclaw/openclaw/camsnap`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Captures image snapshots and video clips from cameras, a media-capture task.

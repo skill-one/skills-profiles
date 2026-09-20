@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Migrating Android code between SDKs: dependency swaps, import/class refactoring, and build verification."}

@@ -1,0 +1,11 @@
+# brainstorm-ideas-new (`phuryn/pm-skills/brainstorm-ideas-new`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Product discovery and feature ideation aimed at validating a new product for business growth.

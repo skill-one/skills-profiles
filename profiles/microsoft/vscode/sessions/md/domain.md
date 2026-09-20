@@ -1,0 +1,11 @@
+# sessions (`microsoft/vscode/sessions`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Architectural guidelines and implementation workflow for VS Code's sessions module.

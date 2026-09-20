@@ -1,0 +1,11 @@
+# runtime (`copilotkit/copilotkit/runtime`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Server-side API/framework integration: mounting runtimes, wiring agent frameworks, middleware.

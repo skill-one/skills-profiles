@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "A security-testing playbook targeting JWT/API-auth vulnerabilities and rate-limit bypass."}

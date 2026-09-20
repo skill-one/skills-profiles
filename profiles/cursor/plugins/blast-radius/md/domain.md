@@ -1,0 +1,11 @@
+# blast-radius (`cursor/plugins/blast-radius`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Code-change review that hunts for downstream breakage and proves safety by running real code.

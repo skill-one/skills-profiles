@@ -1,0 +1,11 @@
+# ce-compound-refresh (`everyinc/compound-engineering-plugin/ce-compound-refresh`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Audits and maintains a repo of engineering knowledge docs (a knowledge base) for staleness and overlap.

@@ -1,0 +1,11 @@
+# implementing-agent-modes (`posthog/posthog/implementing-agent-modes`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Guides coding agent-mode scaffolding, tool/schema integration, and feature flags in a codebase.

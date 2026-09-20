@@ -1,0 +1,11 @@
+# firecrawl-search (`firecrawl/skills/firecrawl-search`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Web search and full-page content retrieval for finding sources, articles, and news.

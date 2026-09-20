@@ -1,0 +1,11 @@
+# rust-call-graph (`actionbook/rust-skills/rust-call-graph`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Visualizing Rust function call graphs via LSP is a code-understanding developer workflow.

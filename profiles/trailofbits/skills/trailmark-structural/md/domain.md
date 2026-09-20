@@ -1,0 +1,11 @@
+# trailmark-structural (`trailofbits/skills/trailmark-structural`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Static code security analysis (taint, attack surface, privilege boundaries) via Trailmark CLI.

@@ -1,0 +1,11 @@
+# appmigrationkit (`dpearson2699/swift-ios-skills/appmigrationkit`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Implementing cross-platform app data migration via Apple's AppMigrationKit framework and extension model.

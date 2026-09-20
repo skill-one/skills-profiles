@@ -1,0 +1,11 @@
+# winui-app (`openai/skills/winui-app`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Full WinUI 3 app lifecycle: scaffolding, C# code, build/debug, environment setup.

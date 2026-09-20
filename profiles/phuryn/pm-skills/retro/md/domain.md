@@ -1,0 +1,11 @@
+# retro (`phuryn/pm-skills/retro`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Facilitates team sprint retrospectives and produces prioritized action items — classic team work management.

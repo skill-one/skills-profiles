@@ -1,0 +1,11 @@
+# pricing (`slavingia/skills/pricing`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Pricing strategy directly drives revenue, customer positioning, and business growth.

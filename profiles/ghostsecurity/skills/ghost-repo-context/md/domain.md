@@ -1,0 +1,11 @@
+# ghost-repo-context (`ghostsecurity/skills/ghost-repo-context`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Maps codebase structure, detects projects and dependencies to build a developer-facing repo context document.

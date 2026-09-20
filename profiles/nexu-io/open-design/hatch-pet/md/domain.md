@@ -1,0 +1,11 @@
+# hatch-pet (`nexu-io/open-design/hatch-pet`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Generates and assembles animated pixel-art sprite sheets via image generation and visual packaging.

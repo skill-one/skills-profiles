@@ -1,0 +1,11 @@
+# observability-service-health (`elastic/agent-skills/observability-service-health`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Assesses APM service health via SLOs, alerts, latency, and infrastructure correlation—core SRE/monitoring work.

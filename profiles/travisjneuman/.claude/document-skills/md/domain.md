@@ -1,0 +1,11 @@
+# document-skills (`travisjneuman/.claude/document-skills`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Entirely focused on creating, editing, and analyzing docx, pdf, pptx, and xlsx files.

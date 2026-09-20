@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Build-performance benchmarking is a core developer workflow (builds, timing, CI context)."}

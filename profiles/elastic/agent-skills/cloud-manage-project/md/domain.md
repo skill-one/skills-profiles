@@ -1,0 +1,11 @@
+# cloud-manage-project (`elastic/agent-skills/cloud-manage-project`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Day-2 cloud infrastructure operations: managing serverless projects, credentials, and API keys.

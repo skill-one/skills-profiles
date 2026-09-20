@@ -1,0 +1,11 @@
+# gke-service-networking (`google/skills/gke-service-networking`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Configures GKE edge networking, load balancing, WAF, SSL, and private service endpoints.

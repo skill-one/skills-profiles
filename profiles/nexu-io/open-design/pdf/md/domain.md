@@ -1,0 +1,11 @@
+# pdf (`nexu-io/open-design/pdf`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+PDF document processing (extract, create, forms) matches office-productivity's explicit docx/pdf scope.

@@ -1,0 +1,11 @@
+# vega (`markdown-viewer/skills/vega`)
+
+## domain
+
+### domain
+
+- data-analysis
+
+### reason
+
+The skill produces statistical visualizations of numeric data via Vega-Lite/Vega, squarely a visualization task.

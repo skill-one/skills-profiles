@@ -1,0 +1,1 @@
+{"domain": ["testing"], "reason": "Covers Spring Boot test patterns including unit, slice, and integration testing with JUnit 5, Mockito, and Testcontainers."}

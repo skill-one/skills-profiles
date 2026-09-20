@@ -1,0 +1,11 @@
+# wiki-rebuild (`ar9av/obsidian-wiki/wiki-rebuild`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Archives, rebuilds, and restores an Obsidian-based personal knowledge base.

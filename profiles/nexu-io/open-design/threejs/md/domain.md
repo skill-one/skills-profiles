@@ -1,0 +1,11 @@
+# threejs (`nexu-io/open-design/threejs`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Three.js 3D scene creation, materials, and post-processing fit the 3D sub-area of design-media.

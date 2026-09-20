@@ -1,0 +1,11 @@
+# dotnet-webapi (`dotnet/skills/dotnet-webapi`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+ASP.NET Core endpoint creation, OpenAPI wiring, and error handling are core development tasks.

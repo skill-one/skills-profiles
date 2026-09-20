@@ -1,0 +1,11 @@
+# mimir (`grafana/skills/mimir`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Deploys and operates a distributed metrics-storage backend for monitoring infrastructure.

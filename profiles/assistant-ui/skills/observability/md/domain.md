@@ -1,0 +1,11 @@
+# observability (`assistant-ui/skills/observability`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Code-level instrumentation of AI SDK routes and React component rendering for trace data.

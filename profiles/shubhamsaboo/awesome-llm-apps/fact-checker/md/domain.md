@@ -1,0 +1,11 @@
+# fact-checker (`shubhamsaboo/awesome-llm-apps/fact-checker`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Systematic claim verification and source evaluation is core to deep research and information retrieval.

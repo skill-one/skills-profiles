@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Hardens GKE workloads via network policies, sandboxing, identity federation, and secret management."}

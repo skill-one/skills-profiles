@@ -1,0 +1,11 @@
+# triaging-issues (`pytorch/pytorch/triaging-issues`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+GitHub issue triage and routing is a software developer workflow, not general office productivity.

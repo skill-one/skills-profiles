@@ -1,0 +1,11 @@
+# gke-cost-analysis (`google/skills/gke-cost-analysis`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+GKE infrastructure cost analysis via kubectl, gcloud, and BigQuery billing queries is cloud-ops/SRE work.

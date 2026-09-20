@@ -1,0 +1,1 @@
+{"domain": ["finance-payment"], "reason": "Calculates risk-based position sizes for long stock trades using Kelly, ATR, and fixed-fractional methods."}

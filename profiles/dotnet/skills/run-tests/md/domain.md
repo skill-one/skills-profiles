@@ -1,0 +1,11 @@
+# run-tests (`dotnet/skills/run-tests`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+The skill exists to produce and execute correct .NET test-run commands across frameworks.

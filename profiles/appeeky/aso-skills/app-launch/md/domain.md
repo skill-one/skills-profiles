@@ -1,0 +1,11 @@
+# app-launch (`appeeky/aso-skills/app-launch`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+App launch planning is marketing/growth strategy centered on ASO, paid acquisition, and channel-based user acquisition.

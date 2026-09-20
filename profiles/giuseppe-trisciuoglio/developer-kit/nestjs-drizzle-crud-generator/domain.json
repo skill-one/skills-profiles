@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Generates NestJS CRUD module code (controllers, services, Drizzle schemas, DTOs) for database-backed features."}

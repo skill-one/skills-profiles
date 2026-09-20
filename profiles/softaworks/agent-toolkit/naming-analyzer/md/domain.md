@@ -1,0 +1,11 @@
+# naming-analyzer (`softaworks/agent-toolkit/naming-analyzer`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Suggests better code identifiers and naming conventions to improve refactoring and code readability.

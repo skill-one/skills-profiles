@@ -1,0 +1,11 @@
+# qdrant (`giuseppe-trisciuoglio/developer-kit/qdrant`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Qdrant vector database integration patterns with Java/Spring Boot/LangChain4j frameworks.

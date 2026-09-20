@@ -1,0 +1,11 @@
+# eightctl (`openclaw/openclaw/eightctl`)
+
+## domain
+
+### domain
+
+- lifestyle
+
+### reason
+
+Controls a smart sleep pod (temperature, alarms, schedules) for personal comfort and health.

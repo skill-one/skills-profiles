@@ -1,0 +1,12 @@
+# frontend-dev (`nexu-io/open-design/frontend-dev`)
+
+## domain
+
+### domain
+
+- development
+- design-media
+
+### reason
+
+Primary purpose is building frontend web pages (code + API); generative art and AI media are integral, substantial sub-capabilities.

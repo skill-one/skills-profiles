@@ -1,0 +1,1 @@
+{"domain": ["data-analysis"], "reason": "Stream-based ETL: extracts data files, transforms them, loads into Elasticsearch."}

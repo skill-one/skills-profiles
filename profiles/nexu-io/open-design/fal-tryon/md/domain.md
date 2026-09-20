@@ -1,0 +1,11 @@
+# fal-tryon (`nexu-io/open-design/fal-tryon`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Generates virtual try-on images via fal.ai models, which is image generation.

@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Scans codebases for leaked credentials and sensitive data, a core security audit practice."}

@@ -1,0 +1,11 @@
+# cursor-delegate (`amelnagdy/delegate-skills/cursor-delegate`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Orchestrates coding tasks via the Cursor Agent CLI, reviews diffs, and commits changes in a git repo.

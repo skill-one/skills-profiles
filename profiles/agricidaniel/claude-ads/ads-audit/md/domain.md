@@ -1,0 +1,11 @@
+# ads-audit (`agricidaniel/claude-ads/ads-audit`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Paid-ad audit is a marketing growth activity optimizing ad spend and account health.

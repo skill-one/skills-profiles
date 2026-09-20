@@ -1,0 +1,11 @@
+# dpm-finder (`grafana/skills/dpm-finder`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Ranks Prometheus metrics by DPM in Grafana Cloud to drive monitoring cost and cardinality SRE work.

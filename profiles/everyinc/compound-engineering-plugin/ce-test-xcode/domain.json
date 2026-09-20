@@ -1,0 +1,1 @@
+{"domain": ["testing"], "reason": "Runs iOS simulator E2E tests and reports pass/fail evidence per surface."}

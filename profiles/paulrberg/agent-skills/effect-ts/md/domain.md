@@ -1,0 +1,11 @@
+# effect-ts (`paulrberg/agent-skills/effect-ts`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Writing and refactoring TypeScript code with the Effect 3 framework and its ecosystem.

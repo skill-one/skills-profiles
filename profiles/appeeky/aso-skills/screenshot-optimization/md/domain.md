@@ -1,0 +1,12 @@
+# screenshot-optimization (`appeeky/aso-skills/screenshot-optimization`)
+
+## domain
+
+### domain
+
+- business-ops
+- design-media
+
+### reason
+
+ASO screenshot strategy is app-store marketing, with substantial visual-design guidance for creative assets.

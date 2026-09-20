@@ -1,0 +1,11 @@
+# infra-postgres (`clickhouse/agent-skills/infra-postgres`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Manages Postgres databases (local and cloud) via CLI for application development.

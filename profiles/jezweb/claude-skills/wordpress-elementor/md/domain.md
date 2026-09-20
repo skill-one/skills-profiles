@@ -1,0 +1,11 @@
+# wordpress-elementor (`jezweb/claude-skills/wordpress-elementor`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+WP-CLI tooling and browser automation for editing a CMS page builder are developer-workflow tasks.

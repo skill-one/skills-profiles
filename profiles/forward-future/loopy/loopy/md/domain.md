@@ -1,0 +1,11 @@
+# loopy (`forward-future/loopy/loopy`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Designs and manages bounded AI-agent loops that automate recurring developer workflows.

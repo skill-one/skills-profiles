@@ -1,0 +1,11 @@
+# stock-liquidity (`himself65/finance-skills/stock-liquidity`)
+
+## domain
+
+### domain
+
+- finance-payment
+
+### reason
+
+Analyzes stock liquidity metrics (spreads, volume, market impact) to assess trading costs for investors.

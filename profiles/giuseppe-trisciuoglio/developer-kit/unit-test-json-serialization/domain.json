@@ -1,0 +1,1 @@
+{"domain": ["testing"], "reason": "Provides patterns for writing unit tests that validate JSON serialization/deserialization using Jackson and @JsonTest."}

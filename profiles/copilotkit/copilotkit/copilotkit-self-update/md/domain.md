@@ -1,0 +1,11 @@
+# copilotkit-self-update (`copilotkit/copilotkit/copilotkit-self-update`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Refreshes an agent's CopilotKit framework knowledge files, a developer workflow tool for staying current with APIs.

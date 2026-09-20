@@ -1,0 +1,11 @@
+# music-video-subtitle-generator (`minimax-ai/minimax-h3/music-video-subtitle-generator`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Beat-reactive typography design, shot composition, and multi-shot video stitching are core video/visual design work.

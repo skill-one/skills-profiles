@@ -1,0 +1,11 @@
+# startup-ideation (`refoundai/lenny-skills/startup-ideation`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Generating and evaluating startup ideas is early-stage business strategy aimed at finding growth opportunities.

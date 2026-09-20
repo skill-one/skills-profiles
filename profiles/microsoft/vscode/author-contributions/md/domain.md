@@ -1,0 +1,11 @@
+# author-contributions (`microsoft/vscode/author-contributions`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Git-based authorship auditing that traces file contributions through renames across branch commits.

@@ -1,0 +1,11 @@
+# setup-vivox-voice-chat (`unity-technologies/skills/setup-vivox-voice-chat`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+API/framework integration: wiring Unity Vivox SDK for in-game voice and text chat.
