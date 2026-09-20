@@ -1,0 +1,11 @@
+# wait-what (`mattpocock/skills/wait-what`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+A repo-scoped re-explanation tool using DDD ubiquitous language to maintain shared technical clarity.

@@ -1,0 +1,11 @@
+# impeccable (`pbakaus/impeccable/impeccable`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+The skill is dedicated to UI design: visual hierarchy, typography, color, layout, motion, and UX craft across interfaces.

@@ -1,0 +1,11 @@
+# cavecrew (`juliusbrussee/caveman/cavecrew`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Compressed-output subagent presets for code navigation, surgical edits, and lightweight diff review within a developer workflow.

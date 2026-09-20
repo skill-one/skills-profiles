@@ -1,0 +1,11 @@
+# writing-plans (`obra/superpowers/writing-plans`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Plans code implementation into TDD tasks with file maps and git commits.

@@ -1,0 +1,11 @@
+# caveman-compress (`juliusbrussee/caveman/caveman-compress`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+CLI tool that compresses developer AI-agent memory files (CLAUDE.md) to save input tokens.

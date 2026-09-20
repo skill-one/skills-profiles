@@ -1,0 +1,12 @@
+# wizard (`mattpocock/skills/wizard`)
+
+## domain
+
+### domain
+
+- development
+- devops-security
+
+### reason
+
+Generates bash CLI scripts that automate CI secrets and infrastructure provisioning workflows.

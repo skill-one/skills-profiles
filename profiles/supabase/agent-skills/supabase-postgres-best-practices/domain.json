@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Covers Postgres schema design, query optimization, RLS, and indexing—explicitly \"databases\" under development."}

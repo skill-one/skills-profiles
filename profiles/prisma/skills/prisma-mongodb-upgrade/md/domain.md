@@ -1,0 +1,11 @@
+# prisma-mongodb-upgrade (`prisma/skills/prisma-mongodb-upgrade`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+ORM migration and database dependency upgrade decision for a developer toolchain.

@@ -1,0 +1,11 @@
+# gpt-taste (`leonxlnx/taste-skill/gpt-taste`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+The skill enforces UI/UX layout architecture, typography, grid design, and motion aesthetics for premium web pages.

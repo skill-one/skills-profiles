@@ -1,0 +1,11 @@
+# video-extend (`prime-skills/runcomfy-agent-skills/video-extend`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Video clip extension/continuation is a form of video production under design-media.
