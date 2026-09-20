@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Orchestrates generation of Salesforce CLT schemas, widget metadata, and renderer code to render MCP tool output."}

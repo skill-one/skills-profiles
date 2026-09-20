@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Migrating .NET 8 to .NET 9 is a code/build/dependency upgrade workflow with breaking-change fixes."}

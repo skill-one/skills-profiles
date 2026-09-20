@@ -1,0 +1,11 @@
+# antislop-layoutmobile (`miqdadbadjuber/anti-slop/antislop-layoutmobile`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Defines responsive UI layout design rules (breakpoints, grids, tap targets, nav) for mobile reflow.

@@ -1,0 +1,11 @@
+# antislop (`miqdadbadjuber/anti-slop/antislop`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+A rules-based filter that governs UI visual quality, layout, color, and design identity for coding agents.

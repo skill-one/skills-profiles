@@ -1,0 +1,11 @@
+# apply (`launchdarkly/ai-tooling/apply`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Installs LaunchDarkly SDK, writes init code, and verifies compilation in a project codebase.

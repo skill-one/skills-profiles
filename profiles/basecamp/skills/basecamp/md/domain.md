@@ -1,0 +1,11 @@
+# basecamp (`basecamp/skills/basecamp`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Basecamp is a team work-management platform (todos, schedules, tickets, messages); the CLI merely accesses it.

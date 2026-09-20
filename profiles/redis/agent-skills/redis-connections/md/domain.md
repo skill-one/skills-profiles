@@ -1,0 +1,11 @@
+# redis-connections (`redis/agent-skills/redis-connections`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Redis client configuration, connection pooling, pipelining, and timeout tuning are database/infrastructure coding tasks.

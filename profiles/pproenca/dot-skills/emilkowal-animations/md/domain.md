@@ -1,0 +1,11 @@
+# emilkowal-animations (`pproenca/dot-skills/emilkowal-animations`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Implements animation code in React, CSS, Framer Motion, and Tailwind v4 — pure frontend development.

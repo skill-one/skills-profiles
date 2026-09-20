@@ -1,0 +1,11 @@
+# animejs (`freshtechbro/claudedesignskills/animejs`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+JavaScript animation library for writing code in web projects.

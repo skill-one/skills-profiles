@@ -1,0 +1,11 @@
+# ce-sessions (`everyinc/compound-engineering-plugin/ce-sessions`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Searches and synthesizes coding agent session history to inform current development work.

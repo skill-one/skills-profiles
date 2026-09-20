@@ -1,0 +1,11 @@
+# retention-engagement (`refoundai/lenny-skills/retention-engagement`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Customer retention strategy, churn management, and growth habit mechanics are core business-ops.

@@ -1,0 +1,11 @@
+# cx-dashboards (`coralogix/cx-cli/cx-dashboards`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Building and deploying monitoring/observability dashboards for services is core SRE/monitoring work.

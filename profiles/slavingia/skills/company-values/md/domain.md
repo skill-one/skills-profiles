@@ -1,0 +1,11 @@
+# company-values (`slavingia/skills/company-values`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Defining organizational culture to guide hiring and team behavior - a core business operation.

@@ -1,0 +1,11 @@
+# bmad-ux (`bmad-code-org/bmad-method/bmad-ux`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+The skill elicits and documents UI visual identity, interaction patterns, and wireframes — core UX design work.

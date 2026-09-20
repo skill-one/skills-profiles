@@ -1,0 +1,11 @@
+# sentry-svelte-sdk (`getsentry/sentry-for-ai/sentry-svelte-sdk`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Installs and configures Sentry SDK via code files and build tooling—framework integration, not ops.

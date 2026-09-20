@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Core activity is calling a video-summarization microservice API via curl and rendering its structured response."}

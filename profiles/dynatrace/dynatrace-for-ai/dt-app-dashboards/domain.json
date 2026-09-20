@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Dynatrace dashboards are a monitoring/observability artifact, fitting the monitoring & alerting scope."}

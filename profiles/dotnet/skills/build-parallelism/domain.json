@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "MSBuild build parallelism, dependency-graph optimization, and CI build tuning are core developer build/dependency workflows."}

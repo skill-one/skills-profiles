@@ -1,0 +1,11 @@
+# edgeone (`aahl/skills/edgeone`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Deploys HTML content or websites to EdgeOne Pages, a deployment & release workflow.

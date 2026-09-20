@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Sets up a dependency-analysis tool and CI checks to enforce package architecture boundaries."}

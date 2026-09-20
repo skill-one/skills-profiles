@@ -1,0 +1,11 @@
+# tanstack-devtools (`tanstack-skills/tanstack-skills/tanstack-devtools`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Unified debugging and state-inspection panel for TanStack libraries, a developer workflow tool.

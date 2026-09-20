@@ -1,0 +1,11 @@
+# giving-presentations (`refoundai/lenny-skills/giving-presentations`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Covers creating and delivering professional presentations (ppt, keynotes, board meetings) as a work productivity activity.

@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Manages Google Cloud IAM access policies via simulation before applying changes."}

@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Refactors legacy Android XML UI into Jetpack Compose code, including dependency setup and interoperability."}

@@ -1,0 +1,11 @@
+# muapi-ai-clipping (`samuraigpt/generative-media-skills/muapi-ai-clipping`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Core task is video editing: clipping and face-cropping long videos into short vertical clips.

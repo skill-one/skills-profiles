@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Diagnoses and fixes MSBuild bin/obj path collisions causing build failures — core developer build/debugging workflow."}

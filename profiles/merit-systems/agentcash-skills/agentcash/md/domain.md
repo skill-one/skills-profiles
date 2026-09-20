@@ -1,0 +1,11 @@
+# agentcash (`merit-systems/agentcash-skills/agentcash`)
+
+## domain
+
+### domain
+
+- finance-payment
+
+### reason
+
+x402 pay-per-call API gateway with wallet-based payment, not the downstream tasks it unlocks.

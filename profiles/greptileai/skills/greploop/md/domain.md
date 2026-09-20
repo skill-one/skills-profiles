@@ -1,0 +1,11 @@
+# greploop (`greptileai/skills/greploop`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Iterates on Greptile code-review feedback until a perfect 5/5 review is achieved.

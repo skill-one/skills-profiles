@@ -1,0 +1,11 @@
+# coverage-analysis (`dotnet/skills/coverage-analysis`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Interprets .NET coverage reports as quality checks, identifying gaps and refactoring risk.

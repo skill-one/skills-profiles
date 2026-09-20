@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "A code-design principle for replacing scattered conditionals with domain-shaped data structures."}

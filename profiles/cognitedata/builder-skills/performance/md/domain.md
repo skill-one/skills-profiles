@@ -1,0 +1,11 @@
+# performance (`cognitedata/builder-skills/performance`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Systematic performance refactoring playbook for a React/CDF web app covering code fixes, build tooling, and API patterns.

@@ -1,0 +1,11 @@
+# file-conversion (`wshobson/agents/file-conversion`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Converts documents and data files between formats (PDF, docx, CSV, EPUB, etc.).

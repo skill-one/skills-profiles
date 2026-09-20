@@ -1,0 +1,11 @@
+# pr (`lobehub/lobehub/pr`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Git branch management, stacked PR splitting, and gh CLI workflow — core version-control tasks.

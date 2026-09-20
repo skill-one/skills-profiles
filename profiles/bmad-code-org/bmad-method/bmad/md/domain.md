@@ -1,0 +1,11 @@
+# bmad (`bmad-code-org/bmad-method/bmad`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Navigates and coordinates a code-development methodology (BMad), recommending next dev-workflow steps and managing the tool's install.

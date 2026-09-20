@@ -1,0 +1,11 @@
+# msbuild-modernization (`dotnet/skills/msbuild-modernization`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+MSBuild project-file migration is a build/dependency developer workflow task.

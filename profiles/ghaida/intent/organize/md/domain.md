@@ -1,0 +1,11 @@
+# organize (`ghaida/intent/organize`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Structuring information via taxonomies, navigation, and labeling is organizing material.

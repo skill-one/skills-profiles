@@ -1,0 +1,11 @@
+# ai-evals (`refoundai/lenny-skills/ai-evals`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Building AI evaluation frameworks, quality metrics, and CI-integrated test pipelines for AI products.

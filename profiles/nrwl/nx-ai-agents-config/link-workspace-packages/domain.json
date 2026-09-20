@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Wiring up monorepo package dependencies is a core developer dependency-management workflow."}

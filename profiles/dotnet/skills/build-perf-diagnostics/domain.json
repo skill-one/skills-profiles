@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Diagnosing MSBuild build performance bottlenecks is a core developer workflow for optimizing builds and CI pipelines."}

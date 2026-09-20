@@ -1,0 +1,11 @@
+# typography-scale (`owl-listener/designer-skills/typography-scale`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Establishes modular typographic systems (sizes, weights, spacing, pairing) for digital UI design.

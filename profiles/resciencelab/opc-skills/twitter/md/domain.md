@@ -1,0 +1,11 @@
+# twitter (`resciencelab/opc-skills/twitter`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Retrieves and searches Twitter/X content (users, tweets, trends) as an information-retrieval tool.

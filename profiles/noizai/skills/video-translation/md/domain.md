@@ -1,0 +1,11 @@
+# video-translation (`noizai/skills/video-translation`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+Core task is translating video speech; audio replacement is just the delivery mechanism.

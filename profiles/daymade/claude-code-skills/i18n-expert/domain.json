@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Sets up i18n frameworks, replaces code strings with keys, and validates locale parity in source files."}

@@ -1,0 +1,11 @@
+# cline-delegate (`amelnagdy/delegate-skills/cline-delegate`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Delegates coding tasks to a CLI agent, then reviews diffs and commits changes.

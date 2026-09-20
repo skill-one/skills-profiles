@@ -1,0 +1,11 @@
+# academic-research-writer (`endigo/claude-skills/academic-research-writer`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+Core output is a written academic document (paper, thesis, review) with IEEE citations.

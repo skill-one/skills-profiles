@@ -1,0 +1,11 @@
+# evaluate (`ghaida/intent/evaluate`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Systematic UX/UI design quality evaluation via heuristics, walkthroughs, and pattern detection.

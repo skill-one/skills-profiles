@@ -1,0 +1,11 @@
+# spectrum (`photon-hq/skills/spectrum`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+TypeScript messaging SDK integration and agent code building.

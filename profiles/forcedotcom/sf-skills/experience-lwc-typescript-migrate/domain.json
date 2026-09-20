@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Refactors existing LWC JavaScript into typed TypeScript, a code-migration task."}

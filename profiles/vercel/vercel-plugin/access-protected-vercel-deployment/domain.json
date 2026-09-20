@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Core purpose is accessing deployment-protected Vercel environments via OIDC tokens and Trusted Sources access control."}

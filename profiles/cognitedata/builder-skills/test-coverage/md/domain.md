@@ -1,0 +1,11 @@
+# test-coverage (`cognitedata/builder-skills/test-coverage`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Finds and fixes test coverage gaps to meet an 80% line coverage gate.

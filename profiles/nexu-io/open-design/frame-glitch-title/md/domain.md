@@ -1,0 +1,11 @@
+# frame-glitch-title (`nexu-io/open-design/frame-glitch-title`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+A visual glitch-title frame template with chromatic offsets and data-corruption effects for video transitions or hero graphics.

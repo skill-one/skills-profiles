@@ -1,0 +1,11 @@
+# redis-best-practices (`mindrally/skills/redis-best-practices`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Developer guide to Redis data structures, caching patterns, and key-value operations in application code.

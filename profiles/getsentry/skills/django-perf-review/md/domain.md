@@ -1,0 +1,11 @@
+# django-perf-review (`getsentry/skills/django-perf-review`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Django performance code review auditing queries and ORM usage for quality issues.

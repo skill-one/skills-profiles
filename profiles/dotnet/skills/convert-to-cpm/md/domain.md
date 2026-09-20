@@ -1,0 +1,11 @@
+# convert-to-cpm (`dotnet/skills/convert-to-cpm`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Centralizing NuGet package versions across .NET projects is a core dependency/build workflow task.

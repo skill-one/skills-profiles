@@ -1,0 +1,11 @@
+# autoresearch (`uditgoenka/autoresearch/autoresearch`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Autonomous code-modify-verify-keep loop; subcommands serve the iteration cycle.

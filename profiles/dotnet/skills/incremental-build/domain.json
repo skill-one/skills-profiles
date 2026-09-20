@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Optimizes MSBuild incremental build performance, a core developer build workflow."}

@@ -1,0 +1,1 @@
+{"domain": ["testing"], "reason": "Performs structured review with quality lenses (edge cases, verification gaps, adversarial critique) over diffs and PRs."}

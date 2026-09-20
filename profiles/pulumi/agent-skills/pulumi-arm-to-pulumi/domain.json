@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Migrating Azure ARM/Bicep infrastructure templates to Pulumi is cloud IaC management."}

@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Dependency management (pnpm lockfile cleanup, dedup, removal) is a developer workflow."}

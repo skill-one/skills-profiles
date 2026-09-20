@@ -1,0 +1,1 @@
+{"domain": ["testing"], "reason": "Validates implementations against goals via structured pass/warn/fail checks, i.e. code review and quality checking."}

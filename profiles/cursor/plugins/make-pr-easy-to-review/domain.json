@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Cleans PR commit history and rewrites descriptions via git operations for reviewability."}

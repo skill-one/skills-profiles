@@ -1,0 +1,11 @@
+# retrieving-developer-knowledge (`google/skills/retrieving-developer-knowledge`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Retrieves Google developer docs (CLI flags, API syntax, IAM) to support coding and integration workflows.

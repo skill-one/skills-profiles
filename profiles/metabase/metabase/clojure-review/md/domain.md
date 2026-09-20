@@ -1,0 +1,11 @@
+# clojure-review (`metabase/metabase/clojure-review`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Code review of Clojure diffs for style and quality violations fits squarely under testing's code review category.

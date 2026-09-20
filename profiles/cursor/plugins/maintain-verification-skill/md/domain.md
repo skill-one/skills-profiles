@@ -1,0 +1,11 @@
+# maintain-verification-skill (`cursor/plugins/maintain-verification-skill`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Maintains a project's E2E verification harness and feature map, driving live feature exercises and triaging harness gaps.

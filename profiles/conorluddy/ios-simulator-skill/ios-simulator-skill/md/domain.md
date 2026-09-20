@@ -1,0 +1,12 @@
+# ios-simulator-skill (`conorluddy/ios-simulator-skill/ios-simulator-skill`)
+
+## domain
+
+### domain
+
+- testing
+- development
+
+### reason
+
+iOS app E2E/UI test automation and build tooling via accessibility-driven simulator scripts.

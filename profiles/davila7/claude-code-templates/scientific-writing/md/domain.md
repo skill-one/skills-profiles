@@ -1,0 +1,11 @@
+# scientific-writing (`davila7/claude-code-templates/scientific-writing`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+The skill's core output is a fully written scientific manuscript (IMRAD prose, citations, figures) for journal submission.

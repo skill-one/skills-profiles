@@ -1,0 +1,11 @@
+# setup-pstack (`cursor/plugins/setup-pstack`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Configures AI model assignments for a developer's IDE plugin workflow.

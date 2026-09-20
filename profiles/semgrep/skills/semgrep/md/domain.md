@@ -1,0 +1,11 @@
+# semgrep (`semgrep/skills/semgrep`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Static security scanning and vulnerability detection across codebases using pattern-based analysis.

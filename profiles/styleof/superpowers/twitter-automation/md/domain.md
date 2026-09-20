@@ -1,0 +1,11 @@
+# twitter-automation (`styleof/superpowers/twitter-automation`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+Automates Twitter/X posting, scheduling, and engagement — squarely social media content management.

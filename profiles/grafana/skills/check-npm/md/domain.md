@@ -1,0 +1,11 @@
+# check-npm (`grafana/skills/check-npm`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Audits package manager configs for supply-chain security hardening and unsafe dependency protocols.

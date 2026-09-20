@@ -1,0 +1,11 @@
+# blender-mcp (`vladmdgolam/agent-skills/blender-mcp`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+3D scene inspection, GLTF/GLB export, and mesh/material optimization are core 3D asset pipeline tasks.

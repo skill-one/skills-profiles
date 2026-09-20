@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Migrating C# codebases to nullable reference types via compiler warnings, annotations, and build checkpoints."}

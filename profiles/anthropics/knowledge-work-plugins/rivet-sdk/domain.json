@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "API/framework integration: scaffolding Zoom server apps via Rivet SDK (auth, webhooks, typed API wrappers)."}

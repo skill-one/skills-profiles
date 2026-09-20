@@ -1,0 +1,11 @@
+# python-backend (`jiatastic/open-python-skills/python-backend`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Covers FastAPI, SQLAlchemy, auth, and caching for Python backend code.

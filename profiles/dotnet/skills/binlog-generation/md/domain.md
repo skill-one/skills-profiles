@@ -1,0 +1,11 @@
+# binlog-generation (`dotnet/skills/binlog-generation`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Adding MSBuild /bl flags to build commands is a core developer build-diagnostics workflow.

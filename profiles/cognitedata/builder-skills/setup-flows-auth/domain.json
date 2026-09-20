@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Configures Vite, installs dependencies, and wires React auth providers for CDF/Fusion API integration."}

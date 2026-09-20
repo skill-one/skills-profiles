@@ -1,0 +1,12 @@
+# sentry (`brianlovin/agent-config/sentry`)
+
+## domain
+
+### domain
+
+- devops-security
+- development
+
+### reason
+
+Sentry provides error monitoring and performance tracing, core concerns of the monitoring & alerting domain.

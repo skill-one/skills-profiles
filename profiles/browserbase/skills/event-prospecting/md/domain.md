@@ -1,0 +1,11 @@
+# event-prospecting (`browserbase/skills/event-prospecting`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Event speaker extraction, ICP filtering, and outreach prep are core sales lead-generation and GTM workflow.

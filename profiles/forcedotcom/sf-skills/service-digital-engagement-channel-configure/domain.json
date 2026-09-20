@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Generates Salesforce messaging channel metadata XML and deploys/activates it via CLI and Metadata API."}

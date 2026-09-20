@@ -1,0 +1,11 @@
+# rag-eval (`nvidia/skills/rag-eval`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Runs RAGAS benchmark scripts to evaluate and compare RAG pipeline quality.
