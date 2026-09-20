@@ -1,0 +1,11 @@
+# remotion-studio (`remotion-dev/skills/remotion-studio`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+CLI developer workflow to launch a Remotion Studio preview server.

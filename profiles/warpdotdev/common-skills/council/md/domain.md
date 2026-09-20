@@ -1,0 +1,11 @@
+# council (`warpdotdev/common-skills/council`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Coordinates multiple AI agents to evaluate code, architecture, and bug fixes and synthesize a technical recommendation.
