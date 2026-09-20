@@ -1,0 +1,11 @@
+# update-specification (`github/awesome-copilot/update-specification`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Updates software specification files (requirements, interfaces, acceptance criteria) as part of the dev workflow.

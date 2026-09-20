@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Parses Burp Suite traffic for security audit findings and vulnerability patterns in captured HTTP data."}

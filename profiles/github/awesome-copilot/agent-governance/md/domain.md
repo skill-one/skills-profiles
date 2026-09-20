@@ -1,0 +1,11 @@
+# agent-governance (`github/awesome-copilot/agent-governance`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Governance, access control, threat detection, and audit patterns for AI agent security.

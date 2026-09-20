@@ -1,0 +1,11 @@
+# playwright (`openai/skills/playwright`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+CLI-driven browser automation (navigation, forms, screenshots, UI debugging) maps to development's browser-automation sub-area.

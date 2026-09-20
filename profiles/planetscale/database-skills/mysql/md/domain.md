@@ -1,0 +1,11 @@
+# mysql (`planetscale/database-skills/mysql`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+MySQL schema design, indexing, query tuning, and DB operations are core database development tasks.

@@ -1,0 +1,11 @@
+# predictable-revenue (`wondelai/skills/predictable-revenue`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Outbound B2B sales process design covering SDR roles, cold email sequences, and pipeline math.

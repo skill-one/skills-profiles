@@ -1,0 +1,11 @@
+# kbo-results (`nomadamas/k-skill/kbo-results`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+The skill retrieves KBO game scores for a specified date, fitting information retrieval.

@@ -1,0 +1,11 @@
+# pragmatic-programmer (`wondelai/skills/pragmatic-programmer`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Software craftsmanship meta-principles guiding architecture, code quality, and engineering decisions.

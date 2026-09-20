@@ -1,0 +1,11 @@
+# wecomcli-email (`wecomteam/wecom-cli/wecomcli-email`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Work email management: send, reply, forward, search, and retrieve email details via WeChat Work.

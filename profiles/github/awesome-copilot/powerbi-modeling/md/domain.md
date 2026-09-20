@@ -1,0 +1,11 @@
+# powerbi-modeling (`github/awesome-copilot/powerbi-modeling`)
+
+## domain
+
+### domain
+
+- data-analysis
+
+### reason
+
+Power BI semantic modeling (star schemas, DAX measures, relationships) serves reporting and data-visualization design.

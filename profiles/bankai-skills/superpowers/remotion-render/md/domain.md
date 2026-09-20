@@ -1,0 +1,11 @@
+# remotion-render (`bankai-skills/superpowers/remotion-render`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Generates MP4 video files from React/Remotion code, fitting programmatic video creation and motion design.

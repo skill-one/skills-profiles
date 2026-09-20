@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Helm charts package and deploy Kubernetes applications, a core deployment-and-release task."}

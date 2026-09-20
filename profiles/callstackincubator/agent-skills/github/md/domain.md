@@ -1,0 +1,11 @@
+# github (`callstackincubator/agent-skills/github`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+GitHub PR, branching, and repo automation via gh CLI are core git/version-control workflows.

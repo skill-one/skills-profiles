@@ -1,0 +1,11 @@
+# bambu-labs (`earthtojake/text-to-cad/bambu-labs`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+3D print job handoff to Bambu Lab printers via LAN FTPS/MQTT.

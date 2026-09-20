@@ -1,0 +1,11 @@
+# promql (`grafana/skills/promql`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Writing and optimizing PromQL for Prometheus/Grafana monitoring, alerting, and SLO management.

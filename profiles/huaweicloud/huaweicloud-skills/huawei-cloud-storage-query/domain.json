@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Queries Huawei Cloud storage resources (EVS, OBS, SFS, CBR) for infrastructure inventory."}

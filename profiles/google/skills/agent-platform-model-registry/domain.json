@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Manages ML model assets in Google Cloud infrastructure via gcloud CLI."}

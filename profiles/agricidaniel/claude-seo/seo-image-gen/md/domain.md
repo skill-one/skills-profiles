@@ -1,0 +1,12 @@
+# seo-image-gen (`agricidaniel/claude-seo/seo-image-gen`)
+
+## domain
+
+### domain
+
+- business-ops
+- design-media
+
+### reason
+
+SEO-dedicated image generation with OG/schema/blog use cases and SEO post-processing checklist.

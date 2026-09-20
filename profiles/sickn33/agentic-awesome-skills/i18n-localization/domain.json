@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Covers i18n code patterns, framework integration (react-i18next, next-intl, gettext), and locale file structure."}

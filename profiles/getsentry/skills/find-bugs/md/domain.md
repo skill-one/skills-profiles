@@ -1,0 +1,11 @@
+# find-bugs (`getsentry/skills/find-bugs`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Reviews branch diffs for bugs and vulnerabilities — classic code review and bug hunting.

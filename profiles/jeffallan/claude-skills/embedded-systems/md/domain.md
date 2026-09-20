@@ -1,0 +1,11 @@
+# embedded-systems (`jeffallan/claude-skills/embedded-systems`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Firmware, RTOS, and peripheral driver coding for microcontrollers is core software development.

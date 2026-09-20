@@ -1,0 +1,11 @@
+# meme-rush (`binance/binance-skills-hub/meme-rush`)
+
+## domain
+
+### domain
+
+- finance-payment
+
+### reason
+
+Real-time crypto launchpad feeds and hot narratives for trading and investing decisions.

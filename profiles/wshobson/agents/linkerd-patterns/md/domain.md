@@ -1,0 +1,11 @@
+# linkerd-patterns (`wshobson/agents/linkerd-patterns`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Linkerd service mesh covers zero-trust networking, mTLS, Kubernetes deployment, and traffic policy configuration.

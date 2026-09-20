@@ -1,0 +1,11 @@
+# kakao-bar-nearby (`nomadamas/k-skill/kakao-bar-nearby`)
+
+## domain
+
+### domain
+
+- lifestyle
+
+### reason
+
+Finds nearby bars (술집) via Kakao Local API for personal food/nightlife outings.

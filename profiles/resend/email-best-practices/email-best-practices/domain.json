@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Covers building email features in apps: SPF/DKIM/DMARC setup, webhooks, retry logic, and API integration."}

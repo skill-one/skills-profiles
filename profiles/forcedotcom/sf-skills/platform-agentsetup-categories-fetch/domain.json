@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Calling a Salesforce REST API endpoint via SF CLI to fetch and parse JSON data."}

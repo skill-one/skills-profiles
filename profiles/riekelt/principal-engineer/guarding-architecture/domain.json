@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Defines and enforces structural code invariants (module boundaries, dependency directions) as build-level contracts."}

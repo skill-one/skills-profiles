@@ -1,0 +1,11 @@
+# cargo-hosting (`getcargohq/cargo-skills/cargo-hosting`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Manages deploying and promoting web apps and serverless workers to production subdomains.

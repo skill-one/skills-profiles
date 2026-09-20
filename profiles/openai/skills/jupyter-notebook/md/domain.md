@@ -1,0 +1,11 @@
+# jupyter-notebook (`openai/skills/jupyter-notebook`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Scaffolding and editing .ipynb code files via a helper script is a developer artifact workflow.

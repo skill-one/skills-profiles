@@ -1,0 +1,11 @@
+# update (`anthropics/knowledge-work-plugins/update`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Syncs and triages personal todos, scans email/calendar/chat for missed tasks.

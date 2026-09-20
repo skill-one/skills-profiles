@@ -1,0 +1,11 @@
+# architect (`jsmastery-pro/skills/architect`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Structures technical design decisions and writes build specs before coding.

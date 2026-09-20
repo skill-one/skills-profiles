@@ -1,0 +1,12 @@
+# transcription-automation (`claude-office-skills/skills/transcription-automation`)
+
+## domain
+
+### domain
+
+- office-productivity
+- content-creation
+
+### reason
+
+Primary use is meeting transcription and notes; subtitle and podcast processing add a content-creation dimension.

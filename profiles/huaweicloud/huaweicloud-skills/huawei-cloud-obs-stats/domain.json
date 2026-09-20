@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Queries cloud storage (OBS) capacity, traffic, and request metrics via CES monitoring for infrastructure observability."}

@@ -1,0 +1,11 @@
+# pixijs-create (`pixijs/pixijs-skills/pixijs-create`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Covers CLI scaffolding, package installation, and TypeScript/build configuration for new or existing PixiJS projects.

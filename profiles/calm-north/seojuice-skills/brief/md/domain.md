@@ -1,0 +1,11 @@
+# brief (`calm-north/seojuice-skills/brief`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+The skill is an SEO content-planning brief focused on keyword ranking strategy.

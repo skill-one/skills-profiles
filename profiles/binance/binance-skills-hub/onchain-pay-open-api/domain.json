@@ -1,0 +1,1 @@
+{"domain": ["finance-payment"], "reason": "Integrates a fiat-to-crypto payment and wallet-transfer flow via Binance's Onchain Pay API."}

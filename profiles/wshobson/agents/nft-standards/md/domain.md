@@ -1,0 +1,11 @@
+# nft-standards (`wshobson/agents/nft-standards`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Implements ERC-721/ERC-1155 smart contracts in Solidity with framework integration.

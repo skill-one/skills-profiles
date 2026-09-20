@@ -1,0 +1,11 @@
+# design-sprint (`wondelai/skills/design-sprint`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Structured product-validation process to de-risk business decisions and confirm customer needs before building.

@@ -1,0 +1,11 @@
+# negotiation (`wondelai/skills/negotiation`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Negotiation for sales, pricing, vendor deals, and customer retention is core business operations.

@@ -1,0 +1,11 @@
+# fluentui-blazor (`github/awesome-copilot/fluentui-blazor`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Guide for integrating and using a Blazor UI component library in application code.

@@ -1,0 +1,11 @@
+# customer-success (`claude-office-skills/skills/customer-success`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Customer onboarding, health scoring, QBRs, and retention are core CRM and customer-growth work.

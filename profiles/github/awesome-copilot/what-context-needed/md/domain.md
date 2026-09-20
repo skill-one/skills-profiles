@@ -1,0 +1,11 @@
+# what-context-needed (`github/awesome-copilot/what-context-needed`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Identifies which code files to examine before answering a coding question—a developer workflow step.

@@ -1,0 +1,11 @@
+# atheris (`trailofbits/skills/atheris`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Atheris is a coverage-guided fuzzer for automated bug-hunting and memory-corruption detection in Python code.

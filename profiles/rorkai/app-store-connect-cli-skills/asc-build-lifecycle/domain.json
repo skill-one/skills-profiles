@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Manages App Store build lifecycle (find, inspect, clean up, distribute) via CLI."}

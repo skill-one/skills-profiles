@@ -1,0 +1,11 @@
+# ghost-scan-code (`ghostsecurity/skills/ghost-scan-code`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+SAST scanner that audits source code for OWASP security vulnerabilities like SQLi, XSS, SSRF.

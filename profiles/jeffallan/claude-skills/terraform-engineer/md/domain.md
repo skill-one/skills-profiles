@@ -1,0 +1,11 @@
+# terraform-engineer (`jeffallan/claude-skills/terraform-engineer`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Terraform is a cloud infrastructure-as-code tool for managing AWS/Azure/GCP resources.

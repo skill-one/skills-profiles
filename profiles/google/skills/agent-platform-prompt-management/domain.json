@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Manages cloud prompt resources via Python SDK API calls (Vertex AI), which is API/framework integration."}

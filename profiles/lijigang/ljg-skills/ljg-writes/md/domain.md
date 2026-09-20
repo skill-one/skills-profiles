@@ -1,0 +1,11 @@
+# ljg-writes (`lijigang/ljg-skills/ljg-writes`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+The skill's entire purpose is turning a viewpoint into a structured, argument-driven Chinese article.

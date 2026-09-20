@@ -1,0 +1,11 @@
+# contagious (`wondelai/skills/contagious`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+The STEPPS framework for engineering virality, referrals, and word-of-mouth is a marketing/growth strategy discipline.

@@ -1,0 +1,11 @@
+# diagram-creator (`claude-office-skills/skills/diagram-creator`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Generates architecture, sequence, class, ER, and git diagrams that visualize software systems and development workflows.

@@ -1,0 +1,11 @@
+# alloy (`grafana/skills/alloy`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Alloy builds and debugs telemetry pipelines (metrics, logs, traces, profiles) — core observability and SRE infrastructure.

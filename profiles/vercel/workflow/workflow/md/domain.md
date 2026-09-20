@@ -1,0 +1,11 @@
+# workflow (`vercel/workflow/workflow`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Code-writing and SDK integration for building durable, resumable workflow functions in Node.js/TypeScript.

@@ -1,0 +1,11 @@
+# keyword-research (`every-app/open-seo/keyword-research`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+The skill performs SEO keyword research to identify and prioritize search ranking opportunities.

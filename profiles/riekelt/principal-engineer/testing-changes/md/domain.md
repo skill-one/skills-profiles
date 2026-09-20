@@ -1,0 +1,11 @@
+# testing-changes (`riekelt/principal-engineer/testing-changes`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Governs which tests a behavior change owes, regression patterns, and assertion discrimination.

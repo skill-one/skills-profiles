@@ -1,0 +1,11 @@
+# command-development (`anthropics/claude-plugins-official/command-development`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Authoring and structuring custom slash commands is a developer workflow tool for CLI agent environments.

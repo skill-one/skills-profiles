@@ -1,0 +1,11 @@
+# payload (`payloadcms/skills/payload`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Configuring Payload CMS collections, hooks, access control, and queries is framework/API integration work in TypeScript.

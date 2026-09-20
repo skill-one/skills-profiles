@@ -1,0 +1,11 @@
+# mom-test (`wondelai/skills/mom-test`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Customer interviews, idea validation, and commitment/advancement are core sales and customer-growth activities.

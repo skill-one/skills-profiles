@@ -1,0 +1,11 @@
+# printing-press-amend (`mvanhorn/cli-printing-press/printing-press-amend`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Patches CLI tools, opens git PRs, and sniffs source-site APIs — core developer workflow.

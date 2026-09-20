@@ -1,0 +1,11 @@
+# ppt-generation (`bytedance/deer-flow/ppt-generation`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+The skill's primary output is a PPTX presentation file, matching office-productivity's explicit PPT document processing scope.

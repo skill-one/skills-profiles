@@ -1,0 +1,11 @@
+# tldr-prompt (`github/awesome-copilot/tldr-prompt`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+Creates concise tldr technical documentation summaries from verbose Copilot files and URLs.

@@ -1,0 +1,11 @@
+# livekit-agents (`livekit/agent-skills/livekit-agents`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Building voice AI agents via LiveKit SDK: code writing, API integration, and architecture design.

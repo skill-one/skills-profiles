@@ -1,0 +1,1 @@
+{"domain": ["design-media"], "reason": "Core operations are image resizing, alpha stripping, and color-space conversion to meet pixel specs."}

@@ -1,0 +1,11 @@
+# limrun-expo-development (`limrun-inc/skills/limrun-expo-development`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Builds, runs, and iterates Expo dev-client apps on remote simulators via CLI tooling.

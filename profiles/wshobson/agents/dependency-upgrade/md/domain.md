@@ -1,0 +1,11 @@
+# dependency-upgrade (`wshobson/agents/dependency-upgrade`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Dependency upgrades are explicitly a developer workflow task involving builds and package management.

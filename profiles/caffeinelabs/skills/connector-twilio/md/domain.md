@@ -1,0 +1,11 @@
+# connector-twilio (`caffeinelabs/skills/connector-twilio`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+API/framework integration: wiring Twilio's typed REST client into a Caffeine canister backend.

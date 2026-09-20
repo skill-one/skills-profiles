@@ -1,0 +1,11 @@
+# python-executor (`skills-shell/superpowers/python-executor`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+A general-purpose Python code execution environment for running scripts, web scraping, and API calls.

@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Syncs local skill files to a GitHub repo via git branches and rsync."}

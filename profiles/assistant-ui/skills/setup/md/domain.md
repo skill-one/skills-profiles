@@ -1,0 +1,11 @@
+# setup (`assistant-ui/skills/setup`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+CLI scaffolding, dependency management, and framework-adapter wiring for a React UI library.

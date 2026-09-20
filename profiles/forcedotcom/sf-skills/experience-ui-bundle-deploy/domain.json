@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Orchestrates a full deploy-and-configure pipeline (auth, build, metadata deploy, SSO, permissions, data) to a Salesforce org."}

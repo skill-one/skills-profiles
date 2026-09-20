@@ -1,0 +1,11 @@
+# cloud (`assistant-ui/skills/cloud`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+API/framework integration: wiring a hosted cloud service into React apps via SDK hooks and auth.

@@ -1,0 +1,11 @@
+# wp-project-triage (`wordpress/agent-skills/wp-project-triage`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Deterministic repo inspection to guide developer workflows and guardrails before code changes.

@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Builds and bundles React/TypeScript frontend artifacts using Vite, Parcel, Tailwind, and shadcn/ui."}

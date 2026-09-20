@@ -1,0 +1,1 @@
+{"domain": ["office-productivity"], "reason": "Detects and extracts structural elements (text, tables, figures) from PDFs and document images using surya."}

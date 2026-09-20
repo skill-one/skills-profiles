@@ -1,0 +1,11 @@
+# m15-anti-pattern (`actionbook/rust-skills/m15-anti-pattern`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+The skill's core purpose is code review, identifying anti-patterns and code smells.

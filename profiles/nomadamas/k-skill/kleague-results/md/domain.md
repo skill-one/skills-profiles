@@ -1,0 +1,11 @@
+# kleague-results (`nomadamas/k-skill/kleague-results`)
+
+## domain
+
+### domain
+
+- data-analysis
+
+### reason
+
+Queries structured K-League results and standings by date/team via a JSON API endpoint.

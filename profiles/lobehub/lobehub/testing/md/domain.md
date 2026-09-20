@@ -1,0 +1,11 @@
+# testing (`lobehub/lobehub/testing`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Vitest test writing, mocking, coverage, and failing-test diagnosis guide.

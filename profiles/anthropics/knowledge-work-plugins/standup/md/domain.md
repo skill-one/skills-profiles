@@ -1,0 +1,11 @@
+# standup (`anthropics/knowledge-work-plugins/standup`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Generates a structured standup update (yesterday/today/blockers) for team communication and work management.

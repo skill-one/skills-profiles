@@ -1,0 +1,11 @@
+# capability-evolver (`evomap/evolver/capability-evolver`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Autonomous code-improvement engine with git rollback, CLI tooling, and API-driven agent evolution.

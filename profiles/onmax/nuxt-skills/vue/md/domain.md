@@ -1,0 +1,11 @@
+# vue (`onmax/nuxt-skills/vue`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Writing Vue 3 SFCs with Composition API is core frontend code development.

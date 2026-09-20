@@ -1,0 +1,12 @@
+# operating-safely (`riekelt/principal-engineer/operating-safely`)
+
+## domain
+
+### domain
+
+- devops-security
+- development
+
+### reason
+
+Safety guards for live-system operations, secrets hygiene, and concurrent dev-session state.

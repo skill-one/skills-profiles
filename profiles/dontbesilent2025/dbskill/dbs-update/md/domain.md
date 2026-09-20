@@ -1,0 +1,11 @@
+# dbs-update (`dontbesilent2025/dbskill/dbs-update`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Updates a CLI skill package via npx, a developer dependency-management workflow.

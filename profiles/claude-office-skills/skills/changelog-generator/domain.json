@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Generates changelogs from git commits and PRs, a core developer workflow."}

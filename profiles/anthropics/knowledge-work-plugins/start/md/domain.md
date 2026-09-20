@@ -1,0 +1,12 @@
+# start (`anthropics/knowledge-work-plugins/start`)
+
+## domain
+
+### domain
+
+- office-productivity
+- knowledge-management
+
+### reason
+
+Sets up a todo dashboard and bootstraps a structured workplace knowledge base.

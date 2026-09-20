@@ -1,0 +1,11 @@
+# character-design-sheet (`magentosh/superpowers/character-design-sheet`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Character consistency via AI image generation, reference sheets, and LoRA for visual design.

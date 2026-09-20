@@ -1,0 +1,11 @@
+# python-packaging (`wshobson/agents/python-packaging`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Covers Python package structure, build config, dependency management, and CLI tool creation—core developer workflow.

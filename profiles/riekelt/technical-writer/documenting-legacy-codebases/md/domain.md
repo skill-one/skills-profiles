@@ -1,0 +1,11 @@
+# documenting-legacy-codebases (`riekelt/technical-writer/documenting-legacy-codebases`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+The skill produces a structured technical documentation tree (API refs, config refs, subsystem docs) from existing code.

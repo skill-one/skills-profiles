@@ -1,0 +1,11 @@
+# appinsights-instrumentation (`github/awesome-copilot/appinsights-instrumentation`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Sets up Azure App Insights telemetry for monitoring and observability of a web app.

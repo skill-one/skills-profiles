@@ -1,0 +1,11 @@
+# design-everyday-things (`wondelai/skills/design-everyday-things`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Applies foundational UX/UI design principles (affordances, signifiers, feedback) to evaluate product interfaces.

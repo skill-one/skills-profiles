@@ -1,0 +1,11 @@
+# dotnet-core-expert (`jeffallan/claude-skills/dotnet-core-expert`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Building .NET 8 applications with APIs, EF Core, CQRS, and clean architecture.

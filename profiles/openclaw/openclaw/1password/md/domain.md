@@ -1,0 +1,11 @@
+# 1password (`openclaw/openclaw/1password`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+1Password CLI is a secrets vault tool; its workflows are credential and access management for secure operations.

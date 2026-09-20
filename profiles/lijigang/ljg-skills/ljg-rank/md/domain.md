@@ -1,0 +1,11 @@
+# ljg-rank (`lijigang/ljg-skills/ljg-rank`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Decomposes any domain to irreducible generators and writes the result as a structured .org note.

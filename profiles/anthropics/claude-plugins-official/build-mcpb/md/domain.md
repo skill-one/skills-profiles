@@ -1,0 +1,11 @@
+# build-mcpb (`anthropics/claude-plugins-official/build-mcpb`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Packaging a local MCP server with bundled runtime is a code build and distribution workflow.

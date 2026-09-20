@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Diagnoses and fixes Postgres query anti-patterns in application code to reduce egress costs."}

@@ -1,0 +1,11 @@
+# landing-page-design (`magentosh/superpowers/landing-page-design`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+The skill is fundamentally about landing page layout, visual components, image generation, and UI design rules.

@@ -1,0 +1,11 @@
+# session-history (`rohitg00/agentmemory/session-history`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Retrieves past coding session history as a developer workflow tool.

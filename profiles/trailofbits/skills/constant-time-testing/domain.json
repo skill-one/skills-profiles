@@ -1,0 +1,1 @@
+{"domain": ["devops-security", "testing"], "reason": "Audits cryptographic binaries for timing side-channel leaks using statistical and dynamic security tools."}

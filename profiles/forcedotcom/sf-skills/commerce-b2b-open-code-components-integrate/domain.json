@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Clones a repo, copies LWC/label files, and uses Salesforce CLI to deploy components into a store project."}

@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Vector database operations (CRUD, similarity search) via AWS API/CLI are core development tasks."}

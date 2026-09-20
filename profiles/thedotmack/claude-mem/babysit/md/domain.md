@@ -1,0 +1,11 @@
+# babysit (`thedotmack/claude-mem/babysit`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Iteratively monitors CI, git commits, and review threads until a PR is mergeable—a core developer workflow.

@@ -1,0 +1,12 @@
+# landing-page-design (`skills-shell/superpowers/landing-page-design`)
+
+## domain
+
+### domain
+
+- business-ops
+- design-media
+
+### reason
+
+Landing page conversion optimization is a marketing-growth activity with supporting UI/image design rules.

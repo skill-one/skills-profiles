@@ -1,0 +1,11 @@
+# writing-postmortems (`riekelt/technical-writer/writing-postmortems`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+The skill is about structuring and writing a technical document (postmortem), i.e., text-centered creation.

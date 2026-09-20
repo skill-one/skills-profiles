@@ -1,0 +1,11 @@
+# doc-parser (`claude-office-skills/skills/doc-parser`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Parses and extracts structure from PDF, Word, and image documents into formatted output.

@@ -1,0 +1,11 @@
+# crossing-the-chasm (`wondelai/skills/crossing-the-chasm`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Go-to-market and sales strategy framework for growing a tech product into the mainstream market.

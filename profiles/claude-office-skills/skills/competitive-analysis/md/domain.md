@@ -1,0 +1,11 @@
+# competitive-analysis (`claude-office-skills/skills/competitive-analysis`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Competitive intelligence and strategic analysis aimed at business growth, sales enablement, and market positioning.

@@ -1,0 +1,11 @@
+# extract (`tavily-ai/skills/extract`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Web content extraction via API is a core web scraping capability.

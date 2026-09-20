@@ -1,0 +1,11 @@
+# seo-content-brief (`agricidaniel/claude-seo/seo-content-brief`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+The skill generates SEO content briefs, a marketing/SEO activity explicitly listed under business-ops.

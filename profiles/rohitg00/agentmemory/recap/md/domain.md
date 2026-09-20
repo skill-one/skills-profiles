@@ -1,0 +1,11 @@
+# recap (`rohitg00/agentmemory/recap`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Retrieves past agent sessions from memory and organizes them into a structured, date-grouped recap.

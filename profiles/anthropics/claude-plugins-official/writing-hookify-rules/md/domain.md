@@ -1,0 +1,11 @@
+# writing-hookify-rules (`anthropics/claude-plugins-official/writing-hookify-rules`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Creating regex-based configuration rules for a developer monitoring tool that watches CLI and code-edit actions.

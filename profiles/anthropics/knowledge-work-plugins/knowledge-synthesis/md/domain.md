@@ -1,0 +1,11 @@
+# knowledge-synthesis (`anthropics/knowledge-work-plugins/knowledge-synthesis`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Synthesizes multi-source search results into deduplicated, attributed answers—core information retrieval and material organization.

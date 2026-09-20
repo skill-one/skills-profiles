@@ -1,0 +1,11 @@
+# korean-character-count (`nomadamas/k-skill/korean-character-count`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+A text-length utility for fitting self-intros and form character limits.

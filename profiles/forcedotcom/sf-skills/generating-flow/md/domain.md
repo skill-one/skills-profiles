@@ -1,0 +1,11 @@
+# generating-flow (`forcedotcom/sf-skills/generating-flow`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Generates Salesforce Flow XML metadata via a 3-step MCP tool pipeline.

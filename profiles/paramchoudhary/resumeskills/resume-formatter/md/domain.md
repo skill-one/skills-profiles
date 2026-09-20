@@ -1,0 +1,11 @@
+# resume-formatter (`paramchoudhary/resumeskills/resume-formatter`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Formats resume documents (.docx/.pdf) for layout, fonts, spacing, and ATS compatibility.

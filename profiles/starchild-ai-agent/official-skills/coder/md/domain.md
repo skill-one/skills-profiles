@@ -1,0 +1,11 @@
+# coder (`starchild-ai-agent/official-skills/coder`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Code-writing, bug-fixing, and feature-implementation specialist; testing is a verification step within the dev workflow.

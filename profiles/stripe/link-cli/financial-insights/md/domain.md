@@ -1,0 +1,11 @@
+# financial-insights (`stripe/link-cli/financial-insights`)
+
+## domain
+
+### domain
+
+- finance-payment
+
+### reason
+
+Reads and summarizes personal financial data (balances, transactions, payment sources) from a wallet platform.

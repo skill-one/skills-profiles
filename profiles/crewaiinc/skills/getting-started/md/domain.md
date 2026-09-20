@@ -1,0 +1,11 @@
+# getting-started (`crewaiinc/skills/getting-started`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Scaffolding a Python framework project via CLI, writing Flow/Crew code, and wiring YAML config.

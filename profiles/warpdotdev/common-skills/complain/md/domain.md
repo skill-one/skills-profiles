@@ -1,0 +1,11 @@
+# complain (`warpdotdev/common-skills/complain`)
+
+## domain
+
+### domain
+
+- other
+
+### reason
+
+Anonymous agent-venting into Slack about tooling frustrations fits no listed technical or productivity category.

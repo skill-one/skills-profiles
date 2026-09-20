@@ -1,0 +1,11 @@
+# codegen (`vercel-labs/json-render/codegen`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Code generation and serialization utilities for building custom code exporters from UI specs.

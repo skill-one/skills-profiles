@@ -1,0 +1,11 @@
+# terraform-skill (`antonbabenko/terraform-skill/terraform-skill`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Diagnoses and guides cloud infrastructure (IaC), state management, security compliance, and CI/CD for Terraform/OpenTofu.

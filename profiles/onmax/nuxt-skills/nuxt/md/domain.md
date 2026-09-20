@@ -1,0 +1,11 @@
+# nuxt (`onmax/nuxt-skills/nuxt`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Full-stack Vue framework for writing SSR apps, server routes, data fetching, and developer workflows.

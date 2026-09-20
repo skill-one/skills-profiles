@@ -1,0 +1,11 @@
+# codex-delegate (`amelnagdy/delegate-skills/codex-delegate`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Orchestrates a coding-task delegation loop: write brief, dispatch to Codex CLI, review diff, and commit.

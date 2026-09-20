@@ -1,0 +1,11 @@
+# pixijs-custom-rendering (`pixijs/pixijs-skills/pixijs-custom-rendering`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Writing custom GPU shaders, filters, and low-level rendering code in PixiJS v8.

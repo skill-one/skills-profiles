@@ -1,0 +1,11 @@
+# urdf (`earthtojake/text-to-cad/urdf`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+URDF authoring is 3D kinematic robot modeling with mesh geometry and frame conventions.

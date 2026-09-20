@@ -1,0 +1,11 @@
+# python-executor (`magentosh/superpowers/python-executor`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Sandboxed Python code execution for scripts, web scraping, and automation.

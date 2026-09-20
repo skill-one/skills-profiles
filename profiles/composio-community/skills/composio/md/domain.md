@@ -1,0 +1,11 @@
+# composio (`composio-community/skills/composio`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+CLI and SDK for API integration across 1000+ external apps — core developer tooling.

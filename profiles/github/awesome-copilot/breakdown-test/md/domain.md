@@ -1,0 +1,11 @@
+# breakdown-test (`github/awesome-copilot/breakdown-test`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Generates test strategies, QA plans, and test issue checklists per ISTQB/ISO 25010.

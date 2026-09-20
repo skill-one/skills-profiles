@@ -1,0 +1,1 @@
+{"domain": ["data-analysis"], "reason": "Executes Athena SQL queries and profiles tables across federated data-lake catalogs for analysis."}

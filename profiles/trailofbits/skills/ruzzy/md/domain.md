@@ -1,0 +1,11 @@
+# ruzzy (`trailofbits/skills/ruzzy`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Ruzzy is a coverage-guided fuzzer whose purpose is automated bug hunting and memory-safety testing of Ruby code.

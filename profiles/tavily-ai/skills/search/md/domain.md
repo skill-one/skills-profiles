@@ -1,0 +1,11 @@
+# search (`tavily-ai/skills/search`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Web search API for retrieving and surfacing relevant information on any topic.

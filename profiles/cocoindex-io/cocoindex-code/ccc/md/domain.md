@@ -1,0 +1,11 @@
+# ccc (`cocoindex-io/cocoindex-code/ccc`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+CLI tool for semantic code search and codebase indexing to support developer workflows.

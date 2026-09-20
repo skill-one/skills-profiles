@@ -1,0 +1,11 @@
+# ask-questions-if-underspecified (`trailofbits/skills/ask-questions-if-underspecified`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Pre-implementation requirements clarification for software work, a developer workflow step.

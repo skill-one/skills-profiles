@@ -1,0 +1,11 @@
+# codeql (`trailofbits/skills/codeql`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+SAST security-vulnerability scanning via CodeQL is squarely a security workflow.

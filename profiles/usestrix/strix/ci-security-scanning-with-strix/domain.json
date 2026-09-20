@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Adds AI vulnerability scanning as a CI/CD pre-merge security gate."}

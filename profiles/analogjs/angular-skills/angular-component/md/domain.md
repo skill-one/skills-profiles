@@ -1,0 +1,11 @@
+# angular-component (`analogjs/angular-skills/angular-component`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Creating and refactoring Angular standalone components with signals, host bindings, and OnPush change detection is core frontend development work.

@@ -1,0 +1,11 @@
+# pixijs-performance (`pixijs/pixijs-skills/pixijs-performance`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Optimizing PixiJS rendering code (FPS, draw calls, GPU memory) is core software development work.

@@ -1,0 +1,11 @@
+# token-integration-analyzer (`trailofbits/skills/token-integration-analyzer`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Security audit of smart contracts identifying vulnerabilities, attack vectors, and integration risks.

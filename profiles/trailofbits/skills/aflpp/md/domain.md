@@ -1,0 +1,11 @@
+# aflpp (`trailofbits/skills/aflpp`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Fuzzing is automated bug hunting: generating inputs to find crashes and memory-corruption defects in C/C++ code.

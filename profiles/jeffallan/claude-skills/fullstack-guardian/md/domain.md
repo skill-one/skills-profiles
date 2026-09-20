@@ -1,0 +1,11 @@
+# fullstack-guardian (`jeffallan/claude-skills/fullstack-guardian`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Primary purpose is implementing full-stack features (frontend, backend, API) with security as a constraint on code.

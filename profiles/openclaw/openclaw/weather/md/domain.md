@@ -1,0 +1,11 @@
+# weather (`openclaw/openclaw/weather`)
+
+## domain
+
+### domain
+
+- lifestyle
+
+### reason
+
+Weather lookups and travel planning are personal lifestyle activities.

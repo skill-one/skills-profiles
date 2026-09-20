@@ -1,0 +1,11 @@
+# msw-avatar (`msw-git/msw-ai-coding-plugins-official/msw-avatar`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Game-engine avatar component configuration, model/map file editing, and Lua scripting within a development platform.

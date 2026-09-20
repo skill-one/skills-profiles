@@ -1,0 +1,11 @@
+# agent-development (`anthropics/claude-plugins-official/agent-development`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Creating agent configuration files and system prompts for Claude Code plugins is a developer workflow.
