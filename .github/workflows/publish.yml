@@ -32,10 +32,10 @@ on:
         default: "8"
       rpm:
         description: Calls a minute the endpoint allows; 0 = no pace
-        default: "0"
+        default: "19"
       prompt:
         description: One prompt id to build, or empty for every prompt
-        default: ""
+        default: "domain"
 
 permissions:
   contents: write
