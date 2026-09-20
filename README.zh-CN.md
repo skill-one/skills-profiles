@@ -30,7 +30,7 @@ output/
 `null`，所以「已经做完的那部分数据集」只差一次筛选：
 
 ```bash
-jq -r 'select(.domain == "开发编程") | [.installs, .id] | @tsv' output/skills.jsonl | head
+jq -r 'select(any(.domain[]; . == "development")) | [.installs, .id] | @tsv' output/skills.jsonl | head
 ```
 
 每个 skill 一个目录，每个角度一个文件。每个 json 恰好是一个 prompt 的结构化输出，生成完即完整落盘——
@@ -38,7 +38,7 @@ jq -r 'select(.domain == "开发编程") | [.installs, .id] | @tsv' output/skill
 
 | Prompt     | 结构                                     | 内容                                                        |
 | ---------- | ---------------------------------------- | ----------------------------------------------------------- |
-| `domain`   | `{domain, reason}`                       | 下面 13 个分类之一 + 一句话理由                             |
+| `domain`   | `{domain[1–3], reason}`                  | 下面 13 个英文分类中的一个或多个(最多 3 个),按贴合度降序、主分类在前,外加一句话理由 |
 | `scenario` | `{text}`                                 | 一段 100 字以内的场景化介绍，从用户痛点切入                 |
 | `tagline`  | `{taglines[3]}`                          | 3 条宣传短标语，每条 20 字以内                              |
 | `blackbox` | `{function, input_output[3–5]}`          | 黑盒视角：你给什么 → 你得到什么，不谈内部实现               |
@@ -46,10 +46,12 @@ jq -r 'select(.domain == "开发编程") | [.installs, .id] | @tsv' output/skill
 | `comments` | `{comments[4–6]}`                        | 用户第一人称评论；`category` 通常为 妙用 / 坑 / 注意 / 启发 |
 
 `{...[n–m]}` 表示长度为 n~m 的数组；`input_output` 的元素是 `{input, output}`，`comments`
-的元素是 `{user, category, comment}`。除 id、路径和字段名外，全部是中文。
+的元素是 `{user, category, comment}`。除 domain 角度(三个值都是英文)外，全部是中文。
 
-`domain.domain` 是闭合枚举，可以直接筛：开发编程 · 测试与质量 · 数据分析 · 运维与安全 · 办公效率 ·
-内容创作 · 设计多媒体 · 知识管理 · 商业运营 · 支付金融 · 教育学习 · 生活服务 · 其他。
+`domain.domain` 是一个数组,元素取自闭合英文枚举(一到三个,通常恰好一个,主分类在前),依然可以
+直接筛：development · testing · data-analysis · devops-security · office-productivity ·
+content-creation · design-media · knowledge-management · business-ops · finance-payment ·
+education · lifestyle · other。
 
 ## 怎么跑
 
@@ -83,7 +85,7 @@ just index             # 从磁盘上的内容重建 output/skills.jsonl
 
 ```bash
 # 一个 skill 是什么、值多少、被归到哪一类
-jq -r '[.id, .installs, (.domain // "-")] | @tsv' output/skills.jsonl | head
+jq -r '[.id, .installs, (.domain[0] // "-")] | @tsv' output/skills.jsonl | head
 
 # 安装一个：它的目录是完整的，与镜像发布的一模一样
 cp -r output/skills/mattpocock/skills/grill-me ~/.claude/skills/

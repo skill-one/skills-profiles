@@ -1,19 +1,28 @@
-请判断这项技能的主要用途落在下面哪一类, 并给出一句话理由。
+Classify this skill into exactly one category below, then justify it.
 
-- 💻 开发编程: 写代码、调试、重构、数据库、API/框架集成、爬虫与浏览器自动化
-- 🧪 测试与质量: 测试编写与测试框架、E2E/UI 自动化测试、代码审查、质量检查与 bug 排查工具
-- 📊 数据分析: SQL 查询、数据清洗、统计分析、可视化、报表与数据工程(ETL)
-- 🛡️ 运维与安全: 部署发布、云基础设施、监控告警、SRE、网络配置与安全防护
-- 🗂️ 办公效率: docx/pdf/xlsx/ppt 等文档处理、邮件、日历、会议纪要、任务与项目管理
-- ✍️ 内容创作: 文章写作、文案、翻译、技术文档、社媒内容、播客/脚本等, 以文字与信息为主体的创作
-- 🎨 设计多媒体: UI/平面设计、图像生成与编辑、视频剪辑、3D、品牌视觉等视觉与音视频制作
-- 🧠 知识管理: 笔记与知识库(Obsidian/Notion 等)、信息检索、调研与深度研究、资料整理沉淀
-- 📈 商业运营: 市场营销、SEO、销售、客服、电商、增长与 CRM 等面向业务增长与客户的工作
-- 💰 支付金融: 支付集成、账单与发票、金融理财、交易类技能
-- 🎓 教育学习: 教学备课、课程制作、学习辅导、刷题与面试准备
-- 🏠 生活服务: 旅行规划、饮食、健身健康、个人日常事务
-- ❓ 其他: 仅当以上分类确实都不贴合时使用, 不要勉强归类
+Output rules (strict):
 
-判断时注意:
+- `domain`: one to three category tags from the list below, ordered by fit with the primary first. Usually exactly one; add more only when the skill has substantial, non-overlapping uses in each - never to hedge.
+- `reason`: ONE short sentence (15 words at most).
 
-- 按「用户装上它之后, 主要拿它做什么」来判断, 不要按文中出现的词汇判断。文档里举例用到的 SQL、报表、测试用例, 不代表这项技能就属于那一类。
+- development: writing code, debugging, refactoring, git & version control, terminal/CLI tools, databases, API/framework integration, web scraping & browser automation, developer workflows (CI, builds, dependencies)
+- testing: writing tests & test frameworks, E2E/UI test automation, code review, quality checks & bug hunting
+- data-analysis: SQL, data cleaning, statistics, visualization, reporting & data engineering (ETL)
+- devops-security: deployment & release, cloud infrastructure, monitoring & alerting, SRE, networking & security
+- office-productivity: docx/pdf/xlsx/ppt document processing, email, calendar, meeting notes, personal & team work management (todos, schedules, tickets). Software project management (git, issues, CI) does NOT belong here
+- content-creation: articles, copywriting, translation, technical docs, social media content, podcasts/scripts - creation centered on text and information
+- design-media: UI/graphic design, image generation & editing, video editing, 3D, brand visuals
+- knowledge-management: notes & knowledge bases (Obsidian/Notion etc.), information retrieval, deep research, organizing material
+- business-ops: marketing, SEO, sales, customer service, e-commerce, growth & CRM - work aimed at business growth and customers
+- finance-payment: payment integration, billing & invoices, investing, trading
+- education: lesson prep, course creation, tutoring, exam & interview practice
+- lifestyle: travel planning, food, fitness & health, personal errands
+- other: only when none of the above genuinely fits; never force a category
+
+Examples:
+
+- writes conventional commit messages / manages git branches -> development ("managing project commits" is not "project management")
+- generates E2E tests with Playwright -> testing, not development
+- drafts weekly reports from meeting notes -> office-productivity
+- organizes Notion pages into a linked knowledge base -> knowledge-management
+- an interview-style questioning tool that sharpens a software plan or design before coding -> development (the interview format is a working method, not education; education means teaching content, courses, or exam prep)

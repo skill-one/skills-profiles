@@ -31,7 +31,7 @@ English: [SPEC.md](SPEC.md)
 
 | 角度 | json 结构 | 内容 |
 | --- | --- | --- |
-| `domain` | `{domain, reason}` | 13 个闭合分类之一，加一句话理由 |
+| `domain` | `{domain[1–3], reason}` | 13 个闭合英文分类中的一个到三个,按贴合度降序、主分类在前,加一句话理由 |
 | `scenario` | `{text}` | 一段 100 字以内的场景化介绍，从用户痛点切入 |
 | `tagline` | `{taglines[3]}` | 3 条宣传短标语，每条 20 字以内 |
 | `blackbox` | `{function, input_output[3–5]}` | 黑盒视角：你给什么 → 你得到什么 |
@@ -45,7 +45,8 @@ English: [SPEC.md](SPEC.md)
   `SKILL.md` 里读出的 `description`，以及本项目标出的 `domain` 与其 `reason`。未知时 `description`
   与 `domain` 为 `null`，所以一行陈述的是数据集的状态而不是工作的取舍：`.domain != null` 是已建成的
   部分，`.installs` 给没建的那部分排序。
-- id、路径与字段名是 ASCII；所有值都是中文。`domain.domain` 是闭合枚举，可以直接筛。
+- id、路径与字段名是 ASCII；`domain.domain` 是一个数组,元素取自闭合英文枚举(一到三个,主分类在前),
+  依然可以直接筛；domain 角度的值都是英文，其余角度的所有值都是中文。
 
 ## 2. 输入
 

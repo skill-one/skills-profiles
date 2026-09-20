@@ -34,7 +34,7 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `gen.py`
 
 | angle | json shape | content |
 | --- | --- | --- |
-| `domain` | `{domain, reason}` | one of 13 closed categories, plus one line of why |
+| `domain` | `{domain[1–3], reason}` | one to three of 13 closed English categories, ordered by fit with the primary first, one line of why |
 | `scenario` | `{text}` | a ≤100-character pitch, built on the user's pain point |
 | `tagline` | `{taglines[3]}` | three slogans, ≤20 characters each |
 | `blackbox` | `{function, input_output[3–5]}` | outside view: what you hand it → what you get back |
@@ -48,8 +48,9 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `gen.py`
   plus the `description` read out of that skill's own `SKILL.md` and the `domain` with its `reason`.
   `description` and `domain` are `null` while they are unknown, so a row states the dataset rather
   than the work: `.domain != null` is what has been built, and `.installs` ranks what has not.
-- Ids, paths and field names are ASCII; every value is Chinese. `domain.domain` is a closed enum,
-  so it filters directly.
+- Ids, paths and field names are ASCII; `domain.domain` is an array of one to three members of a
+  closed English enum, the primary first, so it still filters directly; the `domain` angle's values
+  are English throughout, every other angle's values are Chinese.
 
 ## 2. Input
 

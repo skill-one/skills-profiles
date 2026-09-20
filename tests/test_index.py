@@ -15,7 +15,7 @@ DOT = "owner-e/.dotcfg/settings"
 HOTEL = "owner-h/repo-h/hotel:sub"
 HOTEL_DIR = "owner-h/repo-h/hotel_sub"
 
-DOMAIN = {"domain": "办公效率", "reason": "因为"}
+DOMAIN = {"domain": ["office-productivity"], "reason": "Because it tidies notes"}
 ALPHA_ROW = {
     "id": ALPHA,
     "installs": "300",
@@ -24,8 +24,8 @@ ALPHA_ROW = {
     "fetchedAt": None,
     "description": "Tidies a note list, folds the loose ends into a running index, and keeps "
                    "the whole pile searchable.",
-    "domain": "办公效率",
-    "reason": "因为",
+    "domain": ["office-productivity"],
+    "reason": "Because it tidies notes",
 }
 
 
@@ -84,8 +84,8 @@ def test_the_domain_is_null_until_it_is_built(workdir):
 
     gen.write(config, "domain", ALPHA, DOMAIN)
 
-    assert row(config, ALPHA)["domain"] == "办公效率"
-    assert row(config, ALPHA)["reason"] == "因为"
+    assert row(config, ALPHA)["domain"] == ["office-productivity"]
+    assert row(config, ALPHA)["reason"] == "Because it tidies notes"
     assert row(config, BETA)["reason"] is None
 
 
@@ -107,8 +107,9 @@ def test_a_profile_the_mirror_dropped_is_still_a_row(workdir):
     lines = indexed(config)
 
     assert lines[-1] == {"id": "owner-z/repo-z/zeta", "installs": None, "url": None, "hash": None,
-                         "fetchedAt": None, "description": None, "domain": "办公效率",
-                         "reason": "因为"}
+                         "fetchedAt": None, "description": None,
+                         "domain": ["office-productivity"],
+                         "reason": "Because it tidies notes"}
     assert len(lines) == 7  # the six the mirror lists, plus the one it does not
 
 
@@ -158,5 +159,5 @@ def test_main_writes_and_reports_the_catalog(workdir, capsys):
 
     catalog = config.output_dir / gen.INDEX
     first = catalog.read_text(encoding="utf-8").splitlines()[0]
-    assert json.loads(first)["domain"] == "办公效率"
+    assert json.loads(first)["domain"] == ["office-productivity"]
     assert "indexed 6 skills" in capsys.readouterr().err

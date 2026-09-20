@@ -32,7 +32,7 @@ most installed first — with the `description` read out of that skill's own `SK
 profiled part of the dataset is a filter away:
 
 ```bash
-jq -r 'select(.domain == "开发编程") | [.installs, .id] | @tsv' output/skills.jsonl | head
+jq -r 'select(any(.domain[]; . == "development")) | [.installs, .id] | @tsv' output/skills.jsonl | head
 ```
 
 One directory per skill, one file per angle. Every json is exactly one prompt's structured output,
@@ -41,7 +41,7 @@ the middle of, and the next one picks up where it stopped.
 
 | Prompt     | Shape                                    | Content                                                               |
 | ---------- | ---------------------------------------- | --------------------------------------------------------------------- |
-| `domain`   | `{domain, reason}`                       | one of the 13 categories below, plus one line of justification         |
+| `domain`   | `{domain[1–3], reason}`                  | one or more (at most 3) of the 13 English categories below, ordered by fit with the primary first, plus one line of justification |
 | `scenario` | `{text}`                                 | a ≤100-character pitch, built on the user's pain point                 |
 | `tagline`  | `{taglines[3]}`                          | three slogans, ≤20 characters each                                     |
 | `blackbox` | `{function, input_output[3–5]}`          | outside view: what you hand it → what you get back, no internals       |
@@ -49,11 +49,13 @@ the middle of, and the next one picks up where it stopped.
 | `comments` | `{comments[4–6]}`                        | first-person user notes; `category` typically 妙用 / 坑 / 注意 / 启发 |
 
 `{...[n–m]}` is an array of that many entries; `input_output` items are `{input, output}` and
-`comments` items `{user, category, comment}`. Everything but ids, paths and field names is
-Chinese.
+`comments` items `{user, category, comment}`. Everything is Chinese except the `domain` angle,
+whose three values are English throughout.
 
-`domain.domain` is a closed enum, so it is directly filterable: 开发编程 · 测试与质量 · 数据分析 ·
-运维与安全 · 办公效率 · 内容创作 · 设计多媒体 · 知识管理 · 商业运营 · 支付金融 · 教育学习 · 生活服务 · 其他.
+`domain.domain` is an array of one to three members of the closed English enum below — usually
+exactly one, the primary first — so it is still directly filterable: development · testing ·
+data-analysis · devops-security · office-productivity · content-creation · design-media ·
+knowledge-management · business-ops · finance-payment · education · lifestyle · other.
 
 ## Running it
 
@@ -91,7 +93,7 @@ skill exactly as the mirror publishes it — complete, so installing one is a co
 
 ```bash
 # what a skill is, what it is worth, and what it was labelled
-jq -r '[.id, .installs, (.domain // "-")] | @tsv' output/skills.jsonl | head
+jq -r '[.id, .installs, (.domain[0] // "-")] | @tsv' output/skills.jsonl | head
 
 # install one: its directory is complete, exactly as the mirror publishes it
 cp -r output/skills/mattpocock/skills/grill-me ~/.claude/skills/

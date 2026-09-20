@@ -4,17 +4,22 @@
   "required": ["domain", "reason"],
   "properties": {
     "domain": {
-      "type": "string",
-      "description": "按使用场景找到你最贴合的分类",
-      "enum": [
-        "开发编程", "测试与质量", "数据分析", "运维与安全", "办公效率",
-        "内容创作", "设计多媒体", "知识管理", "商业运营", "支付金融",
-        "教育学习", "生活服务", "其他"
-      ]
+      "type": "array",
+      "description": "Category tags ordered by fit, the primary first; usually exactly one",
+      "items": {
+        "type": "string",
+        "enum": [
+          "development", "testing", "data-analysis", "devops-security", "office-productivity",
+          "content-creation", "design-media", "knowledge-management", "business-ops",
+          "finance-payment", "education", "lifestyle", "other"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 3
     },
     "reason": {
       "type": "string",
-      "description": "分类理由, 极简一句话"
+      "description": "The justification, ONE short sentence"
     }
   }
 }

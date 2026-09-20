@@ -31,7 +31,9 @@ def scratch_prompts(tmp_path: Path, name: str, body: str,
     return directory
 
 
-def fake_client(monkeypatch, content: str = '{"domain": "办公效率", "reason": "因为"}') -> dict:
+def fake_client(monkeypatch,
+                content: str = '{"domain": ["office-productivity"],'
+                               ' "reason": "Because it manages commits"}') -> dict:
     """Install a stand-in `openai.OpenAI`; returns what it recorded."""
     seen: dict = {}
 
@@ -71,8 +73,8 @@ def test_every_prompt_file_has_its_schema_next_to_it(config):
 
 def test_load_prompt_reads_the_pair(config):
     template, schema = gen.load_prompt(config, "domain")
-    assert template.startswith("请判断这项技能的主要用途")
-    assert schema["properties"]["domain"]["enum"][0] == "开发编程"
+    assert template.startswith("Classify this skill")
+    assert schema["properties"]["domain"]["items"]["enum"][0] == "development"
 
 
 def test_load_prompt_names_the_file_of_a_broken_template(tmp_path):
@@ -115,9 +117,11 @@ def test_the_domain_taxonomy_matches_the_schema_enum(config):
     """The 13 categories appear twice - as prose for the model, and as the enum the
     decoder is constrained by. This is what keeps the two honest."""
     template, schema = gen.load_prompt(config, "domain")
-    enum = schema["properties"]["domain"]["enum"]
+    enum = schema["properties"]["domain"]["items"]["enum"]
     body = gen.render(template, "SOURCE", "", "AN ID")
     assert len(enum) == len(set(enum)) == 13
+    assert schema["properties"]["domain"]["minItems"] == 1
+    assert schema["properties"]["domain"]["maxItems"] == 3
     for category in enum:
         assert f" {category}:" in body, f"the taxonomy is missing {category}"
 
@@ -246,7 +250,7 @@ def test_call_sends_the_prompt_schema_as_the_response_format(workdir, monkeypatc
     schema = gen.load_prompt(config, "domain")[1]
 
     assert gen.call(config, schema, [{"role": "user", "content": "hi"}]) == {
-        "domain": "办公效率", "reason": "因为"}
+        "domain": ["office-productivity"], "reason": "Because it manages commits"}
 
     assert seen["sent"]["response_format"] == {
         "type": "json_schema",
@@ -293,13 +297,14 @@ def test_call_rejects_an_empty_answer(workdir, monkeypatch):
 
 
 def test_write_writes_json_and_the_markdown_copy(config):
-    path = gen.write(config, "domain", ALPHA, {"domain": "办公效率", "reason": "因为"})
+    path = gen.write(config, "domain", ALPHA,
+                     {"domain": ["office-productivity"], "reason": "Because it manages commits"})
     assert path == gen.json_path(config, "domain", ALPHA)
     assert json.loads(path.read_text(encoding="utf-8")) == {
-        "domain": "办公效率", "reason": "因为"}
+        "domain": ["office-productivity"], "reason": "Because it manages commits"}
     markdown = gen.markdown_path(config, "domain", ALPHA).read_text(encoding="utf-8")
     assert markdown.startswith(f"# alpha (`{ALPHA}`)\n\n## domain\n")
-    assert "### domain\n\n办公效率" in markdown
+    assert "### domain\n\n- office-productivity" in markdown
 
 
 def test_markdown_labels_every_field(config):
@@ -341,7 +346,7 @@ def test_main_passes_the_source_and_the_task(workdir, monkeypatch):
     assert "Tidies a note list" in system["content"]  # the skill's own one line
     assert f"{ALPHA} does useful things." in system["content"]  # and the body under it
     assert "name: owner-a/repo-a/alpha" not in system["content"]  # said once, not twice
-    assert user["role"] == "user" and "办公效率" in user["content"]
+    assert user["role"] == "user" and "office-productivity" in user["content"]
     assert seen["schema"] == gen.load_prompt(gen.Config(), "domain")[1]
 
 
