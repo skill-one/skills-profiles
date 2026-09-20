@@ -1,0 +1,11 @@
+# microsoft-foundry (`microsoft/azure-skills/microsoft-foundry`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Centers on cloud infrastructure, deployment pipelines, resource management, and monitoring for AI agents on Azure.
