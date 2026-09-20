@@ -1,0 +1,11 @@
+# podcast (`marswaveai/skills/podcast`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+Generates audio podcast episodes with AI speakers; explicitly listed under content-creation.

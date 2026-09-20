@@ -1,0 +1,11 @@
+# develop-userscripts (`xixu-me/skills/develop-userscripts`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Building, debugging, and packaging browser userscripts is a code-focused developer workflow.

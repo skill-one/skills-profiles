@@ -1,0 +1,11 @@
+# sleek-design-mobile-apps (`sleekdotdesign/agent-skills/sleek-design-mobile-apps`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+AI-powered mobile app UI screen design, visual style direction, and design-to-code handoff.

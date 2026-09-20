@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Orchestrates parallel subagents to implement code tasks from development plan files, commit, and run tests."}

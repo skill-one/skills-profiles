@@ -1,0 +1,11 @@
+# prefetch (`patternsdev/skills/prefetch`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Web performance optimization via prefetch tags and Webpack magic comments for faster navigation.

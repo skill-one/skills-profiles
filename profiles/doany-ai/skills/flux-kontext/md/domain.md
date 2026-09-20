@@ -1,0 +1,11 @@
+# flux-kontext (`doany-ai/skills/flux-kontext`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Flux Kontext Pro is a single-reference image editing model for precise local image modifications.

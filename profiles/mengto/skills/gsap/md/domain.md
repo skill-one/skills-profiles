@@ -1,0 +1,11 @@
+# gsap (`mengto/skills/gsap`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Writing and debugging GSAP animation code in HTML/CSS/JS/React is core web development work.

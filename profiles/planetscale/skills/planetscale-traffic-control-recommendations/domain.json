@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Configures PlanetScale Postgres traffic-control budgets and rules, squarely a database administration task."}

@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Fetches dependency source code to let developers read library internals and debug behavior."}

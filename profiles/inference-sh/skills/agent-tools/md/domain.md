@@ -1,0 +1,11 @@
+# agent-tools (`inference-sh/skills/agent-tools`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+CLI tool for running AI apps (image, video, LLM, search, 3D) via API integration.

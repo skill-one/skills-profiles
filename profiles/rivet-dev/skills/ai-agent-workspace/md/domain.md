@@ -1,0 +1,11 @@
+# ai-agent-workspace (`rivet-dev/skills/ai-agent-workspace`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Provides AI agents a full development workspace with filesystem, processes, git, shells, and coding-agent sessions.

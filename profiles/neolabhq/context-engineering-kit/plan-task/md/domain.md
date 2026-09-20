@@ -1,0 +1,11 @@
+# plan-task (`neolabhq/context-engineering-kit/plan-task`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Plans and decomposes software implementation tasks via codebase analysis, architecture synthesis, and sub-task breakdown.

@@ -1,0 +1,11 @@
+# gpt-image-edit (`runcomfy-com/skills/gpt-image-edit`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Core function is AI image editing: text rewriting, multi-ref composition, and identity-preserving modifications via GPT Image 2's edit endpoint.

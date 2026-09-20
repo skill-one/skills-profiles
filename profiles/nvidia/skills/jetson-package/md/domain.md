@@ -1,0 +1,11 @@
+# jetson-package (`nvidia/skills/jetson-package`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Selects Jetson-compatible containers and PyPI indexes for GPU-native ML stack dependencies.

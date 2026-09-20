@@ -1,0 +1,12 @@
+# agent-tools (`halt-catch-fire/superpowers/agent-tools`)
+
+## domain
+
+### domain
+
+- development
+- design-media
+
+### reason
+
+CLI tool for running AI apps (images, video, LLMs, 3D) via terminal.

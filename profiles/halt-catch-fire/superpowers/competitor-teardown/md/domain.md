@@ -1,0 +1,11 @@
+# competitor-teardown (`halt-catch-fire/superpowers/competitor-teardown`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Competitive teardown serves market strategy, investor decks, and sales enablement—core business growth work.

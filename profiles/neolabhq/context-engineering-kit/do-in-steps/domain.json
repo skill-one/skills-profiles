@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Orchestrates sequential multi-step code tasks (refactoring, features, fixes) via sub-agents."}

@@ -1,0 +1,11 @@
+# cobejs (`mengto/skills/cobejs`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Integrating a WebGL globe library into React/Next.js apps with canvas setup and lifecycle code.

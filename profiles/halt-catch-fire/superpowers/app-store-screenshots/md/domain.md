@@ -1,0 +1,12 @@
+# app-store-screenshots (`halt-catch-fire/superpowers/app-store-screenshots`)
+
+## domain
+
+### domain
+
+- business-ops
+- design-media
+
+### reason
+
+ASO/store listing optimization is a marketing-growth activity; the visual asset creation is the tool, not a separate use.

@@ -1,0 +1,11 @@
+# spec-workflow (`tencentcloudbase/skills/spec-workflow`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+A structured developer-workflow skill that plans requirements, design, and tasks before writing code.

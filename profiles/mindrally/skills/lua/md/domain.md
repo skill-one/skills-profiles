@@ -1,0 +1,11 @@
+# lua (`mindrally/skills/lua`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Lua coding guidelines for writing, structuring, and optimizing Lua code including game dev patterns.

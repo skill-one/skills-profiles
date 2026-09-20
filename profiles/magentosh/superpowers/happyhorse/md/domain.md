@@ -1,0 +1,11 @@
+# happyhorse (`magentosh/superpowers/happyhorse`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Video generation and editing via HappyHorse models, squarely in design-media.

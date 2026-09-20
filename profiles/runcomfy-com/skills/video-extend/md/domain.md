@@ -1,0 +1,11 @@
+# video-extend (`runcomfy-com/skills/video-extend`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Extending video clips is a video editing/creation task within the media domain.

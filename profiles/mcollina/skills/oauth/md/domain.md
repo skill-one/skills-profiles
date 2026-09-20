@@ -1,0 +1,11 @@
+# oauth (`mcollina/skills/oauth`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Implements OAuth flows, JWT middleware, and route security as Fastify application code.

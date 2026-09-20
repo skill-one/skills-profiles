@@ -1,0 +1,11 @@
+# agentic-jujutsu (`ruvnet/ruflo/agentic-jujutsu`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+A lock-free, self-learning version control system for AI agents (commits, branches, rebases, conflict resolution).

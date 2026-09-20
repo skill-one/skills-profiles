@@ -1,0 +1,11 @@
+# p-video (`magentosh/superpowers/p-video`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Generates videos from text, images, and audio — a media creation task.

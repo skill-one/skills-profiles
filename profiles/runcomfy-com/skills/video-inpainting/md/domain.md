@@ -1,0 +1,11 @@
+# video-inpainting (`runcomfy-com/skills/video-inpainting`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Region edits across video frames (removing objects, watermarks, replacing regions) are core video editing tasks.

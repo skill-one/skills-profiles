@@ -1,0 +1,11 @@
+# nano-banana-edit (`runcomfy-com/skills/nano-banana-edit`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Image-to-image editing with background swaps and object localization is core design-media work.

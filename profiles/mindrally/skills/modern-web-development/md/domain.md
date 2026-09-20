@@ -1,0 +1,11 @@
+# modern-web-development (`mindrally/skills/modern-web-development`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Covers TypeScript, Next.js, React, Supabase, and Tailwind coding best practices for web app development.

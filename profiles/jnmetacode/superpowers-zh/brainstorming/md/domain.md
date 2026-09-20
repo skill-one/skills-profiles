@@ -1,0 +1,11 @@
+# brainstorming (`jnmetacode/superpowers-zh/brainstorming`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Pre-implementation design/specification workflow for software: classify tasks, explore codebases, write design docs, plan builds.

@@ -1,0 +1,11 @@
+# immersive (`bergside/awesome-design-skills/immersive`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+It defines a UI design system with visual tokens, typography, color palette, and component styling rules.

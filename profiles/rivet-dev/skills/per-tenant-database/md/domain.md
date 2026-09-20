@@ -1,0 +1,11 @@
+# per-tenant-database (`rivet-dev/skills/per-tenant-database`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Multi-tenant database isolation architecture and code patterns with RivetKit actors, state backends, and migrations.
