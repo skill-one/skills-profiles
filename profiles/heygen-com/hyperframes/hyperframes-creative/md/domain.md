@@ -1,0 +1,11 @@
+# hyperframes-creative (`heygen-com/hyperframes/hyperframes-creative`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Creative direction for video compositions covering palettes, typography, beat planning, and brand/style decisions.

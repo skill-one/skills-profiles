@@ -1,0 +1,11 @@
+# env-and-assets-bootstrap (`lllllllama/rigorpilot-skills/env-and-assets-bootstrap`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Conda environment setup, dependency and asset path planning for deep learning repo reproduction.

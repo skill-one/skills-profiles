@@ -1,0 +1,11 @@
+# azure-upgrade (`microsoft/azure-skills/azure-upgrade`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Azure service plan/SKU upgrades and cross-service cloud migrations are core cloud infrastructure work.
