@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Executes cloud deployments (azd/terraform) to Azure — core DevOps release management."}

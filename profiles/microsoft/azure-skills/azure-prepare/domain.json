@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Generates cloud infrastructure (Bicep/Terraform, Dockerfiles) and azd deployment config for Azure."}

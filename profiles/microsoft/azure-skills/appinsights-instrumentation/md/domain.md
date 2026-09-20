@@ -1,0 +1,11 @@
+# appinsights-instrumentation (`microsoft/azure-skills/appinsights-instrumentation`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Azure App Insights is a monitoring/APM tool; the skill centers on telemetry setup and cloud resource creation.
