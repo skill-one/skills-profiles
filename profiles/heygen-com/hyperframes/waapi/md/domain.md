@@ -1,0 +1,11 @@
+# waapi (`heygen-com/hyperframes/waapi`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Authoring JavaScript WAAPI animations integrated with the HyperFrames framework.

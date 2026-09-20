@@ -1,0 +1,11 @@
+# extension-qr-code (`caffeinelabs/skills/extension-qr-code`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+React hook integrating the camera API and jsQR library for in-browser QR scanning.

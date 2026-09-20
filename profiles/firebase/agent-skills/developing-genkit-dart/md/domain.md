@@ -1,0 +1,11 @@
+# developing-genkit-dart (`firebase/agent-skills/developing-genkit-dart`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Covers writing Dart code, integrating Genkit SDK and LLM plugins, and using CLI tools for local dev.

@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Installs and links Swift Package dependencies into Xcode iOS projects."}

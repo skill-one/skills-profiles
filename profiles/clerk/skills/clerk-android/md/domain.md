@@ -1,0 +1,11 @@
+# clerk-android (`clerk/skills/clerk-android`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Implements Clerk auth SDK integration in native Android Kotlin/Compose projects via dependency setup and code patterns.

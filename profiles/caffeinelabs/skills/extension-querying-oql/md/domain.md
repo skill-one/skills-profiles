@@ -1,0 +1,11 @@
+# extension-querying-oql (`caffeinelabs/skills/extension-querying-oql`)
+
+## domain
+
+### domain
+
+- data-analysis
+
+### reason
+
+The skill is a structured-data querying reference: read schema, form filter/aggregate/join queries, parse results, and paginate.

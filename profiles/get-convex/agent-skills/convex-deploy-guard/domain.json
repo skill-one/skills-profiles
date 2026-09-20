@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Guards deployment targets and gates production release actions with per-action consent."}

@@ -1,0 +1,1 @@
+{"domain": ["testing"], "reason": "Collects test-coverage metrics and generates LCOV quality reports for Dart/Flutter test suites."}

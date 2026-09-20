@@ -1,0 +1,11 @@
+# remotion-render (`qu-skills/superpowers/remotion-render`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Generates animated video (MP4) from React/Remotion code; primary output is motion graphics and programmatic video.

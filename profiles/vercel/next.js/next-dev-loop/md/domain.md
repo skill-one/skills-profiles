@@ -1,0 +1,11 @@
+# next-dev-loop (`vercel/next.js/next-dev-loop`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Edit-verify loop during next dev: confirm code changes work at runtime via dev server and browser.

@@ -1,0 +1,11 @@
+# shape (`pbakaus/impeccable/shape`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Plans UX/UI design direction and produces a structured design brief before any code.

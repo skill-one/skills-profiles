@@ -1,0 +1,1 @@
+{"domain": ["testing"], "reason": "Booting and connecting an iOS simulator for gesture-based UI interaction is E2E/UI test automation."}

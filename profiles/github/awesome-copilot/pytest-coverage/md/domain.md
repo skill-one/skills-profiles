@@ -1,0 +1,11 @@
+# pytest-coverage (`github/awesome-copilot/pytest-coverage`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Runs pytest coverage and adds tests to reach 100% line coverage.

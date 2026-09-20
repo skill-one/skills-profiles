@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Resolves Dart package version conflicts in pubspec.yaml and pubspec.lock files."}

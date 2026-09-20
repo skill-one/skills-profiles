@@ -1,0 +1,11 @@
+# story-cover (`zenstory-ai/oh-story-claudecode/story-cover`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Generates and post-processes novel cover images via GPT-Image-2 — core image generation & graphic design.

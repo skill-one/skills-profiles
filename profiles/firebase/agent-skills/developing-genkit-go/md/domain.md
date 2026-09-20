@@ -1,0 +1,11 @@
+# developing-genkit-go (`firebase/agent-skills/developing-genkit-go`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Building AI applications with the Genkit Go SDK: code writing, framework integration, CLI tooling.

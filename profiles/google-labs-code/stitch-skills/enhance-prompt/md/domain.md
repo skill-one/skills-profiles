@@ -1,0 +1,11 @@
+# enhance-prompt (`google-labs-code/stitch-skills/enhance-prompt`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Crafts optimized prompts for Stitch UI generation, adding design-system tokens and visual structure.

@@ -1,0 +1,11 @@
+# popup-cro (`coreyhaines31/marketingskills/popup-cro`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Popup CRO is a marketing conversion-optimization discipline aimed at business growth.

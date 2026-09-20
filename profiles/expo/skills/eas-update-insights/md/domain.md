@@ -1,0 +1,11 @@
+# eas-update-insights (`expo/skills/eas-update-insights`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Monitors EAS Update rollout health (crash rates, adoption, regressions) to gate CI and verify deployments.

@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Performance measurement workflow: writing Go benchmarks, running profiling CLI tools, and committing results."}

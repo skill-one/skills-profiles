@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Boot and connect Android emulators via adb/AVD to enable developer UI workflows."}

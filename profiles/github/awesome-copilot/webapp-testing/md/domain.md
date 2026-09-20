@@ -1,0 +1,11 @@
+# webapp-testing (`github/awesome-copilot/webapp-testing`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+E2E/UI test automation toolkit for verifying web app behavior and capturing debug artifacts.

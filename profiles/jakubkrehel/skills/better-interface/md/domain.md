@@ -1,0 +1,11 @@
+# better-interface (`jakubkrehel/skills/better-interface`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Structured interface code review producing ranked quality findings and bug detection across accessibility, layout, and polish.

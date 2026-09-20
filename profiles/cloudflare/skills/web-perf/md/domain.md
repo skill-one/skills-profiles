@@ -1,0 +1,11 @@
+# web-perf (`cloudflare/skills/web-perf`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Browser-automation-based performance auditing and codebase optimization is a developer workflow.

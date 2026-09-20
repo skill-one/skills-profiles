@@ -1,0 +1,11 @@
+# better-layout (`jakubkrehel/skills/better-layout`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+UI layout principles: spacing, alignment, hierarchy, and responsive design patterns.

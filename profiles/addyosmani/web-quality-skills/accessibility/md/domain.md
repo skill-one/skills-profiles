@@ -1,0 +1,11 @@
+# accessibility (`addyosmani/web-quality-skills/accessibility`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+WCAG audit-and-fix workflow centered on Lighthouse/axe quality checks and manual accessibility testing.

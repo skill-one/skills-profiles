@@ -1,0 +1,11 @@
+# convex-domains (`get-convex/agent-skills/convex-domains`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Configuring DNS records and attaching a custom domain to a cloud app is cloud infrastructure work.

@@ -1,0 +1,11 @@
+# layout (`pbakaus/impeccable/layout`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Improves UI visual hierarchy, spacing rhythm, and layout composition — core UI/graphic design work.

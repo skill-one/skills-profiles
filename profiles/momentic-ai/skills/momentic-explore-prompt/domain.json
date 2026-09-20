@@ -1,0 +1,1 @@
+{"domain": ["testing"], "reason": "Generates the repo-specific prompt file that configures Momentic's E2E test explorer agent."}

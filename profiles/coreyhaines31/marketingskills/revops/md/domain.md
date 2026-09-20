@@ -1,0 +1,11 @@
+# revops (`coreyhaines31/marketingskills/revops`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Covers CRM, lead scoring, marketing-to-sales handoff, and pipeline management for revenue growth.

@@ -1,0 +1,11 @@
+# lavish (`kunchenguid/lavish-axi/lavish`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+CLI tool for visualizing and annotating developer artifacts like plans, code diffs, and prototypes.

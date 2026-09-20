@@ -1,0 +1,11 @@
+# css-animations (`heygen-com/hyperframes/css-animations`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Provides CSS keyframe code patterns and framework integration rules for HyperFrames' deterministic rendering.

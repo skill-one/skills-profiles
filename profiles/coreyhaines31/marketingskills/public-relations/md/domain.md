@@ -1,0 +1,11 @@
+# public-relations (`coreyhaines31/marketingskills/public-relations`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+PR, journalist outreach, and earned media strategy are marketing activities aimed at brand growth and visibility.

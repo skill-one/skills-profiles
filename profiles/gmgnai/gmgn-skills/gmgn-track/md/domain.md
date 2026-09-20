@@ -1,0 +1,11 @@
+# gmgn-track (`gmgnai/gmgn-skills/gmgn-track`)
+
+## domain
+
+### domain
+
+- finance-payment
+
+### reason
+
+Tracks crypto whale and KOL trades for copy-trading and investment signals.

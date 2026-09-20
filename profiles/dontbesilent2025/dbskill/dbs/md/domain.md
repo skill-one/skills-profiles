@@ -1,0 +1,11 @@
+# dbs (`dontbesilent2025/dbskill/dbs`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Business toolbox entry point that orchestrates tasks across business-oriented downstream skills.

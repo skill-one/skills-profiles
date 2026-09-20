@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Secures an auth deployment via rate limiting, CSRF, cookies, OAuth encryption, and audit logging."}

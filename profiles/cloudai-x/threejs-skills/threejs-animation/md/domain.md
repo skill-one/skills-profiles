@@ -1,0 +1,11 @@
+# threejs-animation (`cloudai-x/threejs-skills/threejs-animation`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Three.js 3D animation (keyframes, skeletal, morph targets, blending) is a 3D media task.

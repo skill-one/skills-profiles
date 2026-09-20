@@ -1,0 +1,11 @@
+# pptx (`anthropics/skills/pptx`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+PPTX document creation, editing, reading, and validation is core office presentation processing.

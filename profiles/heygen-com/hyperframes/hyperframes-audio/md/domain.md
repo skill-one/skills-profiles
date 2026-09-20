@@ -1,0 +1,11 @@
+# hyperframes-audio (`heygen-com/hyperframes/hyperframes-audio`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Audio mixing, effects, and ducking within a video composition is multimedia post-production.

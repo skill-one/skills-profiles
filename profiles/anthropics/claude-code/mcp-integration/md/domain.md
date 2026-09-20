@@ -1,0 +1,11 @@
+# mcp-integration (`anthropics/claude-code/mcp-integration`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Integrating external MCP servers (databases, APIs, file systems) into developer tooling via configuration and auth setup.

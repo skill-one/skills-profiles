@@ -1,0 +1,12 @@
+# insforge-cli (`insforge/insforge-skills/insforge-cli`)
+
+## domain
+
+### domain
+
+- devops-security
+- development
+
+### reason
+
+Managing a cloud backend platform: deployments, infra, monitoring, secrets, plus its databases and CLI workflows.

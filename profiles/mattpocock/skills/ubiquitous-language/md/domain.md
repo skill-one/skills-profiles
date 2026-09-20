@@ -1,0 +1,11 @@
+# ubiquitous-language (`mattpocock/skills/ubiquitous-language`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+DDD ubiquitous language is a software domain-modeling design practice within the development workflow.

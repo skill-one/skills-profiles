@@ -1,0 +1,11 @@
+# popups (`coreyhaines31/marketingskills/popups`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Popup and overlay conversion optimization is a marketing/growth tactic for capturing leads and driving business conversions.

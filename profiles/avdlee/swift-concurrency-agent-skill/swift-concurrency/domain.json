@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Diagnoses and refactors Swift concurrency code (actors, async/await, Sendable, data races)."}

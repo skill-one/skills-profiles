@@ -1,0 +1,11 @@
+# docx (`anthropics/skills/docx`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+The skill is dedicated to creating, reading, and editing .docx Word documents and templates.

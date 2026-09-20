@@ -1,0 +1,12 @@
+# twitter-automation (`magentosh/superpowers/twitter-automation`)
+
+## domain
+
+### domain
+
+- business-ops
+- content-creation
+
+### reason
+
+Social media automation for engagement and audience growth is marketing/growth; posting tweets with media is social media content delivery.

@@ -1,0 +1,11 @@
+# email-sequence (`coreyhaines31/marketingskills/email-sequence`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Email sequence design is a marketing/CRM automation activity aimed at customer nurture and conversion.

@@ -1,0 +1,1 @@
+{"domain": ["finance-payment"], "reason": "Integrates Stripe checkout, webhooks, and subscription gating into a Convex app."}

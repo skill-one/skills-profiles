@@ -1,0 +1,11 @@
+# ai-image-generation (`bankai-skills/superpowers/ai-image-generation`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Generates and edits images across 50+ AI models, squarely image generation & editing.

@@ -1,0 +1,11 @@
+# baoyu-infographic (`jimliu/baoyu-skills/baoyu-infographic`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Generates publication-ready infographic images by combining 21 layouts with 22 visual styles via raster image generation.

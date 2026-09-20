@@ -1,0 +1,11 @@
+# marketing-mindset (`axelfreeman/marketing-mindset/marketing-mindset`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+A marketer's operating mindset for client acquisition, growth strategy, and B2B/SaaS positioning.

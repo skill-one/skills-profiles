@@ -1,0 +1,11 @@
+# summarize (`openclaw/openclaw/summarize`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Condenses information from URLs, videos, podcasts, and documents into summaries or transcripts.

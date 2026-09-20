@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Reads and categorizes git PR/branch diffs to produce a structured code-change brief."}

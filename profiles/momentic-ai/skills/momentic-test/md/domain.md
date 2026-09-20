@@ -1,0 +1,11 @@
+# momentic-test (`momentic-ai/skills/momentic-test`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Creates, runs, and maintains E2E browser test suites with Playwright-based automation.

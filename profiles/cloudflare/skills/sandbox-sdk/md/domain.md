@@ -1,0 +1,11 @@
+# sandbox-sdk (`cloudflare/skills/sandbox-sdk`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+SDK for building code-execution environments: API integration, CI/CD, and developer tooling.

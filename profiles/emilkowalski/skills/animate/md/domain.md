@@ -1,0 +1,11 @@
+# animate (`emilkowalski/skills/animate`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+The skill writes animation implementation code (CSS, WAAPI, Motion) with specific curves, durations, and properties.

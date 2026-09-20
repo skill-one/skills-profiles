@@ -1,0 +1,11 @@
+# value (`hugmouse/skills/value`)
+
+## domain
+
+### domain
+
+- other
+
+### reason
+
+A skill that explicitly does nothing and is never used fits no functional category.

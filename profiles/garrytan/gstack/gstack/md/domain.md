@@ -1,0 +1,11 @@
+# gstack (`garrytan/gstack/gstack`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+A router that dispatches developer-workflow requests (planning, review, QA, shipping, security, docs) to the right gstack sub-skill.

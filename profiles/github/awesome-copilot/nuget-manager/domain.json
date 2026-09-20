@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Manages NuGet dependencies via dotnet CLI—pure developer workflow for package adds/updates."}

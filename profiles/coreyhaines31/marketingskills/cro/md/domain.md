@@ -1,0 +1,11 @@
+# cro (`coreyhaines31/marketingskills/cro`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+CRO optimizes marketing pages and forms to drive higher conversion rates, a core marketing/growth activity.

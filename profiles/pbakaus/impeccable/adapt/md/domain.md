@@ -1,0 +1,11 @@
+# adapt (`pbakaus/impeccable/adapt`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Responsive and cross-device UI/UX design adaptation for layouts, interactions, and touch targets.

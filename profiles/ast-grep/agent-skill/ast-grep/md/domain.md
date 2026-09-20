@@ -1,0 +1,11 @@
+# ast-grep (`ast-grep/agent-skill/ast-grep`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+CLI-based AST code search tool for finding structural patterns in codebases.

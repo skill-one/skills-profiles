@@ -1,0 +1,11 @@
+# gsap-scrolltrigger (`greensock/gsap-skills/gsap-scrolltrigger`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Code-level guide for integrating and configuring the GSAP ScrollTrigger plugin in web projects.

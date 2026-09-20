@@ -1,0 +1,11 @@
+# cross-critique (`warpdotdev/common-skills/cross-critique`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Resolves contested architecture, design, and debugging decisions via structured multi-agent critique.

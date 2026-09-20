@@ -1,0 +1,11 @@
+# contribute-catalog (`heygen-com/hyperframes/contribute-catalog`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Scaffolds, writes, validates, and ships code to an open-source repo via CLI and git/PR workflow.

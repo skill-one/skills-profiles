@@ -1,0 +1,11 @@
+# audit (`pbakaus/impeccable/audit`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Systematic code quality audit generating scored P0–P3 findings across accessibility, performance, theming, and responsiveness.

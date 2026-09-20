@@ -1,0 +1,11 @@
+# connector-googlecalendar (`caffeinelabs/skills/connector-googlecalendar`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+The skill is a mandatory recipe for Google Calendar integration (list/create events, check availability), squarely in the 'calendar' bucket.

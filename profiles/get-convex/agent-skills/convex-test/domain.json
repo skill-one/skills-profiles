@@ -1,0 +1,1 @@
+{"domain": ["testing"], "reason": "Generates Convex function tests using convex-test and vitest against an in-memory backend."}

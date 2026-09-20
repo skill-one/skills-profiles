@@ -1,0 +1,12 @@
+# three (`heygen-com/hyperframes/three`)
+
+## domain
+
+### domain
+
+- development
+- design-media
+
+### reason
+
+Three.js/WebGL code patterns for deterministic 3D rendering within the HyperFrames framework.

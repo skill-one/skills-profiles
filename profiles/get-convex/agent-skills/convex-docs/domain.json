@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Fetches version-pinned Convex docs and type definitions to write correct framework code."}

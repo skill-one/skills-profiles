@@ -1,0 +1,11 @@
+# dbs-benchmark (`dontbesilent2025/dbskill/dbs-benchmark`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Helps users find and analyze profitable business benchmarks to imitate for growth.

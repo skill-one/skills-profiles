@@ -1,0 +1,11 @@
+# prototype (`emilkowalski/skills/prototype`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Builds and visually compares divergent UI component variants for design exploration.

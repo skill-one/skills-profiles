@@ -1,0 +1,1 @@
+{"domain": ["testing", "development"], "reason": "Orchestrates parallel agents to independently debug and fix failing test suites."}

@@ -1,0 +1,11 @@
+# fixing-metadata (`ibelick/ui-skills/fixing-metadata`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Auditing and fixing HTML meta tags, JSON-LD, and social cards is a code-level web development task.

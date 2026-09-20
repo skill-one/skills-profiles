@@ -1,0 +1,11 @@
+# taxonomy (`amplitude/mcp-marketplace/taxonomy`)
+
+## domain
+
+### domain
+
+- data-analysis
+
+### reason
+
+Governs analytics data schema: naming, quality audits, and deprecation of event/property taxonomies.

@@ -1,0 +1,11 @@
+# shadcn-ui (`giuseppe-trisciuoglio/developer-kit/shadcn-ui`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Covers installing and coding React/Tailwind UI components, forms, and charts in a developer workflow.
