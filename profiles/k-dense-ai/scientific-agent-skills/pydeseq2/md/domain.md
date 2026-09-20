@@ -1,0 +1,11 @@
+# pydeseq2 (`k-dense-ai/scientific-agent-skills/pydeseq2`)
+
+## domain
+
+### domain
+
+- data-analysis
+
+### reason
+
+Runs statistical differential-expression tests, FDR correction, and visualization on RNA-seq count data.

@@ -1,0 +1,11 @@
+# pptx-quality-gates (`wshobson/agents/pptx-quality-gates`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Validates and repairs PPTX files for geometry, accessibility, and package integrity.

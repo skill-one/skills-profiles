@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Configuring and validating GPU framework integration (CUDA graphs) in a training codebase via code, CLI, and tests."}

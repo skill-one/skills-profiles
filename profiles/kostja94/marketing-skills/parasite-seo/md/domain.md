@@ -1,0 +1,11 @@
+# parasite-seo (`kostja94/marketing-skills/parasite-seo`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Parasite SEO is a marketing/SEO strategy for rankings and backlinks via third-party platforms.

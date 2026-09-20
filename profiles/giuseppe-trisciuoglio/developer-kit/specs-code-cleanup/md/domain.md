@@ -1,0 +1,11 @@
+# specs-code-cleanup (`giuseppe-trisciuoglio/developer-kit/specs-code-cleanup`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Post-review code hygiene (dead code, debug logs, imports, formatting) is a developer workflow task.

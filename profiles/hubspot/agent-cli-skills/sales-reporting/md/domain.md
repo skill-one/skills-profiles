@@ -1,0 +1,11 @@
+# sales-reporting (`hubspot/agent-cli-skills/sales-reporting`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Sales pipeline reporting and win/loss analysis from HubSpot CRM, aimed at business growth.

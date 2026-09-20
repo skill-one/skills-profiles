@@ -1,0 +1,11 @@
+# preview-import (`adobe/skills/preview-import`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Local CLI dev-server workflow: start server, browse, verify DOM/rendering, troubleshoot 404s and broken refs.

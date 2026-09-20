@@ -1,0 +1,11 @@
+# firecrawl-qa (`firecrawl/skills/firecrawl-qa`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Performs exploratory QA and bug hunting on live sites with structured quality reports.

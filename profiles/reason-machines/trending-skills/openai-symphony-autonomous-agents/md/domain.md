@@ -1,0 +1,11 @@
+# openai-symphony-autonomous-agents (`reason-machines/trending-skills/openai-symphony-autonomous-agents`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Autonomous coding agents that manage git branches, open PRs, and check CI status — a developer workflow tool.

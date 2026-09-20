@@ -1,0 +1,1 @@
+{"domain": ["data-analysis"], "reason": "Multi-step ETL pipeline transforming raw videos into structured CoT training annotations."}

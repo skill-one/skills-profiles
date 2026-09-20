@@ -1,0 +1,11 @@
+# invoice-chase (`anthropics/knowledge-work-plugins/invoice-chase`)
+
+## domain
+
+### domain
+
+- finance-payment
+
+### reason
+
+Chases overdue invoices across accounting ledgers and payment processors, the core of billing and receivables management.

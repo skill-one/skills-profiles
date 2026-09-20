@@ -1,0 +1,11 @@
+# service-itsm-agentic-setup-cmdb-access-assign (`forcedotcom/sf-skills/service-itsm-agentic-setup-cmdb-access-assign`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Grants user-level access to CMDB via permission sets and licenses on a live SaaS org — an access-control admin task.

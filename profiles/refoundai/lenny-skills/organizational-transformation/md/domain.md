@@ -1,0 +1,11 @@
+# organizational-transformation (`refoundai/lenny-skills/organizational-transformation`)
+
+## domain
+
+### domain
+
+- other
+
+### reason
+
+Organizational change management and product operating models don't fit any listed category.

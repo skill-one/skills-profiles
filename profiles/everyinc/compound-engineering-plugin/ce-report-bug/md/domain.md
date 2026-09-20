@@ -1,0 +1,11 @@
+# ce-report-bug (`everyinc/compound-engineering-plugin/ce-report-bug`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Files GitHub issues via gh CLI to report bugs in a developer tool.

@@ -1,0 +1,11 @@
+# using-sops (`jssblck/agents/using-sops`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Encrypted secrets management, age-key identity, and secure deployment environments are core DevOps security.

@@ -1,0 +1,11 @@
+# explainer (`pika-labs/pika-plugins/explainer`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Generates a composited explainer video with avatar lipsync and browser-captured footage — core video production.

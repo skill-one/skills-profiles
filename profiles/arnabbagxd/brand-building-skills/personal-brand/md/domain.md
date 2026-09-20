@@ -1,0 +1,11 @@
+# personal-brand (`arnabbagxd/brand-building-skills/personal-brand`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Personal brand strategy is marketing/positioning work aimed at building professional credibility and audience.

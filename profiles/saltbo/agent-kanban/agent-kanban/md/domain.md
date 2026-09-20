@@ -1,0 +1,11 @@
+# agent-kanban (`saltbo/agent-kanban/agent-kanban`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+The skill orchestrates an agent performing code, git, test, and PR work within a task-lifecycle workflow.

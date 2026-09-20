@@ -1,0 +1,11 @@
+# insta (`insforge/instacloud-skills/insta`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Manages cloud infrastructure, app deployment, branch environments, and monitoring via CLI.

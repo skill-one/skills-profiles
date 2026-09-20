@@ -1,0 +1,11 @@
+# wren (`canner/wrenai/wren`)
+
+## domain
+
+### domain
+
+- data-analysis
+
+### reason
+
+Semantic SQL layer for querying 22+ databases, building data models, and generating analytics dashboards.

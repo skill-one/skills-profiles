@@ -1,0 +1,11 @@
+# attribution-setup (`appeeky/aso-skills/attribution-setup`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Sets up marketing attribution measurement (SKAN, MMP, CV schemas) to track paid campaign installs and revenue.

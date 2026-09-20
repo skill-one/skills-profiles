@@ -1,0 +1,11 @@
+# create-business (`wondelai/skills/create-business`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Multi-phase journey from idea to validated strategy, positioning, and pricing for a new business.

@@ -1,0 +1,11 @@
+# extract-errors (`react/react/extract-errors`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Running a CLI build step to maintain error-code definitions in the React codebase.

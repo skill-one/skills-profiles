@@ -1,0 +1,11 @@
+# qwencloud-update-check (`qwencloud/qwencloud-ai/qwencloud-update-check`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Version/dependency update checker for a dev skill pack, a developer workflow tool.

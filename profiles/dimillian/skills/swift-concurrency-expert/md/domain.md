@@ -1,0 +1,11 @@
+# swift-concurrency-expert (`dimillian/skills/swift-concurrency-expert`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Fixes Swift concurrency compiler errors and refactors code for actor isolation and Sendable safety.

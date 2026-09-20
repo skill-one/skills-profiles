@@ -1,0 +1,11 @@
+# adopt-spec (`zernie/vigiles/adopt-spec`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Generates a typed TypeScript spec file and CI compile/lint steps for a developer tool.

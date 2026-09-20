@@ -1,0 +1,11 @@
+# sosumi (`nshipster/sosumi.ai/sosumi`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Fetches Apple API docs for coding agents to look up signatures and behavior during development.

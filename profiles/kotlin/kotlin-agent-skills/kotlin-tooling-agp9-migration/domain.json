@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Migrating KMP projects to AGP 9.0 is a build-tooling and dependency refactoring task."}

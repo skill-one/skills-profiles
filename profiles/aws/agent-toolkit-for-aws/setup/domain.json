@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Configuring AWS cloud agent connections (MCP, IAM, S3) is cloud infrastructure and security setup."}

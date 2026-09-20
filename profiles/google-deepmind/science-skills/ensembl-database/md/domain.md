@@ -1,0 +1,11 @@
+# ensembl-database (`google-deepmind/science-skills/ensembl-database`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Ensembl REST API database querying, ID resolution, and sequence retrieval via helper scripts.

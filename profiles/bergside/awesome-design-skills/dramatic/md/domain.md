@@ -1,0 +1,11 @@
+# dramatic (`bergside/awesome-design-skills/dramatic`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+A theatrical, high-contrast UI design system with tokens, component rules, and visual guidelines.

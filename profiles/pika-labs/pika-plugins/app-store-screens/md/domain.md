@@ -1,0 +1,11 @@
+# app-store-screens (`pika-labs/pika-plugins/app-store-screens`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Generates branded 1290×2796 PNG visuals via image generation and layout design for App Store listings.

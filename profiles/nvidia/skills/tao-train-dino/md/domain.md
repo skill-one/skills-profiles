@@ -1,0 +1,11 @@
+# tao-train-dino (`nvidia/skills/tao-train-dino`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+ML model training, evaluation, and deployment via TAO SDK/PyTorch/TensorRT is a developer framework-integration workflow.

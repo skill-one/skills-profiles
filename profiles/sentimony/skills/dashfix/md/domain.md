@@ -1,0 +1,11 @@
+# dashfix (`sentimony/skills/dashfix`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Repository-scoped typography linter using git hooks, rg, and project files—a developer workflow enforcement tool.

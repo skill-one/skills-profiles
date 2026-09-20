@@ -1,0 +1,11 @@
+# dfam-check (`earthtojake/text-to-cad/dfam-check`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Analyzes 3D mesh geometry for additive-manufacturing printability and gives 3D redesign guidance.

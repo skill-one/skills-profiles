@@ -1,0 +1,11 @@
+# htmx (`mindrally/skills/htmx`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+HTMX attribute-based web app development with HTML and server API integration.

@@ -1,0 +1,11 @@
+# deep-research (`daymade/claude-code-skills/deep-research`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Explicitly performs deep research with evidence tracking, source governance, and multi-pass synthesis.

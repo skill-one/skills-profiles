@@ -1,0 +1,11 @@
+# where-was-this-taken (`useosint/skills/where-was-this-taken`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Structured deep-research workflow that retrieves and verifies media provenance through multiple independent evidence lines.

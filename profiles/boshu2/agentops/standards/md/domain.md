@@ -1,0 +1,11 @@
+# standards (`boshu2/agentops/standards`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+The skill performs standards-compliance code review and quality checks on changed files, reporting cited findings without editing.

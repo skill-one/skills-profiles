@@ -1,0 +1,11 @@
+# project-health (`jezweb/claude-skills/project-health`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Manages developer environment configuration, permissions, and project setup workflows.

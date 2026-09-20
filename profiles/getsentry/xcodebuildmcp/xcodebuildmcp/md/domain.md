@@ -1,0 +1,11 @@
+# xcodebuildmcp (`getsentry/xcodebuildmcp/xcodebuildmcp`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Developer workflow tool for building, running, and debugging Apple platform apps.

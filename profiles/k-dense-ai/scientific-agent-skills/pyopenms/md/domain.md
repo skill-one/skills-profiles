@@ -1,0 +1,11 @@
+# pyopenms (`k-dense-ai/scientific-agent-skills/pyopenms`)
+
+## domain
+
+### domain
+
+- data-analysis
+
+### reason
+
+Processes mass-spec experimental data: feature detection, quantification, normalization, and visualization pipelines.

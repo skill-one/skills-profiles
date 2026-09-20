@@ -1,0 +1,1 @@
+{"domain": ["testing"], "reason": "Scores ASR model outputs against clinical references and gates next steps on metric thresholds."}

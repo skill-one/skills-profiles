@@ -1,0 +1,11 @@
+# cms-migration (`payloadcms/skills/cms-migration`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Designing Payload CMS collection schemas and generating migration scripts is framework-integration developer work.

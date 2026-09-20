@@ -1,0 +1,11 @@
+# ai-engineer (`sickn33/agentic-awesome-skills/ai-engineer`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Building production LLM apps, RAG systems, and agent architectures via code, API integration, and vector databases.

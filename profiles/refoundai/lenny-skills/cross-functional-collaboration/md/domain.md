@@ -1,0 +1,11 @@
+# cross-functional-collaboration (`refoundai/lenny-skills/cross-functional-collaboration`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Cross-functional team structure, role clarity, and meeting rhythms are team work management concerns.

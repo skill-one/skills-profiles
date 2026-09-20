@@ -1,0 +1,11 @@
+# aws-storage (`aws/agent-toolkit-for-aws/aws-storage`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+AWS storage service selection, configuration, migration, and troubleshooting is core cloud infrastructure work.

@@ -1,0 +1,12 @@
+# logfire-instrumentation (`pydantic/skills/logfire-instrumentation`)
+
+## domain
+
+### domain
+
+- development
+- devops-security
+
+### reason
+
+Adding observability instrumentation code (traces, logs, metrics) to application services.

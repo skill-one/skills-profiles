@@ -1,0 +1,11 @@
+# vitest (`jezweb/claude-skills/vitest`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Sets up Vitest test framework, generates test configs, sample tests, and mocking patterns.

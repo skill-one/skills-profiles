@@ -1,0 +1,11 @@
+# screenci (`screenci/screenci/screenci`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Creates narrated product walkthrough videos and stills with zoom, camera motion, and hiding.

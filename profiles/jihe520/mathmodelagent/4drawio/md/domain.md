@@ -1,0 +1,11 @@
+# 4drawio (`jihe520/mathmodelagent/4drawio`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Core task is creating structured visual diagrams (flowcharts, roadmaps, model structure) via DrawIO.

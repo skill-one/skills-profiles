@@ -1,0 +1,11 @@
+# capacitor-plugins (`capawesome-team/skills/capacitor-plugins`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Integrating Capacitor plugin dependencies and framework-specific build configuration into a mobile app project.

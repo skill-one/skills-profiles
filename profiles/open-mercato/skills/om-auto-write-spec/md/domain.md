@@ -1,0 +1,11 @@
+# om-auto-write-spec (`open-mercato/skills/om-auto-write-spec`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Autonomous spec-to-PR pipeline built on git worktrees, commits, PRs, and issue tracking within the SDLC.

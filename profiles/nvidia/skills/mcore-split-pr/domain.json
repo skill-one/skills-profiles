@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Splits GitHub PRs via git diff/apply to minimize CODEOWNERS reviewer groups."}

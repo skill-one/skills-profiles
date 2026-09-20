@@ -1,0 +1,11 @@
+# doherty-threshold (`owl-listener/designer-skills/doherty-threshold`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+The skill defines UI interaction-design patterns (response timing, loading states, transitions) to preserve perceived performance and user flow.

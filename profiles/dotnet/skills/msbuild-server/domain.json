@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Optimizes CLI build performance via MSBuild Server caching for dotnet builds."}

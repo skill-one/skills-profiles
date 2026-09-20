@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Reconstructing struct layouts from decompiled binary code is a low-level development/debugging workflow."}

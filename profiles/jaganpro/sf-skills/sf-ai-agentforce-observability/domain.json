@@ -1,0 +1,1 @@
+{"domain": ["data-analysis"], "reason": "Extracts and analyzes Agentforce telemetry into Parquet via Polars for session diagnostics."}

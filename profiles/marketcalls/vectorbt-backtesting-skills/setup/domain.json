@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Creates Python venv, installs dependencies, and configures environment for backtesting tools."}

@@ -1,0 +1,11 @@
+# wordpress-content (`jezweb/claude-skills/wordpress-content`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+Publishes and manages blog posts, pages, media, and menus on WordPress via CLI/API.

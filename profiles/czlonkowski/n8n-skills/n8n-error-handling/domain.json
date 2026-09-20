@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Wiring n8n error paths, retry config, and API response shapes is framework/API development work."}

@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Monitoring k6 load-test metrics over time to detect service degradation is core SRE/observability work."}

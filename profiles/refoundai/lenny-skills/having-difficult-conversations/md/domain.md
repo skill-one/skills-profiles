@@ -1,0 +1,11 @@
+# having-difficult-conversations (`refoundai/lenny-skills/having-difficult-conversations`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Workplace interpersonal communication for feedback, performance, conflict, and termination conversations.

@@ -1,0 +1,11 @@
+# video-to-sfx (`sonilo-ai/skills/video-to-sfx`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Generates sound effects and muxes them into video, which is core video/media production work.

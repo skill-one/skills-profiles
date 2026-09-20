@@ -1,0 +1,11 @@
+# extract (`alirezarezvani/claude-skills/extract`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Developer-workflow tool that packages debugging patterns into portable, installable skill files.

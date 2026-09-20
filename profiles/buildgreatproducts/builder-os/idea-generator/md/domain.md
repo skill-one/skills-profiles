@@ -1,0 +1,11 @@
+# idea-generator (`buildgreatproducts/builder-os/idea-generator`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Guides a founder to discover and score a product idea aimed at business growth.

@@ -1,0 +1,11 @@
+# diffity-learn (`nilbuild/diffity/diffity-learn`)
+
+## domain
+
+### domain
+
+- education
+
+### reason
+
+A project-driven tutor that plans lessons, teaches through guided tours, and adapts to the learner.

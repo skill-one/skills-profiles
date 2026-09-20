@@ -1,0 +1,11 @@
+# authentication (`codewithmukesh/dotnet-claude-kit/authentication`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Application-level C# code for ASP.NET Core auth (JWT, policies, OIDC) is framework integration.

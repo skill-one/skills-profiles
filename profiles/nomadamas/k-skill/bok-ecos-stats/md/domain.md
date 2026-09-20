@@ -1,0 +1,11 @@
+# bok-ecos-stats (`nomadamas/k-skill/bok-ecos-stats`)
+
+## domain
+
+### domain
+
+- data-analysis
+
+### reason
+
+Queries central-bank economic time-series statistics (rates, FX, CPI, M2), which is statistical data retrieval.

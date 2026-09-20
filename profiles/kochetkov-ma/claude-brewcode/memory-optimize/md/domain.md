@@ -1,0 +1,11 @@
+# memory-optimize (`kochetkov-ma/claude-brewcode/memory-optimize`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Optimizes Claude Code dev-tool memory and config files to reduce token costs and keep developer workflows clean.

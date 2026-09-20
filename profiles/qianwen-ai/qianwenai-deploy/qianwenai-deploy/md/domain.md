@@ -1,0 +1,11 @@
+# qianwenai-deploy (`qianwen-ai/qianwenai-deploy/qianwenai-deploy`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Cloud infrastructure deployment, release, and resource lifecycle management on Alibaba Cloud.

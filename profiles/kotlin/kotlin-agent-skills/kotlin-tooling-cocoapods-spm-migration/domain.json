@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Migrates KMP build dependencies from CocoaPods to SwiftPM and refactors Kotlin import statements."}

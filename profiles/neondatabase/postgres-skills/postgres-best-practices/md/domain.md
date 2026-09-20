@@ -1,0 +1,11 @@
+# postgres-best-practices (`neondatabase/postgres-skills/postgres-best-practices`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Covers Postgres schema design, indexing, and query optimization as core developer database work.

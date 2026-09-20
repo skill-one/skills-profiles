@@ -1,0 +1,11 @@
+# planetscale-codebase-sqlcommenter-instrumentation (`planetscale/skills/planetscale-codebase-sqlcommenter-instrumentation`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Recommends SQLCommenter packages and code-level query tagging instrumentation for database-connected app stacks.

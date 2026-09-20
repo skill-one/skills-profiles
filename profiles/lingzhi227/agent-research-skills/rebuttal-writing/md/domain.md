@@ -1,0 +1,11 @@
+# rebuttal-writing (`lingzhi227/agent-research-skills/rebuttal-writing`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+The skill's core task is composing a structured written rebuttal document to peer reviewers.

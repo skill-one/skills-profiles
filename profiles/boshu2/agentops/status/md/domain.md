@@ -1,0 +1,11 @@
+# status (`boshu2/agentops/status`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Reports observable monitoring status and artifact health for an agent-ops system.

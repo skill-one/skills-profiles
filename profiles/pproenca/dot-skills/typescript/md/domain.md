@@ -1,0 +1,11 @@
+# typescript (`pproenca/dot-skills/typescript`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Covers TypeScript compilation config, type-system optimization, and async code patterns—core coding and build tasks.

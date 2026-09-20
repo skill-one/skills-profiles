@@ -1,0 +1,11 @@
+# migrate (`codewithmukesh/dotnet-claude-kit/migrate`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Guided workflow for EF Core schema migrations, .NET upgrades, and NuGet dependency updates—core developer workflows.

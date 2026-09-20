@@ -1,0 +1,11 @@
+# nuqs (`pproenca/dot-skills/nuqs`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Type-safe URL query state code generation, refactoring, and debugging for Next.js/React frameworks.

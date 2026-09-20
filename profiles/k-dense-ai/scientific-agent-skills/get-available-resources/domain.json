@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Infra resource-limit detection for planning compute workloads within cgroup/scheduler constraints."}

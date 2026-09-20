@@ -1,0 +1,11 @@
+# goals (`boshu2/agentops/goals`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+CLI tool for measuring and tracking declared project fitness goals in agent workflows.

@@ -1,0 +1,11 @@
+# clean (`bergside/awesome-design-skills/clean`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Defines a clean UI design system with visual tokens, component rules, and accessibility standards.

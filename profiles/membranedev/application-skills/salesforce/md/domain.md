@@ -1,0 +1,11 @@
+# salesforce (`membranedev/application-skills/salesforce`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Salesforce CRM/sales/marketing record management and workflows, squarely in business growth.

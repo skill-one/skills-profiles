@@ -1,0 +1,11 @@
+# heygen-translate (`heygen-com/skills/heygen-translate`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Takes an existing video and produces a dubbed, lip-synced video in a target language.

@@ -1,0 +1,11 @@
+# nemo-evaluator-plugin (`nvidia/skills/nemo-evaluator-plugin`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+CLI/SDK-based workflow for submitting and managing AI model evaluation platform jobs.

@@ -1,0 +1,11 @@
+# transpose (`ghaida/intent/transpose`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Rethinking interaction models, content priority, and UX conventions across platforms is core UI/UX design work.

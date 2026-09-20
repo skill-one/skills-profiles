@@ -1,0 +1,1 @@
+{"domain": ["data-analysis", "development"], "reason": "Scales pandas/NumPy data workflows (ETL, cleaning, aggregation) beyond RAM via distributed computing."}

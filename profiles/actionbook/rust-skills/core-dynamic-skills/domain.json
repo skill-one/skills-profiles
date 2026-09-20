@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Manages Rust crate dependencies and generates skill files via CLI, a developer workflow."}

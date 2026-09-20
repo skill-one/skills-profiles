@@ -1,0 +1,11 @@
+# custom-product-pages (`appeeky/aso-skills/custom-product-pages`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+The skill plans and measures ad-campaign-specific App Store pages to lift conversion and reduce CPI.

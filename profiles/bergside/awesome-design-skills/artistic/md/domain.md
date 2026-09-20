@@ -1,0 +1,11 @@
+# artistic (`bergside/awesome-design-skills/artistic`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Defines design-system tokens, typography, color, and visual component rules for artistic UI.

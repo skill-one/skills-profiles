@@ -1,0 +1,11 @@
+# pptx-reference-deck-analysis (`wshobson/agents/pptx-reference-deck-analysis`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Read-only PPTX structure, theme, and layout analysis is core ppt document processing.

@@ -1,0 +1,11 @@
+# setup-security-agent (`aws/agent-toolkit-for-aws/setup-security-agent`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Provisions and configures AWS cloud infrastructure (IAM roles, S3 buckets, agent spaces) for security scanning.

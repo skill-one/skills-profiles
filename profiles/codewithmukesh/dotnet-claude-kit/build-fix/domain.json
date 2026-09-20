@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Drives broken .NET builds or test suites to green via bounded iterative fix loops."}

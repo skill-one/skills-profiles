@@ -1,0 +1,11 @@
+# godot-development (`zate/cc-godot/godot-development`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Godot engine coding, scene/script authoring, and debugging workflows.

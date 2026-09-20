@@ -1,0 +1,11 @@
+# ib-check-deck (`anthropics/financial-services/ib-check-deck`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+PPTX presentation QC (number consistency, narrative, language, visual checks) is document processing.

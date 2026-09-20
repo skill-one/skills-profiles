@@ -1,0 +1,11 @@
+# continual-learning (`cursor/plugins/continual-learning`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Mining prior transcripts to keep AGENTS.md current is organizing material into a maintained knowledge base.

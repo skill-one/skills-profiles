@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Generates TypeScript Drizzle ORM database schemas and migration workflows for Cloudflare D1."}

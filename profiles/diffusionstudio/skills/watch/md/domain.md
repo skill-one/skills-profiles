@@ -1,0 +1,11 @@
+# watch (`diffusionstudio/skills/watch`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+The skill's core task is analyzing and extracting information from video and audio footage.

@@ -1,0 +1,11 @@
+# datamol (`k-dense-ai/scientific-agent-skills/datamol`)
+
+## domain
+
+### domain
+
+- other
+
+### reason
+
+Domain-specific cheminformatics tool for molecular drug discovery; no listed category covers scientific computing.

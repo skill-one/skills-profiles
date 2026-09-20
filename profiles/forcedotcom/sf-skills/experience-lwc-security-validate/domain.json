@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Security compliance audit of LWC components against a rule catalog, producing vulnerability findings and SARIF reports."}

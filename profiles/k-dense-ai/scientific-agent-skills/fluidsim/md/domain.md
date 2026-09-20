@@ -1,0 +1,11 @@
+# fluidsim (`k-dense-ai/scientific-agent-skills/fluidsim`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Centered on configuring, script-generating, dependency-locking, and executing a Python CFD simulation framework.

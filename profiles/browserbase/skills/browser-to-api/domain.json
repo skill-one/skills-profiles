@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Processes browser-trace captures to generate OpenAPI specs for undocumented APIs, enabling client integration."}

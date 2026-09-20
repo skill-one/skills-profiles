@@ -1,0 +1,12 @@
+# verify (`react/react/verify`)
+
+## domain
+
+### domain
+
+- development
+- testing
+
+### reason
+
+Pre-commit verification pipeline running format, lint, type-check, and tests for React.

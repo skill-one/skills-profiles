@@ -1,0 +1,11 @@
+# roundup (`github/awesome-copilot/roundup`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Generates personalized status briefings and team updates, squarely work management and reporting.

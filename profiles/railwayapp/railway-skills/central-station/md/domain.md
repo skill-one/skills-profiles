@@ -1,0 +1,11 @@
+# central-station (`railwayapp/railway-skills/central-station`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Searching and retrieving information from Railway's community knowledge base and support threads.

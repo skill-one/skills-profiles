@@ -1,0 +1,11 @@
+# scikit-learn (`k-dense-ai/scientific-agent-skills/scikit-learn`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Building and training ML models via Python code and scikit-learn framework integration is core software development.

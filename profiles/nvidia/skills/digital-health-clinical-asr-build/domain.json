@@ -1,0 +1,1 @@
+{"domain": ["testing"], "reason": "Builds a NeMo evaluation benchmark (manifest + reference audio) to score ASR quality."}

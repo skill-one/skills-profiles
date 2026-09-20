@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Secures Redis deployments via auth, ACL, TLS, firewall rules, and network exposure lockdown."}

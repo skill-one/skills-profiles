@@ -1,0 +1,1 @@
+{"domain": ["devops-security"], "reason": "Runs AWS Security Agent to scan git diffs for security vulnerabilities pre-commit/pre-PR."}

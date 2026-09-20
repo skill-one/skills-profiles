@@ -1,0 +1,11 @@
+# apple-crash-symbolication (`dotnet/skills/apple-crash-symbolication`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Debugging .NET crashes on Apple platforms by resolving native backtraces to source via dSYMs and atos.

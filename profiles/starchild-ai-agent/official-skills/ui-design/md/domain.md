@@ -1,0 +1,11 @@
+# ui-design (`starchild-ai-agent/official-skills/ui-design`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+UI/UX quality gate and build guide for visual HTML/CSS/JS outputs like pages and dashboards.

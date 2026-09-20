@@ -1,0 +1,11 @@
+# cs-onboard (`codestable/codestable/cs-onboard`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Sets up a git-tracked project skeleton and cross-session developer workflow conventions for a code repository.

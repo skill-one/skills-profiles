@@ -1,0 +1,1 @@
+{"domain": ["development", "testing"], "reason": "Manages PR feedback through git workflows, validation gates, and cross-review before committing or pushing."}

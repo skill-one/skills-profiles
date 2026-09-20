@@ -1,0 +1,11 @@
+# asr (`marswaveai/skills/asr`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+Converts audio to text, i.e. producing written content from spoken input.

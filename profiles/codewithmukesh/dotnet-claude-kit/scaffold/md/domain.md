@@ -1,0 +1,11 @@
+# scaffold (`codewithmukesh/dotnet-claude-kit/scaffold`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Generates complete .NET feature code slices (endpoints, handlers, DTOs, EF config) across architecture patterns.

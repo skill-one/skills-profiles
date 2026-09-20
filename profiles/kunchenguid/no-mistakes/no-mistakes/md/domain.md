@@ -1,0 +1,11 @@
+# no-mistakes (`kunchenguid/no-mistakes/no-mistakes`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+A CI/CD pipeline gate for git commits, PRs, and code validation before push.

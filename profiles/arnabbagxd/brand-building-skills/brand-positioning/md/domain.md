@@ -1,0 +1,11 @@
+# brand-positioning (`arnabbagxd/brand-building-skills/brand-positioning`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Brand positioning is a core marketing strategy activity aimed at market differentiation and competitive advantage.

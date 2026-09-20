@@ -1,0 +1,11 @@
+# sf-testing (`jaganpro/sf-skills/sf-testing`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+Centrally about running Apex tests, coverage analysis, and structured test-fix loops.

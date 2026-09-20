@@ -1,0 +1,11 @@
+# retro (`bergside/awesome-design-skills/retro`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Defines a retro UI design system with visual tokens, typography, color palettes, and component rules.

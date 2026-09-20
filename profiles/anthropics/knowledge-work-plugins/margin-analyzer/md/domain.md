@@ -1,0 +1,11 @@
+# margin-analyzer (`anthropics/knowledge-work-plugins/margin-analyzer`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Pricing and margin analysis for SMB owners is a core business-growth and operations decision.

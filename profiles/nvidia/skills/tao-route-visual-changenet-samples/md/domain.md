@@ -1,0 +1,11 @@
+# tao-route-visual-changenet-samples (`nvidia/skills/tao-route-visual-changenet-samples`)
+
+## domain
+
+### domain
+
+- data-analysis
+
+### reason
+
+Reads a parquet, applies label-based filters, and writes routed data subsets plus a summary — classic ETL/routing.

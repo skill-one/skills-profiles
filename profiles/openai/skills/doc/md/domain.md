@@ -1,0 +1,11 @@
+# doc (`openai/skills/doc`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Reads, creates, edits, and visually validates .docx documents with layout fidelity.

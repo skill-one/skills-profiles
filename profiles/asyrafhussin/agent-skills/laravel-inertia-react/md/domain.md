@@ -1,0 +1,11 @@
+# laravel-inertia-react (`asyrafhussin/agent-skills/laravel-inertia-react`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Provides coding patterns for Laravel + Inertia.js + React full-stack web application development.

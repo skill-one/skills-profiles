@@ -1,0 +1,11 @@
+# apollo-router (`apollographql/skills/apollo-router`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Generates version-aware YAML configs for Apollo Router, a developer tool for federated GraphQL gateways.

@@ -1,0 +1,11 @@
+# evolve (`boshu2/agentops/evolve`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Autonomous software improvement loop orchestrating git, refactoring, CI, and code-quality cycles as a developer workflow.

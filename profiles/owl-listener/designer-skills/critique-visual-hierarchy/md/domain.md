@@ -1,0 +1,11 @@
+# critique-visual-hierarchy (`owl-listener/designer-skills/critique-visual-hierarchy`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Critiques rendered screen visual hierarchy (entry point, eye flow, weight, emphasis) as a UI design review.

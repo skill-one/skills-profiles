@@ -1,0 +1,11 @@
+# om-open-pr (`open-mercato/skills/om-open-pr`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Automates git commit, push, PR open/reuse, and label management within a developer pipeline.

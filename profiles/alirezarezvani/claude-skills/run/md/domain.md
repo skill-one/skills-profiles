@@ -1,0 +1,11 @@
+# run (`alirezarezvani/claude-skills/run`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Iterative code-change-and-evaluate loop with git commits and script execution.

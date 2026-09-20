@@ -1,0 +1,1 @@
+{"domain": ["testing"], "reason": "Prepares repeatable local test/QA environments by generating cross-platform launch scripts for test consumers."}

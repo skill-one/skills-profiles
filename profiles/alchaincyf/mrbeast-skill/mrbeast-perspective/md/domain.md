@@ -1,0 +1,11 @@
+# mrbeast-perspective (`alchaincyf/mrbeast-skill/mrbeast-perspective`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+Framework for creating and optimizing YouTube video content (titles, thumbnails, hooks, retention pacing).

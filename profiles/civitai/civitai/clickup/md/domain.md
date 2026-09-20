@@ -1,0 +1,11 @@
+# clickup (`civitai/civitai/clickup`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+ClickUp task, comment, and doc management is core team work management.

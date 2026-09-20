@@ -1,0 +1,11 @@
+# diffity-tour (`nilbuild/diffity/diffity-tour`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+CLI-driven codebase tour tool for developer comprehension, PR review, and step-by-step code navigation.

@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Diagnoses runtime errors, timeouts, and tool failures in AWS AgentCore agents by reading traces and logs."}

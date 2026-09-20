@@ -1,0 +1,11 @@
+# blueprint (`ghaida/intent/blueprint`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Service design and system architecture mapping that produces blueprints, diagrams, and structural redesign proposals.

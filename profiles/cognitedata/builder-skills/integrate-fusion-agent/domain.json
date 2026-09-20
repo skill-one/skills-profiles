@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Wires up @cognite/app-sdk agent sidebar integration in a React app (hooks, resources, actions)."}

@@ -1,0 +1,11 @@
+# strategize (`ghaida/intent/strategize`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Frames business problems, sizes market opportunities, and maps competitive landscapes for strategic decisions.

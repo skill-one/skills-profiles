@@ -1,0 +1,11 @@
+# whisper (`davila7/claude-code-templates/whisper`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Whisper is a speech-to-text framework integrated via Python API and CLI, squarely API/framework integration.

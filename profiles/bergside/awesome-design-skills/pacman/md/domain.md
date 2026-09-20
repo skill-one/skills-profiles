@@ -1,0 +1,11 @@
+# pacman (`bergside/awesome-design-skills/pacman`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Authors a retro-arcade UI design system with tokens, component rules, and accessibility specs.

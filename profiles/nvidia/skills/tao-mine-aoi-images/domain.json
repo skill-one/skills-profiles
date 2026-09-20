@@ -1,0 +1,1 @@
+{"domain": ["data-analysis"], "reason": "Fixed three-step ETL pipeline: embed parquets, k-NN retrieve, output augmented dataset."}

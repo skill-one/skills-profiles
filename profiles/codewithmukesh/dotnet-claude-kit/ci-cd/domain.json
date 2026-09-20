@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "CI/CD pipeline YAML setup is a developer workflow (CI, builds, dependencies)."}

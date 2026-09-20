@@ -1,0 +1,12 @@
+# 6verity (`jihe520/mathmodelagent/6verity`)
+
+## domain
+
+### domain
+
+- testing
+- office-productivity
+
+### reason
+
+Runs quality gates and acceptance checks on math modeling competition papers.

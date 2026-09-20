@@ -1,0 +1,1 @@
+{"domain": ["devops-security", "development"], "reason": "Defines autonomous execution, rollback, and halt discipline for deploying production database schema changes."}

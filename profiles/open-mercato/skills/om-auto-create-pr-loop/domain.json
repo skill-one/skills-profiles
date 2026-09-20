@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Orchestrates multi-step code implementation via worktrees, commits, PRs, and CI validation gates."}

@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Maintains generated Rust skill docs by checking file references and fetching missing content via CLI/browser tools."}

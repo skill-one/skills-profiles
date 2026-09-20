@@ -1,0 +1,11 @@
+# image (`vercel-labs/json-render/image`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Renders JSON specs into SVG/PNG images for OG cards and social media visuals.

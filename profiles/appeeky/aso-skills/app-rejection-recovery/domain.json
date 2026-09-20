@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "App rejection recovery is a developer release-workflow task: diagnosing guideline violations, fixing code/config, and resubmitting builds."}

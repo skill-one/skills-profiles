@@ -1,0 +1,11 @@
+# seo-audit (`brightdata/skills/seo-audit`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Audits SEO issues to improve organic search performance, squarely in the marketing/SEO/growth space.

@@ -1,0 +1,11 @@
+# grilling (`pandoscope/skills/grilling`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Interview-style tool that stress-tests plans and decisions before committing to them.

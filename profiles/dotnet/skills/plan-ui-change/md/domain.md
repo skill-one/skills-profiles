@@ -1,0 +1,11 @@
+# plan-ui-change (`dotnet/skills/plan-ui-change`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Plans and implements Blazor component architecture: writing .razor files, data-flow design, and code ordering.

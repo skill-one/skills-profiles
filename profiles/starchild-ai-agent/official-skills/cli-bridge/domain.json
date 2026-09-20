@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Manages CLI auth bundles, local shell/file-transfer bridges, and MCP proxy infrastructure for a developer CLI tool."}

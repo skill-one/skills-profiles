@@ -1,0 +1,1 @@
+{"domain": ["development"], "reason": "Emulates and debugs binary code fragments via Unicorn engine hooks."}

@@ -1,0 +1,11 @@
+# dropbox (`membranedev/application-skills/dropbox`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+Dropbox file/folder management and shared-link operations serve personal and team work workflows.

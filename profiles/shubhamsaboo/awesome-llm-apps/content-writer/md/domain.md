@@ -1,0 +1,11 @@
+# content-writer (`shubhamsaboo/awesome-llm-apps/content-writer`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+The skill's core function is copywriting (marketing text, social posts, emails), which is explicitly listed under content-creation.

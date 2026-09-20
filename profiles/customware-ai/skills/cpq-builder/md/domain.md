@@ -1,0 +1,11 @@
+# cpq-builder (`customware-ai/skills/cpq-builder`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Defines architectural patterns and code-level standards for building a React/TypeScript SPA prototype.

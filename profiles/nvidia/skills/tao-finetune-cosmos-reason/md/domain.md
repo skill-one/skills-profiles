@@ -1,0 +1,11 @@
+# tao-finetune-cosmos-reason (`nvidia/skills/tao-finetune-cosmos-reason`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+ML fine-tuning via Docker/CLI specs and GPU config is a developer build workflow.

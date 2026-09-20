@@ -1,0 +1,11 @@
+# alan-plan (`supatest-ai/alan-skills/alan-plan`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Creates technical implementation plans for code changes, analyzing architecture and producing actionable dev steps.

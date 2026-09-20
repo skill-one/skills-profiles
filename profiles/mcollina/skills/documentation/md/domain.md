@@ -1,0 +1,11 @@
+# documentation (`mcollina/skills/documentation`)
+
+## domain
+
+### domain
+
+- content-creation
+
+### reason
+
+The skill centers on writing and structuring technical documentation per the Diátaxis framework.

@@ -1,0 +1,11 @@
+# business-pulse (`anthropics/knowledge-work-plugins/business-pulse`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Cross-functional SMB monitoring across sales, CRM, e-commerce, and operational health.

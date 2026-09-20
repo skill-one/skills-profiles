@@ -1,0 +1,11 @@
+# firecrawl-competitive-intel (`firecrawl/skills/firecrawl-competitive-intel`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+Recurring competitive intelligence monitoring (pricing, features, changelogs) serves business growth and positioning strategy.

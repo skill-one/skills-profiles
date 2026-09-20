@@ -1,0 +1,11 @@
+# paper (`bergside/awesome-design-skills/paper`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+Defines a paper-textured UI design system with tokens, components, and accessibility rules.

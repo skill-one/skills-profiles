@@ -1,0 +1,11 @@
+# tdd (`pandoscope/skills/tdd`)
+
+## domain
+
+### domain
+
+- testing
+
+### reason
+
+TDD is a test-first development discipline centered on writing, committing, and validating failing tests before code.

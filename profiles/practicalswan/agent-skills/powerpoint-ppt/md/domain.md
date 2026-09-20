@@ -1,0 +1,11 @@
+# powerpoint-ppt (`practicalswan/agent-skills/powerpoint-ppt`)
+
+## domain
+
+### domain
+
+- office-productivity
+
+### reason
+
+The skill's core purpose is creating, formatting, and extracting content from .pptx presentation files.

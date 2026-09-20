@@ -1,0 +1,11 @@
+# launch-nemo-rl (`nvidia/skills/launch-nemo-rl`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+The skill is a K8s/Ray cluster operations playbook: deploying, monitoring, and tearing down distributed training workloads.

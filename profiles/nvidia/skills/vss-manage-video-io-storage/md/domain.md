@@ -1,0 +1,12 @@
+# vss-manage-video-io-storage (`nvidia/skills/vss-manage-video-io-storage`)
+
+## domain
+
+### domain
+
+- development
+- devops-security
+
+### reason
+
+Operates VIOS REST API for video storage; includes container deployment and network stream management.

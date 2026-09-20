@@ -1,0 +1,11 @@
+# nvidia-nemoclaw (`reason-machines/trending-skills/nvidia-nemoclaw`)
+
+## domain
+
+### domain
+
+- devops-security
+
+### reason
+
+Policy-enforced sandbox orchestration with network, filesystem, and process security controls for AI assistants.

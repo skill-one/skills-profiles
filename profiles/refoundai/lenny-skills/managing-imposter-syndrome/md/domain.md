@@ -1,0 +1,11 @@
+# managing-imposter-syndrome (`refoundai/lenny-skills/managing-imposter-syndrome`)
+
+## domain
+
+### domain
+
+- other
+
+### reason
+
+Career-confidence and emotional self-doubt support doesn't map to any listed technical/functional category.

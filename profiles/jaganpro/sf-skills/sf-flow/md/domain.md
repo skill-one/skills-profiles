@@ -1,0 +1,11 @@
+# sf-flow (`jaganpro/sf-skills/sf-flow`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Building, validating, and refactoring declarative automation XML with CLI tooling is core developer work.

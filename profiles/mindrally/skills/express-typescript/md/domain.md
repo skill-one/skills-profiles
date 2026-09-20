@@ -1,0 +1,11 @@
+# express-typescript (`mindrally/skills/express-typescript`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Guidelines for building and structuring Express.js APIs with TypeScript, covering routing, middleware, and validation.

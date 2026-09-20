@@ -1,0 +1,11 @@
+# firecrawl-seo-audit (`firecrawl/skills/firecrawl-seo-audit`)
+
+## domain
+
+### domain
+
+- business-ops
+
+### reason
+
+SEO auditing for prioritized search optimization is explicitly listed under business-ops.

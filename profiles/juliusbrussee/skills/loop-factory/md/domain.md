@@ -1,0 +1,11 @@
+# loop-factory (`juliusbrussee/skills/loop-factory`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Orchestrates a spec-driven coding pipeline via CLI, dispatching tasks to AI agents and managing the dev workflow.

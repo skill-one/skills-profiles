@@ -1,0 +1,11 @@
+# bkt (`avivsinai/bitbucket-cli/bkt`)
+
+## domain
+
+### domain
+
+- development
+
+### reason
+
+Terminal/CLI tool for Bitbucket version control, PRs, branches, and CI pipelines.

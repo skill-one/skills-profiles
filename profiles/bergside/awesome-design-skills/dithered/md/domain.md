@@ -1,0 +1,11 @@
+# dithered (`bergside/awesome-design-skills/dithered`)
+
+## domain
+
+### domain
+
+- design-media
+
+### reason
+
+UI design system guideline for dithered dot-pattern visual rendering with tokens and component rules.

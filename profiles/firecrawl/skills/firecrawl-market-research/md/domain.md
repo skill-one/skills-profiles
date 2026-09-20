@@ -1,0 +1,11 @@
+# firecrawl-market-research (`firecrawl/skills/firecrawl-market-research`)
+
+## domain
+
+### domain
+
+- knowledge-management
+
+### reason
+
+Deep research and information retrieval across financial sources, organized into structured market reports.
