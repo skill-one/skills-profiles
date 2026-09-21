@@ -1,0 +1,19 @@
+skills-profiles: generation status
+
+snapshot  dist-2026-09-19, scanned 2026-09-19T19:42:24Z -> 2026-09-19T20:12:32Z (30m07s)
+mirror    9029 listed, 9085 on the leaderboard; that scan +7 -7, 56 dropped
+sources   9007 of 9029 carry a readable description; fetched 2026-09-06 .. 2026-09-19
+
+angle     built     of  built%  installs%
+blackbox      0   9007    0.0%       0.0%
+comments      0   9007    0.0%       0.0%
+domain     9007   9007  100.0%     100.0%
+scenario      0   9007    0.0%       0.0%
+tagline       0   9007    0.0%       0.0%
+whitebox      0   9007    0.0%       0.0%
+total      9007  54042   16.7%
+
+labels    development 3868, design-media 1061, devops-security 915, business-ops 712, testing 520, knowledge-management 397, content-creation 362, office-productivity 350, finance-payment 333, data-analysis 256, other 92, lifestyle 84, education 57 (0 of 13 unused)
+complete  0 of 9007 skills have all 6 angles (0.0%)
+orphans   0 profile directories the mirror no longer lists
+size      profiles 3.0 MB, skills 759.5 MB
