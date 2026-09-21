@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Covers Dart CLI architecture, argument parsing, subprocess spawning, and compilation — core terminal/CLI tool development."}

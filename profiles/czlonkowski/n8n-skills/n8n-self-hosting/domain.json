@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "End-to-end deployment, reverse-proxy TLS, and hardening of a self-hosted Docker stack over SSH."}

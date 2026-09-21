@@ -4,8 +4,12 @@
 
 ### domain
 
-- development
+content-creation
 
-### reason
+### confidence
 
-A repo-scoped re-explanation tool using DDD ubiquitous language to maintain shared technical clarity.
+0.77
+
+### probabilities
+
+data-analysis: 0.0, other: 0.02, finance-payment: 0.0, education: 0.06, business-ops: 0.05, testing: 0.0, content-creation: 0.79, devops-security: 0.0, lifestyle: 0.0, design-media: 0.0, office-productivity: 0.02, development: 0.05, knowledge-management: 0.01

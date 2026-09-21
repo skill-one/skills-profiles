@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Reverse-engineers live Azure cloud resources into Terraform IaC with AVM modules."}

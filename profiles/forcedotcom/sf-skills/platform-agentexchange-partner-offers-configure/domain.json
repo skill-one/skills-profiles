@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Salesforce CLI workflow: query org preference, write metadata, deploy via Metadata API."}

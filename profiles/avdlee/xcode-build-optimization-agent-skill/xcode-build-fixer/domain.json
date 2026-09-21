@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Optimizes Xcode builds through build settings, source compilation fixes, and SPM dependency restructuring."}

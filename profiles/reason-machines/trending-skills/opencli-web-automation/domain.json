@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Builds CLI web-scraping adapters using browser automation and Playwright session reuse."}

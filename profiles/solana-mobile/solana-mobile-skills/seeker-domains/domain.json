@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Implements .skr name-to-address resolution: resolver code, API endpoints, and client integration hooks."}

@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Framework-specific code optimization for GSAP animation performance (transforms, will-change, batching)."}

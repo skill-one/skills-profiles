@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Aggregates security scan results (SAST, SCA, secrets) into a prioritized vulnerability audit report."}

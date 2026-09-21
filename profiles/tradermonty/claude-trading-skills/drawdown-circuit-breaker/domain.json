@@ -1,1 +1,0 @@
-{"domain": ["finance-payment"], "reason": "Evaluates drawdown and losing-streak rules to gate new trade risk in a trading workflow."}

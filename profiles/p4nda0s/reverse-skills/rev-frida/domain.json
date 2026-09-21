@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Frida hook generation is a runtime security/reverse-engineering tool for tracing and inspecting native code."}

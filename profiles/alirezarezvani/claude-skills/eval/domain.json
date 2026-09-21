@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Ranks code agent outputs via git diffs and evaluation commands in a developer workflow."}

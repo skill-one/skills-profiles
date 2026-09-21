@@ -1,1 +1,0 @@
-{"domain": ["development", "devops-security"], "reason": "Covers writing PHP/Symfony Lambda handlers and deploying serverless apps to AWS with CI/CD."}

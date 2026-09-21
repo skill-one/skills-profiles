@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Runs configured validation gates then commits and pushes a branch — a developer git/CI workflow."}

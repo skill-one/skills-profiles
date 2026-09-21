@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Refactors .NET code from Thread.Abort to cooperative cancellation, a developer-level API migration task."}

@@ -4,8 +4,12 @@
 
 ### domain
 
-- development
+development
 
-### reason
+### confidence
 
-Framework-integration skill for configuring agent memory backends and filesystem middleware in LangGraph.
+0.88
+
+### probabilities
+
+devops-security: 0.0, data-analysis: 0.0, content-creation: 0.0, knowledge-management: 0.09, development: 0.9, lifestyle: 0.0, testing: 0.0, finance-payment: 0.0, office-productivity: 0.0, education: 0.0, design-media: 0.0, other: 0.01, business-ops: 0.0

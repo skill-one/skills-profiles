@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Upgrading a .NET project's target framework and resolving compiler, library, and dependency breaking changes is core developer-workflow work."}

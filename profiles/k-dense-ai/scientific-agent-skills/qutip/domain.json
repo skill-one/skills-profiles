@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Core workflow is writing Python simulation code, running bundled CLI tools, and pinning dependencies."}

@@ -4,8 +4,12 @@
 
 ### domain
 
-- content-creation
+content-creation
 
-### reason
+### confidence
 
-Diagnoses and rewrites short-video opening hooks for social media scripts.
+0.99
+
+### probabilities
+
+content-creation: 0.99, knowledge-management: 0.0, lifestyle: 0.0, design-media: 0.0, education: 0.0, development: 0.0, data-analysis: 0.0, other: 0.0, office-productivity: 0.0, business-ops: 0.01, testing: 0.0, finance-payment: 0.0, devops-security: 0.0

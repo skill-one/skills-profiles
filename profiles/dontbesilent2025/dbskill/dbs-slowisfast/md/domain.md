@@ -4,8 +4,12 @@
 
 ### domain
 
-- office-productivity
+other
 
-### reason
+### confidence
 
-A work-method diagnosis tool that helps users decide where in their personal workflow to invest deliberate slow effort versus fast automation.
+0.31
+
+### probabilities
+
+design-media: 0.0, finance-payment: 0.0, testing: 0.0, data-analysis: 0.0, lifestyle: 0.01, office-productivity: 0.01, development: 0.0, other: 0.37, devops-security: 0.0, content-creation: 0.02, knowledge-management: 0.22, business-ops: 0.21, education: 0.16

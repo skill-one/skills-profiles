@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Reads Xcode-bundled Apple docs for Swift compiler diagnostics and framework API details."}

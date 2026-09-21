@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Rust type-driven design patterns (newtype, type state, PhantomData) are core code-writing and refactoring techniques."}

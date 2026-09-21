@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Bazel build configuration and optimization is a core developer workflow (builds, dependencies)."}

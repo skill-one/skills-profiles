@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Validates local developer toolchain (CLI, Node, Git, plugins) and offers install/fix commands."}

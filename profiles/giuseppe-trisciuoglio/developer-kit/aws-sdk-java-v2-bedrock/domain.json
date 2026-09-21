@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "API/framework integration for invoking AWS Bedrock models via Java SDK and Spring Boot."}

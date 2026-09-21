@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Integrates a rate-limiting SDK into application code (APIs, middleware, edge runtimes)."}

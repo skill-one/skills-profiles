@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Configures observability data pipelines (log parsing, enrichment, E2M metrics) in Coralogix, an SRE/monitoring platform."}

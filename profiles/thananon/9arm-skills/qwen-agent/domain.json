@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Delegates mechanical coding tasks (reformatting, boilerplate, build/test runs) to a cheaper subagent model."}

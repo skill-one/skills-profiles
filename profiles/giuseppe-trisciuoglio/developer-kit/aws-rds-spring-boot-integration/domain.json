@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Configures Spring Boot datasource, connection pooling, and database migrations for RDS."}

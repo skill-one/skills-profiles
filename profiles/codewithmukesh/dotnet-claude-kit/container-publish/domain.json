@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Container image building and registry publishing is a deployment and release workflow."}

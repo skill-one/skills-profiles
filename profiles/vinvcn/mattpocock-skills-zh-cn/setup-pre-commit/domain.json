@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Git pre-commit hooks, dependency install, and repo CI-adjacent tooling are core developer workflows."}

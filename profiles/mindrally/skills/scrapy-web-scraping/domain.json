@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Building Scrapy spiders/crawlers is explicitly web scraping & browser automation under development."}

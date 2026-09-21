@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "API design decisions (REST/GraphQL/tRPC, responses, versioning, auth) are core development architecture work."}

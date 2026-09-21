@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Mechanical refactoring of C# production code to replace static calls with injected abstractions."}

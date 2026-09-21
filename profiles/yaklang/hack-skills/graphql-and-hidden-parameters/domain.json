@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Security playbook for probing GraphQL authorization gaps, IDOR, and hidden parameter abuse."}

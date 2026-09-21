@@ -4,8 +4,12 @@
 
 ### domain
 
-- knowledge-management
+knowledge-management
 
-### reason
+### confidence
 
-The skill performs deep research and multi-source synthesis with citations, matching knowledge-management's 'information retrieval, deep research' scope.
+0.99
+
+### probabilities
+
+testing: 0.0, data-analysis: 0.0, development: 0.0, devops-security: 0.0, education: 0.0, lifestyle: 0.0, content-creation: 0.01, office-productivity: 0.0, business-ops: 0.0, knowledge-management: 0.99, design-media: 0.0, other: 0.0, finance-payment: 0.0

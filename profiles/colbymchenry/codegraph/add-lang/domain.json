@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Wiring tree-sitter grammars, writing extractors/tests, and benchmarking a code indexer is core software development."}

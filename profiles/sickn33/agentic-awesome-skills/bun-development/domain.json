@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Covers JS/TS project workflows with the Bun runtime: builds, bundling, migration, dev tooling."}

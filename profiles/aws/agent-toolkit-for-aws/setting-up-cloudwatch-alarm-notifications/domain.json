@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Configures CloudWatch alarm notification channels via SNS topics, subscriptions, and policies — a monitoring & alerting task."}

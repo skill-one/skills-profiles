@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Enforces complete code generation by banning placeholder patterns and truncation shortcuts."}

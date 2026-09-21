@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Code patterns for API concurrency, pagination, and batching when calling CDF Data Modeling endpoints."}

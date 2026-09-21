@@ -4,8 +4,12 @@
 
 ### domain
 
-- testing
+testing
 
-### reason
+### confidence
 
-Iterative critic-subagent review with scored feedback and quality-gate iteration is a structured code-review/quality-check loop.
+0.62
+
+### probabilities
+
+design-media: 0.0, content-creation: 0.0, testing: 0.66, finance-payment: 0.0, lifestyle: 0.0, office-productivity: 0.0, development: 0.34, other: 0.0, devops-security: 0.0, data-analysis: 0.0, knowledge-management: 0.0, business-ops: 0.0, education: 0.0

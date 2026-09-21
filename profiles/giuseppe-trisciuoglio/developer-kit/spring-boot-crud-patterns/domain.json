@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Generates Spring Boot CRUD services: JPA entities, REST controllers, domain models, and repositories."}

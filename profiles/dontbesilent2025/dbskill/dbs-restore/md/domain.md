@@ -4,8 +4,12 @@
 
 ### domain
 
-- office-productivity
+knowledge-management
 
-### reason
+### confidence
 
-Resumes saved diagnostic workflow state (conclusions, next steps, rejected paths) to continue ongoing work.
+0.92
+
+### probabilities
+
+business-ops: 0.0, finance-payment: 0.0, devops-security: 0.0, development: 0.04, office-productivity: 0.0, lifestyle: 0.0, knowledge-management: 0.93, data-analysis: 0.0, education: 0.0, content-creation: 0.0, testing: 0.0, other: 0.02, design-media: 0.0

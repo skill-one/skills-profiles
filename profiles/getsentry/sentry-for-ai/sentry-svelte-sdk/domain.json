@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Installs and configures Sentry SDK via code files and build tooling—framework integration, not ops."}

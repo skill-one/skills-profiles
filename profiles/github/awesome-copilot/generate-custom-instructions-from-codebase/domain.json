@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Generates code migration and refactoring instructions for GitHub Copilot by comparing git references."}

@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Provides Java/Spring code patterns for integrating LangChain4j and OpenAI embedding APIs to build RAG pipelines."}

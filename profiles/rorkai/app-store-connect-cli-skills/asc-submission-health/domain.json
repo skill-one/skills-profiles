@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Manages App Store release pipeline: readiness validation, review monitoring, cancellation, and retry decisions."}

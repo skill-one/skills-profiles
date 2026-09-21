@@ -4,8 +4,12 @@
 
 ### domain
 
-- development
+development
 
-### reason
+### confidence
 
-API/framework integration: wiring the x-client OAuth 2.0 PKCE connector into a Caffeine canister backend.
+0.53
+
+### probabilities
+
+development: 0.5700000000000001, business-ops: 0.0, office-productivity: 0.0, testing: 0.0, lifestyle: 0.0, design-media: 0.0, knowledge-management: 0.0, data-analysis: 0.0, content-creation: 0.43, education: 0.0, other: 0.0, devops-security: 0.0, finance-payment: 0.0

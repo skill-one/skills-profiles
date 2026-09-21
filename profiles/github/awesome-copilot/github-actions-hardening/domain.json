@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Audits and hardens the security threat model of CI/CD workflow files (injection, token scope, supply chain)."}

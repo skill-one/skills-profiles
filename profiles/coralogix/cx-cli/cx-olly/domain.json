@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Queries and investigates observability data (alerts, metrics, logs) via Coralogix's monitoring agent."}

@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Integrates Sentry SDK into React Native/Expo codebases via dependency install, build-config edits, and init code."}

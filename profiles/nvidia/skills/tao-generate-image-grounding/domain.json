@@ -1,1 +1,0 @@
-{"domain": ["data-analysis"], "reason": "ETL pipeline transforming image-caption pairs into VLM-grounded bounding-box training annotations."}

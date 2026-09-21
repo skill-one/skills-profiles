@@ -4,8 +4,12 @@
 
 ### domain
 
-- knowledge-management
+content-creation
 
-### reason
+### confidence
 
-Saves tweets and X articles as structured markdown for organizing and preserving content.
+0.49
+
+### probabilities
+
+finance-payment: 0.0, education: 0.0, devops-security: 0.0, knowledge-management: 0.44, design-media: 0.0, testing: 0.0, business-ops: 0.0, data-analysis: 0.0, office-productivity: 0.01, other: 0.0, lifestyle: 0.0, content-creation: 0.54, development: 0.01

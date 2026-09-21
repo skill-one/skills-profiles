@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Kibana alerting rules manage monitoring thresholds and alert lifecycles — core SRE work."}

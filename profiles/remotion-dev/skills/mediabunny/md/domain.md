@@ -4,8 +4,12 @@
 
 ### domain
 
-- development
+design-media
 
-### reason
+### confidence
 
-Browser library for extracting audio/video metadata — API integration for web developers.
+0.52
+
+### probabilities
+
+content-creation: 0.0, data-analysis: 0.01, lifestyle: 0.0, knowledge-management: 0.0, education: 0.0, development: 0.41, design-media: 0.5700000000000001, other: 0.01, office-productivity: 0.0, testing: 0.0, business-ops: 0.0, devops-security: 0.0, finance-payment: 0.0

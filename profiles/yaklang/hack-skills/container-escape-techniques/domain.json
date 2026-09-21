@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Offensive container-escape playbook covering privileged-mode, capability, cgroup, and runtime-CVE abuse."}

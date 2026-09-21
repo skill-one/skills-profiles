@@ -4,8 +4,12 @@
 
 ### domain
 
-- development
+development
 
-### reason
+### confidence
 
-Code-writing reference for GSAP animation APIs within the HyperFrames framework.
+0.5
+
+### probabilities
+
+office-productivity: 0.0, content-creation: 0.01, other: 0.0, data-analysis: 0.0, business-ops: 0.0, finance-payment: 0.0, lifestyle: 0.0, development: 0.55, devops-security: 0.0, design-media: 0.44, education: 0.0, knowledge-management: 0.0, testing: 0.0

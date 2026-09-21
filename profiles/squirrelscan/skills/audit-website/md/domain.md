@@ -4,8 +4,12 @@
 
 ### domain
 
-- development
+testing
 
-### reason
+### confidence
 
-CLI-driven audit-and-fix loop: run tool, map issues to code, apply fixes, verify builds.
+0.62
+
+### probabilities
+
+devops-security: 0.01, content-creation: 0.0, finance-payment: 0.0, other: 0.0, education: 0.0, testing: 0.65, development: 0.26, business-ops: 0.08, design-media: 0.0, knowledge-management: 0.0, lifestyle: 0.0, office-productivity: 0.0, data-analysis: 0.0

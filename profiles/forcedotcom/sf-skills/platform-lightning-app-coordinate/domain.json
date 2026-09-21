@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Generates deployable Salesforce metadata files (objects, fields, pages, apps) in SFDX structure."}

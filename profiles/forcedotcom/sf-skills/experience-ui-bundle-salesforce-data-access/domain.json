@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Wires Salesforce data access via the Platform SDK GraphQL API into UI bundle code (queries, mutations, caching, codegen)."}

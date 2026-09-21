@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Deploys a Docker-based REST microservice with Elasticsearch/Kafka infrastructure dependencies."}

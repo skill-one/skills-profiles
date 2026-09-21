@@ -4,9 +4,12 @@
 
 ### domain
 
-- design-media
-- business-ops
+design-media
 
-### reason
+### confidence
 
-Creates app store visual assets (screenshots, mockups, preview videos) for ASO and store listing optimization.
+0.86
+
+### probabilities
+
+testing: 0.0, other: 0.0, devops-security: 0.0, design-media: 0.87, lifestyle: 0.0, data-analysis: 0.0, knowledge-management: 0.0, education: 0.0, finance-payment: 0.0, content-creation: 0.0, development: 0.0, business-ops: 0.13, office-productivity: 0.0

@@ -4,8 +4,12 @@
 
 ### domain
 
-- knowledge-management
+content-creation
 
-### reason
+### confidence
 
-Deep multi-source research and synthesis of cognitive frameworks into structured documents.
+0.46
+
+### probabilities
+
+testing: 0.0, education: 0.01, knowledge-management: 0.36, development: 0.09, devops-security: 0.0, content-creation: 0.5, office-productivity: 0.0, other: 0.04, lifestyle: 0.0, finance-payment: 0.0, data-analysis: 0.0, business-ops: 0.0, design-media: 0.0

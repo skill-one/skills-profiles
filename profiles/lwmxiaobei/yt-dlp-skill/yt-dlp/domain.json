@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Wraps yt-dlp CLI into Python scripts for downloading media; a terminal/CLI tool workflow."}

@@ -1,1 +1,0 @@
-{"domain": ["data-analysis"], "reason": "Resolves data lake and warehouse asset references across Glue, S3, and Redshift catalogs."}

@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Manages LLM provider API integrations and credentials via CLI, squarely an API/framework integration task."}

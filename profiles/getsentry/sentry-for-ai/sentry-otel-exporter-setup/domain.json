@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Sets up monitoring infrastructure (OTel Collector + Sentry Exporter) for telemetry pipelines."}

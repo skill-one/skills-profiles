@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Configures build tools (Maven/Gradle) and resolves compilation metadata for native Java executables."}

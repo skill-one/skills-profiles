@@ -4,8 +4,12 @@
 
 ### domain
 
-- office-productivity
+office-productivity
 
-### reason
+### confidence
 
-Enterprise directory contact lookup for finding colleagues, a team work management task.
+0.64
+
+### probabilities
+
+devops-security: 0.0, other: 0.02, design-media: 0.0, lifestyle: 0.0, testing: 0.0, business-ops: 0.05, office-productivity: 0.67, content-creation: 0.0, education: 0.0, knowledge-management: 0.26, finance-payment: 0.0, development: 0.0, data-analysis: 0.0

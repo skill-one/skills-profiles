@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Delegates coding, debugging, and CLI work to tmux-hosted agent sessions with outer supervision."}

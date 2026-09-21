@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Framework integration: wiring LangChain4j into Spring Boot via beans, DI, and starters."}

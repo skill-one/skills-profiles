@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Automates firmware flashing and MicroPython app deployment to embedded ESP32 boards via CLI tooling."}

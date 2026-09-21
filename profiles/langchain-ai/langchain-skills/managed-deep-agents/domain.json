@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Covers the agent development lifecycle: writing Python/TS code, CLI scaffolding, local testing, and deploying managed LangGraph agents."}

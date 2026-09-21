@@ -4,8 +4,12 @@
 
 ### domain
 
-- design-media
+design-media
 
-### reason
+### confidence
 
-Creates strategic HTML slide presentations with design tokens, Chart.js, and layout patterns.
+0.58
+
+### probabilities
+
+testing: 0.0, development: 0.12, knowledge-management: 0.0, finance-payment: 0.0, devops-security: 0.0, content-creation: 0.11, office-productivity: 0.09, other: 0.0, education: 0.0, lifestyle: 0.0, data-analysis: 0.0, design-media: 0.62, business-ops: 0.06

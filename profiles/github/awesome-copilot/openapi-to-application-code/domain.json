@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Generates complete application code (controllers, services, models, build config) from an OpenAPI spec."}

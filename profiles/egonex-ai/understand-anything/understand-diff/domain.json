@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Analyzes git diffs and traces architectural impact via a knowledge graph to assess code-change risks."}

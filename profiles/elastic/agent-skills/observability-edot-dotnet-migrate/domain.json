@@ -1,1 +1,0 @@
-{"domain": ["development", "devops-security"], "reason": "Refactors .NET code and NuGet dependencies to switch observability from classic APM to EDOT SDK."}

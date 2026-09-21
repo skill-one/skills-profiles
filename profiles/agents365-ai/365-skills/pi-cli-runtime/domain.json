@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "CLI forwarder that invokes a Pi runtime to handle dev rescue tasks like diagnosis, planning, and code fixes."}

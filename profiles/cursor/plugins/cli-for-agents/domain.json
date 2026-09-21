@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Designing agent-friendly CLI tools (flags, --help, pipelines) is explicitly a terminal/CLI development concern."}

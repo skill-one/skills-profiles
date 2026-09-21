@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Upgrades a CLI tool via git clone and version comparison, a standard developer dependency-management workflow."}

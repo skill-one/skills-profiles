@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Software design principle for eliminating or structuring concurrent writes to shared mutable state."}

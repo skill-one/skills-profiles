@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Constructs Cloud Monitoring ListTimeSeries API queries for metric observation and aggregation, a core monitoring task."}

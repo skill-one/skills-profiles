@@ -4,8 +4,12 @@
 
 ### domain
 
-- design-media
+design-media
 
-### reason
+### confidence
 
-Animation choreography, scene transitions, and motion design for video compositions across multiple runtimes.
+0.7
+
+### probabilities
+
+education: 0.0, design-media: 0.74, business-ops: 0.0, testing: 0.0, development: 0.26, content-creation: 0.0, devops-security: 0.0, data-analysis: 0.0, other: 0.0, knowledge-management: 0.0, office-productivity: 0.0, lifestyle: 0.0, finance-payment: 0.0

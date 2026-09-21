@@ -4,8 +4,12 @@
 
 ### domain
 
-- devops-security
+devops-security
 
-### reason
+### confidence
 
-Assesses code readiness and deployment blockers before deploying an app to Azure cloud infrastructure.
+0.83
+
+### probabilities
+
+knowledge-management: 0.0, other: 0.0, data-analysis: 0.0, business-ops: 0.0, development: 0.13, devops-security: 0.84, lifestyle: 0.0, office-productivity: 0.0, testing: 0.03, design-media: 0.0, finance-payment: 0.0, education: 0.0, content-creation: 0.0

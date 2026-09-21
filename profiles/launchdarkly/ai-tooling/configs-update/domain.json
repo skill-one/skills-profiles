@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Manages LaunchDarkly config resources via API/MCP tools—developer infrastructure CRUD."}

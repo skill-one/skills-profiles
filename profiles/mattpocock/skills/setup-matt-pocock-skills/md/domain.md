@@ -4,8 +4,12 @@
 
 ### domain
 
-- development
+development
 
-### reason
+### confidence
 
-Configures repo-level developer workflow settings (issue tracker, triage labels, domain docs) for engineering tooling.
+0.8
+
+### probabilities
+
+design-media: 0.0, education: 0.0, lifestyle: 0.0, content-creation: 0.05, development: 0.81, testing: 0.0, data-analysis: 0.0, other: 0.0, knowledge-management: 0.1, business-ops: 0.0, finance-payment: 0.0, office-productivity: 0.03, devops-security: 0.01

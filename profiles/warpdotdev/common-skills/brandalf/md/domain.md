@@ -4,8 +4,12 @@
 
 ### domain
 
-- design-media
+design-media
 
-### reason
+### confidence
 
-The skill governs brand-visual consistency across UI mockups, launch pages, and branded assets for Warp/Oz.
+0.86
+
+### probabilities
+
+testing: 0.0, design-media: 0.89, education: 0.0, business-ops: 0.01, development: 0.0, content-creation: 0.1, devops-security: 0.0, data-analysis: 0.0, other: 0.0, knowledge-management: 0.0, finance-payment: 0.0, lifestyle: 0.0, office-productivity: 0.0

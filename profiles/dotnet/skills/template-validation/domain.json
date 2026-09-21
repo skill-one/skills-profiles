@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Validates .NET CLI template configs as a developer build/publish workflow step."}

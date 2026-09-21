@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Specifies an existing GitHub Actions CI/CD workflow, which is explicitly a developer workflow."}

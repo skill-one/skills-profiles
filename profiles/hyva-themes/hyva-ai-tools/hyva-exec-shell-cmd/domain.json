@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Detects containerized Magento dev environments and wraps shell/CLI commands accordingly."}

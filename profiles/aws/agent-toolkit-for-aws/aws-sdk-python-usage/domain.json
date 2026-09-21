@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Patterns for writing Python code that calls AWS service APIs via boto3/botocore."}

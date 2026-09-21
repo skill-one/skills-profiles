@@ -1,1 +1,0 @@
-{"domain": ["testing"], "reason": "Unit test patterns for Spring @Scheduled/@Async methods with JUnit 5 and Mockito."}

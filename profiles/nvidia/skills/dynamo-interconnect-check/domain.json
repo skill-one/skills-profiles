@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Validates GPU cluster fabric (RDMA/NVLink/InfiniBand) readiness after deployment."}

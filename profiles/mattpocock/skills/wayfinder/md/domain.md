@@ -4,8 +4,12 @@
 
 ### domain
 
-- development
+development
 
-### reason
+### confidence
 
-Plans software work as decision tickets on a repo's issue tracker with native blocking.
+0.6
+
+### probabilities
+
+office-productivity: 0.14, design-media: 0.0, content-creation: 0.0, finance-payment: 0.0, education: 0.0, knowledge-management: 0.2, business-ops: 0.0, testing: 0.0, devops-security: 0.0, lifestyle: 0.0, development: 0.64, data-analysis: 0.0, other: 0.02

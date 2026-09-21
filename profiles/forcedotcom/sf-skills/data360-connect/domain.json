@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Manages database connections, CLI commands, and API integration for Salesforce Data Cloud source systems."}

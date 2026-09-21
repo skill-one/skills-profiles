@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Visualizes Rust dependency trees via cargo tree, a core developer workflow for managing project dependencies."}

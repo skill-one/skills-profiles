@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Building and maintaining Core Data persistence code in iOS apps, covering stack setup, concurrency, batch operations, and migrations."}

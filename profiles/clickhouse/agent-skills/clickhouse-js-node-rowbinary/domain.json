@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Generates TypeScript/JavaScript code for ClickHouse database wire-format integration (binary encoding/decoding)."}

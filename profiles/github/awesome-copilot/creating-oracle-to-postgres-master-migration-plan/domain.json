@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Plans database migration across .NET projects by scanning NuGet dependencies and code."}

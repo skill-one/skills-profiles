@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Code design patterns for game state persistence: serialization, schema versioning, atomic file I/O."}

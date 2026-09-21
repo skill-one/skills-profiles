@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Automated developer workflow: fetch changelog, verify API docs, edit skill files, and open a git PR."}

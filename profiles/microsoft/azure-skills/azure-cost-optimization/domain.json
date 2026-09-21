@@ -1,1 +1,1 @@
-{"domain": ["devops-security"], "reason": "Azure cloud cost optimization: rightsizing, orphaned-resource cleanup, budget alerts, and SRE-style waste reduction."}
+{"domain": "devops-security", "confidence": 0.43, "probabilities": {"development": 0.0, "business-ops": 0.02, "office-productivity": 0.0, "testing": 0.0, "lifestyle": 0.0, "design-media": 0.0, "knowledge-management": 0.0, "data-analysis": 0.47, "content-creation": 0.01, "finance-payment": 0.04, "education": 0.0, "devops-security": 0.45999999999999996, "other": 0.0}}

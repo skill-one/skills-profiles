@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "Provisioning AWS Aurora clusters, instances, and Secrets Manager is cloud infrastructure work."}

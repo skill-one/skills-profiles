@@ -1,1 +1,0 @@
-{"domain": ["finance-payment"], "reason": "Executes on-chain crypto swaps, limit orders, and stop-loss/take-profit strategies via GMGN API."}

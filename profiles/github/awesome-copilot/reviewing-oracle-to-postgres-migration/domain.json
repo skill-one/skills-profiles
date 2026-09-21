@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Database migration (Oracle→PostgreSQL) risk assessment and artifact validation is core database development work."}

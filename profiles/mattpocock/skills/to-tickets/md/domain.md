@@ -4,8 +4,12 @@
 
 ### domain
 
-- development
+development
 
-### reason
+### confidence
 
-Decomposes software work into dependency-ordered tickets for issue trackers — a developer workflow.
+0.78
+
+### probabilities
+
+finance-payment: 0.0, testing: 0.0, business-ops: 0.0, devops-security: 0.0, development: 0.81, education: 0.0, design-media: 0.0, knowledge-management: 0.0, content-creation: 0.0, other: 0.0, lifestyle: 0.0, office-productivity: 0.19, data-analysis: 0.0

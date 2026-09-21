@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Generates TypeScript interfaces and type guards from OpenAPI specs, a pure developer code-generation task."}

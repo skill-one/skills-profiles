@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "API integration: writing code to connect to and consume Zoom's WebSocket event stream."}

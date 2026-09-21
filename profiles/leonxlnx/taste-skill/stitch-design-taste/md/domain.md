@@ -4,8 +4,12 @@
 
 ### domain
 
-- design-media
+design-media
 
-### reason
+### confidence
 
-Generates UI design system specs (typography, color, layout, motion) for premium screen generation.
+0.93
+
+### probabilities
+
+testing: 0.0, data-analysis: 0.0, development: 0.03, devops-security: 0.0, education: 0.0, lifestyle: 0.0, content-creation: 0.04, office-productivity: 0.0, design-media: 0.9299999999999999, knowledge-management: 0.0, business-ops: 0.0, other: 0.0, finance-payment: 0.0

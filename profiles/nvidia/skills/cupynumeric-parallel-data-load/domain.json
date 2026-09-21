@@ -1,1 +1,0 @@
-{"domain": ["data-analysis"], "reason": "Sharded data loading into distributed GPU arrays is a data-engineering (ETL) task."}

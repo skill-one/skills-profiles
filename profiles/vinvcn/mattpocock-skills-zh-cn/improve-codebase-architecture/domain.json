@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Scans and refactors codebase architecture (shallow→deep modules), squarely a developer refactoring workflow."}

@@ -1,1 +1,0 @@
-{"domain": ["devops-security"], "reason": "AWS multi-AZ VPC with subnets, NAT gateways, and security groups is cloud infrastructure."}

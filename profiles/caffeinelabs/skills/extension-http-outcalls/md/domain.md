@@ -4,8 +4,12 @@
 
 ### domain
 
-- development
+development
 
-### reason
+### confidence
 
-Backend HTTP outcall integration with external REST APIs, including code patterns and local verification.
+0.98
+
+### probabilities
+
+other: 0.0, design-media: 0.0, content-creation: 0.0, finance-payment: 0.0, education: 0.0, knowledge-management: 0.0, business-ops: 0.0, testing: 0.0, devops-security: 0.02, lifestyle: 0.0, development: 0.98, data-analysis: 0.0, office-productivity: 0.0

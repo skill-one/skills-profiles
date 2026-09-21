@@ -4,8 +4,12 @@
 
 ### domain
 
-- devops-security
+devops-security
 
-### reason
+### confidence
 
-Cloud cost querying, forecasting, and resource optimization are core SRE/cloud-infrastructure operations.
+0.41
+
+### probabilities
+
+development: 0.0, business-ops: 0.02, finance-payment: 0.42, other: 0.0, knowledge-management: 0.0, education: 0.0, lifestyle: 0.0, office-productivity: 0.0, content-creation: 0.0, design-media: 0.0, devops-security: 0.46, data-analysis: 0.1, testing: 0.0

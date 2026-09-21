@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Setting up a physical iPhone involves xcodebuild signing, developer mode, and tool-server runner bootstrapping — core developer workflow."}

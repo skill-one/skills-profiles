@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Running Nx workspace tasks (build, test, lint) is a core developer CLI workflow."}

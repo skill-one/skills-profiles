@@ -1,1 +1,0 @@
-{"domain": ["testing"], "reason": "Adversarial quality-check that verifies plugin code matches its own annotations, schema, and permission claims."}

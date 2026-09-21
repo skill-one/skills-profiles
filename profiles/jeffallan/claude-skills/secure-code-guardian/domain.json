@@ -1,1 +1,0 @@
-{"domain": ["development"], "reason": "Writes secure application code (auth, input validation, SQL, JWT, headers) as part of development."}
