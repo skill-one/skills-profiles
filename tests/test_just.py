@@ -223,6 +223,19 @@ def test_prompt_builds_one_angle_for_every_skill(project):
     assert json_names(project, BETA) == ["domain.json"]
 
 
+def test_a_prompt_run_takes_the_next_skill_that_needs_it(project):
+    """`limit` counts work rather than positions, and it has to keep doing so when one angle is
+    asked for on its own - which is the case where the list of angles has a blank in it where the
+    chat ones would be. A window that read that blank as an angle would count every row as needing
+    work, take the first `limit` rows instead, and find the work already done."""
+    assert just(project, "limit=1").returncode == 0  # ALPHA is complete
+    assert json_names(project, ALPHA) == sorted(f"{angle}.json" for angle in ANGLES)
+
+    assert just(project, "limit=1", "prompt=domain").returncode == 0
+
+    assert json_names(project, BETA) == ["domain.json"]
+
+
 def test_an_unknown_prompt_lists_the_ones_there_are(project):
     result = just(project, "prompt=nosuchangle")
     assert result.returncode != 0

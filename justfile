@@ -101,14 +101,21 @@ default:
 		| PROMPTS="$angles" awk -v limit={{limit}} '
 			# the prompt ids through the environment: `-v` would reprocess the value, and one with
 			# real newlines in it is an awk syntax error on the BSD that ships with macOS
-			BEGIN { n = split(ENVIRON["PROMPTS"], name, /[ \t\n]+/); for (i = 1; i <= n; i++) asked[name[i]] = 1 }
+			#
+			# An empty name is not an angle. A leading or trailing separator hands awk one, and it
+			# would then be an angle more than there are - so `have[skill] < angles` would hold for
+			# nearly every row, and `limit` would quietly stop counting work and start counting rows.
+			BEGIN {
+				n = split(ENVIRON["PROMPTS"], name, /[ \t\n]+/)
+				for (i = 1; i <= n; i++) if (name[i] != "") { asked[name[i]] = 1; angles++ }
+			}
 			$0 == "---" { listing = 1; next }
 			!listing {
 				angle = $0; sub(/.*\//, "", angle); sub(/\.json$/, "", angle)
 				if (asked[angle]) { skill = $0; sub(/\/[^\/]*$/, "", skill); have[skill]++ }
 				next
 			}
-			have[$0] < n { print; taken++; if (limit && taken >= limit) exit }')
+			have[$0] < angles { print; taken++; if (limit && taken >= limit) exit }')
 	[ -n "$skills" ] || { echo "nothing to build: every skill already has its angles" >&2; exit 0; }
 
 	# `rpm` is a pace rather than a queue: a worker waits that long between its calls, so a
