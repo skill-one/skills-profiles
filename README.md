@@ -23,6 +23,7 @@ output/
 │   └── md/                          the same six angles as markdown, for reading
 ├── skills.jsonl                     `just index`: one flat line per skill — the mirror's own row
 │                                    (id, installs, url, hash, fetchedAt) plus description and domain
+├── stats.txt                        ... and the report beside it: how much of the dataset is built
 └── upstream/                        the rest of the mirror: its index, repos, owners, avatars
 ```
 
@@ -34,6 +35,11 @@ profiled part of the dataset is a filter away:
 ```bash
 jq -r 'select(any(.domain[]; . == "development")) | [.installs, .id] | @tsv' output/skills.jsonl | head
 ```
+
+`stats.txt` beside it is the same tree said as progress instead of as data: per angle, how many
+skills have it and what share of the mirror's installs that covers, next to the snapshot it
+describes. It is written for a reader — the catalog is the file to build on — and it is a projection
+of the tree, so a tree that did not change rewrites it identically.
 
 One directory per skill, one file per angle. Every json is exactly one prompt's structured output,
 written in full the moment it is generated — so an interrupted batch loses only the prompts it was in
@@ -72,7 +78,7 @@ just limit=0           # build every profile still missing, the whole snapshot, 
 just prompt=scenario   # only that angle, for every skill in the window
 just limit=20 jobs=8   # eight at a time, for the first 20 skills
 just dry=1 limit=2     # offline smoke test: fake model, real layout
-just index             # rebuild output/skills.jsonl from what is on disk
+just index             # rebuild output/skills.jsonl and output/stats.txt from what is on disk
 ```
 
 `jobs` bounds how many generations run at once, and `rpm` paces them to what your endpoint allows

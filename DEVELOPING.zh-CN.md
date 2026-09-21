@@ -27,10 +27,10 @@ just limit=0          # ……或者所有还缺的档案：整份快照，无�
 | `just`                      | 构建接下来还缺档案的 `limit` 个 skill，安装量最高的优先。顺序来自清单自己的顺序（`OUTPUT_DIR/skills.jsonl`，即镜像的安装量降序），并滤掉「没有 description」和「磁盘上没有 `SKILL.md`」的行；清单不在时退回目录列表的路径顺序。窗口再取这些 skill 里「至少还缺一个角度」的前 `limit` 个——数的是工作而不是位置，所以反复运行会沿着数据集往下走。recipe 枚举 `PROMPTS_DIR/*.json`，留下 json 还缺的 `(skill, prompt)` 组合，交给 `xargs -P` 池。`jobs` 就是并发的全部。 |
 | `just one <prompt> <skill>` | 只构建一个输出，无论批次有没有轮到它。`limit` 是按数据集自身顺序划的窗口、不是按名指定某个 skill 的方式，所以这是唯一能寻址「一个格子」的入口——也是唯一能在批次会跳过它的前提下重做它的入口。 |
 | `just invalidate <prompt>`  | 删掉某一个 prompt 的全部档案，下一次运行就只重建这些。                                                                                                                                          |
-| `just index`                | 写出 `<output_dir>/skills.jsonl`，即那份清单：镜像列出的每个 skill 一行、扁平，顺序就是镜像的顺序，内容是镜像自己的行（`id`、`installs`、`url`、`hash`、`fetchedAt`）连接上从该 skill 的 `SKILL.md` 里读出的 `description`，以及 `profiles/<id>/domain.json` 里的 `domain` 与 `reason`。未知时两者都是 `null`；镜像已删除但档案还在的 skill 也会有自己的行。它只读这棵树——不联网、不调模型——并且每次整文件重写，所以它是磁盘现状的投影，而不是一份要手工同步的第二副本。 |
+| `just index`                | 写出 `<output_dir>/skills.jsonl`，即那份清单：镜像列出的每个 skill 一行、扁平，顺序就是镜像的顺序，内容是镜像自己的行（`id`、`installs`、`url`、`hash`、`fetchedAt`）连接上从该 skill 的 `SKILL.md` 里读出的 `description`，以及 `profiles/<id>/domain.json` 里的 `domain` 与 `reason`。未知时两者都是 `null`；镜像已删除但档案还在的 skill 也会有自己的行。它只读这棵树——不联网、不调模型——并且每次整文件重写，所以它是磁盘现状的投影，而不是一份要手工同步的第二副本。它还在旁边写出 `stats.txt`，出自同一次遍历：见下面的 `index.py`。 |
 | `just sync`                 | 把整个上游 `dist` 分支作为一个 tarball 下载并按层解压进树里：skill 目录进 `output_dir/skills`（完整、未改动），其余部分——首先是镜像自己的索引——进 `output_dir/upstream`。最后重写清单，因为刚移动的源层让它失效了。下载先落在输出根旁边的暂存目录，落齐之后才做替换，所以抓取失败什么都不会变；前面还有一道守卫，拒绝替换「不是快照」的 `skills/`。每次运行都会下载——没有任何「已是最新」的状态。纯数据操作：它永远不碰生成的档案。 |
 | `just refresh`              | `just sync` 加上它的后果：先把同步之前的那份清单留到一边，然后删掉所有「来源内容 hash 随新快照变了」的 skill 的档案，让下一批重建它们。上游已删除的 skill 保留它的档案。比对完，那份临时清单就消失。 |
-| `just clean`                | 删掉档案与清单——`output_dir/profiles` 与 `output_dir/skills.jsonl`。skill 目录与镜像自己的文件不动：它们才是档案的依据，重新拉取才是贵的那一步。                                                                          |
+| `just clean`                | 删掉生成物：`output_dir/profiles`、清单以及关于它的报告（`output_dir/skills.jsonl`、`output_dir/stats.txt`）。skill 目录与镜像自己的文件不动：它们才是档案的依据，重新拉取才是贵的那一步。                                                                          |
 | `just test`                 | `uv run pytest`。                                                                                                                                                                              |
 
 上面每一条都是 recipe 名，`just --list` 会把它们连同各自的一行说明列出来。
@@ -103,6 +103,16 @@ uv run python gen.py <prompt> <skill> --print   # 打印请求后即停止（不
 `just index` 是你想要这份清单时才跑的一个动词，而 `just sync` 会顺手跑它，因为一次同步移动了它底下
 的源层。除此之外没有任何东西写这个文件，所以它不可能和一棵并非同时写出的树漂移。
 
+同一次运行、同一次遍历还会写出 `output/stats.txt`，它回答的正是清单答不了的那件事：**数据集建成了多少。**
+报告像批次一样数格子——角度的 json 才是工作单元，所以 `just invalidate` 留下的目录不算进度——分母是
+真正建得出来的 skill，因为一个 front matter 读不出 description 的 skill 会让报告永远到不了 100%。每
+个角度一行：有多少 skill 有了它，以及这覆盖了镜像安装量的多大比例——后者才是要紧的数字，因为批次是
+按安装量从高到低做的（计数 0.3%、加权 16% 说的是同一棵树，而只有后者说明一份半成品值多少）。围绕它
+的还有：它描述的那份快照、孤儿、已用到的 domain 标签，以及这棵树的大小。有两点决定值得知道。**它是
+给人看的文字，不是数据**——机器的那个是清单，没有任何东西回读它。**它读的是快照自己的身份**
+（`upstream/latest`、`upstream/stats.json`、`fetchedAt` 的区间）而不是盖一个墙上时钟，因为发布要把这
+棵树和分支对比，一个每次运行都会变的文件会让每次发布都为「并没变过的树」花掉一个 tag。
+
 `stale.py` 是第三个，负责 shell 不擅长的那个比对：两份清单进，内容 hash 变了的 id 出——新清单里已经
 没有的那些不算，它们不该由谁来删。它唯一的参数是被替换掉的那份清单，把退掉的 id 打到 stdout，并删掉
 那些 skill 的 `profiles/<id>` 目录。`just refresh` 就是按这个顺序的 `sync` 加它。
@@ -122,7 +132,7 @@ uv run python gen.py <prompt> <skill> --print   # 打印请求后即停止（不
                                     │
                       profiles/<id>/<angle>.json + md/<angle>.md
                                     │
-              `just index` ──► skills.jsonl：upstream/skills.jsonl × skills/ × profiles/
+              `just index` ──► skills.jsonl + stats.txt：upstream × skills/ × profiles/
 ```
 
 `output/` 一个根里放四样东西，每样都按它是什么来命名：skill、围绕它写出的档案、镜像自己的文件，以及
@@ -174,7 +184,8 @@ uv run python gen.py <prompt> <skill> --print   # 打印请求后即停止（不
   资产）、以及 `dist` 发布工作流（除了这棵目录树，本来也没有别的可发布）。`just index` 确实又写出
   一份 `skills.jsonl`，但没有把别的东西一起带回来：它只是每个 skill 一行，由一条明说的命令从树里
   派生，除了 `just sync` 提供的镜像行之外不引入任何新状态。由产出那棵树的运行顺手写出来的索引，
-  才正是这里要避开的漂移。
+  才正是这里要避开的漂移。`stats.txt` 不是那个文件换了个名字：没有东西读它、消费者不得依赖它，它也不
+  持有任何不在树里的状态——删掉它，下一次 `just index` 会一字不差地写回来。
 
 ## 新增一个 prompt
 
@@ -227,7 +238,7 @@ enum 这一侧检查）。
 ```
 justfile                # 编排器：拉取、构建图、并发池、缓存策略
 gen.py                  # 请求本身：<prompt> <skill> 进，一个 json + markdown 出
-index.py                # 清单：镜像的行与这棵树连接，一份扁平 jsonl 出
+index.py                # 清单与它的报告：一份扁平 jsonl 出，外加旁边的 stats.txt
 stale.py                # 比对：两份清单进，内容变了的 skill 的档案出
 prompts/                # 每个 prompt 一对 <id>.md（任务）+ <id>.json（schema），外加 _system.md
 tests/                  # 离线单元测试，外加一套 just 端到端测试
@@ -263,14 +274,16 @@ justfile 自己的变量——那几个路径、`py`——也按同样这三个�
   skill 都有行（包括还没生成任何档案的）、镜像已删除但档案还在的也有行；读不出 description 的和还没
   定 domain 的都是 `null`；id 用镜像的拼写而目录树用另一种；孤儿靠遍历而不是 glob（包括名字带前导点
   的 repo）；缺镜像索引时的报错；justfile 用来匹配的那个 `"description":null` 拼写；
-  以及「要么完整要么不存在」的写入。
+  以及「要么完整要么不存在」的写入。同一个文件也覆盖那份报告：工作单元是 json 而不是目录、只算真
+  建得出来的分母、被下架的 skill 算孤儿而不是算覆盖、安装量加权、标签读自 schema、报告读 `upstream/`
+  里的快照身份而不是自己盖章、同一棵树写出同样的字节，以及它同样「要么完整要么不存在」。
 - `tests/test_stale.py` 覆盖这个比对：hash 变了只退那一个 skill、上游删掉的 skill 保留档案、没存 hash
   的行不参与比对、还没生成就先变了 hash 的 skill 什么都不退，以及两种冷启动（没有旧清单、树上没有清单）。
 - `tests/test_just.py` 覆盖 justfile，它同时承担联网与并发两件事：全新构建、有限的一轮取的是接下来
   还缺的那些 skill 而不是最上面那几个、整份都建好时什么都不做、删掉一个 json 只重建那一个、
   `limit` 窗口及其顺序（清单，没有清单则是路径序）、读不出 description 的 skill 完全不是目标、
   `jobs` 决定池子大小、`just one` 能触及窗口之外、
-  `just invalidate` 只忘记一个 prompt、`just index` 把镜像的行与档案连起来、`just refresh` 只退掉
+  `just invalidate` 只忘记一个 prompt、`just index` 把镜像的行与档案连起来并顺手写出它旁边的报告、`just refresh` 只退掉
   新快照真正改动的那些、`DRY=1` 的两种写法、
   继承来的 `SKILLS_PROFILES_DRY_RUN` 不被覆盖地传到每个任务、`just sync` 从本地 tarball 拉一份
   快照、按两层解压并整体替换、并重写它刚把源层移走的那份清单；拒绝替换「不是快照」的目录的守卫、

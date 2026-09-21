@@ -1,4 +1,5 @@
-"""index.py: the catalog - the mirror's rows joined with what this project read and decided."""
+"""index.py: the catalog - the mirror's rows joined with what this project read and decided - and
+the report written beside it."""
 
 import json
 
@@ -161,3 +162,130 @@ def test_main_writes_and_reports_the_catalog(workdir, capsys):
     first = catalog.read_text(encoding="utf-8").splitlines()[0]
     assert json.loads(first)["domain"] == ["office-productivity"]
     assert "indexed 6 skills" in capsys.readouterr().err
+
+
+# ------------------------------------------------------------------ the report
+
+
+def report(config) -> str:
+    """The report as index.py writes it: the catalog's own rows, said as progress."""
+    return index.status(config, index.rows(config))
+
+
+def counted(text: str, angle: str) -> list[str]:
+    """One row of the angle table, without its name: `built`, `of`, `built%`, `installs%`."""
+    return next(line for line in text.splitlines() if line.startswith(f"{angle} ")).split()[1:]
+
+
+def said(text: str, name: str) -> str:
+    """One of the report's own lines, without its name."""
+    return next(line for line in text.splitlines() if line.startswith(f"{name} ")).split(None, 1)[1]
+
+
+def test_the_report_counts_the_angles_the_tree_holds(workdir):
+    """The report reads the tree the way the batch does - an angle's json is the unit of work - so
+    `domain` built for two skills of the five that can be built is what it says, and the angles
+    nothing has been built for are at zero rather than left out."""
+    config = gen.Config()
+    gen.write(config, "domain", ALPHA, DOMAIN)
+    gen.write(config, "domain", BETA, DOMAIN)
+
+    text = report(config)
+
+    assert counted(text, "domain")[:2] == ["2", "5"]
+    assert counted(text, "scenario")[:2] == ["0", "5"]
+    assert counted(text, "total")[:2] == ["2", "30"]  # six angles, five skills each
+
+
+def test_the_denominator_is_what_can_be_built(workdir):
+    """`delta` is a skill the mirror lists and never fetched, so no prompt can lead with it and the
+    batch never touches it: counting it would pin the report below 100% forever."""
+    text = report(gen.Config())
+
+    assert said(text, "sources") == "5 of 6 carry a readable description"
+    assert counted(text, "domain")[1] == "5"
+
+
+def test_a_leftover_directory_is_not_progress(workdir):
+    """`just invalidate` deletes the files and leaves the directory behind, so a report that counted
+    directories would claim work that is not on disk."""
+    config = gen.Config()
+    gen.write(config, "domain", ALPHA, DOMAIN)
+    gen.json_path(config, "domain", ALPHA).unlink()
+
+    assert counted(report(config), "domain")[0] == "0"
+
+
+def test_a_profile_the_mirror_dropped_is_an_orphan_not_coverage(workdir):
+    """A dropped skill keeps the profiles that were paid for, so it is counted - on its own line,
+    and not in a column whose denominator is the dataset that still exists."""
+    config = gen.Config()
+    gen.write(config, "domain", "owner-z/repo-z/zeta", DOMAIN)
+
+    text = report(config)
+
+    assert counted(text, "domain")[0] == "0"
+    assert said(text, "orphans") == "1 profile directories the mirror no longer lists"
+
+
+def test_the_installs_column_weighs_the_same_count(workdir):
+    """The batch works the most installed skills first, so the count says how much is left and the
+    weight says what that is worth: `alpha` and `beta` carry 500 of the 690 installs there are."""
+    config = gen.Config()
+    gen.write(config, "domain", ALPHA, DOMAIN)
+    gen.write(config, "domain", BETA, DOMAIN)
+
+    assert counted(report(config), "domain")[3] == "72.5%"
+
+
+def test_the_labels_are_read_off_the_schema(workdir):
+    """The categories come off `domain.json`, so the line shows what nothing has been labelled with
+    as well as what has, which is what makes it a balance check rather than a tally."""
+    config = gen.Config()
+    gen.write(config, "domain", ALPHA, DOMAIN)
+
+    labels = said(report(config), "labels")
+
+    assert labels.startswith("office-productivity 1")
+    assert labels.endswith("(12 of 13 unused)")
+
+
+def test_the_report_says_which_snapshot_it_describes(workdir):
+    """The mirror's own files are its identity, and the report reads them: a wall clock of its own
+    would make every publish a change, and a publish that changes nothing spends no tag."""
+    config = gen.Config()
+    upstream = config.output_dir / gen.UPSTREAM_DIR
+    (upstream / "latest").write_text("dist-2026-01-02\n", encoding="utf-8")
+    (upstream / "stats.json").write_text(json.dumps({
+        "startedAt": "2026-01-02T03:04:05.678Z", "finishedAt": "2026-01-02T03:04:35.678Z",
+        "durationMs": 30000, "leaderboardTotal": 7, "added": 1, "removed": 2, "dropped": 3,
+    }), encoding="utf-8")
+
+    text = report(config)
+
+    assert said(text, "snapshot") == (
+        "dist-2026-01-02, scanned 2026-01-02T03:04:05Z -> 2026-01-02T03:04:35Z (30s)")
+    assert said(text, "mirror") == (
+        "6 listed, 7 on the leaderboard; that scan +1 -2, 3 dropped")
+
+
+def test_the_same_tree_writes_the_same_report(workdir):
+    """Everything in it is a function of the tree, so a run that changed nothing writes the same
+    bytes - which is what keeps `publish-dist` from spending a tag on a tree it already has."""
+    config = gen.Config()
+    gen.write(config, "domain", ALPHA, DOMAIN)
+
+    assert report(config) == report(config)
+
+
+def test_the_report_is_written_whole_or_absent(workdir, capsys):
+    """It lands beside the catalog, by the same rename: a reader never sees half of it."""
+    config = gen.Config()
+    gen.write(config, "domain", ALPHA, DOMAIN)
+
+    assert index.main([]) == 0
+
+    path = config.output_dir / index.STATS
+    assert path.read_text(encoding="utf-8").startswith("skills-profiles: generation status\n")
+    assert not path.with_name(path.name + ".part").exists()
+    assert f"status -> {path}" in capsys.readouterr().err

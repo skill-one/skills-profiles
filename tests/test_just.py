@@ -20,6 +20,7 @@ from pathlib import Path
 import pytest
 
 import gen
+import index
 from conftest import (
     ARCHIVE_ROOT,
     OUTPUT,
@@ -80,6 +81,11 @@ def outputs(project: Path, skill_id: str) -> Path:
 
 def json_names(project: Path, skill_id: str) -> list[str]:
     return sorted(p.name for p in outputs(project, skill_id).glob("*.json"))
+
+
+def counted(text: str, angle: str) -> list[str]:
+    """One row of the report's angle table, without its name."""
+    return next(line for line in text.splitlines() if line.startswith(f"{angle} ")).split()[1:]
 
 
 def snapshot(output: Path, skill_id: str) -> Path:
@@ -370,9 +376,9 @@ def test_invalidate_forgets_exactly_one_prompt(project):
 
 
 def test_just_clean_drops_the_profiles_and_keeps_the_sources(project):
-    """`clean` is about what was generated: the profiles and the catalog. The skill directories and
-    the mirror's own files stay - they are what a profile is built from, and re-fetching them is the
-    expensive part."""
+    """`clean` is about what was generated: the profiles, the catalog and the report about them. The
+    skill directories and the mirror's own files stay - they are what a profile is built from, and
+    re-fetching them is the expensive part."""
     assert just(project, "limit=1").returncode == 0
     assert just(project, "index").returncode == 0
     assert outputs(project, ALPHA).is_dir()
@@ -381,6 +387,7 @@ def test_just_clean_drops_the_profiles_and_keeps_the_sources(project):
 
     assert not (project / OUTPUT / gen.PROFILES_DIR).exists()
     assert not (project / OUTPUT / "skills.jsonl").exists()
+    assert not (project / OUTPUT / index.STATS).exists()
     assert (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").is_file()
     assert (project / OUTPUT / gen.UPSTREAM_DIR / "skills.jsonl").is_file()
 
@@ -388,7 +395,8 @@ def test_just_clean_drops_the_profiles_and_keeps_the_sources(project):
 def test_just_index_joins_the_mirror_with_the_profiles(project):
     """`just index` writes the catalog: a row per skill the mirror lists, in the mirror's order,
     carrying what was read out of the skill and what was decided about it - and `null` where neither
-    has happened. A row keeps the mirror's spelling of the id; its directory is the other one."""
+    has happened. A row keeps the mirror's spelling of the id; its directory is the other one. It
+    writes the report beside it from the same walk, so the two cannot describe different trees."""
     assert just(project, "limit=0", "jobs=4").returncode == 0
     (outputs(project, ALPHA) / "domain.json").unlink()
 
@@ -402,6 +410,9 @@ def test_just_index_joins_the_mirror_with_the_profiles(project):
     assert lines[0]["description"].startswith("Tidies a note list")
     assert lines[0]["domain"] is None  # the profile was deleted; the skill is still listed
     assert lines[5]["description"] is None  # no source to read a description from
+    text = (project / OUTPUT / index.STATS).read_text(encoding="utf-8")
+    assert counted(text, "domain")[:2] == ["4", "5"]  # the deleted json is not progress
+    assert counted(text, "comments")[:2] == ["5", "5"]
 
 
 def test_just_without_a_snapshot_says_what_to_run(tmp_path):

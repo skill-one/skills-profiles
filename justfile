@@ -8,6 +8,7 @@
 #   just rpm=20           ... paced to 20 calls a minute, whatever the pool size
 #   just dry=1 limit=2    offline smoke test: fake model, real layout
 #   just index            write output/skills.jsonl: the mirror's rows joined with the profiles
+#                         ... and output/stats.txt beside it, the same tree said as progress
 #
 # Everything lands under `output_dir`, in layers that do not overlap. `skills/` is the mirror's own
 # skill directories, exactly as it publishes them - what a user downloads means one of those, and
@@ -157,7 +158,8 @@ invalidate prompt:
 	@find {{output_dir}}/profiles -type f \( -name '{{prompt}}.json' -o -name '{{prompt}}.md' \) -delete 2>/dev/null || true
 	@echo "forgot every {{prompt}} output"
 
-# Write the catalog: the mirror's rows joined with each skill's description and its domain.
+# Write the catalog and its report: the mirror's rows joined with each skill's description and its
+# domain, plus `stats.txt`, the same tree said as progress.
 index:
 	@{{py}} index.py
 
@@ -207,10 +209,10 @@ sync:
 	mv "{{output_dir}}/upstream.new" "{{output_dir}}/upstream"
 	{{py}} index.py
 
-# Drop the profiles and the catalog. The sources stay: they are what a profile is built from, and
-# re-fetching them is the expensive part.
+# Drop the profiles, the catalog and its report. The sources stay: they are what a profile is built
+# from, and re-fetching them is the expensive part.
 clean:
-	@rm -rf {{output_dir}}/profiles {{output_dir}}/skills.jsonl
+	@rm -rf {{output_dir}}/profiles {{output_dir}}/skills.jsonl {{output_dir}}/stats.txt
 
 # Run the tests: offline, with a fake model and a local snapshot.
 test:
