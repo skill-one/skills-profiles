@@ -50,11 +50,12 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `gen.py`
   plus the `description` read out of that skill's own `SKILL.md` and the `domain` with its `reason`.
   `description` and `domain` are `null` while they are unknown, so a row states the dataset rather
   than the work: `.domain != null` is what has been built, and `.installs` ranks what has not.
-- **The READMEs are the front page**, written by the same command from the same walk. They say what
-  the directory is — the four layers, the six angles — and how much of the dataset is built: the
-  `skill × angle` cells on disk, per angle, counted and weighted by installs, with the snapshot they
-  describe and the labels in use. They are prose for a reader and nothing reads them back; every
-  line is a function of the tree, so a tree that did not change rewrites them identically.
+- **The READMEs are the front page**, written by the same command from the same walk: two lines on
+  what the directory is, then how much of the dataset is built — the `skill × angle` cells on disk,
+  per angle, counted and weighted by installs, under the snapshot they describe. They stay short on
+  purpose: the project's own prose lives in this repository, and a longer page would be a second copy
+  of it to keep in step. Nothing reads them back, and every line is a function of the tree, so a tree
+  that did not change rewrites them identically.
 - Ids, paths and field names are ASCII; `domain.domain` is an array of one to three members of a
   closed English enum, the primary first, so it still filters directly; the `domain` angle's values
   are English throughout, every other angle's values are Chinese.

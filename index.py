@@ -18,7 +18,6 @@ import argparse
 import json
 import os
 import sys
-from collections import Counter
 from pathlib import Path
 
 import gen
@@ -155,7 +154,7 @@ def angle_ids(config: gen.Config, cells: dict[str, set[str]]) -> list[str]:
 
 
 def facts(config: gen.Config, indexed: list[dict]) -> dict:
-    """What the README says: how much of the dataset is built, and the tree the number comes from.
+    """What the README says: how much of the dataset is built, and the tree the numbers come from.
 
     The denominator is what can be built rather than what the mirror lists - a skill whose front
     matter yields no description is never built, so counting it would pin the number below 100%
@@ -167,9 +166,9 @@ def facts(config: gen.Config, indexed: list[dict]) -> dict:
     """
     cells = built_cells(config)
     ids = angle_ids(config, cells)
-    listed = {gen.skill_dir_name(entry.get("id", "")) for entry in mirror_rows(config)}
+    on_mirror = {gen.skill_dir_name(entry.get("id", "")) for entry in mirror_rows(config)}
+    orphan = sum(1 for row in indexed if gen.skill_dir_name(row["id"]) not in on_mirror)
     buildable = [row for row in indexed if row["description"]]
-    orphan = [row for row in indexed if gen.skill_dir_name(row["id"]) not in listed]
     weight = sum(_installs(row) for row in buildable)
     dirs = {row["id"]: gen.skill_dir_name(row["id"]) for row in buildable}
 
@@ -181,39 +180,16 @@ def facts(config: gen.Config, indexed: list[dict]) -> dict:
         angles.append({"angle": angle, "built": len(here), "of": len(buildable),
                        "percent": _percent(len(here), len(buildable)),
                        "installs": _percent(sum(_installs(row) for row in here), weight)})
-    whole = sum(1 for row in buildable  # `ids` empty = nothing to be complete about
-                if ids and all(dirs[row["id"]] in cells.get(angle, set()) for angle in ids))
-
-    upstream = config.output_dir / gen.UPSTREAM_DIR
-    scan = _read_json(upstream / "stats.json")
-    counted = Counter(row["domain"][0] for row in indexed
-                      if isinstance(row.get("domain"), list) and row["domain"])
-    categories = _categories(config)
-    worn = sorted(counted, key=lambda name: (-counted[name], name))
     return {
-        "tag": _read_text(upstream / "latest").strip() or NOTHING,
-        "scan": _scan(scan),
-        "listed": str(len(indexed) - len(orphan)),
-        "board": _number(scan.get("leaderboardTotal")),
-        "added": _number(scan.get("added")),
-        "removed": _number(scan.get("removed")),
-        "dropped": _number(scan.get("dropped")),
+        "tag": _read_text(config.output_dir / gen.UPSTREAM_DIR / "latest").strip() or NOTHING,
+        "scan": _scan(_read_json(config.output_dir / gen.UPSTREAM_DIR / "stats.json")),
+        "listed": str(len(indexed) - orphan),
         "buildable": str(len(buildable)),
-        "fetched": _fetched(indexed),
-        "angle_names": " · ".join(f"`{name}`" for name in ids) or NOTHING,
         "angles": angles,
         "count": str(len(ids)),
         "cells": str(len(buildable) * len(ids)),
         "cells_built": str(built),
         "cells_percent": _percent(built, len(buildable) * len(ids)),
-        "whole": str(whole),
-        "whole_percent": _percent(whole, len(buildable)),
-        "orphans": str(len(orphan)),
-        "labels_text": ", ".join(f"{name} {counted[name]}" for name in worn) or NOTHING,
-        "categories": str(len(categories)) if categories else NOTHING,
-        "unused": str(sum(1 for name in categories if not counted[name])) if categories else NOTHING,
-        "profiles_size": _size(_du(config.output_dir / gen.PROFILES_DIR)),
-        "skills_size": _size(_du(config.output_dir / gen.SKILLS_DIR)),
     }
 
 
@@ -223,28 +199,6 @@ def _scan(scan: dict) -> str:
         return NOTHING
     spent = f" ({_minutes(scan['durationMs'])})" if scan.get("durationMs") else ""
     return f"{_moment(scan.get('startedAt'))} -> {_moment(scan.get('finishedAt'))}{spent}"
-
-
-def _fetched(indexed: list[dict]) -> str:
-    """The days the sources were gathered on, as the range they span."""
-    days = sorted({row["fetchedAt"][:10] for row in indexed if row.get("fetchedAt")})
-    if not days:
-        return NOTHING
-    return days[0] if days[0] == days[-1] else f"{days[0]} .. {days[-1]}"
-
-
-def _number(value: object) -> str:
-    return NOTHING if value is None else str(value)
-
-
-def _categories(config: gen.Config) -> list[str]:
-    """The domain angle's closed set, off its schema: what the balance check is against."""
-    schema = _read_json(config.prompts_dir / "domain.json")
-    try:
-        return [name for name in schema["properties"]["domain"]["items"]["enum"]
-                if isinstance(name, str)]
-    except (KeyError, TypeError):
-        return []
 
 
 def _installs(row: dict) -> int:
@@ -269,35 +223,6 @@ def _minutes(millis: float) -> str:
     """A millisecond duration as `29m06s`, or `30s` under a minute."""
     seconds = int(millis) // 1000
     return f"{seconds}s" if seconds < 60 else f"{seconds // 60}m{seconds % 60:02d}s"
-
-
-def _size(count: float) -> str:
-    """A byte count as one short string."""
-    for unit in ("B", "KB", "MB", "GB"):
-        if count < 1024:
-            return f"{count:.0f} B" if unit == "B" else f"{count:.1f} {unit}"
-        count /= 1024
-    return f"{count:.1f} GB"
-
-
-def _du(path: Path) -> int:
-    """The bytes under a directory; a missing one is nothing."""
-    total = 0
-    stack = [str(path)]
-    while stack:
-        try:
-            entries = list(os.scandir(stack.pop()))
-        except OSError:
-            continue
-        for entry in entries:
-            try:
-                if entry.is_dir(follow_symlinks=False):
-                    stack.append(entry.path)
-                else:
-                    total += entry.stat().st_size
-            except OSError:
-                continue
-    return total
 
 
 def _read_text(path: Path) -> str:

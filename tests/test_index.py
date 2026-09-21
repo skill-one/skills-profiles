@@ -212,16 +212,16 @@ def test_a_leftover_directory_is_not_progress(workdir):
     assert angle(facts(config), "domain")["built"] == 0
 
 
-def test_a_profile_the_mirror_dropped_is_an_orphan_not_coverage(workdir):
-    """A dropped skill keeps the profiles that were paid for, so it is counted - as an orphan, and
-    not in a column whose denominator is the dataset that still exists."""
+def test_a_profile_the_mirror_dropped_is_not_coverage(workdir):
+    """A dropped skill keeps the profiles that were paid for, and its row stays in the catalog - but
+    it is not part of the dataset, so it is in neither side of the count."""
     config = gen.Config()
     gen.write(config, "domain", "owner-z/repo-z/zeta", DOMAIN)
 
     numbers = facts(config)
 
     assert angle(numbers, "domain")["built"] == 0
-    assert numbers["orphans"] == "1"
+    assert (numbers["listed"], numbers["buildable"]) == ("6", "5")
 
 
 def test_the_installs_share_weighs_the_same_count(workdir):
@@ -234,18 +234,6 @@ def test_the_installs_share_weighs_the_same_count(workdir):
     assert angle(facts(config), "domain")["installs"] == "72.5%"
 
 
-def test_the_labels_are_read_off_the_schema(workdir):
-    """The categories come off `domain.json`, so the number says what nothing has been labelled with
-    as well as what has, which is what makes it a balance check rather than a tally."""
-    config = gen.Config()
-    gen.write(config, "domain", ALPHA, DOMAIN)
-
-    numbers = facts(config)
-
-    assert numbers["labels_text"] == "office-productivity 1"
-    assert (numbers["unused"], numbers["categories"]) == ("12", "13")
-
-
 def test_the_numbers_say_which_snapshot_they_describe(workdir):
     """The mirror's own files are its identity, and they are read: a wall clock of our own would
     make every publish a change, and a publish that changes nothing spends no version number."""
@@ -254,14 +242,13 @@ def test_the_numbers_say_which_snapshot_they_describe(workdir):
     (upstream / "latest").write_text("dist-2026-01-02\n", encoding="utf-8")
     (upstream / "stats.json").write_text(json.dumps({
         "startedAt": "2026-01-02T03:04:05.678Z", "finishedAt": "2026-01-02T03:04:35.678Z",
-        "durationMs": 30000, "leaderboardTotal": 7, "added": 1, "removed": 2, "dropped": 3,
+        "durationMs": 30000,
     }), encoding="utf-8")
 
     numbers = facts(config)
 
     assert numbers["tag"] == "dist-2026-01-02"
     assert numbers["scan"] == "2026-01-02T03:04:05Z -> 2026-01-02T03:04:35Z (30s)"
-    assert (numbers["board"], numbers["added"], numbers["dropped"]) == ("7", "1", "3")
 
 
 def test_a_tree_that_cannot_answer_says_so(workdir):
@@ -269,7 +256,7 @@ def test_a_tree_that_cannot_answer_says_so(workdir):
     nothing behind them are one dash rather than a traceback or a blank."""
     numbers = facts(gen.Config())
 
-    assert (numbers["tag"], numbers["scan"], numbers["board"]) == ("\u2014", "\u2014", "\u2014")
+    assert (numbers["tag"], numbers["scan"]) == ("\u2014", "\u2014")
 
 
 def test_the_same_tree_reads_the_same_numbers(workdir):

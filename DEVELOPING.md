@@ -120,21 +120,23 @@ not written alongside.
 
 The same run writes `output/README.md` and its Chinese twin from the same walk - `readme.py` holds
 the words, `index.py` hands it the numbers - and together they are the one thing the catalog cannot
-answer: **how much of the dataset is built.** They say what the directory is (the four layers, the
-six angles) and then count cells the way the batch does - an angle's json is the unit of work, so a
-directory left behind by `just invalidate` is not progress - over the skills that can actually be
-built, since a skill whose front matter yields no description would pin the number below 100%
-forever. Each angle is a row: how many skills have it, and what share of the mirror's installs that
-covers, which is the number that matters because the batch works most-installed-first (a count of
-0.3% and a weight of 16% are the same tree, and only the second says what a partial dataset is worth).
-Around it: the snapshot they describe, orphans, the domain labels in use, and the size of the tree.
-Three decisions are worth knowing. **They are the front page, because the published root is the
-product**: `publish-dist` copies `output/` to the `dist` branch root, so `README.md` is what GitHub
-renders for anyone who lands there - which is also why there are two of them, the repository's own
-rule for a document. **The words are separated from the numbers** so that a second language is a
-second page rather than a second code path: one renderer, two tables of text, and a test that both
-hold the same keys. **They read the snapshot's own identity** (`upstream/latest`, `upstream/stats.json`,
-the `fetchedAt` range) rather than stamping a wall clock, because a publish compares the tree with the
+answer: **how much of the dataset is built.** Two lines say which files are the skill and which are
+what was written about it, then the table counts cells the way the batch does - an angle's json is the
+unit of work, so a directory left behind by `just invalidate` is not progress - over the skills that
+can actually be built, since a skill whose front matter yields no description would pin the number
+below 100% forever. Each angle is a row: how many skills have it, and what share of the mirror's
+installs that covers, which is the number that matters because the batch works most-installed-first (a
+count of 0.3% and a weight of 16% are the same tree, and only the second says what a partial dataset
+is worth). Under it, two lines: the snapshot the numbers describe, and the denominator. **That is the
+whole page, and the length is the point** - it is the front door of a published directory, and the
+project's own prose lives in this repository; a longer page would be a second copy of it to keep in
+step, so a test pins it at 25 lines. Three decisions are worth knowing. **It is a README, because the
+published root is the product**: `publish-dist` copies `output/` to the `dist` branch root, so
+`README.md` is what GitHub renders for anyone who lands there - which is also why there are two of
+them, the repository's own rule for a document. **The words are separated from the numbers** so that a
+second language is a second page rather than a second code path: one renderer, two tables of text, and
+a test that both hold the same keys. **They read the snapshot's own identity** (`upstream/latest`,
+`upstream/stats.json`) rather than stamping a wall clock, because a publish compares the tree with the
 branch and a file that changes on every run would spend a version number on a tree that did not
 change.
 
@@ -332,14 +334,13 @@ fails loudly, so a test can never call out even with a local `.env` full of keys
   orphan walked rather than globbed (a repo whose name starts with a dot among them), the error a
   missing mirror index gives, the `"description":null` spelling the justfile matches on, and the
   write being whole or absent - plus the numbers a README is said from: a json rather than a directory
-  as the unit of work, the buildable denominator, a dropped skill arriving as an orphan rather than as
-  coverage, the installs weight, the labels read off the schema, the snapshot read out of `upstream/`
-  instead of stamped, a tree that cannot answer saying so in one dash, and the same tree reading the
-  same numbers.
+  as the unit of work, the buildable denominator, a dropped skill counting as neither coverage nor
+  dataset, the installs weight, the snapshot read out of `upstream/` instead of stamped, a tree that
+  cannot answer saying so in one dash, and the same tree reading the same numbers.
 - `tests/test_readme.py` covers the page: both languages holding the same keys, every placeholder in
-  them being a number the report has, the two rendered for a tree with nothing built and one built
-  partway, each page pointing at the other, both saying they are generated, and both being a
-  function of the tree.
+  them being a number the report has, the page staying inside its length, the two rendered for a tree
+  with nothing built and one built partway, each page pointing at the other, both saying they are
+  generated, and both being a function of the tree.
 - `tests/test_stale.py` covers the comparison: a moved hash retiring exactly that skill, a skill that
   vanished keeping its profiles, a row with no hash saved being nobody's business, a skill whose hash
   moved before anything was built retiring nothing, and the two cold starts (no previous catalog, no
