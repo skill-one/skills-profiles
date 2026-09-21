@@ -13,13 +13,15 @@ name: publish
 # the top of it.
 #
 # Repository configuration (Settings -> Secrets and variables -> Actions), mirroring a local
-# `.env`: the endpoint, its key, and the knobs that are about the endpoint rather than the batch.
+# `.env`: both endpoints, their keys, and the knobs that are about an endpoint rather than the batch.
 # Unset means unset - an empty value is ignored, so a missing variable falls back to the default
-# instead of overriding it.
+# instead of overriding it. The System One key is what the `domain` angle is built with (`jev.py`),
+# so a run of that prompt without it fails every pair.
 #
-#   Secret:   SKILLS_PROFILES_API_KEY
+#   Secret:   SKILLS_PROFILES_API_KEY, SKILLS_PROFILES_JEV_API_KEY
 #   Variable: SKILLS_PROFILES_BASE_URL, SKILLS_PROFILES_MODEL,
-#             SKILLS_PROFILES_THINKING, SKILLS_PROFILES_MAX_RETRIES
+#             SKILLS_PROFILES_THINKING, SKILLS_PROFILES_MAX_RETRIES,
+#             SKILLS_PROFILES_JEV_BASE_URL, SKILLS_PROFILES_JEV_MODEL
 
 on:
   workflow_dispatch:
@@ -45,12 +47,15 @@ concurrency:
   cancel-in-progress: false # never cancel a run that is about to push
 
 env:
-  # the endpoint and how to talk to it; the batch's own tunables are `just` knobs instead
+  # the two endpoints and how to talk to them; the batch's own tunables are `just` knobs instead
   SKILLS_PROFILES_API_KEY: ${{ secrets.SKILLS_PROFILES_API_KEY }}
   SKILLS_PROFILES_BASE_URL: ${{ vars.SKILLS_PROFILES_BASE_URL }}
   SKILLS_PROFILES_MODEL: ${{ vars.SKILLS_PROFILES_MODEL }}
   SKILLS_PROFILES_THINKING: ${{ vars.SKILLS_PROFILES_THINKING }}
   SKILLS_PROFILES_MAX_RETRIES: ${{ vars.SKILLS_PROFILES_MAX_RETRIES }}
+  SKILLS_PROFILES_JEV_API_KEY: ${{ secrets.SKILLS_PROFILES_JEV_API_KEY }}
+  SKILLS_PROFILES_JEV_BASE_URL: ${{ vars.SKILLS_PROFILES_JEV_BASE_URL }}
+  SKILLS_PROFILES_JEV_MODEL: ${{ vars.SKILLS_PROFILES_JEV_MODEL }}
 
 jobs:
   publish:
