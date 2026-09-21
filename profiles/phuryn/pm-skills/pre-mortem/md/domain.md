@@ -1,0 +1,15 @@
+# pre-mortem (`phuryn/pm-skills/pre-mortem`)
+
+## domain
+
+### domain
+
+business-ops
+
+### confidence
+
+0.33
+
+### probabilities
+
+design-media: 0.0, finance-payment: 0.0, education: 0.0, business-ops: 0.39, data-analysis: 0.0, testing: 0.01, content-creation: 0.32, development: 0.0, lifestyle: 0.0, devops-security: 0.0, office-productivity: 0.23, other: 0.04, knowledge-management: 0.01

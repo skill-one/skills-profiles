@@ -1,0 +1,15 @@
+# sponsor-finder (`github/awesome-copilot/sponsor-finder`)
+
+## domain
+
+### domain
+
+development
+
+### confidence
+
+0.7
+
+### probabilities
+
+devops-security: 0.0, testing: 0.0, lifestyle: 0.0, business-ops: 0.05, knowledge-management: 0.09999999999999999, data-analysis: 0.05, education: 0.0, other: 0.01, finance-payment: 0.02, office-productivity: 0.0, content-creation: 0.04, design-media: 0.0, development: 0.73

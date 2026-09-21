@@ -1,0 +1,15 @@
+# cargo-orchestration (`getcargohq/cargo-skills/cargo-orchestration`)
+
+## domain
+
+### domain
+
+business-ops
+
+### confidence
+
+0.47
+
+### probabilities
+
+testing: 0.0, business-ops: 0.52, data-analysis: 0.15, design-media: 0.0, education: 0.0, knowledge-management: 0.0, development: 0.25, other: 0.02, lifestyle: 0.0, office-productivity: 0.0, content-creation: 0.0, finance-payment: 0.0, devops-security: 0.06

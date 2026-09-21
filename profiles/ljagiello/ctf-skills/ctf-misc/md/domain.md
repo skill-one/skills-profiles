@@ -1,0 +1,15 @@
+# ctf-misc (`ljagiello/ctf-skills/ctf-misc`)
+
+## domain
+
+### domain
+
+devops-security
+
+### confidence
+
+0.54
+
+### probabilities
+
+design-media: 0.0, finance-payment: 0.0, development: 0.07, testing: 0.06, office-productivity: 0.0, data-analysis: 0.0, knowledge-management: 0.14, lifestyle: 0.0, education: 0.02, devops-security: 0.57, business-ops: 0.0, other: 0.12, content-creation: 0.02
