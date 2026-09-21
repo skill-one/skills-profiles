@@ -1,0 +1,15 @@
+# cuopt-routing-formulation (`nvidia/skills/cuopt-routing-formulation`)
+
+## domain
+
+### domain
+
+other
+
+### confidence
+
+0.32
+
+### probabilities
+
+office-productivity: 0.0, content-creation: 0.01, education: 0.26, other: 0.38, design-media: 0.0, devops-security: 0.0, development: 0.05, knowledge-management: 0.15, finance-payment: 0.0, data-analysis: 0.03, testing: 0.0, business-ops: 0.12, lifestyle: 0.0

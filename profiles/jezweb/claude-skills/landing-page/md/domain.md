@@ -1,0 +1,15 @@
+# landing-page (`jezweb/claude-skills/landing-page`)
+
+## domain
+
+### domain
+
+development
+
+### confidence
+
+0.76
+
+### probabilities
+
+business-ops: 0.15, design-media: 0.05, testing: 0.0, education: 0.0, content-creation: 0.01, development: 0.79, devops-security: 0.0, data-analysis: 0.0, other: 0.0, knowledge-management: 0.0, office-productivity: 0.0, lifestyle: 0.0, finance-payment: 0.0

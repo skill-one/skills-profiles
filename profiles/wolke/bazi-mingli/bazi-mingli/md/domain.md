@@ -1,0 +1,15 @@
+# bazi-mingli (`wolke/bazi-mingli/bazi-mingli`)
+
+## domain
+
+### domain
+
+other
+
+### confidence
+
+0.4
+
+### probabilities
+
+design-media: 0.0, content-creation: 0.19, testing: 0.0, finance-payment: 0.0, lifestyle: 0.33, office-productivity: 0.0, development: 0.0, other: 0.45, devops-security: 0.0, data-analysis: 0.02, knowledge-management: 0.01, business-ops: 0.0, education: 0.0

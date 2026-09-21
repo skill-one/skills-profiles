@@ -1,0 +1,15 @@
+# problem-framing-canvas (`deanpeters/product-manager-skills/problem-framing-canvas`)
+
+## domain
+
+### domain
+
+business-ops
+
+### confidence
+
+0.27
+
+### probabilities
+
+finance-payment: 0.0, business-ops: 0.33, lifestyle: 0.0, knowledge-management: 0.03, design-media: 0.0, testing: 0.0, education: 0.02, data-analysis: 0.0, office-productivity: 0.24, other: 0.13, development: 0.02, content-creation: 0.23, devops-security: 0.0

@@ -1,0 +1,15 @@
+# day2-create-context-sync-skill (`ai-native-camp/camp-1/day2-create-context-sync-skill`)
+
+## domain
+
+### domain
+
+knowledge-management
+
+### confidence
+
+0.33
+
+### probabilities
+
+devops-security: 0.0, office-productivity: 0.08, design-media: 0.0, content-creation: 0.02, development: 0.27, knowledge-management: 0.39, education: 0.23, business-ops: 0.0, finance-payment: 0.0, lifestyle: 0.0, data-analysis: 0.01, other: 0.0, testing: 0.0

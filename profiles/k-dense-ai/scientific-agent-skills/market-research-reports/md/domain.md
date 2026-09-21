@@ -1,0 +1,15 @@
+# market-research-reports (`k-dense-ai/scientific-agent-skills/market-research-reports`)
+
+## domain
+
+### domain
+
+business-ops
+
+### confidence
+
+0.33
+
+### probabilities
+
+data-analysis: 0.26, business-ops: 0.39, office-productivity: 0.0, knowledge-management: 0.06, finance-payment: 0.0, testing: 0.0, design-media: 0.0, education: 0.0, development: 0.0, lifestyle: 0.0, content-creation: 0.29, other: 0.0, devops-security: 0.0

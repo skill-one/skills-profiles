@@ -1,0 +1,15 @@
+# wwas (`phuryn/pm-skills/wwas`)
+
+## domain
+
+### domain
+
+office-productivity
+
+### confidence
+
+0.65
+
+### probabilities
+
+devops-security: 0.0, knowledge-management: 0.01, business-ops: 0.01, other: 0.02, office-productivity: 0.68, lifestyle: 0.0, education: 0.0, testing: 0.0, data-analysis: 0.0, finance-payment: 0.0, design-media: 0.0, content-creation: 0.19, development: 0.09

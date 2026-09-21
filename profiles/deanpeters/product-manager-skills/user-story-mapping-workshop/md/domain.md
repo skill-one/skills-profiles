@@ -1,0 +1,15 @@
+# user-story-mapping-workshop (`deanpeters/product-manager-skills/user-story-mapping-workshop`)
+
+## domain
+
+### domain
+
+office-productivity
+
+### confidence
+
+0.52
+
+### probabilities
+
+knowledge-management: 0.05, other: 0.04, office-productivity: 0.56, design-media: 0.0, data-analysis: 0.0, devops-security: 0.0, business-ops: 0.03, education: 0.0, development: 0.21, lifestyle: 0.0, finance-payment: 0.0, testing: 0.0, content-creation: 0.11

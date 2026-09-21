@@ -1,0 +1,15 @@
+# cuopt-numerical-optimization-api-cli (`nvidia/skills/cuopt-numerical-optimization-api-cli`)
+
+## domain
+
+### domain
+
+development
+
+### confidence
+
+0.39
+
+### probabilities
+
+content-creation: 0.0, knowledge-management: 0.0, lifestyle: 0.0, design-media: 0.0, education: 0.0, development: 0.45, other: 0.29, data-analysis: 0.26, office-productivity: 0.0, testing: 0.0, business-ops: 0.0, devops-security: 0.0, finance-payment: 0.0

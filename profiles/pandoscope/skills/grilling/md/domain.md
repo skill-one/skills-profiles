@@ -1,0 +1,15 @@
+# grilling (`pandoscope/skills/grilling`)
+
+## domain
+
+### domain
+
+education
+
+### confidence
+
+0.22
+
+### probabilities
+
+knowledge-management: 0.03, other: 0.19, data-analysis: 0.0, office-productivity: 0.05, design-media: 0.0, devops-security: 0.0, education: 0.29000000000000004, business-ops: 0.03, development: 0.12, lifestyle: 0.0, finance-payment: 0.0, testing: 0.2, content-creation: 0.09

@@ -1,0 +1,15 @@
+# thought-based-reasoning (`neolabhq/context-engineering-kit/thought-based-reasoning`)
+
+## domain
+
+### domain
+
+other
+
+### confidence
+
+0.33
+
+### probabilities
+
+education: 0.21, other: 0.38, design-media: 0.0, business-ops: 0.0, devops-security: 0.0, testing: 0.0, development: 0.21, knowledge-management: 0.12, finance-payment: 0.0, content-creation: 0.07, office-productivity: 0.0, lifestyle: 0.0, data-analysis: 0.01

@@ -1,0 +1,15 @@
+# design-debt-audit (`owl-listener/designer-skills/design-debt-audit`)
+
+## domain
+
+### domain
+
+design-media
+
+### confidence
+
+0.67
+
+### probabilities
+
+devops-security: 0.0, other: 0.01, design-media: 0.7, development: 0.01, testing: 0.15000000000000002, business-ops: 0.0, office-productivity: 0.02, lifestyle: 0.0, education: 0.0, knowledge-management: 0.09, finance-payment: 0.0, content-creation: 0.01, data-analysis: 0.01

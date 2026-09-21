@@ -1,0 +1,15 @@
+# 1start-mathmodel (`jihe520/mathmodelagent/1start-mathmodel`)
+
+## domain
+
+### domain
+
+content-creation
+
+### confidence
+
+0.45
+
+### probabilities
+
+devops-security: 0.0, lifestyle: 0.0, business-ops: 0.0, office-productivity: 0.18, design-media: 0.0, finance-payment: 0.0, testing: 0.0, education: 0.02, data-analysis: 0.13, knowledge-management: 0.02, content-creation: 0.51, other: 0.07, development: 0.07

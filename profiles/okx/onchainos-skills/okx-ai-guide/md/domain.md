@@ -1,0 +1,15 @@
+# okx-ai-guide (`okx/onchainos-skills/okx-ai-guide`)
+
+## domain
+
+### domain
+
+education
+
+### confidence
+
+0.34
+
+### probabilities
+
+data-analysis: 0.0, lifestyle: 0.0, finance-payment: 0.0, other: 0.12, testing: 0.0, design-media: 0.0, education: 0.4, content-creation: 0.09, office-productivity: 0.0, development: 0.15, knowledge-management: 0.01, business-ops: 0.22, devops-security: 0.01

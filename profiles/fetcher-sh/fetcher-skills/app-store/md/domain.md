@@ -1,0 +1,15 @@
+# app-store (`fetcher-sh/fetcher-skills/app-store`)
+
+## domain
+
+### domain
+
+business-ops
+
+### confidence
+
+0.54
+
+### probabilities
+
+office-productivity: 0.0, content-creation: 0.0, other: 0.01, data-analysis: 0.02, business-ops: 0.59, finance-payment: 0.0, lifestyle: 0.0, design-media: 0.0, devops-security: 0.0, development: 0.13, testing: 0.0, knowledge-management: 0.25, education: 0.0

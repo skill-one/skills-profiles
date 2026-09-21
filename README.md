@@ -14,11 +14,11 @@ catalog of both.
 | --- | ---: | ---: | ---: | ---: |
 | `blackbox` | 0 | 9007 | 0.0% | 0.0% |
 | `comments` | 0 | 9007 | 0.0% | 0.0% |
-| `domain` | 5000 | 9007 | 55.5% | 95.7% |
+| `domain` | 9007 | 9007 | 100.0% | 100.0% |
 | `scenario` | 0 | 9007 | 0.0% | 0.0% |
 | `tagline` | 0 | 9007 | 0.0% | 0.0% |
 | `whitebox` | 0 | 9007 | 0.0% | 0.0% |
-| **total** | 5000 | 54042 | 9.3% |  |
+| **total** | 9007 | 54042 | 16.7% |  |
 
 - **snapshot**: `dist-2026-09-19`, 2026-09-19T19:42:24Z -> 2026-09-19T20:12:32Z (30m07s)
 - **buildable**: 9007 of 9029 have a readable description; the rest are never built

@@ -1,0 +1,15 @@
+# investigate (`ghaida/intent/investigate`)
+
+## domain
+
+### domain
+
+knowledge-management
+
+### confidence
+
+0.31
+
+### probabilities
+
+testing: 0.02, design-media: 0.01, business-ops: 0.19, education: 0.0, content-creation: 0.17, development: 0.0, devops-security: 0.0, data-analysis: 0.1, other: 0.13, lifestyle: 0.0, finance-payment: 0.0, office-productivity: 0.01, knowledge-management: 0.37

@@ -1,0 +1,15 @@
+# post-mortem (`boshu2/agentops/post-mortem`)
+
+## domain
+
+### domain
+
+devops-security
+
+### confidence
+
+0.6
+
+### probabilities
+
+office-productivity: 0.01, education: 0.0, design-media: 0.0, development: 0.02, other: 0.05, testing: 0.0, content-creation: 0.28, devops-security: 0.63, business-ops: 0.0, knowledge-management: 0.01, data-analysis: 0.0, finance-payment: 0.0, lifestyle: 0.0

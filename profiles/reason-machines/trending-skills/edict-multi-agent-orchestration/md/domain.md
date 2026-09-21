@@ -1,0 +1,15 @@
+# edict-multi-agent-orchestration (`reason-machines/trending-skills/edict-multi-agent-orchestration`)
+
+## domain
+
+### domain
+
+development
+
+### confidence
+
+0.41
+
+### probabilities
+
+devops-security: 0.06, other: 0.06, business-ops: 0.06, lifestyle: 0.0, testing: 0.0, office-productivity: 0.33999999999999997, knowledge-management: 0.01, finance-payment: 0.0, development: 0.45, data-analysis: 0.01, education: 0.0, content-creation: 0.01, design-media: 0.0
