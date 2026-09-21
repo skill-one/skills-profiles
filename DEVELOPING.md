@@ -1,8 +1,9 @@
 # Developing skills-profiles
 
 The generator behind the dataset described in [README.md](README.md): it reads each skill's
-`SKILL.md` from [skills-sh-mirror](https://github.com/skill-one/skills-sh-mirror) and asks an
-OpenAI-compatible LLM for six structured Chinese angles per skill.
+`SKILL.md` from [skills-sh-mirror](https://github.com/skill-one/skills-sh-mirror) and asks for six
+structured angles per skill - five of them Chinese, from an OpenAI-compatible chat model, and the
+`domain` label from the System One endpoint, which answers typed questions instead.
 
 中文: [DEVELOPING.zh-CN.md](DEVELOPING.zh-CN.md)
 
@@ -24,10 +25,10 @@ Offline, no API calls and no credentials: `just dry=1 limit=5`.
 
 | Command                     | What it does                                                                                                                                                                                     |
 | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `just`                      | Build the missing profiles for the next `limit` skills that still need one, most installed first. The order is the catalog's own (`OUTPUT_DIR/skills.jsonl`, which the mirror wrote installs-descending) filtered to the rows that have a description and a `SKILL.md` on disk; with no catalog it is the directory listing in path order. The window is then the first `limit` of those skills that are missing at least one angle - a count of work, not of positions, so repeated runs walk down the dataset. The recipe enumerates `PROMPTS_DIR/*.json`, keeps the `(skill, prompt)` pairs whose json is missing, and feeds them to an `xargs -P` pool. `jobs` is the whole concurrency story. |
+| `just`                      | Build the missing profiles for the next `limit` skills that still need one, most installed first. The order is the catalog's own (`OUTPUT_DIR/skills.jsonl`, which the mirror wrote installs-descending) filtered to the rows that have a description and a `SKILL.md` on disk; with no catalog it is the directory listing in path order. The window is then the first `limit` of those skills that are missing at least one angle - a count of work, not of positions, so repeated runs walk down the dataset. The recipe takes the angles from both producers - `PROMPTS_DIR/*.json` and `jev.py --angles` - keeps the pairs whose json is missing, and feeds them to an `xargs -P` pool that hands each pair to the script that owns its angle. `jobs` is the whole concurrency story. |
 | `just one <prompt> <skill>` | Build exactly one output, whether or not the batch has reached it. `limit` is a window over the dataset in its own order, not a way to name a skill, so this is the only way to address one cell - and the only way to rebuild one without the batch skipping it. |
 | `just invalidate <prompt>`  | Delete one prompt's profiles, so the next run rebuilds exactly those.                                                                                                                               |
-| `just index`                | Write `<output_dir>/skills.jsonl` - the catalog: one flat line per skill the mirror lists, in the mirror's order, being the mirror's own row (`id`, `installs`, `url`, `hash`, `fetchedAt`) joined with the `description` read out of that skill's `SKILL.md` and the `domain` and `reason` in `profiles/<id>/domain.json`. Both are `null` while they are unknown, and a skill the mirror has dropped while profiles remain gets a row of its own. It reads the tree alone - no network, no calls - and rewrites the file whole, so it is a projection of what is on disk rather than a second copy to keep in step by hand. It writes the READMEs beside it, from the same walk: see `index.py` below. |
+| `just index`                | Write `<output_dir>/skills.jsonl` - the catalog: one flat line per skill the mirror lists, in the mirror's order, being the mirror's own row (`id`, `installs`, `url`, `hash`, `fetchedAt`) joined with the `description` read out of that skill's `SKILL.md`, and the `domain` and `confidence` in `profiles/<id>/domain.json`. Both are `null` while they are unknown, and a skill the mirror has dropped while profiles remain gets a row of its own. It reads the tree alone - no network, no calls - and rewrites the file whole, so it is a projection of what is on disk rather than a second copy to keep in step by hand. It writes the READMEs beside it, from the same walk: see `index.py` below. |
 | `just sync`                 | Download the whole upstream `dist` branch as one tarball and unpack it into the tree: the skill directories into `output_dir/skills`, complete and unchanged, and the rest - the mirror's own index above all - into `output_dir/upstream`. Then rewrite the catalog, which the moved source layer just invalidated. The fetch lands in a scratch directory beside the output root and the swap happens only once it is whole, so a failed download changes nothing; a guard refuses to replace a `skills/` that is not a snapshot. Every run downloads - nothing tracks "already current". Pure data: it never touches a generated profile. |
 | `just refresh`              | `just sync`, plus the consequence: the catalog as it was before the sync is kept aside, and every profile whose source content hash moved with the new one is deleted, so the next batch rebuilds them. A skill that vanished upstream keeps its profiles. The scratch catalog is gone when the comparison is done. |
 | `just clean`                | Drop what was generated: `output_dir/profiles`, the catalog and the READMEs about it (`output_dir/skills.jsonl`, `output_dir/README.md`, `output_dir/README.zh-CN.md`). The skill directories and the mirror's own files stay: they are what a profile is built from, and re-fetching them is the expensive part. |
@@ -104,6 +105,21 @@ Its whole contract with the caller is then this:
 - **Status** is 0 built, 1 an input or the model was unusable, 2 bad arguments. A failure is one
   line rather than a traceback, because a batch of sixty thousand of them is where a traceback
   stops being information.
+
+`jev.py` is the third writer of a profile and the second producer, and it exists because its
+endpoint is not a chat one: `POST /v1/systemone` takes a `state` and a map of typed `questions`, and
+answers with typed `answers` - no messages, no `json_schema`, no free text. So it builds its own
+request and shares everything else with `gen.py`: the same rendered system message as the `state`,
+the same writer, the same `profiles/<id>/<angle>.json` and markdown copy, the same gate on a skill
+with no description, the same exit codes. `just` sends a pair to whichever of the two owns the angle,
+and `jev.py --angles` is the only list of its own there is - adding one to that dict is adding an
+angle the batch builds. What it trades away is real: a System One answer is a member of a closed set,
+so `domain` has no reason line and no array. What it gives instead is the answer itself, kept whole
+in the profile: the label, the confidence, and the distribution over all 13 categories it was read
+off - which is what another angle's file is too, its model's answer rather than a summary of it. The
+distribution is worth keeping because the winner does not contain it: a call decided 0.52 to 0.48
+says something a call decided 0.99 to 0.01 does not, and neither can be asked for again. The catalog
+takes two of the three, the label and the confidence, and leaves the rest where it lives.
 
 Naming what to build lives in the justfile rather than in a script for the same reason: the graph is
 a directory listing and a glob, and a script that printed it would be a second place for the layout
@@ -277,25 +293,31 @@ just prompt=my_angle
 ```
 
 Already-generated angles are skipped, so only the new one costs calls anyway - `prompt=<id>` just
-says so outright, instead of walking the other six to find nothing to do.
+says so outright, instead of walking the other five to find nothing to do.
 
-Three things about the schema are worth knowing. Keeping it a real `.json` file is the point: an
+Two things about the schema are worth knowing. Keeping it a real `.json` file is the point: an
 editor or another tool can validate it, and the markdown stays prose. `strict` mode is the
 provider's rule, not ours, so a schema it refuses — an unclosed object, a field missing from
 `required` — fails the call with a 400 rather than being quietly coerced; `tests/test_gen.py`
 checks every prompt schema against those rules, so `uv run pytest` catches it before a batch does.
-And `domain` states its 13 categories twice, as prose in the markdown for the model and as the
-schema's `enum` for the decoder; keep them in sync (a test checks that too, from the enum side).
+
+A Jev angle is the other kind, and it is one entry in `jev.py` rather than two files: a name in
+`QUESTIONS` holding the typed questions the endpoint answers, each a `choice` with its options, a
+`score` with its levels, or a `noul` with nothing but an instruction. There is no prompt template and
+no schema, so there is nothing to keep in step - `domain`'s 13 categories are one dict, handed over
+as the options its answer is confined to. An entry there is built by `just` on the next run, just as
+a new prompt pair is.
 
 ## Project layout
 
 ```
-justfile                # the orchestrator: sync, the build graph, the pool, the cache policy
-gen.py                  # the request: <prompt> <skill> in, one json + markdown out
+justfile                # the orchestrator: sync, the two producers, the pool, the cache policy
+gen.py                  # the chat request: <prompt> <skill> in, one json + markdown out
+jev.py                  # the System One request: the same, with typed questions instead of a prompt
 index.py                # the catalog and its numbers: one flat jsonl, and the facts a README is
 readme.py               # the page: those numbers said for a reader, in both languages
 stale.py                # the comparison: two catalogs in, the changed skills' profiles out
-prompts/                # one <id>.md (task) + <id>.json (schema) per prompt, plus _system.md
+prompts/                # one <id>.md (task) + <id>.json (schema) per chat angle, plus _system.md
 tests/                  # offline unit tests plus a just end-to-end suite
 .github/                # ci on every push and pull request, sync and publish by hand
 ```
@@ -312,6 +334,11 @@ resolve from the same three places.
 | `SKILLS_PROFILES_MODEL`         | `gpt-4.1-mini`   | Any OpenAI-compatible chat model                                     |
 | `SKILLS_PROFILES_BASE_URL`      | –                | OpenAI-compatible endpoint                                           |
 | `SKILLS_PROFILES_API_KEY`       | –                | API key for the endpoint                                             |
+| `SKILLS_PROFILES_JEV_MODEL`     | `jev-latest`     | The System One model, an alias over the version (`jev-1.13.0`)       |
+| `SKILLS_PROFILES_JEV_BASE_URL`  | 302.AI's System One path | Where `jev.py` posts; nothing else does                     |
+| `SKILLS_PROFILES_JEV_API_KEY`   | –                | Its key; no key means no call                                        |
+| `SKILLS_PROFILES_JEV_TIMEOUT`   | `20`             | Seconds per request: the endpoint answers in one to three, and drops a first call after idle |
+| `SKILLS_PROFILES_JEV_MAX_RETRIES` | `3`            | Extra attempts, for a dropped call or a busy gateway                 |
 | `SKILLS_PROFILES_MAX_RETRIES`   | `3`              | Extra attempts per LLM call (`0` = a single try)                     |
 | `SKILLS_PROFILES_THINKING`      | `false`          | Let the model reason first: the provider's `enable_thinking`, only ever sent as `true`, which is all the documentation states |
 | `SKILLS_PROFILES_DRY_RUN`       | `false`          | Use the fake LLM: no API calls                                       |
@@ -324,9 +351,13 @@ The suite is offline: `conftest.py` writes a fake snapshot tree, and constructin
 fails loudly, so a test can never call out even with a local `.env` full of keys.
 
 - `tests/test_gen.py` covers the request: prompt loading and its failure modes, the strict-mode
-  rules every schema has to satisfy, the taxonomy/enum agreement, template rendering, the keywords
-  a call is sent with, the dry-run placeholder, the two output files, and the command - plus the
-  description read out of a header as YAML, and the three kinds of header that drop a skill.
+  rules every schema has to satisfy, template rendering, the keywords a call is sent with, the
+  dry-run placeholder, the two output files, and the command - plus the description read out of a
+  header as YAML, and the three kinds of header that drop a skill.
+- `tests/test_jev.py` covers the other producer: the taxonomy as one object, the angles it names,
+  the body a call posts (a state and typed questions, and no messages), a dropped call being retried
+  where a rejected one is not, the guard on an answer outside the closed set, and the command - the
+  same gate, the same exit codes, and a request printed without a key.
 - `tests/test_index.py` covers the catalog: the mirror's row forwarded field by field with the three
   of ours added, a row for every skill it lists - including one with no profile built yet - and a row
   for a skill the mirror has dropped while profiles remain, `null` for a description nothing can be

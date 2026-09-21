@@ -1,8 +1,8 @@
 # skills-profiles
 
 为 [skill-one/skills-sh-mirror](https://github.com/skill-one/skills-sh-mirror) 收录的
-[agent skills](https://www.skills.sh) 生成多角度中文档案：每个 skill 六份由 LLM 写出的档案，
-每份都是一次单轮调用，依据该 skill 自己的 description 与 `SKILL.md` 写成。
+[agent skills](https://www.skills.sh) 生成多角度中文档案：每个 skill 六份由模型写出的档案，
+每份都是一次调用，依据该 skill 自己的 description 与 `SKILL.md` 写成。
 
 English: [README.md](README.md) · 开发指南：[DEVELOPING.zh-CN.md](DEVELOPING.zh-CN.md)
 
@@ -28,11 +28,14 @@ output/
 ```
 
 `skills.jsonl` 是入口。它列出镜像持有的每一个 skill，顺序就是镜像自己的顺序（安装量降序），
-`description` 读自该 skill 自己的 `SKILL.md`，`domain` 与 `reason` 是本项目标的。两者在未知时都是
-`null`，所以「已经做完的那部分数据集」只差一次筛选：
+`description` 读自该 skill 自己的 `SKILL.md`，`domain` 是本项目为它标定的，外加端点当时的置信度。
+三者在未知时都是 `null`，所以「已经做完的那部分数据集」只差一次筛选：
 
 ```bash
-jq -r 'select(any(.domain[]; . == "development")) | [.installs, .id] | @tsv' output/skills.jsonl | head
+jq -r 'select(.domain == "development") | [.installs, .id] | @tsv' output/skills.jsonl | head
+
+# 端点最没把握的那些标签，完整答案就在旁边的档案里
+jq -r 'select(.confidence < 0.7) | [.confidence, .domain, .id] | @tsv' output/skills.jsonl
 ```
 
 旁边的两份 README 是发布根的首页，也是尽可能短地把这棵树说成进度：先说明哪两个目录分别是 skill 与
@@ -45,7 +48,7 @@ jq -r 'select(any(.domain[]; . == "development")) | [.installs, .id] | @tsv' out
 
 | Prompt     | 结构                                     | 内容                                                        |
 | ---------- | ---------------------------------------- | ----------------------------------------------------------- |
-| `domain`   | `{domain[1–3], reason}`                  | 下面 13 个英文分类中的一个或多个(最多 3 个),按贴合度降序、主分类在前,外加一句话理由 |
+| `domain`   | `{domain, confidence, probabilities}`    | 下面 13 个英文分类中的一个、端点自己给出的置信度，以及它据以判断的那份分布 |
 | `scenario` | `{text}`                                 | 一段 100 字以内的场景化介绍，从用户痛点切入                 |
 | `tagline`  | `{taglines[3]}`                          | 3 条宣传短标语，每条 20 字以内                              |
 | `blackbox` | `{function, input_output[3–5]}`          | 黑盒视角：你给什么 → 你得到什么，不谈内部实现               |
@@ -53,17 +56,29 @@ jq -r 'select(any(.domain[]; . == "development")) | [.installs, .id] | @tsv' out
 | `comments` | `{comments[4–6]}`                        | 用户第一人称评论；`category` 通常为 妙用 / 坑 / 注意 / 启发 |
 
 `{...[n–m]}` 表示长度为 n~m 的数组；`input_output` 的元素是 `{input, output}`，`comments`
-的元素是 `{user, category, comment}`。除 domain 角度(三个值都是英文)外，全部是中文。
+的元素是 `{user, category, comment}`。除 domain 角度(值都是英文)外，全部是中文。
 
-`domain.domain` 是一个数组,元素取自闭合英文枚举(一到三个,通常恰好一个,主分类在前),依然可以
-直接筛：development · testing · data-analysis · devops-security · office-productivity ·
-content-creation · design-media · knowledge-management · business-ops · finance-payment ·
-education · lifestyle · other。
+`domain` 取自下面这个闭合英文枚举的单个值,可以直接筛：development · testing · data-analysis ·
+devops-security · office-productivity · content-creation · design-media · knowledge-management ·
+business-ops · finance-payment · education · lifestyle · other。旁边的 `confidence` 是端点对这次
+判断的把握，由它在整个枚举上的分布导出 —— 它不是"这个标签正确的概率"，而是你想找出"值得再看一眼"的
+标签时用来排序的那个数。
+
+档案保留的是整份答案，包括 `probabilities`，因为赢家身上并不包含它：52 比 48 决出的结果和 99 比 1
+决出的结果说的不是一件事，而"第二名是只差一步、还是根本不存在"恰恰是读到一条没把握的标签时想知道
+的。目录只带标签与置信度，到此为止：
+
+```bash
+# 一个标签被选中；它差点选成什么，在同一个 skill 的档案里
+jq '{domain, confidence, second: (.probabilities | to_entries | sort_by(-.value) | .[1])}' \
+  output/profiles/mattpocock/skills/grill-me/domain.json
+```
 
 ## 怎么跑
 
 需要 Python 3.12+、[uv](https://docs.astral.sh/uv/) 和 [`just`](https://just.systems)。凭据放在
-本地 `.env`（复制 [`.env.example`](.env.example)）；只会访问镜像和你自己的模型端点。
+本地 `.env`（复制 [`.env.example`](.env.example)）；只会访问镜像和你的两个模型端点 —— 五个角度走
+对话端点，`domain` 走 System One 端点，后者收到的是强类型问题而不是提示词。
 
 ```bash
 uv sync

@@ -33,7 +33,7 @@ English: [SPEC.md](SPEC.md)
 
 | 角度 | json 结构 | 内容 |
 | --- | --- | --- |
-| `domain` | `{domain[1–3], reason}` | 13 个闭合英文分类中的一个到三个,按贴合度降序、主分类在前,加一句话理由 |
+| `domain` | `{domain, confidence, probabilities}` | 13 个闭合英文分类中的一个、端点自己给出的置信度，以及它据以判断的那份分布 |
 | `scenario` | `{text}` | 一段 100 字以内的场景化介绍，从用户痛点切入 |
 | `tagline` | `{taglines[3]}` | 3 条宣传短标语，每条 20 字以内 |
 | `blackbox` | `{function, input_output[3–5]}` | 黑盒视角：你给什么 → 你得到什么 |
@@ -44,16 +44,22 @@ English: [SPEC.md](SPEC.md)
 - `.json` 是数据；`md/<angle>.md` 是同样字段的渲染版，先写。
 - **清单是入口。** `skills.jsonl` 由 `just index` 写出：每个 skill 一行、扁平，按镜像自身的顺序，
   内容就是镜像那一行——`id`、`installs`、`url`、`hash`、`fetchedAt`——再加上从该 skill 自己的
-  `SKILL.md` 里读出的 `description`，以及本项目标出的 `domain` 与其 `reason`。未知时 `description`
-  与 `domain` 为 `null`，所以一行陈述的是数据集的状态而不是工作的取舍：`.domain != null` 是已建成的
-  部分，`.installs` 给没建的那部分排序。
+  `SKILL.md` 里读出的 `description`、本项目为它标定的 `domain`，以及标定时的 `confidence`。未知时
+  三者都是 `null`，所以一行陈述的是数据集的状态而不是工作的取舍：`.domain != null` 是已建成的部分，
+  `.installs` 给没建的那部分排序。
 - **两份 README 是首页**，由同一条命令、同一次遍历写出：两行说明这个目录是什么，然后说明数据集建到
   了什么程度——`skill × 角度` 的格子有多少已在磁盘上，逐角度给出数量、并按安装量加权的占比，附上它们
   所描述的那份快照。它们刻意保持很短：本项目自己的说明住在这个仓库里，更长的页面只会是它的第二份
   需要同步的副本。没有任何东西回读它们，每一行都是这棵树的函数，所以没变过的树写出来的页面总是一模
   一样。
-- id、路径与字段名是 ASCII；`domain.domain` 是一个数组,元素取自闭合英文枚举(一到三个,主分类在前),
-  依然可以直接筛；domain 角度的值都是英文，其余角度的所有值都是中文。
+- id、路径与字段名是 ASCII；`domain` 取自闭合英文枚举的单个值，可以直接筛。档案在它旁边保留整份
+  答案：`confidence` 是端点自己对"这次判断有多勉强"的读数，由整个枚举上的分布导出，所以它不是
+  "这个标签正确的概率"，发布它是为了可以按它排序、而不是拿它当概率用；`probabilities` 就是那份分布，
+  保留它是因为它无法从赢家反推 —— 52 比 48 决出的结果和 99 比 1 决出的结果说的不是一件事。目录只取
+  其中两样（标签与置信度），答案是留在档案里的那份。domain 角度的值是英文，其余角度的所有值都是中文。
+- 一个角度由两个生产者之一构建，`just` 把每个 (角度, skill) 交给拥有它的那个：提示词对交给一个对话
+  模型，而 `jev.py --angles` 列出的那些则以强类型问题交给一个 System One 端点。这就是 `domain` 没有
+  提示词对、也没有理由句的原因：端点只在一个闭合集合里选一个，不写任何散文。
 
 ## 2. 输入
 
@@ -70,8 +76,10 @@ English: [SPEC.md](SPEC.md)
 每个 skill 的一句话 description 不在镜像索引里（上游已把它去掉）：它读自该 skill 自己的 front matter，
 而 front matter 给不出 description 的 skill 永远不会被构建。
 
-镜像是一份拉取来的快照，只读。一个 prompt 是「任务 + 契约」这一对：schema 会原样作为模型服务
-的严格 `json_schema` response format 随请求发出。**新增一个角度就是两个文件、零代码。**
+镜像是一份拉取来的快照，只读。一个 prompt 是「任务 + 契约」这一对：schema 会原样作为模型服务的严格
+`json_schema` response format 随请求发出，这也是**新增一个对话角度就是两个文件、零代码**的原因。
+分割线另一侧的角度是 `jev.py` 里的一条条目：问题、问题的类型，以及封闭式问题可选的答案 —— 分类体系
+现在就住在那里，只陈述一次，而不是「给模型看的散文 + 给解码器看的枚举」两份。
 
 ## 3. 控制
 
@@ -102,8 +110,11 @@ English: [SPEC.md](SPEC.md)
 它下面一次一个格子：
 
 ```
-gen.py <angle> <id> [--print]
+gen.py <angle> <id> [--print]     # 对话角度：prompts/<id>.md 及旁边的 schema
+jev.py <angle> <id> [--print]     # System One 角度：问题定义就在 jev.py 里
 ```
+
+批次用哪个脚本，取决于谁声明了这个角度：前者是 `prompts/*.json`，后者是 `jev.py --angles`。
 
 - stdout 是数据（`--print` 时是那份请求）；stderr 是进度。
 - 源文本截断在 20000 字符，且这个截断在源文本内部被声明。
@@ -113,8 +124,9 @@ gen.py <angle> <id> [--print]
 ## 4. 配置
 
 `.env`（复制 [`.env.example`](.env.example)）或 `SKILLS_PROFILES_*`；环境变量 → `.env` → 默认值。
-这里只放端点：`MODEL`、`BASE_URL`、`API_KEY`、`MAX_RETRIES`、`TIMEOUT`、`THINKING`、`DRY_RUN`
-—— 外加两个路径，如果你确实需要挪动它们。
+这里只放两个端点：对话端点是 `MODEL`、`BASE_URL`、`API_KEY`、`MAX_RETRIES`、`TIMEOUT`、`THINKING`，
+System One 端点是 `JEV_MODEL`、`JEV_BASE_URL`、`JEV_API_KEY`、`JEV_TIMEOUT`、`JEV_MAX_RETRIES`
+—— 外加 `DRY_RUN` 与两个路径，如果你确实需要挪动它们。
 
 上面那些批次旋钮**不是**环境变量：一次运行只会因为它自己说了要变而变。
 

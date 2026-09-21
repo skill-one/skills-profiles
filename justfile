@@ -17,8 +17,12 @@
 # root is the catalog: one row per skill, the mirror's fields plus the description read out of the
 # skill itself and the domain it was labelled with. Publishing is copying that one directory.
 #
+# Two scripts write those profiles, and a pair goes to whichever one owns its angle: `gen.py` asks
+# a chat model about the angles under `prompts/`, and `jev.py` asks the System One endpoint about
+# its own, which it also names. `jev.py --angles` is the only list of those there is.
+#
 # The knobs are justfile variables: they are set on the command line and nowhere else. `.env`
-# belongs to gen.py, and holds the endpoint and its key.
+# belongs to the two scripts, and holds both endpoints and their keys.
 
 limit := "1"         # skills per run, most installed first: the next ones that need work; 0 = all
 prompt := ""         # one prompt id, or empty for every prompt
@@ -68,13 +72,19 @@ default:
 	[ -n "$ordered" ] || ordered=$(find {{output_dir}}/skills -mindepth 4 -maxdepth 4 -name SKILL.md \
 		| sed 's|^{{output_dir}}/skills/||; s|/SKILL.md$||' | LC_ALL=C sort)
 	[ -n "$ordered" ] || { echo "no skill under {{output_dir}}/skills has a SKILL.md" >&2; exit 1; }
-	prompts=$(find {{prompts_dir}} -maxdepth 1 -name '*.json' | sed 's|.*/||; s|\.json$||')
-	[ -n "$prompts" ] || { echo "no prompt schemas under {{prompts_dir}}" >&2; exit 1; }
+	# The angles come from two producers, and a pair is built by whichever of them owns it: a
+	# `prompts/<id>.json` pair is a chat angle for gen.py, and `jev.py --angles` names the angles
+	# this project asks the System One endpoint instead. Neither list is written down twice.
+	chat=$(find {{prompts_dir}} -maxdepth 1 -name '*.json' | sed 's|.*/||; s|\.json$||')
+	systemone=$({{py}} jev.py --angles)
 	if [ -n "{{prompt}}" ]; then
-		one=$(printf '%s\n' $prompts | grep -x '{{prompt}}') || {
-			echo "no prompt '{{prompt}}' - have: $prompts" >&2; exit 1; }
-		prompts=$one
+		one=$(printf '%s\n' $chat $systemone | grep -x '{{prompt}}') || {
+			echo "no prompt '{{prompt}}' - have: $chat $systemone" >&2; exit 1; }
+		chat=$(printf '%s\n' $chat | grep -x '{{prompt}}' || true)
+		systemone=$(printf '%s\n' $systemone | grep -x '{{prompt}}' || true)
 	fi
+	angles="$chat $systemone"
+	[ -n "$(printf '%s' "$angles" | tr -d '[:space:]')" ] || { echo "no angles to build" >&2; exit 1; }
 
 	# The window: the next `limit` skills that still have something to do, in that order. `0` = all.
 	#
@@ -88,7 +98,7 @@ default:
 	present=$(find {{output_dir}}/profiles -mindepth 4 -maxdepth 4 -name '*.json' 2>/dev/null \
 		| sed 's|^{{output_dir}}/profiles/||')
 	skills=$( { printf '%s\n' "$present"; printf '%s\n' ---; printf '%s\n' "$ordered"; } \
-		| PROMPTS="$prompts" awk -v limit={{limit}} '
+		| PROMPTS="$angles" awk -v limit={{limit}} '
 			# the prompt ids through the environment: `-v` would reprocess the value, and one with
 			# real newlines in it is an awk syntax error on the BSD that ships with macOS
 			BEGIN { n = split(ENVIRON["PROMPTS"], name, /[ \t\n]+/); for (i = 1; i <= n; i++) asked[name[i]] = 1 }
@@ -110,11 +120,13 @@ default:
 		interval=$(( pool * 60 / {{rpm}} ))
 	fi
 	export INTERVAL=$interval
+	# the pool dispatches a pair by its angle, so it is told which angles this script's are
+	export JEV_ANGLES="$systemone"
 	if [ "$interval" -gt 0 ]; then
 		echo "pacing: $pool at a time, one call per ${interval}s per worker" >&2
 	fi
 
-	for prompt in $prompts; do
+	for prompt in $chat $systemone; do
 		printf '%s\n' "$skills" | while read -r skill; do
 			json={{output_dir}}/profiles/$(echo "$skill" | tr ':&' '__')/$prompt.json
 			[ -f "$json" ] || echo "$prompt $skill"
@@ -130,7 +142,9 @@ default:
 	done | xargs -r -P "$pool" -n 2 sh -c '
 		err=$(mktemp)
 		start=$(date +%s)
-		if {{py}} gen.py "$@" 2>"$err"; then
+		runner="{{py}} gen.py"
+		case " $JEV_ANGLES " in *" $1 "*) runner="{{py}} jev.py";; esac
+		if $runner "$@" 2>"$err"; then
 			cat "$err" >&2
 		else
 			cat "$err" >>"${GEN_ERR_LOG:-/dev/null}"
@@ -147,11 +161,11 @@ default:
 
 # Build exactly one output, whether or not the batch has reached it yet.
 one prompt skill:
-	@{{py}} gen.py {{prompt}} {{skill}}
+	@case " `{{py}} jev.py --angles` " in *" {{prompt}} "*) {{py}} jev.py {{prompt}} {{skill}} ;; *) {{py}} gen.py {{prompt}} {{skill}} ;; esac
 
 # Print the request one output would send, calling nothing.
 render prompt skill:
-	@{{py}} gen.py {{prompt}} {{skill}} --print
+	@case " `{{py}} jev.py --angles` " in *" {{prompt}} "*) {{py}} jev.py {{prompt}} {{skill}} --print ;; *) {{py}} gen.py {{prompt}} {{skill}} --print ;; esac
 
 # Forget one prompt's outputs, so the next run rebuilds them.
 invalidate prompt:

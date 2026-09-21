@@ -2,9 +2,9 @@
 """Index the profile tree: one flat line per skill, the mirror's own row joined with ours.
 
 `output/skills.jsonl` is the catalog: every skill the mirror lists, carrying the description read out
-of that skill's own `SKILL.md` and the domain this project labelled it with. It is what a consumer
-reads instead of walking the tree - and instead of going back to the mirror's own index for the
-installs, the url and the hash - and `just index` rewrites it whole.
+of that skill's own `SKILL.md`, the domain this project labelled it with, and how sure the endpoint
+was of it. It is what a consumer reads instead of walking the tree - and instead of going back to the
+mirror's own index for the installs, the url and the hash - and `just index` rewrites it whole.
 
 The same run writes the README that goes with it, out of the same walk: the numbers here, said for a
 reader by `readme.py`. That is the half of the catalog's own question the catalog cannot answer - how
@@ -21,6 +21,7 @@ import sys
 from pathlib import Path
 
 import gen
+import jev
 import readme
 
 MIRROR = Path(gen.UPSTREAM_DIR) / gen.INDEX  # the mirror's own listing: the join's left side
@@ -71,7 +72,12 @@ def description(config: gen.Config, skill: str) -> str:
 
 
 def labelled(config: gen.Config, skill: str) -> dict:
-    """The domain angle's answer for one skill, or nothing while it has not been built."""
+    """The domain angle's answer for one skill, or nothing while it has not been built.
+
+    The profile writes what `jev.py` answered - one category, its confidence, and the distribution
+    it was read off. Two of those three belong in a catalog row, and they are taken by name rather
+    than forwarded whole, so the row says what a consumer can use and nothing else.
+    """
     path = gen.json_path(config, "domain", skill)
     if not path.is_file():
         return {}
@@ -101,11 +107,17 @@ def rows(config: gen.Config) -> list[dict]:
 
 
 def _row(entry: dict, config: gen.Config, skill: str) -> dict:
+    """The mirror's row plus ours: the description, and the label with the endpoint's confidence.
+
+    Only the two of the label the catalog is asked for. `domain` stays one member of the enum so a
+    row filters on it directly, and `confidence` is the number to sort by when the question is which
+    labels to look at - the rest of what `jev.py` wrote stays in the profile, where it is the answer.
+    """
     row = {name: entry.get(name) for name in MIRROR_FIELDS}
     row["description"] = description(config, skill) or None
-    domain = labelled(config, skill)
-    row["domain"] = domain.get("domain")
-    row["reason"] = domain.get("reason")
+    label = labelled(config, skill)
+    row["domain"] = label.get("domain")
+    row["confidence"] = label.get("confidence")
     return row
 
 
@@ -145,12 +157,14 @@ def built_cells(config: gen.Config) -> dict[str, set[str]]:
 
 
 def angle_ids(config: gen.Config, cells: dict[str, set[str]]) -> list[str]:
-    """The angles, which are the prompt schemas: what a profile is built from.
+    """The angles: a prompt schema for gen.py, a question list in jev.py for the rest.
 
-    A tree without prompts falls back to the angles that are on disk, so the report describes the
-    profiles there are rather than nothing.
+    Read from the two producers rather than from the profiles a tree happens to hold, so an angle
+    with nothing built yet still has a row. A tree with neither falls back to what is on disk, so
+    the report describes the profiles there are rather than nothing.
     """
-    return sorted(path.stem for path in config.prompts_dir.glob("*.json")) or sorted(cells)
+    angles = {path.stem for path in config.prompts_dir.glob("*.json")} | set(jev.QUESTIONS)
+    return sorted(angles or cells)
 
 
 def facts(config: gen.Config, indexed: list[dict]) -> dict:

@@ -1,8 +1,8 @@
 # skills-profiles
 
 Chinese multi-angle profiles for the [agent skills](https://www.skills.sh) collected by
-[skill-one/skills-sh-mirror](https://github.com/skill-one/skills-sh-mirror): six LLM-written
-angles per skill, each one a single turn built from that skill's own description and `SKILL.md`.
+[skill-one/skills-sh-mirror](https://github.com/skill-one/skills-sh-mirror): six model-written
+angles per skill, each one a single call built from that skill's own description and `SKILL.md`.
 
 中文: [README.zh-CN.md](README.zh-CN.md) · Dev guide: [DEVELOPING.md](DEVELOPING.md)
 
@@ -29,12 +29,15 @@ output/
 ```
 
 `skills.jsonl` is the way in. It lists every skill the mirror has, in the mirror's own order — the
-most installed first — with the `description` read out of that skill's own `SKILL.md` and the
-`domain` and `reason` this project labelled it with. Both are `null` while they are unknown, so the
-profiled part of the dataset is a filter away:
+most installed first — with the `description` read out of that skill's own `SKILL.md`, the `domain`
+this project labelled it with, and how sure the endpoint was of it. All three are `null` while they
+are unknown, so the profiled part of the dataset is a filter away:
 
 ```bash
-jq -r 'select(any(.domain[]; . == "development")) | [.installs, .id] | @tsv' output/skills.jsonl | head
+jq -r 'select(.domain == "development") | [.installs, .id] | @tsv' output/skills.jsonl | head
+
+# the labels the endpoint was least sure of, with the rest of the answer in the profile beside them
+jq -r 'select(.confidence < 0.7) | [.confidence, .domain, .id] | @tsv' output/skills.jsonl
 ```
 
 The READMEs beside it are the front page of the published root, and the same tree said as progress in
@@ -50,7 +53,7 @@ the middle of, and the next one picks up where it stopped.
 
 | Prompt     | Shape                                    | Content                                                               |
 | ---------- | ---------------------------------------- | --------------------------------------------------------------------- |
-| `domain`   | `{domain[1–3], reason}`                  | one or more (at most 3) of the 13 English categories below, ordered by fit with the primary first, plus one line of justification |
+| `domain`   | `{domain, confidence, probabilities}`    | one of the 13 English categories below, the endpoint's confidence in it, and the distribution it was read off |
 | `scenario` | `{text}`                                 | a ≤100-character pitch, built on the user's pain point                 |
 | `tagline`  | `{taglines[3]}`                          | three slogans, ≤20 characters each                                     |
 | `blackbox` | `{function, input_output[3–5]}`          | outside view: what you hand it → what you get back, no internals       |
@@ -59,18 +62,32 @@ the middle of, and the next one picks up where it stopped.
 
 `{...[n–m]}` is an array of that many entries; `input_output` items are `{input, output}` and
 `comments` items `{user, category, comment}`. Everything is Chinese except the `domain` angle,
-whose three values are English throughout.
+whose value is English.
 
-`domain.domain` is an array of one to three members of the closed English enum below — usually
-exactly one, the primary first — so it is still directly filterable: development · testing ·
-data-analysis · devops-security · office-productivity · content-creation · design-media ·
-knowledge-management · business-ops · finance-payment · education · lifestyle · other.
+`domain` is one member of the closed English enum below, so it is directly filterable:
+development · testing · data-analysis · devops-security · office-productivity · content-creation ·
+design-media · knowledge-management · business-ops · finance-payment · education · lifestyle ·
+other. Beside it, `confidence` is how sure the endpoint was, derived from its distribution over the
+whole enum — not the probability of the label being right, but the number to sort on when you want to
+find the labels worth a second look.
+
+The profile keeps the whole answer, `probabilities` included, because the winner does not contain it:
+a call decided 0.52 to 0.48 says something a call decided 0.99 to 0.01 does not, and whether the
+category that came second was one step away or nothing at all is exactly what a reader of an unsure
+label wants to know. The catalog carries the label and the confidence and stops there:
+
+```bash
+# one label was chosen; what the endpoint nearly chose instead is in the same skill's profile
+jq '{domain, confidence, second: (.probabilities | to_entries | sort_by(-.value) | .[1])}' \
+  output/profiles/mattpocock/skills/grill-me/domain.json
+```
 
 ## Running it
 
 Needs Python 3.12+, [uv](https://docs.astral.sh/uv/) and [`just`](https://just.systems). Credentials
-go in a local `.env` (copy [`.env.example`](.env.example)); the only hosts touched are the mirror
-and your own model endpoint.
+go in a local `.env` (copy [`.env.example`](.env.example)); the only hosts touched are the mirror and
+your two model endpoints — a chat one for five of the angles, and a System One one for `domain`,
+which is asked typed questions rather than a prompt.
 
 ```bash
 uv sync

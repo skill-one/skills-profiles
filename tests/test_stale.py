@@ -9,7 +9,7 @@ import stale
 ALPHA = "owner-a/repo-a/alpha"
 BETA = "owner-b/repo-b/beta"
 
-DOMAIN = {"domain": ["office-productivity"], "reason": "Because it tidies notes"}
+DOMAIN = {"domain": "office-productivity"}
 
 
 def index_of(config: gen.Config) -> Path:

@@ -36,7 +36,7 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `gen.py`
 
 | angle | json shape | content |
 | --- | --- | --- |
-| `domain` | `{domain[1–3], reason}` | one to three of 13 closed English categories, ordered by fit with the primary first, one line of why |
+| `domain` | `{domain, confidence, probabilities}` | one of 13 closed English categories, the endpoint's own confidence in it, and the distribution it was read off |
 | `scenario` | `{text}` | a ≤100-character pitch, built on the user's pain point |
 | `tagline` | `{taglines[3]}` | three slogans, ≤20 characters each |
 | `blackbox` | `{function, input_output[3–5]}` | outside view: what you hand it → what you get back |
@@ -47,18 +47,28 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `gen.py`
 - A `.json` is the data; `md/<angle>.md` is the same fields rendered, written first.
 - **The catalog is the way in.** `skills.jsonl` is written by `just index`: one flat line per skill,
   in the mirror's own order, being the mirror's row — `id`, `installs`, `url`, `hash`, `fetchedAt` —
-  plus the `description` read out of that skill's own `SKILL.md` and the `domain` with its `reason`.
-  `description` and `domain` are `null` while they are unknown, so a row states the dataset rather
-  than the work: `.domain != null` is what has been built, and `.installs` ranks what has not.
+  plus the `description` read out of that skill's own `SKILL.md`, the `domain` this project labelled
+  it with, and the `confidence` it was labelled at.
+  The three are `null` while they are unknown, so a row states the dataset rather than the work:
+  `.domain != null` is what has been built, and `.installs` ranks what has not.
 - **The READMEs are the front page**, written by the same command from the same walk: two lines on
   what the directory is, then how much of the dataset is built — the `skill × angle` cells on disk,
   per angle, counted and weighted by installs, under the snapshot they describe. They stay short on
   purpose: the project's own prose lives in this repository, and a longer page would be a second copy
   of it to keep in step. Nothing reads them back, and every line is a function of the tree, so a tree
   that did not change rewrites them identically.
-- Ids, paths and field names are ASCII; `domain.domain` is an array of one to three members of a
-  closed English enum, the primary first, so it still filters directly; the `domain` angle's values
-  are English throughout, every other angle's values are Chinese.
+- Ids, paths and field names are ASCII; `domain` is one member of a closed English enum, so it
+  filters directly. The profile keeps the whole answer beside it: `confidence`, the endpoint's own
+  reading of how close the call was - derived from the distribution over the enum, so it is not the
+  probability of the label being right, and published to be sorted on rather than trusted as one -
+  and `probabilities`, that distribution. It is kept because it cannot be recovered from the winner:
+  a call decided 0.52 to 0.48 says something a call decided 0.99 to 0.01 does not. The catalog takes
+  two of the three, the label and the confidence, and the profile is where the answer itself lives.
+  The `domain` angle's value is English, every other angle's values are Chinese.
+- An angle is built by one of two producers, and `just` sends a pair to whichever owns it: a prompt
+  pair goes to a chat model, and an angle named by `jev.py --angles` is asked of a System One
+  endpoint as typed questions instead. That is why `domain` has no prompt pair and no reason line:
+  the endpoint answers a closed set with one member of it and writes no prose.
 
 ## 2. Input
 
@@ -77,8 +87,10 @@ A skill's one-line description is not in the mirror's index, upstream having dro
 from the skill's own front matter, and a skill whose front matter does not yield one is never built.
 
 The mirror is a fetched snapshot, read-only. A prompt is a task/contract pair: the schema travels to
-the provider verbatim as a strict `json_schema` response format. **Adding an angle is two files and no
-code.**
+the provider verbatim as a strict `json_schema` response format, which is what makes **adding a chat
+angle two files and no code**. An angle on the other side of the split is an entry in `jev.py`: the
+questions, their types, and the options a closed one may answer - which is where the domain taxonomy
+lives now, stated once rather than as prose for a model and an enum for a decoder.
 
 ## 3. Control
 
@@ -109,8 +121,12 @@ The modifiers are command-line variables, nowhere else:
 Under it, one cell at a time:
 
 ```
-gen.py <angle> <id> [--print]
+gen.py <angle> <id> [--print]     # a chat angle: prompts/<id>.md with its schema beside it
+jev.py <angle> <id> [--print]     # a System One angle: the questions in jev.py itself
 ```
+
+The one the batch uses is whichever names that angle: `prompts/*.json` for the first, `jev.py
+--angles` for the second.
 
 - stdout is data (the request, under `--print`); stderr is progress.
 - The source is cut at 20 000 characters, and the cut is announced inside the source itself.
@@ -120,8 +136,9 @@ gen.py <angle> <id> [--print]
 ## 4. Configuration
 
 `.env` (copy [`.env.example`](.env.example)) or `SKILLS_PROFILES_*`; env → `.env` → defaults. It
-holds the endpoint only: `MODEL`, `BASE_URL`, `API_KEY`, `MAX_RETRIES`, `TIMEOUT`, `THINKING`,
-`DRY_RUN` — plus the two paths if you must move them.
+holds the two endpoints only: the chat one as `MODEL`, `BASE_URL`, `API_KEY`, `MAX_RETRIES`,
+`TIMEOUT`, `THINKING`, and the System One one as `JEV_MODEL`, `JEV_BASE_URL`, `JEV_API_KEY`,
+`JEV_TIMEOUT`, `JEV_MAX_RETRIES` — plus `DRY_RUN` and the two paths if you must move them.
 
 The batch knobs above are **not** environment variables: a run changes only because a run said so.
 

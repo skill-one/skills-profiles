@@ -7,7 +7,7 @@ import index
 import readme
 
 ALPHA = "owner-a/repo-a/alpha"
-DOMAIN = {"domain": ["office-productivity"], "reason": "Because it tidies notes"}
+DOMAIN = {"domain": "office-productivity"}
 # the renderer's own slots, inside the bullet template: filled per line rather than from the numbers
 SLOTS = {"label", "value"}
 # the page is the front door of a published directory, not a document: what it holds is the way in,

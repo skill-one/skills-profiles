@@ -9,7 +9,8 @@ import pytest
 
 import gen
 
-ANGLES = {"blackbox", "comments", "domain", "scenario", "tagline", "whitebox"}
+# the angles this script builds: `domain` is not one of them, being the System One endpoint's
+ANGLES = {"blackbox", "comments", "scenario", "tagline", "whitebox"}
 ALPHA = "owner-a/repo-a/alpha"
 
 
@@ -31,9 +32,7 @@ def scratch_prompts(tmp_path: Path, name: str, body: str,
     return directory
 
 
-def fake_client(monkeypatch,
-                content: str = '{"domain": ["office-productivity"],'
-                               ' "reason": "Because it manages commits"}') -> dict:
+def fake_client(monkeypatch, content: str = '{"text": "一句话介绍"}') -> dict:
     """Install a stand-in `openai.OpenAI`; returns what it recorded."""
     seen: dict = {}
 
@@ -72,9 +71,9 @@ def test_every_prompt_file_has_its_schema_next_to_it(config):
 
 
 def test_load_prompt_reads_the_pair(config):
-    template, schema = gen.load_prompt(config, "domain")
-    assert template.startswith("Classify this skill")
-    assert schema["properties"]["domain"]["items"]["enum"][0] == "development"
+    template, schema = gen.load_prompt(config, "scenario")
+    assert template.startswith("设想在一个场景下")
+    assert schema["properties"]["text"]["type"] == "string"
 
 
 def test_load_prompt_names_the_file_of_a_broken_template(tmp_path):
@@ -111,19 +110,6 @@ def _check_strict(node: dict) -> None:
 def test_every_schema_is_usable_in_strict_mode(config):
     for angle in ANGLES:
         _check_strict(gen.load_prompt(config, angle)[1])
-
-
-def test_the_domain_taxonomy_matches_the_schema_enum(config):
-    """The 13 categories appear twice - as prose for the model, and as the enum the
-    decoder is constrained by. This is what keeps the two honest."""
-    template, schema = gen.load_prompt(config, "domain")
-    enum = schema["properties"]["domain"]["items"]["enum"]
-    body = gen.render(template, "SOURCE", "", "AN ID")
-    assert len(enum) == len(set(enum)) == 13
-    assert schema["properties"]["domain"]["minItems"] == 1
-    assert schema["properties"]["domain"]["maxItems"] == 3
-    for category in enum:
-        assert f" {category}:" in body, f"the taxonomy is missing {category}"
 
 
 def test_render_gives_the_template_the_body_the_description_and_the_name(config):
@@ -202,8 +188,8 @@ def test_a_skill_whose_front_matter_yields_no_description_is_dropped(workdir, ca
                  "---\nname: alpha\ndescription: DEPRECATED: renamed elsewhere\n---\n\nBody.\n"]:
         path.write_text(text, encoding="utf-8")
         assert gen.skill_description(gen.skill_source(config, ALPHA)) == ""
-        assert gen.main(["domain", ALPHA]) == 1
-        assert not gen.json_path(config, "domain", ALPHA).exists()
+        assert gen.main(["scenario", ALPHA]) == 1
+        assert not gen.json_path(config, "scenario", ALPHA).exists()
         assert "no description in its front matter" in capsys.readouterr().err
 
 
@@ -247,10 +233,9 @@ def test_call_sends_the_prompt_schema_as_the_response_format(workdir, monkeypatc
     monkeypatch.setenv("SKILLS_PROFILES_MAX_RETRIES", "7")
     seen = fake_client(monkeypatch)
     config = gen.Config()
-    schema = gen.load_prompt(config, "domain")[1]
+    schema = gen.load_prompt(config, "scenario")[1]
 
-    assert gen.call(config, schema, [{"role": "user", "content": "hi"}]) == {
-        "domain": ["office-productivity"], "reason": "Because it manages commits"}
+    assert gen.call(config, schema, [{"role": "user", "content": "hi"}]) == {"text": "一句话介绍"}
 
     assert seen["sent"]["response_format"] == {
         "type": "json_schema",
@@ -277,7 +262,7 @@ def test_thinking_is_opt_in_and_sends_only_the_provider_flag(workdir, monkeypatc
     config = gen.Config()
     assert config.thinking is True
 
-    gen.call(config, gen.load_prompt(config, "domain")[1],
+    gen.call(config, gen.load_prompt(config, "scenario")[1],
              [{"role": "user", "content": "hi"}])
 
     # under `extra_body`, because `create()` has no `chat_template_kwargs` parameter and
@@ -297,14 +282,12 @@ def test_call_rejects_an_empty_answer(workdir, monkeypatch):
 
 
 def test_write_writes_json_and_the_markdown_copy(config):
-    path = gen.write(config, "domain", ALPHA,
-                     {"domain": ["office-productivity"], "reason": "Because it manages commits"})
-    assert path == gen.json_path(config, "domain", ALPHA)
-    assert json.loads(path.read_text(encoding="utf-8")) == {
-        "domain": ["office-productivity"], "reason": "Because it manages commits"}
-    markdown = gen.markdown_path(config, "domain", ALPHA).read_text(encoding="utf-8")
-    assert markdown.startswith(f"# alpha (`{ALPHA}`)\n\n## domain\n")
-    assert "### domain\n\n- office-productivity" in markdown
+    path = gen.write(config, "scenario", ALPHA, {"text": "一句话介绍"})
+    assert path == gen.json_path(config, "scenario", ALPHA)
+    assert json.loads(path.read_text(encoding="utf-8")) == {"text": "一句话介绍"}
+    markdown = gen.markdown_path(config, "scenario", ALPHA).read_text(encoding="utf-8")
+    assert markdown.startswith(f"# alpha (`{ALPHA}`)\n\n## scenario\n")
+    assert "### text\n\n一句话介绍" in markdown
 
 
 def test_markdown_labels_every_field(config):
@@ -323,9 +306,9 @@ def test_markdown_labels_every_field(config):
 
 
 def test_main_writes_one_output(config):
-    assert gen.main(["domain", ALPHA]) == 0
-    assert gen.json_path(config, "domain", ALPHA).is_file()
-    assert gen.markdown_path(config, "domain", ALPHA).is_file()
+    assert gen.main(["scenario", ALPHA]) == 0
+    assert gen.json_path(config, "scenario", ALPHA).is_file()
+    assert gen.markdown_path(config, "scenario", ALPHA).is_file()
 
 
 def test_main_passes_the_source_and_the_task(workdir, monkeypatch):
@@ -337,7 +320,7 @@ def test_main_passes_the_source_and_the_task(workdir, monkeypatch):
         return gen._placeholder(schema)
 
     monkeypatch.setattr(gen, "call", capture)
-    assert gen.main(["domain", ALPHA]) == 0
+    assert gen.main(["scenario", ALPHA]) == 0
 
     system, user = seen["messages"]
     assert system["role"] == "system"
@@ -346,8 +329,8 @@ def test_main_passes_the_source_and_the_task(workdir, monkeypatch):
     assert "Tidies a note list" in system["content"]  # the skill's own one line
     assert f"{ALPHA} does useful things." in system["content"]  # and the body under it
     assert "name: owner-a/repo-a/alpha" not in system["content"]  # said once, not twice
-    assert user["role"] == "user" and "office-productivity" in user["content"]
-    assert seen["schema"] == gen.load_prompt(gen.Config(), "domain")[1]
+    assert user["role"] == "user" and "设想在一个场景下" in user["content"]
+    assert seen["schema"] == gen.load_prompt(gen.Config(), "scenario")[1]
 
 
 @pytest.mark.parametrize("variable", ["skill_body", "description", "name"])
@@ -357,12 +340,12 @@ def test_a_task_template_cannot_ask_for_a_system_variable(workdir, monkeypatch, 
     prompts = tmp_path / "prompts"
     prompts.mkdir()
     real = gen.Config().prompts_dir
-    (prompts / "domain.json").write_text((real / "domain.json").read_text(), encoding="utf-8")
-    (prompts / "domain.md").write_text(f"{{{{ {variable} }}}}", encoding="utf-8")
+    (prompts / "scenario.json").write_text((real / "scenario.json").read_text(), encoding="utf-8")
+    (prompts / "scenario.md").write_text(f"{{{{ {variable} }}}}", encoding="utf-8")
     monkeypatch.setenv("SKILLS_PROFILES_PROMPTS_DIR", str(prompts))
 
     with pytest.raises(SystemExit, match="is undefined"):
-        gen.load_prompt(gen.Config(), "domain")
+        gen.load_prompt(gen.Config(), "scenario")
 
 
 def test_a_system_prompt_that_names_an_unknown_variable_is_a_message(workdir, monkeypatch,
@@ -372,12 +355,12 @@ def test_a_system_prompt_that_names_an_unknown_variable_is_a_message(workdir, mo
     prompts = tmp_path / "prompts"
     prompts.mkdir()
     real = gen.Config().prompts_dir
-    for name in ("_system.md", "domain.md", "domain.json"):
+    for name in ("_system.md", "scenario.md", "scenario.json"):
         (prompts / name).write_text((real / name).read_text(encoding="utf-8"), encoding="utf-8")
     (prompts / "_system.md").write_text("{{ nosuchvar }}", encoding="utf-8")
     monkeypatch.setenv("SKILLS_PROFILES_PROMPTS_DIR", str(prompts))
 
-    assert gen.main(["domain", ALPHA]) == 1
+    assert gen.main(["scenario", ALPHA]) == 1
 
     assert "_system.md: 'nosuchvar' is undefined" in capsys.readouterr().err
 
@@ -389,12 +372,12 @@ def test_print_shows_the_request_and_calls_nothing(workdir, monkeypatch, capsys)
         raise AssertionError("the model was called")
 
     monkeypatch.setattr(gen, "call", explode)
-    assert gen.main(["domain", ALPHA, "--print"]) == 0
+    assert gen.main(["scenario", ALPHA, "--print"]) == 0
 
     out = capsys.readouterr().out
     assert "----- system -----" in out and "does useful things." in out
     assert "----- user -----" in out
-    assert not gen.json_path(gen.Config(), "domain", ALPHA).exists()
+    assert not gen.json_path(gen.Config(), "scenario", ALPHA).exists()
 
 
 def test_a_missing_input_is_a_message_not_a_traceback(workdir, capsys):

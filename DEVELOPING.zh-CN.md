@@ -2,7 +2,8 @@
 
 [README.zh-CN.md](README.zh-CN.md) 里那份数据集的生成器：读取
 [skills-sh-mirror](https://github.com/skill-one/skills-sh-mirror) 中每个 skill 的 `SKILL.md`，
-向一个 OpenAI 兼容的 LLM 要六份结构化中文档案。
+为其索取六份结构化档案 —— 五份中文的来自 OpenAI 兼容的对话模型，`domain` 标签则来自 System One
+端点，后者回答的是强类型问题。
 
 English: [DEVELOPING.md](DEVELOPING.md)
 
@@ -24,10 +25,10 @@ just limit=0          # ……或者所有还缺的档案：整份快照，无�
 
 | 命令                        | 作用                                                                                                                                                                                          |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `just`                      | 构建接下来还缺档案的 `limit` 个 skill，安装量最高的优先。顺序来自清单自己的顺序（`OUTPUT_DIR/skills.jsonl`，即镜像的安装量降序），并滤掉「没有 description」和「磁盘上没有 `SKILL.md`」的行；清单不在时退回目录列表的路径顺序。窗口再取这些 skill 里「至少还缺一个角度」的前 `limit` 个——数的是工作而不是位置，所以反复运行会沿着数据集往下走。recipe 枚举 `PROMPTS_DIR/*.json`，留下 json 还缺的 `(skill, prompt)` 组合，交给 `xargs -P` 池。`jobs` 就是并发的全部。 |
+| `just`                      | 构建接下来还缺档案的 `limit` 个 skill，安装量最高的优先。顺序来自清单自己的顺序（`OUTPUT_DIR/skills.jsonl`，即镜像的安装量降序），并滤掉「没有 description」和「磁盘上没有 `SKILL.md`」的行；清单不在时退回目录列表的路径顺序。窗口再取这些 skill 里「至少还缺一个角度」的前 `limit` 个——数的是工作而不是位置，所以反复运行会沿着数据集往下走。recipe 从两个生产者取角度 —— `PROMPTS_DIR/*.json` 与 `jev.py --angles` —— 留下 json 还缺的组合，交给 `xargs -P` 池，由池把每个组合交给拥有该角度的那个脚本。`jobs` 就是并发的全部。 |
 | `just one <prompt> <skill>` | 只构建一个输出，无论批次有没有轮到它。`limit` 是按数据集自身顺序划的窗口、不是按名指定某个 skill 的方式，所以这是唯一能寻址「一个格子」的入口——也是唯一能在批次会跳过它的前提下重做它的入口。 |
 | `just invalidate <prompt>`  | 删掉某一个 prompt 的全部档案，下一次运行就只重建这些。                                                                                                                                          |
-| `just index`                | 写出 `<output_dir>/skills.jsonl`，即那份清单：镜像列出的每个 skill 一行、扁平，顺序就是镜像的顺序，内容是镜像自己的行（`id`、`installs`、`url`、`hash`、`fetchedAt`）连接上从该 skill 的 `SKILL.md` 里读出的 `description`，以及 `profiles/<id>/domain.json` 里的 `domain` 与 `reason`。未知时两者都是 `null`；镜像已删除但档案还在的 skill 也会有自己的行。它只读这棵树——不联网、不调模型——并且每次整文件重写，所以它是磁盘现状的投影，而不是一份要手工同步的第二副本。它还在旁边写出两份 README，出自同一次遍历：见下面的 `index.py`。 |
+| `just index`                | 写出 `<output_dir>/skills.jsonl`，即那份清单：镜像列出的每个 skill 一行、扁平，顺序就是镜像的顺序，内容是镜像自己的行（`id`、`installs`、`url`、`hash`、`fetchedAt`）连接上从该 skill 的 `SKILL.md` 里读出的 `description`，以及 `profiles/<id>/domain.json` 里的 `domain` 与 `confidence`。未知时两者都是 `null`；镜像已删除但档案还在的 skill 也会有自己的行。它只读这棵树——不联网、不调模型——并且每次整文件重写，所以它是磁盘现状的投影，而不是一份要手工同步的第二副本。它还在旁边写出两份 README，出自同一次遍历：见下面的 `index.py`。 |
 | `just sync`                 | 把整个上游 `dist` 分支作为一个 tarball 下载并按层解压进树里：skill 目录进 `output_dir/skills`（完整、未改动），其余部分——首先是镜像自己的索引——进 `output_dir/upstream`。最后重写清单，因为刚移动的源层让它失效了。下载先落在输出根旁边的暂存目录，落齐之后才做替换，所以抓取失败什么都不会变；前面还有一道守卫，拒绝替换「不是快照」的 `skills/`。每次运行都会下载——没有任何「已是最新」的状态。纯数据操作：它永远不碰生成的档案。 |
 | `just refresh`              | `just sync` 加上它的后果：先把同步之前的那份清单留到一边，然后删掉所有「来源内容 hash 随新快照变了」的 skill 的档案，让下一批重建它们。上游已删除的 skill 保留它的档案。比对完，那份临时清单就消失。 |
 | `just clean`                | 删掉生成物：`output_dir/profiles`、清单以及关于它的两份 README（`output_dir/skills.jsonl`、`output_dir/README.md`、`output_dir/README.zh-CN.md`）。skill 目录与镜像自己的文件不动：它们才是档案的依据，重新拉取才是贵的那一步。                                                                          |
@@ -181,6 +182,18 @@ uv run python gen.py <prompt> <skill> --print   # 打印请求后即停止（不
   `index.py` 同样两样都不知道，它只读这棵树；`readme.py` 是它的另一半，把同样的数字说给读者听，
   不知道那些数字从哪来；justfile 只负责指认文件。正是这样，请求本身才
   小到可以一口气读完。
+- **两个生产者，一条分派。** `jev.py` 是第三个写档案的脚本，也是第二个生产者，它存在的原因是那个
+  端点不是对话式的：`POST /v1/systemone` 收一个 `state` 和一张强类型 `questions` 表，回一张强类型
+  `answers` 表——没有 messages、没有 `json_schema`、没有自由文本。所以它自己拼请求，其余全部与
+  `gen.py` 共用：同一份渲染好的 system message 当作 `state`、同一个写入器、同样的
+  `profiles/<id>/<angle>.json` 与 markdown 副本、同样「读不出 description 就丢弃」的门、同样的退出码。
+  `just` 把每个组合交给拥有该角度的那个脚本，而 `jev.py --angles` 是它自己角度列表的唯一来源——
+  往那个 dict 里加一条，就是加一个批次会构建的角度。它换掉的东西是实在的：System One 的答案只能是
+  闭合集合里的一个成员，所以 `domain` 没有理由句、也没有数组。它换来的是把答案整份留在档案里：标签、
+  置信度，以及据以判断的那份覆盖 13 个分类的分布 —— 这也正是别的角度的文件所是的东西：模型给出的
+  答案本身，而不是对它的摘要。分布值得留下，因为赢家身上并不包含它：52 比 48 决出的结果和 99 比 1
+  决出的结果说的不是一件事，而且事后都要不回来。目录只取其中两样（标签与置信度），其余留在它该在的
+  地方。
 - **一份镜像，一次请求。** `just sync` 是一条 `curl`、一条 `tar` 加一次清单重写，拉整个分支：不做
   选择性解压、不维护 tag、没有任何会过期的状态。代价是磁盘和下载时间（分支里还带着 avatars 等一批
   任务永远不读的文件），这是一次刻意取舍：`sync` 不再有任何可能做错的判断。它永远是整体替换而不是
@@ -230,24 +243,29 @@ just prompt=my_angle
 ```
 
 已生成的角度本来就会被跳过，所以花调用的只有新角度——`prompt=<id>` 只是把这件事说白，而不是去
-把另外六个走一遍、发现无事可做。
+把另外五个走一遍、发现无事可做。
 
-关于这份 schema 有三点值得知道。让它保持真正的 `.json` 文件就是重点：编辑器或别的工具能校验它，
+关于这份 schema 有两点值得知道。让它保持真正的 `.json` 文件就是重点：编辑器或别的工具能校验它，
 而 markdown 保持是散文。`strict` 是模型服务的规则而不是我们的，所以它拒绝的 schema——对象没封闭、
 字段没进 `required`——会让调用直接 400，而不是被悄悄纠正：`tests/test_gen.py` 会按这些规则检查每
-一个 prompt 的 schema，所以 `uv run pytest` 会在批次之前就拦住。另外 `domain` 把 13 个分类写了两遍，
-一遍是 markdown 里给模型看的散文，一遍是 schema 里给解码器用的 `enum`；请保持两者一致（也有测试从
-enum 这一侧检查）。
+一个 prompt 的 schema，所以 `uv run pytest` 会在批次之前就拦住。
+
+Jev 角度是另一类，而且它是 `jev.py` 里的一条条目而不是两个文件：`QUESTIONS` 里的一个名字，装着
+端点要回答的强类型问题——带选项的 `choice`、带档位的 `score`，或只有一句 instruction 的 `noul`。
+它没有 prompt 模板、也没有 schema，所以没有任何两份东西需要保持一致——`domain` 那 13 个分类就是一个
+dict，作为它只能在其中作答的选项交出去。在那里加一条，下一次 `just` 就会构建它，跟新增一对 prompt
+文件一样。
 
 ## 项目结构
 
 ```
-justfile                # 编排器：拉取、构建图、并发池、缓存策略
-gen.py                  # 请求本身：<prompt> <skill> 进，一个 json + markdown 出
+justfile                # 编排器：拉取、两个生产者、并发池、缓存策略
+gen.py                  # 对话请求：<prompt> <skill> 进，一个 json + markdown 出
+jev.py                  # System One 请求：同样进同样出，但用强类型问题代替提示词
 index.py                # 清单与它的数字：一份扁平 jsonl 出，外加 README 要用的那些事实
 readme.py               # 那一页：把这些数字说给读者听，两种语言各一份
 stale.py                # 比对：两份清单进，内容变了的 skill 的档案出
-prompts/                # 每个 prompt 一对 <id>.md（任务）+ <id>.json（schema），外加 _system.md
+prompts/                # 每个对话角度一对 <id>.md（任务）+ <id>.json（schema），外加 _system.md
 tests/                  # 离线单元测试，外加一套 just 端到端测试
 .github/                # push / PR 上跑 ci，sync 与 publish 手动触发
 ```
@@ -263,6 +281,11 @@ justfile 自己的变量——那几个路径、`py`——也按同样这三个�
 | `SKILLS_PROFILES_MODEL`         | `gpt-4.1-mini`    | 任意 OpenAI 兼容的 chat 模型                  |
 | `SKILLS_PROFILES_BASE_URL`      | –                 | OpenAI 兼容端点                               |
 | `SKILLS_PROFILES_API_KEY`       | –                 | 端点 API key                                  |
+| `SKILLS_PROFILES_JEV_MODEL`     | `jev-latest`      | System One 模型，别名指向某个版本（`jev-1.13.0`） |
+| `SKILLS_PROFILES_JEV_BASE_URL`  | 302.AI 的 System One 路径 | `jev.py` 发往的地址；只有它用得到        |
+| `SKILLS_PROFILES_JEV_API_KEY`   | –                 | 它的 key；没有 key 就没有调用                 |
+| `SKILLS_PROFILES_JEV_TIMEOUT`   | `20`              | 单次请求秒数：端点一到三秒作答，而空闲后第一次调用会被丢弃 |
+| `SKILLS_PROFILES_JEV_MAX_RETRIES` | `3`             | 额外尝试次数，用于被丢弃的调用或忙碌的网关    |
 | `SKILLS_PROFILES_MAX_RETRIES`   | `3`               | 每次 LLM 调用的额外重试次数（`0` = 只试一次） |
 | `SKILLS_PROFILES_THINKING`      | `false`           | 让模型先思考再作答：模型服务的 `enable_thinking`，只发 `true`（文档也只写了 `true`） |
 | `SKILLS_PROFILES_DRY_RUN`       | `false`           | 用假 LLM：不调 API                            |
@@ -275,8 +298,11 @@ justfile 自己的变量——那几个路径、`py`——也按同样这三个�
 失败——所以即使本地 `.env` 里全是真 key，测试也绝不可能网出去。
 
 - `tests/test_gen.py` 覆盖这次请求：prompt 加载与它的几种失败模式、每个 schema 都必须满足的 strict
-  规则、分类文案与 enum 的一致性、模板渲染、调用实际发出的关键字、dry-run 占位内容、两份输出文件，
-  以及命令本身——再加上把 description 按 YAML 从表头里读出来，和三种导致 skill 被丢弃的表头。
+  规则、模板渲染、调用实际发出的关键字、dry-run 占位内容、两份输出文件，以及命令本身——再加上把
+  description 按 YAML 从表头里读出来，和三种导致 skill 被丢弃的表头。
+- `tests/test_jev.py` 覆盖另一个生产者：作为单一对象的分类体系、它声明的角度、调用发出的请求体
+  （一个 state 加强类型问题，没有任何 messages）、被丢弃的调用会重试而被告知的请求不会、闭合集合之外
+  的答案会被拦下，以及命令本身——同一道门、同样的退出码，还有不用 key 也能打印请求。
 - `tests/test_index.py` 覆盖这份清单：镜像那一行逐字段转发、我们的三个字段接在后面；镜像列出的每个
   skill 都有行（包括还没生成任何档案的）、镜像已删除但档案还在的也有行；读不出 description 的和还没
   定 domain 的都是 `null`；id 用镜像的拼写而目录树用另一种；孤儿靠遍历而不是 glob（包括名字带前导点
