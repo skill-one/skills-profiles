@@ -1,0 +1,15 @@
+# metrickit (`dpearson2699/swift-ios-skills/metrickit`)
+
+## domain
+
+### domain
+
+development
+
+### confidence
+
+0.53
+
+### probabilities
+
+devops-security: 0.38, other: 0.0, data-analysis: 0.05, lifestyle: 0.0, education: 0.0, knowledge-management: 0.0, design-media: 0.0, development: 0.57, testing: 0.0, business-ops: 0.0, content-creation: 0.0, finance-payment: 0.0, office-productivity: 0.0

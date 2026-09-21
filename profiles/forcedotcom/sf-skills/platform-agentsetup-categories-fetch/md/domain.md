@@ -1,0 +1,15 @@
+# platform-agentsetup-categories-fetch (`forcedotcom/sf-skills/platform-agentsetup-categories-fetch`)
+
+## domain
+
+### domain
+
+development
+
+### confidence
+
+0.45
+
+### probabilities
+
+knowledge-management: 0.35, other: 0.03, business-ops: 0.08, data-analysis: 0.03, development: 0.5, devops-security: 0.01, lifestyle: 0.0, office-productivity: 0.0, education: 0.0, design-media: 0.0, finance-payment: 0.0, testing: 0.0, content-creation: 0.0

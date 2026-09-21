@@ -1,0 +1,15 @@
+# mfds-drug-safety (`nomadamas/k-skill/mfds-drug-safety`)
+
+## domain
+
+### domain
+
+lifestyle
+
+### confidence
+
+0.53
+
+### probabilities
+
+devops-security: 0.01, testing: 0.0, lifestyle: 0.57, business-ops: 0.02, knowledge-management: 0.19, data-analysis: 0.01, education: 0.0, content-creation: 0.01, finance-payment: 0.0, office-productivity: 0.0, other: 0.18, design-media: 0.0, development: 0.01

@@ -1,0 +1,15 @@
+# frontend-slides (`nexu-io/open-design/frontend-slides`)
+
+## domain
+
+### domain
+
+design-media
+
+### confidence
+
+0.44
+
+### probabilities
+
+development: 0.04, education: 0.01, office-productivity: 0.26, content-creation: 0.19, devops-security: 0.0, design-media: 0.49, lifestyle: 0.0, other: 0.01, knowledge-management: 0.0, finance-payment: 0.0, business-ops: 0.0, data-analysis: 0.0, testing: 0.0

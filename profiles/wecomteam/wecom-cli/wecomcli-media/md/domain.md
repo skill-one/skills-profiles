@@ -1,0 +1,15 @@
+# wecomcli-media (`wecomteam/wecom-cli/wecomcli-media`)
+
+## domain
+
+### domain
+
+office-productivity
+
+### confidence
+
+0.73
+
+### probabilities
+
+knowledge-management: 0.01, testing: 0.0, finance-payment: 0.0, development: 0.07, lifestyle: 0.0, content-creation: 0.0, education: 0.0, design-media: 0.0, office-productivity: 0.76, devops-security: 0.01, business-ops: 0.01, data-analysis: 0.0, other: 0.14

@@ -1,0 +1,15 @@
+# express-bus-booking (`nomadamas/k-skill/express-bus-booking`)
+
+## domain
+
+### domain
+
+lifestyle
+
+### confidence
+
+0.93
+
+### probabilities
+
+finance-payment: 0.01, development: 0.01, education: 0.0, lifestyle: 0.93, design-media: 0.0, business-ops: 0.04, testing: 0.0, devops-security: 0.0, data-analysis: 0.0, other: 0.01, knowledge-management: 0.0, content-creation: 0.0, office-productivity: 0.0

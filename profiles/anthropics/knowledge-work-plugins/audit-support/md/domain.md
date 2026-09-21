@@ -1,0 +1,15 @@
+# audit-support (`anthropics/knowledge-work-plugins/audit-support`)
+
+## domain
+
+### domain
+
+content-creation
+
+### confidence
+
+0.32
+
+### probabilities
+
+office-productivity: 0.04, education: 0.0, devops-security: 0.0, testing: 0.12, knowledge-management: 0.03, other: 0.19, development: 0.0, business-ops: 0.08, content-creation: 0.37, lifestyle: 0.0, design-media: 0.0, data-analysis: 0.0, finance-payment: 0.17

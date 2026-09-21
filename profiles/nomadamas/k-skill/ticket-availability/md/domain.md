@@ -1,0 +1,15 @@
+# ticket-availability (`nomadamas/k-skill/ticket-availability`)
+
+## domain
+
+### domain
+
+business-ops
+
+### confidence
+
+0.26
+
+### probabilities
+
+business-ops: 0.32, design-media: 0.0, education: 0.0, testing: 0.0, development: 0.11, content-creation: 0.0, devops-security: 0.0, data-analysis: 0.02, other: 0.1, knowledge-management: 0.2, finance-payment: 0.01, lifestyle: 0.23, office-productivity: 0.01

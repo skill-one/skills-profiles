@@ -1,0 +1,15 @@
+# lean-ux (`wondelai/skills/lean-ux`)
+
+## domain
+
+### domain
+
+design-media
+
+### confidence
+
+0.84
+
+### probabilities
+
+education: 0.02, design-media: 0.85, office-productivity: 0.01, development: 0.01, other: 0.05, testing: 0.0, data-analysis: 0.0, devops-security: 0.0, business-ops: 0.04, knowledge-management: 0.01, content-creation: 0.01, finance-payment: 0.0, lifestyle: 0.0

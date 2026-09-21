@@ -1,0 +1,15 @@
+# generating-mermaid-diagrams (`forcedotcom/sf-skills/generating-mermaid-diagrams`)
+
+## domain
+
+### domain
+
+design-media
+
+### confidence
+
+0.45
+
+### probabilities
+
+testing: 0.0, lifestyle: 0.0, finance-payment: 0.0, development: 0.28, devops-security: 0.0, content-creation: 0.19, education: 0.0, other: 0.0, office-productivity: 0.0, knowledge-management: 0.0, data-analysis: 0.02, design-media: 0.51, business-ops: 0.0

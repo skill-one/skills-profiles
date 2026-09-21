@@ -1,0 +1,15 @@
+# comp-analysis (`anthropics/knowledge-work-plugins/comp-analysis`)
+
+## domain
+
+### domain
+
+data-analysis
+
+### confidence
+
+0.68
+
+### probabilities
+
+knowledge-management: 0.0, design-media: 0.0, finance-payment: 0.03, office-productivity: 0.0, data-analysis: 0.71, testing: 0.0, other: 0.01, devops-security: 0.0, education: 0.0, development: 0.0, content-creation: 0.0, business-ops: 0.25, lifestyle: 0.0

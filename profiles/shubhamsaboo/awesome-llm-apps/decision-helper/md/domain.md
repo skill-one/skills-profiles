@@ -1,0 +1,15 @@
+# decision-helper (`shubhamsaboo/awesome-llm-apps/decision-helper`)
+
+## domain
+
+### domain
+
+office-productivity
+
+### confidence
+
+0.45
+
+### probabilities
+
+lifestyle: 0.01, knowledge-management: 0.03, content-creation: 0.11, testing: 0.0, devops-security: 0.0, finance-payment: 0.0, design-media: 0.0, education: 0.0, other: 0.27, office-productivity: 0.5, data-analysis: 0.01, development: 0.0, business-ops: 0.07
