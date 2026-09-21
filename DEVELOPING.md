@@ -27,10 +27,10 @@ Offline, no API calls and no credentials: `just dry=1 limit=5`.
 | `just`                      | Build the missing profiles for the next `limit` skills that still need one, most installed first. The order is the catalog's own (`OUTPUT_DIR/skills.jsonl`, which the mirror wrote installs-descending) filtered to the rows that have a description and a `SKILL.md` on disk; with no catalog it is the directory listing in path order. The window is then the first `limit` of those skills that are missing at least one angle - a count of work, not of positions, so repeated runs walk down the dataset. The recipe enumerates `PROMPTS_DIR/*.json`, keeps the `(skill, prompt)` pairs whose json is missing, and feeds them to an `xargs -P` pool. `jobs` is the whole concurrency story. |
 | `just one <prompt> <skill>` | Build exactly one output, whether or not the batch has reached it. `limit` is a window over the dataset in its own order, not a way to name a skill, so this is the only way to address one cell - and the only way to rebuild one without the batch skipping it. |
 | `just invalidate <prompt>`  | Delete one prompt's profiles, so the next run rebuilds exactly those.                                                                                                                               |
-| `just index`                | Write `<output_dir>/skills.jsonl` - the catalog: one flat line per skill the mirror lists, in the mirror's order, being the mirror's own row (`id`, `installs`, `url`, `hash`, `fetchedAt`) joined with the `description` read out of that skill's `SKILL.md` and the `domain` and `reason` in `profiles/<id>/domain.json`. Both are `null` while they are unknown, and a skill the mirror has dropped while profiles remain gets a row of its own. It reads the tree alone - no network, no calls - and rewrites the file whole, so it is a projection of what is on disk rather than a second copy to keep in step by hand. It writes `stats.txt` beside it, from the same walk: see `index.py` below. |
+| `just index`                | Write `<output_dir>/skills.jsonl` - the catalog: one flat line per skill the mirror lists, in the mirror's order, being the mirror's own row (`id`, `installs`, `url`, `hash`, `fetchedAt`) joined with the `description` read out of that skill's `SKILL.md` and the `domain` and `reason` in `profiles/<id>/domain.json`. Both are `null` while they are unknown, and a skill the mirror has dropped while profiles remain gets a row of its own. It reads the tree alone - no network, no calls - and rewrites the file whole, so it is a projection of what is on disk rather than a second copy to keep in step by hand. It writes the READMEs beside it, from the same walk: see `index.py` below. |
 | `just sync`                 | Download the whole upstream `dist` branch as one tarball and unpack it into the tree: the skill directories into `output_dir/skills`, complete and unchanged, and the rest - the mirror's own index above all - into `output_dir/upstream`. Then rewrite the catalog, which the moved source layer just invalidated. The fetch lands in a scratch directory beside the output root and the swap happens only once it is whole, so a failed download changes nothing; a guard refuses to replace a `skills/` that is not a snapshot. Every run downloads - nothing tracks "already current". Pure data: it never touches a generated profile. |
 | `just refresh`              | `just sync`, plus the consequence: the catalog as it was before the sync is kept aside, and every profile whose source content hash moved with the new one is deleted, so the next batch rebuilds them. A skill that vanished upstream keeps its profiles. The scratch catalog is gone when the comparison is done. |
-| `just clean`                | Drop what was generated: `output_dir/profiles`, the catalog and the report about it (`output_dir/skills.jsonl`, `output_dir/stats.txt`). The skill directories and the mirror's own files stay: they are what a profile is built from, and re-fetching them is the expensive part. |
+| `just clean`                | Drop what was generated: `output_dir/profiles`, the catalog and the READMEs about it (`output_dir/skills.jsonl`, `output_dir/README.md`, `output_dir/README.zh-CN.md`). The skill directories and the mirror's own files stay: they are what a profile is built from, and re-fetching them is the expensive part. |
 | `just test`                 | `uv run pytest`.                                                                                                                                                                                   |
 
 Every command above is a recipe name, and `just --list` prints them with a line about each.
@@ -118,19 +118,25 @@ domains the tree holds and the file it renames into place. It is not in the buil
 moves the source layer under it. Nothing else writes the file, so it cannot drift from a tree it was
 not written alongside.
 
-The same run writes `output/stats.txt` from the same walk, and it is the one thing the catalog
-cannot answer: **how much of the dataset is built.** The report counts cells the way the batch does -
-an angle's json is the unit of work, so a directory left behind by `just invalidate` is not progress
-- over the skills that can actually be built, since a skill whose front matter yields no description
-would pin the report below 100% forever. Each angle is a row: how many skills have it, and what
-share of the mirror's installs that covers, which is the number that matters because the batch works
-most-installed-first (a count of 0.3% and a weight of 16% are the same tree, and only the second
-says what a partial dataset is worth). Around it: the snapshot it describes, orphans, the domain
-labels in use, and the size of the tree. Two decisions are worth knowing. **It is prose, not data** -
-the catalog is the machine-readable one, and nothing reads this back. **It reads the snapshot's own
-identity** (`upstream/latest`, `upstream/stats.json`, the `fetchedAt` range) rather than stamping a
-wall clock, because a publish compares the tree with the branch and a file that changes on every run
-would make every publish spend a tag on a tree that did not change.
+The same run writes `output/README.md` and its Chinese twin from the same walk - `readme.py` holds
+the words, `index.py` hands it the numbers - and together they are the one thing the catalog cannot
+answer: **how much of the dataset is built.** They say what the directory is (the four layers, the
+six angles) and then count cells the way the batch does - an angle's json is the unit of work, so a
+directory left behind by `just invalidate` is not progress - over the skills that can actually be
+built, since a skill whose front matter yields no description would pin the number below 100%
+forever. Each angle is a row: how many skills have it, and what share of the mirror's installs that
+covers, which is the number that matters because the batch works most-installed-first (a count of
+0.3% and a weight of 16% are the same tree, and only the second says what a partial dataset is worth).
+Around it: the snapshot they describe, orphans, the domain labels in use, and the size of the tree.
+Three decisions are worth knowing. **They are the front page, because the published root is the
+product**: `publish-dist` copies `output/` to the `dist` branch root, so `README.md` is what GitHub
+renders for anyone who lands there - which is also why there are two of them, the repository's own
+rule for a document. **The words are separated from the numbers** so that a second language is a
+second page rather than a second code path: one renderer, two tables of text, and a test that both
+hold the same keys. **They read the snapshot's own identity** (`upstream/latest`, `upstream/stats.json`,
+the `fetchedAt` range) rather than stamping a wall clock, because a publish compares the tree with the
+branch and a file that changes on every run would spend a version number on a tree that did not
+change.
 
 `stale.py` is the third, for the one comparison a shell is bad at: two catalogs in, the ids whose
 content hash moved out - minus the ones the new one no longer holds, which are nobody's to delete.
@@ -152,7 +158,7 @@ mirror `dist` branch ─────┼──► skills/<id>/**      the skill i
                                       │
                         profiles/<id>/<angle>.json + md/<angle>.md
                                       │
-                `just index` ──► skills.jsonl + stats.txt: upstream × skills/ × profiles/
+                `just index` ──► skills.jsonl + READMEs: upstream × skills/ × profiles/
 ```
 
 `output/` is one root holding four things, each named after what it is: the skills, the profiles
@@ -209,7 +215,8 @@ Design decisions:
   is never a target.
 - **One script per job.** `gen.py` knows nothing about the snapshot (it is handed a skill id) and
   nothing about the build graph; `index.py` knows nothing about either and only reads the output
-  tree; the justfile only names files. That is what
+  tree; `readme.py` is its other half, the same numbers said for a reader, and knows nothing about
+  where they came from; the justfile only names files. That is what
   keeps the request itself small enough to read in one sitting.
 - **One snapshot, one request.** `just sync` is a `curl` and a `tar` of the whole branch: no
   selective unpacking, no tag bookkeeping, nothing to go stale. That costs disk and download time
@@ -222,10 +229,10 @@ Design decisions:
   covers (one fewer endpoint, key, quota and binary asset to manage), and the `dist` publishing
   workflows (there is nothing to publish but a directory tree). `just index` does write a
   `skills.jsonl` again, but nothing else came back with it: it is one flat line per skill over its
-  `domain`, derived from the tree by a command that says so, and nothing reads it. An index that is
-  written by the run that produces a tree would be the drift this one avoids. `stats.txt` is not that
-  file under another name: nothing reads it, no consumer may rely on it, and it holds no state that
-  is not already in the tree — remove it and the next `just index` writes it back, byte for byte.
+  `domain`, derived from the tree by a command that says so. An index that is written by the run that
+  produces a tree would be the drift this one avoids. The READMEs are not that file under another
+  name: nothing reads them back, no consumer may rely on their numbers, and they hold no state that
+  is not already in the tree — remove them and the next `just index` writes them back, byte for byte.
 
 ## Adding a prompt
 
@@ -283,7 +290,8 @@ schema's `enum` for the decoder; keep them in sync (a test checks that too, from
 ```
 justfile                # the orchestrator: sync, the build graph, the pool, the cache policy
 gen.py                  # the request: <prompt> <skill> in, one json + markdown out
-index.py                # the catalog and its report: one flat jsonl, and stats.txt beside it
+index.py                # the catalog and its numbers: one flat jsonl, and the facts a README is
+readme.py               # the page: those numbers said for a reader, in both languages
 stale.py                # the comparison: two catalogs in, the changed skills' profiles out
 prompts/                # one <id>.md (task) + <id>.json (schema) per prompt, plus _system.md
 tests/                  # offline unit tests plus a just end-to-end suite
@@ -323,11 +331,15 @@ fails loudly, so a test can never call out even with a local `.env` full of keys
   read from and for a domain not decided yet, the mirror's spelling of an id against the tree's, an
   orphan walked rather than globbed (a repo whose name starts with a dot among them), the error a
   missing mirror index gives, the `"description":null` spelling the justfile matches on, and the
-  write being whole or absent. It covers the report in the same file: a json rather than a directory
-  as the unit of work, the buildable denominator, a dropped skill arriving as an orphan rather than
-  as coverage, the installs weight, the labels read off the schema, the snapshot the report reads out
-  of `upstream/` instead of stamping, the same tree writing the same bytes, and the write being
-  whole or absent too.
+  write being whole or absent - plus the numbers a README is said from: a json rather than a directory
+  as the unit of work, the buildable denominator, a dropped skill arriving as an orphan rather than as
+  coverage, the installs weight, the labels read off the schema, the snapshot read out of `upstream/`
+  instead of stamped, a tree that cannot answer saying so in one dash, and the same tree reading the
+  same numbers.
+- `tests/test_readme.py` covers the page: both languages holding the same keys, every placeholder in
+  them being a number the report has, the two rendered for a tree with nothing built and one built
+  partway, each page pointing at the other, both saying they are generated, and both being a
+  function of the tree.
 - `tests/test_stale.py` covers the comparison: a moved hash retiring exactly that skill, a skill that
   vanished keeping its profiles, a row with no hash saved being nobody's business, a skill whose hash
   moved before anything was built retiring nothing, and the two cold starts (no previous catalog, no
@@ -339,7 +351,7 @@ fails loudly, so a test can never call out even with a local `.env` full of keys
   can be read from being no target at all, `jobs` sizing
   the pool, `just one` reaching outside the window, `just invalidate`
   forgetting exactly one prompt, `just index` joining the mirror's rows with the profiles and
-  writing the report beside them, `just refresh`
+  writing the READMEs beside them, `just refresh`
   retiring exactly what a new snapshot changed, `DRY=1` in both of its
   spellings, an inherited `SKILLS_PROFILES_DRY_RUN` reaching the jobs unclobbered, `just sync`
   fetching a snapshot from a local tarball, unpacking its two layers and replacing them wholesale,

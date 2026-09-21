@@ -11,7 +11,7 @@ import pytest
 import gen
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-SCRIPTS = ["justfile", "gen.py", "index.py", "stale.py"]
+SCRIPTS = ["justfile", "gen.py", "index.py", "readme.py", "stale.py"]
 ARCHIVE_ROOT = "skills-sh-mirror-dist"  # GitHub wraps a branch in <repo>-<branch>/
 # the published root: the skill directories, the profiles written about them, the mirror's own files
 # and the catalog, which are the four things the justfile and the three scripts all read

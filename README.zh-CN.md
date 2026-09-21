@@ -22,7 +22,8 @@ output/
 │   └── md/                          同样六个角度的 markdown 版，方便阅读
 ├── skills.jsonl                     `just index`：每个 skill 一行——镜像那一行（id、installs、
 │                                    url、hash、fetchedAt）再加上 description 与 domain
-├── stats.txt                        …… 以及它旁边的报告：数据集建成到什么程度了
+├── README.md                        …… 以及它旁边的首页：这个目录是什么、建到了什么程度
+├── README.zh-CN.md                  同一页的中文版
 └── upstream/                        镜像的其余部分：索引、repos、owners、avatars
 ```
 
@@ -34,9 +35,10 @@ output/
 jq -r 'select(any(.domain[]; . == "development")) | [.installs, .id] | @tsv' output/skills.jsonl | head
 ```
 
-旁边的 `stats.txt` 则把这棵树说成进度而不是数据：逐角度给出有多少 skill 有了它、这覆盖了镜像安装量的
-多大比例，并写明描述的是哪份快照。它是写给读者看的——要拿来做东西请用那份清单——而且它是这棵树的
-投影，所以没变过的树写出来的报告总是一模一样。
+旁边的两份 README 是发布根的首页，也是把这棵树说成进度：先说四层与六个角度各是什么，再逐角度给出有
+多少 skill 有了它、这覆盖了镜像安装量的多大比例，并写明它们描述的是哪份快照。它们是写给读者看的——
+要拿来做东西请用那份清单——而且它们是这棵树的投影，所以没变过的树写出来的页面总是一模一样。两份都由
+`just index` 生成，都不是手写的。
 
 每个 skill 一个目录，每个角度一个文件。每个 json 恰好是一个 prompt 的结构化输出，生成完即完整落盘——
 所以批次被中断只会丢掉它正在处理的那几个 prompt，下一批会从断点继续。
@@ -72,7 +74,7 @@ just limit=0           # 生成所有还缺的档案：整份快照，无上限
 just prompt=scenario   # 只做这一个角度，窗口内每个 skill 都要
 just limit=20 jobs=8   # 同时跑 8 个，只做前 20 个 skill
 just dry=1 limit=2     # 离线冒烟：假模型、真布局
-just index             # 从磁盘上的内容重建 output/skills.jsonl 与 output/stats.txt
+just index             # 从磁盘上的内容重建 output/skills.jsonl 与两份 README
 ```
 
 `jobs` 决定同时跑多少个生成，`rpm` 把它们配速到端点允许的节奏（写着每分钟 20 次的免费档就用

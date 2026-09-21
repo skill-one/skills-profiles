@@ -20,7 +20,7 @@ from pathlib import Path
 import pytest
 
 import gen
-import index
+import readme
 from conftest import (
     ARCHIVE_ROOT,
     OUTPUT,
@@ -84,8 +84,9 @@ def json_names(project: Path, skill_id: str) -> list[str]:
 
 
 def counted(text: str, angle: str) -> list[str]:
-    """One row of the report's angle table, without its name."""
-    return next(line for line in text.splitlines() if line.startswith(f"{angle} ")).split()[1:]
+    """One row of the README's angle table, without its name."""
+    row = next(line for line in text.splitlines() if line.startswith(f"| `{angle}` |"))
+    return [cell.strip() for cell in row.strip("|").split("|")][1:]
 
 
 def snapshot(output: Path, skill_id: str) -> Path:
@@ -387,7 +388,8 @@ def test_just_clean_drops_the_profiles_and_keeps_the_sources(project):
 
     assert not (project / OUTPUT / gen.PROFILES_DIR).exists()
     assert not (project / OUTPUT / "skills.jsonl").exists()
-    assert not (project / OUTPUT / index.STATS).exists()
+    assert not (project / OUTPUT / readme.README).exists()
+    assert not (project / OUTPUT / readme.README_ZH).exists()
     assert (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").is_file()
     assert (project / OUTPUT / gen.UPSTREAM_DIR / "skills.jsonl").is_file()
 
@@ -410,7 +412,7 @@ def test_just_index_joins_the_mirror_with_the_profiles(project):
     assert lines[0]["description"].startswith("Tidies a note list")
     assert lines[0]["domain"] is None  # the profile was deleted; the skill is still listed
     assert lines[5]["description"] is None  # no source to read a description from
-    text = (project / OUTPUT / index.STATS).read_text(encoding="utf-8")
+    text = (project / OUTPUT / readme.README).read_text(encoding="utf-8")
     assert counted(text, "domain")[:2] == ["4", "5"]  # the deleted json is not progress
     assert counted(text, "comments")[:2] == ["5", "5"]
 

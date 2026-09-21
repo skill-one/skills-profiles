@@ -37,10 +37,10 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["gen", "conftest"]
+known-first-party = ["gen", "readme", "conftest"]
 
 [tool.mypy]
 python_version = "3.12"
 ignore_missing_imports = true
 warn_unused_ignores = true
-files = ["gen.py", "index.py", "stale.py"]
+files = ["gen.py", "index.py", "readme.py", "stale.py"]

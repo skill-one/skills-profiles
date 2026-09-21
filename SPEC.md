@@ -22,7 +22,8 @@ decide which part of it gets written.
 │   ├── blackbox.json  whitebox.json  comments.json
 │   └── md/<angle>.md      # the same content, rendered for reading
 ├── skills.jsonl           # `just index`: the catalog, one flat line per skill
-├── stats.txt              # ... and the report beside it: how much of the dataset is built
+├── README.md              # ... and the front page beside it: what this directory is, and how
+├── README.zh-CN.md        #     much of it is built; the same page, in Chinese
 └── upstream/              # the rest of the mirror: skills.jsonl, repos.jsonl, owners.jsonl,
                            # curated.jsonl, trending.json, stats.json, latest, avatars/
 ```
@@ -49,11 +50,11 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `gen.py`
   plus the `description` read out of that skill's own `SKILL.md` and the `domain` with its `reason`.
   `description` and `domain` are `null` while they are unknown, so a row states the dataset rather
   than the work: `.domain != null` is what has been built, and `.installs` ranks what has not.
-- **`stats.txt` is the progress report**, written by the same command from the same walk: how many of
-  the dataset's `skill × angle` cells are on disk, per angle, counted and weighted by installs, with
-  the snapshot it describes and the labels in use. It is prose for a reader and nothing reads it
-  back; every line of it is a function of the tree, so a tree that did not change rewrites it
-  identically.
+- **The READMEs are the front page**, written by the same command from the same walk. They say what
+  the directory is — the four layers, the six angles — and how much of the dataset is built: the
+  `skill × angle` cells on disk, per angle, counted and weighted by installs, with the snapshot they
+  describe and the labels in use. They are prose for a reader and nothing reads them back; every
+  line is a function of the tree, so a tree that did not change rewrites them identically.
 - Ids, paths and field names are ASCII; `domain.domain` is an array of one to three members of a
   closed English enum, the primary first, so it still filters directly; the `domain` angle's values
   are English throughout, every other angle's values are Chinese.
@@ -87,10 +88,10 @@ The batch is one recipe with modifiers, plus six verbs:
 | `just` | build every missing (skill, angle) in the window |
 | `just one <angle> <id>` | build one cell, inside or outside the window |
 | `just invalidate <angle>` | delete that angle's profiles, everywhere |
-| `just index` | write the catalog and the report: the mirror's rows joined with the descriptions and the domains, and `stats.txt` |
+| `just index` | write the catalog and the READMEs: the mirror's rows joined with the descriptions and the domains, and the published root's front page |
 | `just sync` | fetch the mirror, replacing `skills/` and `upstream/` wholesale, and rewrite the catalog |
 | `just refresh` | fetch it, and drop every profile whose source hash changed with it |
-| `just clean` | drop the profiles, the catalog and the report; keep the skills and the mirror's files |
+| `just clean` | drop the profiles, the catalog and the READMEs; keep the skills and the mirror's files |
 | `just render <angle> <id>` · `just test` | dev only: print the request · run the suite |
 
 The modifiers are command-line variables, nowhere else:
@@ -137,8 +138,8 @@ The batch knobs above are **not** environment variables: a run changes only beca
 - **A file is whole or absent.** The markdown is written first, the json renamed into place.
 - **One turn per file.** No ordering, no dependency, no cascade.
 - **The catalog is derived and complete.** `just index` rebuilds it whole from the tree, offline: one
-  row per skill the mirror lists, and one for a skill it has dropped while profiles remain — with
-  `stats.txt` written from the same walk, so the two cannot describe different trees.
+  row per skill the mirror lists, and one for a skill it has dropped while profiles remain — with the
+  READMEs written from the same walk, so no two things there can describe different trees.
 - **The layout is the only contract.** Publish `output/` as it is; the mirror's own files included.
 
 ## 6. Open — to agree before this is the spec

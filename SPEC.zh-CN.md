@@ -20,7 +20,8 @@ English: [SPEC.md](SPEC.md)
 │   ├── blackbox.json  whitebox.json  comments.json
 │   └── md/<angle>.md      # 同样的内容，渲染成方便阅读的版本
 ├── skills.jsonl           # `just index`：清单，每个 skill 一行、扁平
-├── stats.txt              # …… 以及它旁边的报告：数据集建成到什么程度了
+├── README.md              # …… 以及它旁边的首页：这个目录是什么、建到了什么程度
+├── README.zh-CN.md        #     同一页的中文版
 └── upstream/              # 镜像的其余部分：skills.jsonl、repos.jsonl、owners.jsonl、
                            # curated.jsonl、trending.json、stats.json、latest、avatars/
 ```
@@ -46,9 +47,10 @@ English: [SPEC.md](SPEC.md)
   `SKILL.md` 里读出的 `description`，以及本项目标出的 `domain` 与其 `reason`。未知时 `description`
   与 `domain` 为 `null`，所以一行陈述的是数据集的状态而不是工作的取舍：`.domain != null` 是已建成的
   部分，`.installs` 给没建的那部分排序。
-- **`stats.txt` 是进度报告**，由同一条命令、同一次遍历写出：数据集的 `skill × 角度` 格子有多少已在
-  磁盘上，逐角度给出数量、并按安装量加权的占比，外加它所描述的那份快照与已用到的标签。它是给人看的
-  文字，没有任何东西读它；它的每一行都是这棵树的函数，所以没变过的树写出来的报告总是一模一样。
+- **两份 README 是首页**，由同一条命令、同一次遍历写出。它们说明这个目录是什么——四层、六个角度——
+  以及数据集建到了什么程度：`skill × 角度` 的格子有多少已在磁盘上，逐角度给出数量、并按安装量加权的
+  占比，外加它们所描述的那份快照与已用到的标签。它们是给人看的文字，没有任何东西回读；每一行都是
+  这棵树的函数，所以没变过的树写出来的页面总是一模一样。
 - id、路径与字段名是 ASCII；`domain.domain` 是一个数组,元素取自闭合英文枚举(一到三个,主分类在前),
   依然可以直接筛；domain 角度的值都是英文，其余角度的所有值都是中文。
 
@@ -79,10 +81,10 @@ English: [SPEC.md](SPEC.md)
 | `just` | 构建窗口内所有还缺的 (skill, angle) |
 | `just one <angle> <id>` | 构建一个格子，无论它在不在窗口内 |
 | `just invalidate <angle>` | 删除这个角度在所有 skill 上的档案 |
-| `just index` | 写出清单与报告：镜像的行连接上 description 与 domain，外加 `stats.txt` |
+| `just index` | 写出清单与 README：镜像的行连接上 description 与 domain，外加发布根的首页 |
 | `just sync` | 拉取镜像，整体替换 `skills/` 与 `upstream/`，并重写清单 |
 | `just refresh` | 拉取，并删掉所有「来源 hash 随之变了」的档案 |
-| `just clean` | 删掉档案、清单与报告；skill 目录与镜像文件不动 |
+| `just clean` | 删掉档案、清单与 README；skill 目录与镜像文件不动 |
 | `just render <angle> <id>` · `just test` | 仅开发用：打印请求 · 跑测试 |
 
 修饰符是命令行变量，只在命令行上设置：
@@ -126,8 +128,8 @@ gen.py <angle> <id> [--print]
 - **文件要么完整、要么不存在。** 先写 markdown，json 以重命名落位。
 - **每个文件一次单轮调用。** 没有顺序、没有依赖、没有级联。
 - **清单是派生品，而且是完整的。** `just index` 可以离线地把它整份从树里重建：镜像列出的每个 skill
-  一行，另外为「镜像已删除但档案还在」的 skill 补一行——`stats.txt` 出自同一次遍历，所以两者不可能
-  描述两棵不同的树。
+  一行，另外为「镜像已删除但档案还在」的 skill 补一行——两份 README 出自同一次遍历，所以其中任何
+  两样东西都不可能描述两棵不同的树。
 - **布局是唯一的契约。** 发布时请把 `output/` 原样保留，镜像自己的文件也在里面。
 
 ## 6. 待定 —— 在把它定为规范之前需要达成一致
