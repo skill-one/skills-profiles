@@ -10,7 +10,8 @@ name: publish
 # from. This run never touches upstream: the dataset is exactly what the last `sync` published.
 # `limit` counts work rather than positions - the next skills that still need something, in the
 # catalog's order, most installed first - so repeated runs walk down the dataset instead of redoing
-# the top of it.
+# the top of it. An angle whose output shape changed is named in `invalidate`, which drops its
+# published profiles first: without it they would be the cache and never be rebuilt.
 #
 # Repository configuration (Settings -> Secrets and variables -> Actions), mirroring a local
 # `.env`: both endpoints, their keys, and the knobs that are about an endpoint rather than the batch.
@@ -38,6 +39,9 @@ on:
       prompt:
         description: One prompt id to build, or empty for every prompt
         default: "domain"
+      invalidate:
+        description: An angle whose published profiles are dropped first, or empty to keep them
+        default: ""
 
 permissions:
   contents: write
@@ -78,6 +82,12 @@ jobs:
 
       - name: Restore the published snapshot (profiles + sources)
         uses: ./.github/actions/restore-dist
+
+      # The profiles are the cache, so a published one is never rebuilt and a change to an angle's
+      # output has to say so: this is that, for an angle whose shape moved under it.
+      - name: Drop an angle's profiles, when one is named
+        if: inputs.invalidate != ''
+        run: just invalidate "${{ inputs.invalidate }}"
 
       - name: Build the missing profiles
         run: >-
