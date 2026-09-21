@@ -10,8 +10,8 @@ name: publish
 # from. This run never touches upstream: the dataset is exactly what the last `sync` published.
 # `limit` counts work rather than positions - the next skills that still need something, in the
 # catalog's order, most installed first - so repeated runs walk down the dataset instead of redoing
-# the top of it. An angle whose output shape changed is named in `invalidate`, which drops its
-# published profiles first: without it they would be the cache and never be rebuilt.
+# the top of it. An angle whose output shape changed is rebuilt by a run that asks for `replace`:
+# being the cache, its published profiles would otherwise never be rebuilt.
 #
 # Repository configuration (Settings -> Secrets and variables -> Actions), mirroring a local
 # `.env`: both endpoints, their keys, and the knobs that are about an endpoint rather than the batch.
@@ -39,9 +39,9 @@ on:
       prompt:
         description: One prompt id to build, or empty for every prompt
         default: "domain"
-      invalidate:
-        description: An angle whose published profiles are dropped first, or empty to keep them
-        default: ""
+      replace:
+        description: Rebuild the prompt's profiles from scratch (true drops them before building)
+        default: "false"
 
 permissions:
   contents: write
@@ -84,10 +84,14 @@ jobs:
         uses: ./.github/actions/restore-dist
 
       # The profiles are the cache, so a published one is never rebuilt and a change to an angle's
-      # output has to say so: this is that, for an angle whose shape moved under it.
-      - name: Drop an angle's profiles, when one is named
-        if: inputs.invalidate != ''
-        run: just invalidate "${{ inputs.invalidate }}"
+      # output has to say so. It says so here, and only for the angle this same run is about to
+      # build: what is dropped is what is rebuilt, so no run can publish a tree with an angle
+      # emptied out - which is also why this is a knob on a publish rather than a workflow of its
+      # own. A run is a fresh runner plus what `restore-dist` brings back, so an invalidation only
+      # survives by publishing, and an invalidation-only one would publish exactly that gap.
+      - name: Drop what this run rebuilds, when asked
+        if: inputs.replace == 'true' && inputs.prompt != ''
+        run: just invalidate "${{ inputs.prompt }}"
 
       - name: Build the missing profiles
         run: >-
