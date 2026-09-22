@@ -110,8 +110,12 @@ Its whole contract with the caller is then this:
 endpoint is not a chat one: `POST /v1/systemone` takes a `state` and a map of typed `questions`, and
 answers with typed `answers` - no messages, no `json_schema`, no free text. So it builds its own
 request and shares everything else with `gen.py`: the same rendered system message as the `state`,
-the same writer, the same `profiles/<id>/<angle>.json` and markdown copy, the same gate on a skill
-with no description, the same exit codes. `just` sends a pair to whichever of the two owns the angle,
+plus the one layer no chat angle is handed - the skill's repository, as its siblings' one-line
+descriptions, each cut to a hint and the count capped - because `domain` is a property of a
+repository rather than of one file, and the siblings decide what a lone, ambiguous skill leaves
+open: the same writer,
+the same `profiles/<id>/<angle>.json` and markdown copy, the same gate on a skill with no
+description, the same exit codes. `just` sends a pair to whichever of the two owns the angle,
 and `jev.py --angles` is the only list of its own there is - adding one to that dict is adding an
 angle the batch builds. What it trades away is real: a System One answer is a member of a closed set,
 so `domain` has no reason line and no array. What it gives instead is the answer itself, kept whole
@@ -256,11 +260,15 @@ Design decisions:
 
 Two files, and no code change at all.
 
-`prompts/my_angle.md` is the task. The only variables a template can use are `{{ name }}` - the id the
+`prompts/my_angle.md` is the task. The variables a template can use are `{{ name }}` - the id the
 tree calls the skill by - `{{ description }}`, the `description` of the skill's own front matter, read
-as YAML so that a folded block or a quoted string arrives as text, and `{{ skill_body }}`, its
-`SKILL.md` with that front matter dropped. All three are available in `_system.md` alone: that is the
-message the skill is sent in, and it is the whole of what the model is told before the task. The body
+as YAML so that a folded block or a quoted string arrives as text, `{{ skill_body }}`, its
+`SKILL.md` with that front matter dropped, and a fourth, `{{ repo }}`, the skill's repository as
+context: its id and the one-line descriptions of the siblings beside it. All are available in
+`_system.md` alone: that is the message the skill is sent in, and it is the whole of what the model
+is told before the task. `repo` is `None` for every chat angle and the template says nothing when it
+is, `jev.py` being the only caller that passes one - so `domain` is the only angle handed the
+repository. The body
 carries no header because the header is those first two parts said again: the name and the description
 are read out of it. The block goes whole for the body, the fields beside them being YAML; what is left
 behind is `license`, `allowed-tools`, a version - how a skill is installed rather than what it is for.

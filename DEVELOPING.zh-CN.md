@@ -185,7 +185,9 @@ uv run python gen.py <prompt> <skill> --print   # 打印请求后即停止（不
 - **两个生产者，一条分派。** `jev.py` 是第三个写档案的脚本，也是第二个生产者，它存在的原因是那个
   端点不是对话式的：`POST /v1/systemone` 收一个 `state` 和一张强类型 `questions` 表，回一张强类型
   `answers` 表——没有 messages、没有 `json_schema`、没有自由文本。所以它自己拼请求，其余全部与
-  `gen.py` 共用：同一份渲染好的 system message 当作 `state`、同一个写入器、同样的
+  `gen.py` 共用：同一份渲染好的 system message 当作 `state`，再加上没有任何对话角度拿得到的那一层——
+  这个 skill 所属的仓库（即同级 skill 的一句话描述，每条截断为提示、条数设有上限）——因为 `domain` 属于仓库而
+  不属于单个文件，同级 skill 能补上单个含糊 skill 自己正文说不清的部分：同一个写入器、同样的
   `profiles/<id>/<angle>.json` 与 markdown 副本、同样「读不出 description 就丢弃」的门、同样的退出码。
   `just` 把每个组合交给拥有该角度的那个脚本，而 `jev.py --angles` 是它自己角度列表的唯一来源——
   往那个 dict 里加一条，就是加一个批次会构建的角度。它换掉的东西是实在的：System One 的答案只能是
@@ -210,13 +212,16 @@ uv run python gen.py <prompt> <skill> --print   # 打印请求后即停止（不
 
 两个文件，完全不用改代码。
 
-`prompts/my_angle.md` 是任务。模板能用的变量只有三个：`{{ name }}`（树用来称呼这个 skill 的那个 id）、
+`prompts/my_angle.md` 是任务。模板能用的变量是：`{{ name }}`（树用来称呼这个 skill 的那个 id）、
 `{{ description }}`（该 skill 自己 front matter 里的 `description`，按 YAML 解析，所以折行块标量与引号
-字符串都是以文本形态抵达）与 `{{ skill_body }}`（它的 `SKILL.md`，已去掉 front matter），而且三者只在
-`_system.md` 里可用：那里是 skill 被送出去的那条消息，也是任务之前模型知道的全部。正文之所以不带表头，
+字符串都是以文本形态抵达）、`{{ skill_body }}`（它的 `SKILL.md`，已去掉 front matter），以及第四个
+`{{ repo }}`——这个 skill 所属的仓库作为上下文：它的 id，以及同级 skill 的一句话描述。它们只在
+`_system.md` 里可用：那里是 skill 被送出去的那条消息，也是任务之前模型知道的全部。`repo` 对每个对话角度
+都是 `None`，模板在它为 `None` 时什么也不说——`jev.py` 是唯一会传它的调用方，所以 `domain` 是唯一拿到
+仓库信息的角度。正文之所以不带表头，
 是因为表头就是前两部分的重复：name 与 description 正是从那里读出来的。正文里它是**整块**去掉而不是逐字段
 挑，因为字段是 YAML；留下来的东西是 `license`、`allowed-tools`、版本号——讲一个 skill 怎么装，而不是它
-是干什么用的。任务模板若提到这三者之一，会在**加载时**失败，而不是以空字符串的形式抵达。模板是
+是干什么用的。任务模板若提到这些变量之一，会在**加载时**失败，而不是以空字符串的形式抵达。模板是
 jinja2，加载时立即解析并试渲染，所以语法错误或凭空冒出的变量都会点名文件，而不是在批次中途才炸：
 
 ```markdown

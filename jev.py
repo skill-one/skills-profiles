@@ -3,8 +3,9 @@
 
 Its endpoint is not OpenAI-compatible - a `state` and typed `questions` in, typed `answers` out,
 and no free text at all - so the request is built here and never reaches `gen.py`. Everything else
-is shared with it: the same system message as the state, the same `profiles/<id>/<angle>.json` and
-markdown copy, the same writer.
+is shared with it: the same system message as the state, and - the one thing `domain` gets that a
+chat angle does not - the skill's repository as context, `domain` being a property of the repository
+rather than of one file, so the siblings beside the skill can decide what its own text leaves open.
 
     jev.py --angles                    the angles the batch hands to this script, not to gen.py
     jev.py <angle> <skill> [--print]   build one cell, or print the request and call nothing
@@ -196,9 +197,15 @@ def placeholder(angle: str) -> dict:
 
 
 def state(config: gen.Config, skill: str, source: str) -> str:
-    """The system message: the same bytes gen.py sends, so both producers read a skill alike."""
+    """The system message, plus the repository: the one layer a chat angle is not handed.
+
+    The template decides what to say about it and says nothing when it is None, so the same bytes
+    still serve gen.py; only `domain` passes a repository, because a repository is where a lone,
+    ambiguous skill is disambiguated.
+    """
     template = (config.prompts_dir / gen.SYSTEM_MD).read_text(encoding="utf-8").strip()
-    return gen.render(template, gen.skill_body(source), gen.skill_description(source), skill)
+    return gen.render(template, gen.skill_body(source), gen.skill_description(source), skill,
+                      gen.repository(config, skill))
 
 
 def main(argv: list[str] | None = None) -> int:

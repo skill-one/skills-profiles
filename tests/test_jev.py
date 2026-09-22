@@ -180,6 +180,33 @@ def test_no_key_is_no_call(workdir, monkeypatch):
         jev.Jev(jev.JevConfig())
 
 
+# ------------------------------------------------------------------ the repository
+
+
+def test_the_repository_reaches_the_state(workdir):
+    """The one layer a chat angle is not handed: the siblings' own lines, beside the skill's parts."""
+    config = gen.Config()
+    path = gen.skill_source_path(config, ALPHA).parent.parent / "beta"
+    path.mkdir()
+    (path / gen.SKILL_MD).write_text(
+        "---\nname: beta\ndescription: Drafts a release note.\n---\n\nbody\n", encoding="utf-8")
+
+    state = jev.state(config, ALPHA, gen.skill_source(config, ALPHA))
+
+    assert "<repository>" in state
+    assert "<id>owner-a/repo-a</id>" in state
+    assert "- beta: Drafts a release note." in state
+
+
+def test_a_lone_skill_gets_no_repository(workdir, capsys):
+    """A repository with no sibling is not invented into the state, and `--print` shows the same."""
+    config = gen.Config()
+    assert "<repository>" not in jev.state(config, ALPHA, gen.skill_source(config, ALPHA))
+
+    assert jev.main(["--print", "domain", ALPHA]) == 0
+    assert "<repository>" not in json.loads(capsys.readouterr().out)["state"]
+
+
 # ------------------------------------------------------------------ the command
 
 

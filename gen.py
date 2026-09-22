@@ -25,6 +25,13 @@ SKILL_MD = "SKILL.md"
 SYSTEM_MD = "_system.md"
 INDEX = "skills.jsonl"
 MAX_SKILL_MD_CHARS = 20000
+# A repository can be one skill or several hundred (`awesome-*` collections). The cap keeps the
+# context a few thousand characters whatever the repo is, and what was left out is counted.
+MAX_SIBLINGS = 50
+# A sibling's own description is sometimes a page rather than a line, and a repo of those would
+# dwarf the skill's own body. Each is cut to a hint - the opening statement that names the topic,
+# which sits well inside this - and the slugs beside them carry the rest.
+MAX_SIBLING_CHARS = 300
 # libyaml where there is one, which every PyYAML wheel carries, and the pure-Python loader where a
 # source build left it out: the block is a few hundred bytes, and a skill is one process.
 YAML_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
@@ -127,6 +134,38 @@ def skill_description(source: str) -> str:
     return description.strip() if isinstance(description, str) else ""
 
 
+def repository(config: Config, skill: str) -> dict | None:
+    """The context a skill's own repository gives: its id, and the siblings beside it.
+
+    Upstream nests a skill as `owner/repo/slug`, so the repository is the directory one level above
+    the skill's own, and every sibling holds one: no upstream file is read, and a repo that vanished
+    upstream still answers. A sibling contributes its own one-line description and nothing else: its
+    body would be a second skill's body. A repository with no sibling says nothing the skill's own
+    name has not already said, so it is not sent at all rather than sent empty.
+    """
+    parts = skill_dir_name(skill).split("/")
+    if len(parts) != 3:
+        return None
+    owner, repo, own = parts
+    root = config.output_dir / SKILLS_DIR / owner / repo
+    if not root.is_dir():
+        return None
+    siblings = []
+    for child in sorted(root.iterdir()):
+        source = child / SKILL_MD
+        if child.name == own or not source.is_file():
+            continue
+        one_line = " ".join(skill_description(
+            source.read_text(encoding="utf-8", errors="replace")).split())
+        if len(one_line) > MAX_SIBLING_CHARS:
+            one_line = one_line[:MAX_SIBLING_CHARS].rsplit(" ", 1)[0].rstrip() + "…"
+        siblings.append(f"{child.name}: {one_line}" if one_line else child.name)
+    if not siblings:
+        return None
+    return {"id": f"{owner}/{repo}", "siblings": siblings[:MAX_SIBLINGS],
+            "more": max(0, len(siblings) - MAX_SIBLINGS)}
+
+
 def load_prompt(config: Config, prompt: str) -> tuple[str, dict]:
     path = config.prompts_dir / f"{prompt}.md"
     template = path.read_text(encoding="utf-8").strip()
@@ -146,8 +185,10 @@ def load_prompt(config: Config, prompt: str) -> tuple[str, dict]:
     return template, schema
 
 
-def render(template: str, body: str, description: str, name: str) -> str:
-    return _env.from_string(template).render(skill_body=body, description=description, name=name)
+def render(template: str, body: str, description: str, name: str,
+           repo: dict | None = None) -> str:
+    return _env.from_string(template).render(
+        skill_body=body, description=description, name=name, repo=repo)
 
 
 def call(config: Config, schema: dict, messages: list[dict]) -> dict:

@@ -118,6 +118,11 @@ def test_render_gives_the_template_the_body_the_description_and_the_name(config)
     assert gen.render("{{ description }}", "SOURCE", "ONE LINE", "AN ID") == "ONE LINE"
     assert gen.render("{{ name }}", "SOURCE", "ONE LINE", "AN ID") == "AN ID"
     assert gen.render("no variables here", "SOURCE", "ONE LINE", "AN ID") == "no variables here"
+    # `repo` is the fourth, and it is None unless a caller passes one: a chat angle renders the
+    # template with no repository block, and only `domain` hands one over
+    assert gen.render("{% if repo %}x{% endif %}", "S", "D", "N") == ""
+    assert gen.render("{% if repo %}{{ repo.id }}{% endif %}", "S", "D", "N",
+                      {"id": "own/repo"}) == "own/repo"
 
 
 # ------------------------------------------------------------- the skill source
@@ -213,6 +218,96 @@ def test_a_long_source_is_cut_on_a_line_break_and_says_so(workdir):
     assert len(head) <= gen.MAX_SKILL_MD_CHARS  # never past the budget
     assert body.startswith(head + "\n")  # a prefix of the file, ending at a line end
     assert all(line.startswith("line ") for line in head.splitlines())  # whole lines only
+
+
+# ------------------------------------------------------------------ the repository
+
+
+def add_sibling(config: gen.Config, slug: str, description: str) -> None:
+    """One more skill beside ALPHA's, the way the mirror nests a repository: `owner/repo/slug`."""
+    path = gen.skill_source_path(config, ALPHA).parent.parent / slug
+    path.mkdir()
+    (path / gen.SKILL_MD).write_text(
+        f"---\nname: {slug}\ndescription: {description}\n---\n\nbody\n", encoding="utf-8")
+
+
+def test_the_repository_is_the_directory_above_the_skill_not_the_skills_own(workdir):
+    """The tree nests `owner/repo/slug`, so a skill's own directory is not its repository: a file
+    inside it is not a sibling, and the sibling that matters sits one level up."""
+    config = gen.Config()
+    own = gen.skill_source_path(config, ALPHA).parent
+    (own / "nested").mkdir()
+    (own / "nested" / gen.SKILL_MD).write_text("---\nname: x\ndescription: y\n---\n", encoding="utf-8")
+    assert gen.repository(config, ALPHA) is None
+
+    add_sibling(config, "beta", "Drafts a release note.")
+    assert gen.repository(config, ALPHA)["siblings"] == ["beta: Drafts a release note."]
+
+
+def test_the_repository_is_the_siblings_beside_the_skill_and_never_itself(workdir):
+    """The directory above the skill is the repository; a sibling gives its one line, not its body."""
+    config = gen.Config()
+    add_sibling(config, "beta", "Drafts a release note.")
+    add_sibling(config, "gamma", "Trims the note down.")
+
+    assert gen.repository(config, ALPHA) == {
+        "id": "owner-a/repo-a",
+        "siblings": ["beta: Drafts a release note.", "gamma: Trims the note down."],
+        "more": 0}
+
+
+def test_a_repository_with_no_sibling_is_not_sent(workdir):
+    """Nothing the skill's own name has not said, so no empty block for a model to fill in."""
+    assert gen.repository(gen.Config(), ALPHA) is None
+
+
+def test_a_sibling_with_no_description_is_named_without_one(workdir):
+    """The slug is still a signal; a header nothing can be read from is not a reason to drop it."""
+    config = gen.Config()
+    path = gen.skill_source_path(config, ALPHA).parent.parent / "beta"
+    path.mkdir()
+    (path / gen.SKILL_MD).write_text("Just a body.\n", encoding="utf-8")
+
+    assert gen.repository(config, ALPHA)["siblings"] == ["beta"]
+
+
+def test_only_the_first_siblings_are_sent_and_the_rest_are_counted(workdir, monkeypatch):
+    """A `awesome-*` collection cannot blow the request up: the cap holds and the rest is counted."""
+    monkeypatch.setattr(gen, "MAX_SIBLINGS", 1)
+    config = gen.Config()
+    add_sibling(config, "beta", "First.")
+    add_sibling(config, "gamma", "Second.")
+
+    assert gen.repository(config, ALPHA) == {
+        "id": "owner-a/repo-a", "siblings": ["beta: First."], "more": 1}
+
+
+def test_a_sibling_description_is_cut_to_a_hint(workdir):
+    """A sibling's own description is sometimes a page: cut at a word so a repo of them cannot
+    dwarf the skill's own body."""
+    config = gen.Config()
+    add_sibling(config, "beta", "word " * 200)
+
+    line = gen.repository(config, ALPHA)["siblings"][0]
+
+    assert line.startswith("beta: word word")
+    assert line.endswith("…") and "  " not in line
+    assert len(line) <= len("beta: ") + gen.MAX_SIBLING_CHARS + 1
+
+
+def test_a_chat_angle_is_sent_no_repository(workdir, monkeypatch):
+    """Only `domain` is handed the repository: the other angles keep the skill's own parts."""
+    seen: dict = {}
+
+    def capture(config, schema, messages):
+        seen["messages"] = messages
+        return gen._placeholder(schema)
+
+    monkeypatch.setattr(gen, "call", capture)
+    add_sibling(gen.Config(), "beta", "Drafts a release note.")
+
+    assert gen.main(["scenario", ALPHA]) == 0
+    assert "<repository>" not in seen["messages"][0]["content"]
 
 
 # ------------------------------------------------------------------- the call
