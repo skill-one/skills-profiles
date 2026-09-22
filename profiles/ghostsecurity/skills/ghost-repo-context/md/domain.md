@@ -4,12 +4,12 @@
 
 ### domain
 
-development
+knowledge-management
 
 ### confidence
 
-0.36
+0.27
 
 ### probabilities
 
-business-ops: 0.0, education: 0.0, finance-payment: 0.0, development: 0.42, office-productivity: 0.0, content-creation: 0.23, lifestyle: 0.0, other: 0.0, devops-security: 0.05, knowledge-management: 0.3, data-analysis: 0.0, design-media: 0.0, testing: 0.0
+knowledge-management: 0.34, development: 0.33, data-analysis: 0.0, finance-payment: 0.0, design-media: 0.0, office-productivity: 0.0, lifestyle: 0.0, content-creation: 0.25, business-ops: 0.0, devops-security: 0.08, testing: 0.0, education: 0.0, other: 0.0

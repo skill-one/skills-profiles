@@ -4,12 +4,12 @@
 
 ### domain
 
-knowledge-management
+business-ops
 
 ### confidence
 
-0.39
+0.31
 
 ### probabilities
 
-testing: 0.0, design-media: 0.0, business-ops: 0.1, education: 0.0, content-creation: 0.14, development: 0.0, devops-security: 0.0, data-analysis: 0.21, other: 0.01, lifestyle: 0.0, finance-payment: 0.09, office-productivity: 0.0, knowledge-management: 0.45
+other: 0.01, business-ops: 0.36, design-media: 0.0, devops-security: 0.0, testing: 0.0, lifestyle: 0.0, development: 0.0, education: 0.0, content-creation: 0.2, data-analysis: 0.19, knowledge-management: 0.15, finance-payment: 0.09, office-productivity: 0.0

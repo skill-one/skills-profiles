@@ -8,8 +8,8 @@ development
 
 ### confidence
 
-0.55
+0.62
 
 ### probabilities
 
-devops-security: 0.02, development: 0.59, lifestyle: 0.0, business-ops: 0.0, education: 0.0, data-analysis: 0.0, knowledge-management: 0.08, other: 0.07, office-productivity: 0.15000000000000002, content-creation: 0.09, finance-payment: 0.0, design-media: 0.0, testing: 0.0
+knowledge-management: 0.07, testing: 0.0, office-productivity: 0.12, finance-payment: 0.0, education: 0.0, content-creation: 0.11, other: 0.04, design-media: 0.0, development: 0.65, lifestyle: 0.0, business-ops: 0.0, data-analysis: 0.0, devops-security: 0.01

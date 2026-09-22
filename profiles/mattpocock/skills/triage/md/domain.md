@@ -12,4 +12,4 @@ development
 
 ### probabilities
 
-office-productivity: 0.24, content-creation: 0.03, other: 0.03, data-analysis: 0.0, design-media: 0.0, finance-payment: 0.0, development: 0.58, business-ops: 0.01, devops-security: 0.0, lifestyle: 0.0, testing: 0.01, knowledge-management: 0.1, education: 0.0
+data-analysis: 0.0, testing: 0.01, education: 0.0, development: 0.56, other: 0.03, office-productivity: 0.31, design-media: 0.0, finance-payment: 0.0, lifestyle: 0.0, devops-security: 0.0, content-creation: 0.02, knowledge-management: 0.05, business-ops: 0.01

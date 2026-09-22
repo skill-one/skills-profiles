@@ -1,0 +1,15 @@
+# sprite-segment-3x3grid (`unity-technologies/skills/sprite-segment-3x3grid`)
+
+## domain
+
+### domain
+
+data-analysis
+
+### confidence
+
+0.47
+
+### probabilities
+
+content-creation: 0.03, lifestyle: 0.0, finance-payment: 0.0, other: 0.0, development: 0.19, business-ops: 0.0, devops-security: 0.0, office-productivity: 0.0, testing: 0.02, data-analysis: 0.52, knowledge-management: 0.0, design-media: 0.24000000000000002, education: 0.0

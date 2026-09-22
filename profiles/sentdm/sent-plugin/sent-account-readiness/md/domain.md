@@ -8,8 +8,8 @@ business-ops
 
 ### confidence
 
-0.44
+0.32
 
 ### probabilities
 
-office-productivity: 0.0, education: 0.0, finance-payment: 0.01, other: 0.04, content-creation: 0.0, devops-security: 0.26, development: 0.12, testing: 0.06, knowledge-management: 0.0, data-analysis: 0.01, design-media: 0.0, business-ops: 0.5, lifestyle: 0.0
+content-creation: 0.0, knowledge-management: 0.0, data-analysis: 0.03, devops-security: 0.28, testing: 0.08, business-ops: 0.38, finance-payment: 0.0, development: 0.19, other: 0.04, office-productivity: 0.0, design-media: 0.0, lifestyle: 0.0, education: 0.0

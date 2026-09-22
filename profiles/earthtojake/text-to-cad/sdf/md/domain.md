@@ -4,12 +4,12 @@
 
 ### domain
 
-development
+design-media
 
 ### confidence
 
-0.46
+0.7
 
 ### probabilities
 
-finance-payment: 0.0, other: 0.08, data-analysis: 0.0, education: 0.0, business-ops: 0.0, testing: 0.0, design-media: 0.4, content-creation: 0.01, lifestyle: 0.0, devops-security: 0.0, office-productivity: 0.0, development: 0.51, knowledge-management: 0.0
+design-media: 0.73, testing: 0.0, devops-security: 0.0, finance-payment: 0.0, content-creation: 0.01, business-ops: 0.0, knowledge-management: 0.0, other: 0.07, office-productivity: 0.0, lifestyle: 0.0, development: 0.19, education: 0.0, data-analysis: 0.0

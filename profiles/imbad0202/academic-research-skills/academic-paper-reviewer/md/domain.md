@@ -8,8 +8,8 @@ content-creation
 
 ### confidence
 
-0.52
+0.5
 
 ### probabilities
 
-other: 0.1, lifestyle: 0.0, education: 0.06, content-creation: 0.56, development: 0.0, office-productivity: 0.03, knowledge-management: 0.06, business-ops: 0.0, testing: 0.18, design-media: 0.0, data-analysis: 0.01, devops-security: 0.0, finance-payment: 0.0
+content-creation: 0.54, lifestyle: 0.0, design-media: 0.0, testing: 0.18, education: 0.07, development: 0.0, knowledge-management: 0.08, data-analysis: 0.01, business-ops: 0.0, finance-payment: 0.0, devops-security: 0.0, other: 0.1, office-productivity: 0.02

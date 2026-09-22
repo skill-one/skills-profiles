@@ -8,8 +8,8 @@ testing
 
 ### confidence
 
-0.59
+0.58
 
 ### probabilities
 
-knowledge-management: 0.0, testing: 0.62, finance-payment: 0.05, development: 0.0, lifestyle: 0.0, content-creation: 0.0, education: 0.0, design-media: 0.0, office-productivity: 0.26, devops-security: 0.0, data-analysis: 0.07, business-ops: 0.0, other: 0.0
+finance-payment: 0.07, office-productivity: 0.16, education: 0.0, content-creation: 0.0, business-ops: 0.0, data-analysis: 0.15, design-media: 0.0, development: 0.0, devops-security: 0.0, knowledge-management: 0.0, lifestyle: 0.0, testing: 0.62, other: 0.0

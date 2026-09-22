@@ -4,12 +4,12 @@
 
 ### domain
 
-business-ops
+lifestyle
 
 ### confidence
 
-0.57
+0.29
 
 ### probabilities
 
-testing: 0.0, data-analysis: 0.07, business-ops: 0.61, design-media: 0.0, education: 0.0, knowledge-management: 0.08, development: 0.02, other: 0.03, office-productivity: 0.0, lifestyle: 0.1, content-creation: 0.0, finance-payment: 0.09, devops-security: 0.0
+content-creation: 0.0, finance-payment: 0.06, office-productivity: 0.0, design-media: 0.0, lifestyle: 0.35000000000000003, other: 0.05, testing: 0.0, development: 0.0, education: 0.0, knowledge-management: 0.23, data-analysis: 0.03, devops-security: 0.0, business-ops: 0.27

@@ -4,12 +4,12 @@
 
 ### domain
 
-office-productivity
+content-creation
 
 ### confidence
 
-0.3
+0.37
 
 ### probabilities
 
-office-productivity: 0.36, knowledge-management: 0.17, data-analysis: 0.0, other: 0.01, content-creation: 0.35, business-ops: 0.0, devops-security: 0.0, lifestyle: 0.0, finance-payment: 0.0, education: 0.0, design-media: 0.0, development: 0.11, testing: 0.0
+testing: 0.0, business-ops: 0.0, devops-security: 0.0, education: 0.0, finance-payment: 0.0, content-creation: 0.42, development: 0.23, data-analysis: 0.0, design-media: 0.0, knowledge-management: 0.1, lifestyle: 0.0, other: 0.01, office-productivity: 0.24

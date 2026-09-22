@@ -8,8 +8,8 @@ devops-security
 
 ### confidence
 
-0.53
+0.35
 
 ### probabilities
 
-data-analysis: 0.0, other: 0.06, knowledge-management: 0.0, devops-security: 0.56, design-media: 0.0, content-creation: 0.01, education: 0.01, office-productivity: 0.08, finance-payment: 0.0, business-ops: 0.07, testing: 0.0, development: 0.2, lifestyle: 0.0
+other: 0.11, development: 0.09, finance-payment: 0.0, data-analysis: 0.0, knowledge-management: 0.01, content-creation: 0.01, business-ops: 0.29, office-productivity: 0.06, devops-security: 0.4, education: 0.03, design-media: 0.0, testing: 0.0, lifestyle: 0.0

@@ -8,8 +8,8 @@ finance-payment
 
 ### confidence
 
-0.72
+0.7
 
 ### probabilities
 
-finance-payment: 0.74, knowledge-management: 0.02, education: 0.0, design-media: 0.0, lifestyle: 0.0, business-ops: 0.0, testing: 0.0, office-productivity: 0.0, data-analysis: 0.02, other: 0.04, development: 0.17, content-creation: 0.0, devops-security: 0.01
+content-creation: 0.0, finance-payment: 0.73, office-productivity: 0.0, testing: 0.0, lifestyle: 0.0, other: 0.07, design-media: 0.0, development: 0.15, education: 0.0, knowledge-management: 0.03, data-analysis: 0.01, devops-security: 0.01, business-ops: 0.0

@@ -8,8 +8,8 @@ knowledge-management
 
 ### confidence
 
-0.74
+0.75
 
 ### probabilities
 
-devops-security: 0.01, other: 0.09, design-media: 0.0, development: 0.0, testing: 0.0, content-creation: 0.03, office-productivity: 0.0, business-ops: 0.05, education: 0.0, knowledge-management: 0.75, finance-payment: 0.0, lifestyle: 0.0, data-analysis: 0.07
+education: 0.0, development: 0.0, data-analysis: 0.05, finance-payment: 0.0, design-media: 0.0, other: 0.06, knowledge-management: 0.78, content-creation: 0.04, business-ops: 0.07, devops-security: 0.0, testing: 0.0, office-productivity: 0.0, lifestyle: 0.0

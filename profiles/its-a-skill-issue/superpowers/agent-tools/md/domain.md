@@ -8,8 +8,8 @@ design-media
 
 ### confidence
 
-0.63
+0.71
 
 ### probabilities
 
-other: 0.13, data-analysis: 0.0, lifestyle: 0.0, content-creation: 0.16, education: 0.0, development: 0.04, design-media: 0.67, knowledge-management: 0.0, office-productivity: 0.0, business-ops: 0.0, testing: 0.0, finance-payment: 0.0, devops-security: 0.0
+finance-payment: 0.0, office-productivity: 0.0, other: 0.12, education: 0.0, development: 0.03, knowledge-management: 0.0, data-analysis: 0.0, business-ops: 0.0, content-creation: 0.1, devops-security: 0.0, testing: 0.0, design-media: 0.75, lifestyle: 0.0
