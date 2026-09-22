@@ -1,11 +1,8 @@
 ---
 name: qwencloud-audio-tts
-description: "[QwenCloud] Synthesize speech from text with Qwen TTS models. TRIGGER when: user wants to convert text to speech, create voiceovers, generate audio narration, read text aloud, build TTS applications, mentions speech synthesis/voice generation/audio output from text, or explicitly invokes this skill by name (e.g. use qwencloud-audio-tts). DO NOT TRIGGER when: user wants speech recognition/ASR, text generation without audio, non-Qwen audio tasks."
-compatibility: "Requires Python 3.9+ and curl. Cursor: auto-loaded. Claude Code: read this skill's SKILL.md before first use."
+description: "Synthesize speech from text with Qwen TTS models. TRIGGER when: user wants to convert text to speech, create voiceovers, generate audio narration, read text aloud, build TTS applications, mentions speech synthesis/voice generation/audio output from text, or explicitly invokes this skill by name (e.g. use qwencloud-audio-tts). DO NOT TRIGGER when: user wants speech recognition/ASR, text generation without audio, non-Qwen audio tasks."
+compatibility: "Requires Python 3.9+; curl is PAYG-only. Cursor: auto-loaded. Claude Code: read this skill's SKILL.md before first use."
 ---
-
-> **Agent setup**: If your agent doesn't auto-load skills (e.g. Claude Code),
-> see [agent-compatibility.md](references/agent-compatibility.md) once per session.
 
 # Qwen Audio TTS (Text-to-Speech)
 
@@ -18,65 +15,72 @@ Use this skill's internal files to execute and learn. Load reference files on de
 
 | Location | Purpose |
 |----------|---------|
-| `scripts/tts.py` | Qwen TTS (HTTP API) — qwen3-tts-flash, qwen3-tts-instruct-flash |
-| `scripts/tts_cosyvoice.py` | CosyVoice (WebSocket API) — requires `dashscope` SDK |
+| `scripts/tts.py` | Qwen TTS / Qwen Audio TTS (HTTP and WebSocket); current compatibility and defaults are in the model catalog below |
+| `scripts/tts_cosyvoice.py` | CosyVoice (WebSocket API) — requires `dashscope` SDK; current compatibility and defaults are in the model catalog below |
 | `references/cosyvoice-guide.md` | CosyVoice setup, voices, examples, errors |
 | `references/execution-guide.md` | Fallback: curl (standard, instruct, streaming), code generation |
 | `references/prompt-guide.md` | Text formatting for speech, instructions templates, voice selection |
 | `references/api-guide.md` | API supplement |
 | `references/sources.md` | Official documentation URLs |
-| `references/agent-compatibility.md` | Agent self-check: register skills in project config for agents that don't auto-load |
 
 ## Security
 
-**NEVER output any API key or credential in plaintext.** Always use variable references (`$DASHSCOPE_API_KEY` in shell, `os.environ["DASHSCOPE_API_KEY"]` in Python). Any check or detection of credentials must be **non-plaintext**: report only status (e.g. "set" / "not set", "valid" / "invalid"), never the value. Never display contents of `.env` or config files that may contain secrets.
+**NEVER output any API key or credential in plaintext.** Always use variable references (`$QWENCLOUD_API_KEY` in shell, `os.environ["QWENCLOUD_API_KEY"]` in Python). The scripts accept `QWENCLOUD_API_KEY`, then `QWEN_API_KEY`, then `DASHSCOPE_API_KEY`. Any check or detection of credentials must be **non-plaintext**: report only status (e.g. "set" / "not set", "valid" / "invalid"), never the value. Never display contents of `.env` or config files that may contain secrets.
 
-**When the API key is not configured, NEVER ask the user to provide it directly.** Instead, help create a `.env` file with a placeholder (`DASHSCOPE_API_KEY=sk-your-key-here`) and instruct the user to replace it with their actual key from the [QwenCloud Console](https://home.qwencloud.com/api-keys). Only write the actual key value if the user explicitly requests it.
+**When the API key is not configured, NEVER ask the user to provide it directly.** Instead, help create a `.env` file with a placeholder (`QWENCLOUD_API_KEY=sk-your-key-here`) and instruct the user to replace it with their actual key from the [QwenCloud Console](https://home.qwencloud.com/api-keys). Only write the actual key value if the user explicitly requests it.
 
 ## Key Compatibility
 
-Scripts require a **standard QwenCloud API key** (`sk-...`). Coding Plan keys (`sk-sp-...`) cannot be used — TTS models are not available on Coding Plan, and Coding Plan does not support the native QwenCloud API. The script detects `sk-sp-` keys at startup and prints a warning. If qwencloud-ops-auth is installed, see its `references/codingplan.md` for full details.
+Scripts support both **standard QwenCloud API keys** (`sk-...`) and **Token Plan keys** (`sk-sp-...`). Token Plan keys are automatically routed to the Token Plan endpoint for supported TTS models — see [Token Plan Support](#token-plan-support) below.
+
+**Token Plan: do not use curl; always use the bundled Python scripts.**
+
+Coding Plan keys (also `sk-sp-` prefix but purchased via Coding Plan subscription) cannot be used — TTS models are not available on Coding Plan. The script detects key type at startup and routes accordingly. If qwencloud-ops-auth is installed, see its `references/codingplan.md` for full details.
+
+Detect the API key type without exposing the key:
+
+```bash
+python3 -c "
+import sys; sys.path.insert(0, 'scripts')
+from qwencloud_lib import detect_api_key_type
+print(detect_api_key_type('scripts/qwencloud_lib.py'))
+"
+```
+
+| Output | Meaning |
+|--------|---------|
+| `token-plan` | Token Plan key detected (`sk-sp-` prefix) |
+| `payg` | Standard PAYG key detected |
+| `not-set` | No API key found in environment |
+
+For Token Plan, fetch and read the current [Token Plan model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-token-plan-models.md), then use an exact listed model with `scripts/tts.py`. If CDN access fails, use the [local fallback](cdn/references/qwencloud-token-plan-models.md).
 
 ## Model Selection
 
-### Qwen TTS (HTTP API) — use `scripts/tts.py`
+> **🚫 CRITICAL — Never override the user's model choice.** If the user (or the request JSON) explicitly specifies a `model`, you MUST use exactly that model. Do NOT:
+> - Replace it with a "better suited" model (e.g., switching to `qwen3-tts-instruct-flash` for stylized/poetic text)
+> - Add `instructions` the user did not ask for
+> - Modify any parameter the user explicitly provided
+>
+> Model selection guidance below applies **only when the user has NOT specified a model**.
 
-| Model | Use Case | Notes |
-|-------|----------|-------|
-| `qwen3-tts-flash` | **Recommended** (standard) — fast, multi-language | Cost-effective, widely available |
-| `qwen3-tts-instruct-flash` | Instruction-guided style control | Tone/emotion via instructions |
+Before selecting, recommending, or defaulting a model, fetch and read the current [QwenCloud audio TTS model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-audio-tts-models.md). It contains the model list, basic model information, script and voice compatibility, recommendations, and defaults. If CDN access fails, use the [local fallback](cdn/references/qwencloud-audio-tts-models.md).
 
-### CosyVoice (WebSocket API) — use `scripts/tts_cosyvoice.py`
+Consult the **qwencloud-model-selector** skill when model choice depends on capability, scenario, or pricing. CosyVoice requires the `dashscope` SDK and uses different voices; see [cosyvoice-guide.md](references/cosyvoice-guide.md).
 
-| Model | Use Case |
-|-------|----------|
-| `cosyvoice-v3-flash` | High quality, fast |
-| `cosyvoice-v3-plus` | Highest quality |
-
-> **Note**: CosyVoice requires `dashscope` SDK and uses different voices. See [cosyvoice-guide.md](references/cosyvoice-guide.md).
-
-1. **User specified a model** → use the appropriate script:
-   - `qwen3-tts-*` → `scripts/tts.py`
-   - `cosyvoice-*` → `scripts/tts_cosyvoice.py`
-2. **Consult the qwencloud-model-selector skill** when model choice depends on capability, scenario, or pricing.
-3. **No signal, clear task** → `qwen3-tts-flash` via `tts.py` (default for standard tasks).
-
-> **⚠️ Important**: The model list above is a **point-in-time snapshot** and may be outdated. Model availability
+> **⚠️ Important**: The model catalog is a **point-in-time snapshot** and may be outdated. Model availability
 > changes frequently. **Always check the [official model list](https://www.qwencloud.com/models)
 > for the authoritative, up-to-date catalog before making model decisions.**
 
-> **Model details**: For more information about a specific model, direct the user to its detail page: `https://www.qwencloud.com/models/<model-name>` (replace `<model-name>` with the exact model ID, e.g. `qwen3-tts-flash` → https://www.qwencloud.com/models/qwen3-tts-flash). NEVER modify or guess the model name in the URL.
+> **Model details**: For more information about a specific model, direct the user to `https://www.qwencloud.com/models/<model-name>`. Replace `<model-name>` with the exact model ID; never modify or guess it.
 
 > **Dynamic model queries**: If the **qwencloud-model-selector** skill or **QwenCloud CLI** (`qwencloud models info <model>`) is available, use it for real-time model data. CLI requires authentication — see the **qwencloud-usage** skill for login flow.
 
 ## Available Voices
 
-| Voice | Description | Script |
-|-------|-------------|--------|
-| Cherry, Ethan, Serena | Qwen TTS system voices | `tts.py` |
-| longanyang, longanhuan, longhuhu_v3 | CosyVoice verified voices | `tts_cosyvoice.py` |
+Use the QwenCloud audio TTS model catalog linked above for current model-to-voice compatibility and defaults. For complete voice inventories, use the official voice-list links in [sources.md](references/sources.md).
 
-> **Full lists**: [api-guide.md](references/api-guide.md#system-voice-list) (Qwen TTS) · [cosyvoice-guide.md](references/cosyvoice-guide.md) (CosyVoice)
+> **Voice defaulting**: When no voice is supplied for a Qwen-Audio WebSocket model, `tts.py` selects that model's configured default voice and prints a notice to stderr. Any explicit voice—including explicit `Cherry`—is passed through unchanged. Fetch the model catalog before choosing a voice.
 
 ## Execution
 
@@ -86,7 +90,8 @@ Scripts require a **standard QwenCloud API key** (`sk-...`). Coding Plan keys (`
 
 #### Prerequisites
 
-- **API Key**: Check that `DASHSCOPE_API_KEY` (or `QWEN_API_KEY`) is set using a **non-plaintext** check only (e.g. in shell: `[ -n "$DASHSCOPE_API_KEY" ]`; report only "set" or "not set", never the key value). If not set: run the **qwencloud-ops-auth** skill if available; otherwise guide the user to obtain a key from [QwenCloud Console](https://home.qwencloud.com/api-keys) and set it via `.env` file (`echo 'DASHSCOPE_API_KEY=sk-your-key-here' >> .env` in project root or current directory) or environment variable. The script searches for `.env` in the current working directory and the project root. Skills may be installed independently — do not assume qwencloud-ops-auth is present.
+- **API Key**: Check `QWENCLOUD_API_KEY`, `QWEN_API_KEY`, then `DASHSCOPE_API_KEY` using a **non-plaintext** check only (e.g. in shell: `[ -n "$QWENCLOUD_API_KEY" ]`; report only "set" or "not set", never the key value). If not set: run the **qwencloud-ops-auth** skill if available; otherwise guide the user to obtain a key from [QwenCloud Console](https://home.qwencloud.com/api-keys) and set it via `.env` file (`echo 'QWENCLOUD_API_KEY=sk-your-key-here' >> .env` in project root or current directory) or environment variable. The script searches for `.env` in the current working directory and the project root. Skills may be installed independently — do not assume qwencloud-ops-auth is present.
+  **Note**: The script auto-loads `.env` from the current directory and the project root (in addition to any exported environment variable). A shell check showing `$QWENCLOUD_API_KEY` as "not set" does NOT mean the script will fail — it may still find the key in `.env`. Treat the shell check as informational only; the authoritative test is simply running the script (it exits with a clear error if no key is found anywhere).
 - Python 3.9+ (stdlib only, **no pip install needed**)
 
 #### Environment Check
@@ -97,7 +102,7 @@ Before first execution, verify Python is available:
 python3 --version  # must be 3.9+
 ```
 
-If `python3` is not found, try `python --version` or `py -3 --version`. If Python is unavailable or below 3.9, skip to **Path 2 (curl)** in [execution-guide.md](references/execution-guide.md).
+If `python3` is unavailable or below 3.9, PAYG may use **Path 2 (curl)**; Token Plan must install Python 3.9+ instead.
 
 #### Default: Run Script
 
@@ -118,7 +123,7 @@ python3 <this-skill-dir>/scripts/tts.py \
 |----------|-------------|
 | `--request '{...}'` | JSON request body |
 | `--file path.json` | Load request from file |
-| `--output dir/` | Save audio and response JSON to directory |
+| `--output path` | Save audio and response JSON to directory, or specify an audio file path (e.g. `speech.mp3`); use distinct filenames across calls to avoid overwriting |
 | `--print-response` | Print response to stdout |
 | `--model ID` | Override model |
 | `--voice NAME` | Override voice |
@@ -134,7 +139,7 @@ python3 <this-skill-dir>/scripts/tts.py \
 
 If the script fails, match the error output against the diagnostic table below to determine the resolution. If no match, read [execution-guide.md](references/execution-guide.md) for alternative paths: curl commands (Path 2 — standard, instruct, streaming), code generation (Path 3), and autonomous resolution (Path 5).
 
-**If Python is not available at all** → skip directly to Path 2 (curl) in [execution-guide.md](references/execution-guide.md).
+**If Python is not available at all** → PAYG may use Path 2 (curl); Token Plan must install Python 3.9+.
 
 ---
 
@@ -143,9 +148,11 @@ If the script fails, match the error output against the diagnostic table below t
 CosyVoice requires `dashscope` SDK. Quick start:
 
 ```bash
-pip install dashscope>=1.24.6
+pip install dashscope>=1.25.17
 python3 <this-skill-dir>/scripts/tts_cosyvoice.py --text "Hello"
 ```
+
+> **Token Plan**: `tts_cosyvoice.py` rejects Token Plan keys at startup. Fetch the Token Plan catalog linked above and use an exact supported TTS model with `tts.py`, or use a PAYG key. Never replace an explicitly requested model without the user's confirmation.
 
 > **Full guide**: [cosyvoice-guide.md](references/cosyvoice-guide.md) (setup, voices, examples, errors)
 
@@ -154,7 +161,8 @@ python3 <this-skill-dir>/scripts/tts_cosyvoice.py --text "Hello"
 | `command not found: python3` | Python not on PATH | Try `python` or `py -3`; install Python 3.9+ if missing |
 | `Python 3.9+ required` | Script version check failed | Upgrade Python to 3.9+ |
 | `SyntaxError` near type hints | Python < 3.9 | Upgrade Python to 3.9+ |
-| `QWEN_API_KEY/DASHSCOPE_API_KEY not found` | Missing API key | Obtain key from [QwenCloud Console](https://home.qwencloud.com/api-keys); add to `.env`: `echo 'DASHSCOPE_API_KEY=sk-...' >> .env`; or run **qwencloud-ops-auth** if available |
+| `cosyvoice models are not available on Token Plan` | Token Plan key detected | Use `tts.py` with an exact supported model from the Token Plan catalog, or a PAYG key |
+| `QWENCLOUD_API_KEY/QWEN_API_KEY/DASHSCOPE_API_KEY not found` | Missing API key | Obtain key from [QwenCloud Console](https://home.qwencloud.com/api-keys); add to `.env`: `echo 'QWENCLOUD_API_KEY=sk-...' >> .env`; or run **qwencloud-ops-auth** if available |
 | `HTTP 401` | Invalid or mismatched key | Run **qwencloud-ops-auth** (non-plaintext check only); verify key is valid |
 | `SSL: CERTIFICATE_VERIFY_FAILED` | SSL cert issue (proxy/corporate) | macOS: run `Install Certificates.command`; else set `SSL_CERT_FILE` env var |
 | `URLError` / `ConnectionError` | Network unreachable | Check internet; set `HTTPS_PROXY` if behind proxy |
@@ -168,12 +176,17 @@ python3 <this-skill-dir>/scripts/tts_cosyvoice.py --text "Hello"
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `text` | string | **Required** — text to synthesize (max 600 chars) |
-| `voice` | string | **Required** — voice ID (e.g. `Cherry`, `Ethan`) |
-| `model` | string | Model ID (default: `qwen3-tts-flash`) |
-| `language_type` | string | `Auto`, `Chinese`, `English`, `Japanese`, `Korean`, `French`, `German`, etc. |
-| `instructions` | string | Tone/style instructions (instruct model only) |
-| `stream` | bool | Enable streaming (Base64 chunks) |
+| `text` | string | **Required** — text to synthesize; check the model catalog above for model-specific limits |
+| `voice` | string | Voice ID; check the model catalog above for current defaults and compatibility |
+| `model` | string | Model ID; check the model catalog above for the current default |
+| `language_type` | string | `Auto`, `Chinese`, `English`, `Japanese`, `Korean`, `French`, `German`, etc. — full names, not codes (`zh`, `en`) |
+| `instructions` | string | Tone/style instructions; check the model catalog above for current compatibility and limits |
+| `volume` | int | Volume `[0-100]`, default 50 — supported WebSocket models only; check the model catalog |
+| `rate` | float | Speech rate `[0.5-2.0]`, default 1.0; below 1.0 slows speech — **WebSocket models only** |
+| `pitch` | float | Pitch multiplier `[0.5-2.0]`, default 1.0; above 1.0 raises pitch — **WebSocket models only** |
+| `sample_rate` | int | Sample rate in Hz, default 24000 — **WebSocket models only** |
+| `format` | string | Audio format: `mp3`/`wav`/`pcm`/`opus`, default `mp3` — **WebSocket models only** |
+| `stream` | bool | Direct Qwen3-TTS HTTP API field for SSE streaming. Bundled `tts.py` does not implement this field; use the direct SSE path in [execution-guide.md](references/execution-guide.md) |
 
 ### Response Fields
 
@@ -186,11 +199,11 @@ python3 <this-skill-dir>/scripts/tts_cosyvoice.py --text "Hello"
 
 ## Important Notes
 
-- **text**: Max 600 characters per request.
-- **instructions**: Only works with `qwen3-tts-instruct-flash`.
-- **language_type**: `Auto` for mixed language; specify for better pronunciation.
+- **text**: Check the model catalog above for the selected model's current request limit.
+- **instructions**: Support is model-specific; check the model catalog above before using it.
+- **language_type**: `Auto` for mixed language; specify for better pronunciation. Values are full names (`Chinese`, `English`, `Japanese`, ...), not codes (`zh`, `en`). It applies only to compatible HTTP models; the script ignores it for WebSocket models whose language follows the selected voice.
 - **audio_url**: Valid for 24 hours — download promptly.
-- **Real-time/streaming TTS**: For WebSocket-based real-time TTS (CosyVoice, qwen3-tts-flash-realtime), a WebSocket client is required. This skill covers the HTTP-based non-real-time API. For real-time streaming use cases, refer to the official docs in [sources.md](references/sources.md).
+- **Real-time/streaming TTS**: Bundled `tts.py` uses non-streaming HTTP for Qwen3-TTS and raw WebSocket only for Qwen-Audio TTS; CosyVoice is handled by `tts_cosyvoice.py`. The Qwen3-TTS API itself supports optional SSE; use the direct example in [execution-guide.md](references/execution-guide.md) when needed.
 
 ## Cross-Skill Chaining
 
@@ -211,6 +224,8 @@ When passing generated audio to another skill (e.g., video-gen audio overlay):
 > [Pay-as-you-go Billing](https://home.qwencloud.com/billing/pay-as-you-go) |
 > [Coding Plan Billing](https://home.qwencloud.com/billing/coding-plan)
 >
+> For the current pricing model list and billing units, fetch the [CDN model-pricing reference](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-model-pricing.md). If CDN access fails, use the [local fallback](cdn/references/qwencloud-model-pricing.md).
+>
 > **NEVER fabricate, guess, or construct usage/billing/console URLs.** Only provide the exact links listed in this skill. If a URL is not listed here, do not invent one.
 
 ## Output Location
@@ -218,6 +233,38 @@ When passing generated audio to another skill (e.g., video-gen audio overlay):
 Prefer the **current working directory**. Default subdirectory: `./output/qwencloud-audio-tts/`.
 
 **Write prohibition**: NEVER write output files into this skill's installation directory or any `skills/` hierarchy. All generated content must go to `output/` under the current working directory or a user-specified path.
+
+## Token Plan Support
+
+Token Plan supports only a subset of TTS models. Fetch and read the current [Token Plan model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-token-plan-models.md) before selecting or validating a model. If CDN access fails, use the [local fallback](cdn/references/qwencloud-token-plan-models.md).
+
+When a Token Plan key is combined with an unsupported model, `tts.py` prints a warning to stderr listing the currently supported models and suggesting alternatives; it does not block the call. If you see this warning, tell the user which models the current catalog supports and offer either a catalog-listed alternative or a PAYG key for the original model. Never silently replace an explicitly requested model.
+
+For CosyVoice specifically, `tts_cosyvoice.py` **hard-blocks** Token Plan keys at startup. Use `tts.py` with a model listed in the current Token Plan catalog, or use a PAYG key.
+
+### Style control on Token Plan
+
+Use only style-control fields supported by the selected Token Plan model in the audio model catalog. The following is a protocol example for a currently supported model; do not substitute it for a user-specified model:
+
+```json
+{"text": "落霞与孤鹜齐飞，秋水共长天一色。", "model": "qwen-audio-3.0-tts-plus", "rate": 0.8, "pitch": 1.1, "volume": 60}
+```
+
+- `rate` below 1.0 slows speech, above 1.0 speeds it up
+- `pitch` above 1.0 raises pitch, below 1.0 lowers it
+- `volume` scales linearly (0 = silent, 50 = default, 100 = max)
+
+### Protocol note
+
+The [QwenCloud model page](https://www.qwencloud.com/models/qwen-audio-3.0-tts-plus) documents **WSS (WebSocket)** for `qwen-audio-3.0-tts-plus`. The script includes a WebSocket path branch that:
+1. Connects to `wss://token-plan.ap-southeast-1.maas.aliyuncs.com/api-ws/v1/inference` (or standard endpoint for PAYG)
+2. Sets `User-Agent: qwencloud-skills` in the WebSocket handshake
+3. Sends run-task → continue-task → finish-task messages
+4. Receives binary audio frames and concatenates them into the output file
+
+### Required header
+
+`User-Agent: qwencloud-skills` is automatically included in both HTTP and WebSocket requests.
 
 ## Update Check (MANDATORY Post-Execution)
 

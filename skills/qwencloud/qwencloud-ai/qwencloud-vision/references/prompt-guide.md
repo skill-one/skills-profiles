@@ -17,13 +17,7 @@ Techniques for crafting effective visual query prompts. If the user provides a s
 
 ## Thinking Mode Decision
 
-| Scenario | `enable_thinking` | Model |
-|----------|:-:|-------|
-| Simple "what is this?" | `false` | `qwen3-vl-flash` |
-| Detailed analysis | `true` (default) | `qwen3.6-plus` |
-| Math / logic from images | always on | `qvq-max` (streaming) |
-| OCR extraction | N/A | `qwen-vl-ocr` |
-| Precise localization / 3D | optional | `qwen3-vl-plus` |
+Fetch and read the current [QwenCloud vision model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-vision-models.md) for scenario recommendations and per-model thinking defaults. If CDN access fails, use the [local fallback](../cdn/references/qwencloud-vision-models.md). Never swap a user-specified model or override `enable_thinking` without the user's explicit request, except that structured output is incompatible with thinking: the bundled scripts automatically use `enable_thinking: false` when it was omitted and reject explicit `true`.
 
 ## Prompt Enhancement Patterns
 

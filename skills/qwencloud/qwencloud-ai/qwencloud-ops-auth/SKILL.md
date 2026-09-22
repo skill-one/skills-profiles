@@ -1,10 +1,8 @@
 ---
 name: qwencloud-ops-auth
-description: "[QwenCloud] Configure authentication (API keys, endpoints). TRIGGER when: setting up QWEN_API_KEY, troubleshooting 401/auth errors, when another skill reports missing credentials, or user explicitly invokes this skill by name (e.g. use qwencloud-ops-auth). DO NOT TRIGGER when: non-auth Qwen tasks, general API usage questions."
-compatibility: "Requires curl for verification. Cursor: auto-loaded. Claude Code: read this skill's SKILL.md before first use."
+description: "Configure authentication (API keys, endpoints). TRIGGER when: setting up QWEN_API_KEY, troubleshooting 401/auth errors, when another skill reports missing credentials, or user explicitly invokes this skill by name (e.g. use qwencloud-ops-auth). DO NOT TRIGGER when: non-auth Qwen tasks, general API usage questions."
+compatibility: "Requires curl for PAYG verification. Cursor: auto-loaded. Claude Code: read this skill's SKILL.md before first use."
 ---
-
-> **Agent setup**: If your agent doesn't auto-load skills (e.g. Claude Code), see [agent-compatibility.md](references/agent-compatibility.md) once per session.
 
 # QwenCloud Authentication Setup
 
@@ -17,10 +15,10 @@ Use this skill's internal files for learning. Load references only when the user
 
 | Location | Purpose |
 |----------|---------|
+| `references/tokenplan.md` | Token Plan vs Coding Plan vs PAYG; CDN model catalog, endpoint mapping, pricing, User-Agent |
 | `references/codingplan.md` | Coding Plan vs standard key: model list, endpoint mapping, error codes, cost risks |
 | `references/custom-oss.md` | Custom OSS bucket setup for production file uploads (replaces 48h temp storage) |
 | `references/sources.md` | Console URLs, auth guide (manual lookup only) |
-| `references/agent-compatibility.md` | Agent self-check: register skills in project config for agents that don't auto-load |
 
 ## Security
 
@@ -58,16 +56,17 @@ Credentials are loaded in the following order (first match wins):
 
 ## API Key Types
 
-QwenCloud has two mutually exclusive key types:
+QwenCloud has three mutually exclusive key/plan types:
 
 | Key Type | Format | Purpose | Endpoint |
 |----------|--------|---------|----------|
 | **Standard (Pay-as-you-go)** | `sk-xxxxx` | API calls from scripts, apps, and tools | `dashscope-intl.aliyuncs.com` |
+| **Token Plan** | `sk-sp-xxxxx` | Interactive AI tools with User-Agent header | `token-plan.ap-southeast-1.maas.aliyuncs.com` |
 | **Coding Plan** | `sk-sp-xxxxx` | Interactive AI coding tools only (Cursor, Claude Code, Qwen Code) | `coding-intl.dashscope.aliyuncs.com` |
 
-All qwencloud/qwencloud-ai scripts require a **standard** key. Coding Plan keys cannot call QwenCloud APIs directly — they produce `403 invalid api-key` on standard endpoints. Coding Plan supports only 8 text LLMs (qwen3.5-plus, kimi-k2.5, glm-5, MiniMax-M2.5, qwen3-max-2026-01-23, qwen3-coder-next, qwen3-coder-plus, glm-4.7) and excludes all image/video/TTS models.
+All qwencloud/qwencloud-ai scripts require a **standard** key (`sk-`). Coding Plan keys (`sk-sp-`) produce `401 invalid_api_key` on standard endpoints. Token Plan keys (`sk-sp-`) are auto-routed to the Token Plan endpoint by scripts. Before a Token Plan request, fetch and read the current [Token Plan model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-token-plan-models.md) and pass an exact listed model; if CDN access fails, use the [local fallback](cdn/references/qwencloud-token-plan-models.md). Coding Plan details remain in [codingplan.md](references/codingplan.md).
 
-If the user's key starts with `sk-sp-`, guide them to obtain a standard key from the console below. See [codingplan.md](references/codingplan.md) for full details.
+If the user's key starts with `sk-sp-`, first check [tokenplan.md](references/tokenplan.md) for Token Plan details and the CDN catalog above for model coverage, then [codingplan.md](references/codingplan.md) for Coding Plan specifics. Guide them to obtain a standard key from the console below if needed for models outside their plan.
 
 ### Viewing Bills
 
@@ -76,6 +75,8 @@ Use the **qwencloud-usage** skill to query usage, free tier quota, and billing d
 | Key Type | Billing Page |
 |----------|--------------|
 | Standard (Pay-as-you-go) | [Pay-as-you-go Billing](https://home.qwencloud.com/billing/pay-as-you-go) |
+| Token Plan Personal | [Personal Billing](https://home.qwencloud.com/analytics/token-plan/individual) |
+| Token Plan Team | [Team Billing](https://home.qwencloud.com/analytics/token-plan/team) |
 | Coding Plan | [Coding Plan Billing](https://home.qwencloud.com/billing/coding-plan) |
 | Usage analytics (both) | [Usage Analytics](https://home.qwencloud.com/analytics) |
 
@@ -117,7 +118,7 @@ The script automatically loads `.env` from the current working directory and the
 
 Unless explicitly stated otherwise, any script or task mentioned in this skill runs in the **foreground** — wait for standard output; do not run it as a background task.
 
-Test authentication with a simple curl request:
+**PAYG only:** Test authentication with a simple curl request. **Token Plan: do not use curl; verify with the target skill's bundled Python script.**
 
 ```bash
 curl -sS -X POST "https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions" \
@@ -139,7 +140,7 @@ When **any** sub-skill receives a `401` response and a non-plaintext check shows
 
 ### Probe command
 
-Send a lightweight request to verify authentication:
+For PAYG, send a lightweight request to verify authentication. In Token Plan mode, do not use curl; run the target skill's bundled Python script instead.
 
 ```bash
 curl -sS -o /dev/null -w "%{http_code}" \
@@ -151,7 +152,7 @@ curl -sS -o /dev/null -w "%{http_code}" \
 
 ### On 401: mandatory interactive resolution
 
-If the probe returns 401, follow these steps **in order**:
+If the PAYG probe returns 401, follow these steps **in order**:
 
 **Step 1 — Confirm the key origin:**
 
@@ -177,8 +178,8 @@ the [QwenCloud console](https://home.qwencloud.com/api-keys).
 
 ## Validation
 
-Run the curl verification command above. Pass criteria: HTTP 200 response with valid JSON containing `choices` and
-`message.content`. Save output to `output/qwencloud-ops-auth/` for evidence.
+For PAYG, run the curl verification above. For Token Plan, run the target skill's bundled Python script instead.
+Pass criteria: HTTP 200 with valid output. Save evidence to `output/qwencloud-ops-auth/`.
 
 ## Output And Evidence
 
@@ -212,5 +213,7 @@ After the user responds:
 
 ## References
 
+- [tokenplan.md](references/tokenplan.md) — Token Plan vs standard key; CDN model-catalog pointer, Credits billing, and endpoint guidance
+- [codingplan.md](references/codingplan.md) — Coding Plan compatibility and error guidance
 - [custom-oss.md](references/custom-oss.md) — Custom OSS bucket setup for production file uploads
 - [sources.md](references/sources.md) — Official documentation URLs (consoles, auth guide)

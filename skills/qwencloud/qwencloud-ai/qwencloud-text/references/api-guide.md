@@ -12,18 +12,7 @@ Qwen text generation models accessed through an **OpenAI-compatible** interface.
 
 ## Use Cases
 
-| Scenario | Recommended Model | Notes |
-|----------|------------------|-------|
-| General conversation / content generation | `qwen3.6-plus` | Latest flagship. Best balance of performance, cost, and speed. 1M context. **Recommended default.** |
-| General conversation (alt) | `qwen3.5-plus` | Balanced performance, cost, speed, 1M context, thinking on by default. |
-| Low-latency real-time interaction | `qwen3.5-flash` / `qwen-turbo` | Fastest response time. Suitable for chatbots. |
-| Complex tasks / strongest capability | `qwen3-max` | Largest model. Best for complex reasoning. |
-| Code generation / completion | `qwen3-coder-next` | Top recommendation. `qwen3-coder-plus` for highest quality, `qwen3-coder-flash` for speed. |
-| Deep reasoning / math | `qwq-plus` | Chain-of-thought (CoT) reasoning. |
-| Ultra-long document processing | `qwen-long` | 10M token context. Not available in ap-southeast-1. |
-| Agent / tool calling | `qwen3.6-plus` / `qwen3.5-plus` / `qwen-plus` | Most complete function calling support. |
-| Machine translation | `qwen-mt-plus` | Best quality, 92 languages. `qwen-mt-flash` for speed, `qwen-mt-lite` for real-time chat. Uses `translation_options` parameter. |
-| Role-playing / character dialog | `qwen-plus-character-ja` | Character restoration, empathetic dialog. Singapore: use `-ja` variant. |
+Fetch and read the current [QwenCloud text model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-text-models.md) for recent Qwen general-purpose model recommendations, defaults, and basic model information. Use qwencloud-model-selector or the QwenCloud CLI for coding, translation, or third-party families. If CDN access fails, use the [local fallback](../cdn/references/qwencloud-text-models.md). These recommendations apply only when the user has not specified a model; preserve any explicit model or parameter choice.
 
 ---
 
@@ -96,33 +85,31 @@ resp = client.chat.completions.create(
 # Execute the function, then send result back with role="tool"
 ```
 
-Supported models: Qwen-Max/Plus/Flash/Turbo, Qwen3.5/3 series, qwen3-vl-plus/flash, qwen3-omni-flash.
+For the current function-calling model list, fetch and read the CDN model catalog linked above.
 
 ### Thinking Mode
 
-**Model defaults apply**: `qwen3.6-plus`, `qwen3.5-plus` and `qwen3.5-flash` have thinking mode **enabled by default**. For these models, do NOT set `enable_thinking` unless you want to override the default behavior.
-
-For other models (`qwen3-max`, `qwen-plus`, `qwen-turbo`, etc.), thinking mode is off by default. Only enable when the user explicitly requests step-by-step reasoning:
+Fetch and read the CDN model catalog linked above for current thinking-mode defaults and compatible models. Preserve the selected model's default unless the user explicitly asks to change it:
 
 ```python
-# For qwen3.6-plus/qwen3.5-plus/flash: thinking is ON by default, no need to set
+# For a model whose documented default is thinking on, no need to set it
 resp = client.chat.completions.create(
     model="qwen3.6-plus",
     messages=[{"role": "user", "content": "Solve this problem."}],
 )
 
-# For other models: enable thinking only when user explicitly requests it
+# For a model whose documented default is thinking off, enable only when requested
 resp = client.chat.completions.create(
     model="qwen3-max",
     messages=[{"role": "user", "content": "Solve 17 × 23 step by step."}],
-    extra_body={"enable_thinking": True},  # Only for non-default models
+    extra_body={"enable_thinking": True},  # Only when the user requests this override
 )
 
 # Script usage: add --enable-thinking flag to override defaults
 # python scripts/text.py --request '{"messages":[...]}' --enable-thinking
 ```
 
-**When to disable thinking for qwen3.6-plus/qwen3.5-plus/flash**: Set `enable_thinking: false` for simple chat, real-time interaction, or when you want faster responses without extended reasoning.
+**When to disable thinking**: After checking the model's current default in the CDN catalog, set `enable_thinking: false` only when the user explicitly asks for faster responses or explicitly wants thinking off. Do NOT silently disable it just because the task looks simple — that changes the model's default behavior without the user's consent. You may *suggest* disabling it for simple tasks.
 
 ### Key Request Parameters
 
@@ -153,12 +140,10 @@ resp = client.chat.completions.create(
 1. **Prefer streaming.** Non-streaming blocks until the full response is generated (10–60s+ for long outputs). Always use `stream=True` for interactive scenarios.
 2. **API keys are region-specific.** Use the `ap-southeast-1` (Singapore) endpoint with your API key.
 3. **openai SDK version:** Requires ≥1.55.0. Older versions conflict with httpx ≥0.28, causing a `proxies` TypeError.
-4. **Thinking mode varies by model.** `qwen3.6-plus`, `qwen3.5-plus` and `qwen3.5-flash` have thinking mode enabled by default; other models have it off. Only override with `enable_thinking` when you want to change the default behavior.
+4. **Thinking mode varies by model.** Fetch the CDN model catalog linked above for current defaults. Only override with `enable_thinking` when the user explicitly asks to change the default.
 5. **Function calling constraints.** `tools` cannot be used with `stream=True` (older limitation; some newer models support it). Also incompatible with `n > 1`.
 6. **messages format.** `system` role can only appear at `messages[0]`. The last message must have the `user` role.
-7. **Some models have limited regional availability.** `qwen-long` (10M context), `qwen-math-plus`, and third-party
-   models are not available in `ap-southeast-1`. Check
-   the [Model List](https://www.qwencloud.com/models) for the latest availability.
+7. **Regional availability is model-specific.** The CDN catalog does not provide region coverage; verify it with `qwencloud models info <model>` or the official model documentation.
 
 ---
 
@@ -171,10 +156,10 @@ A: Change three values: `api_key` to your DASHSCOPE_API_KEY, `base_url` to the c
 A: Use streaming for interactive scenarios (chat, real-time output). Use non-streaming for batch processing or when you need the complete JSON response at once. With streaming, set `stream_options={"include_usage": True}` to receive token usage in the last chunk.
 
 **Q: Which models support function calling?**
-A: Qwen-Max/Plus/Flash/Turbo series, Qwen3.5/3/2.5 series, qwen3-vl-plus/flash, qwen3-omni-flash, and third-party models (deepseek, kimi, glm).
+A: Fetch and read the current CDN model catalog linked above.
 
 **Q: What is the difference between `qwen3.6-plus` and `qwen3.5-plus`?**
-A: `qwen3.6-plus` is the latest flagship model (2026-04-02) with 1M context and best balance of quality, speed, and cost. `qwen3.5-plus` is the previous generation. `qwen3.6-plus` is recommended for new projects.
+A: Fetch and read the current CDN model catalog linked above for model comparisons and the recommended default.
 
 **Q: How do I control output length?**
 A: Use `max_tokens` to limit output token count. Use `stop` to set stop sequences. Each model has its own default output limit.

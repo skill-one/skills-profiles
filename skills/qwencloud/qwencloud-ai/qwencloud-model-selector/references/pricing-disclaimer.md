@@ -6,12 +6,15 @@ a cost-related answer, **you must read and apply this file**.
 
 ## Pricing Guidance
 
-- **Default pricing reference**: [pricing.md](pricing.md) — International, USD; structural overview only.
+- **Default pricing reference**: [pricing.md](pricing.md) — stable billing guidance with a CDN structural fallback.
 - **Latest / exact prices**: When the user asks for exact or latest pricing, run
   `qwencloud models info <model> --format json` first (returns structured pricing tiers).
   Fall back to the [official pricing page](https://docs.qwencloud.com/developer-guides/getting-started/pricing)
   only if CLI is unavailable. **Never invent a number.**
-- **Cost formula**: `Cost = Tokens ÷ 1,000,000 × Unit price`. 1K Chinese chars ≈ 1,200–1,500 tokens.
+- **Cost formula depends on the workload**: text/vision use token-based rates; image generation uses
+  input/output image counts where applicable; video and speech recognition use duration-based rates;
+  TTS uses input-character rates. Token Plan uses dynamic Credits and must not be estimated with PAYG formulas.
+  For token-priced models only: `Cost = Tokens ÷ 1,000,000 × Unit price`.
 - **Free quota**: Some models offer a limited free quota after activation — but quotas may have been consumed,
   expired, or changed without notice. **Always present the paid unit price first.** Mention free quota only as
   something the user should verify in their [QwenCloud console](https://home.qwencloud.com/benefits) or via
@@ -19,7 +22,7 @@ a cost-related answer, **you must read and apply this file**.
 - **Cost tips**:
     - Use Batch API for 50% off in non-realtime scenarios
     - Enable context cache for repeated contexts
-    - Use flash/turbo series for non-critical tasks
+    - Use the lower-cost option recommended by the [CDN model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-model-recommendations.md) for non-critical tasks. If CDN access fails, use the [local fallback](../cdn/references/qwencloud-model-recommendations.md).
     - Watch for tiered pricing breakpoints (≤32K, ≤128K, ≤256K, ≤1M)
 
 ## Usage & Billing Console
@@ -31,6 +34,7 @@ console page (these are **NOT** accessible via API; the user must open them in a
 |---------------------------------------------------------|--------------|
 | "How much have I used?" / "Show my usage"               | [Usage Analytics](https://home.qwencloud.com/analytics) |
 | "Show my bill" / "How much did I spend?" (pay-as-you-go)| [Pay-as-you-go Billing](https://home.qwencloud.com/billing/pay-as-you-go) |
+| "Show my Token Plan bill" / "Token Plan usage"          | [Personal Billing](https://home.qwencloud.com/analytics/token-plan/individual) \| [Team Billing](https://home.qwencloud.com/analytics/token-plan/team) |
 | "Show my Coding Plan bill" / "Coding Plan usage"        | [Coding Plan Billing](https://home.qwencloud.com/billing/coding-plan) |
 
 > **Important**: This skill can estimate costs based on published unit prices, but **cannot** query the user's
@@ -55,7 +59,7 @@ This applies regardless of language or response format.
 ### Required disclaimer (Chinese response)
 
 > ⚠️ **费用说明**：以上费用为基于官方公示单价的预估价格，仅供参考。实际费用受 Token
-> 消耗量、上下文长度阶梯定价、Batch/缓存折扣及计费策略调整等因素影响，请以QwenCloud控制台的实际账单为准：[按量付费账单](https://home.qwencloud.com/billing/pay-as-you-go) | [Coding Plan 账单](https://home.qwencloud.com/billing/coding-plan) | [用量分析](https://home.qwencloud.com/analytics)。部分模型可能提供限时免费额度，但免费额度的可用性、额度量及有效期随时可能调整，请在控制台确认您的账户是否仍有剩余额度，**切勿假设本次调用免费**。最新定价详见 [模型定价页](https://docs.qwencloud.com/developer-guides/getting-started/pricing)。
+> 消耗量、上下文长度阶梯定价、Batch/缓存折扣及计费策略调整等因素影响，请以QwenCloud控制台的实际账单为准：[按量付费账单](https://home.qwencloud.com/billing/pay-as-you-go) | [Token Plan 个人版账单](https://home.qwencloud.com/analytics/token-plan/individual) | [Token Plan 团队版账单](https://home.qwencloud.com/analytics/token-plan/team) | [Coding Plan 账单](https://home.qwencloud.com/billing/coding-plan) | [用量分析](https://home.qwencloud.com/analytics)。部分模型可能提供限时免费额度，但免费额度的可用性、额度量及有效期随时可能调整，请在控制台确认您的账户是否仍有剩余额度，**切勿假设本次调用免费**。最新定价详见 [模型定价页](https://docs.qwencloud.com/developer-guides/getting-started/pricing)。
 
 ### Required disclaimer (English response)
 
@@ -66,6 +70,8 @@ This applies regardless of language or response format.
 > verify your remaining quota in
 > the [QwenCloud console](https://home.qwencloud.com/benefits) and refer to your actual
 > bill for definitive costs: [Pay-as-you-go Billing](https://home.qwencloud.com/billing/pay-as-you-go) |
+> [Token Plan Personal Billing](https://home.qwencloud.com/analytics/token-plan/individual) |
+> [Token Plan Team Billing](https://home.qwencloud.com/analytics/token-plan/team) |
 > [Coding Plan Billing](https://home.qwencloud.com/billing/coding-plan) |
 > [Usage Analytics](https://home.qwencloud.com/analytics).
 > See [Model Pricing](https://docs.qwencloud.com/developer-guides/getting-started/pricing) for

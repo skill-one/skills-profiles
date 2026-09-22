@@ -1,8 +1,8 @@
 # Request Fields by Mode
 
-Detailed field tables for each video generation mode. The Mode Selection Guide and model tables are in SKILL.md. These fields are passed in the `input` and `parameters` sections of the API request.
+Detailed field tables for each video generation mode. Fetch and read the [CDN model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-video-generation-models.md) for mode-to-model recommendations, supported models, defaults, and model-specific field differences. Unless a model family is named explicitly, the tables below describe the legacy Wan 2.5/2.6 request shape. These fields are passed in the `input` and `parameters` sections of the API request. If CDN access fails, use the [local fallback](../cdn/references/qwencloud-video-generation-models.md).
 
-## t2v (Text-to-Video)
+## t2v (Text-to-Video, legacy Wan 2.5/2.6 shape)
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
@@ -14,7 +14,7 @@ Detailed field tables for each video generation mode. The Mode Selection Guide a
 | `prompt_extend` | bool | No | Smart prompt rewriting |
 | `seed` | int | No | Reproducibility |
 
-## i2v (Image-to-Video)
+## i2v (Image-to-Video, legacy Wan 2.5/2.6 shape)
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
@@ -35,7 +35,7 @@ Detailed field tables for each video generation mode. The Mode Selection Guide a
 | `last_frame_url` | string | Yes* | Last frame (*not needed if using `template`) |
 | `resolution` | string | No | `"480P"`, `"720P"` (default), `"1080P"` |
 
-## r2v (Reference-based / Role-play)
+## r2v (Reference-based / Role-play, legacy Wan 2.6 shape)
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
@@ -63,6 +63,17 @@ Detailed field tables for each video generation mode. The Mode Selection Guide a
 | `top_scale`/`bottom_scale`/`left_scale`/`right_scale` | float | No | 1.0–2.0 (for outpainting) |
 | `size` | string | No | e.g. `"1280*720"` (for image_reference) |
 
+## animate (Image-to-Animation)
+
+Fetch the CDN model catalog linked above for the current animate model list, behavior, and plan compatibility. Animate requests use **no `prompt`** and no resolution/duration/seed/watermark parameters.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `image_url` | string | Yes | Character image: URL, `oss://`, or local path (auto-uploaded) |
+| `video_url` | string | Yes | Reference video (motion/expression source): URL/`oss://`/local path |
+| `mode` | string | Yes | `"wan-std"` (faster/cheaper) or `"wan-pro"` (smoother/higher quality) |
+| `check_image` | bool | No | Image quality check (default `true`) |
+
 ## Audio Handling
 
 When the user mentions audio/voice/music/sound for video, clarify the source:
@@ -72,9 +83,4 @@ When the user mentions audio/voice/music/sound for video, clarify the source:
 3. **Auto-generated audio** → omit `audio_url` (wan2.5/2.6 auto-dubs)
 4. **If unclear** → ask the user
 
-**Audio support by mode:**
-- **t2v**: wan2.6/2.5 support `audio_url` or auto-dubbing. Others silent only.
-- **i2v**: wan2.6/2.5 support audio. wan2.6-i2v-flash can be forced silent with `audio: false`.
-- **kf2v**: Silent only. For audio, switch to wan2.6-i2v or add post-generation — see [workflows.md](workflows.md).
-- **r2v**: wan2.6-r2v supports audio. wan2.6-r2v-flash can be forced silent.
-- **vace**: Silent only. Add audio post-generation — see [workflows.md](workflows.md).
+**Audio support by model:** Fetch and read the CDN model catalog linked above. For a silent model, add audio after generation as described in [workflows.md](workflows.md).

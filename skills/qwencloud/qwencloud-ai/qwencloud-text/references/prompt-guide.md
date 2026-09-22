@@ -1,6 +1,6 @@
 # Text Chat — Prompt Guide
 
-Techniques for building effective system prompts and user prompts. If the user provides specific prompt text, use it as-is — suggest enhancements only.
+Techniques for building effective system prompts and user prompts. If the user provides specific prompt text, use it as-is — suggest enhancements only. Likewise, if the user explicitly specifies a model or parameters, use them exactly as given — never swap the model or add unrequested parameters (e.g. `enable_thinking`) based on the techniques below; these apply only when the user has NOT made an explicit choice.
 
 ## System Prompt: CO-STAR Framework
 

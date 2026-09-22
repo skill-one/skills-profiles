@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Visual reasoning with QVQ and thinking-enabled VL models.
+"""Visual reasoning with the configured thinking-capable vision model.
 
 Chain-of-thought visual reasoning: the model thinks step-by-step before answering.
 Best for math problems in images, complex chart analysis, video understanding,
-and multi-step visual logic. Always uses streaming (required for QVQ models).
+and multi-step visual logic. The current configured default is qwen3.8-max.
+Always uses streaming so reasoning tokens are returned and QVQ remains compatible.
 
 Usage:
   python scripts/reason.py --request '{"prompt":"Solve this problem","image":"math.png"}'
@@ -23,16 +24,19 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from vision_lib import (  # noqa: E402
+    DiagnosticStream,
+    check_token_plan_model_support,
     chat_url,
+    get_default_model,
     load_request,
     prompt_update_check_install,
     require_api_key,
+    sanitize_diagnostic,
     save_result,
     stream_sse,
     build_content,
 )
 
-DEFAULT_MODEL = "qvq-max"
 DEFAULT_MAX_TOKENS = 8192
 
 def reason(req: dict[str, Any], api_key: str, *, upload_files: bool = False) -> dict[str, Any]:
@@ -40,7 +44,7 @@ def reason(req: dict[str, Any], api_key: str, *, upload_files: bool = False) -> 
     if not prompt:
         raise ValueError("prompt is required")
 
-    model = req.get("model", DEFAULT_MODEL)
+    model = req["model"] if "model" in req else get_default_model("reason")
     upload_key = api_key if upload_files else None
     upload_model = model if upload_files else None
 
@@ -68,37 +72,40 @@ def reason(req: dict[str, Any], api_key: str, *, upload_files: bool = False) -> 
     model_name = model
     is_answering = False
 
-    for chunk in stream_sse(
-        chat_url(), api_key, payload,
-        timeout=int(req.get("timeout_s", 300)),
-    ):
-        if chunk.get("usage"):
-            usage = chunk["usage"]
-        if chunk.get("model"):
-            model_name = chunk["model"]
+    diagnostics = DiagnosticStream()
+    try:
+        for chunk in stream_sse(
+            chat_url(), api_key, payload,
+            timeout=int(req.get("timeout_s", 300)),
+        ):
+            if chunk.get("usage"):
+                usage = chunk["usage"]
+            if chunk.get("model"):
+                model_name = chunk["model"]
 
-        choices = chunk.get("choices") or []
-        if not choices:
-            continue
-        delta = choices[0].get("delta") or {}
+            choices = chunk.get("choices") or []
+            if not choices:
+                continue
+            delta = choices[0].get("delta") or {}
 
-        rc = delta.get("reasoning_content") or ""
-        if rc:
-            reasoning_content += rc
-            if not is_answering:
-                print(rc, end="", flush=True, file=sys.stderr)
+            rc = delta.get("reasoning_content") or ""
+            if rc:
+                reasoning_content += rc
+                if not is_answering:
+                    diagnostics.write(rc)
 
-        ct = delta.get("content") or ""
-        if ct:
-            if not is_answering:
-                is_answering = True
-                if reasoning_content:
-                    print("\n", file=sys.stderr)
-            answer_content += ct
-            print(ct, end="", flush=True, file=sys.stderr)
-
-    if reasoning_content or answer_content:
-        print("", file=sys.stderr)
+            ct = delta.get("content") or ""
+            if ct:
+                if not is_answering:
+                    is_answering = True
+                    if reasoning_content:
+                        diagnostics.write("\n\n")
+                answer_content += ct
+                diagnostics.write(ct)
+    finally:
+        if reasoning_content or answer_content:
+            diagnostics.write("\n")
+        diagnostics.flush()
 
     result: dict[str, Any] = {
         "text": answer_content,
@@ -112,7 +119,7 @@ def reason(req: dict[str, Any], api_key: str, *, upload_files: bool = False) -> 
 def main() -> None:
     prompt_update_check_install()
     parser = argparse.ArgumentParser(
-        description="Visual reasoning with QVQ/thinking VL models (always streaming)",
+        description="Visual reasoning (current configured default: qwen3.8-max; always streaming)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""\
 request JSON fields (--request / --file):
@@ -121,8 +128,8 @@ request JSON fields (--request / --file):
   video             Video URL or local path
   video_frames      Array of frame image URLs/paths (alternative to video)
   fps               Frame sampling rate for video (default: auto)
-  model             Model ID (default: qvq-max)
-  enable_thinking   true/false — override thinking mode (QVQ always thinks)
+  model             Model ID (current configured default: qwen3.8-max)
+  enable_thinking   true/false — override hybrid thinking (thinking-only models cannot disable it)
   thinking_budget   Max thinking tokens
   max_tokens        Max output tokens (default: 8192)
   timeout_s         Request timeout in seconds (default: 300)
@@ -132,8 +139,9 @@ input types (provide exactly one):
   video         Video reasoning (URL or local file)
   video_frames  Video from extracted frames (array of image paths)
 
-models:
-  qvq-max           (default) Visual reasoning specialist (always-on thinking)
+model examples (current default loads from CDN configuration):
+  qwen3.8-max       Current default; multimodal, thinking on by default
+  qvq-max           PAYG visual reasoning specialist; thinking/streaming only
   qwen3-vl-plus     General vision with optional thinking mode
   qwen3.5-plus      Unified multimodal with thinking on by default
 
@@ -167,8 +175,14 @@ examples:
     args = parser.parse_args()
 
     api_key = require_api_key()
-    req = load_request(args)
-    result = reason(req, api_key, upload_files=args.upload_files)
+    try:
+        req = load_request(args)
+        model = req["model"] if "model" in req else get_default_model("reason")
+        check_token_plan_model_support(model, domain="Vision")
+        result = reason(req, api_key, upload_files=args.upload_files)
+    except (ValueError, RuntimeError) as e:
+        print(sanitize_diagnostic(f"Error: {e}"), file=sys.stderr)
+        sys.exit(1)
 
     if args.output:
         save_result(result, args.output)

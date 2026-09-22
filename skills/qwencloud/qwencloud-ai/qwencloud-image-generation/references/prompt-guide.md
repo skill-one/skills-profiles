@@ -1,6 +1,6 @@
 # Image Generation — Prompt Guide
 
-Techniques for building high-quality image prompts. If the user provides specific prompt text, use it as-is — suggest enhancements only.
+Techniques for building high-quality image prompts. If the user provides specific prompt text, use it as-is — suggest enhancements only. The same rule applies to model and parameter choices: if the user explicitly specified them, never swap or "optimize" them based on the techniques in this guide.
 
 ## Prompt Formulas
 
@@ -68,6 +68,8 @@ watermark, text, signature, out of frame, cropped
 ```
 
 ## prompt_extend Decision
+
+> **Only apply this table when the user has NOT explicitly set `prompt_extend`** (in prompt or request JSON). If the user set it, keep their value — never override it, and never add/remove `prompt_extend` to "improve" a user-specified request without asking.
 
 | Condition | Value |
 |-----------|:-----:|

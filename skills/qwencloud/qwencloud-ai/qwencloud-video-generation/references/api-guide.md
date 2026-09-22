@@ -12,15 +12,7 @@ Video generation service based on the Wan model family. Supports **5 creation mo
 
 ## Use Cases
 
-| Scenario | Recommended Mode + Model | Notes |
-|----------|------------------------|-------|
-| Generate video from text description | t2v + `wan2.6-t2v` | Audio support, multi-shot, up to 15s. |
-| Animate a still image | i2v + `wan2.6-i2v-flash` | Fast, audio support, up to 15s. |
-| Transition animation between two images | kf2v + `wan2.2-kf2v-flash` | First+last frame control, 5s, silent. |
-| Maintain character consistency across scenes | r2v + `wan2.6-r2v-flash` | Up to 5 reference characters. `wan2.6-r2v` for higher quality. |
-| Style transfer / local editing / extension | vace + `wan2.1-vace-plus` | Repainting, mask editing, extension, outpainting. |
-| Cinematic multi-shot narrative | t2v/i2v + `shot_type: "multi"` | Multiple camera angles and scenes in a single generation. |
-| Custom background music | t2v/i2v + `audio_url` | Provide an audio file for synchronized generation. |
+Fetch and read the current [QwenCloud video-generation model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-video-generation-models.md) for mode recommendations, defaults, compatibility, and basic model information. If CDN access fails, use the [local fallback](../cdn/references/qwencloud-video-generation-models.md).
 
 ---
 

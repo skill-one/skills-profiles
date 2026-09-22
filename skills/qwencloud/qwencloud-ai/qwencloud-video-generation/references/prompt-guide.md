@@ -1,6 +1,6 @@
 # Video Generation — Prompt Guide
 
-Techniques for building effective video prompts per mode. If the user provides specific prompt text, use it as-is — suggest enhancements only.
+Techniques for building effective video prompts per mode. If the user provides specific prompt text, use it as-is — suggest enhancements only. This includes NOT injecting sound/BGM descriptions (see "Sound Description" below) into a user-supplied prompt unless the user asked for audio content. Model and parameter choices follow the same rule: if the user explicitly specified them, never swap or "optimize" them based on this guide.
 
 ## Prompt Formula by Mode
 
@@ -85,6 +85,8 @@ inconsistent lighting, flickering
 ```
 
 ## prompt_extend Decision
+
+> **Only apply this table when the user has NOT explicitly set `prompt_extend`** (in prompt or request JSON). If the user set it, keep their value. Exception: multi-shot (`shot_type: "multi"`) technically requires `prompt_extend: true` — if the user requested multi-shot but pinned `prompt_extend: false`, surface the conflict and let them decide.
 
 | Condition | Value |
 |-----------|:-----:|

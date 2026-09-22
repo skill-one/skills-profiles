@@ -1,6 +1,8 @@
 # Audio TTS — Prompt Guide
 
-Techniques for optimizing TTS text input and voice instructions. If the user provides specific text or instructions, use them as-is — suggest enhancements only.
+Techniques for optimizing TTS text input and voice instructions.
+
+> **🚫 Never override user-specified parameters.** If the user specified a model, voice, or text, use them exactly as given. The instruction templates below are only for a model currently marked instruction-compatible in the CDN model catalog, and only when the user asks for style control. NEVER switch models or inject instructions on your own initiative.
 
 ## Text Formatting for Natural Speech
 
@@ -17,7 +19,13 @@ TTS quality is highly sensitive to punctuation and structure:
 
 For mixed-language text, set `language_type: "Auto"`.
 
-## Instructions Templates (qwen3-tts-instruct-flash only)
+## Instruction Templates
+
+> These templates apply ONLY when: (1) the user did NOT specify a model, AND (2) the user explicitly asks for a specific style/tone. Otherwise, do not add instructions.
+
+Fetch and read the current [QwenCloud audio TTS model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-audio-tts-models.md) before choosing a model or instruction field. If CDN access fails, use the [local fallback](../cdn/references/qwencloud-audio-tts-models.md).
+
+Use the instruction field documented for the selected model; do not interchange `instructions` and `instruction`.
 
 | Scenario | Instructions |
 |----------|-------------|
@@ -37,9 +45,5 @@ as if [character/scenario]. [Additional: emphasis, pauses, accent].
 
 ## Voice Selection
 
-| Scenario | Voice | Reason |
-|----------|-------|--------|
-| Business narration | Ethan, Aiden | Steady, professional male voice |
-| Warm storytelling | Cherry, Serena | Soft, warm female voice |
-| Energetic marketing | Chelsie | Upbeat, lively female voice |
-| General purpose | Aria | Natural, versatile female voice |
+Fetch the CDN model catalog linked above for the current voice list and model compatibility, then choose
+a voice that matches the user's requested tone. Do not infer support for a voice that is absent from the catalog.

@@ -15,7 +15,9 @@ After fixing, retry the script (Path 1). If the environment is unfixable, fall t
 
 ## Path 2 · Direct API Call (curl)
 
-### Sync mode (wan2.6, recommended)
+### Sync mode
+
+Fetch the [CDN model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-image-generation-models.md) before choosing a model; the example below demonstrates the synchronous request path. If CDN access fails, use the [local fallback](../cdn/references/qwencloud-image-generation-models.md). Preserve an explicitly selected model.
 
 **Step 1 — Generate image:**
 
@@ -392,7 +394,7 @@ curl -sS -X POST "https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/multi
 
 Extract image URL from `output.choices[0].message.content[0].image`, then download.
 
-### qwen-image-plus / qwen-image-max: Text-to-image (async)
+### qwen-image-plus / qwen-image: Text-to-image (async)
 
 **Step 1 — Submit task:**
 
@@ -426,6 +428,25 @@ Wait until `output.task_status` is `SUCCEEDED`.
 ```bash
 curl -o image.png "IMAGE_URL_FROM_POLL_RESPONSE"
 ```
+
+### qwen-image-max: Text-to-image (sync-only)
+
+Do not add `X-DashScope-Async` and do not use the `text2image/image-synthesis` endpoint for this model.
+
+```bash
+curl -sS -X POST "https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation" \
+  -H "Authorization: Bearer $DASHSCOPE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "qwen-image-max",
+    "input": {"messages": [{"role": "user", "content": [
+      {"text": "A healing-style hand-drawn poster featuring three puppies playing with a ball on green grass"}
+    ]}]},
+    "parameters": {"size": "1664*928", "n": 1, "prompt_extend": true, "watermark": false}
+  }'
+```
+
+Extract the image URL from `output.choices[0].message.content[0].image`.
 
 **Valid sizes for qwen-image-plus/max:** `1664*928` (16:9), `1472*1104` (4:3), `1328*1328` (1:1), `1104*1472` (3:4), `928*1664` (9:16)
 

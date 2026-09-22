@@ -18,12 +18,34 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from qwencloud_lib import (  # noqa: E402
     chat_url,
+    check_token_plan_model_support,
     http_post,
+    load_cdn_model_config,
     load_request,
     require_api_key,
     run_update_signal,
     stream_sse,
 )
+
+
+_MODEL_CONFIG_DIR = Path(__file__).resolve().parent.parent / "cdn" / "config"
+
+
+def _validate_model_config(config: dict[str, Any]) -> bool:
+    return isinstance(config.get("default_model"), str) and bool(config["default_model"])
+
+
+def _default_model() -> str:
+    config = load_cdn_model_config(
+        "qwencloud-text-config.json",
+        local_dir=_MODEL_CONFIG_DIR,
+        required_keys=("default_model",),
+        validator=_validate_model_config,
+    )
+    model = config["default_model"]
+    if not isinstance(model, str) or not model:
+        raise RuntimeError("Invalid text model configuration: default_model must be a string")
+    return model
 
 
 # ---------------------------------------------------------------------------
@@ -126,7 +148,7 @@ def main() -> None:
 request JSON fields (--request / --file):
   messages          (required) Array of {role, content} message objects
   model             Model ID — overridden by --model flag
-  enable_thinking   true/false — enable chain-of-thought (default: false)
+  enable_thinking   true/false — override the model's thinking default
   tools             Array of tool/function definitions for function calling
   response_format   {"type":"json_object"} or {"type":"json_schema","json_schema":{...}}
   temperature       Sampling temperature (0-2)
@@ -134,8 +156,9 @@ request JSON fields (--request / --file):
   stream            true/false — overridden by --stream flag
 
 environment variables:
-  DASHSCOPE_API_KEY  (required) API key — also loaded from .env file
-  QWEN_API_KEY       (alternative) Alias for DASHSCOPE_API_KEY
+  QWENCLOUD_API_KEY  (preferred) API key — also loaded from .env file
+  QWEN_API_KEY       (fallback) Legacy alias
+  DASHSCOPE_API_KEY  (fallback) Legacy provider variable
   QWEN_REGION        ap-southeast-1 (default)
   QWEN_BASE_URL      Override the API base URL entirely
 
@@ -162,39 +185,41 @@ examples:
     parser.add_argument("--output", default="output/qwencloud-text",
                         help="Directory to save response JSON (default: output/qwencloud-text)")
     parser.add_argument("--print-response", action="store_true", help="Print generated text to stdout")
-    parser.add_argument("--model", default="qwen3.6-plus", help="Model ID (default: qwen3.6-plus)")
+    parser.add_argument("--model", help="Model ID (default loaded from CDN model configuration)")
     parser.add_argument("--stream", action="store_true", help="Enable streaming response (SSE)")
     parser.add_argument("--enable-thinking", action="store_true", dest="enable_thinking_flag",
                         help="Enable chain-of-thought thinking mode (overrides model defaults). "
-                             "Recommended for complex reasoning/math tasks. Adds latency for qwen3.6-plus/qwen3.5-plus/flash.")
+                             "Use only when explicitly requested.")
     parser.add_argument("--hide-reasoning", action="store_true",
                         help="Suppress reasoning process output to stderr (reasoning still saved to JSON)")
     args = parser.parse_args()
 
     try:
         request = load_request(args)
-    except ValueError as e:
+        if args.model is not None:
+            request["model"] = args.model
+        elif "model" not in request:
+            request["model"] = _default_model()
+    except (ValueError, RuntimeError) as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
-
-    if args.model:
-        request["model"] = args.model
     
     # Thinking mode handling:
     # - User explicitly enabled via flag → set true
     # - User specified in request JSON → respect their choice  
-    # - Otherwise → let API apply model defaults (qwen3.6-plus/qwen3.5-plus/flash have thinking ON by default)
+    # - Otherwise → let the API apply the selected model's default
     if args.enable_thinking_flag:
         request["enable_thinking"] = True
-        print("Note: Thinking mode enabled explicitly. May add latency for qwen3.6-plus/qwen3.5-plus/flash.", file=sys.stderr)
+        print("Note: Thinking mode enabled explicitly; this may add latency.", file=sys.stderr)
     elif "enable_thinking" not in request:
         # Do nothing - preserve API defaults per model
         pass
 
     api_key = require_api_key(script_file=__file__)
-    url = chat_url()
 
     try:
+        check_token_plan_model_support(request.get("model", ""), domain="Text")
+        url = chat_url()
         if args.stream or request.get("stream"):
             print("Connecting to model (streaming)...", file=sys.stderr)
             response_data = _run_stream(url, api_key, request, args.print_response,
@@ -213,9 +238,14 @@ examples:
         print(f"API error: {e}", file=sys.stderr)
         sys.exit(1)
 
-    out_dir = Path(args.output)
+    out = Path(args.output)
+    if out.suffix.lower() == ".json":
+        out_file = out
+        out_dir = out.parent
+    else:
+        out_dir = out
+        out_file = out_dir / "response.json"
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_file = out_dir / "response.json"
     out_file.write_text(json.dumps(response_data, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Response saved to {out_file}", file=sys.stderr)
 

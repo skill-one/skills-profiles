@@ -1,6 +1,6 @@
 # 百炼模型市场索引
 
-> 自动生成 · 共 181 个模型家族 · 419 个主干模型 · 更新于 2026-09-18
+> 自动生成 · 共 184 个模型家族 · 421 个主干模型 · 更新于 2026-09-21
 
 **机器查询走结构化文件**：
 
@@ -218,12 +218,14 @@ join：`models.jsonl[].family == families.jsonl[].slug == index.json.families[].
 - [表情包Emoji-detect](groups/emoji-detect-v1.json) — 表情包Emoji-Detect是辅助表情包Emoji生成的图像检测模型，用于检测图片中的人物形象是否符合视频生成要求。
   - 模型：`emoji-detect-v1`
 
-## 语音合成 `TTS` — 16 个家族
+## 语音合成 `TTS` — 17 个家族
 
 - [CosyVoice大模型](groups/cosyvoice.json) — 基于新一代生成式语音大模型，CosyVoice将文本理解和语音生成技术深度融合，能够精准解析并诠释各种文本内容，将其转化为如同真人发声般的自然语音，带来高度拟人化的自然语音合成体验。
   - 模型：`cosyvoice-clone-v1`, `cosyvoice-v1`, `cosyvoice-v2`, `cosyvoice-v3-flash`, `cosyvoice-v3-plus`, `cosyvoice-v3.5-flash`, `cosyvoice-v3.5-plus`
 - [MiniMax-Speech系列语音模型](groups/MiniMax-speech-market-place.json) — 由MiniMax提供的MiniMax-Speech系列语音模型API服务。
   - 模型：`MiniMax/speech-02-hd`, `MiniMax/speech-02-turbo`, `MiniMax/speech-2.8-hd`, `MiniMax/speech-2.8-turbo`
+- [Qwen-Audio-3.1-TTS](groups/qwen-audio-3.1-tts.json) — Qwen-Audio-3.1-TTS-Flash是面向实时交互场景的高性能语音合成大模型，支持多种语言和方言，支持流式语音合成。该模型具有free-style指令遵循能力和细粒度标签控制能力，可更灵活…
+  - 模型：`qwen-audio-3.1-tts-flash`
 - [Qwen-TTS](groups/qwen-tts.json) — 千问系列首个语音合成模型，支持中文、英文、中英混合输入。自适应根据输入文本调整输出语气，音色真实自然，支持输入输出全流式。
   - 模型：`qwen-tts`, `qwen-tts-latest`
 - [Qwen-声音复刻](groups/qwen-voice-enrollment.json) — 千问voice-enrollment模型是千问语音模型的声音复刻系列模型，仅需5s以上的音频，即可迅速复刻高相似度声音。结合qwen3-tts-vc-realtime模型使用，可将一个人的声音高保真复…
@@ -357,8 +359,10 @@ join：`models.jsonl[].family == families.jsonl[].slug == index.json.families[].
 - [Qwen3-LiveTranslate-Flash](groups/qwen3-livetranslate-flash.json) — Qwen3-LiveTranslate-Flash，一款高精度、高响应、高鲁棒性的多语言实时音视频同传大模型。依托Qwen3-Omni强大的基座能力、海量多模态数据、跨语言跨模态对齐和视觉增强等技术，…
   - 模型：`qwen3-livetranslate-flash`
 
-## 全模态 `Multimodal-Omni` — 6 个家族
+## 全模态 `Multimodal-Omni` — 7 个家族
 
+- [Qwen-MT-Uni](groups/qwen-mt-uni.json) — Qwen-MT-Uni 是 Qwen-MT 系列最新一代全模态翻译模型，除了提供文本和图片翻译之外，以文档与音频翻译为核心，覆盖 152 个语种互译：文档侧支持 Txt / Excel / PDF /…
+  - 模型：`qwen-mt-uni`
 - [Qwen-Omni-Turbo](groups/qwen-omni-turbo.json) — 千问全新多模态理解生成大模型，支持文本, 图像，语音，视频输入理解和混合输入理解，具备文本和语音同时流式生成能力，多模态内容理解速度显著提升，提供了4种自然对话音色。
   - 模型：`qwen-omni-turbo`, `qwen-omni-turbo-latest`
 - [Qwen2.5-开源模型](groups/qwen2.5.json) — Qwen2.5系列开源模型，包含文本生成模型、视觉理解模型、多模态模型等多个领域领先模型。
@@ -383,10 +387,17 @@ join：`models.jsonl[].family == families.jsonl[].slug == index.json.families[].
 - [实时语音识别及翻译V1.0](groups/gummy-realtime-v1.json) — 多语言语音转写及翻译的多模态大模型。本模型提供长时间、高准确率、实时转写中/英/日/韩等10个混合语种的服务。同时支持中英日韩互译，以其他6个语种翻译成中文或英文。
   - 模型：`gummy-realtime-v1`
 
-## 实时全模态 `Realtime-Omni` — 4 个家族
+## Realtime-Chatting `Realtime-Chatting` — 3 个家族
 
-- [Qwen-Omni-Turbo-Realtime](groups/qwen-omni-turbo-realtime.json) — 千问全新多模态理解生成大模型实时版，适合实时音频交互场景。支持音频伴随文本、图像、视频混合输入理解，具备语音和文本同时流式生成能力，提供了4种自然对话音色。
-  - 模型：`qwen-omni-turbo-realtime`, `qwen-omni-turbo-realtime-latest`
+- [Qwen-Audio-3.1-Realtime](groups/qwen-audio-3.1-realtime.json) — Qwen-Audio-3.1-Realtime 是新一代实时全双工语音大模型，进一步增强口语推理、多轮指令遵循、共情表达与角色扮演能力，兼顾智能应答与自然对话节奏。模型优化噪声拒识、多人对话理解与动态…
+  - 模型：`qwen-audio-3.1-realtime-plus`
+- [Qwen-Audio-Realtime-Flash](groups/qwen-audio-realtime-flash.json) — Qwen-Audio-Realtime 是一款登顶全球权威评测的下一代实时双工语音大模型，模型兼顾了模型智商与双工对话节奏,在保持流畅、自然的实时交互体验的同时,语音推理能力不打折扣;并通过并行推理和…
+  - 模型：`qwen-audio-3.0-realtime-flash`
+- [Qwen-Audio-Realtime-Plus](groups/qwen-audio-realtime-plus.json) — Qwen-Audio-Realtime 是一款登顶全球权威评测的下一代实时双工语音大模型，模型兼顾了模型智商与双工对话节奏,在保持流畅、自然的实时交互体验的同时,语音推理能力不打折扣;并通过并行推理和…
+  - 模型：`qwen-audio-3.0-realtime-plus`
+
+## 实时全模态 `Realtime-Omni` — 3 个家族
+
 - [Qwen3-Omni-Flash-Realtime](groups/qwen3-omni-flash-realtime.json) — Qwen3-Omni-Flash-Realtime多模态大模型的实时版，基于Thinker–Talker混合专家（MoE）架构，支持文本、图像、音频、视频的高效理解与语音生成能力，可进行119种语言文…
   - 模型：`qwen3-omni-flash-realtime`
 - [Qwen3.5-Omni-Flash-Realtime](groups/qwen3.5-omni-flash-realtime.json) — Qwen3.5-Omni是Qwen最新一代全模态大模型，支持文本，图片，音频，音视频理解与交互。作为 Qwen3-Omni 的全面进化版本，支持60+种语言音频输入，30+语言语音输出以及可控语音对话…
@@ -401,13 +412,6 @@ join：`models.jsonl[].family == families.jsonl[].slug == index.json.families[].
 - [通义多模态向量](groups/embedding.json) — 基于LLM底座的通用多模态表征模型，支持文本、图像、视频3种模态，具有以视觉为中心、全场景性能优异、高性价比的特点，适用于以图搜图、以文搜图、以文搜视频、以视频搜视频、以文搜文等下游多样化任务场景。
   - 模型：`multimodal-embedding-v1`, `tongyi-embedding-vision-flash`, `tongyi-embedding-vision-plus`
 
-## Realtime-Chatting `Realtime-Chatting` — 2 个家族
-
-- [Qwen-Audio-Realtime-Flash](groups/qwen-audio-realtime-flash.json) — Qwen-Audio-Realtime 是一款登顶全球权威评测的下一代实时双工语音大模型，模型兼顾了模型智商与双工对话节奏,在保持流畅、自然的实时交互体验的同时,语音推理能力不打折扣;并通过并行推理和…
-  - 模型：`qwen-audio-3.0-realtime-flash`
-- [Qwen-Audio-Realtime-Plus](groups/qwen-audio-realtime-plus.json) — Qwen-Audio-Realtime 是一款登顶全球权威评测的下一代实时双工语音大模型，模型兼顾了模型智商与双工对话节奏,在保持流畅、自然的实时交互体验的同时,语音推理能力不打折扣;并通过并行推理和…
-  - 模型：`qwen-audio-3.0-realtime-plus`
-
 ## 实时语音合成 `Realtime-Text-to-Speech` — 2 个家族
 
 - [Qwen-Audio-TTS](groups/qwen-audio-tts.json) — Qwen-Audio-TTS是一款面向实时交互场景和高质量语音生成场景的语音合成大模型。模型支持多种小语种和中文方言，并具有Free-style 指令遵循能力、Context能力和细粒度标签控制能力，…
@@ -421,6 +425,11 @@ join：`models.jsonl[].family == families.jsonl[].slug == index.json.families[].
   - 模型：`qwen3.7-text-embedding`, `qwen3.7-text-embedding-flash`, `text-embedding-async-v1`, `text-embedding-async-v2`, `text-embedding-v1`, `text-embedding-v2`, `text-embedding-v3`, `text-embedding-v4`
 - [Qwen-Rerank](groups/qwen-rerank.json) — 基于Qwen LLM底座训练的文本排序模型，对输入的Query和候选Docs进行相关性排序，支持100+语种和长文本输入，适用于文本检索、RAG等场景，效果对齐Qwen家族开源Rerank系列模型。
   - 模型：`gte-rerank-v2`, `qwen3-rerank`, `qwen3-vl-rerank`, `qwen3.7-text-rerank`
+
+## World-Model `World-Model` — 1 个家族
+
+- [HappyOyster-1.0](groups/happyoyster-1.0.json) — Happyoyster 系列首个实时交互的开放式世界模型。只需输入一句话，即可生成一个完整、可演绎、可探索、可互动的数字世界。
+  - 模型：`happyoyster-1.0-adventure`
 
 ## 3D 生成 `3D-generation` — 1 个家族
 

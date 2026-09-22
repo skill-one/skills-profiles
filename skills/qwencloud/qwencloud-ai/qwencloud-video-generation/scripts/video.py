@@ -7,6 +7,7 @@ Supports ALL video generation modes:
   kf2v  -- image-to-video based on first + last frames
   r2v   -- reference-based video (character role-play)
   vace  -- video editing (multi-image ref, repainting, edit, extension, outpainting)
+  animate -- image-to-animation (character image + reference video, wan2.2-animate-*)
 
 Submits async task, polls until completion, downloads video.
 Self-contained, stdlib only.
@@ -24,27 +25,37 @@ import argparse
 import json
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from qwencloud_lib import (  # noqa: E402
+    check_token_plan_model_support,
     download_file,
     http_request,
+    is_token_plan_key,
+    is_token_plan_model_supported,
     load_request,
     native_base_url,
     poll_task,
     require_api_key,
     run_update_signal,
+    sanitize_diagnostic,
 )
 from video_lib import (  # noqa: E402
-    DEFAULT_MODELS,
     ENDPOINTS,
+    MODE_ANIMATE,
     MODE_I2V,
     MODE_KF2V,
+    MODE_VIDEO_EDIT,
     PAYLOAD_BUILDERS,
     RESOLVE_KEYS,
-    _WAN27_I2V_MODELS,
     detect_mode,
+    get_default_model,
+    is_animate_model,
+    is_happyhorse_i2v_model,
+    is_video_edit_model,
+    is_wan27_i2v_model,
     resolve_request_urls,
     extract_video_url,
     estimate_cost,
@@ -53,17 +64,54 @@ from video_lib import (  # noqa: E402
 )
 
 # ---------------------------------------------------------------------------
-def _handle_result(result: dict[str, Any], args: argparse.Namespace) -> None:
+# Token Plan credits usage consoles — PAYG pricing is irrelevant for TP keys
+_TOKEN_PLAN_PERSONAL_CONSOLE_URL = (
+    "https://home.qwencloud.com/analytics/token-plan/individual"
+)
+_TOKEN_PLAN_TEAM_CONSOLE_URL = "https://home.qwencloud.com/analytics/token-plan/team"
+# Model market — activation guidance for models not yet enabled on the account
+_MODEL_MARKET_URL = "https://www.qwencloud.com/models/"
+
+# Error keywords indicating the model is not activated/subscribed (case-insensitive)
+_ACTIVATION_ERROR_HINTS = ("not activated", "not subscribed", "activation", "activate")
+
+
+def _check_not_activated(error_text: str, model: str, api_key: str) -> None:
+    """Print activation guidance when the API error indicates the model is not activated."""
+    text = (error_text or "").lower()
+    if not any(h in text for h in _ACTIVATION_ERROR_HINTS):
+        return
+    if is_token_plan_key(api_key):
+        print(
+            f"Hint: model '{model}' may not be included in your Token Plan subscription.\n"
+            "Manage your subscription:\n"
+            f"  Personal: {_TOKEN_PLAN_PERSONAL_CONSOLE_URL}\n"
+            f"  Team: {_TOKEN_PLAN_TEAM_CONSOLE_URL}",
+            file=sys.stderr,
+        )
+    else:
+        print(
+            f"Hint: model '{model}' may require activation before use.\n"
+            f"Activate it at {_MODEL_MARKET_URL}{model} "
+            "(see the model's page for activation steps).",
+            file=sys.stderr,
+        )
+
+
+def _handle_result(result: dict[str, Any], args: argparse.Namespace,
+                   model: str = "", api_key: str = "") -> None:
     output = result.get("output", {})
     status = output.get("task_status", "")
     if status != "SUCCEEDED":
         msg = output.get("message", "Unknown error")
-        print(f"Error: Task failed ({status}): {msg}", file=sys.stderr)
+        code = output.get("code", "")
+        _check_not_activated(f"{code}: {msg}" if code else msg, model, api_key)
+        print(sanitize_diagnostic(f"Error: Task failed ({status}): {msg}"), file=sys.stderr)
         sys.exit(1)
 
     video_url = extract_video_url(result)
     if not video_url:
-        print(f"Error: No video URL in result: {result}", file=sys.stderr)
+        print(sanitize_diagnostic(f"Error: No video URL in result: {result}"), file=sys.stderr)
         sys.exit(1)
 
     args.output.mkdir(parents=True, exist_ok=True)
@@ -71,11 +119,16 @@ def _handle_result(result: dict[str, Any], args: argparse.Namespace) -> None:
     resp_file.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Response saved to {resp_file}", file=sys.stderr)
 
-    video_file = args.output / "video.mp4"
+    # Use URL basename for unique filename (contains task ID from API)
+    url_basename = Path(urlparse(video_url).path).name
+    if url_basename and "." in url_basename:
+        video_file = args.output / url_basename
+    else:
+        video_file = args.output / "video.mp4"
     try:
         download_file(video_url, video_file)
     except Exception as e:
-        print(f"Warning: Could not download video: {e}", file=sys.stderr)
+        print(sanitize_diagnostic(f"Warning: Could not download video: {e}"), file=sys.stderr)
     else:
         print(f"Video saved to {video_file}", file=sys.stderr)
 
@@ -85,7 +138,7 @@ def _handle_result(result: dict[str, Any], args: argparse.Namespace) -> None:
             "local_path": str(video_file),
         }, ensure_ascii=False))
 
-    print(f"Video URL: {video_url}", file=sys.stderr)
+    print(sanitize_diagnostic(f"Video URL: {video_url}"), file=sys.stderr)
 
 # ---------------------------------------------------------------------------
 # Main
@@ -97,18 +150,35 @@ def main() -> None:
         description="Generate video via Wan models (t2v/i2v/kf2v/r2v/vace)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""\
-mode auto-detection (from request JSON fields):
-  t2v   prompt only → text-to-video (default: wan2.6-t2v, or wan2.7-t2v)
-  i2v   img_url/media/first_frame_url → image-to-video (default: wan2.6-i2v-flash, or wan2.7-i2v)
-  kf2v  first_frame_url (without media) → keyframe-to-video (default: wan2.2-kf2v-flash)
-  r2v   reference_urls → reference role-play (default: wan2.6-r2v-flash)
-  vace  function → video editing/repaint/extend (default: wan2.1-vace-plus)
+mode auto-detection (from request JSON fields; defaults load from CDN config):
+  t2v   prompt only → text-to-video
+  i2v   img_url/media/first_frame_url → image-to-video
+  kf2v  first_frame_url (without media) → keyframe-to-video
+  r2v   reference_urls → reference role-play
+  vace  function → video editing/repaint/extend
+  videoedit  model-id (wan2.7-videoedit / happyhorse-1.0-video-edit) →
+        media-based video editing
+  animate    model-id (wan2.2-animate-move / wan2.2-animate-mix) →
+        image-to-animation
 
 model version differences (handled automatically):
   wan2.6-t2v: uses "size" param (e.g. "1280*720"), supports seed, shot_type
-  wan2.7-t2v: uses "resolution" + "ratio" params, auto-dubbing, 5000 char prompt
+  wan2.7-t2v / happyhorse-1.0-t2v / happyhorse-1.1-t2v: use "resolution" + "ratio" params
   wan2.6-i2v: single img_url input
   wan2.7-i2v: media array (first_frame, last_frame, driving_audio, first_clip)
+  wan3.0-video / wan3.0-video-prime: media array i2v + optional "ratio" param
+    (adaptive/16:9/9:16/1:1) on top of resolution/duration
+  happyhorse-1.0-i2v / happyhorse-1.1-i2v: strict spec — media=[{type:'first_frame', url}]
+    (exactly one); only resolution/duration/watermark/seed params. Rejects
+    negative_prompt / prompt_extend / ratio / last_frame / first_clip / driving_audio.
+    Legacy img_url is auto-converted for convenience.
+  wan2.7-videoedit / happyhorse-1.0-video-edit: media=[{type:'video', url}] +
+    [{type:'reference_image', url}] (no `function` field). wan2.7-videoedit also
+    supports negative_prompt + ratio/duration/prompt_extend; happyhorse only
+    resolution/watermark/audio_setting/seed (prompt required).
+  wan2.2-animate-move / wan2.2-animate-mix: image_url (character) + video_url
+    (reference video, 2-30s) + mode ("wan-std" faster / "wan-pro" smoother,
+    required) + optional check_image. NO prompt, NO resolution/duration/seed.
 
 request JSON fields (--request / --file):
   prompt            Text description (required for t2v/i2v/r2v, optional for vace)
@@ -116,15 +186,18 @@ request JSON fields (--request / --file):
   size              Resolution for wan2.6 t2v/r2v, e.g. "1280*720"
   resolution        Resolution for wan2.7/i2v/kf2v, e.g. "720P", "1080P"
   ratio             Aspect ratio for wan2.7-t2v, e.g. "16:9", "9:16"
-  img_url           First-frame image (i2v wan2.6)
+  img_url           First-frame image (i2v wan2.6 / happyhorse-i2v compat)
   first_frame_url   First frame (wan2.7-i2v/kf2v)
   last_frame_url    Last frame (wan2.7-i2v/kf2v)
   first_clip_url    Video to continue (wan2.7-i2v)
   driving_audio_url Audio for lip-sync (wan2.7-i2v)
-  media             Array of {type, url} for wan2.7-i2v
+  media             Array of {type, url} for wan2.7-i2v / happyhorse-i2v / videoedit
   reference_urls    Character reference URLs (r2v)
+  reference_images  Reference image URLs (videoedit)
   function          VACE: repainting, editing, extension, outpainting
-  video_url         Source video (VACE)
+  image_url         Character image URL/path (animate)
+  video_url         Source video (VACE / videoedit / animate)
+  mode              Service mode: "wan-std" / "wan-pro" (animate, required)
   audio_url         Audio track (t2v/i2v)
   negative_prompt   What to avoid
   seed              Reproducibility (wan2.6 only)
@@ -135,8 +208,9 @@ local files:
   Local paths are auto-uploaded to DashScope temp storage (48h TTL).
 
 environment variables:
-  DASHSCOPE_API_KEY  (required) API key — also loaded from .env
-  QWEN_API_KEY       (alternative)
+  QWENCLOUD_API_KEY  (preferred) API key — also loaded from .env
+  QWEN_API_KEY       (fallback) Legacy alias
+  DASHSCOPE_API_KEY  (fallback) Legacy provider variable
   QWEN_REGION        ap-southeast-1 (default)
 
 examples:
@@ -165,6 +239,19 @@ examples:
   # VACE video editing
   python scripts/video.py --request '{"function":"repainting",
     "video_url":"input.mp4","prompt":"Change sky to sunset"}'
+
+  # Video editing with wan2.7-videoedit (media[] protocol, no `function`)
+  python scripts/video.py --request '{"prompt":"Replace the man with a robot",
+    "video_url":"input.mp4","reference_images":["robot.png"],
+    "resolution":"1080P","ratio":"16:9"}' --model wan2.7-videoedit
+
+  # Image-to-video with happyhorse-i2v (img_url auto-promoted to media first_frame)
+  python scripts/video.py --request '{"prompt":"gentle motion",
+    "img_url":"photo.png"}' --model happyhorse-1.1-i2v
+
+  # Image-to-animation: transfer actions from a reference video to a character
+  python scripts/video.py --request '{"image_url":"character.jpg",
+    "video_url":"dance.mp4","mode":"wan-std"}' --model wan2.2-animate-move
 """,
     )
     parser.add_argument("--request", type=str, help="Inline JSON: fields depend on mode")
@@ -174,8 +261,11 @@ examples:
     parser.add_argument("--print-response", action="store_true", help="Print video URL to stdout")
     parser.add_argument("--model", type=str,
                         help="Model ID (overrides auto-default; see epilog for defaults per mode)")
-    parser.add_argument("--mode", type=str, choices=["t2v", "i2v", "kf2v", "r2v", "vace"],
-                        help="Force mode (auto-detected from request fields if omitted)")
+    parser.add_argument("--mode", type=str,
+                        choices=["t2v", "i2v", "kf2v", "r2v", "vace", "videoedit", "animate"],
+                        help="Force mode (auto-detected from request fields if omitted). "
+                             "'videoedit' is for wan2.7-videoedit / happyhorse-1.0-video-edit; "
+                             "'animate' is for wan2.2-animate-move / wan2.2-animate-mix.")
     parser.add_argument("--poll-interval", type=int, default=15,
                         help="Seconds between poll attempts (default: 15)")
     parser.add_argument("--timeout", type=int, default=600,
@@ -200,7 +290,7 @@ examples:
             print(f"  {format_task_status(result)}", file=sys.stderr)
         status = result.get("output", {}).get("task_status", "")
         if status in ("SUCCEEDED", "FAILED", "CANCELED"):
-            _handle_result(result, args)
+            _handle_result(result, args, model=args.model or "", api_key=api_key)
         else:
             print(json.dumps(result, ensure_ascii=False, indent=2))
             sys.exit(2)
@@ -210,7 +300,7 @@ examples:
     if args.task_id:
         task_id = args.task_id
         if verbose:
-            print(f"Resuming task: {task_id}", file=sys.stderr)
+            print(sanitize_diagnostic(f"Resuming task: {task_id}"), file=sys.stderr)
             print(f"Polling every {args.poll_interval}s (timeout: {args.timeout}s)...",
                   file=sys.stderr)
         try:
@@ -218,38 +308,59 @@ examples:
                                timeout_s=args.timeout, interval=args.poll_interval,
                                verbose=verbose)
         except TimeoutError as e:
-            print(f"Error: {e}", file=sys.stderr)
-            print(f"Task may still be running. Resume with: --task-id {task_id}", file=sys.stderr)
+            print(sanitize_diagnostic(f"Error: {e}"), file=sys.stderr)
+            print(sanitize_diagnostic(f"Task may still be running. Resume with: --task-id {task_id}"), file=sys.stderr)
             sys.exit(1)
-        _handle_result(result, args)
+        _handle_result(result, args, model=args.model or "", api_key=api_key)
         return
 
     # --- Normal mode: submit new task ---
     try:
         request = load_request(args)
     except ValueError as e:
-        print(f"Error: {e}", file=sys.stderr)
+        print(sanitize_diagnostic(f"Error: {e}"), file=sys.stderr)
         sys.exit(1)
 
-    mode = args.mode or detect_mode(request)
-    model = args.model or request.get("model") or DEFAULT_MODELS[mode]
-    # Model-aware correction: wan2.7-i2v uses first_frame_url but needs i2v endpoint
-    if model in _WAN27_I2V_MODELS and mode == MODE_KF2V:
-        mode = MODE_I2V
-    duration = request.get("duration", 5)
-    resolution = resolve_resolution(request, mode)
-    cost_str = estimate_cost(model, duration, resolution)
+    try:
+        mode = args.mode or detect_mode(request, model=args.model or request.get("model", ""))
+        model = args.model or request.get("model") or get_default_model(mode)
+        check_token_plan_model_support(model, domain="Video")
+        # Model-aware correction: wan2.7-i2v / happyhorse-i2v use first_frame_url
+        # but belong to i2v mode (detect_mode would have classified them as kf2v).
+        if is_wan27_i2v_model(model) or is_happyhorse_i2v_model(model):
+            if mode == MODE_KF2V:
+                mode = MODE_I2V
+        # Correct model-routed modes when the request shape alone is ambiguous.
+        if is_video_edit_model(model) and mode != MODE_VIDEO_EDIT:
+            mode = MODE_VIDEO_EDIT
+        if is_animate_model(model) and mode != MODE_ANIMATE:
+            mode = MODE_ANIMATE
+        duration = request.get("duration", 5)
+        resolution = resolve_resolution(request, mode)
+        # Token Plan keys consume credits, not PAYG pricing.
+        token_plan = is_token_plan_key(api_key)
+        token_plan_model = is_token_plan_model_supported(model, "Video")
+        cost_str = None if token_plan else estimate_cost(model, duration, resolution)
 
-    if verbose:
-        info = f"Mode: {mode} | Model: {model}"
-        if cost_str:
-            info += f" | Cost: {cost_str}"
-        print(info, file=sys.stderr)
+        if verbose:
+            info = f"Mode: {mode} | Model: {model}"
+            if token_plan and token_plan_model:
+                info += (
+                    f" | Credits: Personal {_TOKEN_PLAN_PERSONAL_CONSOLE_URL}"
+                    f" | Team {_TOKEN_PLAN_TEAM_CONSOLE_URL}"
+                )
+            elif token_plan:
+                info += " | Billing: PAYG-only model (not available on Token Plan)"
+            elif cost_str:
+                info += f" | Cost: {cost_str}"
+            print(info, file=sys.stderr)
 
-    resolve_request_urls(request, api_key, model, RESOLVE_KEYS[mode])
-
-    builder = PAYLOAD_BUILDERS[mode]
-    payload = builder(request, model)
+        resolve_request_urls(request, api_key, model, RESOLVE_KEYS[mode])
+        builder = PAYLOAD_BUILDERS[mode]
+        payload = builder(request, model)
+    except (ValueError, KeyError, RuntimeError) as e:
+        print(sanitize_diagnostic(f"Error: {e}"), file=sys.stderr)
+        sys.exit(1)
 
     url = f"{native_base_url()}{ENDPOINTS[mode]}"
 
@@ -257,17 +368,18 @@ examples:
         resp = http_request("POST", url, api_key, payload,
                             extra_headers={"X-DashScope-Async": "enable"}, timeout=60)
     except Exception as e:
-        print(f"API error: {e}", file=sys.stderr)
+        _check_not_activated(str(e), model, api_key)
+        print(sanitize_diagnostic(f"API error: {e}"), file=sys.stderr)
         sys.exit(1)
 
     task_id = resp.get("output", {}).get("task_id")
     if not task_id:
-        print(f"Error: No task_id in response: {json.dumps(resp, ensure_ascii=False)[:500]}",
+        print(sanitize_diagnostic(f"Error: No task_id in response: {json.dumps(resp, ensure_ascii=False)}")[:500],
               file=sys.stderr)
         sys.exit(1)
 
     if verbose:
-        print(f"Task submitted: {task_id}", file=sys.stderr)
+        print(sanitize_diagnostic(f"Task submitted: {task_id}"), file=sys.stderr)
 
     if args.submit_only:
         print(task_id)
@@ -282,11 +394,11 @@ examples:
                            timeout_s=args.timeout, interval=args.poll_interval,
                            verbose=verbose)
     except TimeoutError as e:
-        print(f"Error: {e}", file=sys.stderr)
-        print(f"Task may still be running. Resume with: --task-id {task_id}", file=sys.stderr)
+        print(sanitize_diagnostic(f"Error: {e}"), file=sys.stderr)
+        print(sanitize_diagnostic(f"Task may still be running. Resume with: --task-id {task_id}"), file=sys.stderr)
         sys.exit(1)
 
-    _handle_result(result, args)
+    _handle_result(result, args, model=model, api_key=api_key)
 
 if __name__ == "__main__":
     main()

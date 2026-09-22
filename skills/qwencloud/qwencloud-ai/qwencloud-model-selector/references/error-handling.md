@@ -1,12 +1,12 @@
 # CLI Error Handling — qwencloud-model-selector
 
-When a CLI command fails, **do not silently fall back to static snapshots**. Classify the error first,
+When a CLI command fails, **do not silently fall back to CDN/static snapshots**. Classify the error first,
 then apply the matching recovery action. Only fall back after recovery genuinely fails or the user
 explicitly declines.
 
 ## Core principle
 
-> **Recover first, fall back last.** Snapshots and web lookups are tertiary sources — they exist for
+> **Recover first, fall back last.** CDN/static snapshots and other web lookups are tertiary sources — they exist for
 > the case when CLI is truly unreachable, not for the case when CLI returned a recoverable error.
 
 ## Error classification & recovery
@@ -19,7 +19,7 @@ explicitly declines.
 | `network-timeout` | Network errors, `ETIMEDOUT`, `ECONNREFUSED`, `socket hang up`, `502/503/504` | Retry once after 2s. If second attempt also fails, inform user and ask whether to retry again or fall back to snapshot. |
 | `rate-limit` | `429`, `rate limit exceeded`, `too many requests` | Inform user; direct them to [Rate Limit Console](https://home.qwencloud.com/settings/monitoring/rate-limit). **Do NOT** auto-fall back — let user decide whether to wait and retry. |
 | `quota-exhausted` | `quota exhausted`, `insufficient balance`, `free tier used up`, `403` on usage | Inform user; direct them to [Billing Console](https://home.qwencloud.com/billing/pay-as-you-go). **Do NOT** fall back to snapshots — snapshots have no quota information, falling back would be misleading. |
-| `permission-denied` | `403 Forbidden` on model/feature, `not subscribed`, Coding Plan key (`sk-sp-...`) requesting non-Coding-Plan model | Explain restriction (e.g. Coding Plan model list); see [recommendation-matrix.md](recommendation-matrix.md) Coding Plan section. Suggest an alternative model the user has access to. |
+| `permission-denied` | `403 Forbidden` on model/feature, `not subscribed`, or a plan/model mismatch | Fetch the [CDN Token Plan model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-token-plan-models.md). Explain the restriction and suggest only a documented alternative; never probe models or silently switch to PAYG. If CDN access fails, use the [local fallback](../cdn/references/qwencloud-token-plan-models.md). |
 | `version-mismatch` | `unsupported flag`, `unknown subcommand`, `please upgrade` | Suggest `qwencloud version --check` or run the update-check skill. After upgrade, retry original command. |
 | `other` | Unrecognized stderr output | Show the raw stderr to the user; link to [official docs](https://docs.qwencloud.com/). Only after the user has seen the error and declined to debug, fall back to snapshot. |
 
@@ -43,7 +43,7 @@ For any CLI error, follow this template:
 3. **Act** — perform the recovery action for that category.
 4. **Retry** — re-run the **exact original command** after recovery succeeds.
 5. **Fall back only if** — recovery failed OR user explicitly opted out.
-6. **When falling back** — always state explicitly: "CLI unavailable, using offline snapshot (may be outdated)."
+6. **When falling back** — always state explicitly: "CLI unavailable, using the CDN/static snapshot (may be outdated)."
 
 ## Example flows
 

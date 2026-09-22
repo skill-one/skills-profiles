@@ -1,11 +1,8 @@
 ---
 name: qwencloud-video-generation
-description: "[QwenCloud] Generate videos using Wan models. Supports text-to-video, image-to-video, first+last frame, reference-based role-play, and video editing (VACE). TRIGGER when: user wants to create, generate, or edit video content, mentions video generation/animation/video clips/Wan models, or explicitly invokes this skill by name (e.g. use qwencloud-video-generation). DO NOT TRIGGER when: user wants to generate images (use qwencloud-image-generation), understand/analyze existing videos (use qwencloud-vision), text-only tasks."
-compatibility: "Requires Python 3.9+ and curl. Cursor: auto-loaded. Claude Code: read this skill's SKILL.md before first use."
+description: "Generate videos using Wan models. Supports text-to-video, image-to-video, first+last frame, reference-based role-play, and video editing (VACE). TRIGGER when: user wants to create, generate, or edit video content, mentions video generation/animation/video clips/Wan models, or explicitly invokes this skill by name (e.g. use qwencloud-video-generation). DO NOT TRIGGER when: user wants to generate images (use qwencloud-image-generation), understand/analyze existing videos (use qwencloud-vision), text-only tasks."
+compatibility: "Requires Python 3.9+; curl is PAYG-only. Cursor: auto-loaded. Claude Code: read this skill's SKILL.md before first use."
 ---
-
-> **Agent setup**: If your agent doesn't auto-load skills (e.g. Claude Code),
-> see [agent-compatibility.md](references/agent-compatibility.md) once per session.
 
 # Qwen Video Generation
 
@@ -13,9 +10,9 @@ Generate videos using Wan models. All tasks are **asynchronous** — submit, the
 completion.
 This skill is part of **qwencloud/qwencloud-ai**.
 
-> **⚠️ Critical Parameter Differences by Mode:**
+> **⚠️ Critical Parameter Differences:**
 > - **kf2v (First+Last Frame)**: Duration is **fixed at 5 seconds** — other values will fail. Output is **silent only**.
-> - **Resolution parameter varies**: t2v/r2v/vace use `size` (e.g. `"1280*720"`); i2v/kf2v use `resolution` (e.g. `"720P"`).
+> - **Resolution parameters vary by model family, not mode alone**: Fetch the current model catalog before choosing `size`, `resolution`, or `ratio`.
 
 ## Skill directory
 
@@ -32,17 +29,38 @@ Use this skill's internal files to execute and learn. Load reference files on de
 | `references/prompt-guide.md` | Per-mode prompt formulas, sound description, multi-shot structure |
 | `references/examples.md` | Full script examples per mode |
 | `references/sources.md` | Official documentation URLs |
-| `references/agent-compatibility.md` | Agent self-check: register skills in project config for agents that don't auto-load |
 
 ## Security
 
-**NEVER output any API key or credential in plaintext.** Always use variable references (`$DASHSCOPE_API_KEY` in shell, `os.environ["DASHSCOPE_API_KEY"]` in Python). Any check or detection of credentials must be **non-plaintext**: report only status (e.g. "set" / "not set", "valid" / "invalid"), never the value. Never display contents of `.env` or config files that may contain secrets.
+**NEVER output any API key or credential in plaintext.** Always use variable references (`$QWENCLOUD_API_KEY` in shell, `os.environ["QWENCLOUD_API_KEY"]` in Python). The scripts accept `QWENCLOUD_API_KEY`, then `QWEN_API_KEY`, then `DASHSCOPE_API_KEY`. Any check or detection of credentials must be **non-plaintext**: report only status (e.g. "set" / "not set", "valid" / "invalid"), never the value. Never display contents of `.env` or config files that may contain secrets.
 
-**When the API key is not configured, NEVER ask the user to provide it directly.** Instead, help create a `.env` file with a placeholder (`DASHSCOPE_API_KEY=sk-your-key-here`) and instruct the user to replace it with their actual key from the [QwenCloud Console](https://home.qwencloud.com/api-keys). Only write the actual key value if the user explicitly requests it.
+**When the API key is not configured, NEVER ask the user to provide it directly.** Instead, help create a `.env` file with a placeholder (`QWENCLOUD_API_KEY=sk-your-key-here`) and instruct the user to replace it with their actual key from the [QwenCloud Console](https://home.qwencloud.com/api-keys). Only write the actual key value if the user explicitly requests it.
 
 ## Key Compatibility
 
-Scripts require a **standard QwenCloud API key** (`sk-...`). Coding Plan keys (`sk-sp-...`) cannot be used — video generation models are not available on Coding Plan, and Coding Plan does not support the native QwenCloud API. Video generation incurs per-second charges on standard keys. The script detects `sk-sp-` keys at startup and prints a warning. If qwencloud-ops-auth is installed, see its `references/codingplan.md` for full details.
+Scripts support both **standard QwenCloud API keys** (`sk-...`) and **Token Plan keys** (`sk-sp-...`). Token Plan keys are automatically routed to the Token Plan endpoint for supported video models — see [Token Plan Support](#token-plan-support) below.
+
+**Token Plan: do not use curl; always use the bundled Python script.**
+
+Coding Plan keys (also `sk-sp-` prefix but purchased via Coding Plan subscription) cannot be used — video generation models are not available on Coding Plan. Video generation incurs per-second charges on standard keys. The script detects key type at startup and routes accordingly. If qwencloud-ops-auth is installed, see its `references/codingplan.md` for full details.
+
+Detect the API key type without exposing the key:
+
+```bash
+python3 -c "
+import sys; sys.path.insert(0, 'scripts')
+from qwencloud_lib import detect_api_key_type
+print(detect_api_key_type('scripts/qwencloud_lib.py'))
+"
+```
+
+| Output | Meaning |
+|--------|---------|
+| `token-plan` | Token Plan key detected (`sk-sp-` prefix) |
+| `payg` | Standard PAYG key detected |
+| `not-set` | No API key found in environment |
+
+For Token Plan, fetch and read the current [Token Plan model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-token-plan-models.md), then use an exact listed model. If CDN access fails, use the [local fallback](cdn/references/qwencloud-token-plan-models.md).
 
 ## Mode Selection Guide
 
@@ -50,51 +68,35 @@ Scripts require a **standard QwenCloud API key** (`sk-...`). Coding Plan keys (`
 |-----------|------|-----------|
 | Generate video from text description only | **t2v** | `prompt` only |
 | Animate a single image | **i2v** | `img_url` or `reference_image` |
-| wan2.7 unified i2v: first frame, first+last frame, video continuation, audio sync | **i2v** | `media[]`, `first_frame_url`, `first_clip_url`, `driving_audio_url` |
+| wan2.7 unified i2v: first frame, first+last frame, video continuation, audio sync | **i2v** | `media` (array), `first_frame_url`, `first_clip_url`, `driving_audio_url` |
 | Transition between two images (**⚠️ 5s fixed, silent only**) | **kf2v** | `first_frame_url` + `last_frame_url` |
-| Role-play: make characters act a new script | **r2v** | `reference_urls` (up to 5) |
-| Video editing: multi-image ref, repainting, local edit, extend, outpaint | **vace** | `function` |
+| Role-play: make characters act a new script | **r2v** | `reference_urls` or `media`; read the CDN model catalog for model-specific limits |
+| Video editing: multi-image ref, repainting, local edit, extend, outpaint | **vace** | `function`; read the CDN model catalog for the current default |
+| Video editing via media protocol | **videoedit** | `--model` + `media` or `video_url`; read the CDN model catalog for supported models |
+| Transfer a person's actions/expressions from a reference video to a character image | **animate** | `--model` + `image_url` + `video_url` + `mode`; read the CDN model catalog for supported models |
 
 ### Model Selection
 
-1. **User specified a model** → use directly.
+> **🚫 CRITICAL — Never override user-specified parameters.** If the user explicitly specifies a model (in prompt or request JSON), you MUST use exactly that model. Do NOT:
+> - Replace it with a "better suited" or newer model (e.g., swapping the user's `wan2.6-t2v` for `wan3.0-video` because the task "looks like an all-in-one job")
+> - Replace or restructure their input fields (e.g. converting a user-specified `img_url`/`media` arrangement) unless required by the chosen model's documented format — and if a conversion is required, keep the user's media order and content intact
+> - Add parameters the user did not ask for (`prompt_extend`, `shot_type`, style hints) — note `shot_type: "multi"` REQUIRES `prompt_extend: true`, but only when the user actually requested multi-shot
+> - "Optimize" any explicit user choice (`duration`, `size`, `resolution`, `prompt`)
+>
+> Selection guidance below applies **only when the user has NOT specified a model**.
+
+1. **User specified a model** → **MANDATORY: use that exact model** — do not substitute, do not "optimize", do not add unrequested parameters.
 2. **Consult the qwencloud-model-selector skill** when model choice depends on capability, scenario, or pricing.
-3. **No signal, clear task** → defaults: t2v → `wan2.6-t2v`, i2v → `wan2.6-i2v-flash`, kf2v → `wan2.2-kf2v-flash`, r2v → `wan2.6-r2v-flash`, vace → `wan2.1-vace-plus`. For wan2.7 features, explicitly set `--model wan2.7-t2v` or `--model wan2.7-i2v`.
 
 ## Models
 
-### t2v (Text-to-Video)
+Before selecting, recommending, or defaulting a model, fetch and read the current [QwenCloud video-generation model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-video-generation-models.md). It contains the model list, basic model information, mode recommendations, compatibility notes, and defaults. If CDN access fails, use the [local fallback](cdn/references/qwencloud-video-generation-models.md).
 
-| Model | Features |
-|-------|----------|
-| `wan2.7-t2v` | Ratio control, auto-dubbing, 5000 char prompt, 720P/1080P. Use `resolution` + `ratio` params. |
-| `wan2.6-t2v` **default** | Audio, multi-shot, 2–15s, 720P/1080P. Use `size` param. |
-| `wan2.5-t2v-preview` | Audio, 5s/10s, 480P/720P/1080P |
-| `wan2.2-t2v-plus` | Silent, 5s, 480P/1080P |
-
-### i2v (Image-to-Video)
-
-| Model | Features |
-|-------|----------|
-| `wan2.7-i2v` | Unified protocol: first frame, first+last frame, video continuation, audio sync. Uses `media[]` array. |
-| `wan2.6-i2v-flash` **default** | Audio/silent, multi-shot, 2–15s, 720P/1080P. Uses `img_url`. |
-| `wan2.6-i2v` | Audio, multi-shot, 2–15s, 720P/1080P |
-| `wan2.5-i2v-preview` | Audio, 5s/10s, 480P/720P/1080P |
-
-### kf2v / r2v / vace
-
-| Model                                  | Features                                           |
-|----------------------------------------|----------------------------------------------------|
-| `wan2.2-kf2v-flash` **(kf2v default)** | Silent, 5s, 480P/720P/1080P                        |
-| `wan2.6-r2v`                           | Audio, single/multi character, 2–10s, 720P/1080P   |
-| `wan2.6-r2v-flash` **(r2v default)**   | Audio/silent, multi-character, 2–10s, 720P/1080P   |
-| `wan2.1-vace-plus` **(vace)**         | Multi-image ref, repainting, local edit, ≤5s, 720P |
-
-> **⚠️ Important**: The model list above is a **point-in-time snapshot** and may be outdated. Model availability
+> **⚠️ Important**: The model catalog is a **point-in-time snapshot** and may be outdated. Model availability
 > changes frequently. **Always check the [official model list](https://www.qwencloud.com/models)
 > for the authoritative, up-to-date catalog before making model decisions.**
 
-> **Model details**: For more information about a specific model, direct the user to its detail page: `https://www.qwencloud.com/models/<model-name>` (replace `<model-name>` with the exact model ID, e.g. `wan2.7-t2v` → https://www.qwencloud.com/models/wan2.7-t2v). NEVER modify or guess the model name in the URL.
+> **Model details**: For more information about a specific model, direct the user to `https://www.qwencloud.com/models/<model-name>`. Replace `<model-name>` with the exact model ID; never modify or guess it.
 
 > **Dynamic model queries**: If the **qwencloud-model-selector** skill or **QwenCloud CLI** (`qwencloud models info <model>`) is available, use it for real-time model data. CLI requires authentication — see the **qwencloud-usage** skill for login flow.
 
@@ -104,12 +106,16 @@ Scripts require a **standard QwenCloud API key** (`sk-...`). Coding Plan keys (`
 
 ### Prerequisites
 
-- **API Key**: Check that `DASHSCOPE_API_KEY` (or `QWEN_API_KEY`) is set using a **non-plaintext** check only (e.g. in shell:
-  `[ -n "$DASHSCOPE_API_KEY" ]`; report only "set" or "not set", never the key value). If not set: run the *
+- **API Key**: Check `QWENCLOUD_API_KEY`, `QWEN_API_KEY`, then `DASHSCOPE_API_KEY` using a **non-plaintext** check only (e.g. in shell:
+  `[ -n "$QWENCLOUD_API_KEY" ]`; report only "set" or "not set", never the key value). If not set: run the *
   *qwencloud-ops-auth** skill if available; otherwise guide the user to obtain a key from [QwenCloud Console](https://home.qwencloud.com/api-keys) and set it via `.env` file (
-  `echo 'DASHSCOPE_API_KEY=sk-your-key-here' >> .env` in project root or current directory) or environment variable. The
+  `echo 'QWENCLOUD_API_KEY=sk-your-key-here' >> .env` in project root or current directory) or environment variable. The
   script searches for `.env` in the current working directory and the project root. Skills may be installed
   independently — do not assume qwencloud-ops-auth is present.
+  **Note**: The script auto-loads `.env` from the current directory and the project root (in addition to any exported environment
+  variable). A shell check showing `$QWENCLOUD_API_KEY` as "not set" does NOT mean the script will fail — it may still find the
+  key in `.env`. Treat the shell check as informational only; the authoritative test is simply running the script (it exits with
+  a clear error if no key is found anywhere).
 - Python 3.9+ (stdlib only, **no pip install needed**)
 - For media merging (concat, trim, audio overlay): see [merge-media.md](references/merge-media.md) for ffmpeg/moviepy recipes suited to the user's environment
 
@@ -121,7 +127,7 @@ Before first execution, verify Python is available:
 python3 --version  # must be 3.9+
 ```
 
-If `python3` is not found, try `python --version` or `py -3 --version`. If Python is unavailable or below 3.9, skip to **Path 2 (curl)** in [execution-guide.md](references/execution-guide.md).
+If `python3` is unavailable or below 3.9, PAYG may use **Path 2 (curl)**; Token Plan must install Python 3.9+ instead.
 
 ### Default: Run Script
 
@@ -133,7 +139,14 @@ If `python3` is not found, try `python --version` or `py -3 --version`. If Pytho
 
 ```bash
 python3 <this-skill-dir>/scripts/video.py \
+  --model wan2.6-t2v \
   --request '{"prompt":"A detective in a rainy city at night","size":"1280*720","duration":5}' \
+  --print-response
+
+# Image-to-animation (no prompt): transfer dance moves from reference video to a character
+python3 <this-skill-dir>/scripts/video.py \
+  --model wan2.2-animate-move \
+  --request '{"image_url":"https://example.com/character.jpg","video_url":"https://example.com/dance.mp4","mode":"wan-std"}' \
   --print-response
 ```
 
@@ -141,9 +154,9 @@ python3 <this-skill-dir>/scripts/video.py \
 |----------|-------------|
 | `--request '{...}'` | JSON request body |
 | `--file path.json` | Load request from file |
-| `--mode MODE` | Override auto-detected mode (t2v/i2v/kf2v/r2v/vace) |
+| `--mode MODE` | Override auto-detected mode (t2v/i2v/kf2v/r2v/vace/videoedit/animate) |
 | `--model ID` | Override model |
-| `--output dir/` | Save video and response JSON |
+| `--output dir/` | Save video and response JSON to directory; video is auto-named from the download URL basename, preventing overwrites across runs; use distinct filenames across calls to avoid overwriting response data |
 | `--print-response` | Print response JSON to stdout |
 | `--submit-only` | Submit and exit (print task_id) |
 | `--task-id ID` | Operate on existing task |
@@ -162,14 +175,14 @@ python3 <this-skill-dir>/scripts/video.py \
 
 If the script fails, match the error output against the diagnostic table below to determine the resolution. If no match, read [execution-guide.md](references/execution-guide.md) for alternative paths: curl commands (Path 2 — all 5 modes), code generation (Path 3), and autonomous resolution (Path 5).
 
-**If Python is not available at all** → skip directly to Path 2 (curl) in [execution-guide.md](references/execution-guide.md).
+**If Python is not available at all** → PAYG may use Path 2 (curl); Token Plan must install Python 3.9+.
 
 | Error Pattern | Diagnosis | Resolution |
 |---------------|-----------|------------|
 | `command not found: python3` | Python not on PATH | Try `python` or `py -3`; install Python 3.9+ if missing |
 | `Python 3.9+ required` | Script version check failed | Upgrade Python to 3.9+ |
 | `SyntaxError` near type hints | Python < 3.9 | Upgrade Python to 3.9+ |
-| `QWEN_API_KEY/DASHSCOPE_API_KEY not found` | Missing API key | Obtain key from [QwenCloud Console](https://home.qwencloud.com/api-keys); add to `.env`: `echo 'DASHSCOPE_API_KEY=sk-...' >> .env`; or run **qwencloud-ops-auth** if available |
+| `QWENCLOUD_API_KEY/QWEN_API_KEY/DASHSCOPE_API_KEY not found` | Missing API key | Obtain key from [QwenCloud Console](https://home.qwencloud.com/api-keys); add to `.env`: `echo 'QWENCLOUD_API_KEY=sk-...' >> .env`; or run **qwencloud-ops-auth** if available |
 | `HTTP 401` | Invalid or mismatched key | Run **qwencloud-ops-auth** (non-plaintext check only); verify key is valid |
 | `SSL: CERTIFICATE_VERIFY_FAILED` | SSL cert issue (proxy/corporate) | macOS: run `Install Certificates.command`; else set `SSL_CERT_FILE` env var |
 | `URLError` / `ConnectionError` | Network unreachable | Check internet; set `HTTPS_PROXY` if behind proxy |
@@ -180,43 +193,22 @@ If the script fails, match the error output against the diagnostic table below t
 
 ## Request Fields Summary
 
-All modes require `prompt`. See [request-fields.md](references/request-fields.md) for full field tables per mode.
+All modes require `prompt` **except** `animate` (no prompt) and `videoedit` for wan2.7 (prompt optional). See [request-fields.md](references/request-fields.md) for full field tables per mode.
 
-### ⚠️ Resolution Parameter by Mode (Critical)
+### ⚠️ Resolution Parameters by Model Family (Critical)
 
-| Mode | Parameter | Format | Example |
-|------|-----------|--------|--------|
-| t2v | `size` | `"WxH"` | `"1280*720"`, `"1920*1080"` |
-| r2v | `size` | `"WxH"` | `"1280*720"`, `"1920*1080"` |
-| vace | `size` | `"WxH"` | `"1280*720"` |
-| i2v | `resolution` | `"xxxP"` | `"720P"`, `"1080P"` |
-| kf2v | `resolution` | `"xxxP"` | `"480P"`, `"720P"`, `"1080P"` |
-
-> **Using the wrong parameter name will cause the API call to fail.**
+The resolution field varies by model family. Check the model catalog above before choosing between `size`, `resolution`, and `ratio`; using the wrong field can cause the API call to fail.
 
 ### Mode-Specific Required Fields
 
-- i2v needs `img_url`/`reference_image`. kf2v needs `first_frame_url` + `last_frame_url`. r2v needs `reference_urls`. vace needs `function`.
+- Required fields vary by model family. Use [request-fields.md](references/request-fields.md) for payload shapes and the model catalog above for current model-specific compatibility.
 
 ## Cost Estimation
 
 > 🚨 **NEVER guess or fabricate any price figure.** Always direct the user to the
 > [official pricing page](https://docs.qwencloud.com/developer-guides/getting-started/pricing) for exact rates.
 
-Cost is billed per second of generated video. Price varies by model and resolution. For the latest rates, check
-the [official pricing page](https://docs.qwencloud.com/developer-guides/getting-started/pricing).
-
-| Model            | 720P (USD)         | 1080P (USD)        |
-|------------------|--------------------|--------------------|
-| wan2.7-t2v       | per-second billing | per-second billing |
-| wan2.7-i2v       | per-second billing | per-second billing |
-| wan2.6-t2v       | per-second billing | per-second billing |
-| wan2.6-i2v-flash | per-second billing | per-second billing |
-| wan2.6-r2v-flash | per-second billing | per-second billing |
-
-Quick example: wan2.6-t2v 5s 720P — check
-the [official pricing page](https://docs.qwencloud.com/developer-guides/getting-started/pricing) for current per-second
-rates. Some models may offer a limited free quota — **do not assume any call is free**; use the **qwencloud-usage** skill to check remaining free tier quota, or verify in the user's [QwenCloud console](https://home.qwencloud.com/benefits).
+Cost is billed per second of generated video. Price varies by model and resolution. Fetch the [CDN model-pricing reference](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-model-pricing.md), and use the official pricing page for exact current rates. Some models may offer a limited free quota — **do not assume any call is free**; use the **qwencloud-usage** skill to check remaining free tier quota, or verify in the user's [QwenCloud console](https://home.qwencloud.com/benefits). If CDN access fails, use the [local fallback](cdn/references/qwencloud-model-pricing.md).
 
 To check actual usage and bills: use the **qwencloud-usage** skill, or visit the console:
 [Usage Analytics](https://home.qwencloud.com/analytics) |
@@ -270,6 +262,20 @@ When passing this skill's output to another skill (e.g., vace edit, vision analy
 Prefer the **current working directory**. Default subdirectory: `./output/qwencloud-video-generation/`.
 
 **Write prohibition**: NEVER write output files into this skill's installation directory or any `skills/` hierarchy. All generated content must go to `output/` under the current working directory or a user-specified path.
+
+## Token Plan Support
+
+Token Plan supports only a subset of video models. Fetch and read the current [Token Plan model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-token-plan-models.md) before selecting or validating a model. If CDN access fails, use the [local fallback](cdn/references/qwencloud-token-plan-models.md).
+
+Only modes with a compatible model in the current Token Plan catalog can use Token Plan. A request for another mode may return a service error; do not silently switch the requested model or mode.
+
+For a Token Plan kf2v request when the catalog has no compatible kf2v model, **stop before submitting**. Explain that the selected model requires PAYG, then ask the user to choose either a PAYG key already configured for this request or a change to the requested outcome that a Token Plan-supported mode can fulfill.
+
+> ⚠️ **Credits warning**: Video generation consumes significantly more Credits per call than text conversations. A single video may use hundreds of Credits depending on duration and resolution. Check your remaining quota before generating.
+
+### Required header
+
+`User-Agent: qwencloud-skills` is automatically included.
 
 ## Update Check (MANDATORY Post-Execution)
 

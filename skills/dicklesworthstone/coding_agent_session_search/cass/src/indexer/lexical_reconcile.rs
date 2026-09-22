@@ -8,7 +8,7 @@
 //! with no corpus-wide replay:
 //!
 //! 1. bind one canonical conversation/source identity plus an immutable
-//!    source fingerprint (message count, max idx, capped content bytes);
+//!    content-bound fingerprint of every projected lexical document;
 //! 2. persist a durable recovery checkpoint with the expected doc count
 //!    BEFORE any publication;
 //! 3. upsert the full source doc set under Quill's stable CASS document
@@ -16,10 +16,11 @@
 //!    then publish a successor generation;
 //! 4. on retry, re-read the checkpoint and converge to exactly one live doc
 //!    per identity (upsert replaces; never appends);
-//! 5. verify early/late canaries and the live-doc count before clearing the
+//! 5. verify exact endpoint canaries and the replay live-doc count before clearing the
 //!    durable checkpoint.
 
 use std::collections::HashMap;
+use std::io::Read;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context, Result, anyhow, bail};
@@ -29,6 +30,11 @@ use crate::search::asset_state::SearchMaintenanceMode;
 use crate::search::tantivy::{TantivyIndex, expected_index_dir};
 use crate::storage::sqlite::FrankenStorage;
 
+mod checkpoint;
+mod canary;
+
+const CHECKPOINT_MAX_BYTES: u64 = 64 * 1024;
+
 /// Durable recovery checkpoint written before the first publication and
 /// cleared only after convergence + canary verification.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -37,12 +43,15 @@ pub(crate) struct LexicalReconcileCheckpoint {
     pub conversation_id: i64,
     pub source_id: String,
     pub source_path: String,
-    /// Immutable source fingerprint: capped message rows the reconcile bound.
+    /// Shape diagnostics, not proof that the underlying content is unchanged.
     pub message_count: usize,
     pub max_message_idx: i64,
     pub content_bytes: usize,
     /// Lexical docs the bound source set projects to (post noise filter).
     pub expected_docs: usize,
+    /// Version two binds all projected content/metadata. Absent only in v1.
+    #[serde(default)]
+    pub projection_blake3: Option<String>,
     pub started_at_ms: i64,
     pub attempt: u32,
 }
@@ -59,11 +68,11 @@ pub(crate) struct LexicalReconcileReport {
     pub upserted_docs: usize,
     pub doc_count_before: u64,
     pub doc_count_after: u64,
-    /// True when a second upsert of the identical set left the live-doc
-    /// count unchanged — the converge-to-one-doc-per-identity proof.
+    /// True when a second upsert of the identical set left the live-doc count
+    /// unchanged. This is a replay invariant, not a full content-witness audit.
     pub converged: bool,
-    /// Early/late content canaries observed in the published snapshot with a
-    /// matching stored conversation id. `None` when the message carried no
+    /// Early/late content canaries observed at the exact source/message identity
+    /// with a matching stored preview. `None` when the message carried no
     /// usable search token (vacuously accepted).
     pub early_canary_ok: Option<bool>,
     pub late_canary_ok: Option<bool>,
@@ -78,15 +87,20 @@ pub(crate) fn lexical_reconcile_checkpoint_path(
 }
 
 fn load_checkpoint(path: &Path) -> Result<Option<LexicalReconcileCheckpoint>> {
-    let raw = match std::fs::read_to_string(path) {
-        Ok(raw) => raw,
+    let file = match std::fs::File::open(path) {
+        Ok(file) => file,
         Err(err) if matches!(err.kind(), std::io::ErrorKind::NotFound) => return Ok(None),
         Err(err) => {
             return Err(err)
                 .with_context(|| format!("reading reconcile checkpoint {}", path.display()));
         }
     };
-    serde_json::from_str(&raw)
+    anyhow::ensure!(file.metadata()?.is_file(), "reconcile checkpoint is not a regular file");
+    let mut raw = Vec::new();
+    file.take(CHECKPOINT_MAX_BYTES + 1).read_to_end(&mut raw)?;
+    anyhow::ensure!(raw.len() as u64 <= CHECKPOINT_MAX_BYTES,
+        "reconcile checkpoint exceeds its 64 KiB budget; checkpoint retained");
+    serde_json::from_slice(&raw)
         .map(Some)
         .with_context(|| format!("parsing reconcile checkpoint {}", path.display()))
 }
@@ -109,41 +123,6 @@ fn canary_token(content: &str) -> Option<String> {
         .map(str::to_lowercase)
 }
 
-/// Search the published snapshot for `token` and require a hit whose stored
-/// conversation id matches. `Ok(None)` when no token was derivable.
-fn verify_canary(
-    index: &TantivyIndex,
-    conversation_id: i64,
-    token: Option<&str>,
-) -> Result<Option<bool>> {
-    let Some(token) = token else {
-        return Ok(None);
-    };
-    let parser = frankensearch::quill::query::CassQueryParser::new(
-        frankensearch::quill::schema::CASS_SEMANTIC_SCHEMA,
-    )
-    .map_err(|error| anyhow!("building the CASS query parser for canary: {error}"))?;
-    let parsed = parser.parse(
-        token,
-        &frankensearch::quill::query::CassQueryFilters::default(),
-    );
-    let reader = index.reader()?;
-    let page = crate::search::quill_bridge::search_paginated(&reader, &parsed.query, 25, 0, false)?;
-    let fields = &index.fields;
-    for hit in &page.hits {
-        let stored = crate::search::quill_bridge::stored_i64(
-            &reader,
-            fields.conversation_id,
-            hit.global_docid,
-        )
-        .unwrap_or(None);
-        if stored.is_some_and(|id| id.cmp(&conversation_id).is_eq()) {
-            return Ok(Some(true));
-        }
-    }
-    Ok(Some(false))
-}
-
 /// Run the targeted reconcile for one canonical conversation.
 ///
 /// Holds the index-run lock for the whole operation (never races the
@@ -154,6 +133,7 @@ pub(crate) fn run_lexical_conversation_reconcile(
     db_path: &Path,
     conversation_id: i64,
 ) -> Result<LexicalReconcileReport> {
+    anyhow::ensure!(conversation_id > 0, "reconcile conversation id must be positive");
     let _run_lock = super::acquire_index_run_lock(data_dir, db_path, SearchMaintenanceMode::Index)?;
 
     let storage = FrankenStorage::open_readonly(db_path)
@@ -190,7 +170,7 @@ pub(crate) fn run_lexical_conversation_reconcile(
     let source_map: HashMap<String, (crate::sources::provenance::SourceKind, Option<String>)> =
         storage
             .list_sources()
-            .unwrap_or_default()
+            .context("loading canonical source provenance for reconcile")?
             .into_iter()
             .map(|source| (source.id, (source.kind, source.host_label)))
             .collect();
@@ -211,44 +191,14 @@ pub(crate) fn run_lexical_conversation_reconcile(
     let late_token = docs.last().and_then(|doc| canary_token(&doc.content));
 
     // 2. Durable checkpoint BEFORE publication; on retry, converge only when
-    // the bound source set is byte-for-byte the same shape.
+    // the complete projected content and metadata are unchanged. A legacy
+    // shape-only checkpoint is rebound before the full replay, never trusted
+    // as evidence that any document was already published.
     let checkpoint_path = lexical_reconcile_checkpoint_path(&index_path, conversation_id);
     std::fs::create_dir_all(&index_path)
         .with_context(|| format!("creating index directory {}", index_path.display()))?;
-    let attempt = match load_checkpoint(&checkpoint_path)? {
-        Some(existing) => {
-            let identity_matches = existing.source_id.cmp(&row.source_id).is_eq()
-                && existing
-                    .source_path
-                    .cmp(&row.source_path.to_string_lossy().to_string())
-                    .is_eq();
-            let fingerprint_matches = matches!(
-                (existing.message_count, existing.max_message_idx, existing.content_bytes),
-                (mc, mi, cb) if mc.cmp(&message_count).is_eq()
-                    && mi.cmp(&max_message_idx).is_eq()
-                    && cb.cmp(&content_bytes).is_eq()
-            );
-            if !identity_matches || !fingerprint_matches {
-                bail!(
-                    "reconcile checkpoint {} was bound to a different source shape \
-                     (checkpoint: {} msgs / max idx {} / {} bytes; live: {} / {} / {}); \
-                     the canonical source changed — run a normal `cass index` instead, \
-                     then retry, or remove the checkpoint to rebind",
-                    checkpoint_path.display(),
-                    existing.message_count,
-                    existing.max_message_idx,
-                    existing.content_bytes,
-                    message_count,
-                    max_message_idx,
-                    content_bytes,
-                );
-            }
-            existing.attempt.saturating_add(1)
-        }
-        None => 1,
-    };
-    let checkpoint = LexicalReconcileCheckpoint {
-        version: 1,
+    let checkpoint = checkpoint::resume(LexicalReconcileCheckpoint {
+        version: checkpoint::VERSION,
         conversation_id,
         source_id: row.source_id.clone(),
         source_path: row.source_path.to_string_lossy().to_string(),
@@ -256,9 +206,11 @@ pub(crate) fn run_lexical_conversation_reconcile(
         max_message_idx,
         content_bytes,
         expected_docs: docs.len(),
+        projection_blake3: Some(checkpoint::projection_fingerprint(&docs)),
         started_at_ms: FrankenStorage::now_millis(),
-        attempt,
-    };
+        attempt: 1,
+    }, load_checkpoint(&checkpoint_path)?)?;
+    let attempt = checkpoint.attempt;
     super::write_json_pretty_atomically(&checkpoint_path, &checkpoint)?;
 
     // 3. Upsert the full source doc set and publish a successor generation.
@@ -268,16 +220,20 @@ pub(crate) fn run_lexical_conversation_reconcile(
     index.commit()?;
     let doc_count_after_first = index.doc_count()?;
 
-    // 4. Converge proof: replaying the identical set must not grow the live
-    // set — one live document per identity, never append.
+    // 4. Preserve the existing replay invariant until the CASS adapter exposes
+    // Quill's writer-side per-document witnesses. Counts alone do not prove
+    // that every expected projected document is present with matching content.
     index.upsert_prebuilt_documents_slice(&docs)?;
     index.commit()?;
-    let doc_count_after = index.doc_count()?;
+    // Reuse one admitted reader for final accounting and both endpoint checks.
+    // No refresh or path reopen may split these observations across generations.
+    let reader = index.reader()?;
+    let doc_count_after = reader.doc_count()?;
     let converged = doc_count_after.cmp(&doc_count_after_first).is_eq();
 
     // 5. Early/late canaries against the published snapshot.
-    let early_canary_ok = verify_canary(&index, conversation_id, early_token.as_deref())?;
-    let late_canary_ok = verify_canary(&index, conversation_id, late_token.as_deref())?;
+    let early_canary_ok = canary::verify(&reader, &docs[0], early_token.as_deref())?;
+    let late_canary_ok = canary::verify(&reader, &docs[docs.len() - 1], late_token.as_deref())?;
 
     let canaries_ok = early_canary_ok.unwrap_or(true) && late_canary_ok.unwrap_or(true);
     let checkpoint_cleared = if converged && canaries_ok {
@@ -394,10 +350,13 @@ mod tests {
         // Canaries: early and late markers resolve to this conversation.
         let early = canary_token(&docs[0].content);
         let late = canary_token(&docs[9].content);
-        assert_eq!(verify_canary(&index, 42, early.as_deref())?, Some(true));
-        assert_eq!(verify_canary(&index, 42, late.as_deref())?, Some(true));
+        let reader = index.reader()?;
+        assert_eq!(canary::verify(&reader, &docs[0], early.as_deref())?, Some(true));
+        assert_eq!(canary::verify(&reader, &docs[9], late.as_deref())?, Some(true));
         // A wrong conversation id must not satisfy the canary.
-        assert_eq!(verify_canary(&index, 43, early.as_deref())?, Some(false));
+        let mut wrong = docs[0].clone();
+        wrong.conversation_id = Some(43);
+        assert_eq!(canary::verify(&reader, &wrong, early.as_deref())?, Some(false));
         Ok(())
     }
 
@@ -418,6 +377,7 @@ mod tests {
             max_message_idx: 9,
             content_bytes: 320,
             expected_docs: 10,
+            projection_blake3: None,
             started_at_ms: 1,
             attempt: 1,
         };

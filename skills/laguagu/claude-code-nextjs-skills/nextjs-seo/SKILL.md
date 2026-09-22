@@ -7,6 +7,30 @@ description: Next.js App Router SEO optimization and auditing. Use when implemen
 
 Comprehensive SEO guide for Next.js App Router applications.
 
+## Start with evidence and useful content
+
+Read the installed Next.js version and relevant `node_modules/next/dist/docs/`
+guides before changing framework code; use current official docs when local
+docs are unavailable. Use Vercel MCP documentation search for platform behavior
+when available, but check retrieved examples against the installed framework.
+Do not copy a legacy cache API from a search snippet into a newer app.
+
+- Solve the reader's task first. A short useful page does not need padding.
+  Give the H1, subtitle and section headings distinct jobs; do not repeat the
+  same phrase in each for SEO. Keep UI copy concise, concrete and useful.
+- Do not add generic introductions, keyword blocks, decorative badges, a FAQ
+  or TL;DR just to make a page look optimized. Add content only when it answers
+  a real question. Preserve necessary explanations and disclosures.
+- Create team, location or category pages only when each offers distinct,
+  maintainable value. A swapped name/logo and duplicate list is insufficient.
+- Describe seasons, availability and update times from current data. Do not
+  leave pre-launch copy on an active service or change timestamps for freshness.
+- Separate evidence: a Search Console performance export shows queries and
+  traffic, not indexing status, Google's canonical choice or CWV. Use the
+  relevant report or URL Inspection; mark unavailable checks as unverified.
+- Report findings and verification before predicting impact. No ranking,
+  indexing, rich-result or AI-citation guarantees.
+
 ## Quick SEO Audit
 
 Run this checklist for any Next.js project:
@@ -62,9 +86,7 @@ export const metadata: Metadata = {
     description: 'Description for Twitter',
     images: ['/og-image.png'],
   },
-  alternates: {
-    canonical: '/',
-  },
+  // Set alternates.canonical per page; a root '/' would be inherited by children.
   robots: {
     index: true,
     follow: true,
@@ -140,7 +162,7 @@ Three ways to set social images — prefer the file conventions over hand-syncin
 
 ### Cache Components & SEO
 
-With `cacheComponents: true` in next.config.ts (the v16 top-level flag that unifies the old `experimental.dynamicIO`/`ppr`/`useCache`), use the `"use cache"` directive for SEO-critical server components:
+With `cacheComponents: true`, use `"use cache"` for data/components that can be shared and whose freshness requirements permit caching. Static content needs no extra cache directive merely for SEO:
 
 ```typescript
 // app/(home)/sections/hero-section.tsx
@@ -156,23 +178,28 @@ export async function HeroSection() {
 }
 ```
 
-**Built-in `cacheLife` profiles** (`stale` / `revalidate` / `expire`): `seconds` (30s/1s/1m), `minutes` (5m/1m/1h), `hours` (5m/1h/1d), `days` (5m/1d/1w), `weeks` (5m/1w/30d), `max` (5m/30d/1y), and the implicit `default` (5m/15m/never). For SEO pages pick by how often content changes — `days` for blog/docs, `max` for legal/marketing. (`minutes` revalidates every 1 min — too aggressive for most SEO content.)
+Choose `cacheLife` from the product's freshness requirements and the installed
+Next.js documentation. Do not infer a cache lifetime from the page category;
+marketing and legal pages also need timely publication and invalidation.
 
 **Key rules:**
 - `"use cache"` must be the first statement in the function body (or at the top of the file for file-level caching)
-- No `cookies()`/`headers()`/`searchParams` inside a plain `"use cache"` scope — good for SEO, since indexable content should be request-agnostic. (`"use cache: private"` *does* allow them, but is never prerendered, so it never lands in the static SEO shell.)
+- No `cookies()`/`headers()`/runtime `searchParams` inside a plain `"use cache"` scope. Keep public content separate from personalized data; do not accidentally cache private information for all users. Check the installed docs before using experimental private caching.
 - Invalidate with `updateTag("hero")` inside a Server Action (read-your-writes; it throws outside one), or `revalidateTag("hero", "max")` from a Route Handler / webhook (pass the profile — the one-argument form is legacy behaviour) — prefer these over `export const revalidate`
-- Very short cache profiles can change what Next.js includes in the prerendered shell. Do not infer that behavior from `revalidate` alone: choose a profile from the documented freshness requirements and verify the installed Next.js version's `next build` output. Prefer `hours`/`days`/`max` for SEO-critical content unless the product genuinely needs fresher data
-- Sitemaps and metadata are static by default — only add `"use cache"` (+ `cacheTag`) if they fetch CMS/dynamic data you want to invalidate on publish
+- Choose cache lifetimes from actual freshness requirements, not an SEO preference for long caches. Verify `next build`, the served content and publish-time invalidation. Legacy route options such as `revalidate` are disabled with Cache Components; without it, follow the installed version's supported cache model.
+- A database read does not by itself make a sitemap update after deployment. Configure and verify its refresh/invalidation path. Metadata can be static or runtime-dependent; inspect the route rather than assuming.
 
 ### Rendering Strategy for SEO
 
 | Strategy | Use When | SEO Impact |
 |----------|----------|------------|
-| "use cache" | Server components with periodic data | Best - cached HTML, fast TTFB |
-| SSG (Static) | Content rarely changes | Best - pre-rendered HTML |
-| SSR | Dynamic content per request | Great - server-rendered |
-| CSR | Dashboards, authenticated areas | Poor - avoid for SEO pages |
+| "use cache" | Shared data with a defined refresh policy | Can include content in the prerendered shell |
+| SSG (Static) | Content known at build time | Content available in HTML; plan updates |
+| SSR | Content needed at request time | Content available in the response; measure latency |
+| CSR | Interactive or authenticated features | Avoid relying on browser-only fetching for critical public content |
+
+These are rendering trade-offs, not ranking tiers. A Client Component can still
+be server-prerendered; `"use client"` does not mean its content is absent from HTML.
 
 ### Core Web Vitals Targets
 
@@ -182,18 +209,13 @@ export async function HeroSection() {
 | INP (Interaction to Next Paint) | < 200ms | Interactivity |
 | CLS (Cumulative Layout Shift) | < 0.1 | Visual stability |
 
-- **Measured on field data, not lab.** Google ranks on the 75th percentile of real users (Chrome UX Report, 28-day rolling window, mobile/desktop separate). A URL group passes only when ≥75% of visits hit "Good" on all three. Use PageSpeed Insights and the Search Console CWV report for the real signal — **Lighthouse is lab-only and cannot measure INP**.
-- **INP replaced FID** as a Core Web Vital on 2024-03-12; FID is deprecated. INP is the most commonly failed metric — prioritize it.
-- **Page experience is a tiebreaker, not a standalone ranking system** (Google de-emphasized it). Good CWV won't rescue thin content; content relevance and quality come first. Treat CWV as baseline UX hygiene.
-- **Myths to ignore:** 2026 SEO blogs falsely claim "LCP was lowered to 2.0s" and invent an "Engagement Reliability" metric. Neither exists in any Google/web.dev source — the LCP and CLS thresholds are unchanged since 2021, and INP's 200 ms has been fixed since it became a Core Web Vital in 2024.
-
-### Ranking Signals Beyond Technical SEO
-
-Metadata + CWV alone don't drive rankings. Keep these in mind (out of scope for this skill, but pointers):
-
-- **Helpful content** is part of core ranking (since 2024-03), evaluated continuously — not an episodic penalty.
-- **E-E-A-T** (Experience, Expertise, Authoritativeness, Trust): cite real authors/credentials and first-hand experience, especially on YMYL pages.
-- **Mobile-first indexing is complete** (since 2024-07): Google indexes the mobile rendering only. Ensure the mobile view has the same content, metadata, and structured data as desktop; never block mobile resources. (Mostly automatic with Next.js responsive design.)
+- Use the 75th percentile of field measurements, segmented by device. Evaluate
+  each metric separately; this does not mean the same 75% of visits pass all
+  three simultaneously. Lighthouse is a lab diagnostic, not an INP field score.
+- Good CWV does not guarantee ranking. Relevant content, crawlability and
+  accurate metadata remain necessary; avoid invented numerical ranking weights.
+- Keep mobile content, metadata and structured data equivalent to desktop.
+  Verify authorship and credentials rather than generating them.
 
 ## References
 
@@ -217,7 +239,7 @@ Metadata + CWV alone don't drive rankings. Keep these in mind (out of scope for 
 9. **Blanket-blocking AI crawlers** - `GPTBot disallow: /` blocks training but leaves you in AI search; don't accidentally block citation bots (OAI-SearchBot, PerplexityBot). See [references/ai-search.md](references/ai-search.md)
 10. **Adding the `keywords` meta tag for Google** - Google ignores it entirely (no indexing or ranking effect); it's noise, not a signal
 11. **Assuming named robots.txt groups inherit `*` rules** - Per RFC 9309 §2.2.1 the `*` group applies only when no group matches, and Google never merges a specific group with `*`. A `{ userAgent: 'OAI-SearchBot', allow: '/' }` group drops the wildcard's `/api/`/`/admin/` disallows — repeat them in every named group
-12. **Trusting browser view for bot metadata** - PPR + streaming metadata has served bots pages with no `<title>`/canonical (vercel/next.js #95406 — check its status on your version), and the browser view never shows it. Confirm production HTML with a bot User-Agent: `curl -A "Googlebot" https://your-site.com | grep -E '<title>|canonical'`
+12. **Trusting browser view for bot metadata** - Check status, headers and the complete production response for Googlebot and a relevant HTML-limited bot. Streaming may place metadata outside the initial head. A spoofed User-Agent tests response behavior, not Google's actual crawl access or indexing; use URL Inspection and verified bot logs where available.
 13. **Assuming a route that indexes well also *works*** - A PPR route (`◐` in the build output) can serve perfect SEO HTML while none of its `<Suspense>` boundaries hydrate on a direct load. Load the route directly in a browser and interact with it; the observation and the check are in [references/troubleshooting.md](references/troubleshooting.md#ppr-route-serves-perfect-seo-html-but-client-components-never-hydrate).
 
 ## Quick Fixes
@@ -228,10 +250,14 @@ Metadata + CWV alone don't drive rankings. Keep these in mind (out of scope for 
 export const metadata: Metadata = {
   robots: {
     index: false,
-    follow: false,
+    follow: true,
   },
 };
 ```
+
+Keep the page crawlable for `noindex` to be seen. Robots disallow is not an
+index-removal or access-control mechanism. Preview protection and noindex are
+separate concerns; see [references/sitemap-robots.md](references/sitemap-robots.md).
 
 ### Dynamic metadata per page
 

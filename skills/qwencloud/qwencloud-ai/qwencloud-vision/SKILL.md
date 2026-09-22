@@ -1,11 +1,8 @@
 ---
 name: qwencloud-vision
-description: "[QwenCloud] Understand images and videos with Qwen vision models. TRIGGER when: user wants to analyze, describe, or extract information from images or videos, OCR text extraction, chart/table reading, visual reasoning, multi-image comparison, screenshot understanding, video comprehension, or explicitly invokes this skill by name (e.g. use qwencloud-vision). DO NOT TRIGGER when: user wants to generate/create images (use qwencloud-image-generation), generate videos (use qwencloud-video-generation), text-only tasks without visual input, or non-Qwen vision tasks."
-compatibility: "Requires Python 3.9+ and curl. Cursor: auto-loaded. Claude Code: read this skill's SKILL.md before first use."
+description: "Understand images and videos with Qwen vision models. TRIGGER when: user wants to analyze, describe, or extract information from images or videos, OCR text extraction, chart/table reading, visual reasoning, multi-image comparison, screenshot understanding, video comprehension, or explicitly invokes this skill by name (e.g. use qwencloud-vision). DO NOT TRIGGER when: user wants to generate/create images (use qwencloud-image-generation), generate videos (use qwencloud-video-generation), text-only tasks without visual input, or non-Qwen vision tasks."
+compatibility: "Requires Python 3.9+; curl is PAYG-only. Cursor: auto-loaded. Claude Code: read this skill's SKILL.md before first use."
 ---
-
-> **Agent setup**: If your agent doesn't auto-load skills (e.g. Claude Code),
-> see [agent-compatibility.md](references/agent-compatibility.md) once per session.
 
 # Qwen Vision (Image & Video Understanding)
 
@@ -28,37 +25,53 @@ Use this skill's internal files to execute and learn. Load reference files on de
 | `references/prompt-guide.md` | Query prompt templates by task, thinking mode decision |
 | `references/ocr.md` | OCR parameters and examples |
 | `references/sources.md` | Official documentation URLs |
-| `references/agent-compatibility.md` | Agent self-check: register skills in project config for agents that don't auto-load |
 
 ## Security
 
-**NEVER output any API key or credential in plaintext.** Always use variable references (`$DASHSCOPE_API_KEY` in shell, `os.environ["DASHSCOPE_API_KEY"]` in Python). Any check or detection of credentials must be **non-plaintext**: report only status (e.g. "set" / "not set", "valid" / "invalid"), never the value. Never display contents of `.env` or config files that may contain secrets.
+**NEVER output any API key or credential in plaintext.** Always use variable references (`$QWENCLOUD_API_KEY` in shell, `os.environ["QWENCLOUD_API_KEY"]` in Python). The scripts accept `QWENCLOUD_API_KEY`, then `QWEN_API_KEY`, then `DASHSCOPE_API_KEY`. Any check or detection of credentials must be **non-plaintext**: report only status (e.g. "set" / "not set", "valid" / "invalid"), never the value. Never display contents of `.env` or config files that may contain secrets.
 
-**When the API key is not configured, NEVER ask the user to provide it directly.** Instead, help create a `.env` file with a placeholder (`DASHSCOPE_API_KEY=sk-your-key-here`) and instruct the user to replace it with their actual key from the [QwenCloud Console](https://home.qwencloud.com/api-keys). Only write the actual key value if the user explicitly requests it.
+**When the API key is not configured, NEVER ask the user to provide it directly.** Instead, help create a `.env` file with a placeholder (`QWENCLOUD_API_KEY=sk-your-key-here`) and instruct the user to replace it with their actual key from the [QwenCloud Console](https://home.qwencloud.com/api-keys). Only write the actual key value if the user explicitly requests it.
 
 ## Key Compatibility
 
-Scripts require a **standard QwenCloud API key** (`sk-...`). Coding Plan keys (`sk-sp-...`) cannot be used for direct API calls and do not support dedicated vision models (qwen3-vl-plus, qvq-max, etc.). The scripts detect `sk-sp-` keys at startup and print a warning. If qwencloud-ops-auth is installed, see its `references/codingplan.md` for full details.
+Scripts support both **standard QwenCloud API keys** (`sk-...`) and **Token Plan keys** (`sk-sp-...`). Token Plan keys are automatically routed to the Token Plan endpoint for supported multimodal models — see the [Token Plan model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-token-plan-models.md). If CDN access fails, use the [local fallback](cdn/references/qwencloud-token-plan-models.md).
+
+**Token Plan: do not use curl; always use the bundled Python scripts.**
+
+Coding Plan keys (also `sk-sp-` prefix but purchased via Coding Plan subscription) cannot be used for direct API calls. The scripts detect key type at startup and route accordingly. If qwencloud-ops-auth is installed, see its `references/codingplan.md` for current model coverage, endpoint mapping, and error details.
+
+Detect the API key type without exposing the key:
+
+```bash
+python3 -c "
+import sys; sys.path.insert(0, 'scripts')
+from qwencloud_lib import detect_api_key_type
+print(detect_api_key_type('scripts/qwencloud_lib.py'))
+"
+```
+
+| Output | Meaning |
+|--------|---------|
+| `token-plan` | Token Plan key detected (`sk-sp-` prefix) |
+| `payg` | Standard PAYG key detected |
+| `not-set` | No API key found in environment |
 
 ## Model Selection
 
-| Model | Use Case |
-|-------|----------|
-| **qwen3.6-plus** | **Preferred** — latest flagship, unified multimodal (text+image+video). Thinking on by default. Best balance of quality, speed, cost. |
-| **qwen3.5-plus** | Unified multimodal (text+image+video). Thinking on by default. |
-| **qwen3.5-flash** | Fast multimodal — cheaper, faster. Thinking on by default. |
-| **qwen3-vl-plus** | High-precision — object localization (2D/3D), document/webpage parsing. |
-| **qwen3-vl-flash** | Fast vision — lower latency, 33 languages. |
-| **qvq-max** | Visual reasoning — chain-of-thought for math, charts. **Streaming only.** |
-| **qwen-vl-ocr** | OCR — text extraction, table parsing, document scanning. |
-| **qwen-vl-max** | Qwen2.5-VL — best-performing in 2.5 series. |
-| **qwen-vl-plus** | Qwen2.5-VL — faster, good balance of performance and cost, 11 languages. |
+> **🚫 CRITICAL — Never override user-specified parameters.** If the user explicitly specifies a model (in prompt or request JSON), you MUST use exactly that model. Do NOT:
+> - Replace it with a "better suited" or newer model (e.g., swapping the user's `qwen3-vl-plus` for `qwen3.7-plus`/`qwen3.8-max` because newer docs "prefer" it)
+> - Add parameters the user did not ask for (`enable_thinking`, `thinking_budget`, `vl_high_resolution_images`, `detail`), except that the bundled scripts must send `enable_thinking: false` when the user requests `json_mode`/`schema` and omitted the setting
+> - "Optimize" any explicit user choice
+>
+> Selection guidance below applies **only when the user has NOT specified a model**.
 
-1. **User specified a model** → use directly.
+Before selecting, recommending, or defaulting a model, fetch and read the current [QwenCloud vision model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-vision-models.md). It contains the model list, basic model information, task recommendations, compatibility notes, and defaults. If CDN access fails, use the [local fallback](cdn/references/qwencloud-vision-models.md).
+
+1. **User specified a model** → **MANDATORY: use that exact model** — do not substitute or "optimize" it. Do not add unrequested parameters except for the structured-output compatibility behavior described above; reject a thinking-only model instead of silently replacing it.
 2. **Consult the qwencloud-model-selector skill** when model choice depends on requirement, scenario, or pricing.
-3. **No signal, clear task** → `qwen3.6-plus`. Use `qwen3-vl-plus` for precise localization or 3D detection.
+3. **No signal, clear task** → use the default and task-specific alternatives from the model catalog. Dedicated-script defaults remain independent of key type; Token Plan users should select a compatible model from the catalog when a default is unavailable on their plan.
 
-> **⚠️ Important**: The model list above is a **point-in-time snapshot** and may be outdated. Model availability
+> **⚠️ Important**: The model catalog is a **point-in-time snapshot** and may be outdated. Model availability
 > changes frequently. **Always check the [official model list](https://www.qwencloud.com/models)
 > for the authoritative, up-to-date catalog before making model decisions.**
 
@@ -70,12 +83,16 @@ Scripts require a **standard QwenCloud API key** (`sk-...`). Coding Plan keys (`
 
 ### Prerequisites
 
-- **API Key**: Check that `DASHSCOPE_API_KEY` (or `QWEN_API_KEY`) is set using a **non-plaintext** check only (e.g. in shell:
-  `[ -n "$DASHSCOPE_API_KEY" ]`; report only "set" or "not set", never the key value). If not set: run the *
+- **API Key**: Check `QWENCLOUD_API_KEY`, `QWEN_API_KEY`, then `DASHSCOPE_API_KEY` using a **non-plaintext** check only (e.g. in shell:
+  `[ -n "$QWENCLOUD_API_KEY" ]`; report only "set" or "not set", never the key value). If not set: run the *
   *qwencloud-ops-auth** skill if available; otherwise guide the user to obtain a key from [QwenCloud Console](https://home.qwencloud.com/api-keys) and set it via `.env` file (
-  `echo 'DASHSCOPE_API_KEY=sk-your-key-here' >> .env` in project root or current directory) or environment variable. The
+  `echo 'QWENCLOUD_API_KEY=sk-your-key-here' >> .env` in project root or current directory) or environment variable. The
   script searches for `.env` in the current working directory and the project root. Skills may be installed
   independently — do not assume qwencloud-ops-auth is present.
+  **Note**: The script auto-loads `.env` from the current directory and the project root (in addition to any exported environment
+  variable). A shell check showing `$QWENCLOUD_API_KEY` as "not set" does NOT mean the script will fail — it may still find the
+  key in `.env`. Treat the shell check as informational only; the authoritative test is simply running the script (it exits with
+  a clear error if no key is found anywhere).
 - Python 3.9+ (stdlib only, **no pip install needed**)
 
 ### Environment Check
@@ -86,7 +103,7 @@ Before first execution, verify Python is available:
 python3 --version  # must be 3.9+
 ```
 
-If `python3` is not found, try `python --version` or `py -3 --version`. If Python is unavailable or below 3.9, skip to **Path 2 (curl)** in [execution-guide.md](references/execution-guide.md).
+If `python3` is unavailable or below 3.9, PAYG may use **Path 2 (curl)**; Token Plan must install Python 3.9+ instead.
 
 ### Default: Run Script
 
@@ -98,9 +115,9 @@ If `python3` is not found, try `python --version` or `py -3 --version`. If Pytho
 
 | Script | Purpose | Default Model |
 |--------|---------|---------------|
-| `scripts/analyze.py` | Image understanding, multi-image, video, thinking mode, high-res | `qwen3.6-plus` |
-| `scripts/reason.py` | Visual reasoning with chain-of-thought, video reasoning (always streaming) | `qvq-max` |
-| `scripts/ocr.py` | OCR text extraction from documents, receipts, tables | `qwen-vl-ocr` |
+| `scripts/analyze.py` | Image understanding, multi-image, video, thinking mode, high-res | Read the current default from the model catalog above |
+| `scripts/reason.py` | Visual reasoning with chain-of-thought, video reasoning (always streaming) | Read the current default from the model catalog above |
+| `scripts/ocr.py` | OCR text extraction from documents, receipts, tables | Read the current default from the model catalog above |
 
 **Input type fields** (use exactly one in `--request` JSON):
 
@@ -154,14 +171,14 @@ python3 <this-skill-dir>/scripts/ocr.py \
 
 If scripts fail, match the error output against the diagnostic table below to determine the resolution. If no match, read [execution-guide.md](references/execution-guide.md) for alternative paths: curl commands (Path 2), code generation (Path 3), and autonomous resolution (Path 5).
 
-**If Python is not available at all** → skip directly to Path 2 (curl) in [execution-guide.md](references/execution-guide.md).
+**If Python is not available at all** → PAYG may use Path 2 (curl); Token Plan must install Python 3.9+.
 
 | Error Pattern                    | Diagnosis                        | Resolution                                                                                                                                                  |
 |----------------------------------|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `command not found: python3`     | Python not on PATH               | Try `python` or `py -3`; install Python 3.9+ if missing                                                                                                     |
 | `Python 3.9+ required`           | Script version check failed      | Upgrade Python to 3.9+                                                                                                                                      |
 | `SyntaxError` near type hints    | Python < 3.9                     | Upgrade Python to 3.9+                                                                                                                                      |
-| `QWEN_API_KEY/DASHSCOPE_API_KEY not found` | Missing API key | Obtain key from [QwenCloud Console](https://home.qwencloud.com/api-keys); add to `.env`: `echo 'DASHSCOPE_API_KEY=sk-...' >> .env`; or run **qwencloud-ops-auth** if available |
+| `QWENCLOUD_API_KEY/QWEN_API_KEY/DASHSCOPE_API_KEY not found` | Missing API key | Obtain key from [QwenCloud Console](https://home.qwencloud.com/api-keys); add to `.env`: `echo 'QWENCLOUD_API_KEY=sk-...' >> .env`; or run **qwencloud-ops-auth** if available |
 | `HTTP 401`                       | Invalid or mismatched key        | Run **qwencloud-ops-auth** (non-plaintext check only); verify key is valid                                                                                  |
 | `SSL: CERTIFICATE_VERIFY_FAILED` | SSL cert issue (proxy/corporate) | macOS: run `Install Certificates.command`; else set `SSL_CERT_FILE` env var                                                                                 |
 | `URLError` / `ConnectionError`   | Network unreachable              | Check internet; set `HTTPS_PROXY` if behind proxy                                                                                                           |
@@ -192,24 +209,19 @@ When the input file comes from another skill's output (e.g., image-gen, video-ge
 
 ## Thinking Mode
 
-| Model | Thinking Default | Notes |
-|-------|-----------------|-------|
-| `qwen3.6-plus` | **On** | Latest flagship. Disable with `enable_thinking: false` for simple tasks. |
-| `qwen3.5-plus` / `qwen3.5-flash` | **On** | Disable with `enable_thinking: false` for simple tasks. |
-| `qwen3-vl-plus` / `qwen3-vl-flash` | Off | Enable with `enable_thinking: true`. |
-| `qvq-max` | Always on | **Streaming output required.** |
+Use the vision model catalog linked above for current thinking defaults and model compatibility. Do NOT set `enable_thinking` unless the user explicitly asks to change it — neither to enable it "because the task looks complex" nor to disable it "because the task looks simple". The sole compatibility exception is structured output: `json_mode` and `schema` require non-thinking mode, so the bundled scripts automatically send `enable_thinking: false` when the setting is omitted and reject explicit `true`. Thinking-only models cannot be used for structured output.
 
 See [visual-reasoning.md](references/visual-reasoning.md) for details.
 
-## OCR (qwen-vl-ocr)
+## OCR
 
-Optimized for text extraction. Supports multi-language, skewed images, tables, formulas. See [ocr.md](references/ocr.md) for parameters and examples.
+Use the vision model catalog linked above for the current OCR default, alternatives, and model capabilities. See [ocr.md](references/ocr.md) for parameters and examples.
 
 ## Input Limits
 
-**Images**: BMP/JPEG/PNG/TIFF/WEBP/HEIC. Min 10px sides, aspect ratio <= 200:1. Max 20 MB (URL, Qwen3.5) / 10 MB (others).
+**Images**: BMP/JPEG/PNG/TIFF/WEBP/HEIC. Min 10px sides, aspect ratio <= 200:1. Check the model catalog above for model-specific size limits.
 
-**Videos**: MP4/AVI/MKV/MOV/FLV/WMV. Duration 2s–2h (Qwen3.5) / 2s–10min (others). Max 2 GB (URL) / 10 MB (base64). fps range [0.1, 10], default 2.0.
+**Videos**: MP4/AVI/MKV/MOV/FLV/WMV. Check the model catalog above for model-specific duration and size limits. fps range [0.1, 10], default 2.0.
 
 ## Error Handling
 
@@ -232,6 +244,28 @@ Optimized for text extraction. Supports multi-language, skewed images, tables, f
 Prefer the **current working directory**. Default subdirectory: `./output/qwencloud-vision/`.
 
 **Write prohibition**: NEVER write output files into this skill's installation directory or any `skills/` hierarchy. All generated content must go to `output/` under the current working directory or a user-specified path.
+
+## Token Plan Support
+
+Token Plan keys (`sk-sp-...`) are supported for multimodal models with vision capability.
+
+### Supported vision models
+
+Fetch and read the current [Token Plan model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-token-plan-models.md), then use an exact listed vision-capable model. If CDN access fails, use the [local fallback](cdn/references/qwencloud-token-plan-models.md).
+
+These models use the OpenAI-compatible chat API with multimodal message format (image_url content type).
+
+### Defaults
+
+When no model is supplied, each script uses its configured default regardless of key type. Check the vision and Token Plan catalogs for current compatibility. An explicitly supplied request model always takes precedence.
+
+### Not supported via Token Plan
+
+Models not listed as vision-capable in the Token Plan model catalog require a PAYG key. Only with the user's explicit consent, suggest compatible alternatives from the vision catalog. Never silently swap a user-specified model because of key-type restrictions; present the options and let the user choose.
+
+### Required header
+
+`User-Agent: qwencloud-skills` is automatically included.
 
 ## Update Check (MANDATORY Post-Execution)
 

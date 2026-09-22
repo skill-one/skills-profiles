@@ -10,6 +10,7 @@ use std::collections::BTreeMap;
 use std::error::Error;
 use std::fmt;
 use std::fs;
+use std::io::Read;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::sync::Arc;
@@ -18,15 +19,68 @@ use std::time::{Duration, Instant, SystemTime};
 /// Live collection never opens Beads' writable database. Its exported JSONL
 /// snapshot is explicitly partial because unexported database changes may exist.
 #[must_use]
-pub fn collect_live_swarm_sources(repo: &Path) -> SwarmSourceCollection {
+pub fn collect_live_swarm_sources(
+    repo: &Path,
+    cass_paths: Option<(&Path, &Path)>,
+) -> SwarmSourceCollection {
     let started = Instant::now();
+    // Observe CASS first so an unavailable external daemon cannot consume its
+    // entire budget. Both CASS surfaces share one strictly passive child read.
+    let cass = cass_paths
+        .map(|(data_dir, db_path)| collect_passive_cass(repo, data_dir, db_path, started));
+    let evidence = run_swarm_observer(repo, "observe-evidence", &[], started).and_then(|payload| {
+        if payload["schema_version"] != "cass-proof-metadata-v1" {
+            return Err("unsupported proof observer schema".to_string());
+        }
+        if let Some(error) = payload["error"].as_str() {
+            return Err(error.to_string());
+        }
+        Ok(payload)
+    });
     let snapshots = REQUIRED_SWARM_SOURCE_PROVIDERS
         .iter()
         .copied()
         .map(|name| {
+            if name == SwarmProviderName::Evidence {
+                return match &evidence {
+                    Ok(payload) => SwarmSourceSnapshot::partial(
+                        name,
+                        "live:evidence",
+                        "Reported proof metadata only; artifacts, current revision coverage, and completeness are unverified.",
+                        payload.clone(),
+                    ),
+                    Err(error) => SwarmSourceSnapshot::unavailable(
+                        name,
+                        "live:evidence",
+                        "live-provider-read-failed",
+                        error.clone(),
+                    ),
+                };
+            }
+            if matches!(name, SwarmProviderName::CassHealth | SwarmProviderName::CassStatus)
+                && let Some(result) = &cass
+            {
+                return match result {
+                    Ok(payload) => SwarmSourceSnapshot::partial(
+                        name,
+                        format!("live:{name}"),
+                        "Passive filesystem observations only; database integrity and query readiness are not tested.",
+                        payload.clone(),
+                    ),
+                    Err(error) => SwarmSourceSnapshot::unavailable(
+                        name,
+                        format!("live:{name}"),
+                        "live-provider-read-failed",
+                        error.clone(),
+                    ),
+                };
+            }
             if matches!(
                 name,
-                SwarmProviderName::Git | SwarmProviderName::Beads | SwarmProviderName::Process
+                SwarmProviderName::Git
+                    | SwarmProviderName::Beads
+                    | SwarmProviderName::Process
+                    | SwarmProviderName::AgentMail
             ) {
                 LiveSwarmSourceAdapter {
                     repo: repo.to_path_buf(),
@@ -47,6 +101,230 @@ pub fn collect_live_swarm_sources(repo: &Path) -> SwarmSourceCollection {
     SwarmSourceCollection { snapshots }
 }
 
+fn cass_archive_id(data_dir: &Path, db_path: &Path) -> String {
+    let mut hash = blake3::Hasher::new();
+    for path in [data_dir, db_path] {
+        let bytes = path.as_os_str().as_encoded_bytes();
+        hash.update(&(bytes.len() as u64).to_le_bytes());
+        hash.update(bytes);
+    }
+    hash.finalize().to_hex().to_string()
+}
+
+/// Called only by the early, non-runtime CLI observer branch. Never opens the
+/// database or invokes status/health, whose normal maintenance may write.
+pub(crate) fn passive_cass_observation(data_dir: &Path, db_path: &Path) -> Value {
+    let absent =
+        fs::metadata(db_path).is_err_and(|error| error.kind() == std::io::ErrorKind::NotFound);
+    let lock_path = crate::search::asset_state::index_run_lock_path(data_dir);
+    let active_rebuild = match fs::metadata(&lock_path) {
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => Some(false),
+        Ok(metadata) if metadata.is_file() => {
+            let lock = crate::search::asset_state::read_search_maintenance_snapshot(data_dir);
+            // The existing probe hides stale metadata and I/O errors alike.
+            // An inactive result therefore cannot prove a negative here.
+            if lock.active {
+                lock.mode.map(|mode| mode.rebuild_active())
+            } else {
+                None
+            }
+        }
+        _ => None,
+    };
+    serde_json::json!({
+        "schema_version": "cass-passive-v1",
+        "archive_id": cass_archive_id(data_dir, db_path),
+        "source_kind": "passive-filesystem",
+        "observed_at_ms": SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).unwrap_or_default().as_millis(),
+        "status": if absent { "uninitialized" } else { "unprobed" },
+        "healthy": absent.then_some(false),
+        "initialized": absent.then_some(false),
+        "search_ready": absent.then_some(false),
+        "active_rebuild": active_rebuild,
+    })
+}
+
+fn collect_passive_cass(
+    repo: &Path,
+    data_dir: &Path,
+    db_path: &Path,
+    started: Instant,
+) -> Result<Value, String> {
+    let payload = run_swarm_observer(
+        repo,
+        "observe-cass",
+        &[("--data-dir", data_dir), ("--db-path", db_path)],
+        started,
+    )?;
+    if payload["schema_version"] != "cass-passive-v1"
+        || payload["archive_id"] != cass_archive_id(data_dir, db_path)
+    {
+        return Err("CASS observer identity mismatch".to_string());
+    }
+    Ok(payload)
+}
+
+fn run_swarm_observer(
+    repo: &Path,
+    subcommand: &str,
+    paths: &[(&str, &Path)],
+    started: Instant,
+) -> Result<Value, String> {
+    let remaining = Duration::from_secs(15)
+        .checked_sub(started.elapsed())
+        .filter(|remaining| !remaining.is_zero())
+        .ok_or("live provider deadline exceeded")?;
+    let executable = std::env::current_exe().map_err(|_| "CASS executable unavailable")?;
+    let mut command = Command::new(executable);
+    command.args(["swarm", subcommand]);
+    for (flag, path) in paths {
+        command.arg(flag).arg(path);
+    }
+    command
+        .current_dir(repo)
+        .env_remove("CASS_TRACE_FILE")
+        .stdin(Stdio::null())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped());
+    crate::sources::configure_child_process_group(&mut command);
+    let child = command.spawn().map_err(|_| "CASS observer spawn failed")?;
+    let output = crate::sources::wait_for_child_output_with_limit(
+        child,
+        remaining.min(Duration::from_secs(3)),
+        Some(64 * 1024),
+    )
+    .map_err(|_| "CASS observer output failed")?
+    .ok_or("CASS observer deadline exceeded")?;
+    if !output.status.success() {
+        return Err("CASS observer failed".to_string());
+    }
+    serde_json::from_slice(&output.stdout)
+        .map_err(|_| "CASS observer returned invalid JSON".to_string())
+}
+
+const MAX_PROOF_MANIFEST_BYTES: u64 = 1024 * 1024;
+const MAX_PROOF_MANIFEST_ROWS: usize = 128;
+
+fn same_proof_metadata(left: &fs::Metadata, right: &fs::Metadata) -> bool {
+    if left.len() != right.len() || left.modified().ok() != right.modified().ok() {
+        return false;
+    }
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::MetadataExt;
+        if (left.dev(), left.ino(), left.ctime(), left.ctime_nsec())
+            != (right.dev(), right.ino(), right.ctime(), right.ctime_nsec())
+        {
+            return false;
+        }
+    }
+    true
+}
+
+/// Read only the canonical manifest. Never follow artifact/log references or
+/// promote a producer's reported pass into proof for the current revision.
+pub(crate) fn passive_proof_observation(repo: &Path) -> Result<Value, &'static str> {
+    let mut directories = Vec::new();
+    for path in [repo.join(".cass"), repo.join(".cass/proofs")] {
+        let metadata = fs::symlink_metadata(&path).map_err(|_| "proof directory unavailable")?;
+        if !metadata.is_dir() {
+            return Err("proof directory is not a regular directory");
+        }
+        directories.push((path, metadata));
+    }
+    let path = repo.join(".cass/proofs/proof-manifest.jsonl");
+    let before = fs::symlink_metadata(&path).map_err(|_| "proof manifest unavailable")?;
+    if !before.is_file() || before.len() > MAX_PROOF_MANIFEST_BYTES {
+        return Err("proof manifest is not a bounded regular file");
+    }
+    let mut options = fs::OpenOptions::new();
+    options.read(true);
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::OpenOptionsExt;
+        options.custom_flags(libc::O_NOFOLLOW | libc::O_NONBLOCK);
+    }
+    let file = options
+        .open(&path)
+        .map_err(|_| "proof manifest open failed")?;
+    let opened = file.metadata().map_err(|_| "proof manifest stat failed")?;
+    if !opened.is_file() || !same_proof_metadata(&before, &opened) {
+        return Err("proof manifest changed during open");
+    }
+    let mut bytes = Vec::new();
+    (&file)
+        .take(MAX_PROOF_MANIFEST_BYTES + 1)
+        .read_to_end(&mut bytes)
+        .map_err(|_| "proof manifest read failed")?;
+    if bytes.len() as u64 > MAX_PROOF_MANIFEST_BYTES {
+        return Err("proof manifest exceeds byte limit");
+    }
+    let after = file.metadata().map_err(|_| "proof manifest stat failed")?;
+    let named = fs::symlink_metadata(&path).map_err(|_| "proof manifest disappeared")?;
+    if !same_proof_metadata(&opened, &after) || !same_proof_metadata(&opened, &named) {
+        return Err("proof manifest changed during read");
+    }
+    for (directory, metadata) in directories {
+        let after = fs::symlink_metadata(directory).map_err(|_| "proof directory disappeared")?;
+        if !after.is_dir() || !same_proof_metadata(&metadata, &after) {
+            return Err("proof directory changed during read");
+        }
+    }
+    project_proof_manifest(&bytes)
+}
+
+fn project_proof_manifest(bytes: &[u8]) -> Result<Value, &'static str> {
+    let text = std::str::from_utf8(bytes).map_err(|_| "proof manifest is not UTF-8")?;
+    let mut proofs = Vec::new();
+    let mut rejected = 0;
+    for (index, line) in text
+        .lines()
+        .filter(|line| !line.trim().is_empty())
+        .enumerate()
+    {
+        if index >= MAX_PROOF_MANIFEST_ROWS {
+            return Err("proof manifest exceeds row limit");
+        }
+        let record =
+            if let Ok(proof) = serde_json::from_str::<crate::proof_artifact::EmittedProof>(line) {
+                Some((proof.label, serde_json::json!(proof.status), None))
+            } else if let Ok(proof) =
+                serde_json::from_str::<crate::search::proof_log::ProofLogRecord>(line)
+            {
+                Some((
+                    proof.scenario_id,
+                    serde_json::json!(proof.outcome),
+                    Some(proof.finished_at_ms),
+                ))
+            } else {
+                None
+            };
+        let Some((label, reported_status, finished_at_ms)) = record else {
+            rejected += 1;
+            continue;
+        };
+        proofs.push(serde_json::json!({
+            "kind": "manifest-record",
+            "proof_id": format!("manifest-record-{}", index + 1),
+            "label": redact_swarm_text(&label).chars().take(256).collect::<String>(),
+            "status": "unverified",
+            "reported_status": reported_status,
+            "finished_at_ms": finished_at_ms,
+            "freshness_status": "unverified",
+            "redaction_status": "metadata_only",
+        }));
+    }
+    Ok(serde_json::json!({
+        "schema_version": "cass-proof-metadata-v1",
+        "source_kind": "proof-manifest",
+        "manifest_digest": blake3::hash(bytes).to_hex().to_string(),
+        "observed_at_ms": SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).unwrap_or_default().as_millis(),
+        "recent_proofs": proofs,
+        "rejected_records": rejected,
+        "redaction_applied": true,
+    }))
+}
+
 struct LiveSwarmSourceAdapter {
     repo: PathBuf,
     name: SwarmProviderName,
@@ -65,6 +343,7 @@ impl SwarmSourceAdapter for LiveSwarmSourceAdapter {
             SwarmProviderName::Git => collect_live_git(&self.repo, self.started),
             SwarmProviderName::Beads => collect_exported_beads(&self.repo, self.started),
             SwarmProviderName::Process => collect_live_rch(&self.repo, self.started),
+            SwarmProviderName::AgentMail => collect_live_mail(&self.repo, self.started),
             _ => Err("unsupported live provider".to_string()),
         };
         let mut snapshot = match result {
@@ -80,6 +359,14 @@ impl SwarmSourceAdapter for LiveSwarmSourceAdapter {
                 "RCH status only; local processes and build admission are not observed.",
                 payload,
             ),
+            Ok(payload) if self.name == SwarmProviderName::AgentMail => {
+                SwarmSourceSnapshot::partial(
+                    self.name,
+                    source,
+                    "Read-only roster and reservation observations; messages and proof evidence are not collected. Recheck coordination before claiming.",
+                    payload,
+                )
+            }
             Ok(payload) => SwarmSourceSnapshot::ok(self.name, source, payload),
             Err(error) => SwarmSourceSnapshot::unavailable(
                 self.name,
@@ -126,6 +413,11 @@ fn live_command(
         .env("GIT_OPTIONAL_LOCKS", "0")
         .env("GIT_TERMINAL_PROMPT", "0")
         .env("BEADS_DIR", repo.join(".beads"));
+    if program == "rch" {
+        // Even `rch status` otherwise writes its parsed configuration cache.
+        // Inspection must not create or refresh files in the caller's home.
+        command.env("RCH_DISABLE_CONFIG_CACHE", "1");
+    }
     // Caller-specific overrides must not redirect a project snapshot elsewhere.
     for key in [
         "GIT_DIR",
@@ -149,6 +441,158 @@ fn live_command(
         return Err(format!("{program} exited with {}", output.status));
     }
     Ok(output.stdout)
+}
+
+fn collect_live_mail(repo: &Path, started: Instant) -> Result<Value, String> {
+    let endpoint = dotenvy::var("CASS_SWARM_AGENT_MAIL_URL")
+        .map_err(|_| "CASS_SWARM_AGENT_MAIL_URL is not configured")?;
+    let token = dotenvy::var("CASS_SWARM_AGENT_MAIL_TOKEN").ok();
+    let project = repo
+        .canonicalize()
+        .map_err(|_| "cannot identify Mail project")?;
+    let project = project.to_str().ok_or("Mail project is not UTF-8")?;
+    let encoded: String = project.bytes().map(|byte| format!("%{byte:02X}")).collect();
+    crate::ensure_rustls_crypto_provider();
+    let client = reqwest::blocking::Client::builder()
+        .redirect(reqwest::redirect::Policy::none())
+        .build()
+        .map_err(|_| "cannot construct Mail HTTP client")?;
+    let mail_started = Instant::now();
+    let read = |uri: &str| -> Result<Value, String> {
+        let remaining = Duration::from_secs(15)
+            .checked_sub(started.elapsed())
+            .ok_or("live provider deadline exceeded")?
+            .min(
+                Duration::from_secs(3)
+                    .checked_sub(mail_started.elapsed())
+                    .ok_or("Mail provider deadline exceeded")?,
+            );
+        if remaining.is_zero() {
+            return Err("Mail provider deadline exceeded".into());
+        }
+        let mut request = client
+            .post(&endpoint)
+            .header(reqwest::header::ACCEPT, "application/json")
+            .timeout(remaining)
+            .json(&serde_json::json!({
+                "jsonrpc":"2.0", "id":"cass-swarm-read", "method":"resources/read",
+                "params":{"uri":uri}
+            }));
+        if let Some(token) = &token {
+            request = request.bearer_auth(token);
+        }
+        let response = request.send().map_err(|_| "Mail resource request failed")?;
+        if !response.status().is_success() {
+            return Err("Mail resource HTTP failure".into());
+        }
+        let mut bytes = Vec::new();
+        response
+            .take(8 * 1024 * 1024 + 1)
+            .read_to_end(&mut bytes)
+            .map_err(|_| "Mail resource body read failed")?;
+        if bytes.len() > 8 * 1024 * 1024 {
+            return Err("Mail response exceeds output cap".into());
+        }
+        parse_mail_resource(&bytes, uri)
+    };
+    let roster = read(&format!("resource://agents/{encoded}"))?;
+    let reservations = read(&format!(
+        "resource://file_reservations/{encoded}?active_only=true&limit=250"
+    ))?;
+    project_mail_observations(&roster, &reservations, project, chrono::Utc::now())
+}
+
+fn parse_mail_resource(bytes: &[u8], uri: &str) -> Result<Value, String> {
+    let envelope: Value = serde_json::from_slice(bytes).map_err(|_| "invalid Mail JSON")?;
+    if envelope["jsonrpc"] != "2.0"
+        || envelope["id"] != "cass-swarm-read"
+        || envelope.get("error").is_some()
+    {
+        return Err("invalid or rejected Mail response".into());
+    }
+    let contents = envelope["result"]["contents"]
+        .as_array()
+        .ok_or("missing Mail resource contents")?;
+    if contents.len() != 1 || contents[0]["uri"] != uri {
+        return Err("Mail resource identity mismatch".into());
+    }
+    serde_json::from_str(
+        contents[0]["text"]
+            .as_str()
+            .ok_or("missing Mail resource text")?,
+    )
+    .map_err(|_| "invalid Mail resource JSON".into())
+}
+
+fn project_mail_observations(
+    roster: &Value,
+    reservations: &Value,
+    project: &str,
+    now: chrono::DateTime<chrono::Utc>,
+) -> Result<Value, String> {
+    if roster["project"]["human_key"] != project {
+        return Err("Mail project identity mismatch".into());
+    }
+    let agents = roster["agents"]
+        .as_array()
+        .ok_or("missing Mail agent roster")?;
+    let reservations = reservations.as_array().ok_or("missing Mail reservations")?;
+    // The reservation resource caps pages at 250 without a continuation flag.
+    // A full page cannot prove a complete inventory.
+    if agents.len() > 512 || reservations.len() >= 250 {
+        return Err("Mail inventory exceeds bounded complete page".into());
+    }
+    let timestamp = |row: &Value,
+                     field: &str|
+     -> Result<chrono::DateTime<chrono::FixedOffset>, String> {
+        chrono::DateTime::parse_from_rfc3339(row[field].as_str().ok_or("missing Mail timestamp")?)
+            .map_err(|_| "invalid Mail timestamp".into())
+    };
+    let mut projected_agents = Vec::new();
+    for agent in agents {
+        let age = now.signed_duration_since(timestamp(agent, "last_active_ts")?);
+        let name = agent["name"]
+            .as_str()
+            .filter(|name| !name.is_empty())
+            .ok_or("missing Mail agent name")?;
+        projected_agents.push(serde_json::json!({"name":name,
+            "last_active_ts":agent["last_active_ts"],
+            "active":age >= chrono::Duration::zero() && age <= chrono::Duration::seconds(600)}));
+    }
+    let mut projected_reservations = Vec::new();
+    for reservation in reservations {
+        let expires = timestamp(reservation, "expires_ts")?;
+        let id = reservation["id"]
+            .as_u64()
+            .ok_or("invalid Mail reservation id")?;
+        let agent = reservation["agent"]
+            .as_str()
+            .ok_or("missing Mail reservation agent")?;
+        let path = reservation["path_pattern"]
+            .as_str()
+            .ok_or("missing Mail reservation path")?;
+        let exclusive = reservation["exclusive"]
+            .as_bool()
+            .ok_or("missing Mail lock type")?;
+        if reservation.get("released_ts").is_none() {
+            return Err("missing Mail release state".into());
+        }
+        projected_reservations.push(
+            serde_json::json!({"id":id,"agent":agent,"path_pattern":path,
+            "exclusive":exclusive,"expires_ts":reservation["expires_ts"],
+            "active":reservation["released_ts"].is_null() && expires > now}),
+        );
+    }
+    let observed_active_reservation_count = projected_reservations
+        .iter()
+        .filter(|row| row["active"] == true)
+        .count();
+    Ok(
+        serde_json::json!({"source_kind":"agent-mail-resources", "repository":project,
+        "observed_at_ms":now.timestamp_millis(), "agents":projected_agents,
+        "observed_active_reservation_count":observed_active_reservation_count,
+        "reservations":projected_reservations}),
+    )
 }
 
 fn collect_live_rch(repo: &Path, started: Instant) -> Result<Value, String> {
@@ -365,9 +809,8 @@ fn collect_exported_beads(repo: &Path, started: Instant) -> Result<Value, String
         "513",
     ])?;
     let blocked = read(&["blocked", "--json", "--limit", "513"])?;
-    if blocked.get("has_more").and_then(Value::as_bool) != Some(false) {
-        return Err("blocked Beads snapshot is truncated or has an unsupported schema".to_string());
-    }
+    let active = beads_issue_page(&active)?;
+    let blocked = beads_issue_page(&blocked)?;
     let project_rows = |rows: &Value| -> Result<Vec<Value>, String> {
         let rows = rows.as_array().ok_or("unsupported br issue schema")?;
         if rows.len() > 512 {
@@ -402,12 +845,21 @@ fn collect_exported_beads(repo: &Path, started: Instant) -> Result<Value, String
     };
     let after = unchanged_beads_export(&path, &before)?;
     Ok(
-        serde_json::json!({"ready": project_rows(&ready)?, "in_progress": project_rows(&active)?,
-        "blocked": project_rows(blocked.get("issues").ok_or("missing blocked issues")?)?,
+        serde_json::json!({"ready": project_rows(&ready)?, "in_progress": project_rows(active)?,
+        "blocked": project_rows(blocked)?,
         "graph": null, "version": version, "source_kind": "exported-jsonl",
         "observed_at_ms": SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).unwrap_or_default().as_millis(),
         "export_age_ms": after.modified().ok().and_then(|time| time.elapsed().ok()).map(|age| age.as_millis())}),
     )
+}
+
+fn beads_issue_page(page: &Value) -> Result<&Value, String> {
+    if page.get("has_more").and_then(Value::as_bool) != Some(false) {
+        return Err("Beads page is truncated or has an unsupported schema".to_string());
+    }
+    page.get("issues")
+        .filter(|issues| issues.is_array())
+        .ok_or_else(|| "Beads page lacks an issues array".to_string())
 }
 
 fn unchanged_beads_export(path: &Path, before: &fs::Metadata) -> Result<fs::Metadata, String> {
@@ -951,6 +1403,155 @@ mod tests {
         PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(relative)
     }
 
+    #[test]
+    fn proof_manifest_keeps_reported_results_unverified_and_omits_private_fields() {
+        let lightweight = json!({"label":"selected test", "status":"pass",
+            "path":"/private/never-read.json", "command":"PRIVATE_COMMAND"});
+        let structured = json!({
+            "run_id":"run", "scenario_id":"timeout", "command_id":"test", "phase":"test",
+            "started_at_ms":1, "finished_at_ms":2, "elapsed_ms":1,
+            "meta":{"cass_binary_path":"PRIVATE_BINARY", "cass_version":"0.9.0",
+                "cargo_profile":"test", "target_dir":"PRIVATE_TARGET", "data_dir":"PRIVATE_DATA",
+                "config_dir":"PRIVATE_CONFIG"},
+            "execution":{"argv":["PRIVATE_ARG"], "timeout_ms":1, "timed_out":true, "retry_count":0},
+            "artifacts":{"stdout_path":"PRIVATE_STDOUT", "stderr_path":"PRIVATE_STDERR",
+                "robot_contract_ok":false, "ansi_free_stdout_ok":true},
+            "outcome":"timed_out_partial"
+        });
+        let bytes = format!("{lightweight}\n{{bad\n{structured}\n");
+        let projected = project_proof_manifest(bytes.as_bytes()).unwrap();
+        assert_eq!(projected["rejected_records"], 1);
+        assert_eq!(projected["recent_proofs"][0]["reported_status"], "pass");
+        assert_eq!(
+            projected["recent_proofs"][1]["reported_status"],
+            "timed_out_partial"
+        );
+        for proof in projected["recent_proofs"].as_array().unwrap() {
+            assert_eq!(proof["status"], "unverified");
+            assert_eq!(proof["freshness_status"], "unverified");
+        }
+        let serialized = projected.to_string();
+        assert!(!serialized.contains("PRIVATE_"));
+        assert!(!serialized.contains("/private/"));
+    }
+
+    #[test]
+    fn proof_manifest_enforces_row_byte_and_file_type_limits() {
+        let row =
+            "{\"label\":\"test\",\"status\":\"pass\",\"path\":\"absent\",\"command\":\"test\"}\n";
+        assert!(project_proof_manifest(row.repeat(MAX_PROOF_MANIFEST_ROWS).as_bytes()).is_ok());
+        assert!(
+            project_proof_manifest(row.repeat(MAX_PROOF_MANIFEST_ROWS + 1).as_bytes()).is_err()
+        );
+        assert!(project_proof_manifest(&[0xff]).is_err());
+        assert_eq!(
+            project_proof_manifest(b"\n").unwrap()["recent_proofs"],
+            json!([])
+        );
+        let root = tempfile::tempdir().unwrap();
+        assert!(passive_proof_observation(root.path()).is_err());
+        let proofs = root.path().join(".cass/proofs");
+        fs::create_dir_all(&proofs).unwrap();
+        let path = proofs.join("proof-manifest.jsonl");
+        let file = fs::File::create(&path).unwrap();
+        file.set_len(MAX_PROOF_MANIFEST_BYTES + 1).unwrap();
+        assert!(passive_proof_observation(root.path()).is_err());
+        assert_eq!(file.metadata().unwrap().len(), MAX_PROOF_MANIFEST_BYTES + 1);
+    }
+
+    #[test]
+    #[cfg(unix)]
+    fn proof_manifest_rejects_symlinked_control_files() {
+        let root = tempfile::tempdir().unwrap();
+        let proofs = root.path().join(".cass/proofs");
+        fs::create_dir_all(&proofs).unwrap();
+        let outside = root.path().join("outside.jsonl");
+        fs::write(&outside, b"private sentinel").unwrap();
+        std::os::unix::fs::symlink(&outside, proofs.join("proof-manifest.jsonl")).unwrap();
+        assert!(passive_proof_observation(root.path()).is_err());
+        assert_eq!(fs::read(outside).unwrap(), b"private sentinel");
+    }
+
+    #[test]
+    fn mail_resource_rejects_wrong_identity_and_rpc_errors() {
+        let uri = "resource://agents/%2Fproject";
+        let response = json!({"jsonrpc":"2.0","id":"cass-swarm-read",
+            "result":{"contents":[{"uri":uri,"text":"{\"agents\":[]}"}]}});
+        assert_eq!(
+            parse_mail_resource(&serde_json::to_vec(&response).unwrap(), uri).unwrap(),
+            json!({"agents":[]})
+        );
+        assert!(parse_mail_resource(&serde_json::to_vec(&response).unwrap(), "other").is_err());
+        for (pointer, replacement) in [
+            ("/id", json!("other")),
+            ("/jsonrpc", json!("1.0")),
+            ("/result/contents/0/text", json!("bad JSON")),
+            ("/result/contents", json!([])),
+        ] {
+            let mut bad = response.clone();
+            *bad.pointer_mut(pointer).unwrap() = replacement;
+            assert!(parse_mail_resource(&serde_json::to_vec(&bad).unwrap(), uri).is_err());
+        }
+        let mut failed = response;
+        failed["error"] = json!({"message":"private failure"});
+        assert!(parse_mail_resource(&serde_json::to_vec(&failed).unwrap(), uri).is_err());
+    }
+
+    #[test]
+    fn mail_observations_use_live_time_and_omit_private_metadata() {
+        let now = chrono::DateTime::parse_from_rfc3339("2026-09-19T00:00:00Z")
+            .unwrap()
+            .with_timezone(&chrono::Utc);
+        let roster = json!({"project":{"human_key":"/project"},"agents":[
+            {"name":"ActiveAgent","last_active_ts":"2026-09-18T23:50:00Z","task_description":"private task"},
+            {"name":"OldAgent","last_active_ts":"2026-09-18T23:49:59Z"},
+            {"name":"FutureAgent","last_active_ts":"2026-09-19T00:01:00Z"}
+        ]});
+        let reservation = json!({"id":1,"agent":"ActiveAgent","path_pattern":"src/**","exclusive":true,
+            "expires_ts":"2026-09-19T00:00:01Z","released_ts":null,"reason":"private reason"});
+        let mut expired = reservation.clone();
+        expired["expires_ts"] = json!("2026-09-19T00:00:00Z");
+        let mut released = reservation.clone();
+        released["released_ts"] = json!("2026-09-18T23:59:00Z");
+        let result = project_mail_observations(
+            &roster,
+            &json!([reservation, expired, released]),
+            "/project",
+            now,
+        )
+        .unwrap();
+        assert_eq!(result["agents"][0]["active"], true);
+        assert_eq!(result["agents"][1]["active"], false);
+        assert_eq!(result["agents"][2]["active"], false);
+        assert_eq!(result["reservations"][0]["active"], true);
+        assert_eq!(result["reservations"][1]["active"], false);
+        assert_eq!(result["reservations"][2]["active"], false);
+        assert!(!result.to_string().contains("private"));
+        assert!(project_mail_observations(&roster, &json!([]), "/wrong", now).is_err());
+        assert!(
+            project_mail_observations(&roster, &json!(vec![Value::Null; 250]), "/project", now)
+                .is_err()
+        );
+        let mut bad = roster;
+        bad["agents"][0]["last_active_ts"] = json!("invalid");
+        assert!(project_mail_observations(&bad, &json!([]), "/project", now).is_err());
+    }
+
+    #[test]
+    #[ignore = "requires explicitly configured live Mail HTTP endpoint; run through RCH"]
+    fn live_mail_resource_read_preserves_metadata_only_contract() {
+        let repo = std::env::current_dir().unwrap();
+        let value = collect_live_mail(&repo, Instant::now()).expect("live Mail resources");
+        assert_eq!(value["source_kind"], "agent-mail-resources");
+        assert!(value["agents"].is_array());
+        assert!(value["reservations"].is_array());
+        assert!(value.get("messages").is_none());
+        for agent in value["agents"].as_array().unwrap() {
+            assert!(agent.get("task_description").is_none());
+            assert!(agent["active"].is_boolean());
+        }
+    }
+
     fn rch_status_example() -> Value {
         json!({"api_version":"1.0", "command":"status", "success":true,
             "timestamp":1000, "data":{"schema_version":"1.0.0", "posture":"remote_ready",
@@ -1041,7 +1642,7 @@ mod tests {
 
     #[test]
     fn live_git_porcelain_preserves_rename_paths_and_unknown_upstream() {
-        let bytes = b"# branch.oid 0123456789012345678901234567890123456789\0# branch.head main\02 R. N... 100644 100644 100644 abc def R100 new name\0old\nname\0? untracked\0";
+        let bytes = b"# branch.oid 0123456789012345678901234567890123456789\0# branch.head main\x002 R. N... 100644 100644 100644 abc def R100 new name\0old\nname\0? untracked\0";
         let value = parse_git_status(bytes).expect("valid porcelain");
         assert_eq!(value["branch"], "main");
         assert_eq!(value["dirty"], true);
@@ -1065,7 +1666,7 @@ mod tests {
             b"# branch.oid (initial)\0# branch.head main\0# branch.head other\0".as_slice(),
             b"# branch.oid (initial)\0# branch.head main\0? \0".as_slice(),
             b"# branch.head main\0x future-record\0".as_slice(),
-            b"# branch.head main\02 R. N... 100644 100644 100644 a b R100 new\0".as_slice(),
+            b"# branch.head main\x002 R. N... 100644 100644 100644 a b R100 new\0".as_slice(),
             b"# branch.head main\0# branch.ab +wrong -0\0".as_slice(),
         ] {
             assert!(
@@ -1219,7 +1820,7 @@ mod tests {
     #[test]
     fn live_collection_reports_missing_sources_without_initializing_them() {
         let dir = tempfile::tempdir().expect("empty directory");
-        let collection = collect_live_swarm_sources(dir.path());
+        let collection = collect_live_swarm_sources(dir.path(), None);
         for name in [SwarmProviderName::Git, SwarmProviderName::Beads] {
             let snapshot = collection.snapshot(name).expect("provider retained");
             assert_eq!(snapshot.status, SwarmProviderStatus::Unavailable);
@@ -1280,6 +1881,25 @@ mod tests {
         fs::write(&path, "a changed export with a different length").expect("concurrent export");
         let error = unchanged_beads_export(&path, &before).expect_err("reject mixed snapshot");
         assert!(error.contains("changed during collection"));
+    }
+
+    #[test]
+    fn live_beads_issue_pages_require_complete_pagination_metadata() {
+        for issues in [json!([]), json!([{"id":"live-1", "status":"in_progress"}])] {
+            let page = json!({"issues":issues, "has_more":false});
+            assert_eq!(beads_issue_page(&page).unwrap(), &issues);
+        }
+        for page in [
+            json!([]),
+            json!({"issues":[]}),
+            json!({"issues":[], "has_more":true}),
+            json!({"issues":[], "has_more":"false"}),
+            json!({"has_more":false}),
+            json!({"issues":null, "has_more":false}),
+            json!({"issues":{}, "has_more":false}),
+        ] {
+            assert!(beads_issue_page(&page).is_err(), "accepted page: {page}");
+        }
     }
 
     #[test]

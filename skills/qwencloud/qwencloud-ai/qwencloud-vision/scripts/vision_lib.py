@@ -22,41 +22,66 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 # Re-export shared infrastructure so existing scripts keep working with
 # ``from vision_lib import ...``.
 from qwencloud_lib import (  # noqa: E402,F401
+    DiagnosticStream,
     chat_url,
+    check_token_plan_model_support,
     extract_text,
     has_oss_url,
     http_post,
+    load_cdn_model_config,
     load_request,
     native_base_url,
     require_api_key as _require_api_key_base,
     resolve_file,
     run_update_signal,
+    sanitize_diagnostic,
     save_result,
     stream_sse,
     try_parse_json,
     upload_local_file,
 )
 
+
+_MODEL_CONFIG_DIR = Path(__file__).resolve().parent.parent / "cdn" / "config"
+
+
+def _validate_model_config(config: dict[str, Any]) -> bool:
+    defaults = config.get("default_models")
+    return (
+        isinstance(defaults, dict)
+        and all(
+            isinstance(defaults.get(task), str) and defaults[task]
+            for task in ("analyze", "reason", "ocr")
+        )
+    )
+
+
+def get_default_model(task: str) -> str:
+    """Return the current default model for a vision task."""
+    config = load_cdn_model_config(
+        "qwencloud-vision-config.json",
+        local_dir=_MODEL_CONFIG_DIR,
+        required_keys=("default_models",),
+        validator=_validate_model_config,
+    )
+    model = config["default_models"].get(task)
+    if not isinstance(model, str) or not model:
+        raise RuntimeError(f"Invalid vision model configuration: missing default for {task}")
+    return model
+
 # ---------------------------------------------------------------------------
 # Vision-specific credential wrapper
 # ---------------------------------------------------------------------------
 
 def require_api_key() -> str:
-    """Load API key with vision-specific validation.
+    """Load API key with vision domain tagging.
 
-    Coding Plan keys (``sk-sp-...``) are rejected outright for vision models
-    rather than just warned about.
+    Token Plan keys (``sk-sp-...``) pass through here and are routed to the
+    Token Plan endpoint by ``qwencloud_lib``; per-model availability is
+    handled by ``check_token_plan_model_support()`` in each script (aligned
+    with the qianwen-ai implementation).
     """
-    key = _require_api_key_base(script_file=__file__, domain="Vision")
-    if key.startswith("sk-sp-"):
-        print(
-            "Error: Coding Plan key detected (sk-sp-...). "
-            "Vision models are not available on Coding Plan.\n"
-            "Docs: https://docs.qwencloud.com/coding-plan/overview",
-            file=sys.stderr,
-        )
-        sys.exit(1)
-    return key
+    return _require_api_key_base(script_file=__file__, domain="Vision")
 
 # ---------------------------------------------------------------------------
 # Update-check signal (convenience)

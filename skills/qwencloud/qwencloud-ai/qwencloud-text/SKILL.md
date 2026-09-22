@@ -1,11 +1,8 @@
 ---
 name: qwencloud-text
-description: "[QwenCloud] Generate text, have conversations, write code, reason, and call functions with Qwen models. TRIGGER when: user asks to chat with Qwen, generate text, write code with Qwen, use Qwen function calling, or explicitly invokes this skill by name (e.g. use qwencloud-text). DO NOT TRIGGER when: general coding questions without Qwen, non-Qwen AI model usage (OpenAI, Gemini, etc.), image/video understanding (use qwencloud-vision), image/video/audio generation."
-compatibility: "Requires Python 3.9+ and curl. Cursor: auto-loaded. Claude Code: read this skill's SKILL.md before first use."
+description: "Generate text, have conversations, write code, reason, and call functions with Qwen models and third-party models available on QwenCloud. TRIGGER when: user asks to chat with Qwen, generate text, write code with Qwen, use Qwen function calling, call third-party models (deepseek, kimi, glm, etc.) via QwenCloud, or explicitly invokes this skill by name (e.g. use qwencloud-text). DO NOT TRIGGER when: using non-QwenCloud platforms (direct OpenAI API, Google Gemini API, etc.), general coding questions unrelated to QwenCloud, image/video understanding (use qwencloud-vision), image/video/audio generation."
+compatibility: "Requires Python 3.9+; curl is PAYG-only. Cursor: auto-loaded. Claude Code: read this skill's SKILL.md before first use."
 ---
-
-> **Agent setup**: If your agent doesn't auto-load skills (e.g. Claude Code),
-> see [agent-compatibility.md](references/agent-compatibility.md) once per session.
 
 # Qwen Text Chat (OpenAI-Compatible)
 
@@ -24,52 +21,57 @@ need details.
 | `references/api-guide.md`           | API supplement and full code examples                                               |
 | `references/prompt-guide.md`        | Prompt engineering: CO-STAR framework, CoT, few-shot, task steps                    |
 | `references/sources.md`             | Official documentation URLs (manual lookup only)                                    |
-| `references/agent-compatibility.md` | Agent self-check: register skills in project config for agents that don't auto-load |
 
 ## Security
 
-**NEVER output any API key or credential in plaintext.** Always use variable references (`$DASHSCOPE_API_KEY` in shell,
-`os.environ["DASHSCOPE_API_KEY"]` in Python). Any check or detection of credentials must be **non-plaintext**: report
+**NEVER output any API key or credential in plaintext.** Always use variable references (`$QWENCLOUD_API_KEY` in shell,
+`os.environ["QWENCLOUD_API_KEY"]` in Python). The scripts accept `QWENCLOUD_API_KEY`, then `QWEN_API_KEY`, then
+`DASHSCOPE_API_KEY`. Any check or detection of credentials must be **non-plaintext**: report
 only status (e.g. "set" / "not set", "valid" / "invalid"), never the value. Never display contents of `.env` or config
 files that may contain secrets.
 
-**When the API key is not configured, NEVER ask the user to provide it directly.** Instead, help create a `.env` file with a placeholder (`DASHSCOPE_API_KEY=sk-your-key-here`) and instruct the user to replace it with their actual key from the [QwenCloud Console](https://home.qwencloud.com/api-keys). Only write the actual key value if the user explicitly requests it.
+**When the API key is not configured, NEVER ask the user to provide it directly.** Instead, help create a `.env` file with a placeholder (`QWENCLOUD_API_KEY=sk-your-key-here`) and instruct the user to replace it with their actual key from the [QwenCloud Console](https://home.qwencloud.com/api-keys). Only write the actual key value if the user explicitly requests it.
 
 ## Key Compatibility
 
-Scripts require a **standard QwenCloud API key** (`sk-...`). Coding Plan keys (`sk-sp-...`) cannot be used for direct
-API calls — they are designed exclusively for interactive coding tools (Cursor, Claude Code, Qwen Code) and do not work
-on QwenCloud API endpoints. The script detects `sk-sp-` keys at startup and prints a warning. If qwencloud-ops-auth is installed,
-see its `references/codingplan.md` for details on key types, endpoint mapping, and error codes.
+Scripts support both **standard QwenCloud API keys** (`sk-...`) and **Token Plan keys** (`sk-sp-...`). Token Plan keys are automatically routed to the Token Plan endpoint — see the [Token Plan model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-token-plan-models.md) for supported models. If CDN access fails, use the [local fallback](cdn/references/qwencloud-token-plan-models.md).
+
+**Token Plan: do not use curl; always use the bundled Python script.**
+
+Coding Plan keys (also `sk-sp-` prefix but purchased via Coding Plan subscription) are for interactive coding tools only and will fail on these scripts. If qwencloud-ops-auth is installed, see its `references/codingplan.md` for details on key types, endpoint mapping, and error codes.
+
+Detect the API key type without exposing the key:
+
+```bash
+python3 -c "
+import sys; sys.path.insert(0, 'scripts')
+from qwencloud_lib import detect_api_key_type
+print(detect_api_key_type('scripts/qwencloud_lib.py'))
+"
+```
+
+| Output | Meaning |
+|--------|---------|
+| `token-plan` | Token Plan key detected (`sk-sp-` prefix) |
+| `payg` | Standard PAYG key detected |
+| `not-set` | No API key found in environment |
 
 ## Model Selection
 
-| Model              | Use Case                                                                |
-|--------------------|-------------------------------------------------------------------------|
-| `qwen3.6-plus`     | **Recommended default** — latest flagship, balanced performance/cost/speed, 1M context, thinking on by default, multimodal (text+image+video) |
-| `qwen3.5-plus`     | Balanced performance, cost, speed, 1M context, thinking on by default   |
-| `qwen3.5-flash`    | Fast, low-cost, 1M context                                              |
-| `qwen3-max`        | Strongest capability, built-in tools (web search, code interpreter)     |
-| `qwen-plus`        | General purpose                                                         |
-| `qwen-turbo`       | Cheapest, low latency                                                   |
-| `qwen3-coder-next` | **Recommended code model** — best balance of quality, speed, cost; agentic coding |
-| `qwen3-coder-plus` | Code generation — highest quality for complex tasks                     |
-| `qwen3-coder-flash`| Code generation — fast responses, lower cost                            |
-| `qwq-plus`         | Reasoning / chain-of-thought                                            |
-| `qwen-mt-plus`     | Machine translation — best quality, 92 languages                        |
-| `qwen-mt-flash`    | Machine translation — fast, low cost, 92 languages                      |
-| `qwen-mt-lite`     | Machine translation — real-time chat, fastest, 31 languages             |
-| `qwen-plus-character-ja` | Role-playing — recommended for Singapore                          |
-| `qwen-plus-character`    | Role-playing — character restoration, empathetic dialog             |
-| `qwen-flash-character`   | Role-playing — fast, lower cost                                    |
+> **🚫 CRITICAL — Never override user-specified parameters.** If the user explicitly specifies a model (in prompt or request JSON), you MUST use exactly that model. Do NOT:
+> - Replace it with a "better suited" or newer model (e.g., swapping the user's `qwen3.7-max` for a thinking model because the task "looks like reasoning")
+> - Add parameters the user did not ask for (`enable_thinking`, `enable_search`, style hints)
+> - "Optimize" any explicit user choice
+>
+> Selection guidance below applies **only when the user has NOT specified a model**.
 
-1. **User specified a model** → use directly.
+Before selecting, recommending, or defaulting a model, fetch and read the current [QwenCloud text model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-text-models.md). It contains recent Qwen general-purpose models, basic model information, recommendations, and the default model. For coding, translation, or third-party families, consult qwencloud-model-selector or the QwenCloud CLI. If CDN access fails, use the [local fallback](cdn/references/qwencloud-text-models.md).
+
+1. **User specified a model** → **MANDATORY: use that exact model** — do not substitute, do not "optimize", do not add unrequested parameters.
 2. **Consult the qwencloud-model-selector skill** when model choice depends on requirement, scenario, or pricing.
-3. **No signal, clear task** → `qwen3.6-plus` (default).
+3. **No signal, clear task** → use the default from the model catalog.
 
-> Fallback: if model-selector is unavailable, the defaults in the table above apply.
-
-> **⚠️ Important**: The model list above is a **point-in-time snapshot** and may be outdated. Model availability
+> **⚠️ Important**: The model catalog is a **point-in-time snapshot** and may be outdated. Model availability
 > changes frequently. **Always check the [official model list](https://www.qwencloud.com/models)
 > for the authoritative, up-to-date catalog before making model decisions.**
 
@@ -81,12 +83,16 @@ see its `references/codingplan.md` for details on key types, endpoint mapping, a
 
 ### Prerequisites
 
-- **API Key**: Check that `DASHSCOPE_API_KEY` (or `QWEN_API_KEY`) is set using a **non-plaintext** check only (e.g. in shell:
-  `[ -n "$DASHSCOPE_API_KEY" ]`; report only "set" or "not set", never the key value). If not set: run the *
+- **API Key**: Check `QWENCLOUD_API_KEY`, `QWEN_API_KEY`, then `DASHSCOPE_API_KEY` using a **non-plaintext** check only (e.g. in shell:
+  `[ -n "$QWENCLOUD_API_KEY" ]`; report only "set" or "not set", never the key value). If not set: run the *
   *qwencloud-ops-auth** skill if available; otherwise guide the user to obtain a key from [QwenCloud Console](https://home.qwencloud.com/api-keys) and set it via `.env` file
-  (`echo 'DASHSCOPE_API_KEY=sk-your-key-here' >> .env` in project root or current directory) or environment variable.
+  (`echo 'QWENCLOUD_API_KEY=sk-your-key-here' >> .env` in project root or current directory) or environment variable.
   The script searches for `.env` in the current working directory and the project root. Skills may be installed independently — do
   not assume qwencloud-ops-auth is present.
+  **Note**: The script auto-loads `.env` from the current directory and the project root (in addition to any exported environment
+  variable). A shell check showing `$QWENCLOUD_API_KEY` as "not set" does NOT mean the script will fail — it may still find the
+  key in `.env`. Treat the shell check as informational only; the authoritative test is simply running the script (it exits with
+  a clear error if no key is found anywhere).
 - Python 3.9+ (stdlib only, **no pip install needed** for script execution)
 
 ### Environment Check
@@ -97,8 +103,8 @@ Before first execution, verify Python is available:
 python3 --version  # must be 3.9+
 ```
 
-If `python3` is not found, try `python --version` or `py -3 --version`. If Python is unavailable or below 3.9, skip to *
-*Path 2 (curl)** in [execution-guide.md](references/execution-guide.md).
+If `python3` is not found, try `python --version` or `py -3 --version`. If Python is unavailable or below 3.9,
+PAYG may use **Path 2 (curl)**; Token Plan must install Python 3.9+ instead.
 
 ### Default: Run Script
 
@@ -113,7 +119,7 @@ execution.
 
 ```bash
 python3 <this-skill-dir>/scripts/text.py \
-  --request '{"messages":[{"role":"user","content":"Hello!"}],"model":"qwen3.6-plus"}' \
+  --request '{"messages":[{"role":"user","content":"Hello!"}],"model":"qwen3.7-plus"}' \
   --output output/qwencloud-text/ --print-response
 ```
 
@@ -121,7 +127,7 @@ For streaming (recommended for interactive use):
 
 ```bash
 python3 <this-skill-dir>/scripts/text.py \
-  --request '{"messages":[{"role":"user","content":"Write a poem about the sea"}],"model":"qwen3.6-plus"}' \
+  --request '{"messages":[{"role":"user","content":"Write a poem about the sea"}],"model":"qwen3.7-plus"}' \
   --stream --print-response
 ```
 
@@ -130,7 +136,7 @@ python3 <this-skill-dir>/scripts/text.py \
 | `--request '{...}'` | JSON request body                                   |
 | `--file path.json`  | Load request from file (alternative to `--request`) |
 | `--stream`          | Enable streaming output                             |
-| `--output dir/`     | Save response JSON to directory                     |
+| `--output path`     | Save response JSON to path (file if `.json` suffix, otherwise directory); use distinct filenames across calls to avoid overwriting |
 | `--print-response`  | Print response to stdout                            |
 | `--model ID`        | Override model (also settable in request JSON)      |
 
@@ -150,7 +156,7 @@ If the script fails, match the error output against the diagnostic table below t
 read [execution-guide.md](references/execution-guide.md) for alternative paths: curl commands (Path 2), Python SDK code
 generation (Path 3), and autonomous resolution (Path 5).
 
-**If Python is not available at all** → skip directly to Path 2 (curl)
+**If Python is not available at all** → PAYG may use Path 2 (curl); Token Plan must install Python 3.9+
 in [execution-guide.md](references/execution-guide.md).
 
 | Error Pattern                    | Diagnosis                        | Resolution                                                                   |
@@ -158,7 +164,7 @@ in [execution-guide.md](references/execution-guide.md).
 | `command not found: python3`     | Python not on PATH               | Try `python` or `py -3`; install Python 3.9+ if missing                      |
 | `Python 3.9+ required`           | Script version check failed      | Upgrade Python to 3.9+                                                       |
 | `SyntaxError` near type hints    | Python < 3.9                     | Upgrade Python to 3.9+                                                       |
-| `QWEN_API_KEY/DASHSCOPE_API_KEY not found` | Missing API key | Obtain key from [QwenCloud Console](https://home.qwencloud.com/api-keys); add to `.env`: `echo 'DASHSCOPE_API_KEY=sk-...' >> .env`; or run **qwencloud-ops-auth** if available |
+| `QWENCLOUD_API_KEY/QWEN_API_KEY/DASHSCOPE_API_KEY not found` | Missing API key | Obtain key from [QwenCloud Console](https://home.qwencloud.com/api-keys); add to `.env`: `echo 'QWENCLOUD_API_KEY=sk-...' >> .env`; or run **qwencloud-ops-auth** if available |
 | `HTTP 401`                       | Invalid or mismatched key        | Run **qwencloud-ops-auth** (non-plaintext check only); verify key is valid         |
 | `SSL: CERTIFICATE_VERIFY_FAILED` | SSL cert issue (proxy/corporate) | macOS: run `Install Certificates.command`; else set `SSL_CERT_FILE` env var  |
 | `URLError` / `ConnectionError`   | Network unreachable              | Check internet; set `HTTPS_PROXY` if behind proxy                            |
@@ -173,13 +179,13 @@ in [execution-guide.md](references/execution-guide.md).
 | Field                 | Type            | Description                                                                                          |
 |-----------------------|-----------------|------------------------------------------------------------------------------------------------------|
 | `prompt` / `messages` | string \| array | User input or message list                                                                           |
-| `model`               | string          | Model ID (e.g. `qwen3.6-plus`)                                                                       |
+| `model`               | string          | Model ID (e.g. `qwen3.7-plus`)                                                                       |
 | `system`              | string          | System prompt (optional)                                                                             |
 | `temperature`         | float           | 0–2, controls randomness                                                                             |
 | `max_tokens`          | int             | Max output tokens                                                                                    |
 | `tools`               | array           | Function definitions for tool calling                                                                |
 | `stream`              | bool            | Enable streaming (recommended for interactive use)                                                   |
-| `enable_thinking`     | bool            | Enable thinking mode. **Model defaults apply**: `qwen3.6-plus`/`qwen3.5-plus`/`qwen3.5-flash` have thinking **ON by default**. Only set explicitly when user requests deep thinking or needs to disable for flash models. Adds latency for real-time tasks. |
+| `enable_thinking`     | bool            | Override thinking mode. Model defaults vary; check the model catalog above. Do NOT set this field unless the user explicitly asks to change the default. |
 
 ### Response Fields
 
@@ -213,7 +219,7 @@ For detailed usage of each feature, see [api-guide.md](references/api-guide.md) 
 | `401 Unauthorized`      | Invalid or missing API key          | Run **qwencloud-ops-auth** if available; else prompt user to set key (non-plaintext check only) |
 | `429 Too Many Requests` | Rate limit exceeded                 | Retry with backoff                                                                         |
 | `500` / `502` / `503`   | Server error                        | Retry; check status page                                                                   |
-| `Invalid model`         | Model ID not found                  | Verify model name against Model Selection table                                            |
+| `Invalid model`         | Model ID not found                  | Verify the ID against the model catalog above                                               |
 | `Invalid parameter`     | Bad request body                    | Validate JSON and field types                                                              |
 | `TypeError: ...proxies` | openai SDK vs httpx incompatibility | `pip install --upgrade openai` (>=1.55.0); or use script (pure stdlib)                     |
 
@@ -230,6 +236,24 @@ Prefer the **current working directory** for all outputs. Default subdirectory w
 `./output/qwencloud-text/`.
 
 **Write prohibition**: NEVER write output files into this skill's installation directory or any `skills/` hierarchy. All generated content must go to `output/` under the current working directory or a user-specified path.
+
+## Token Plan Support
+
+Token Plan keys (`sk-sp-...`) are fully supported. The script automatically routes to the Token Plan endpoint (`token-plan.ap-southeast-1.maas.aliyuncs.com`) when a Token Plan key is detected.
+
+### Supported models
+
+Fetch and read the current [Token Plan model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-token-plan-models.md), then use an exact listed text-capable model. If CDN access fails, use the [local fallback](cdn/references/qwencloud-token-plan-models.md).
+
+### Behavior
+
+- **Token Plan key + supported model** → auto-routes to Token Plan endpoint, runs normally
+- **Token Plan key + unsupported model** → request may fail on the TP endpoint; consult the catalog above, then suggest switching to a supported model or using a PAYG key
+- **Coding Plan key** → scripts are NOT coding agents; calls will fail. Use a standard PAYG key or Token Plan key instead.
+
+### Required header
+
+`User-Agent: qwencloud-skills` is automatically included in all requests.
 
 ## Update Check (MANDATORY Post-Execution)
 

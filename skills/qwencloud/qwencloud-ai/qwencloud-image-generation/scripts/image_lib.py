@@ -12,13 +12,35 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from qwencloud_lib import resolve_file  # noqa: E402
+from qwencloud_lib import load_cdn_model_config, resolve_file, sanitize_diagnostic  # noqa: E402
 
 # ---------------------------------------------------------------------------
 # Model classification constants
 # ---------------------------------------------------------------------------
 
-DEFAULT_MODEL = "wan2.6-t2i"
+_MODEL_CONFIG_FILE = "qwencloud-image-generation-config.json"
+_MODEL_CONFIG_DIR = Path(__file__).resolve().parent.parent / "cdn" / "config"
+_MODEL_CONFIG_STRING_KEYS = (
+    "default_model",
+    "i2i_default_model",
+    "mt_image_default_model",
+)
+_MODEL_CONFIG_ARRAY_KEYS = (
+    "image_edit_models",
+    "multi_func_models",
+    "i2i_models",
+    "qwen_image_edit_models",
+    "qwen_image_edit_prefixes",
+    "qwen_image_30_models",
+    "qwen_t2i_models",
+    "qwen_t2i_async_models",
+    "qwen_t2i_sync_models",
+    "qwen_t2i_valid_sizes",
+    "qwen_image_edit_single_output_models",
+    "qwen_reference_required_models",
+    "z_image_models",
+    "mt_image_models",
+)
 DEFAULT_SIZE = "1280*1280"
 
 SYNC_PATH = "/services/aigc/multimodal-generation/generation"
@@ -26,24 +48,71 @@ ASYNC_PATH = "/services/aigc/image-generation/generation"
 I2I_ASYNC_PATH = "/services/aigc/image2image/image-synthesis"
 T2I_ASYNC_PATH = "/services/aigc/text2image/image-synthesis"
 
-_IMAGE_EDIT_MODELS: frozenset[str] = frozenset({"wan2.6-image"})
-_MULTI_FUNC_MODELS: frozenset[str] = frozenset({
-    "wan2.7-image-pro", "wan2.7-image",
-})  # Support both t2i and image editing, no reference_images required
-_I2I_MODELS: frozenset[str] = frozenset({"wan2.5-i2i-preview"})
-_QWEN_IMAGE_EDIT_MODELS: frozenset[str] = frozenset({
-    "qwen-image-2.0-pro", "qwen-image-2.0",
-    "qwen-image-edit-max", "qwen-image-edit-plus", "qwen-image-edit",
-})
-_QWEN_IMAGE_EDIT_PREFIXES: tuple[str, ...] = (
-    "qwen-image-2.0-pro-", "qwen-image-2.0-",
-    "qwen-image-edit-max-", "qwen-image-edit-plus-", "qwen-image-edit-",
-)
-_QWEN_T2I_MODELS: frozenset[str] = frozenset({"qwen-image-plus", "qwen-image-max"})
-_QWEN_T2I_VALID_SIZES: frozenset[str] = frozenset({
-    "1664*928", "1472*1104", "1328*1328", "1104*1472", "928*1664",
-})
-_QWEN_IMAGE_EDIT_SINGLE_OUTPUT: frozenset[str] = frozenset({"qwen-image-edit"})
+def _validate_model_config(config: dict[str, Any]) -> bool:
+    if not all(isinstance(config.get(key), str) and config[key] for key in _MODEL_CONFIG_STRING_KEYS):
+        return False
+    if not all(
+        isinstance(config.get(key), list)
+        and bool(config[key])
+        and all(isinstance(item, str) and item for item in config[key])
+        for key in _MODEL_CONFIG_ARRAY_KEYS
+    ):
+        return False
+
+    qwen_edit = set(config["qwen_image_edit_models"])
+    general_models = (
+        set(config["image_edit_models"])
+        | set(config["multi_func_models"])
+        | qwen_edit
+        | set(config["qwen_t2i_models"])
+        | set(config["z_image_models"])
+    )
+    return (
+        config["default_model"] in general_models
+        and config["i2i_default_model"] in config["i2i_models"]
+        and config["mt_image_default_model"] in config["mt_image_models"]
+        and set(config["qwen_image_30_models"]).issubset(qwen_edit)
+        and set(config["qwen_image_edit_single_output_models"]).issubset(qwen_edit)
+        and set(config["qwen_reference_required_models"]).issubset(qwen_edit)
+        and set(config["qwen_t2i_async_models"]).isdisjoint(config["qwen_t2i_sync_models"])
+        and (
+            set(config["qwen_t2i_async_models"])
+            | set(config["qwen_t2i_sync_models"])
+        ) == set(config["qwen_t2i_models"])
+    )
+
+
+def _model_config() -> dict[str, Any]:
+    return load_cdn_model_config(
+        _MODEL_CONFIG_FILE,
+        local_dir=_MODEL_CONFIG_DIR,
+        required_keys=_MODEL_CONFIG_STRING_KEYS + _MODEL_CONFIG_ARRAY_KEYS,
+        validator=_validate_model_config,
+    )
+
+
+def _model_ids(key: str) -> frozenset[str]:
+    return frozenset(_model_config()[key])
+
+
+def _model_prefixes(key: str) -> tuple[str, ...]:
+    return tuple(_model_config()[key])
+
+
+def _default_model(key: str = "default_model") -> str:
+    return _model_config()[key]
+
+
+def default_model() -> str:
+    return _default_model()
+
+
+def i2i_default_model() -> str:
+    return _default_model("i2i_default_model")
+
+
+def mt_image_default_model() -> str:
+    return _default_model("mt_image_default_model")
 
 # ---------------------------------------------------------------------------
 # Model classification predicates
@@ -51,30 +120,51 @@ _QWEN_IMAGE_EDIT_SINGLE_OUTPUT: frozenset[str] = frozenset({"qwen-image-edit"})
 
 def is_image_edit_model(model: str) -> bool:
     """Return True if model is a Wan image-editing model (requires reference images)."""
-    return model in _IMAGE_EDIT_MODELS
+    return model in _model_ids("image_edit_models")
 
 
 def is_multi_func_model(model: str) -> bool:
     """Return True if model is a multi-function model (wan2.7 series, supports t2i + editing)."""
-    return model in _MULTI_FUNC_MODELS
+    return model in _model_ids("multi_func_models")
 
 
 def is_i2i_model(model: str) -> bool:
     """Return True if model uses the dedicated image-to-image async endpoint."""
-    return model in _I2I_MODELS
+    return model in _model_ids("i2i_models")
 
 
 def is_qwen_image_edit_model(model: str) -> bool:
     """Return True if model is a Qwen image-editing model (includes snapshot versions)."""
-    if model in _QWEN_IMAGE_EDIT_MODELS:
+    if model in _model_ids("qwen_image_edit_models"):
         return True
     # Support snapshot versions like qwen-image-2.0-pro-2026-03-03
-    return model.startswith(_QWEN_IMAGE_EDIT_PREFIXES)
+    return model.startswith(_model_prefixes("qwen_image_edit_prefixes"))
 
 
 def is_qwen_t2i_model(model: str) -> bool:
-    """Return True if model is a Qwen text-to-image model (async-only)."""
-    return model in _QWEN_T2I_MODELS
+    """Return True if model uses a legacy fixed-size Qwen T2I contract."""
+    return model in _model_ids("qwen_t2i_models")
+
+
+def is_qwen_t2i_async_model(model: str) -> bool:
+    """Return True if model uses the asynchronous text2image endpoint."""
+    return model in _model_ids("qwen_t2i_async_models")
+
+
+def is_qwen_t2i_sync_model(model: str) -> bool:
+    """Return True if model uses the synchronous multimodal endpoint."""
+    return model in _model_ids("qwen_t2i_sync_models")
+
+
+def is_z_image_model(model: str) -> bool:
+    """Return True if model is the z-image series (sync-only, single-text-content)."""
+    return model in _model_ids("z_image_models")
+
+
+def is_mt_image_model(model: str) -> bool:
+    """Return True for image translation (bundled script uses its async route)."""
+    return model in _model_ids("mt_image_models")
+
 
 # ---------------------------------------------------------------------------
 # Internal helpers
@@ -88,8 +178,131 @@ def _resolve_file_url(value: str, api_key: str, model: str) -> str:
 # Payload builders
 # ---------------------------------------------------------------------------
 
+def _build_z_image_payload(req: dict[str, Any], model: str) -> dict[str, Any]:
+    """Build payload for z-image-turbo: sync-only, single text content, no `n`, no reference images.
+
+    Per openapi-z-image.json: parameters accept ONLY size / prompt_extend / seed.
+    `n` is NOT supported (server returns 400). Reference images are NOT supported.
+    """
+    prompt = req.get("prompt")
+    if not prompt:
+        raise ValueError("z-image-turbo requires non-empty prompt")
+    if req.get("reference_images") or req.get("reference_image"):
+        print(
+            f"Warning: {model} does not accept reference images. "
+            "Images will be ignored.",
+            file=sys.stderr,
+        )
+    if req.get("n") not in (None, 1):
+        print(
+            f"Warning: {model} does not support n>1 (n parameter is forbidden). "
+            "Falling back to single-image output.",
+            file=sys.stderr,
+        )
+
+    parameters: dict[str, Any] = {}
+    if req.get("size"):
+        parameters["size"] = req["size"]
+    if req.get("prompt_extend") is not None:
+        parameters["prompt_extend"] = req["prompt_extend"]
+    if req.get("seed") is not None:
+        parameters["seed"] = req["seed"]
+
+    return {
+        "model": model,
+        "input": {"messages": [{"role": "user", "content": [{"text": prompt}]}]},
+        "parameters": parameters,
+    }
+
+
+def _build_qwen_t2i_sync_payload(req: dict[str, Any], model: str) -> dict[str, Any]:
+    """Build the synchronous fixed-size Qwen Image request (qwen-image-max)."""
+    prompt = req.get("prompt")
+    if not prompt:
+        raise ValueError("prompt is required")
+    if req.get("reference_images") or req.get("reference_image"):
+        print(
+            f"Warning: {model} does not support reference images for text-to-image. "
+            "Images will be ignored. Use a compatible image-editing model instead.",
+            file=sys.stderr,
+        )
+    if req.get("n") not in (None, 1):
+        print(
+            f"Warning: {model} supports exactly one output; n={req['n']} will be ignored.",
+            file=sys.stderr,
+        )
+
+    size = req.get("size", "1328*1328")
+    valid_sizes = _model_ids("qwen_t2i_valid_sizes")
+    if size not in valid_sizes:
+        valid = ", ".join(sorted(valid_sizes))
+        print(
+            f"Warning: size '{size}' may not be valid for {model}. Valid sizes: {valid}",
+            file=sys.stderr,
+        )
+
+    parameters: dict[str, Any] = {
+        "size": size,
+        "n": 1,
+        "prompt_extend": req.get("prompt_extend", True),
+        "watermark": req.get("watermark", False),
+    }
+    if req.get("negative_prompt"):
+        parameters["negative_prompt"] = req["negative_prompt"]
+    if req.get("seed") is not None:
+        parameters["seed"] = req["seed"]
+    return {
+        "model": model,
+        "input": {"messages": [{"role": "user", "content": [{"text": prompt}]}]},
+        "parameters": parameters,
+    }
+
+
+def build_mt_image_payload(req: dict[str, Any], model: str, api_key: str) -> dict[str, Any]:
+    """Build payload for qwen-mt-image-2.0 (image translation).
+
+    Per openapi-image-translation.json:
+      - input: {image_url (required), source_lang (required), target_lang (required),
+        ext (optional: {domainHint, sensitives, terminologies, config})}.
+      - NO prompt, NO parameters.
+    """
+    image_url = req.get("image_url") or req.get("reference_image")
+    if not image_url:
+        raise ValueError(
+            f"{model} requires 'image_url' (URL or local path of the image to translate)."
+        )
+    source_lang = req.get("source_lang")
+    target_lang = req.get("target_lang")
+    if not source_lang:
+        raise ValueError(
+            f"{model} requires 'source_lang' (e.g. \"auto\", \"zh\", \"en\")."
+        )
+    if not target_lang:
+        raise ValueError(
+            f"{model} requires 'target_lang' (e.g. \"zh\", \"en\")."
+        )
+
+    resolved_url = _resolve_file_url(str(image_url), api_key, model)
+
+    input_obj: dict[str, Any] = {
+        "image_url": resolved_url,
+        "source_lang": str(source_lang),
+        "target_lang": str(target_lang),
+    }
+    if isinstance(req.get("ext"), dict) and req["ext"]:
+        input_obj["ext"] = req["ext"]
+
+    return {"model": model, "input": input_obj}
+
+
 def build_payload(req: dict[str, Any], model: str, api_key: str) -> dict[str, Any]:
     """Build the DashScope request payload for Wan image-edit and general generation."""
+    # z-image-turbo: dedicated branch (sync-only, single-text-content, no n, no images).
+    if is_z_image_model(model):
+        return _build_z_image_payload(req, model)
+    if is_qwen_t2i_sync_model(model):
+        return _build_qwen_t2i_sync_payload(req, model)
+
     prompt = req.get("prompt")
     if not prompt:
         raise ValueError("prompt is required")
@@ -109,23 +322,23 @@ def build_payload(req: dict[str, Any], model: str, api_key: str) -> dict[str, An
         if not enable_interleave and not images:
             print(
                 f"Warning: {model} requires reference_images or enable_interleave=true. "
-                f"Falling back to {DEFAULT_MODEL} for text-to-image.",
+                f"Falling back to {default_model()} for text-to-image.",
                 file=sys.stderr,
             )
-            model = DEFAULT_MODEL
+            model = default_model()
             req["model"] = model
             is_wan_edit = False
     elif is_qwen_edit:
         images = req.get("reference_images") or []
         if not images and req.get("reference_image"):
             images = [req["reference_image"]]
-        if not images and model in _QWEN_IMAGE_EDIT_SINGLE_OUTPUT | {"qwen-image-edit-max", "qwen-image-edit-plus"}:
+        if not images and model in _model_ids("qwen_reference_required_models"):
             print(
                 f"Warning: {model} requires reference_images for editing. "
-                f"Falling back to {DEFAULT_MODEL} for text-to-image.",
+                f"Falling back to {default_model()} for text-to-image.",
                 file=sys.stderr,
             )
-            model = DEFAULT_MODEL
+            model = default_model()
             req["model"] = model
             is_qwen_edit = False
 
@@ -199,13 +412,28 @@ def build_payload(req: dict[str, Any], model: str, api_key: str) -> dict[str, An
         if not enable_sequential and req.get("color_palette"):
             parameters["color_palette"] = req["color_palette"]
     elif is_qwen_edit:
-        parameters = {"size": req.get("size", "1024*1024")}
-        if model in _QWEN_IMAGE_EDIT_SINGLE_OUTPUT:
+        is_qwen_30 = model in _model_ids("qwen_image_30_models")
+        if is_qwen_30:
+            # qwen-image-3.0 series: NO default size -- only pass size when explicitly
+            # provided, so the model auto-recommends resolution otherwise.
+            parameters = {}
+            if req.get("size"):
+                parameters["size"] = req["size"]
+        else:
+            parameters = {"size": req.get("size", "1024*1024")}
+        if model in _model_ids("qwen_image_edit_single_output_models"):
             parameters["n"] = 1
         else:
             parameters["n"] = req.get("n", 1)
         parameters["prompt_extend"] = req.get("prompt_extend", True)
         parameters["watermark"] = req.get("watermark", False)
+        if is_qwen_30:
+            # 3.0-exclusive params: pass through only when explicitly provided.
+            # Use membership check so a literal False for enable_thinking is honored.
+            if "enable_thinking" in req:
+                parameters["enable_thinking"] = req["enable_thinking"]
+            if req.get("prompt_extend_mode"):
+                parameters["prompt_extend_mode"] = req["prompt_extend_mode"]
     else:
         parameters = {"size": req.get("size", DEFAULT_SIZE)}
         parameters["prompt_extend"] = req.get("prompt_extend", True)
@@ -275,9 +503,9 @@ def build_t2i_payload(req: dict[str, Any], model: str) -> dict[str, Any]:
             file=sys.stderr,
         )
 
-    # Validate n parameter: qwen-image-plus/max only support n=1 (fixed)
+    # Models routed through this legacy fixed-size endpoint support n=1.
     n_value = req.get("n", 1)
-    if model in ("qwen-image-plus", "qwen-image-max") and n_value != 1:
+    if is_qwen_t2i_model(model) and n_value != 1:
         print(
             f"Warning: {model} only supports n=1 (fixed). Your value ({n_value}) will be ignored.",
             file=sys.stderr,
@@ -285,8 +513,9 @@ def build_t2i_payload(req: dict[str, Any], model: str) -> dict[str, Any]:
         n_value = 1
 
     size = req.get("size", "1328*1328")
-    if size not in _QWEN_T2I_VALID_SIZES:
-        valid = ", ".join(sorted(_QWEN_T2I_VALID_SIZES))
+    valid_sizes = _model_ids("qwen_t2i_valid_sizes")
+    if size not in valid_sizes:
+        valid = ", ".join(sorted(valid_sizes))
         print(
             f"Warning: size '{size}' may not be valid for {model}. Valid sizes: {valid}",
             file=sys.stderr,
@@ -340,6 +569,22 @@ def extract_i2i_urls(resp: dict[str, Any]) -> list[str]:
     return urls
 
 
+def extract_mt_image_url(resp: dict[str, Any]) -> str:
+    """Extract the translated image URL from output.image_url.
+
+    The image-translation task result carries the URL directly under output.image_url
+    (not inside output.results[]). When the image has no translatable text the task
+    still SUCCEEDS and returns message "No text detected for translation" with no URL.
+    """
+    url = (resp.get("output") or {}).get("image_url")
+    if not url:
+        msg = (resp.get("output") or {}).get("message", "")
+        if msg:
+            raise RuntimeError(sanitize_diagnostic(f"No translated image URL returned (message: {msg})"))
+        raise RuntimeError("No translated image URL returned by DashScope")
+    return url
+
+
 def extract_interleaved_content(resp: dict[str, Any]) -> list[dict[str, str]]:
     """Extract interleaved text and image content from response."""
     output = resp.get("output") or {}
@@ -362,8 +607,15 @@ def extract_interleaved_content(resp: dict[str, Any]) -> list[dict[str, str]]:
 
 
 def extract_usage(resp: dict[str, Any]) -> tuple[int | None, int | None]:
-    """Extract image width and height from response usage field."""
+    """Extract image width and height from response usage field.
+
+    Supports two usage formats:
+      - width/height integer fields (z-image-turbo: {"width": 1024, "height": 1024})
+      - size string field (other models: {"size": "1024*1024"})
+    """
     usage = resp.get("usage") or {}
+    if isinstance(usage.get("width"), int) and isinstance(usage.get("height"), int):
+        return usage["width"], usage["height"]
     size_str = usage.get("size", "")
     if size_str and "*" in size_str:
         parts = size_str.split("*")

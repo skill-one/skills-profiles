@@ -6,17 +6,7 @@
 
 ## Overview
 
-Qwen-VL-OCR is optimized for text extraction and structured data parsing from images: scanned documents, tables, receipts, tickets, ID cards, and handwritten text. Higher accuracy than general VL models for text-heavy images.
-
----
-## Supported Models
-
-| Model | Region | Notes |
-|-------|--------|-------|
-| `qwen-vl-ocr` (stable) | International (ap-southeast-1) | For pricing, see [official pricing page](https://docs.qwencloud.com/developer-guides/getting-started/pricing) |
-| `qwen-vl-ocr-2025-11-20` | International (ap-southeast-1) | Pinned version |
-
-Context: 38,192 tokens. Max input: 30,000 tokens per image. Max output: 8,192 tokens.
+Fetch and read the current [QwenCloud vision model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-vision-models.md) for OCR model recommendations, defaults, supported models, and basic capabilities. If CDN access fails, use the [local fallback](../cdn/references/qwencloud-vision-models.md).
 
 ---
 
@@ -148,7 +138,8 @@ curl -X POST https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/complet
 
 ## Important Notes
 
-1. **Use qwen-vl-ocr for text-heavy images.** General VL models (qwen3-vl-plus) handle OCR but with lower accuracy on dense text.
-2. **Pixel parameters control cost.** Higher `max_pixels` = more tokens = better accuracy but higher cost. For simple text, lower values suffice.
-3. **SDK version requirements**: DashScope Python SDK >= 1.22.2, Java SDK >= 2.21.8.
-4. **DashScope-only features**: Image rotation correction and built-in OCR task types are only available through the DashScope native API, not through the OpenAI-compatible API.
+1. **Use a dedicated OCR model for text-heavy images.** Fetch the CDN model catalog linked above for the current recommendation and alternatives.
+2. **JSON mode requires non-thinking mode.** `ocr.py --json-mode` automatically sends `enable_thinking: false` when omitted, rejects explicit `enable_thinking: true`, and rejects thinking-only models.
+3. **Pixel parameters control cost.** Higher `max_pixels` = more tokens = better accuracy but higher cost. For simple text, lower values suffice.
+4. **SDK version requirements**: DashScope Python SDK >= 1.22.2, Java SDK >= 2.21.8.
+5. **DashScope-only features**: Image rotation correction and built-in OCR task types are only available through the DashScope native API, not through the OpenAI-compatible API.

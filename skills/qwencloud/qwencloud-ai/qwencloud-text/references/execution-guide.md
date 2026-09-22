@@ -126,14 +126,13 @@ response = client.chat.completions.create(
 
 ## Thinking Mode
 
-Qwen3.6/Qwen3.5 models support `enable_thinking` for extended reasoning. When enabled, the model may return thinking content before the final answer. **Do not enable by default** — only set `enable_thinking: true` when the user explicitly asks for deep thinking, step-by-step reasoning, or chain-of-thought. Keeping it off improves response speed for simple or conversational requests.
+Thinking support and defaults vary by model; fetch and read the [CDN model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-text-models.md) before overriding them. If CDN access fails, use the [local fallback](../cdn/references/qwencloud-text-models.md). Omit `enable_thinking` to preserve the selected model's default behavior, and set it only when the user explicitly asks for an override.
 
 ```python
 response = client.chat.completions.create(
-    model="qwen3.6-plus",
+    model="qwen3.7-plus",
     messages=[{"role": "user", "content": "Solve: 17 * 23 step by step."}],
-    extra_body={"enable_thinking": True},
 )
 ```
 
-Via curl, add `"enable_thinking": true` to the request body.
+Via curl, add `"enable_thinking": true` or `false` only when an explicit override is requested.

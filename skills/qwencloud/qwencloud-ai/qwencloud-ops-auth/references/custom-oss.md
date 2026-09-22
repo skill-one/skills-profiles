@@ -92,7 +92,7 @@ OSS credentials (`QWEN_TMP_OSS_AK_ID`, `QWEN_TMP_OSS_AK_SECRET`) must be treated
 
 - **Never hardcode** AccessKey credentials in source code.
 - **Never log or display** `QWEN_TMP_OSS_AK_ID` or `QWEN_TMP_OSS_AK_SECRET` in plaintext. Use masked output (e.g. `Lxxx...xxxx`) in any diagnostic or error message.
-- **Presigned URLs contain embedded credentials** (OSSAccessKeyId, Signature). Never log or display the full presigned URL including query parameters. Strip or mask the query string before any output.
+- **Presigned URLs grant temporary access** through query parameters such as `OSSAccessKeyId`, `Signature`, `x-oss-credential`, `x-oss-signature`, and security tokens. Keep complete URLs only in authorized data returns and API requests, including the Agent JSON handoff above. For stderr, diagnostic logs, debug previews, and test excerpts, redact the complete query string and fragment. Do not redact the actual returned URL or API payload, because that would make the URL unusable.
 - Add `.env` to `.gitignore` to prevent accidental commits.
 - Use RAM users with minimal permissions (`oss:PutObject`, `oss:GetObject` on your bucket).
 - Consider using internal endpoints (`QWEN_TMP_OSS_ENDPOINT`) when running in the same region/VPC as your OSS bucket to avoid public network charges.

@@ -12,26 +12,14 @@ Visual reasoning models output their thinking process before the final answer. S
 
 ## Model Types
 
-### Thinking-only (always reason)
+Fetch and read the current [QwenCloud vision model catalog](https://alioth-intl.alicdn.com/skills-info/models/references/qwencloud-vision-models.md) for thinking-only and hybrid-thinking model lists, defaults, and compatibility. If CDN access fails, use the [local fallback](../cdn/references/qwencloud-vision-models.md). Preserve a user-specified model and thinking setting.
 
-| Model | Region | Notes |
-|-------|--------|-------|
-| `qvq-max` | International | **Streaming output only**. `incremental_output` defaults true. |
-| `qvq-plus` | International | Streaming output only. |
-| `qwen3-vl-235b-a22b-thinking` | International, Global | Open source. Streaming only. |
-| `qwen3-vl-32b-thinking` | International, Global | Open source. Streaming only. |
-| `qwen3-vl-30b-a3b-thinking` | International, Global | Open source. |
-| `qwen3-vl-8b-thinking` | International, Global | Open source. |
-
-### Hybrid thinking (toggle via `enable_thinking`)
-
-| Model | Default | Notes |
-|-------|---------|-------|
-| `qwen3-vl-plus` | thinking **off** | Set `enable_thinking: true` to activate |
-| `qwen3-vl-flash` | thinking **off** | Set `enable_thinking: true` to activate |
-| `qwen3.6-plus` | thinking **on** | Latest flagship. Set `enable_thinking: false` to disable |
-| `qwen3.5-plus` | thinking **on** | Set `enable_thinking: false` to disable |
-| `qwen3.5-flash` | thinking **on** | Set `enable_thinking: false` to disable |
+Rules that must not be inferred from the catalog: `qvq-max` is thinking-only
+and streaming-only. The current open-source vision thinking model,
+`qwen3-vl-235b-a22b-thinking`, is also thinking-only and streaming-only.
+Neither accepts `enable_thinking: false`. Hybrid models accept
+`enable_thinking`; use their catalog default unless the user asks for an
+override or requests structured output.
 
 ---
 
@@ -45,7 +33,7 @@ Same endpoint as standard vision: `POST /compatible-mode/v1/chat/completions`
 |-----------|------|-------------|
 | `enable_thinking` | bool | Enable/disable thinking (hybrid models only). Pass via `extra_body`. |
 | `thinking_budget` | int | Max tokens for reasoning process. Controls thinking depth. |
-| `stream` | bool | **Required for thinking-only models** (qvq-max, etc.). Recommended for all. |
+| `stream` | bool | **Required for `qvq-max` and `qwen3-vl-235b-a22b-thinking`.** Recommended for hybrid thinking. |
 
 ### Streaming Response
 
@@ -140,7 +128,7 @@ completion = client.chat.completions.create(
 )
 ```
 
-**Video duration limits**: 2s-2h (Qwen3.5) / 2s-10min (QVQ, Qwen3-VL, Qwen2.5-VL). `fps` range [0.1, 10], default 2.0. Use lower fps for long videos to save tokens.
+**Video duration limits are model-specific**: Fetch the CDN model catalog linked above for current limits. `fps` range is [0.1, 10], default 2.0. Use lower fps for long videos to save tokens.
 
 **Script usage**:
 
@@ -157,10 +145,10 @@ python scripts/reason.py --request '{"prompt":"Describe the action",
 
 ## Important Notes
 
-1. **QVQ models require streaming.** Non-streaming calls return an error. The skill script auto-enables streaming for QVQ.
+1. **Thinking-only models have fixed behavior.** `qvq-max` and `qwen3-vl-235b-a22b-thinking` require streaming and cannot disable thinking. `reason.py` always streams.
 2. **Thinking tokens are billed as output tokens.** This increases cost. Use `thinking_budget` to limit reasoning depth.
 3. **System prompt**: In general (non-agent) scenarios, do not set a System Message for optimal performance. Pass instructions via User Message. For multi-turn agents, use the system message.
-4. **Qwen3.6-plus/Qwen3.5-plus thinking is on by default.** Disable with `enable_thinking: false` for simple tasks where speed matters.
-5. **Structured output only in non-thinking mode.** JSON Schema and structured output are only supported when thinking is disabled.
+4. **Thinking defaults vary by model.** Fetch the CDN model catalog before overriding them; preserve explicit settings except that an invalid `enable_thinking: true` plus structured-output request must be rejected.
+5. **Structured output only in non-thinking mode.** `analyze.py` and `ocr.py` automatically set `enable_thinking: false` for structured output when omitted, reject explicit `true`, and cannot use thinking-only models for that request.
 6. **analyze.py also supports thinking.** Set `enable_thinking: true` in the request — the script auto-enables streaming. Use reason.py only for QVQ or dedicated reasoning workflows.
 7. **Video reasoning supported.** Both `reason.py` and `analyze.py` accept `video` (URL) and `video_frames` (frame list) input with optional `fps` parameter. Video audio is not processed — models analyze frames only.

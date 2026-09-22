@@ -25,19 +25,22 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from vision_lib import (  # noqa: E402
+    DiagnosticStream,
     chat_url,
+    check_token_plan_model_support,
     extract_text,
+    get_default_model,
     http_post,
     load_request,
     prompt_update_check_install,
     require_api_key,
+    sanitize_diagnostic,
     save_result,
     stream_sse,
     try_parse_json,
     build_content,
 )
 
-DEFAULT_MODEL = "qwen3.6-plus"
 DEFAULT_MAX_TOKENS = 512
 DEFAULT_TEMPERATURE = 0.2
 DEFAULT_DETAIL = "auto"
@@ -61,7 +64,7 @@ def _analyze_sync(
 
     message = choices[0].get("message", {})
     text = extract_text(message.get("content"))
-    parsed = try_parse_json(text) if (json_mode or schema_obj) else None
+    parsed = try_parse_json(text) if (json_mode or schema_obj is not None) else None
 
     result: dict[str, Any] = {
         "text": text,
@@ -90,39 +93,42 @@ def _analyze_stream(
     model_name = model
     is_answering = False
 
-    for chunk in stream_sse(
-        chat_url(), api_key, payload,
-        timeout=int(req.get("timeout_s", 300)),
-    ):
-        if chunk.get("usage"):
-            usage = chunk["usage"]
-        if chunk.get("model"):
-            model_name = chunk["model"]
+    diagnostics = DiagnosticStream()
+    try:
+        for chunk in stream_sse(
+            chat_url(), api_key, payload,
+            timeout=int(req.get("timeout_s", 300)),
+        ):
+            if chunk.get("usage"):
+                usage = chunk["usage"]
+            if chunk.get("model"):
+                model_name = chunk["model"]
 
-        choices = chunk.get("choices") or []
-        if not choices:
-            continue
-        delta = choices[0].get("delta") or {}
+            choices = chunk.get("choices") or []
+            if not choices:
+                continue
+            delta = choices[0].get("delta") or {}
 
-        rc = delta.get("reasoning_content") or ""
-        if rc:
-            reasoning_content += rc
-            if not is_answering:
-                print(rc, end="", flush=True, file=sys.stderr)
+            rc = delta.get("reasoning_content") or ""
+            if rc:
+                reasoning_content += rc
+                if not is_answering:
+                    diagnostics.write(rc)
 
-        ct = delta.get("content") or ""
-        if ct:
-            if not is_answering:
-                is_answering = True
-                if reasoning_content:
-                    print("\n", file=sys.stderr)
-            answer_content += ct
-            print(ct, end="", flush=True, file=sys.stderr)
+            ct = delta.get("content") or ""
+            if ct:
+                if not is_answering:
+                    is_answering = True
+                    if reasoning_content:
+                        diagnostics.write("\n\n")
+                answer_content += ct
+                diagnostics.write(ct)
+    finally:
+        if reasoning_content or answer_content:
+            diagnostics.write("\n")
+        diagnostics.flush()
 
-    if reasoning_content or answer_content:
-        print("", file=sys.stderr)
-
-    parsed = try_parse_json(answer_content) if (json_mode or schema_obj) else None
+    parsed = try_parse_json(answer_content) if (json_mode or schema_obj is not None) else None
 
     result: dict[str, Any] = {
         "text": answer_content,
@@ -146,7 +152,7 @@ def analyze(
     if not prompt:
         raise ValueError("prompt is required")
 
-    model = req.get("model", DEFAULT_MODEL)
+    model = req["model"] if "model" in req else get_default_model("analyze")
     detail = req.get("detail", DEFAULT_DETAIL)
     json_mode = bool(req.get("json_mode", False))
     schema_obj = req.get("schema")
@@ -154,7 +160,20 @@ def analyze(
     if schema_obj is not None and not isinstance(schema_obj, dict):
         raise ValueError("schema must be a JSON object")
 
-    if schema_obj:
+    structured_output = json_mode or schema_obj is not None
+    if structured_output and (model == "qvq-max" or model.endswith("-thinking")):
+        raise ValueError(
+            f"Structured output (json_mode/schema) cannot use thinking-only model {model}. "
+            "Select a hybrid or non-thinking model."
+        )
+    if structured_output and req.get("enable_thinking") is True:
+        raise ValueError(
+            "Structured output (json_mode/schema) is incompatible with "
+            "enable_thinking=true. Set enable_thinking to false or omit it; "
+            "analyze.py automatically disables thinking when it is omitted."
+        )
+
+    if schema_obj is not None:
         prompt = f"{prompt}\n\nReturn ONLY JSON that matches the provided schema. Do not include markdown or extra commentary."
     elif json_mode:
         prompt = f"{prompt}\n\nReturn ONLY valid JSON."
@@ -164,7 +183,7 @@ def analyze(
     content = build_content(req, detail, upload_key=upload_key, upload_model=upload_model)
     content.append({"type": "text", "text": prompt})
 
-    enable_thinking = req.get("enable_thinking")
+    enable_thinking = False if structured_output else req.get("enable_thinking")
     thinking_budget = req.get("thinking_budget")
     use_stream = force_stream or bool(req.get("stream", False)) or enable_thinking is True
 
@@ -183,7 +202,7 @@ def analyze(
     if req.get("vl_high_resolution_images") is not None:
         payload["vl_high_resolution_images"] = bool(req["vl_high_resolution_images"])
 
-    if schema_obj:
+    if schema_obj is not None:
         payload["response_format"] = {
             "type": "json_schema",
             "json_schema": {"name": "vision_result", "schema": schema_obj},
@@ -208,11 +227,11 @@ request JSON fields (--request / --file):
   video               Video URL or local path
   video_frames        Array of frame image URLs/paths (alternative to video)
   fps                 Frame sampling rate for video (default: auto)
-  model               Model ID (default: qwen3.6-plus)
+  model               Model ID (default loaded from CDN model configuration)
   detail              Image detail level: "auto" | "low" | "high"
-  json_mode           true — request JSON-only output (also via --json-mode)
-  schema              JSON Schema object for structured extraction
-  enable_thinking     true — enable chain-of-thought reasoning (forces streaming)
+  json_mode           true — request JSON-only output; automatically disables thinking
+  schema              JSON Schema object; automatically disables thinking
+  enable_thinking     true — enable reasoning (incompatible with json_mode/schema)
   thinking_budget     Max thinking tokens
   vl_high_resolution_images  true — enable high-res mode for fine details
   max_tokens          Max output tokens (default: 512)
@@ -225,8 +244,9 @@ input types (provide exactly one):
   video_frames  Video from extracted frames (array of image paths)
 
 environment variables:
-  DASHSCOPE_API_KEY   (required) API key — also loaded from .env
-  QWEN_API_KEY        (alternative) Alias for DASHSCOPE_API_KEY
+  QWENCLOUD_API_KEY   (preferred) API key — also loaded from .env
+  QWEN_API_KEY        (fallback) Legacy alias
+  DASHSCOPE_API_KEY   (fallback) Legacy provider variable
   QWEN_REGION         ap-southeast-1 (default)
 
 examples:
@@ -261,7 +281,11 @@ examples:
     args = parser.parse_args()
 
     api_key = require_api_key()
-    req = load_request(args)
+    try:
+        req = load_request(args)
+    except ValueError as e:
+        print(sanitize_diagnostic(f"Error: {e}"), file=sys.stderr)
+        sys.exit(1)
 
     if args.json_mode:
         req["json_mode"] = True
@@ -269,8 +293,14 @@ examples:
         val = args.schema
         req["schema"] = json.loads(val) if val.startswith("{") else json.loads(Path(val).read_text(encoding="utf-8"))
 
-    result = analyze(req, api_key, force_stream=args.stream,
-                     upload_files=args.upload_files)
+    try:
+        model = req["model"] if "model" in req else get_default_model("analyze")
+        check_token_plan_model_support(model, domain="Vision")
+        result = analyze(req, api_key, force_stream=args.stream,
+                         upload_files=args.upload_files)
+    except (ValueError, RuntimeError) as e:
+        print(sanitize_diagnostic(f"Error: {e}"), file=sys.stderr)
+        sys.exit(1)
 
     if args.output:
         save_result(result, args.output)

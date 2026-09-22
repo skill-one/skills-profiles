@@ -56,6 +56,8 @@ curl -o output.wav "AUDIO_URL_FROM_STEP_2"
 
 ### With instruction control (qwen3-tts-instruct-flash)
 
+> **⚠️ Only use the instruct model + `instructions` when the user explicitly asked for instruction/style control.** This template is for that specific case — do NOT switch a user-specified model (e.g. `qwen-audio-3.0-tts-plus` or `qwen3-tts-flash`) to `qwen3-tts-instruct-flash`, and do NOT add `instructions` the user didn't request, even if the text "sounds like" an audiobook/radio-drama. Use the user's model as given.
+
 ```bash
 curl -sS -X POST "https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation" \
   -H "Authorization: Bearer $DASHSCOPE_API_KEY" \
@@ -72,6 +74,8 @@ curl -sS -X POST "https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/multi
 ```
 
 ### Streaming (Base64 audio chunks via SSE)
+
+This is a direct API fallback. Qwen3-TTS supports SSE at the API level, but the bundled `scripts/tts.py` HTTP path is non-streaming and does not consume its request JSON `stream` field.
 
 ```bash
 curl -sS --no-buffer -X POST "https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation" \
