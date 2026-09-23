@@ -8,13 +8,13 @@ from pathlib import Path
 
 import pytest
 
-import gen
+import jev
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-SCRIPTS = ["justfile", "gen.py", "jev.py", "index.py", "readme.py", "stale.py"]
+SCRIPTS = ["justfile", "jev.py", "index.py", "readme.py", "stale.py"]
 ARCHIVE_ROOT = "skills-sh-mirror-dist"  # GitHub wraps a branch in <repo>-<branch>/
-# the published root: the skill directories, the profiles written about them, the mirror's own files
-# and the catalog, which are the four things the justfile and the three scripts all read
+# the published root: the skill directories, the labels written about them, the mirror's own files
+# and the catalog, which are the four things the justfile and the scripts all read
 OUTPUT = Path("output")
 
 # The fake mirror's own index: five skills with saved content, one without (the scraper recorded no
@@ -46,11 +46,7 @@ def skill_dir_name(skill_id: str) -> str:
 
 
 def skill_md_text(entry: dict) -> str | None:
-    """The SKILL.md the fake mirror holds for one skill; None = no content.
-
-    Upstream writes the skill's name and description into the front matter, and since the index
-    dropped its own copy of the description, that block is where gen.py reads it from.
-    """
+    """The SKILL.md the fake mirror holds for one skill; None = no content."""
     if not entry.get("hash"):  # the scraper saved no source for it
         return None
     return (f"---\nname: {entry['id']}\ndescription: {entry['description']}\n---\n\n"
@@ -64,12 +60,12 @@ def index_row(entry: dict) -> dict:
 
 def skill_path(output: Path, skill_id: str) -> Path:
     """A skill's own directory, as the mirror publishes it: what a user downloads and installs."""
-    return output / gen.SKILLS_DIR / skill_dir_name(skill_id)
+    return output / jev.SKILLS_DIR / skill_dir_name(skill_id)
 
 
 def profile_path(output: Path, skill_id: str) -> Path:
     """What this project writes about a skill."""
-    return output / gen.PROFILES_DIR / skill_dir_name(skill_id)
+    return output / jev.PROFILES_DIR / skill_dir_name(skill_id)
 
 
 def branch_files(entries: list[dict]) -> dict[str, str]:
@@ -87,16 +83,15 @@ def branch_files(entries: list[dict]) -> dict[str, str]:
 
 
 def write_snapshot(output: Path, entries: list[dict] | None = None) -> None:
-    """A snapshot already unpacked into the output tree, the way `just sync` leaves it: the skill
-    directories at the root, the mirror's own files beside them under `upstream/`."""
+    """A snapshot already unpacked into the output tree, the way `just sync` leaves one."""
     for name, content in branch_files(SKILLS if entries is None else entries).items():
-        where = output / name if name.startswith("skills/") else output / gen.UPSTREAM_DIR / name
+        where = output / name if name.startswith("skills/") else output / jev.UPSTREAM_DIR / name
         where.parent.mkdir(parents=True, exist_ok=True)
         where.write_text(content, encoding="utf-8")
 
 
 def make_tarball(archive: Path, entries: list[dict] | None = None) -> None:
-    """Build a dist-branch tarball for `make sync` to fetch."""
+    """Build a dist-branch tarball for `just sync` to fetch."""
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp) / ARCHIVE_ROOT
         for name, content in branch_files(SKILLS if entries is None else entries).items():
@@ -111,25 +106,22 @@ def make_tarball(archive: Path, entries: list[dict] | None = None) -> None:
 def offline(monkeypatch):
     """No test reaches the network.
 
-    Constructing the SDK client raises, so a test cannot silently call out even with
-    a local `.env` full of real keys. `make sync` never runs against the network in a
-    test either: it is pointed at a local tarball through the SNAPSHOT variable.
+    Constructing a real httpx client raises, so a test cannot silently call out even with a local
+    `.env` full of real keys. The tests that exercise the call inject a stand-in client.
     """
-    import openai
 
     def _no_client(*args, **kwargs):
-        raise AssertionError("a real LLM client was constructed")
+        raise AssertionError("a real HTTP client was constructed")
 
-    monkeypatch.setattr(openai, "OpenAI", _no_client)
+    monkeypatch.setattr(jev.httpx, "Client", _no_client)
 
 
 @pytest.fixture
 def workdir(tmp_path, monkeypatch) -> Path:
     """An isolated working directory, wired up through SKILLS_PROFILES_* env vars.
 
-    The scripts each build their own Config, so the tests point them at tmp_path the
-    way a user would - through the environment - and chdir into it so nothing
-    relative (`.env`, `output/`) can escape.
+    The script builds its own Config, so the tests point it at tmp_path the way a user would -
+    through the environment - and chdir into it so nothing relative (`.env`, `output/`) can escape.
     """
     workdir = tmp_path / "work"
     workdir.mkdir()
@@ -142,6 +134,6 @@ def workdir(tmp_path, monkeypatch) -> Path:
 
 
 @pytest.fixture
-def config(workdir) -> gen.Config:
-    """The Config gen.py would build for `workdir`."""
-    return gen.Config()
+def config(workdir) -> jev.Config:
+    """The Config jev.py would build for `workdir`."""
+    return jev.Config()

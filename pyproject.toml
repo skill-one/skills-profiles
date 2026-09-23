@@ -1,13 +1,12 @@
 [project]
 name = "skills-profiles"
 version = "0.1.0"
-description = "Generate multi-angle Chinese profiles for agent skills collected by skills-sh-mirror"
+description = "Label agent skills collected by skills-sh-mirror with a closed domain taxonomy via Jev"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "httpx>=0.28.1",
     "jinja2>=3.1.6",
-    "openai>=2.54.0",
     "pydantic>=2.13.5",
     "pydantic-settings>=2.15.0",
     "pyyaml>=6.0.3",
@@ -23,7 +22,7 @@ dev = ["mypy>=1.18.0", "pytest>=9.1.1", "ruff>=0.14.0"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-# so `import gen` in the tests finds the script at the project root
+# so `import jev` in the tests finds the script at the project root
 pythonpath = ["."]
 
 [tool.ruff]
@@ -37,10 +36,10 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["gen", "jev", "readme", "conftest"]
+known-first-party = ["jev", "index", "readme", "conftest"]
 
 [tool.mypy]
 python_version = "3.12"
 ignore_missing_imports = true
 warn_unused_ignores = true
-files = ["gen.py", "index.py", "jev.py", "readme.py", "stale.py"]
+files = ["index.py", "jev.py", "readme.py", "stale.py"]
