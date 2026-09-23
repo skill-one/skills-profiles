@@ -1,47 +1,40 @@
-# Generate the skill profiles: one json + one markdown per (skill, prompt).
+# Label the skills with their domain: one domain.json per skill.
 #
-#   just                  build the first skill's missing outputs (`just --list` for more)
-#   just limit=20         ... the next 20 skills that still need something, most installed first
+#   just                  build the first skill missing its label (`just --list` for more)
+#   just limit=20         ... the next 20 skills still unlabelled, most installed first
 #   just limit=0          ... every skill in the snapshot, with no cap
-#   just prompt=scenario  ... only that angle, for every skill in the window
-#   just limit=20 jobs=8  ... the same window, eight generations at a time
+#   just limit=20 jobs=8  the same window, eight labels at a time
 #   just rpm=20           ... paced to 20 calls a minute, whatever the pool size
-#   just dry=1 limit=2    offline smoke test: fake model, real layout
-#   just index            write output/skills.jsonl: the mirror's rows joined with the profiles
+#   just dry=1 limit=2    offline smoke test: fake endpoint, real layout
+#   just index            write output/skills.jsonl: the mirror's rows joined with the labels
 #                         ... and output/README.md beside it, the same tree said as progress
 #
-# Everything lands under `output_dir`, in layers that do not overlap. `skills/` is the mirror's own
-# skill directories, exactly as it publishes them - what a user downloads means one of those, and
-# installing one means copying it. `profiles/` is what this project writes about them, one directory
-# per skill. `upstream/` is the rest of the mirror, its own index above all. `skills.jsonl` at the
-# root is the catalog: one row per skill, the mirror's fields plus the description read out of the
-# skill itself and the domain it was labelled with. Publishing is copying that one directory.
+# Everything lands under `output_dir`, in layers that do not overlap. `skills/` is the mirror's
+# own skill directories, exactly as it publishes them. `profiles/` is what this project writes
+# about them - one domain.json per skill. `upstream/` is the rest of the mirror, its own index
+# above all. `skills.jsonl` at the root is the catalog: one row per skill, the mirror's fields plus
+# the description read out of the skill itself and the domain it was labelled with. Publishing is
+# copying that one directory.
 #
-# Two scripts write those profiles, and a pair goes to whichever one owns its angle: `gen.py` asks
-# a chat model about the angles under `prompts/`, and `jev.py` asks the System One endpoint about
-# its own, which it also names. `jev.py --angles` is the only list of those there is.
-#
-# The knobs are justfile variables: they are set on the command line and nowhere else. `.env`
-# belongs to the two scripts, and holds both endpoints and their keys.
+# The one producer is `jev.py`, which asks the System One endpoint. The knobs are justfile
+# variables: set on the command line and nowhere else. `.env` belongs to the script and holds the
+# endpoint and its key.
 
 limit := "1"         # skills per run, most installed first: the next ones that need work; 0 = all
-prompt := ""         # one prompt id, or empty for every prompt
-jobs := num_cpus()   # generations in flight at once
+jobs := num_cpus()   # labels in flight at once
 rpm := "0"           # what the endpoint allows per minute; 0 = no pace
-dry := ""            # 1 = fake model, real layout
+dry := ""            # 1 = fake endpoint, real layout
 output_dir := "output"
 prompts_dir := "prompts"
 snapshot := "https://codeload.github.com/skill-one/skills-sh-mirror/tar.gz/dist"
 py := "uv run python"
 
-# What gen.py reads. Its configuration is the environment, so this is the handover - and it is
-# also why the pool below runs gen.py rather than `just one`: a nested just would re-evaluate
-# this file and reset every one of these to its default.
+# What jev.py reads. Its configuration is the environment, so this is the handover.
 export SKILLS_PROFILES_OUTPUT_DIR := output_dir
 export SKILLS_PROFILES_PROMPTS_DIR := prompts_dir
 export SKILLS_PROFILES_DRY_RUN := dry
 
-# Build the missing outputs for the next `limit` skills, most installed first, `jobs` at a time.
+# Build the missing labels for the next `limit` skills, most installed first, `jobs` at a time.
 [script]
 default:
 	#!/usr/bin/env sh
@@ -52,13 +45,11 @@ default:
 	# `skills.jsonl` is written with the mirror's rows in the mirror's order, so reading it is the
 	# whole ordering - the most installed skills come first, and nothing is sorted. A row whose
 	# description is `null` is a skill nothing could be read from, and the batch never touches it.
-	# An id it names whose SKILL.md is not on disk is skipped, because the catalog and the tree are
-	# written separately and can disagree.
+	# An id it names whose SKILL.md is not on disk is skipped.
 	#
-	# No catalog, or one whose ids do not parse, falls back to the directory listing in path order,
-	# so a batch runs either way. That walk is a `find` rather than a glob (a glob drops a leading
-	# dot, and `.claude` is a repo name people use) and `LC_ALL=C sort` rather than plain `sort`,
-	# whose collation moves `_` around: the order has to be the same one in every locale.
+	# No catalog, or one whose ids do not parse, falls back to the directory listing in path order:
+	# a `find` rather than a glob (a glob drops a leading dot, and `.claude` is a repo name people
+	# use) and `LC_ALL=C sort` rather than plain `sort`, whose collation moves `_` around.
 	[ -d {{output_dir}}/skills ] || { echo "no sources under {{output_dir}} - run \`just sync\` first" >&2; exit 1; }
 	ordered=
 	if [ -f {{output_dir}}/skills.jsonl ]; then
@@ -72,54 +63,23 @@ default:
 	[ -n "$ordered" ] || ordered=$(find {{output_dir}}/skills -mindepth 4 -maxdepth 4 -name SKILL.md \
 		| sed 's|^{{output_dir}}/skills/||; s|/SKILL.md$||' | LC_ALL=C sort)
 	[ -n "$ordered" ] || { echo "no skill under {{output_dir}}/skills has a SKILL.md" >&2; exit 1; }
-	# The angles come from two producers, and a pair is built by whichever of them owns it: a
-	# `prompts/<id>.json` pair is a chat angle for gen.py, and `jev.py --angles` names the angles
-	# this project asks the System One endpoint instead. Neither list is written down twice.
-	chat=$(find {{prompts_dir}} -maxdepth 1 -name '*.json' | sed 's|.*/||; s|\.json$||')
-	systemone=$({{py}} jev.py --angles)
-	if [ -n "{{prompt}}" ]; then
-		one=$(printf '%s\n' $chat $systemone | grep -x '{{prompt}}') || {
-			echo "no prompt '{{prompt}}' - have: $chat $systemone" >&2; exit 1; }
-		chat=$(printf '%s\n' $chat | grep -x '{{prompt}}' || true)
-		systemone=$(printf '%s\n' $systemone | grep -x '{{prompt}}' || true)
-	fi
-	angles="$chat $systemone"
-	[ -n "$(printf '%s' "$angles" | tr -d '[:space:]')" ] || { echo "no angles to build" >&2; exit 1; }
 
-	# The window: the next `limit` skills that still have something to do, in that order. `0` = all.
+	# The window: the next `limit` skills still missing domain.json, in that order. `0` = all.
 	#
-	# `limit` counts work rather than positions. The first skill of the listing is finished after
-	# one run, so "the first `limit` of the listing" would make every later run - and every later
-	# `publish` - a no-op, instead of walking down the dataset one window at a time.
-	#
-	# "not all there yet" is one awk over two streams rather than a `[ -f ]` per (skill, prompt):
-	# the first stream is what the tree already holds, the second is the order. Sixty thousand
-	# stats in a shell loop is a minute of forking, and this decides before anything is dispatched.
-	present=$(find {{output_dir}}/profiles -mindepth 4 -maxdepth 4 -name '*.json' 2>/dev/null \
-		| sed 's|^{{output_dir}}/profiles/||')
+	# `limit` counts work rather than positions: a finished skill is not in the window, so repeated
+	# runs walk down the dataset one window at a time. "not there yet" is one awk over two streams:
+	# the labelled skill dirs the tree already holds, then the order.
+	present=$(find {{output_dir}}/profiles -mindepth 4 -maxdepth 4 -name domain.json 2>/dev/null \
+		| sed 's|^{{output_dir}}/profiles/||; s|/domain.json$||')
 	skills=$( { printf '%s\n' "$present"; printf '%s\n' ---; printf '%s\n' "$ordered"; } \
-		| PROMPTS="$angles" awk -v limit={{limit}} '
-			# the prompt ids through the environment: `-v` would reprocess the value, and one with
-			# real newlines in it is an awk syntax error on the BSD that ships with macOS
-			#
-			# An empty name is not an angle. A leading or trailing separator hands awk one, and it
-			# would then be an angle more than there are - so `have[skill] < angles` would hold for
-			# nearly every row, and `limit` would quietly stop counting work and start counting rows.
-			BEGIN {
-				n = split(ENVIRON["PROMPTS"], name, /[ \t\n]+/)
-				for (i = 1; i <= n; i++) if (name[i] != "") { asked[name[i]] = 1; angles++ }
-			}
+		| awk -v limit={{limit}} '
 			$0 == "---" { listing = 1; next }
-			!listing {
-				angle = $0; sub(/.*\//, "", angle); sub(/\.json$/, "", angle)
-				if (asked[angle]) { skill = $0; sub(/\/[^\/]*$/, "", skill); have[skill]++ }
-				next
-			}
-			have[$0] < angles { print; taken++; if (limit && taken >= limit) exit }')
-	[ -n "$skills" ] || { echo "nothing to build: every skill already has its angles" >&2; exit 0; }
+			!listing { have[$0] = 1; next }
+			!($0 in have) { print; taken++; if (limit && taken >= limit) exit }')
+	[ -n "$skills" ] || { echo "nothing to build: every skill already has its domain label" >&2; exit 0; }
 
-	# `rpm` is a pace rather than a queue: a worker waits that long between its calls, so a
-	# batch cannot outrun the endpoint. The pool is capped at it too, so the first round fits.
+	# `rpm` is a pace rather than a queue: a worker waits that long between its calls, so a batch
+	# cannot outrun the endpoint. The pool is capped at it too, so the first round fits.
 	pool={{jobs}}
 	interval=0
 	if [ "{{rpm}}" -gt 0 ]; then
@@ -127,78 +87,61 @@ default:
 		interval=$(( pool * 60 / {{rpm}} ))
 	fi
 	export INTERVAL=$interval
-	# the pool dispatches a pair by its angle, so it is told which angles this script's are
-	export JEV_ANGLES="$systemone"
 	if [ "$interval" -gt 0 ]; then
 		echo "pacing: $pool at a time, one call per ${interval}s per worker" >&2
 	fi
 
-	for prompt in $chat $systemone; do
-		printf '%s\n' "$skills" | while read -r skill; do
-			json={{output_dir}}/profiles/$(echo "$skill" | tr ':&' '__')/$prompt.json
-			[ -f "$json" ] || echo "$prompt $skill"
-		done
-	# A failed call must not end the run: `xargs` stops on 255 and reports 123, and either
-	# one throws away every hour left in a long batch. The pair is named in FAIL_LOG so the
-	# next run redoes exactly it, and the pace is paid either way - a systemic outage would
-	# otherwise spin through every remaining skill in minutes, all of them failing.
-	#
-	# stderr is held back rather than redirected wholesale, because that is where the
-	# progress line goes; only a failing call's traceback is filed away, in GEN_ERR_LOG.
-	# `-r` keeps an empty list from running the pool once with no pair at all.
-	done | xargs -r -P "$pool" -n 2 sh -c '
+	# A failed call must not end the run: the skill is named in FAIL_LOG so the next run redoes
+	# exactly it, and the pace is paid either way. stderr progress goes through; only a failing
+	# call's traceback is filed away in GEN_ERR_LOG. `-r` keeps an empty list from running the pool.
+	printf '%s\n' "$skills" | xargs -r -P "$pool" -n 1 sh -c '
 		err=$(mktemp)
 		start=$(date +%s)
-		runner="{{py}} gen.py"
-		case " $JEV_ANGLES " in *" $1 "*) runner="{{py}} jev.py";; esac
-		if $runner "$@" 2>"$err"; then
+		if {{py}} jev.py "$1" 2>"$err"; then
 			cat "$err" >&2
 		else
 			cat "$err" >>"${GEN_ERR_LOG:-/dev/null}"
-			printf "FAILED %s %s\n" "$1" "$2" >>"${FAIL_LOG:-/dev/null}"
-			echo "failed: $2 $1" >&2
+			printf "FAILED domain %s\n" "$1" >>"${FAIL_LOG:-/dev/null}"
+			echo "failed: $1" >&2
 		fi
 		rm -f "$err"
-		# `interval` is a floor on the time between two calls, not a rest after one: a call
-		# takes a good part of it, and sleeping the whole of it on top would spend the
-		# budget on the network instead of on the endpoint - half the allowed rate, gone.
+		# `interval` is a floor on the time between two calls, not a rest after one.
 		pause=$(( INTERVAL - ($(date +%s) - start) ))
 		[ "$pause" -gt 0 ] && sleep "$pause"
 		:' _
 
-# Build exactly one output, whether or not the batch has reached it yet.
-one prompt skill:
-	@case " `{{py}} jev.py --angles` " in *" {{prompt}} "*) {{py}} jev.py {{prompt}} {{skill}} ;; *) {{py}} gen.py {{prompt}} {{skill}} ;; esac
+# Build exactly one label, whether or not the batch has reached it yet.
+one skill:
+	@{{py}} jev.py {{skill}}
 
-# Print the request one output would send, calling nothing.
-render prompt skill:
-	@case " `{{py}} jev.py --angles` " in *" {{prompt}} "*) {{py}} jev.py {{prompt}} {{skill}} --print ;; *) {{py}} gen.py {{prompt}} {{skill}} --print ;; esac
+# Print the request one label would send, calling nothing.
+render skill:
+	@{{py}} jev.py {{skill}} --print
 
-# Forget one prompt's outputs, so the next run rebuilds them.
-invalidate prompt:
-	@find {{output_dir}}/profiles -type f \( -name '{{prompt}}.json' -o -name '{{prompt}}.md' \) -delete 2>/dev/null || true
-	@echo "forgot every {{prompt}} output"
+# Forget every domain label, so the next run rebuilds them.
+invalidate:
+	@find {{output_dir}}/profiles -type f -name 'domain.json' -delete 2>/dev/null || true
+	@echo "forgot every domain output"
 
 # Write the catalog and its READMEs: the mirror's rows joined with each skill's description and its
 # domain, plus the front page of the published root - the same tree said as progress.
 index:
 	@{{py}} index.py
 
-# The catalog `refresh` is about to replace: scratch, because `sync` rewrites that whole file from
-# the tree it has just fetched, and nothing of the previous one survives to be compared against.
+# The catalog `refresh` is about to replace: scratch, because `sync` rewrites that whole file.
 [private]
 capture-index:
 	@cp "{{output_dir}}/skills.jsonl" ".previous-index" 2>/dev/null || rm -f .previous-index
 
-# Re-fetch the snapshot and retire the profiles whose source changed under them (DEVELOPING.md).
+# Re-fetch the snapshot and retire the labels whose source changed under them (DEVELOPING.md).
 refresh: capture-index sync
 	@{{py}} stale.py .previous-index; status=$?; rm -f .previous-index; exit $status
 
 # Download the upstream snapshot and unpack it into the two layers the rest reads: the skill
 # directories a user installs, and the mirror's own metadata - its index above all - beside them.
 #
-# The fetch lands in a scratch directory beside the output root and the swap happens only once it is
-# whole, so a broken download changes nothing; the guard is what keeps `rm -rf` away from an
+# The fetch lands in a scratch directory beside the output root and the swap happens only once it
+# is whole, so a broken download changes nothing; the guard is what keeps `rm -rf` away from an
 # `output_dir` that is not this tree's. The catalog is rewritten last, because a sync moves the
 # source layer under it.
 [script]
@@ -230,12 +173,12 @@ sync:
 	mv "{{output_dir}}/upstream.new" "{{output_dir}}/upstream"
 	{{py}} index.py
 
-# Drop the profiles, the catalog and the READMEs about them. The sources stay: they are what a
-# profile is built from, and re-fetching them is the expensive part.
+# Drop the labels, the catalog and the READMEs about them. The sources stay: they are what a label
+# is built from, and re-fetching them is the expensive part.
 clean:
 	@rm -rf {{output_dir}}/profiles {{output_dir}}/skills.jsonl \
 		{{output_dir}}/README.md {{output_dir}}/README.zh-CN.md
 
-# Run the tests: offline, with a fake model and a local snapshot.
+# Run the tests: offline, with a fake endpoint and a local snapshot.
 test:
 	@uv run pytest

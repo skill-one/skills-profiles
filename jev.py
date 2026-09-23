@@ -1,27 +1,56 @@
 #!/usr/bin/env python3
-"""The System One angles: `domain`, answered by Jev over 302.AI rather than by a chat model.
+"""Label one skill's `domain` with Jev (TypeSafe System One) over 302.AI.
 
 Its endpoint is not OpenAI-compatible - a `state` and typed `questions` in, typed `answers` out,
-and no free text at all - so the request is built here and never reaches `gen.py`. Everything else
-is shared with it: the same system message as the state, and - the one thing `domain` gets that a
-chat angle does not - the skill's repository as context, `domain` being a property of the repository
-rather than of one file, so the siblings beside the skill can decide what its own text leaves open.
+and no free text. The state is rendered from `prompts/_system.md`: the skill's name, the
+description out of its own front matter, its `SKILL.md` body, and - the one extra layer `domain`
+gets - the sibling skills beside it in its repository, a category being a property of the
+repository rather than of one file.
 
-    jev.py --angles                    the angles the batch hands to this script, not to gen.py
-    jev.py <angle> <skill> [--print]   build one cell, or print the request and call nothing
+    jev.py <skill> [--print]   label one skill, or print the request and call nothing
 
-Driven by the justfile, which sends a pair to whichever of the two producers owns the angle.
+Driven by the justfile, one process per skill.
 """
 
 import argparse
 import json
+import re
 import sys
 import time
+from pathlib import Path
 
 import httpx
+import yaml
+from jinja2 import Environment, StrictUndefined
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-import gen
+_env = Environment(autoescape=False, keep_trailing_newline=True, undefined=StrictUndefined)
+# The output root holds three layers, and they do not overlap: the skill directories the mirror
+# publishes and a user installs, the labels this project writes about them, and the rest of the
+# mirror (its index, repositories, avatars) that the sources were taken from.
+SKILLS_DIR = "skills"
+PROFILES_DIR = "profiles"
+UPSTREAM_DIR = "upstream"
+SKILL_MD = "SKILL.md"
+SYSTEM_MD = "_system.md"
+INDEX = "skills.jsonl"
+ANGLE = "domain"
+MAX_SKILL_MD_CHARS = 20000
+# A repository can be one skill or several hundred (`awesome-*` collections). The cap keeps the
+# context a few thousand characters whatever the repo is, and what was left out is counted.
+MAX_SIBLINGS = 50
+# A sibling's own description is sometimes a page rather than a line. Each is cut to a hint, and
+# the slugs beside them carry the rest.
+MAX_SIBLING_CHARS = 300
+# libyaml where there is one, which every PyYAML wheel carries, and the pure-Python loader where a
+# source build left it out.
+YAML_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+# The header is where a skill's name and description are written down; what sits beside them -
+# `license`, `allowed-tools`, a version - is about installing a skill rather than what it is for.
+FRONT_MATTER = re.compile(r"\A\s*---\r?\n(.*?)\r?\n---\r?\n", re.S)
+# A source that just stops reads as one that ended, and an answer can then be confidently wrong
+# about the part that was never sent. Said in the prompt's language, and inside the source.
+TRUNCATION_NOTE = "[注: 这份正文过长, 以上仅为开头, 余下内容已省略]"
 
 # 302.AI serves System One under the provider's own namespace; its generic `/v1` gateway has no
 # channel for one and answers `503 no available models` whatever model is asked for.
@@ -60,30 +89,21 @@ CRITERIA = {
              "name that one rather than falling back here",
 }
 # The task, and the one rule the taxonomy leans on: a skill is what it is for, not how it works.
-# Everything narrower lives in CRITERIA, beside the category it draws a line around - a rule that
-# only restates this one for one pair of categories belongs in the criteria of whichever of the two
-# it excludes from, never here. The rule is measured: without it the endpoint read skills by the
-# medium they work through, calling every CLI and API wrapper `development` (12 of the 17
-# disagreements in a 100-skill A/B) and answering `education` for tools that interview a developer.
-# Both of those were the criteria's fault, not the rule's: `development` listed nothing before the
-# code was written, and `education` named interviews.
 INSTRUCTION = (
     "Which single category does this skill primarily belong to?\n"
     "1. Judge what the skill is for, not how it works or what it is written in: the interface it "
     "uses - a script, a CLI, an API wrapper - is not its category, and a tool that draws, watches "
     "or writes belongs to the category of what it produces.\n"
     "2. When several categories fit, choose the one the skill's main output serves.")
-# What each angle asks: every question of the one call, all answered against the same state. The
-# names here are the only list of this script's angles there is - `--angles` is how the batch reads
-# it, so an angle added to it is an angle the batch builds, with no other file to keep in step.
-QUESTIONS = {"domain": {"type": "choice", "instructions": INSTRUCTION, "criteria": CRITERIA}}
+# The one question of the one call: a closed choice over the taxonomy above.
+QUESTION = {"domain": {"type": "choice", "instructions": INSTRUCTION, "criteria": CRITERIA}}
 
 
-class JevConfig(BaseSettings):
-    """This endpoint's own settings, under their own prefix: `.env` holds both this and gen's."""
+class Config(BaseSettings):
+    """Settings under the `SKILLS_PROFILES_` prefix: `.env` holds the endpoint and its key."""
 
     model_config = SettingsConfigDict(
-        env_prefix="SKILLS_PROFILES_JEV_", env_file=".env", env_file_encoding="utf-8",
+        env_prefix="SKILLS_PROFILES_", env_file=".env", env_file_encoding="utf-8",
         extra="ignore", env_ignore_empty=True)
 
     api_key: str | None = None
@@ -94,11 +114,108 @@ class JevConfig(BaseSettings):
     # the timeout is what decides how long a dead call waits before the retry that rescues it
     timeout: float = 20.0
     max_retries: int = 3
+    dry_run: bool = False
+
+    prompts_dir: Path = Path("prompts")
+    output_dir: Path = Path("output")
 
 
-def request(model: str, state: str, questions: dict) -> dict:
-    """The one body this endpoint takes: a state, the questions about it, and no messages."""
-    return {"model": model, "state": state, "questions": questions}
+def skill_dir_name(skill: str) -> str:
+    """The `_` spelling upstream writes for `:` and `&` in an id."""
+    return skill.replace(":", "_").replace("&", "_")
+
+
+def profile_dir(config: Config, skill: str) -> Path:
+    return config.output_dir / PROFILES_DIR / skill_dir_name(skill)
+
+
+def json_path(config: Config, skill: str) -> Path:
+    return profile_dir(config, skill) / f"{ANGLE}.json"
+
+
+def skill_source_path(config: Config, skill: str) -> Path:
+    """The skill's own directory as the mirror published it, beside the label written from it."""
+    return config.output_dir / SKILLS_DIR / skill_dir_name(skill) / SKILL_MD
+
+
+def skill_source(config: Config, skill: str) -> str:
+    """The skill's own text, capped at MAX_SKILL_MD_CHARS, cut on a line break and announced."""
+    text = skill_source_path(config, skill).read_text(encoding="utf-8", errors="replace")
+    if len(text) <= MAX_SKILL_MD_CHARS:
+        return text
+    cut = text.rfind("\n", 0, MAX_SKILL_MD_CHARS)
+    head = text[:cut] if cut > 0 else text[:MAX_SKILL_MD_CHARS]
+    return f"{head.rstrip()}\n\n{TRUNCATION_NOTE}\n"
+
+
+def skill_body(source: str) -> str:
+    """The source without its front matter: the name and the description lead the state already."""
+    return FRONT_MATTER.sub("", source, count=1).lstrip("\n")
+
+
+def skill_description(source: str) -> str:
+    """The skill's own one-line description: its front matter's `description`, as YAML.
+
+    Empty means nothing to lead with rather than a description that happens to be short, and
+    `main` drops the skill on it.
+    """
+    block = FRONT_MATTER.match(source)
+    if block is None:
+        return ""
+    try:
+        front = yaml.load(block.group(1), Loader=YAML_LOADER)
+    except yaml.YAMLError:
+        return ""
+    description = front.get("description") if isinstance(front, dict) else None
+    return description.strip() if isinstance(description, str) else ""
+
+
+def repository(config: Config, skill: str) -> dict | None:
+    """The context a skill's own repository gives: its id, and the siblings beside it.
+
+    A sibling contributes its own one-line description and nothing else: its body would be a
+    second skill's body. A repository with no sibling says nothing the skill's own name has not
+    already said, so it is not sent at all rather than sent empty.
+    """
+    parts = skill_dir_name(skill).split("/")
+    if len(parts) != 3:
+        return None
+    owner, repo, own = parts
+    root = config.output_dir / SKILLS_DIR / owner / repo
+    if not root.is_dir():
+        return None
+    siblings = []
+    for child in sorted(root.iterdir()):
+        source = child / SKILL_MD
+        if child.name == own or not source.is_file():
+            continue
+        one_line = " ".join(skill_description(
+            source.read_text(encoding="utf-8", errors="replace")).split())
+        if len(one_line) > MAX_SIBLING_CHARS:
+            one_line = one_line[:MAX_SIBLING_CHARS].rsplit(" ", 1)[0].rstrip() + "…"
+        siblings.append(f"{child.name}: {one_line}" if one_line else child.name)
+    if not siblings:
+        return None
+    return {"id": f"{owner}/{repo}", "siblings": siblings[:MAX_SIBLINGS],
+            "more": max(0, len(siblings) - MAX_SIBLINGS)}
+
+
+def render(template: str, body: str, description: str, name: str,
+           repo: dict | None = None) -> str:
+    return _env.from_string(template).render(
+        skill_body=body, description=description, name=name, repo=repo)
+
+
+def state(config: Config, skill: str, source: str) -> str:
+    """The system message, plus the repository: the one layer that disambiguates a lone skill."""
+    template = (config.prompts_dir / SYSTEM_MD).read_text(encoding="utf-8").strip()
+    return render(template, skill_body(source), skill_description(source), skill,
+                  repository(config, skill))
+
+
+def request_body(model: str, state_text: str) -> dict:
+    """The one body this endpoint takes: a state, the question about it, and no messages."""
+    return {"model": model, "state": state_text, "questions": QUESTION}
 
 
 def worth_retrying(error: httpx.HTTPError) -> bool:
@@ -109,16 +226,16 @@ def worth_retrying(error: httpx.HTTPError) -> bool:
 
 
 class Jev:
-    """One `POST /v1/systemone`: a state, typed questions, typed answers, and no text."""
+    """One `POST /v1/systemone`: a state, a typed question, a typed answer, and no text."""
 
-    def __init__(self, config: JevConfig, client: httpx.Client | None = None):
+    def __init__(self, config: Config, client: httpx.Client | None = None):
         if not config.api_key:
-            raise SystemExit("SKILLS_PROFILES_JEV_API_KEY is not set - nothing to call with")
+            raise SystemExit("SKILLS_PROFILES_API_KEY is not set - nothing to call with")
         self.config = config
         self.client = client or httpx.Client(timeout=config.timeout)
 
     def ask(self, body: dict) -> dict:
-        """The questions against the state, in one call: the answers back.
+        """The question against the state, in one call: the answer back.
 
         The first call after the endpoint has been idle is regularly dropped with no response at
         all, which arrives as a timeout, so a dropped call is retried rather than recorded as a
@@ -146,42 +263,24 @@ def choice(answer: object) -> str | None:
 
 
 def confidence(answer: object) -> float | None:
-    """How sure the endpoint says it is, or nothing when the answer does not carry one.
-
-    It is derived from the distribution rather than being the probability of the option picked -
-    the endpoint's own reading of how close the call was - which is what makes it worth keeping:
-    it is how the labels worth a second look can be found without asking anyone again.
-    """
+    """How sure the endpoint says it is, derived from the distribution rather than guessed."""
     value = answer.get("confidence") if isinstance(answer, dict) else None
     return float(value) if isinstance(value, (int, float)) else None
 
 
 def probabilities(answer: object) -> dict:
-    """The distribution the choice was read off: every option of the enum, and the mass it holds.
-
-    Kept whole, because it is the answer rather than a summary of it - a call decided 0.52 to 0.48
-    says something a call decided 0.99 to 0.01 does not, and neither can be recovered from the
-    winner. What narrows is the catalog: one category and one number, which are the two things a
-    consumer filters on.
-    """
+    """The distribution the choice was read off: every option of the enum, and the mass it holds."""
     value = answer.get("probabilities") if isinstance(answer, dict) else None
     return dict(value) if isinstance(value, dict) else {}
-
-
-def questions(angle: str) -> dict:
-    return {angle: QUESTIONS[angle]}
 
 
 def profile(answers: dict) -> dict:
     """Jev's answer as the profile's json: the category it chose, how sure it was, and the rest.
 
-    The whole answer, the way another angle's file is the whole of its schema's output - and no
-    reason line and no list, those being the two things this path does not have. `domain` is one
-    member of the enum so that a consumer can filter on it; the category that came second is in
-    `probabilities` with all the others, rather than being named beside it. The guard on the way in
-    is the decoder this path no longer has: the request used to enforce the enum, so it is checked.
+    The guard on the way in is the decoder this path does not have: the request used to enforce
+    the enum, so an answer outside it is checked.
     """
-    answer = answers.get("domain")
+    answer = answers.get(ANGLE)
     picked = choice(answer)
     if picked not in CRITERIA:
         raise RuntimeError(f"chose {picked!r}, which is not a category")
@@ -189,68 +288,60 @@ def profile(answers: dict) -> dict:
             "probabilities": probabilities(answer)}
 
 
-def placeholder(angle: str) -> dict:
+def placeholder() -> dict:
     """A value shaped like the answer, so `just dry=1` still writes the real layout."""
     first = next(iter(CRITERIA))
-    return {angle: first, "confidence": 1.0,
+    return {"domain": first, "confidence": 1.0,
             "probabilities": {name: 1.0 if name == first else 0.0 for name in CRITERIA}}
 
 
-def state(config: gen.Config, skill: str, source: str) -> str:
-    """The system message, plus the repository: the one layer a chat angle is not handed.
-
-    The template decides what to say about it and says nothing when it is None, so the same bytes
-    still serve gen.py; only `domain` passes a repository, because a repository is where a lone,
-    ambiguous skill is disambiguated.
-    """
-    template = (config.prompts_dir / gen.SYSTEM_MD).read_text(encoding="utf-8").strip()
-    return gen.render(template, gen.skill_body(source), gen.skill_description(source), skill,
-                      gen.repository(config, skill))
+def write(config: Config, skill: str, output: dict) -> Path:
+    """Write domain.json, renamed into place: a half-written one would read as done to the batch."""
+    path = json_path(config, skill)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    partial = path.with_name(path.name + ".part")
+    partial.write_text(json.dumps(output, ensure_ascii=False), encoding="utf-8")
+    partial.replace(path)
+    return path
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Build one System One angle for one skill.")
-    parser.add_argument("--angles", action="store_true",
-                        help="print the angles this script builds, one per line, and stop")
-    parser.add_argument("angle", nargs="?", help="the angle to build")
+    parser = argparse.ArgumentParser(description="Label one skill's domain.")
     parser.add_argument("skill", nargs="?", help="skill directory in the snapshot: owner/repo/slug")
     parser.add_argument("--print", dest="print_request", action="store_true",
                         help="print the request and stop, calling nothing")
     args = parser.parse_args(argv)
 
-    if args.angles:
-        print("\n".join(QUESTIONS))
-        return 0
-    if args.angle is None or args.skill is None or args.angle not in QUESTIONS:
-        print(f"usage: jev.py <angle> <skill>   (angles: {', '.join(QUESTIONS)})", file=sys.stderr)
+    if args.skill is None:
+        print("usage: jev.py <skill>   (owner/repo/slug in the snapshot)", file=sys.stderr)
         return 2
 
-    config = gen.Config()
+    config = Config()
     try:
-        source = gen.skill_source(config, args.skill)
+        source = skill_source(config, args.skill)
     except FileNotFoundError as error:
         print(f"{error.filename}: not found", file=sys.stderr)
         return 1
-    # the same gate gen.py applies: a profile is written from the line saying what a skill is for,
-    # so a skill whose own header yields none is dropped here rather than guessed at
-    if not gen.skill_description(source):
+    # the gate on a skill: a label is written from the line saying what a skill is for, so a skill
+    # whose own header yields none is dropped here rather than guessed at
+    if not skill_description(source):
         print(f"{args.skill}: no description in its front matter", file=sys.stderr)
         return 1
-    settings = JevConfig()
-    body = request(settings.model, state(config, args.skill, source), questions(args.angle))
+
+    body = request_body(config.model, state(config, args.skill, source))
     if args.print_request:
         print(json.dumps(body, ensure_ascii=False, indent=2))
         return 0
 
     if config.dry_run:
-        output = placeholder(args.angle)
+        output = placeholder()
     else:
         try:
-            output = profile(Jev(settings).ask(body))
+            output = profile(Jev(config).ask(body))
         except (httpx.HTTPError, RuntimeError) as error:
             print(f"{args.skill}: {type(error).__name__}: {error}", file=sys.stderr)
             return 1
-    written = gen.write(config, args.angle, args.skill, output)
+    written = write(config, args.skill, output)
     print(f"built {written}", file=sys.stderr)
     return 0
 

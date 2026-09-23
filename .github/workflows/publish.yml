@@ -1,46 +1,40 @@
 name: publish
 
-# Manual: produce more profiles against the dataset already published in `dist`, and publish as
+# Manual: label more skills against the dataset already published in `dist`, and publish as
 # `dist-<base>-N`, where base is the newest bare `dist-YYYY-MM-DD` sync tag (or today, when there is
 # none) and N increments across that base's publishes.
 #
 # Every run starts on a fresh runner, and `restore-dist` pulls the published tree back — the skills,
-# the profiles written about them, the mirror's own files and the catalog, in one request. The
-# profiles are the cache (so `just` only fills what is missing) and the skills are what it builds
-# from. This run never touches upstream: the dataset is exactly what the last `sync` published.
-# `limit` counts work rather than positions - the next skills that still need something, in the
-# catalog's order, most installed first - so repeated runs walk down the dataset instead of redoing
-# the top of it. An angle whose output shape changed is rebuilt by a run that asks for `replace`:
-# being the cache, its published profiles would otherwise never be rebuilt.
+# the labels written about them, the mirror's own files and the catalog, in one request. The labels
+# are the cache (so `just` only fills what is missing) and the skills are what it builds from. This
+# run never touches upstream: the dataset is exactly what the last `sync` published. `limit` counts
+# work rather than positions - the next skills still unlabelled, in the catalog's order, most
+# installed first - so repeated runs walk down the dataset instead of redoing the top of it. Asking
+# for `replace` drops every label before building, when the taxonomy or the output shape changed.
 #
 # Repository configuration (Settings -> Secrets and variables -> Actions), mirroring a local
-# `.env`: both endpoints, their keys, and the knobs that are about an endpoint rather than the batch.
-# Unset means unset - an empty value is ignored, so a missing variable falls back to the default
-# instead of overriding it. The System One key is what the `domain` angle is built with (`jev.py`),
-# so a run of that prompt without it fails every pair.
+# `.env`: the one endpoint, its key, and the knobs that are about an endpoint rather than the
+# batch. Unset means unset - an empty value is ignored, so a missing variable falls back to the
+# default instead of overriding it. The key is what every label is built with (`jev.py`), so a run
+# without it fails every skill.
 #
-#   Secret:   SKILLS_PROFILES_API_KEY, SKILLS_PROFILES_JEV_API_KEY
-#   Variable: SKILLS_PROFILES_BASE_URL, SKILLS_PROFILES_MODEL,
-#             SKILLS_PROFILES_THINKING, SKILLS_PROFILES_MAX_RETRIES,
-#             SKILLS_PROFILES_JEV_BASE_URL, SKILLS_PROFILES_JEV_MODEL
+#   Secret:   SKILLS_PROFILES_API_KEY
+#   Variable: SKILLS_PROFILES_BASE_URL, SKILLS_PROFILES_MODEL
 
 on:
   workflow_dispatch:
     inputs:
       limit:
-        description: How many skills to complete this run
+        description: How many skills to label this run
         default: "10"
       jobs:
-        description: Generations in flight at once
+        description: Calls in flight at once
         default: "8"
       rpm:
         description: Calls a minute the endpoint allows; 0 = no pace
         default: "19"
-      prompt:
-        description: One prompt id to build, or empty for every prompt
-        default: "domain"
       replace:
-        description: Rebuild the prompt's profiles from scratch (true drops them before building)
+        description: Rebuild every label from scratch (true drops them before building)
         default: "false"
 
 permissions:
@@ -51,22 +45,17 @@ concurrency:
   cancel-in-progress: false # never cancel a run that is about to push
 
 env:
-  # the two endpoints and how to talk to them; the batch's own tunables are `just` knobs instead
+  # the one endpoint and how to talk to it; the batch's own tunables are `just` knobs instead
   SKILLS_PROFILES_API_KEY: ${{ secrets.SKILLS_PROFILES_API_KEY }}
   SKILLS_PROFILES_BASE_URL: ${{ vars.SKILLS_PROFILES_BASE_URL }}
   SKILLS_PROFILES_MODEL: ${{ vars.SKILLS_PROFILES_MODEL }}
-  SKILLS_PROFILES_THINKING: ${{ vars.SKILLS_PROFILES_THINKING }}
-  SKILLS_PROFILES_MAX_RETRIES: ${{ vars.SKILLS_PROFILES_MAX_RETRIES }}
-  SKILLS_PROFILES_JEV_API_KEY: ${{ secrets.SKILLS_PROFILES_JEV_API_KEY }}
-  SKILLS_PROFILES_JEV_BASE_URL: ${{ vars.SKILLS_PROFILES_JEV_BASE_URL }}
-  SKILLS_PROFILES_JEV_MODEL: ${{ vars.SKILLS_PROFILES_JEV_MODEL }}
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    # the run is bounded by `limit` generations at `rpm`, so the timeout has to cover the pace and
-    # not just the work: 1000 skills at 20 a minute is 300 minutes, and every request is bounded on
-    # its own by the client's timeout
+    # the run is bounded by `limit` calls at `rpm`, so the timeout has to cover the pace and not
+    # just the work: 1000 skills at 20 a minute is 300 minutes, and every request is bounded on its
+    # own by the client's timeout
     timeout-minutes: 180
     steps:
       - uses: actions/checkout@v5
@@ -80,23 +69,20 @@ jobs:
       - name: Install
         run: uv sync
 
-      - name: Restore the published snapshot (profiles + sources)
+      - name: Restore the published snapshot (labels + sources)
         uses: ./.github/actions/restore-dist
 
-      # The profiles are the cache, so a published one is never rebuilt and a change to an angle's
-      # output has to say so. It says so here, and only for the angle this same run is about to
-      # build: what is dropped is what is rebuilt, so no run can publish a tree with an angle
-      # emptied out - which is also why this is a knob on a publish rather than a workflow of its
-      # own. A run is a fresh runner plus what `restore-dist` brings back, so an invalidation only
-      # survives by publishing, and an invalidation-only one would publish exactly that gap.
-      - name: Drop what this run rebuilds, when asked
-        if: inputs.replace == 'true' && inputs.prompt != ''
-        run: just invalidate "${{ inputs.prompt }}"
+      # The labels are the cache, so a published one is never rebuilt and a change to the taxonomy
+      # or the output shape has to say so. A run is a fresh runner plus what `restore-dist` brings
+      # back, so an invalidation only survives by publishing.
+      - name: Drop every label, when asked
+        if: inputs.replace == 'true'
+        run: just invalidate
 
-      - name: Build the missing profiles
+      - name: Build the missing labels
         run: >-
           just limit="${{ inputs.limit }}" jobs="${{ inputs.jobs }}"
-          rpm="${{ inputs.rpm }}" prompt="${{ inputs.prompt }}"
+          rpm="${{ inputs.rpm }}"
 
       - name: Rewrite the index
         run: just index

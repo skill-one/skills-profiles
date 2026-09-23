@@ -1,151 +1,132 @@
-# skills-profiles: 对外的那一面
+# skills-profiles：外部视图
 
-黑盒视角：用户或消费方能看见的一切，完全不涉及它内部怎么实现的。
+黑盒视角：用户或消费者能看到的一切，不含任何内部构建方式。
 
-**产物是一个目录** —— `output/`：镜像原样发布的 skill 目录、围绕它们写出的中文档案、镜像自己的那
-些文件，以及把前两者连起来的一份清单。生成器是为了产出这个目录而存在的，所以它就是接口，命令只决定
-其中哪一部分被写出来。
+**产品是一个目录**——`output/`：镜像原样发布的 skill 目录、为每个 skill 写的一个领域标签、旁边
+镜像自己的文件，以及把两者连起来的一份清单。生成器为产出这个目录而存在，所以它就是接口，命
+令只决定写它的哪一部分。
 
 English: [SPEC.md](SPEC.md)
 
-## 1. 输出 —— 接口本身
+## 1. 产出——接口
 
 ```
 <output_dir>/
-├── skills/<owner>/<repo>/<slug>/     # 镜像自己的目录，完整且未改动：
-│   ├── SKILL.md                      #   把它拷进 skills 目录就等于装好了这个 skill
-│   └── ...该 skill 随附的一切        #   ——这正是用户「下载一个 skill」的含义
+├── skills/<owner>/<repo>/<slug>/     # 镜像自己的目录，完整且原样：
+│   ├── SKILL.md                      #   拷一个进 skills 文件夹，skill 就
+│   └── ...该 skill 自带的每个文件     #   装上了——这就是用户下载的东西
 ├── profiles/<owner>/<repo>/<slug>/
-│   ├── domain.json  scenario.json  tagline.json
-│   ├── blackbox.json  whitebox.json  comments.json
-│   └── md/<angle>.md      # 同样的内容，渲染成方便阅读的版本
-├── skills.jsonl           # `just index`：清单，每个 skill 一行、扁平
-├── README.md              # …… 以及它旁边的首页：这个目录是什么、建到了什么程度
-├── README.zh-CN.md        #     同一页的中文版
-└── upstream/              # 镜像的其余部分：skills.jsonl、repos.jsonl、owners.jsonl、
-                           # curated.jsonl、trending.json、stats.json、latest、avatars/
+│   └── domain.json                   # 标签：{domain, confidence, probabilities}
+├── skills.jsonl                      # `just index`：清单，每个 skill 扁平一行
+├── README.md                         # ……以及旁边的首页：这个目录是什么、
+├── README.zh-CN.md                   #     建了多少；同一页面，中文一份
+└── upstream/                         # 镜像的其余部分：skills.jsonl、repos.jsonl、owners.jsonl、
+                                      # curated.jsonl、trending.json、stats.json、latest、avatars/
 ```
 
-这里没有任何一处需要回头去找镜像：装 skill 用 `skills/`，而关于它的全部已知信息都在 `skills.jsonl`。
+这里的一切都不需要镜像：skill 从 `skills/` 安装，关于它的一切都在 `skills.jsonl` 里。
 
-`<id>` 是 skill id，即 `{owner}/{repo}/{slug}`。清单里的行按镜像自己的拼写记它；两个目录树则把 `:`
-与 `&` 写成 `_`，那也正是交给 `gen.py` 的句柄。
+`<id>` 是 skill id，`{owner}/{repo}/{slug}`。行里按镜像的拼写携带它；两个目录把 `:` 和 `&` 拼
+写成 `_`，这也是交给 `jev.py` 的句柄。
 
-| 角度 | json 结构 | 内容 |
-| --- | --- | --- |
-| `domain` | `{domain, confidence, probabilities}` | 13 个闭合英文分类中的一个、端点自己给出的置信度，以及它据以判断的那份分布 |
-| `scenario` | `{text}` | 一段 100 字以内的场景化介绍，从用户痛点切入 |
-| `tagline` | `{taglines[3]}` | 3 条宣传短标语，每条 20 字以内 |
-| `blackbox` | `{function, input_output[3–5]}` | 黑盒视角：你给什么 → 你得到什么 |
-| `whitebox` | `{execution_flow[3–5], mechanisms[2–3]}` | 白盒视角：主路径、关键机制、真实依赖 |
-| `comments` | `{comments[4–6]}` | 用户第一人称评论：`{user, category, comment}` |
+`domain.json` 是 `{domain, confidence, probabilities}`：
 
-- 每个 skill 一个目录，每个角度一个文件。各角度彼此独立——没有任何文件读另一个文件。
-- `.json` 是数据；`md/<angle>.md` 是同样字段的渲染版，先写。
-- **清单是入口。** `skills.jsonl` 由 `just index` 写出：每个 skill 一行、扁平，按镜像自身的顺序，
-  内容就是镜像那一行——`id`、`installs`、`url`、`hash`、`fetchedAt`——再加上从该 skill 自己的
-  `SKILL.md` 里读出的 `description`、本项目为它标定的 `domain`，以及标定时的 `confidence`。未知时
-  三者都是 `null`，所以一行陈述的是数据集的状态而不是工作的取舍：`.domain != null` 是已建成的部分，
-  `.installs` 给没建的那部分排序。
-- **两份 README 是首页**，由同一条命令、同一次遍历写出：两行说明这个目录是什么，然后说明数据集建到
-  了什么程度——`skill × 角度` 的格子有多少已在磁盘上，逐角度给出数量、并按安装量加权的占比，附上它们
-  所描述的那份快照。它们刻意保持很短：本项目自己的说明住在这个仓库里，更长的页面只会是它的第二份
-  需要同步的副本。没有任何东西回读它们，每一行都是这棵树的函数，所以没变过的树写出来的页面总是一模
-  一样。
-- id、路径与字段名是 ASCII；`domain` 取自闭合英文枚举的单个值，可以直接筛。档案在它旁边保留整份
-  答案：`confidence` 是端点自己对"这次判断有多勉强"的读数，由整个枚举上的分布导出，所以它不是
-  "这个标签正确的概率"，发布它是为了可以按它排序、而不是拿它当概率用；`probabilities` 就是那份分布，
-  保留它是因为它无法从赢家反推 —— 52 比 48 决出的结果和 99 比 1 决出的结果说的不是一件事。目录只取
-  其中两样（标签与置信度），答案是留在档案里的那份。domain 角度的值是英文，其余角度的所有值都是中文。
-- 一个角度由两个生产者之一构建，`just` 把每个 (角度, skill) 交给拥有它的那个：提示词对交给一个对话
-  模型，而 `jev.py --angles` 列出的那些则以强类型问题交给一个 System One 端点。这就是 `domain` 没有
-  提示词对、也没有理由句的原因：端点只在一个闭合集合里选一个，不写任何散文。
+- `domain`——13 个封闭英文分类之一：development · testing · data-analysis · devops-security ·
+  office-productivity · content-creation · design-media · knowledge-management · business-ops ·
+  finance-payment · education · lifestyle · other。可以直接过滤。
+- `confidence`——端点自己对这次调用有多接近的读数，由枚举上的分布导出；不是标签正确的概率，发
+  布它是为了排序，而不是当作概率来信任。
+- `probabilities`——那个分布，完整保留，因为无法从赢家恢复它：0.52 对 0.48 的抉择与 0.99 对
+  0.01 的抉择说的不是一回事。所有值均为英文。
+
+- 每个 skill 一个目录、一个文件：`domain.json`，即端点的完整回答。
+- **清单是入口。** `skills.jsonl` 由 `just index` 写：每个 skill 扁平一行，按镜像自己的顺序，由
+  镜像的行——`id`、`installs`、`url`、`hash`、`fetchedAt`——加上从该 skill 自己的 `SKILL.md` 读出
+  的 `description`、标的 `domain` 和标注时的 `confidence`。三者未知时为 `null`，所以行陈述的是数
+  据集而不是在制品：`.domain != null` 是已建成的部分，`.installs` 给未建成的排序。清单取三个标签
+  字段中的两个，回答本身住在 profile 里。
+- **README 是首页**，由同一命令从同一次遍历写出：两行说明目录是什么，然后数据集标了多少——数量
+  及其占镜像安装量的份额，在它们所描述的快照之下。没有任何东西回读它们，每一行都是树的函数，
+  所以没变的树会重写出逐字节相同的页面。
+- 标签由一个生产者写：`jev.py` 向 System One 端点问类型化问题，而不是发聊天提示词。这就是为什
+  么 `domain` 没有提示词对、没有理由行：端点用封闭集的一个成员作答，不写任何散文。
 
 ## 2. 输入
 
-| 什么 | 哪里 | 由谁放进去 |
+| 是什么 | 在哪 | 由谁放进去 |
 | --- | --- | --- |
-| 镜像：每个 skill 一个目录，外加它自己的索引与元数据 | `<output_dir>/skills` 与 `<output_dir>/upstream` | `just sync`，来自上游 `dist` 分支 |
-| 一个 prompt：`prompts/<id>.md`（任务）+ `prompts/<id>.json`（它的 schema） | `prompts_dir` | 你，手工 |
-| 共享 system prompt `prompts/_system.md` | `prompts_dir` | 你 |
+| 镜像：每个 skill 一个目录，以及它自己的索引和元数据 | `<output_dir>/skills` 和 `<output_dir>/upstream` | `just sync`，来自上游 `dist` 分支 |
+| state 模板 `prompts/_system.md` | `prompts_dir` | 你 |
 
-`upstream/skills.jsonl` 是镜像自己的列表，也是清单的左半边：行集合、批次的工作顺序（安装量降序），
-以及这棵树无从知道的那些字段。`skills/<id>/SKILL.md` 是一个 prompt 的全部依据——它旁边的文件是替
-「要安装这个 skill 的用户」带的，不参与生成。
+`upstream/skills.jsonl` 是镜像自己的清单，是清单拼接的左表：行集合、批次工作的顺序（安装量降
+序），以及树无法知道的字段。`skills/<id>/SKILL.md` 是构造 state 的全部材料——此外为消歧还会用
+同仓库旁系 skill 的一句话描述；skill 目录里的其他文件是为安装它的用户携带的，并不读取。
 
-每个 skill 的一句话 description 不在镜像索引里（上游已把它去掉）：它读自该 skill 自己的 front matter，
-而 front matter 给不出 description 的 skill 永远不会被构建。
-
-镜像是一份拉取来的快照，只读。一个 prompt 是「任务 + 契约」这一对：schema 会原样作为模型服务的严格
-`json_schema` response format 随请求发出，这也是**新增一个对话角度就是两个文件、零代码**的原因。
-分割线另一侧的角度是 `jev.py` 里的一条条目：问题、问题的类型，以及封闭式问题可选的答案 —— 分类体系
-现在就住在那里，只陈述一次，而不是「给模型看的散文 + 给解码器看的枚举」两份。
+skill 的一句话描述不在镜像索引里（上游已移除）：它从 skill 自己的 front matter 读出，front
+matter 给不出描述的 skill 永远不会被构建。镜像是拉来的快照，只读。分类法是代码：`jev.py` 里的
+`CRITERIA` 和 `INSTRUCTION`，作为答案被限定的选项交给端点——只陈述一次，没有 schema 里的 enum，
+也没有要保持同步的解码器。
 
 ## 3. 控制
 
-批次是一个 recipe 加若干修饰符，另有六个动词：
+批处理是一个带修饰符的配方，加六个动词：
 
 | 命令 | 作用 |
 | --- | --- |
-| `just` | 构建窗口内所有还缺的 (skill, angle) |
-| `just one <angle> <id>` | 构建一个格子，无论它在不在窗口内 |
-| `just invalidate <angle>` | 删除这个角度在所有 skill 上的档案 |
-| `just index` | 写出清单与 README：镜像的行连接上 description 与 domain，外加发布根的首页 |
-| `just sync` | 拉取镜像，整体替换 `skills/` 与 `upstream/`，并重写清单 |
-| `just refresh` | 拉取，并删掉所有「来源 hash 随之变了」的档案 |
-| `just clean` | 删掉档案、清单与 README；skill 目录与镜像文件不动 |
-| `just render <angle> <id>` · `just test` | 仅开发用：打印请求 · 跑测试 |
+| `just` | 标注窗口内每个还缺 `domain.json` 的 skill |
+| `just one <id>` | 标注一个 skill，窗口内外皆可 |
+| `just invalidate` | 删除所有标签，所有位置 |
+| `just index` | 写清单和两个 README：镜像的行拼接 description 与标签，以及发布根目录的首页 |
+| `just sync` | 拉取镜像，整体替换 `skills/` 和 `upstream/`，重建清单 |
+| `just refresh` | 拉取，并删除随之源 hash 变化的每个标签 |
+| `just clean` | 删除 profiles、清单和 README；保留 skill 和镜像的文件 |
+| `just render <id>` · `just test` | 仅开发：打印请求 · 跑套件 |
 
-修饰符是命令行变量，只在命令行上设置：
+修饰符是命令行变量，别无他处：
 
-| 旋钮 | 默认值 | 含义 |
+| 旋钮 | 默认 | 含义 |
 | --- | --- | --- |
-| `limit` | 1 | 按清单自身的顺序（即镜像的顺序，安装量降序）取接下来还缺内容的 N 个 skill；`0` = 全量，无上限。它数的是工作而不是位置，所以反复运行会沿着数据集往下走，档案批次就是这个语义 |
-| `prompt` | – | 一个角度，或全部角度 |
-| `jobs` | 每个核一个 | 同时在飞的生成数 |
-| `rpm` | 0 | 把一次运行配速到端点每分钟的配额 |
-| `dry` | – | `1` = 假模型、真布局 |
-| `output_dir` `prompts_dir` `snapshot` `py` | 见 [DEVELOPING.zh-CN.md](DEVELOPING.zh-CN.md) | 管路 |
+| `limit` | 1 | 按清单顺序——镜像顺序，安装量降序——接下来 N 个还没标签的 skill；`0` = 全部，无上限。数工作量不数位置，所以重复运行沿数据集往下走 |
+| `jobs` | 每核一个 | 同时进行的调用数 |
+| `rpm` | 0 | 按端点每分钟额度控速 |
+| `dry` | – | `1` = 假端点、真实目录结构 |
+| `output_dir` `prompts_dir` `snapshot` `py` | 见 [DEVELOPING.zh-CN.md](DEVELOPING.zh-CN.md) | 管道配置 |
 
-它下面一次一个格子：
+底下一次一个 skill：
 
 ```
-gen.py <angle> <id> [--print]     # 对话角度：prompts/<id>.md 及旁边的 schema
-jev.py <angle> <id> [--print]     # System One 角度：问题定义就在 jev.py 里
+jev.py <id> [--print]     # 类型化问题在 jev.py 自己这里，state 来自 _system.md
 ```
 
-批次用哪个脚本，取决于谁声明了这个角度：前者是 `prompts/*.json`，后者是 `jev.py --angles`。
-
-- stdout 是数据（`--print` 时是那份请求）；stderr 是进度。
-- 源文本截断在 20000 字符，且这个截断在源文本内部被声明。
-- 退出码：`0` 已构建 · `1` 输入或模型不可用 · `2` 参数错误。front matter 给不出 description 的
-  skill 就是「输入不可用」：它被丢弃，stderr 一行，什么都不写。
+- stdout 是数据（`--print` 下是请求）；stderr 是进度。
+- 源在 20 000 字符处截断，截断在源内部声明。
+- 退出：`0` 已建 · `1` 输入或端点不可用 · `2` 参数错误。front matter 给不出 description 的
+  skill 属于不可用输入：被丢弃，stderr 一行，什么都不写。
 
 ## 4. 配置
 
-`.env`（复制 [`.env.example`](.env.example)）或 `SKILLS_PROFILES_*`；环境变量 → `.env` → 默认值。
-这里只放两个端点：对话端点是 `MODEL`、`BASE_URL`、`API_KEY`、`MAX_RETRIES`、`TIMEOUT`、`THINKING`，
-System One 端点是 `JEV_MODEL`、`JEV_BASE_URL`、`JEV_API_KEY`、`JEV_TIMEOUT`、`JEV_MAX_RETRIES`
-—— 外加 `DRY_RUN` 与两个路径，如果你确实需要挪动它们。
+`.env`（复制 [`.env.example`](.env.example)）或 `SKILLS_PROFILES_*`；env → `.env` → 默认值。它只
+装唯一的端点：`API_KEY`、`BASE_URL`、`MODEL`、`TIMEOUT`、`MAX_RETRIES`——外加 `DRY_RUN`，以及必要
+时移动两个路径用的变量。
 
-上面那些批次旋钮**不是**环境变量：一次运行只会因为它自己说了要变而变。
+上面的批处理旋钮**不是**环境变量：一次运行只因为命令行明说才改变。
 
-## 5. 消费方可以依赖的东西
+## 5. 消费者可以依赖什么
 
-- **存在就是缓存。** 已写出的永远不会重建；中断的批次从第一个缺失的文件接着做。
-- **失效就是删除。** 改模板本身不会让任何东西失效；新快照会让它改动过的那些失效，而
-  `just refresh` 就是删掉这些档案的那个动词。
-- **失败不丢东西。** 调用失败不写文件、也不结束批次；下一次运行只重试它。
-- **读不出东西的 skill 永远不会被构建。** 只有 front matter 给得出 description 才会发起调用，所以清单
-  为它写的是 `description: null`，而窗口会跳过这一行：不调用、不写文件、也没有需要重试的失败。
-- **文件要么完整、要么不存在。** 先写 markdown，json 以重命名落位。
-- **每个文件一次单轮调用。** 没有顺序、没有依赖、没有级联。
-- **清单是派生品，而且是完整的。** `just index` 可以离线地把它整份从树里重建：镜像列出的每个 skill
-  一行，另外为「镜像已删除但档案还在」的 skill 补一行——两份 README 出自同一次遍历，所以其中任何
-  两样东西都不可能描述两棵不同的树。
-- **布局是唯一的契约。** 发布时请把 `output/` 原样保留，镜像自己的文件也在里面。
+- **存在即缓存。** 已写出的东西绝不重建；停下的批次从第一个缺失文件恢复。
+- **失效即删除。** 改 `_system.md` 本身不使任何东西失效；新快照使它改变的东西失效，`just
+  refresh` 是删除那些标签的动词。
+- **失败不丢任何东西。** 失败的调用不写文件，也不结束批次；下次运行恰好重试它。
+- **读不出东西的 skill 永不构建。** 调用前它的 front matter 必须给出 description，所以清单为它
+  写 `description: null`，窗口跳过该行：不调用、不写文件、没有要重试的失败。
+- **文件要么完整要么不存在。** json 原地改名写入，所以写了一半的永远不可见。
+- **每个文件一次对话。** 无排序、无依赖、无级联。
+- **清单是派生且完整的。** `just index` 离线地从树整体重建它：镜像列出的每个 skill 一行，镜像
+  已删除但标签仍在的 skill 也一行——README 从同一次遍历写出，所以那里没有两样东西能描述不同的
+  树。
+- **目录结构是唯一的契约。** 原样发布 `output/`；包括镜像自己的文件。
 
-## 6. 待定 —— 在把它定为规范之前需要达成一致
+## 6. 待定——成为正式 spec 前先达成一致
 
-1. `render` 与 `test` 算对外的一面，还是仅开发用（不进入上面的承诺）？
-2. `snapshot` 与 `py` 该不该是公开旋钮，还是固定默认值的管路？
+1. `render` 和 `test` 是表面的一部分，还是仅开发用（排除在上面的承诺之外）？
+2. `snapshot` 和 `py` 应该是公开旋钮，还是固定默认值的管道配置？
