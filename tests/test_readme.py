@@ -12,7 +12,7 @@ DOMAIN = {"domain": "office-productivity"}
 SLOTS = {"label", "value"}
 # the page is the front door of a published directory, not a document: the way in, the progress,
 # and the two lines saying which tree it describes
-LINES = 16
+LINES = 17
 
 
 def numbers(config) -> dict:
@@ -53,6 +53,8 @@ def test_the_page_opens_the_directory_it_sits_in(workdir):
     which files are the skill and which are what was written about it, and how far the batch got."""
     config = common.Config()
     common.write_json(common.profile_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
+    common.write_json(common.profile_path(config, ALPHA, common.TRANSLATE_ANGLE),
+                      {"description_zh": "中文描述"})
 
     text = page(config, "en")
 
@@ -61,6 +63,7 @@ def test_the_page_opens_the_directory_it_sits_in(workdir):
     assert "`profiles/<id>/` holds what is written about it" in text
     assert "`description_zh`" in text
     assert "- **domain**: 1 of 5 labelled (20.0%), covering 43.5% of the mirror's installs" in text
+    assert "- **translate**: 1 of 5 translated (20.0%), covering 43.5% of the mirror's installs" in text
 
 
 def test_the_page_says_it_is_generated(workdir):
@@ -74,11 +77,14 @@ def test_the_chinese_page_is_the_same_document(workdir):
     - and each page points at the other."""
     config = common.Config()
     common.write_json(common.profile_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
+    common.write_json(common.profile_path(config, ALPHA, common.TRANSLATE_ANGLE),
+                      {"description_zh": "中文描述"})
 
     zh = page(config, "zh")
 
     assert "## 进度" in zh
     assert "5 个里已标 1 个（20.0%），覆盖镜像安装量的 43.5%" in zh
+    assert "5 个里已翻译 1 个（20.0%），覆盖镜像安装量的 43.5%" in zh
     assert "[README.md](README.md)" in zh
     assert "[README.zh-CN.md](README.zh-CN.md)" in page(config, "en")
 
@@ -89,6 +95,7 @@ def test_a_tree_with_nothing_built_still_has_a_page(workdir):
     text = page(common.Config(), "en")
 
     assert "- **domain**: 0 of 5 labelled (0.0%), covering 0.0% of the mirror's installs" in text
+    assert "- **translate**: 0 of 5 translated (0.0%), covering 0.0% of the mirror's installs" in text
     assert "- **snapshot**: `—`, —" in text
 
 

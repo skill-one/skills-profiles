@@ -115,22 +115,22 @@ def write(config: Config, rows: list[dict]) -> Path:
     return common.write_atomic(config.output_dir / common.INDEX, text)
 
 
-def built_skills(config: Config) -> set[str]:
-    """The skills whose domain.json is on disk, from one walk of the profile tree."""
+def built_skills(config: Config, angle: str) -> set[str]:
+    """The skills whose angle json is on disk, from one walk of the profile tree."""
     root = config.output_dir / common.PROFILES_DIR
     built: set[str] = set()
     for dirpath, _, filenames in os.walk(root):
         path = Path(dirpath)
-        if len(path.relative_to(root).parts) == 3 and f"{common.DOMAIN_ANGLE}.json" in filenames:
+        if len(path.relative_to(root).parts) == 3 and f"{angle}.json" in filenames:
             built.add(path.relative_to(root).as_posix())
     return built
 
 
 def facts(config: Config, indexed: list[dict]) -> dict:
-    """What the README says: how much of the dataset is labelled, and the tree the numbers come
-    from.
+    """What the README says: how much of the dataset is built for each angle, and the tree the
+    numbers come from.
 
-    The denominator is what can be labelled rather than what the mirror lists - a skill whose front
+    The denominator is what can be built rather than what the mirror lists - a skill whose front
     matter yields no description is never built, so counting it would pin the number below 100%
     forever. The installs share is a second reading of the same count: the batch works the most
     installed skills first, so the count says how much is left and the weight says what it is
@@ -141,17 +141,21 @@ def facts(config: Config, indexed: list[dict]) -> dict:
     buildable = [row for row in indexed if row["description"]]
     weight = sum(_installs(row) for row in buildable)
     dirs = {row["id"]: common.skill_dir_name(row["id"]) for row in buildable}
-    done = built_skills(config)
-
-    here = [row for row in buildable if dirs[row["id"]] in done]
+    domain_done = built_skills(config, common.DOMAIN_ANGLE)
+    translate_done = built_skills(config, common.TRANSLATE_ANGLE)
+    domain_here = [row for row in buildable if dirs[row["id"]] in domain_done]
+    translate_here = [row for row in buildable if dirs[row["id"]] in translate_done]
     return {
         "tag": _read_text(config.output_dir / common.UPSTREAM_DIR / "latest").strip() or NOTHING,
         "scan": _scan(_read_json(config.output_dir / common.UPSTREAM_DIR / "stats.json")),
         "listed": str(len(indexed) - orphan),
         "buildable": str(len(buildable)),
-        "built": str(len(here)),
-        "percent": _percent(len(here), len(buildable)),
-        "installs": _percent(sum(_installs(row) for row in here), weight),
+        "built": str(len(domain_here)),
+        "percent": _percent(len(domain_here), len(buildable)),
+        "installs": _percent(sum(_installs(row) for row in domain_here), weight),
+        "translated": str(len(translate_here)),
+        "translate_percent": _percent(len(translate_here), len(buildable)),
+        "translate_installs": _percent(sum(_installs(row) for row in translate_here), weight),
     }
 
 

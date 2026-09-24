@@ -192,17 +192,21 @@ def facts(config) -> dict:
     return index.facts(config, index.rows(config))
 
 
-def test_the_numbers_count_the_labels_the_tree_holds(workdir):
-    """They read the tree the way the batch does - domain.json is the unit of work - so `domain`
-    built for two skills of the five that can be built is what they say."""
+def test_the_numbers_count_each_angle_independently(workdir):
+    """They read the tree the way each batch does, so domain and translation can have different
+    coverage: two labels and one translation here mean two built and one translated."""
     config = common.Config()
     common.write_json(common.profile_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
     common.write_json(common.profile_path(config, BETA, common.DOMAIN_ANGLE), DOMAIN)
+    common.write_json(common.profile_path(config, ALPHA, common.TRANSLATE_ANGLE),
+                      {"description_zh": "中文描述"})
 
     numbers = facts(config)
 
     assert (numbers["built"], numbers["buildable"]) == ("2", "5")
     assert numbers["percent"] == "40.0%"
+    assert (numbers["translated"], numbers["translate_percent"]) == ("1", "20.0%")
+    assert numbers["translate_installs"] == "43.5%"
 
 
 def test_the_denominator_is_what_can_be_built(workdir):

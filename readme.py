@@ -3,8 +3,8 @@
 
 `output/README.md` and its Chinese twin become the root of the `dist` branch, so they are the page
 anyone lands on. It stays small on purpose: what the directory is in two lines, then how much of
-the dataset is labelled. `just index` writes both from the same walk as the catalog, and nothing
-reads them back.
+the dataset is built for each angle. `just index` writes both from the same walk as the catalog, and
+nothing reads them back.
 """
 
 from pathlib import Path
@@ -17,7 +17,7 @@ README = "README.md"
 README_ZH = "README.zh-CN.md"
 # What the bullets under Progress say, in this order. Each name is a sentence in TEXT below and a
 # `<name>_label` beside it, so the two languages cannot drift apart in structure.
-FACTS = ("domain", "snapshot", "buildable")
+FACTS = ("domain", "translate", "snapshot", "buildable")
 
 # One page per language: the same thing said in the same order. `$name` is filled from the numbers
 # index.py reads; the rest is prose and markdown. The two hold the same keys - a test says so.
@@ -33,9 +33,11 @@ TEXT: dict[str, dict[str, Any]] = {
         "progress": "Progress",
         "bullet": "- **$label**: $value",
         "domain_label": "domain",
+        "translate_label": "translate",
         "snapshot_label": "snapshot",
         "buildable_label": "buildable",
         "domain": "$built of $buildable labelled ($percent), covering $installs of the mirror's installs",
+        "translate": "$translated of $buildable translated ($translate_percent), covering $translate_installs of the mirror's installs",
         "snapshot": "`$tag`, $scan",
         "buildable": "$buildable of $listed have a readable description; the rest are never built",
     },
@@ -49,9 +51,11 @@ TEXT: dict[str, dict[str, Any]] = {
         "progress": "进度",
         "bullet": "- **$label**：$value",
         "domain_label": "domain",
+        "translate_label": "translate",
         "snapshot_label": "快照",
         "buildable_label": "可建",
         "domain": "$buildable 个里已标 $built 个（$percent），覆盖镜像安装量的 $installs",
+        "translate": "$buildable 个里已翻译 $translated 个（$translate_percent），覆盖镜像安装量的 $translate_installs",
         "snapshot": "`$tag`，$scan",
         "buildable": "$listed 个里有 $buildable 个可读出 description；其余的永远不会被构建",
     },
@@ -87,7 +91,7 @@ def write(config: common.Config, facts: dict) -> list[Path]:
 
 
 def _facts(facts: dict, text: dict) -> list[str]:
-    """The progress bullets: what the labels cover, and which tree they describe."""
+    """The progress bullets: what each angle covers, and which tree they describe."""
     return [Template(text["bullet"]).substitute(
         label=text[f"{name}_label"], value=Template(text[name]).substitute(facts))
         for name in FACTS]
