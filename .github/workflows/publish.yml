@@ -61,6 +61,9 @@ env:
   SKILLS_PROFILES_TRANSLATE_API_KEY: ${{ secrets.SKILLS_PROFILES_TRANSLATE_API_KEY }}
   SKILLS_PROFILES_TRANSLATE_BASE_URL: ${{ vars.SKILLS_PROFILES_TRANSLATE_BASE_URL }}
   SKILLS_PROFILES_TRANSLATE_MODEL: ${{ vars.SKILLS_PROFILES_TRANSLATE_MODEL }}
+  # the endpoint drops calls under load instead of answering 429: more attempts turn a dropped
+  # handshake into a billable answer, which matters more than speed for an overnight batch
+  SKILLS_PROFILES_MAX_RETRIES: "6"
   # Per-skill failures are reported but do not stop the batch: successful outputs are published,
   # and the next run retries the skills whose files are still missing.
   #
@@ -74,8 +77,10 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     # with no pace the run is bounded by the work itself; every request is bounded on its own by
-    # the client timeout, and 32 calls run at once
-    timeout-minutes: 180
+    # the client timeout, and 16 calls run at once. The ceiling is GitHub's own 360: a slow
+    # endpoint night (~1.5 skills/min at jobs=8) needs hours for a 300-skill window, and a job
+    # killed here loses its whole batch - the outputs die with the runner.
+    timeout-minutes: 350
     steps:
       - uses: actions/checkout@v5
 
