@@ -1,32 +1,32 @@
 # skills-profiles
 
 为 [skill-one/skills-sh-mirror](https://github.com/skill-one/skills-sh-mirror) 收集的 [agent
-skills](https://www.skills.sh) 打领域标签并给中文描述：每个 skill 一个封闭分类标签，由
+skills](https://www.skills.sh) 打领域标签并做中文翻译：每个 skill 一个封闭分类标签，由
 Jev（TypeSafe System One）端点根据该 skill 自己的 description 与 `SKILL.md` 通过一次类型化问答
-生成；每个 skill 还有一个 `description_zh`，由 OpenAI 兼容的聊天端点把同一句 description 翻译
-成中文，也是一次调用。
+生成；另有两次 OpenAI 兼容的聊天调用——一次把那句 description 翻译成中文，一次把 `SKILL.md`
+正文翻译成一份独立的中文页面。
 
 English: [README.md](README.md) · 开发指南: [DEVELOPING.zh-CN.md](DEVELOPING.zh-CN.md)
 
 ## 产出
 
-一切都落在同一个根目录 `output/` 下，目录自包含：skill 原件、为它们写的东西（一个标签加一段
-中文描述），以及把这些连起来的一份清单——读者不需要再回到镜像。发布就是拷贝这一个目录。
+一切都落在同一个根目录 `output/` 下：各角度所依据的构建源、为它们写的东西（一个标签加中文翻
+译），以及把这些连起来的一份清单——读者不需要再回到镜像。发布就是拷贝这一个目录。
 
 ```
 output/
-├── skills/<owner>/<repo>/<slug>/    镜像自己的 skill 目录，完整且原样：
-│   ├── SKILL.md                     拷一个进你的 skills 目录就等于装上了
-│   └── ...该 skill 自带的每个文件
+├── skills/<owner>/<repo>/<slug>/    每个 skill 一个目录，只有它的 SKILL.md：各角度
+│   └── SKILL.md                     共用的构建源；完整的 skill 在它自己的仓库里
 ├── profiles/<owner>/<repo>/<slug>/
 │   ├── domain.json                  一个标签，类型化端点回答的完整内容
-│   └── description_zh.json          一句话描述的一份中文翻译
+│   ├── description_zh.json          一句话描述的一份中文翻译
+│   └── skill_zh.md                  SKILL.md 正文的中文翻译
 ├── skills.jsonl                     `just index`：每个 skill 一行——镜像自己的行
 │                                    （id、installs、url、hash、fetchedAt）外加 description、
 │                                    description_zh 和 domain
 ├── README.md                        ……以及旁边的首页：这个目录是什么、建了多少——
 ├── README.zh-CN.md                  一份英文，这份中文
-└── upstream/                        镜像的其余部分：它的索引、repos、owners、avatars
+└── upstream/                        树会读取的镜像文件：它的索引、版本指针、扫描统计
 ```
 
 `skills.jsonl` 是入口。它按镜像自己的顺序（安装量从高到低）列出镜像有的每个 skill，带着从该
@@ -40,9 +40,9 @@ jq -r 'select(.domain == "development") | [.installs, .id] | @tsv' output/skills
 jq -r 'select(.confidence < 0.7) | [.confidence, .domain, .id] | @tsv' output/skills.jsonl
 ```
 
-每个 skill 一个目录、两个文件：`domain.json` 和 `description_zh.json`。每个文件一生成就完整
-写入——中断的批次只会丢掉正在进行的那一次调用，下一次从停下的地方继续。两个角度互相独立：各
-自构建、各自重建。
+每个 skill 一个目录、三个文件：`domain.json`、`description_zh.json` 和 `skill_zh.md`。每个文件
+一生成就完整写入——中断的批次只会丢掉正在进行的那一次调用，下一次从停下的地方继续。三个角度
+互相独立：各自构建、各自重建。
 
 `domain.json` 的形状是 `{domain, confidence, probabilities}`：下面 13 个英文分类之一、端点对它
 的确信度，以及读出该标签的概率分布。全部为英文。
@@ -81,6 +81,7 @@ just limit=20 jobs=8   # 前 20 个 skill，一次八个（默认池大小 32）
 just dry=1 limit=2     # 离线冒烟：假端点，真实目录结构
 just translate         # 第二个角度：翻译第一个还缺的 description_zh
 just limit=0 translate # 翻译所有 skill，limit/jobs/dry 旋钮与上面相同
+just skill-zh          # 第三个角度：SKILL.md 正文的中文页面，旋钮相同
 just index             # 按磁盘内容重建 output/skills.jsonl 和两个 README
 ```
 
@@ -93,16 +94,18 @@ just index             # 按磁盘内容重建 output/skills.jsonl 和两个 REA
 
 ## 使用
 
-清单说明一个 skill 是什么；两个目录是实际内容。`output/skills/<id>/` 是镜像发布的原样 skill
-——完整，所以安装就是拷贝；`output/profiles/<id>/` 里是为它写的东西：`domain.json` 和
-`description_zh.json`。`<id>` 在两处都是路径，其中的 `:` 或 `&` 写作 `_`。
+清单说明一个 skill 是什么；两个目录是实际内容。`output/skills/<id>/` 装着各角度所依据的构建
+源，`output/profiles/<id>/` 里是为它写的东西：`domain.json`、`description_zh.json` 和中文页面
+`skill_zh.md`。`<id>` 在两处都是路径，其中的 `:` 或 `&` 写作 `_`。这里没有任何东西用于安装：
+一个 skill 自带的远不止 `SKILL.md`——脚本、参考、资源——完整内容在它自己的仓库里，清单的
+`url` 指向它。
 
 ```bash
 # 一个 skill 是什么、值多少、被标成什么
 jq -r '[.id, .installs, (.domain[0] // "-")] | @tsv' output/skills.jsonl | head
 
-# 安装一个：它的目录完整，与镜像发布的一致
-cp -r output/skills/mattpocock/skills/grill-me ~/.claude/skills/
+# 一个 skill 的构建源：批次读的就是它；完整 skill 在清单 url 指向的仓库里
+cat output/skills/mattpocock/skills/grill-me/SKILL.md
 
 # 为它写的东西，就在旁边：标签和中文描述
 cat output/profiles/mattpocock/skills/grill-me/domain.json

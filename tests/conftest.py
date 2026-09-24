@@ -11,7 +11,8 @@ import pytest
 import common
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-SCRIPTS = ["justfile", "common.py", "jev.py", "translate.py", "index.py", "readme.py", "stale.py"]
+SCRIPTS = ["justfile", "common.py", "jev.py", "translate.py", "skill_zh.py", "index.py",
+           "readme.py", "stale.py"]
 ARCHIVE_ROOT = "skills-sh-mirror-dist"  # GitHub wraps a branch in <repo>-<branch>/
 # the published root: the skill directories, the labels written about them, the mirror's own files
 # and the catalog, which are the four things the justfile and the scripts all read
@@ -59,7 +60,7 @@ def index_row(entry: dict) -> dict:
 
 
 def skill_path(output: Path, skill_id: str) -> Path:
-    """A skill's own directory, as the mirror publishes it: what a user downloads and installs."""
+    """A skill's own directory in the tree: its SKILL.md alone, the way `just sync` leaves it."""
     return output / common.SKILLS_DIR / skill_dir_name(skill_id)
 
 
@@ -83,8 +84,14 @@ def branch_files(entries: list[dict]) -> dict[str, str]:
 
 
 def write_snapshot(output: Path, entries: list[dict] | None = None) -> None:
-    """A snapshot already unpacked into the output tree, the way `just sync` leaves one."""
+    """A snapshot already unpacked into the output tree, the way `just sync` leaves one: each
+    skill's SKILL.md alone, and only the mirror's files the tree reads beside it."""
     for name, content in branch_files(SKILLS if entries is None else entries).items():
+        if name.startswith("skills/"):
+            if not name.endswith("/" + common.SKILL_MD):
+                continue  # sync strips everything a skill ships but its SKILL.md
+        elif name != "skills.jsonl":
+            continue  # sync keeps only the mirror's files the tree reads
         where = output / name if name.startswith("skills/") else output / common.UPSTREAM_DIR / name
         where.parent.mkdir(parents=True, exist_ok=True)
         where.write_text(content, encoding="utf-8")

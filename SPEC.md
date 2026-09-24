@@ -2,8 +2,8 @@
 
 The black-box view: everything a user or a consumer can see, and nothing about how it is built.
 
-**The product is one directory** — `output/`: the mirror's skill directories exactly as it publishes
-them, one domain label written about each, the mirror's own files beside them, and one catalog
+**The product is one directory** — `output/`: one directory per skill holding its `SKILL.md`, one
+domain label written about each, the mirror's own files beside them, and one catalog
 joining the two. The generator exists to produce that directory, so it is the interface, and the
 commands only decide which part of it gets written.
 
@@ -13,21 +13,23 @@ commands only decide which part of it gets written.
 
 ```
 <output_dir>/
-├── skills/<owner>/<repo>/<slug>/     # the mirror's own directory, complete and unchanged:
-│   ├── SKILL.md                      #   copy one of these into a skills folder and the skill is
-│   └── ...every file the skill ships #   installed - which is what a user downloads
+├── skills/<owner>/<repo>/<slug>/     # one directory per skill, its SKILL.md alone: the source
+│   └── SKILL.md                      #   page every angle reads - not an installation; the full
+│                                     #   skill lives in its own repository
 ├── profiles/<owner>/<repo>/<slug>/
 │   ├── domain.json                   # the label: {domain, confidence, probabilities}
-│   └── description_zh.json           # the Chinese description: {description_zh}
+│   ├── description_zh.json           # the Chinese description: {description_zh}
+│   └── skill_zh.md                   # the SKILL.md body, translated into Chinese
 ├── skills.jsonl                      # `just index`: the catalog, one flat line per skill
 ├── README.md                         # ... and the front page beside it: what this directory is,
 ├── README.zh-CN.md                   #     and how much of it is built; the same page, in Chinese
-└── upstream/                         # the rest of the mirror: skills.jsonl, repos.jsonl, owners.jsonl,
-                                      # curated.jsonl, trending.json, stats.json, latest, avatars/
+└── upstream/                         # the mirror's own files the tree reads: skills.jsonl,
+                                      # latest, stats.json
 ```
 
-Nothing here needs the mirror: a skill is installed from `skills/`, and everything known about it is
-in `skills.jsonl`.
+Nothing here needs the mirror: the catalog names every skill and the repository it lives in
+(`url`), and the profiles hold what was built about it. `skills/` is the source the generator
+reads, kept beside what was built from it - nothing in it is an installation.
 
 `<id>` is the skill id, `{owner}/{repo}/{slug}`. A row carries it the way the mirror spells it; the
 two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py` is handed.
@@ -44,8 +46,9 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py`
   call decided 0.52 to 0.48 says something a call decided 0.99 to 0.01 does not. Every value is
   English.
 
-- One directory per skill, two files: `domain.json`, the endpoint's whole typed answer, and
-  `description_zh.json`, the Chinese translation of the one-line description.
+- One directory per skill, three files: `domain.json`, the endpoint's whole typed answer;
+  `description_zh.json`, the Chinese translation of the one-line description; and `skill_zh.md`,
+  the SKILL.md body translated into Chinese.
 - **The catalog is the way in.** `skills.jsonl` is written by `just index`: one flat line per skill,
   in the mirror's own order, being the mirror's row — `id`, `installs`, `url`, `hash`, `fetchedAt` —
   plus the `description` read out of that skill's own `SKILL.md`, its `description_zh`, the `domain`
@@ -57,11 +60,15 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py`
   what the directory is, then how much of the dataset is labelled — the count and its share of the
   mirror's installs, under the snapshot they describe. Nothing reads them back, and every line is a
   function of the tree, so a tree that did not change rewrites them identically.
-- The two angles have two producers. `jev.py` asks a System One endpoint a typed question instead of
+- The three angles have three producers. `jev.py` asks a System One endpoint a typed question
+  instead of
   sending a chat prompt: that is why `domain` has no prompt pair and no reason line, the endpoint
   answers a closed set with one member of it and writes no prose. `translate.py` asks an
   OpenAI-compatible chat endpoint one free-text question — the description in, Chinese out — so
-  `description_zh` is a plain string with no confidence and no distribution. Both are thin angles
+  `description_zh` is a plain string with no confidence and no distribution. `skill_zh.py` asks the
+  same chat endpoint to translate the SKILL.md body; the answer is the one Chinese page, and a body
+  too long for the endpoint is unusable input, since a half-translated page must never pass for a
+  whole one. All are thin angles
   over one shared kernel, `common.py`: the tree, the source, the prompt files, the retried call,
   the atomic write and the command itself.
 
@@ -73,12 +80,14 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py`
 | the state template `prompts/_system.md`                           | `prompts_dir`                                     | you                                          |
 | the translation system prompt `prompts/translate.md`              | `prompts_dir`                                     | you                                          |
 | the translation user prompt `prompts/translate_user.md`           | `prompts_dir`                                     | you                                          |
+| the page system prompt `prompts/skill_zh.md`                      | `prompts_dir`                                     | you                                          |
+| the page user prompt `prompts/skill_zh_user.md`                   | `prompts_dir`                                     | you                                          |
 
 `upstream/skills.jsonl` is the mirror's own listing, and it is the catalog's left side: the row set,
 the order a batch works in (installs, descending), and the fields the tree has no way to know.
 `skills/<id>/SKILL.md` is the whole of what the state is built from — plus, for disambiguation, the
-one-line descriptions of the sibling skills beside it in its repository; the other files in the
-skill directory are carried for the user who installs it, not read.
+one-line descriptions of the sibling skills beside it in its repository; the sync strips the other
+files a skill ships, so the tree keeps nothing it does not read.
 
 A skill's one-line description is not in the mirror's index, upstream having dropped it: it is read
 from the skill's own front matter, and a skill whose front matter does not yield one is never built
@@ -98,10 +107,13 @@ The batch is one shared recipe with modifiers, run for one of two angles, plus t
 | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `just`                                                          | label every skill still missing `domain.json` in the window                                                                                               |
 | `just translate`                                                | translate every skill still missing `description_zh.json` in the window                                                                                   |
+| `just skill-zh`                                                 | translate every skill still missing `skill_zh.md` in the window                                                                                           |
 | `just one <id>`                                                 | label one skill's domain, inside or outside the window                                                                                                    |
 | `just translate-one <id>`                                       | translate one skill's description, inside or outside the window                                                                                           |
+| `just skill-zh-one <id>`                                        | translate one skill's SKILL.md body, inside or outside the window                                                                                         |
 | `just invalidate`                                               | delete every domain label, everywhere                                                                                                                     |
 | `just invalidate-translate`                                     | delete every Chinese description, everywhere                                                                                                              |
+| `just invalidate-skill-zh`                                      | delete every Chinese SKILL.md page, everywhere                                                                                                            |
 | `just index`                                                    | write the catalog and the READMEs: the mirror's rows joined with the descriptions, their translations and the labels, and the published root's front page |
 | `just sync`                                                     | fetch the mirror, replacing `skills/` and `upstream/` wholesale, and rewrite the catalog                                                                  |
 | `just refresh`                                                  | fetch it, and drop every profile whose source hash changed with it - both angles at once                                                                  |
@@ -140,7 +152,8 @@ holds two endpoints: the typed one as `API_KEY`, `BASE_URL`, `MODEL`, and the Op
 chat one as `TRANSLATE_API_KEY`, `TRANSLATE_BASE_URL`, `TRANSLATE_MODEL` — plus `TIMEOUT`,
 `MAX_RETRIES` shared by both, `DRY_RUN`, and the two paths if you must move them. The translator
 also takes `TRANSLATE_ENABLE_THINKING` (on by default) and `TRANSLATE_MAX_TOKENS`; a thinking call
-is slower, so `TIMEOUT` is raised locally for that batch. Its default address and model point at
+is slower, so `TIMEOUT` is raised locally for that batch. The third angle, `skill_zh.py`, calls
+the same chat endpoint with the same `TRANSLATE_*` settings. Its default address and model point at
 Xunfei Xingchen MaaS serving Spark-X2.5-4B; the model id is whatever the console's service page
 shows, so a subscription spells it via `TRANSLATE_MODEL`.
 
@@ -149,7 +162,7 @@ The batch knobs above are **not** environment variables: a run changes only beca
 ## 5. What a consumer may rely on
 
 - **Existence is the cache.** Anything already written is never rebuilt; a stopped batch resumes at
-  the first missing file. The two angles cache independently: having a label does not satisfy a
+  the first missing file. The three angles cache independently: having a label does not satisfy a
   translation run, or the reverse.
 - **Invalidation is deletion.** Editing `_system.md` invalidates nothing by itself; a new snapshot
   invalidates what it changed, and `just refresh` is the verb that deletes those profiles - both

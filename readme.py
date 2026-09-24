@@ -17,7 +17,7 @@ README = "README.md"
 README_ZH = "README.zh-CN.md"
 # What the bullets under Progress say, in this order. Each name is a sentence in TEXT below and a
 # `<name>_label` beside it, so the two languages cannot drift apart in structure.
-FACTS = ("domain", "translate", "snapshot", "buildable")
+FACTS = ("domain", "translate", "skill_zh", "snapshot", "buildable")
 
 # One page per language: the same thing said in the same order. `$name` is filled from the numbers
 # index.py reads; the rest is prose and markdown. The two hold the same keys - a test says so.
@@ -27,17 +27,20 @@ TEXT: dict[str, dict[str, Any]] = {
                  "category by the Jev endpoint and described in Chinese by a chat model, plus the\n"
                  "catalog joining it all. Written by `just index` - generated, so do not edit it.\n"
                  "中文: [README.zh-CN.md](README.zh-CN.md)",
-        "where": "`skills/<id>/` is the skill as published: copy one into a skills folder and it is\n"
-                 "installed. `profiles/<id>/` holds what is written about it - the domain label and\n"
-                 "the Chinese `description_zh` - and `skills.jsonl` is the catalog joining them.",
+        "where": "`skills/<id>/` is the source page every angle was built from; the full skill lives\n"
+                 "in its own repository, at the `url` the catalog names. `profiles/<id>/` holds what\n"
+                 "is written about it - the domain label, the Chinese `description_zh`, and the\n"
+                 "Chinese `skill_zh` page - and `skills.jsonl` is the catalog joining them.",
         "progress": "Progress",
         "bullet": "- **$label**: $value",
         "domain_label": "domain",
         "translate_label": "translate",
+        "skill_zh_label": "skill_zh",
         "snapshot_label": "snapshot",
         "buildable_label": "buildable",
         "domain": "$built of $buildable labelled ($percent), covering $installs of the mirror's installs",
         "translate": "$translated of $buildable translated ($translate_percent), covering $translate_installs of the mirror's installs",
+        "skill_zh": "$skillzh of $buildable skill pages translated ($skillzh_percent), covering $skillzh_installs of the mirror's installs",
         "snapshot": "`$tag`, $scan",
         "buildable": "$buildable of $listed have a readable description; the rest are never built",
     },
@@ -45,17 +48,19 @@ TEXT: dict[str, dict[str, Any]] = {
         "intro": "本仓库收集的那些 agent skills，每个由 Jev 端点标注一个封闭分类、由聊天模型给出\n"
                  "中文描述，外加把这些连起来的清单。由 `just index` 从这棵树生成——不要手改。\n"
                  "English: [README.md](README.md)",
-        "where": "`skills/<id>/` 是发布的 skill 原件：拷进 skills 目录就等于装上了。\n"
-                 "`profiles/<id>/` 里是为它写的东西：domain 分类和中文 `description_zh`；"
-                 "`skills.jsonl` 是把它们连起来的清单。",
+        "where": "`skills/<id>/` 是各角度共用的构建源；完整的 skill 在它自己的仓库里，清单的 `url`\n"
+                 "指向它。`profiles/<id>/` 里是为它写的东西：domain 分类、中文 `description_zh` 和\n"
+                 "中文 `skill_zh` 页面；`skills.jsonl` 是把它们连起来的清单。",
         "progress": "进度",
         "bullet": "- **$label**：$value",
         "domain_label": "domain",
         "translate_label": "translate",
+        "skill_zh_label": "skill_zh",
         "snapshot_label": "快照",
         "buildable_label": "可建",
         "domain": "$buildable 个里已标 $built 个（$percent），覆盖镜像安装量的 $installs",
         "translate": "$buildable 个里已翻译 $translated 个（$translate_percent），覆盖镜像安装量的 $translate_installs",
+        "skill_zh": "$buildable 个里已有 $skillzh 个中文页面（$skillzh_percent），覆盖镜像安装量的 $skillzh_installs",
         "snapshot": "`$tag`，$scan",
         "buildable": "$listed 个里有 $buildable 个可读出 description；其余的永远不会被构建",
     },

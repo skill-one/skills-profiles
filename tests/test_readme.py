@@ -12,7 +12,7 @@ DOMAIN = {"domain": "office-productivity"}
 SLOTS = {"label", "value"}
 # the page is the front door of a published directory, not a document: the way in, the progress,
 # and the two lines saying which tree it describes
-LINES = 17
+LINES = 20
 
 
 def numbers(config) -> dict:
@@ -59,8 +59,8 @@ def test_the_page_opens_the_directory_it_sits_in(workdir):
     text = page(config, "en")
 
     assert text.startswith("# skills-profiles\n")
-    assert "`skills/<id>/` is the skill as published" in text
-    assert "`profiles/<id>/` holds what is written about it" in text
+    assert "`skills/<id>/` is the source page" in text
+    assert "`profiles/<id>/` holds" in text
     assert "`description_zh`" in text
     assert "- **domain**: 1 of 5 labelled (20.0%), covering 43.5% of the mirror's installs" in text
     assert "- **translate**: 1 of 5 translated (20.0%), covering 43.5% of the mirror's installs" in text

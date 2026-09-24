@@ -1,33 +1,35 @@
 # skills-profiles
 
-Domain labels and Chinese descriptions for the [agent skills](https://www.skills.sh) collected by
+Domain labels and Chinese translations for the [agent skills](https://www.skills.sh) collected by
 [skill-one/skills-sh-mirror](https://github.com/skill-one/skills-sh-mirror): one closed-category
 label per skill, each a single typed call to the Jev (TypeSafe System One) endpoint built from
-that skill's own description and `SKILL.md`, and one `description_zh` per skill, a single
-OpenAI-compatible chat call that translates that same description into Chinese.
+that skill's own description and `SKILL.md`, and two OpenAI-compatible chat calls - one
+translating that description into Chinese, one translating the `SKILL.md` body into a Chinese
+page of its own.
 
 中文: [README.zh-CN.md](README.zh-CN.md) · Dev guide: [DEVELOPING.md](DEVELOPING.md)
 
 ## What it produces
 
-Everything lands under one root, `output/`, and the directory is self-contained: the skills
-themselves, what is written about them — a label and a Chinese description — and one catalog joining
-it all, so nothing here sends a reader back to the mirror. Publishing is copying that one directory.
+Everything lands under one root, `output/`: the source pages the angles were built from, what is
+written about them — a label and Chinese translations — and one catalog joining it all, so nothing
+here sends a reader back to the mirror. Publishing is copying that one directory.
 
 ```
 output/
-├── skills/<owner>/<repo>/<slug>/    the mirror's own skill directory, complete and unchanged:
-│   ├── SKILL.md                     copy one of these into your skills folder and it is installed
-│   └── ...every file the skill ships
+├── skills/<owner>/<repo>/<slug>/    one directory per skill, its SKILL.md alone: the source page
+│   └── SKILL.md                     the angles read; the full skill lives in its own repository
 ├── profiles/<owner>/<repo>/<slug>/
 │   ├── domain.json                  one label, the typed endpoint's whole answer
-│   └── description_zh.json          one Chinese translation of the one-line description
+│   ├── description_zh.json          one Chinese translation of the one-line description
+│   └── skill_zh.md                  the SKILL.md body, translated into Chinese
 ├── skills.jsonl                     `just index`: one flat line per skill — the mirror's own row
 │                                    (id, installs, url, hash, fetchedAt) plus description,
 │                                    description_zh and domain
 ├── README.md                        ... and the front page beside it: what this directory is, and
 ├── README.zh-CN.md                  how much of it is built — the first is in English, this Chinese
-└── upstream/                        the rest of the mirror: its index, repos, owners, avatars
+└── upstream/                        the mirror's own files the tree reads: its index, the version
+                                     pointer, the scan stats
 ```
 
 `skills.jsonl` is the way in. It lists every skill the mirror has, in the mirror's own order — the
@@ -42,10 +44,10 @@ jq -r 'select(.domain == "development") | [.installs, .id] | @tsv' output/skills
 jq -r 'select(.confidence < 0.7) | [.confidence, .domain, .id] | @tsv' output/skills.jsonl
 ```
 
-One directory per skill, two files: `domain.json` and `description_zh.json`. Each is written in
-full the moment it is generated — so an interrupted batch loses only the call it was in the middle
-of, and the next one picks up where it stopped. The two angles are independent: each is built and
-rebuilt on its own.
+One directory per skill, three files: `domain.json`, `description_zh.json` and `skill_zh.md`. Each
+is written in full the moment it is generated — so an interrupted batch loses only the call it was
+in the middle of, and the next one picks up where it stopped. The three angles are independent:
+each is built and rebuilt on its own.
 
 `domain.json` is `{domain, confidence, probabilities}`: one of the 13 English categories below, the
 endpoint's confidence in it, and the distribution it was read off. Everything is English.
@@ -88,6 +90,7 @@ just limit=20 jobs=8   # eight at a time, for the first 20 skills (default pool:
 just dry=1 limit=2     # offline smoke test: fake endpoint, real layout
 just translate         # the second angle: translate the first missing description_zh
 just limit=0 translate # translate every skill, same limit/jobs/dry knobs as above
+just skill-zh          # the third angle: the SKILL.md body in Chinese, same knobs
 just index             # rebuild output/skills.jsonl and the READMEs from what is on disk
 ```
 
@@ -103,17 +106,19 @@ See [DEVELOPING.md](DEVELOPING.md).
 
 ## Consuming it
 
-The catalog says what a skill is; the two directories are the payload. `output/skills/<id>/` is the
-skill exactly as the mirror publishes it — complete, so installing one is a copy — and
-`output/profiles/<id>/` holds what was written about it: `domain.json` and `description_zh.json`.
-`<id>` is the path under both, with a `:` or an `&` spelled `_`.
+The catalog says what a skill is; the two directories are the payload. `output/skills/<id>/` holds
+the source page every angle was built from, and `output/profiles/<id>/` holds what was written
+about it: `domain.json`, `description_zh.json` and the Chinese page `skill_zh.md`.
+`<id>` is the path under both, with a `:` or an `&` spelled `_`. Nothing here is an installation:
+a skill ships more than its `SKILL.md` — scripts, references, assets — and the whole of it lives
+in its own repository, which the catalog's `url` names.
 
 ```bash
 # what a skill is, what it is worth, and what it was labelled
 jq -r '[.id, .installs, (.domain[0] // "-")] | @tsv' output/skills.jsonl | head
 
-# install one: its directory is complete, exactly as the mirror publishes it
-cp -r output/skills/mattpocock/skills/grill-me ~/.claude/skills/
+# a skill's source page: what the batches read; the full skill is at the url the catalog names
+cat output/skills/mattpocock/skills/grill-me/SKILL.md
 
 # what was written about it, beside it: the label and the Chinese description
 cat output/profiles/mattpocock/skills/grill-me/domain.json

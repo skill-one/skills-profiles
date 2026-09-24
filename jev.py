@@ -134,10 +134,10 @@ def placeholder(_description: str) -> dict:
 
 
 def _request(config: Config, skill: str, source: str, _description: str) -> dict:
-    return request_body(config.model, state(config, skill, source))
+    return request_body(config.model, state(config, skill, common.cap_source(source)))
 
 
-def _produce(config: Config, body: dict) -> dict:
+def _produce(config: Config, body: dict, _source: str) -> dict:
     return profile(Jev(config).ask(body))
 
 

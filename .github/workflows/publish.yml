@@ -4,8 +4,9 @@ name: publish
 # `dist-<base>-N`, where base is the newest bare `dist-YYYY-MM-DD` sync tag (or today, when there is
 # none) and N increments across that base's publishes.
 #
-# Two angles, chosen by `angle`: the domain labels (jev.py), the Chinese descriptions
-# (translate.py), or both - domain first, then translation. Every run starts on a fresh runner, and
+# Three angles, chosen by `angle`: the domain labels (jev.py), the Chinese descriptions
+# (translate.py), the Chinese SKILL.md pages (skill_zh.py), or `all` of them - in that order. Every
+# run starts on a fresh runner, and
 # `restore-dist` pulls the published tree back - the skills, the angles written about them, the
 # mirror's own files and the catalog, in one request. The outputs are the cache (so `just` only
 # fills what is missing) and the skills are what it builds from. This run never touches upstream:
@@ -30,10 +31,11 @@ on:
         description: Which angle to build
         type: choice
         options:
-          - both
+          - all
           - domain
           - translate
-        default: both
+          - skill_zh
+        default: all
       limit:
         description: How many skills to build this run (per angle)
         default: "10"
@@ -99,22 +101,30 @@ jobs:
           case "${{ inputs.angle }}" in
             domain) just invalidate ;;
             translate) just invalidate-translate ;;
-            both) just invalidate && just invalidate-translate ;;
+            skill_zh) just invalidate-skill-zh ;;
+            all) just invalidate && just invalidate-translate && just invalidate-skill-zh ;;
           esac
 
       - name: Build the missing domain labels
-        if: inputs.angle == 'both' || inputs.angle == 'domain'
+        if: inputs.angle == 'all' || inputs.angle == 'domain'
         env:
           GEN_ERR_LOG: ${{ runner.temp }}/generation-errors.log
           FAIL_LOG: ${{ runner.temp }}/failed-skills.log
         run: just limit="${{ inputs.limit }}" jobs="${{ inputs.jobs }}"
 
       - name: Build the missing Chinese descriptions
-        if: inputs.angle == 'both' || inputs.angle == 'translate'
+        if: inputs.angle == 'all' || inputs.angle == 'translate'
         env:
           GEN_ERR_LOG: ${{ runner.temp }}/generation-errors.log
           FAIL_LOG: ${{ runner.temp }}/failed-skills.log
         run: just limit="${{ inputs.limit }}" jobs="${{ inputs.jobs }}" translate
+
+      - name: Build the missing Chinese SKILL.md pages
+        if: inputs.angle == 'all' || inputs.angle == 'skill_zh'
+        env:
+          GEN_ERR_LOG: ${{ runner.temp }}/generation-errors.log
+          FAIL_LOG: ${{ runner.temp }}/failed-skills.log
+        run: just limit="${{ inputs.limit }}" jobs="${{ inputs.jobs }}" skill-zh
 
       - name: Report partial results
         if: always()

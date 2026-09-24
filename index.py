@@ -101,6 +101,9 @@ def _row(entry: dict, config: Config, skill: str) -> dict:
     label = angle_output(config, skill, common.DOMAIN_ANGLE)
     row["domain"] = label.get("domain")
     row["confidence"] = label.get("confidence")
+    # the one text angle: the row carries its presence, the page itself stays in the profile
+    row[common.SKILL_ZH_ANGLE] = (common.profile_dir(config, skill)
+                                  / f"{common.SKILL_ZH_ANGLE}.md").is_file() or None
     return row
 
 
@@ -115,13 +118,13 @@ def write(config: Config, rows: list[dict]) -> Path:
     return common.write_atomic(config.output_dir / common.INDEX, text)
 
 
-def built_skills(config: Config, angle: str) -> set[str]:
-    """The skills whose angle json is on disk, from one walk of the profile tree."""
+def built_skills(config: Config, filename: str) -> set[str]:
+    """The skills whose angle file of that name is on disk, from one walk of the profile tree."""
     root = config.output_dir / common.PROFILES_DIR
     built: set[str] = set()
     for dirpath, _, filenames in os.walk(root):
         path = Path(dirpath)
-        if len(path.relative_to(root).parts) == 3 and f"{angle}.json" in filenames:
+        if len(path.relative_to(root).parts) == 3 and filename in filenames:
             built.add(path.relative_to(root).as_posix())
     return built
 
@@ -141,10 +144,12 @@ def facts(config: Config, indexed: list[dict]) -> dict:
     buildable = [row for row in indexed if row["description"]]
     weight = sum(_installs(row) for row in buildable)
     dirs = {row["id"]: common.skill_dir_name(row["id"]) for row in buildable}
-    domain_done = built_skills(config, common.DOMAIN_ANGLE)
-    translate_done = built_skills(config, common.TRANSLATE_ANGLE)
+    domain_done = built_skills(config, f"{common.DOMAIN_ANGLE}.json")
+    translate_done = built_skills(config, f"{common.TRANSLATE_ANGLE}.json")
+    skill_zh_done = built_skills(config, f"{common.SKILL_ZH_ANGLE}.md")
     domain_here = [row for row in buildable if dirs[row["id"]] in domain_done]
     translate_here = [row for row in buildable if dirs[row["id"]] in translate_done]
+    skill_zh_here = [row for row in buildable if dirs[row["id"]] in skill_zh_done]
     return {
         "tag": _read_text(config.output_dir / common.UPSTREAM_DIR / "latest").strip() or NOTHING,
         "scan": _scan(_read_json(config.output_dir / common.UPSTREAM_DIR / "stats.json")),
@@ -156,6 +161,9 @@ def facts(config: Config, indexed: list[dict]) -> dict:
         "translated": str(len(translate_here)),
         "translate_percent": _percent(len(translate_here), len(buildable)),
         "translate_installs": _percent(sum(_installs(row) for row in translate_here), weight),
+        "skillzh": str(len(skill_zh_here)),
+        "skillzh_percent": _percent(len(skill_zh_here), len(buildable)),
+        "skillzh_installs": _percent(sum(_installs(row) for row in skill_zh_here), weight),
     }
 
 

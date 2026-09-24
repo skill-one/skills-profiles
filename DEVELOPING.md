@@ -4,9 +4,10 @@ The generator behind the dataset described in [README.md](README.md): it reads e
 `SKILL.md` from [skills-sh-mirror](https://github.com/skill-one/skills-sh-mirror) and asks the Jev
 (TypeSafe System One) endpoint one typed question - which closed domain category the skill belongs
 to. A second producer, `translate.py`, asks an OpenAI-compatible chat endpoint one free-text
-question - the skill's one-line description in, Chinese out. The two are parallel angles on the
-same profile directory, and both are thin: the tree, the source, the prompt files, the settings,
-the retried call, the atomic write and the command itself all live once in `common.py`.
+question - the skill's one-line description in, Chinese out - and a third, `skill_zh.py`, asks the
+same endpoint to translate the `SKILL.md` body into a Chinese page. The three are parallel angles
+on the same profile directory, and all are thin: the tree, the source, the prompt files, the
+settings, the retried call, the atomic write and the command itself all live once in `common.py`.
 
 中文: [DEVELOPING.zh-CN.md](DEVELOPING.zh-CN.md)
 
@@ -21,9 +22,11 @@ just sync             # fetch the mirror into output/skills and output/upstream
 just                  # label the first skill, end to end
 just limit=0          # ... or every skill still unlabelled, whole snapshot, no cap
 just translate        # the second angle: translate the first missing description_zh
+just skill-zh         # the third angle: the SKILL.md body in Chinese
 ```
 
-Offline, no API calls and no credentials: `just dry=1 limit=5` (and `just dry=1 translate`).
+Offline, no API calls and no credentials: `just dry=1 limit=5` (and `just dry=1 translate`,
+`just dry=1 skill-zh`).
 
 ## The batch is `just`
 
@@ -31,21 +34,24 @@ Offline, no API calls and no credentials: `just dry=1 limit=5` (and `just dry=1 
 | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `just`                          | Label the next `limit` skills still missing `domain.json`, most installed first. The order is the catalog's own (`OUTPUT_DIR/skills.jsonl`, installs-descending) filtered to rows with a description and a `SKILL.md` on disk; with no catalog it is the directory listing in path order. The window is the first `limit` of those skills - a count of work, not of positions, so repeated runs walk down the dataset. The recipe feeds them to an `xargs -P` pool running `jev.py`. `jobs` is the whole concurrency story.                                                                        |
 | `just translate`                | The same batch for the second angle: the next `limit` skills still missing `description_zh.json`, the same ordering and the same pool, running `translate.py`. Every modifier below works identically.                                                                                                                                                                                                                                                                                                                                                                                             |
+| `just skill-zh`                 | The same batch for the third angle: the next `limit` skills still missing `skill_zh.md`, the same ordering and the same pool, running `skill_zh.py`. Every modifier below works identically.                                                                                                                                                                                                                                                                                                                                                                                                       |
 | `just one <skill>`              | Label exactly one skill, whether or not the batch has reached it. The only way to address one skill - and the only way to rebuild one without the batch skipping it.                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | `just translate-one <skill>`    | Translate exactly one skill, inside or outside the window.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `just skill-zh-one <skill>`     | Translate exactly one skill's SKILL.md body, inside or outside the window.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `just render <skill>`           | Print the request one label would send - the state and the typed question - calling nothing.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | `just translate-render <skill>` | Print the request one translation would send - the two turns rendered from the translate templates - calling nothing.                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `just invalidate`               | Delete every `domain.json`, so the next run relabels the whole window.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | `just invalidate-translate`     | Delete every `description_zh.json`, so the next translate run rebuilds the whole window.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `just invalidate-skill-zh`      | Delete every `skill_zh.md`, so the next skill-zh run rebuilds the whole window.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | `just index`                    | Write `<output_dir>/skills.jsonl` - the catalog: one flat line per skill the mirror lists, in the mirror's order, being the mirror's own row (`id`, `installs`, `url`, `hash`, `fetchedAt`) joined with the `description` read out of that skill's `SKILL.md`, the `description_zh` in `profiles/<id>/description_zh.json`, and the `domain` and `confidence` in `profiles/<id>/domain.json`. The joined fields are `null` while unknown. It reads the tree alone - no network, no calls - and rewrites the file whole. It writes the READMEs beside it from the same walk: see `readme.py` below. |
-| `just sync`                     | Download the whole upstream `dist` branch as one tarball and unpack it: the skill directories into `output_dir/skills`, the rest - the mirror's own index above all - into `output_dir/upstream`. Then rewrite the catalog. The fetch lands in a scratch directory and the swap happens only once it is whole; a guard refuses to replace a `skills/` that is not a snapshot. Pure data: it never touches a generated profile.                                                                                                                                                                     |
+| `just sync`                     | Download the whole upstream `dist` branch as one tarball and unpack it: the skill directories - stripped to their `SKILL.md` - into `output_dir/skills`, and of the mirror's own files only the ones the tree reads (its index, `latest`, `stats.json`) into `output_dir/upstream`. Then rewrite the catalog. The fetch lands in a scratch directory and the swap happens only once it is whole; a guard refuses to replace a `skills/` that is not a snapshot. Pure data: it never touches a generated profile.                                                                                                                                                                     |
 | `just refresh`                  | `just sync`, plus the consequence: the catalog as it was before the sync is kept aside, and the whole profile - both files - of every skill whose source content hash moved is deleted. A skill that vanished upstream keeps its profile.                                                                                                                                                                                                                                                                                                                                                          |
 | `just clean`                    | Drop what was generated: `output_dir/profiles`, the catalog and the READMEs. The skill directories and the mirror's own files stay.                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `just test`                     | `uv run pytest`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 
-The two batches are one recipe body - the `[script] build angle:` parameterized recipe, with the
-angle choosing the script (`jev.py` vs `translate.py`), the file that means "done", and the label in
-the failure log; `default` and `translate` just call it.
+The three batches are one recipe body - the `[script] build angle:` parameterized recipe, with the
+angle choosing the script (`jev.py` vs `translate.py` vs `skill_zh.py`), the file that means "done",
+and the label in the failure log; `default`, `translate` and `skill-zh` just call it.
 
 | Variable     | Default                                | Meaning                                                                                                                                                                              |
 | ------------ | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -150,11 +156,28 @@ description, status 1), same exit codes, same rename-into-place write at
   back off exponentially, a 4xx fails at once. Defaults point at Xunfei Xingchen MaaS serving
   Spark-X2.5-4B; the model id the console shows may differ, hence the env override.
 
+The third angle mirrors it once more:
+
+```bash
+uv run python skill_zh.py <owner>/<repo>/<slug>           # translate exactly one skill's body
+uv run python skill_zh.py <owner>/<repo>/<slug> --print   # print the request and stop, calling nothing
+```
+
+`skill_zh.py` is the same shape again - same command line, same gate, same exit codes, same
+rename-into-place write - with two differences. It sends the SKILL.md *body* (the front matter is
+identifying metadata, and the catalog and the other angle files already carry it), rendered from
+`prompts/skill_zh.md` and `prompts/skill_zh_user.md`, and it writes the one text file
+`<output_dir>/profiles/<skill>/skill_zh.md`: the translation alone. A body past `MAX_BODY_CHARS`
+(60 000 characters, in the script) is unusable input - a
+half-translated page must never pass for a whole one - and, like a missing description, drops the
+skill with no call and no file.
+
 `index.py` joins the mirror's rows with the tree and writes `output/skills.jsonl`. It has no
 arguments, no network and no call, and it is not in the build's path: `just index` is a verb you run
 when you want the catalog, and `just sync` runs it because a sync moves the source layer under it.
-Each row carries the mirror's fields, then `description`, `description_zh`, `domain`, `confidence` -
-the two angles read from their own files, independently and missing independently. The same run
+Each row carries the mirror's fields, then `description`, `description_zh`, `domain`, `confidence`,
+and `skill_zh` - the angles read from their own files, independently and missing independently
+(`skill_zh` is a presence marker: the page itself is the answer). The same run
 writes `output/README.md` and its Chinese twin - `readme.py` holds the words, `index.py` hands it
 the numbers - the one thing the catalog cannot answer: **how much of the dataset is labelled**
 (domain coverage; translation coverage is not on the page). It reads the snapshot's own identity
@@ -170,16 +193,17 @@ is `sync` and it, in that order.
 ```
                         output/  ── the whole artifact, published as one directory
                           │
-mirror `dist` branch ─────┼──► skills/<id>/**      the skill itself, as published
-     (`just sync`)        │                          downloads means one of these, install means copying
-                          ├──► upstream/**         the rest of the mirror, its own index above all
+mirror `dist` branch ─────┼──► skills/<id>/**      the source page every angle reads, SKILL.md alone
+     (`just sync`)        │                          not an installation: the full skill is at its url
+                          ├──► upstream/**         the mirror's own files the tree reads, its index above all
                           │
                           └─► the justfile walks the catalog
                                       │
                         `just` labels what is missing, JOBS at a time
                         `just translate` translates what is missing, the same pool
+                        `just skill-zh` translates the pages, the same pool
                                       │
-                        profiles/<id>/domain.json + description_zh.json
+                        profiles/<id>/domain.json + description_zh.json + skill_zh.md
                                       │
                 `just index` ──► skills.jsonl + READMEs: upstream × skills/ × profiles/
 ```
@@ -198,12 +222,15 @@ common.py               # the kernel both producers share: Config, the tree, the
                         # the retried call, the atomic write, and the run() command skeleton
 jev.py                  # the domain angle: the taxonomy, the state, the typed question
 translate.py            # the translation angle: one chat call, shaped over the shared command
+skill_zh.py             # the page angle: the SKILL.md body translated, one .md written
 index.py                # the catalog and its numbers: one flat jsonl, and the facts a README is
 readme.py               # the page: those numbers said for a reader, in both languages
 stale.py                # the comparison: two catalogs in, the changed skills' profiles out
 prompts/_system.md       # the state template: name, description, body, and the repository block
 prompts/translate.md     # the translation system template: the faithful-translation task, {{to}}
 prompts/translate_user.md  # the translation user template: "Translate to {{to}}:" carrying {{text}}
+prompts/skill_zh.md      # the page system template: translate the document, keep the formatting
+prompts/skill_zh_user.md # the page user template: "Translate to {{to}}:" carrying the body
 tests/                  # offline unit tests plus a just end-to-end suite
 .github/                # ci on every push and pull request, sync and publish by hand
 ```
@@ -247,8 +274,12 @@ fails loudly, so a test can never call out even with a local `.env` full of keys
   the gate, the exit codes, a request printed without a key.
 - `tests/test_index.py` covers the catalog and its numbers (including `description_zh` joining
   independently); `tests/test_readme.py` the bilingual page; `tests/test_stale.py` the hash
-  comparison; `tests/test_just.py` drives the justfile itself - both batches, the window, the pool,
-  the cache, `sync`, `refresh`, `invalidate` for both angles - against a local tarball.
+  comparison; `tests/test_just.py` drives the justfile itself - the batches, the window, the pool,
+  the cache, `sync`, `refresh`, `invalidate` for every angle - against a local tarball.
+- `tests/test_skill_zh.py` covers the third angle: the request (the body as a Jinja value, the
+  front matter never sent), the output (front matter as published over the translation, one
+  `skill_zh.md`), the length gate, and the command - the gate, the exit codes, a request printed
+  without a key.
 
 ```bash
 uv run pytest          # offline test suite
@@ -256,6 +287,7 @@ uv run ruff check .    # lint
 uv run mypy            # types
 just dry=1 limit=2     # the batch itself, end to end
 just dry=1 translate   # the second batch, end to end
+just dry=1 skill-zh    # the third batch, end to end
 ```
 
 ## CI

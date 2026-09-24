@@ -406,6 +406,21 @@ def test_the_documented_dry_switch_works(project):
     assert (outputs(project, ALPHA) / "domain.json").is_file()
 
 
+def test_the_skill_zh_batch_writes_the_chinese_pages(project):
+    """The third angle shares the batch and its knobs: `just skill-zh` fills the window with
+    skill_zh.md, and the invalidation verb forgets exactly those."""
+    assert just(project, "limit=2", "jobs=4", "skill-zh").returncode == 0
+    for skill_id in (ALPHA, BETA):
+        page = outputs(project, skill_id) / "skill_zh.md"
+        assert page.is_file()
+        assert page.read_text(encoding="utf-8").startswith("【占位】")  # dry-run value
+    assert not (outputs(project, GAMMA) / "skill_zh.md").exists()  # the window was two wide
+
+    assert just(project, "invalidate-skill-zh").returncode == 0
+    for skill_id in (ALPHA, BETA):
+        assert not (outputs(project, skill_id) / "skill_zh.md").exists()
+
+
 def test_a_dry_run_the_environment_cannot_trigger(project):
     """The knobs are the command line. A `SKILLS_PROFILES_DRY_RUN=1` exported in the shell is not
     read - which is the point: only a run that says `dry=1` is a fake one."""
@@ -487,18 +502,20 @@ def test_just_without_a_snapshot_says_what_to_run(tmp_path):
 
 
 def test_just_sync_unpacks_the_branch_into_its_two_layers(project, tmp_path):
-    """`just sync` is the whole fetch: the skill directories land at the root of the tree,
-    complete, and the mirror's other files - its index above all - land under `upstream/`."""
+    """`just sync` is the whole fetch: each skill's SKILL.md lands at the root of the tree, with
+    the rest of what the skill ships stripped, and the mirror's other files - its index above
+    all - land under `upstream/`."""
     tarball = tmp_path / "snapshot.tar.gz"
     make_tarball(tarball)
     result = just(project, f"snapshot=file://{tarball}", "sync")
     assert result.returncode == 0, result.stderr
 
     assert (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").is_file()
-    # the whole skill directory lands now, not only the SKILL.md
-    assert (snapshot(project / OUTPUT, ALPHA) / "extra.md").is_file()
+    # everything a skill ships but its SKILL.md is stripped by the sync
+    assert not (snapshot(project / OUTPUT, ALPHA) / "extra.md").exists()
     assert (project / OUTPUT / common.UPSTREAM_DIR / "skills.jsonl").is_file()
-    assert (project / OUTPUT / common.UPSTREAM_DIR / "repos.jsonl").is_file()
+    # the mirror's own files the tree never reads are pruned by the sync
+    assert not (project / OUTPUT / common.UPSTREAM_DIR / "repos.jsonl").exists()
     # and GitHub's <repo>-<branch>/ wrapper is stripped, not nested
     assert not (project / OUTPUT / ARCHIVE_ROOT).exists()
 

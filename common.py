@@ -19,18 +19,19 @@ import yaml
 from jinja2 import Environment, StrictUndefined
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-# The output root holds three layers, and they do not overlap: the skill directories the mirror
-# publishes and a user installs, the profiles this project writes about them, and the rest of the
-# mirror (its index, repositories, avatars) that the sources were taken from.
+# The output root holds three layers, and they do not overlap: the source pages the angles read
+# (one SKILL.md per skill), the profiles this project writes about them, and the mirror's own
+# files the tree reads (its index above all) that the sources were taken from.
 SKILLS_DIR = "skills"
 PROFILES_DIR = "profiles"
 UPSTREAM_DIR = "upstream"
 SKILL_MD = "SKILL.md"
 INDEX = "skills.jsonl"
 
-# The two angles, each one file in a skill's profile directory and one field in the catalog.
+# The three angles, each one file in a skill's profile directory and one field in the catalog.
 DOMAIN_ANGLE = "domain"
 TRANSLATE_ANGLE = "description_zh"
+SKILL_ZH_ANGLE = "skill_zh"  # the one text angle: its file is skill_zh.md, not skill_zh.json
 
 MAX_SKILL_MD_CHARS = 20000
 # A repository can be one skill or several hundred (`awesome-*` collections). The cap keeps the
@@ -120,14 +121,24 @@ def profile_path(config: Config, skill: str, angle: str) -> Path:
 # ----------------------------------------------------------------------- the skill source
 
 
-def skill_source(config: Config, skill: str) -> str:
-    """The skill's own text, capped at MAX_SKILL_MD_CHARS, cut on a line break and announced."""
-    text = skill_md_path(config, skill).read_text(encoding="utf-8", errors="replace")
+def skill_md(config: Config, skill: str) -> str:
+    """The skill's own SKILL.md, whole: the text as the mirror published it."""
+    return skill_md_path(config, skill).read_text(encoding="utf-8", errors="replace")
+
+
+def cap_source(text: str) -> str:
+    """The state's budget over a source: past MAX_SKILL_MD_CHARS it is cut on a line break and
+    the cut is announced."""
     if len(text) <= MAX_SKILL_MD_CHARS:
         return text
     cut = text.rfind("\n", 0, MAX_SKILL_MD_CHARS)
     head = text[:cut] if cut > 0 else text[:MAX_SKILL_MD_CHARS]
     return f"{head.rstrip()}\n\n{TRUNCATION_NOTE}\n"
+
+
+def skill_source(config: Config, skill: str) -> str:
+    """The skill's own text at the state's budget: what a state-building angle reads."""
+    return cap_source(skill_md(config, skill))
 
 
 def skill_body(source: str) -> str:
@@ -247,12 +258,13 @@ def post_json(client: httpx.Client, url: str, key: str, body: dict, max_retries:
 
 def run(argv: list[str] | None, *, program: str, description: str, angle: str,
         build_request: Callable[[Config, str, str, str], dict],
-        produce: Callable[[Config, dict], dict],
-        placeholder: Callable[[str], dict]) -> int:
-    """The whole command the two producers share: one skill in, one angle file written.
+        produce: Callable[[Config, dict, str], Any],
+        placeholder: Callable[[str], Any]) -> int:
+    """The whole command the producers share: one skill in, one angle file written.
 
-    `build_request(config, skill, source, description)` shapes the call; `produce(config, body)`
-    makes it and shapes the answer, raising on a bad one; `placeholder(description)` is the dry run.
+    `build_request(config, skill, source, description)` shapes the call; `produce(config, body,
+    source)` makes it and shapes the answer, raising on a bad one; `placeholder(description)` is
+    the dry run. A dict answer is written as `<angle>.json`, a str answer as `<angle>.md`.
     Exit: 0 built, 1 unusable input or endpoint, 2 bad arguments.
     """
     parser = argparse.ArgumentParser(description=description)
@@ -268,7 +280,7 @@ def run(argv: list[str] | None, *, program: str, description: str, angle: str,
 
     config = Config()
     try:
-        source = skill_source(config, args.skill)
+        source = skill_md(config, args.skill)
     except FileNotFoundError as error:
         print(f"{error.filename}: not found", file=sys.stderr)
         return 1
@@ -288,10 +300,14 @@ def run(argv: list[str] | None, *, program: str, description: str, angle: str,
         output = placeholder(line)
     else:
         try:
-            output = produce(config, body)
+            output = produce(config, body, source)
         except (httpx.HTTPError, RuntimeError) as error:
             print(f"{args.skill}: {type(error).__name__}: {error}", file=sys.stderr)
             return 1
-    written = write_json(profile_path(config, args.skill, angle), output)
+    path = profile_path(config, args.skill, angle)
+    if isinstance(output, str):  # the text angle: one markdown page, not one json object
+        written = write_atomic(path.with_suffix(".md"), output)
+    else:
+        written = write_json(path, output)
     print(f"built {written}", file=sys.stderr)
     return 0

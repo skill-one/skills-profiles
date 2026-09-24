@@ -40,18 +40,23 @@ def messages(config: Config, description: str) -> list[dict]:
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
 
-def request_body(config: Config, description: str) -> dict:
-    """An OpenAI-compatible chat completions body: deterministic, non-streaming, one turn.
+def chat_body(config: Config, turns: list[dict]) -> dict:
+    """An OpenAI-compatible chat completions body over the turns given: deterministic,
+    non-streaming.
 
     `enable_thinking` is the MaaS extension (a top-level body field, `extra_body` in the OpenAI
     SDK): the model reasons into `reasoning_content` first, and `max_tokens` covers thinking plus
     the answer, so it is the ceiling the endpoint documents rather than its 2048 default.
     """
-    body = {"model": config.translate_model, "messages": messages(config, description),
+    body = {"model": config.translate_model, "messages": turns,
             "temperature": 0, "stream": False, "max_tokens": config.translate_max_tokens}
     if config.translate_enable_thinking:
         body["enable_thinking"] = True
     return body
+
+
+def request_body(config: Config, description: str) -> dict:
+    return chat_body(config, messages(config, description))
 
 
 def translation(payload: object) -> str:
@@ -101,7 +106,7 @@ def _request(config: Config, _skill: str, _source: str, description: str) -> dic
     return request_body(config, description)
 
 
-def _produce(config: Config, body: dict) -> dict:
+def _produce(config: Config, body: dict, _source: str) -> dict:
     return {common.TRANSLATE_ANGLE: Translator(config).ask(body)}
 
 

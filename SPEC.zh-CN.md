@@ -2,9 +2,9 @@
 
 黑盒视角：用户或消费者能看到的一切，不含任何内部构建方式。
 
-**产品是一个目录**——`output/`：镜像原样发布的 skill 目录、为每个 skill 写的一个领域标签和一段
-中文描述、旁边镜像自己的文件，以及把这些连起来的一份清单。生成器为产出这个目录而存在，所以它
-就是接口，命令只决定写它的哪一部分。
+**产品是一个目录**——`output/`：每个 skill 一个目录、里面只有它的 `SKILL.md`，为每个 skill 写的
+一个领域标签和一段中文描述、旁边镜像自己的文件，以及把这些连起来的一份清单。生成器为产出这个
+目录而存在，所以它就是接口，命令只决定写它的哪一部分。
 
 English: [SPEC.md](SPEC.md)
 
@@ -12,20 +12,21 @@ English: [SPEC.md](SPEC.md)
 
 ```
 <output_dir>/
-├── skills/<owner>/<repo>/<slug>/     # 镜像自己的目录，完整且原样：
-│   ├── SKILL.md                      #   拷一个进 skills 文件夹，skill 就
-│   └── ...该 skill 自带的每个文件     #   装上了——这就是用户下载的东西
+├── skills/<owner>/<repo>/<slug>/     # 每个 skill 一个目录，只有它的 SKILL.md：各角度
+│   └── SKILL.md                      #   共用的构建源——不是安装件；完整的 skill
+│                                     #   在它自己的仓库里
 ├── profiles/<owner>/<repo>/<slug>/
 │   ├── domain.json                   # 标签：{domain, confidence, probabilities}
-│   └── description_zh.json           # 中文描述：{description_zh}
+│   ├── description_zh.json           # 中文描述：{description_zh}
+│   └── skill_zh.md                   # SKILL.md 正文的中文翻译
 ├── skills.jsonl                      # `just index`：清单，每个 skill 扁平一行
 ├── README.md                         # ……以及旁边的首页：这个目录是什么、
 ├── README.zh-CN.md                   #     建了多少；同一页面，中文一份
-└── upstream/                         # 镜像的其余部分：skills.jsonl、repos.jsonl、owners.jsonl、
-                                      # curated.jsonl、trending.json、stats.json、latest、avatars/
+└── upstream/                         # 树会读取的镜像文件：skills.jsonl、latest、stats.json
 ```
 
-这里的一切都不需要镜像：skill 从 `skills/` 安装，关于它的一切都在 `skills.jsonl` 里。
+这里的一切都不需要镜像：清单写明每个 skill 及其所在仓库（`url`），profile 里是为它建的东西。
+`skills/` 是生成器读取的源，与由它建出的产物放在一起——其中没有任何东西是安装件。
 
 `<id>` 是 skill id，`{owner}/{repo}/{slug}`。行里按镜像的拼写携带它；两个目录把 `:` 和 `&` 拼
 写成 `_`，这也是交给 `jev.py` 的句柄。
@@ -40,8 +41,8 @@ English: [SPEC.md](SPEC.md)
 - `probabilities`——那个分布，完整保留，因为无法从赢家恢复它：0.52 对 0.48 的抉择与 0.99 对
   0.01 的抉择说的不是一回事。所有值均为英文。
 
-- 每个 skill 一个目录、两个文件：`domain.json`，即端点完整的类型化回答；以及 `description_zh.json`，
-  即一句话描述的中文翻译。
+- 每个 skill 一个目录、三个文件：`domain.json`，即端点完整的类型化回答；`description_zh.json`，
+  一句话描述的中文翻译；以及 `skill_zh.md`，SKILL.md 正文的中文翻译。
 - **清单是入口。** `skills.jsonl` 由 `just index` 写：每个 skill 扁平一行，按镜像自己的顺序，由
   镜像的行——`id`、`installs`、`url`、`hash`、`fetchedAt`——加上从该 skill 自己的 `SKILL.md` 读出
   的 `description`、它的 `description_zh`、标的 `domain` 和标注时的 `confidence`。四者未知时为
@@ -51,10 +52,12 @@ English: [SPEC.md](SPEC.md)
 - **README 是首页**，由同一命令从同一次遍历写出：两行说明目录是什么，然后数据集标了多少——数量
   及其占镜像安装量的份额，在它们所描述的快照之下。没有任何东西回读它们，每一行都是树的函数，
   所以没变的树会重写出逐字节相同的页面。
-- 两个角度各有一个生产者。`jev.py` 向 System One 端点问类型化问题，而不是发聊天提示词：这就是
+- 三个角度各有一个生产者。`jev.py` 向 System One 端点问类型化问题，而不是发聊天提示词：这就是
   为什么 `domain` 没有提示词对、没有理由行——端点用封闭集的一个成员作答，不写任何散文。
   `translate.py` 向 OpenAI 兼容的聊天端点问一个自由文本问题——描述进去、中文出来——所以
-  `description_zh` 是纯字符串，没有 confidence，也没有分布。两者都是同一个共享内核 `common.py`
+  `description_zh` 是纯字符串，没有 confidence，也没有分布。`skill_zh.py` 向同一个聊天端点请求
+  翻译 SKILL.md 正文；回答就是那份中文页面，正文超过端点所能即为不可用输入——半截翻译的页面
+  绝不能冒充完整的一页。三者都是同一个共享内核 `common.py`
   之上的薄角度：目录树、源读取、prompt 文件、带重试的调用、原子写，以及命令本身。
 
 ## 2. 输入
@@ -65,10 +68,13 @@ English: [SPEC.md](SPEC.md)
 | state 模板 `prompts/_system.md`                     | `prompts_dir`                                    | 你                                |
 | 翻译 system 提示词 `prompts/translate.md`           | `prompts_dir`                                    | 你                                |
 | 翻译 user 提示词 `prompts/translate_user.md`        | `prompts_dir`                                    | 你                                |
+| 页面 system 提示词 `prompts/skill_zh.md`            | `prompts_dir`                                    | 你                                |
+| 页面 user 提示词 `prompts/skill_zh_user.md`         | `prompts_dir`                                    | 你                                |
 
 `upstream/skills.jsonl` 是镜像自己的清单，是清单拼接的左表：行集合、批次工作的顺序（安装量降
 序），以及树无法知道的字段。`skills/<id>/SKILL.md` 是构造 state 的全部材料——此外为消歧还会用
-同仓库旁系 skill 的一句话描述；skill 目录里的其他文件是为安装它的用户携带的，并不读取。
+同仓库旁系 skill 的一句话描述；sync 会剥掉 skill 自带的其他文件，树里不保留任何它不读取的
+东西。
 
 skill 的一句话描述不在镜像索引里（上游已移除）：它从 skill 自己的 front matter 读出，front
 matter 给不出描述的 skill 永远不会被任何一个生产者构建。镜像是拉来的快照，只读。分类法是代码：
@@ -85,10 +91,13 @@ schema 里的 enum，也没有要保持同步的解码器。翻译任务正好�
 | --------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
 | `just`                                                          | 标注窗口内每个还缺 `domain.json` 的 skill                                             |
 | `just translate`                                                | 翻译窗口内每个还缺 `description_zh.json` 的 skill                                     |
+| `just skill-zh`                                                 | 翻译窗口内每个还缺 `skill_zh.md` 的 skill                                             |
 | `just one <id>`                                                 | 标注一个 skill 的 domain，窗口内外皆可                                                |
 | `just translate-one <id>`                                       | 翻译一个 skill 的描述，窗口内外皆可                                                   |
+| `just skill-zh-one <id>`                                        | 翻译一个 skill 的 SKILL.md 正文，窗口内外皆可                                         |
 | `just invalidate`                                               | 删除所有 domain 标签，所有位置                                                        |
 | `just invalidate-translate`                                     | 删除所有中文描述，所有位置                                                            |
+| `just invalidate-skill-zh`                                      | 删除所有中文 SKILL.md 页面，所有位置                                                  |
 | `just index`                                                    | 写清单和两个 README：镜像的行拼接 description、其中文翻译与标签，以及发布根目录的首页 |
 | `just sync`                                                     | 拉取镜像，整体替换 `skills/` 和 `upstream/`，重建清单                                 |
 | `just refresh`                                                  | 拉取，并删除随之源 hash 变化的每个 profile——两个角度一起删                            |
@@ -126,7 +135,8 @@ translate.py <id> [--print]   # 一次聊天：两个翻译模板用那句话描
 两个端点：类型化端点是 `API_KEY`、`BASE_URL`、`MODEL`，OpenAI 兼容聊天端点是 `TRANSLATE_API_KEY`、
 `TRANSLATE_BASE_URL`、`TRANSLATE_MODEL`——外加两者共用的 `TIMEOUT`、`MAX_RETRIES`、`DRY_RUN`，以
 及必要时移动两个路径用的变量。翻译端还有 `TRANSLATE_ENABLE_THINKING`（默认开）和
-`TRANSLATE_MAX_TOKENS`；思考调用更慢，因此本地为翻译批次调大 `TIMEOUT`。默认地址和模型指向讯飞
+`TRANSLATE_MAX_TOKENS`；思考调用更慢，因此本地为翻译批次调大 `TIMEOUT`。第三个角度
+`skill_zh.py` 调用同一个聊天端点，共用同一组 `TRANSLATE_*` 设置。默认地址和模型指向讯飞
 星辰 MaaS 上的 Spark-X2.5-4B；模型 id 以控制台服务页显示的为准，订阅方通过 `TRANSLATE_MODEL`
 指定。
 
@@ -134,7 +144,7 @@ translate.py <id> [--print]   # 一次聊天：两个翻译模板用那句话描
 
 ## 5. 消费者可以依赖什么
 
-- **存在即缓存。** 已写出的东西绝不重建；停下的批次从第一个缺失文件恢复。两个角度各自缓存：有
+- **存在即缓存。** 已写出的东西绝不重建；停下的批次从第一个缺失文件恢复。三个角度各自缓存：有
   标签不能满足翻译批次，反之亦然。
 - **失效即删除。** 改 `_system.md` 本身不使任何东西失效；新快照使它改变的东西失效，`just
 refresh` 是删除那些 profile 的动词——两个文件一起删，因为它们都来自同一个源。

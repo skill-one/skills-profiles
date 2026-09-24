@@ -28,6 +28,7 @@ ALPHA_ROW = {
     "description_zh": None,
     "domain": "office-productivity",
     "confidence": 0.9,
+    "skill_zh": None,
 }
 
 
@@ -75,7 +76,7 @@ def test_a_description_nothing_can_be_read_from_is_null(workdir):
     assert row(common.Config(), "owner-d/repo-d/delta") == {
         "id": "owner-d/repo-d/delta", "installs": "90", "url": None, "hash": None,
         "fetchedAt": None, "description": None, "description_zh": None,
-        "domain": None, "confidence": None}
+        "domain": None, "confidence": None, "skill_zh": None}
 
 
 def test_the_domain_is_null_until_it_is_built(workdir):
@@ -108,6 +109,18 @@ def test_the_chinese_description_is_null_until_it_is_built(workdir):
     assert row(config, ALPHA)["description_zh"] is None
 
 
+def test_the_chinese_page_is_a_presence_marker(workdir):
+    """The third angle's answer is the page itself, so the row carries only that it exists."""
+    config = common.Config()
+    assert row(config, ALPHA)["skill_zh"] is None
+
+    page = common.profile_dir(config, ALPHA) / f"{common.SKILL_ZH_ANGLE}.md"
+    page.parent.mkdir(parents=True, exist_ok=True)
+    page.write_text("---\nname: alpha\n---\n\n中文正文。\n", encoding="utf-8")
+
+    assert row(config, ALPHA)["skill_zh"] is True
+
+
 def test_the_id_is_the_mirrors_own_spelling(workdir):
     """A row is joined on the mirror's id, while the directories of the tree spell a `:` as `_`,
     which is the handle the batch is handed."""
@@ -127,7 +140,7 @@ def test_a_profile_the_mirror_dropped_is_still_a_row(workdir):
 
     assert lines[-1] == {"id": "owner-z/repo-z/zeta", "installs": None, "url": None, "hash": None,
                          "fetchedAt": None, "description": None, "description_zh": None,
-                         "domain": "office-productivity", "confidence": 0.9}
+                         "domain": "office-productivity", "confidence": 0.9, "skill_zh": None}
     assert len(lines) == 7  # the six the mirror lists, plus the one it does not
 
 
@@ -200,6 +213,9 @@ def test_the_numbers_count_each_angle_independently(workdir):
     common.write_json(common.profile_path(config, BETA, common.DOMAIN_ANGLE), DOMAIN)
     common.write_json(common.profile_path(config, ALPHA, common.TRANSLATE_ANGLE),
                       {"description_zh": "中文描述"})
+    page = common.profile_dir(config, BETA) / f"{common.SKILL_ZH_ANGLE}.md"
+    page.parent.mkdir(parents=True, exist_ok=True)
+    page.write_text("中文页面\n", encoding="utf-8")
 
     numbers = facts(config)
 
@@ -207,6 +223,7 @@ def test_the_numbers_count_each_angle_independently(workdir):
     assert numbers["percent"] == "40.0%"
     assert (numbers["translated"], numbers["translate_percent"]) == ("1", "20.0%")
     assert numbers["translate_installs"] == "43.5%"
+    assert (numbers["skillzh"], numbers["skillzh_percent"]) == ("1", "20.0%")
 
 
 def test_the_denominator_is_what_can_be_built(workdir):
