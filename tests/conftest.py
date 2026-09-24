@@ -8,10 +8,10 @@ from pathlib import Path
 
 import pytest
 
-import jev
+import common
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-SCRIPTS = ["justfile", "jev.py", "index.py", "readme.py", "stale.py"]
+SCRIPTS = ["justfile", "common.py", "jev.py", "translate.py", "index.py", "readme.py", "stale.py"]
 ARCHIVE_ROOT = "skills-sh-mirror-dist"  # GitHub wraps a branch in <repo>-<branch>/
 # the published root: the skill directories, the labels written about them, the mirror's own files
 # and the catalog, which are the four things the justfile and the scripts all read
@@ -60,12 +60,12 @@ def index_row(entry: dict) -> dict:
 
 def skill_path(output: Path, skill_id: str) -> Path:
     """A skill's own directory, as the mirror publishes it: what a user downloads and installs."""
-    return output / jev.SKILLS_DIR / skill_dir_name(skill_id)
+    return output / common.SKILLS_DIR / skill_dir_name(skill_id)
 
 
 def profile_path(output: Path, skill_id: str) -> Path:
     """What this project writes about a skill."""
-    return output / jev.PROFILES_DIR / skill_dir_name(skill_id)
+    return output / common.PROFILES_DIR / skill_dir_name(skill_id)
 
 
 def branch_files(entries: list[dict]) -> dict[str, str]:
@@ -85,7 +85,7 @@ def branch_files(entries: list[dict]) -> dict[str, str]:
 def write_snapshot(output: Path, entries: list[dict] | None = None) -> None:
     """A snapshot already unpacked into the output tree, the way `just sync` leaves one."""
     for name, content in branch_files(SKILLS if entries is None else entries).items():
-        where = output / name if name.startswith("skills/") else output / jev.UPSTREAM_DIR / name
+        where = output / name if name.startswith("skills/") else output / common.UPSTREAM_DIR / name
         where.parent.mkdir(parents=True, exist_ok=True)
         where.write_text(content, encoding="utf-8")
 
@@ -113,7 +113,7 @@ def offline(monkeypatch):
     def _no_client(*args, **kwargs):
         raise AssertionError("a real HTTP client was constructed")
 
-    monkeypatch.setattr(jev.httpx, "Client", _no_client)
+    monkeypatch.setattr(common.httpx, "Client", _no_client)
 
 
 @pytest.fixture
@@ -134,6 +134,6 @@ def workdir(tmp_path, monkeypatch) -> Path:
 
 
 @pytest.fixture
-def config(workdir) -> jev.Config:
-    """The Config jev.py would build for `workdir`."""
-    return jev.Config()
+def config(workdir) -> common.Config:
+    """The Config the scripts build for `workdir`."""
+    return common.Config()

@@ -18,7 +18,7 @@ from pathlib import Path
 
 import pytest
 
-import jev
+import common
 import readme
 from conftest import (
     ARCHIVE_ROOT,
@@ -176,21 +176,16 @@ def test_jobs_is_what_the_pool_gets(project):
     result = subprocess.run(["just", "--dry-run", "jobs=3"], cwd=project,
                             capture_output=True, text=True, check=False, env=os.environ)
     assert result.returncode == 0, result.stderr
-    assert "pool=3" in result.stderr
-    assert '-P "$pool"' in result.stderr
+    assert '-P 3' in result.stderr
 
 
-def test_rpm_paces_the_pool(project):
-    """`rpm` turns the pool into a pace: a worker waits `pool * 60 / rpm` between calls."""
-    result = just(project, "limit=1", "rpm=60", "jobs=1")
-    assert result.returncode == 0, result.stderr
-    assert "pacing: 1 at a time, one call per 1s per worker" in result.stderr
-
-
-def test_without_rpm_nothing_waits(project):
+def test_the_pool_is_unpaced(project):
+    """There is no per-minute pace any more: nothing waits between calls, and no worker interval
+    is exported."""
     result = just(project, "limit=1")
     assert result.returncode == 0, result.stderr
     assert "pacing" not in result.stderr
+    assert "INTERVAL" not in result.stderr
 
 
 def test_a_repo_whose_name_starts_with_a_dot_is_still_a_skill(project):
@@ -297,6 +292,112 @@ def test_one_output_can_be_built_by_name(project):
     assert json_names(project, GAMMA) == ["domain.json"]
 
 
+# ------------------------------------------------------ the translation angle
+
+
+def test_just_translates_every_missing_translation(project):
+    """`just translate` is the same batch over the second angle: its window is the skills missing
+    description_zh.json, and it writes nothing else."""
+    result = just(project, "limit=2", "jobs=4", "translate")
+    assert result.returncode == 0, result.stderr
+    for skill_id in (ALPHA, BETA):
+        assert json_names(project, skill_id) == ["description_zh.json"]
+
+
+def test_the_translate_window_walks_down_the_snapshot(project):
+    """The window counts work the same way: two one-skill runs translate two skills, and a third
+    run reaches the third."""
+    for _ in range(2):
+        assert just(project, "limit=1", "translate").returncode == 0
+    assert json_names(project, ALPHA) == ["description_zh.json"]
+    assert json_names(project, BETA) == ["description_zh.json"]
+
+    assert just(project, "limit=1", "translate").returncode == 0
+    assert json_names(project, GAMMA) == ["description_zh.json"]
+
+
+def test_a_translation_that_exists_is_not_redone(project):
+    """Existence is the cache for this angle too: a second run takes the next skill and leaves the
+    file that is already there byte-for-byte."""
+    assert just(project, "limit=1", "translate").returncode == 0
+    stamp = (outputs(project, ALPHA) / "description_zh.json").stat().st_mtime_ns
+
+    assert just(project, "limit=1", "translate").returncode == 0
+
+    assert (outputs(project, ALPHA) / "description_zh.json").stat().st_mtime_ns == stamp
+    assert json_names(project, BETA) == ["description_zh.json"]
+
+
+def test_translate_one_builds_by_name(project):
+    """`just translate-one` addresses one skill, like `just one` does for the domain."""
+    result = just(project, "translate-one", GAMMA)
+    assert result.returncode == 0, result.stderr
+    assert json_names(project, GAMMA) == ["description_zh.json"]
+    assert not outputs(project, ALPHA).exists()
+
+
+def test_the_two_angles_build_independently_and_share_a_dir(project):
+    """Each batch sees only its own missing file, so either angle can lead; when both are built
+    the skill holds two files in one profile directory."""
+    assert just(project, "limit=1").returncode == 0  # domain for ALPHA
+    assert just(project, "limit=2", "translate").returncode == 0  # translation for ALPHA, BETA
+
+    assert sorted(p.name for p in outputs(project, ALPHA).glob("*.json")) == [
+        "description_zh.json", "domain.json"]
+    assert json_names(project, BETA) == ["description_zh.json"]
+
+    # the domain window has BETA ahead of it still, and never redoes ALPHA
+    assert just(project, "limit=2").returncode == 0
+    assert json_names(project, BETA) == ["description_zh.json", "domain.json"]
+    assert json_names(project, GAMMA) == ["domain.json"]
+
+
+def test_a_translation_call_that_fails_does_not_end_the_run(project, monkeypatch):
+    """The shared pool reports a failed translation under its own angle name, and keeps going."""
+    monkeypatch.setenv("FAIL_LOG", str(project / "failures.txt"))
+    monkeypatch.setenv("GEN_ERR_LOG", str(project / "errors.log"))
+    (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").chmod(0o000)
+
+    result = just(project, "limit=2", "jobs=4", "translate")
+
+    assert result.returncode == 0, result.stderr
+    assert json_names(project, ALPHA) == []
+    assert json_names(project, BETA) == ["description_zh.json"]
+    assert (project / "failures.txt").read_text(encoding="utf-8").splitlines() == [
+        f"FAILED translation {ALPHA}"]
+
+
+def test_invalidate_translate_drops_only_translations(project):
+    """Each angle has its own invalidation verb: deleting one file type never touches the other."""
+    assert just(project, "limit=1").returncode == 0
+    assert just(project, "limit=1", "translate").returncode == 0
+
+    result = just(project, "invalidate-translate")
+    assert result.returncode == 0, result.stderr
+    assert not (outputs(project, ALPHA) / "description_zh.json").exists()
+    assert (outputs(project, ALPHA) / "domain.json").is_file()
+
+    assert just(project, "invalidate").returncode == 0
+    assert not (outputs(project, ALPHA) / "domain.json").exists()
+    assert not list(outputs(project, ALPHA).glob("*.json"))  # nothing of either angle remains
+
+
+def test_translate_then_index_carries_the_chinese_into_the_catalog(project):
+    """The point of the second angle: `just index` joins description_zh into the catalog rows,
+    `null` where there was nothing to translate."""
+    assert just(project, "limit=0", "jobs=4", "translate").returncode == 0
+    assert just(project, "index").returncode == 0
+
+    lines = [json.loads(line) for line in
+             (project / OUTPUT / "skills.jsonl").read_text(encoding="utf-8").splitlines()]
+    assert [line["id"] for line in lines] == [
+        ALPHA, BETA, GAMMA, HOTEL, DOT, DELTA]
+    assert lines[0]["description_zh"].startswith("【占位】")  # dry-run value, shaped like the answer
+    assert lines[0]["description_zh"].endswith("the whole pile searchable.")
+    assert lines[0]["domain"] is None  # only the translation was built
+    assert lines[5]["description_zh"] is None  # delta has no source to read a description from
+
+
 def test_the_documented_dry_switch_works(project):
     """`dry=1` is the offline switch a user types, and it has to reach the script - an empty value
     must stay 'not set'."""
@@ -341,12 +442,12 @@ def test_just_clean_drops_the_profiles_and_keeps_the_sources(project):
 
     assert just(project, "clean").returncode == 0
 
-    assert not (project / OUTPUT / jev.PROFILES_DIR).exists()
+    assert not (project / OUTPUT / common.PROFILES_DIR).exists()
     assert not (project / OUTPUT / "skills.jsonl").exists()
     assert not (project / OUTPUT / readme.README).exists()
     assert not (project / OUTPUT / readme.README_ZH).exists()
     assert (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").is_file()
-    assert (project / OUTPUT / jev.UPSTREAM_DIR / "skills.jsonl").is_file()
+    assert (project / OUTPUT / common.UPSTREAM_DIR / "skills.jsonl").is_file()
 
 
 def test_just_index_joins_the_mirror_with_the_profiles(project):
@@ -396,8 +497,8 @@ def test_just_sync_unpacks_the_branch_into_its_two_layers(project, tmp_path):
     assert (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").is_file()
     # the whole skill directory lands now, not only the SKILL.md
     assert (snapshot(project / OUTPUT, ALPHA) / "extra.md").is_file()
-    assert (project / OUTPUT / jev.UPSTREAM_DIR / "skills.jsonl").is_file()
-    assert (project / OUTPUT / jev.UPSTREAM_DIR / "repos.jsonl").is_file()
+    assert (project / OUTPUT / common.UPSTREAM_DIR / "skills.jsonl").is_file()
+    assert (project / OUTPUT / common.UPSTREAM_DIR / "repos.jsonl").is_file()
     # and GitHub's <repo>-<branch>/ wrapper is stripped, not nested
     assert not (project / OUTPUT / ARCHIVE_ROOT).exists()
 

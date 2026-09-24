@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Index the profile tree: one flat line per skill, the mirror's own row joined with the label.
+"""Index the profile tree: one flat line per skill, the mirror's own row joined with both angles.
 
 `output/skills.jsonl` is the catalog: every skill the mirror lists, carrying the description read
-out of that skill's own `SKILL.md`, the domain Jev labelled it with, and how sure the endpoint was
-of it. It is what a consumer reads instead of walking the tree - and instead of going back to the
-mirror's own index for the installs, the url and the hash - and `just index` rewrites it whole.
+out of that skill's own `SKILL.md`, its Chinese translation, the domain Jev labelled it with, and
+how sure the endpoint was of it. It is what a consumer reads instead of walking the tree - and
+instead of going back to the mirror's own index for the installs, the url and the hash - and
+`just index` rewrites it whole.
 
 The same run writes the README that goes with it, out of the same walk: the numbers here, said for
 a reader by `readme.py`.
@@ -16,17 +17,18 @@ import os
 import sys
 from pathlib import Path
 
-import jev
+import common
 import readme
+from common import Config
 
-MIRROR = Path(jev.UPSTREAM_DIR) / jev.INDEX  # the mirror's own listing: the join's left side
+MIRROR = Path(common.UPSTREAM_DIR) / common.INDEX  # the mirror's own listing: the join's left side
 # The mirror's row, forwarded field by field rather than whole, so that every row of the catalog
 # has the same shape and a field upstream adds later is a decision made here rather than a surprise.
 MIRROR_FIELDS = ("id", "installs", "url", "hash", "fetchedAt")
 NOTHING = "—"  # an em dash: what the README shows where the tree cannot answer
 
 
-def mirror_rows(config: jev.Config) -> list[dict]:
+def mirror_rows(config: Config) -> list[dict]:
     """The mirror's own rows, in its own order - installs, descending."""
     path = config.output_dir / MIRROR
     if not path.is_file():
@@ -34,14 +36,14 @@ def mirror_rows(config: jev.Config) -> list[dict]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
 
 
-def skill_ids(config: jev.Config) -> list[str]:
+def skill_ids(config: Config) -> list[str]:
     """Every skill the profile tree holds, in path order.
 
-    A skill the mirror has since dropped is still a population: its label was paid for, and a
+    A skill the mirror has since dropped is still a population: its profile was paid for, and a
     catalog that left it out would hide work that is on disk. The walk is an `os.walk` rather than
     a glob - a glob drops a leading dot, and `.claude` is a repo name people use.
     """
-    root = config.output_dir / jev.PROFILES_DIR
+    root = config.output_dir / common.PROFILES_DIR
     ids = []
     for dirpath, dirnames, _ in os.walk(root):
         path = Path(dirpath)
@@ -51,32 +53,32 @@ def skill_ids(config: jev.Config) -> list[str]:
     return sorted(ids)
 
 
-def description(config: jev.Config, skill: str) -> str:
+def description(config: Config, skill: str) -> str:
     """The skill's own one line, out of its `SKILL.md`; empty when there is none to read."""
     try:
-        return jev.skill_description(jev.skill_source(config, skill))
+        return common.skill_description(common.skill_source(config, skill))
     except FileNotFoundError:
         return ""
 
 
-def labelled(config: jev.Config, skill: str) -> dict:
-    """The domain answer for one skill, or nothing while it has not been built."""
-    path = jev.json_path(config, skill)
+def angle_output(config: Config, skill: str, angle: str) -> dict:
+    """One angle's json for one skill, or nothing while it has not been built."""
+    path = common.profile_path(config, skill, angle)
     if not path.is_file():
         return {}
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def rows(config: jev.Config) -> list[dict]:
+def rows(config: Config) -> list[dict]:
     """One row per skill: the mirror's row, plus what this project read and decided about it.
 
-    `description` and `domain` are `null` while they are unknown. A skill the mirror no longer
-    lists is a row too, named the way the tree spells it, with the mirror's fields left empty.
+    The joined fields are `null` while unknown. A skill the mirror no longer lists is a row too,
+    named the way the tree spells it, with the mirror's fields left empty.
     """
     out = []
     listed = set()
     for entry in mirror_rows(config):
-        skill = jev.skill_dir_name(entry.get("id", ""))
+        skill = common.skill_dir_name(entry.get("id", ""))
         listed.add(skill)
         out.append(_row(entry, config, skill))
     for skill in skill_ids(config):
@@ -85,47 +87,46 @@ def rows(config: jev.Config) -> list[dict]:
     return out
 
 
-def _row(entry: dict, config: jev.Config, skill: str) -> dict:
-    """The mirror's row plus ours: the description, and the label with its confidence.
+def _row(entry: dict, config: Config, skill: str) -> dict:
+    """The mirror's row plus ours: the description, its Chinese translation, and the label with
+    its confidence.
 
     Only the two of the label the catalog is asked for. The rest of what Jev wrote stays in the
     profile, where it is the answer.
     """
     row = {name: entry.get(name) for name in MIRROR_FIELDS}
     row["description"] = description(config, skill) or None
-    label = labelled(config, skill)
+    row[common.TRANSLATE_ANGLE] = angle_output(
+        config, skill, common.TRANSLATE_ANGLE).get(common.TRANSLATE_ANGLE)
+    label = angle_output(config, skill, common.DOMAIN_ANGLE)
     row["domain"] = label.get("domain")
     row["confidence"] = label.get("confidence")
     return row
 
 
-def write(config: jev.Config, rows: list[dict]) -> Path:
+def write(config: Config, rows: list[dict]) -> Path:
     """Write the catalog, renamed into place: a half-written one would read as a whole one.
 
     Compact, like the mirror's own listing: the justfile matches the `"description":null` spelling
     in it to keep an undescribable skill out of the window.
     """
-    path = config.output_dir / jev.INDEX
-    path.parent.mkdir(parents=True, exist_ok=True)
-    partial = path.with_name(path.name + ".part")
-    partial.write_text("".join(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n"
-                               for row in rows), encoding="utf-8")
-    partial.replace(path)
-    return path
+    text = "".join(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n"
+                   for row in rows)
+    return common.write_atomic(config.output_dir / common.INDEX, text)
 
 
-def built_skills(config: jev.Config) -> set[str]:
+def built_skills(config: Config) -> set[str]:
     """The skills whose domain.json is on disk, from one walk of the profile tree."""
-    root = config.output_dir / jev.PROFILES_DIR
+    root = config.output_dir / common.PROFILES_DIR
     built: set[str] = set()
     for dirpath, _, filenames in os.walk(root):
         path = Path(dirpath)
-        if len(path.relative_to(root).parts) == 3 and f"{jev.ANGLE}.json" in filenames:
+        if len(path.relative_to(root).parts) == 3 and f"{common.DOMAIN_ANGLE}.json" in filenames:
             built.add(path.relative_to(root).as_posix())
     return built
 
 
-def facts(config: jev.Config, indexed: list[dict]) -> dict:
+def facts(config: Config, indexed: list[dict]) -> dict:
     """What the README says: how much of the dataset is labelled, and the tree the numbers come
     from.
 
@@ -135,17 +136,17 @@ def facts(config: jev.Config, indexed: list[dict]) -> dict:
     installed skills first, so the count says how much is left and the weight says what it is
     worth. Everything here is a string, ready to be dropped into a sentence.
     """
-    on_mirror = {jev.skill_dir_name(entry.get("id", "")) for entry in mirror_rows(config)}
-    orphan = sum(1 for row in indexed if jev.skill_dir_name(row["id"]) not in on_mirror)
+    on_mirror = {common.skill_dir_name(entry.get("id", "")) for entry in mirror_rows(config)}
+    orphan = sum(1 for row in indexed if common.skill_dir_name(row["id"]) not in on_mirror)
     buildable = [row for row in indexed if row["description"]]
     weight = sum(_installs(row) for row in buildable)
-    dirs = {row["id"]: jev.skill_dir_name(row["id"]) for row in buildable}
+    dirs = {row["id"]: common.skill_dir_name(row["id"]) for row in buildable}
     done = built_skills(config)
 
     here = [row for row in buildable if dirs[row["id"]] in done]
     return {
-        "tag": _read_text(config.output_dir / jev.UPSTREAM_DIR / "latest").strip() or NOTHING,
-        "scan": _scan(_read_json(config.output_dir / jev.UPSTREAM_DIR / "stats.json")),
+        "tag": _read_text(config.output_dir / common.UPSTREAM_DIR / "latest").strip() or NOTHING,
+        "scan": _scan(_read_json(config.output_dir / common.UPSTREAM_DIR / "stats.json")),
         "listed": str(len(indexed) - orphan),
         "buildable": str(len(buildable)),
         "built": str(len(here)),
@@ -205,7 +206,7 @@ def main(argv: list[str] | None = None) -> int:
     argparse.ArgumentParser(
         description="Write output/skills.jsonl and the READMEs beside it from the tree."
     ).parse_args(argv)
-    config = jev.Config()
+    config = Config()
     indexed = rows(config)
     path = write(config, indexed)
     written = readme.write(config, facts(config, indexed))

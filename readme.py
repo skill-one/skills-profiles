@@ -11,7 +11,7 @@ from pathlib import Path
 from string import Template
 from typing import Any
 
-import jev
+import common
 
 README = "README.md"
 README_ZH = "README.zh-CN.md"
@@ -24,12 +24,12 @@ FACTS = ("domain", "snapshot", "buildable")
 TEXT: dict[str, dict[str, Any]] = {
     "en": {
         "intro": "The agent skills this repository collects, each labelled with one closed-domain\n"
-                 "category by the Jev endpoint, plus the catalog joining the two. Written by "
-                 "`just index` -\ngenerated, so do not edit it.\n"
+                 "category by the Jev endpoint and described in Chinese by a chat model, plus the\n"
+                 "catalog joining it all. Written by `just index` - generated, so do not edit it.\n"
                  "中文: [README.zh-CN.md](README.zh-CN.md)",
         "where": "`skills/<id>/` is the skill as published: copy one into a skills folder and it is\n"
-                 "installed. `profiles/<id>/domain.json` is the label written about it, and "
-                 "`skills.jsonl`\nis the catalog of both.",
+                 "installed. `profiles/<id>/` holds what is written about it - the domain label and\n"
+                 "the Chinese `description_zh` - and `skills.jsonl` is the catalog joining them.",
         "progress": "Progress",
         "bullet": "- **$label**: $value",
         "domain_label": "domain",
@@ -40,11 +40,12 @@ TEXT: dict[str, dict[str, Any]] = {
         "buildable": "$buildable of $listed have a readable description; the rest are never built",
     },
     "zh": {
-        "intro": "本仓库收集的那些 agent skills，每个由 Jev 端点标注一个封闭分类，外加把两者连起来\n"
-                 "的清单。由 `just index` 从这棵树生成——不要手改。\n"
+        "intro": "本仓库收集的那些 agent skills，每个由 Jev 端点标注一个封闭分类、由聊天模型给出\n"
+                 "中文描述，外加把这些连起来的清单。由 `just index` 从这棵树生成——不要手改。\n"
                  "English: [README.md](README.md)",
         "where": "`skills/<id>/` 是发布的 skill 原件：拷进 skills 目录就等于装上了。\n"
-                 "`profiles/<id>/domain.json` 是为它标的分类，`skills.jsonl` 是这两者的清单。",
+                 "`profiles/<id>/` 里是为它写的东西：domain 分类和中文 `description_zh`；"
+                 "`skills.jsonl` 是把它们连起来的清单。",
         "progress": "进度",
         "bullet": "- **$label**：$value",
         "domain_label": "domain",
@@ -75,14 +76,12 @@ def page(facts: dict, lang: str) -> str:
     return "\n".join(lines)
 
 
-def write(config: jev.Config, facts: dict) -> list[Path]:
+def write(config: common.Config, facts: dict) -> list[Path]:
     """Write both pages, each renamed into place for the catalog's own reason."""
     written = []
     for name, lang in ((README, "en"), (README_ZH, "zh")):
         path = config.output_dir / name
-        partial = path.with_name(path.name + ".part")
-        partial.write_text(page(facts, lang), encoding="utf-8")
-        partial.replace(path)
+        common.write_atomic(path, page(facts, lang))
         written.append(path)
     return written
 

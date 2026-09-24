@@ -1,40 +1,47 @@
 name: publish
 
-# Manual: label more skills against the dataset already published in `dist`, and publish as
+# Manual: write the missing angles about the dataset already published in `dist`, and publish as
 # `dist-<base>-N`, where base is the newest bare `dist-YYYY-MM-DD` sync tag (or today, when there is
 # none) and N increments across that base's publishes.
 #
-# Every run starts on a fresh runner, and `restore-dist` pulls the published tree back — the skills,
-# the labels written about them, the mirror's own files and the catalog, in one request. The labels
-# are the cache (so `just` only fills what is missing) and the skills are what it builds from. This
-# run never touches upstream: the dataset is exactly what the last `sync` published. `limit` counts
-# work rather than positions - the next skills still unlabelled, in the catalog's order, most
-# installed first - so repeated runs walk down the dataset instead of redoing the top of it. Asking
-# for `replace` drops every label before building, when the taxonomy or the output shape changed.
+# Two angles, chosen by `angle`: the domain labels (jev.py), the Chinese descriptions
+# (translate.py), or both - domain first, then translation. Every run starts on a fresh runner, and
+# `restore-dist` pulls the published tree back - the skills, the angles written about them, the
+# mirror's own files and the catalog, in one request. The outputs are the cache (so `just` only
+# fills what is missing) and the skills are what it builds from. This run never touches upstream:
+# the dataset is exactly what the last `sync` published. `limit` counts work rather than positions
+# - the next skills still missing that angle, in the catalog's order, most installed first - so
+# repeated runs walk down the dataset instead of redoing the top of it. Asking for `replace` drops
+# the chosen angle's outputs before building, when its taxonomy, prompts or shape changed.
 #
 # Repository configuration (Settings -> Secrets and variables -> Actions), mirroring a local
-# `.env`: the one endpoint, its key, and the knobs that are about an endpoint rather than the
+# `.env`: the two endpoints, their keys, and the knobs that are about an endpoint rather than the
 # batch. Unset means unset - an empty value is ignored, so a missing variable falls back to the
-# default instead of overriding it. The key is what every label is built with (`jev.py`), so a run
-# without it fails every skill.
+# default instead of overriding it. A run without an angle's key fails every skill of that angle.
 #
-#   Secret:   SKILLS_PROFILES_API_KEY
-#   Variable: SKILLS_PROFILES_BASE_URL, SKILLS_PROFILES_MODEL
+#   Secrets:   SKILLS_PROFILES_API_KEY, SKILLS_PROFILES_TRANSLATE_API_KEY
+#   Variables: SKILLS_PROFILES_BASE_URL, SKILLS_PROFILES_MODEL,
+#              SKILLS_PROFILES_TRANSLATE_BASE_URL, SKILLS_PROFILES_TRANSLATE_MODEL
 
 on:
   workflow_dispatch:
     inputs:
+      angle:
+        description: Which angle to build
+        type: choice
+        options:
+          - both
+          - domain
+          - translate
+        default: both
       limit:
-        description: How many skills to label this run
+        description: How many skills to build this run (per angle)
         default: "10"
       jobs:
         description: Calls in flight at once
-        default: "8"
-      rpm:
-        description: Calls a minute the endpoint allows; 0 = no pace
-        default: "19"
+        default: "32"
       replace:
-        description: Rebuild every label from scratch (true drops them before building)
+        description: Rebuild the chosen angle(s) from scratch (true drops their outputs first)
         default: "false"
 
 permissions:
@@ -45,17 +52,22 @@ concurrency:
   cancel-in-progress: false # never cancel a run that is about to push
 
 env:
-  # the one endpoint and how to talk to it; the batch's own tunables are `just` knobs instead
+  # the two endpoints and how to talk to them; the batch's own tunables are `just` knobs instead
   SKILLS_PROFILES_API_KEY: ${{ secrets.SKILLS_PROFILES_API_KEY }}
   SKILLS_PROFILES_BASE_URL: ${{ vars.SKILLS_PROFILES_BASE_URL }}
   SKILLS_PROFILES_MODEL: ${{ vars.SKILLS_PROFILES_MODEL }}
+  SKILLS_PROFILES_TRANSLATE_API_KEY: ${{ secrets.SKILLS_PROFILES_TRANSLATE_API_KEY }}
+  SKILLS_PROFILES_TRANSLATE_BASE_URL: ${{ vars.SKILLS_PROFILES_TRANSLATE_BASE_URL }}
+  SKILLS_PROFILES_TRANSLATE_MODEL: ${{ vars.SKILLS_PROFILES_TRANSLATE_MODEL }}
+  # thinking is on by default for translation, so a call reasons before it answers and outruns the
+  # client's own 20s timeout
+  SKILLS_PROFILES_TIMEOUT: "120"
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    # the run is bounded by `limit` calls at `rpm`, so the timeout has to cover the pace and not
-    # just the work: 1000 skills at 20 a minute is 300 minutes, and every request is bounded on its
-    # own by the client's timeout
+    # with no pace the run is bounded by the work itself; every request is bounded on its own by
+    # the client timeout, and 32 calls run at once
     timeout-minutes: 180
     steps:
       - uses: actions/checkout@v5
@@ -69,20 +81,29 @@ jobs:
       - name: Install
         run: uv sync
 
-      - name: Restore the published snapshot (labels + sources)
+      - name: Restore the published snapshot (angles + sources)
         uses: ./.github/actions/restore-dist
 
-      # The labels are the cache, so a published one is never rebuilt and a change to the taxonomy
-      # or the output shape has to say so. A run is a fresh runner plus what `restore-dist` brings
-      # back, so an invalidation only survives by publishing.
-      - name: Drop every label, when asked
+      # Outputs are the cache, so a published one is never rebuilt and a change to the taxonomy,
+      # the prompts or the output shape has to say so. A run is a fresh runner plus what
+      # `restore-dist` brings back, so an invalidation only survives by publishing.
+      - name: Drop the chosen angles, when asked
         if: inputs.replace == 'true'
-        run: just invalidate
+        shell: sh
+        run: |
+          case "${{ inputs.angle }}" in
+            domain) just invalidate ;;
+            translate) just invalidate-translate ;;
+            both) just invalidate && just invalidate-translate ;;
+          esac
 
-      - name: Build the missing labels
-        run: >-
-          just limit="${{ inputs.limit }}" jobs="${{ inputs.jobs }}"
-          rpm="${{ inputs.rpm }}"
+      - name: Build the missing domain labels
+        if: inputs.angle == 'both' || inputs.angle == 'domain'
+        run: just limit="${{ inputs.limit }}" jobs="${{ inputs.jobs }}"
+
+      - name: Build the missing Chinese descriptions
+        if: inputs.angle == 'both' || inputs.angle == 'translate'
+        run: just limit="${{ inputs.limit }}" jobs="${{ inputs.jobs }}" translate
 
       - name: Rewrite the index
         run: just index
