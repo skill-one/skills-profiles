@@ -1,0 +1,1 @@
+{"description_zh": "文件系统RAG基准测试：corpus/, train.json, evaluate_rag.py (RAGAS 质量)。不适用于生产监控、延迟/吞吐量基准测试（使用 rag-perf），或超出本仓库布局范围的评估。"}

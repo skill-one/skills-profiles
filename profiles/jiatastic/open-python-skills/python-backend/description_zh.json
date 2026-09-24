@@ -1,0 +1,1 @@
+{"description_zh": "Python 后端开发专长，涵盖 FastAPI、安全模式、数据库操作、Upstash 集成与代码质量。适用场景：\n(1) 使用 FastAPI 构建 REST API，(2) 实现 JWT/OAuth2 认证，(3) 配置 SQLAlchemy/异步数据库，(4) 集成 Redis/Upstash 缓存，(5) 重构 AI 生成的 Python 代码（去冗化），(6) 设计 API 模式，或 (7) 优化后端性能。"}

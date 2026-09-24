@@ -1,0 +1,1 @@
+{"description_zh": "在用户需要创建、生成、修改或验证 Salesforce Lightning 页面（FlexiPages）时使用本技能。当用户提及 RecordPage、AppPage、HomePage、Lightning 页面、页面布局、向页面添加组件或页面定制等内容时触发。此外，当用户说类似“创建 Lightning 页面”、“向页面添加组件”、“定制记录页面”、“生成 FlexiPage”等，或在处理 FlexiPage XML 文件时，需要帮助处理组件、区域或部署错误时，也请使用本技能。对于任何与 FlexiPage 相关的操作，始终使用本技能，即使用户只是在 Salesforce 语境下仅提到“页面”。"}

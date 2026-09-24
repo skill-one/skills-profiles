@@ -1,0 +1,1 @@
+{"description_zh": "全面的 Nushell 脚本编程最佳实践、惯用写法、安全性以及基于证据的代码审查。适用于编写、审查、审计、调试或重构 Nushell (.nu) 脚本、模块、自定义命令、管道、配置和测试。此外，还适用于 Bash/POSIX 至 Nushell 的转换，以及 Nu 0.114/0.115 版本的迁移问题，例如更严格的类型检查、YAML 1.2、`external_arg`、`run`、SemVer、可选的 `nothing`、子进程诊断以及显式子模块导入。"}

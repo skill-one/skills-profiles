@@ -1,0 +1,1 @@
+{"description_zh": "NestJS 的完整 Sentry SDK 配置。当用户请求“为 NestJS 添加 Sentry”、“安装 @sentry/nestjs”、“在 NestJS 中配置 Sentry”，或配置 NestJS 应用程序的错误监控、追踪、性能分析、日志记录、指标、定时任务或 AI 监控时使用。支持 Express 和 Fastify 适配器、GraphQL、微服务、WebSocket 和后台任务。"}

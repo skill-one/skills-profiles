@@ -1,0 +1,1 @@
+{"description_zh": "XXE 操作手册。当 XML、SVG、OOXML、SOAP 或基于解析器的导入可能会解析外部实体、文件或内部网络资源时使用。"}

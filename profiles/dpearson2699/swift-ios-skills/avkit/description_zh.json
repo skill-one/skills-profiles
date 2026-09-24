@@ -1,0 +1,1 @@
+{"description_zh": "使用 AVKit 创建媒体播放体验。在添加使用 AVPlayerViewController 的视频播放器、启用画中画、通过 AirPlay 传输媒体、使用 SwiftUI VideoPlayer 视图、配置传输控件、显示字幕和隐藏式字幕，或集成 AVFoundation 播放与系统 UI 时使用。"}

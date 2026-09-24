@@ -1,0 +1,1 @@
+{"description_zh": "从 OpenSpec 变更中同步增量规格到主规格。当用户希望根据增量规格的变更更新主规格，且不归档该变更时使用。当用户说“openspec sync”或“opsx sync”时，也使用。"}

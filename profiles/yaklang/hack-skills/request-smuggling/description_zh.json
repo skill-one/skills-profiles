@@ -1,0 +1,1 @@
+{"description_zh": "HTTP 请求走私与脱同步测试。适用于前端代理、CDN 或负载均衡器与源站在消息分帧（Content-Length 与 Transfer-Encoding）上存在分歧、HTTP/2→HTTP/1 转换，或通过浏览器 fetch 管道探索客户端脱同步的场景。"}

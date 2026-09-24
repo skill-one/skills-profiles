@@ -1,0 +1,1 @@
+{"description_zh": "CRLF 注入操作手册。当用户输入会到达 HTTP 响应头、Location 重定向、Set-Cookie 值或日志文件，且回车符/换行符可能导致内容被拆分或注入时使用。"}

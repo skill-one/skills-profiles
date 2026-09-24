@@ -1,0 +1,1 @@
+{"description_zh": "使用 Python pyservicemaker API 开发 NVIDIA DeepStream SDK。适用于构建视频分析流水线、基于 GStreamer 的视频处理、TensorRT 推理集成、目标检测/跟踪，或 Kafka/消息代理集成。"}

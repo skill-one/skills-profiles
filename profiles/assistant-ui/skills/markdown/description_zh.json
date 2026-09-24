@@ -1,0 +1,1 @@
+{"description_zh": "在 assistant-ui 中将助手消息文本渲染为 Markdown。当将 MarkdownTextPrimitive 或 markdown-text 元素接入 MessagePrimitive.Parts，安装 Shiki 或 Prism 高亮显示，添加 KaTeX 数学公式或 Mermaid 图表，规范化模型生成的数学定界符，或选择 StreamdownTextPrimitive 以实现块感知流式传输并支持可选的代码、数学、Mermaid 和 CJK 插件时使用。涵盖延迟和流畅的解析行为、代码块覆盖以及流式传输完成。对于未样式化的消息组合，使用原语；在安装或编辑样式渲染器时，使用元素。"}

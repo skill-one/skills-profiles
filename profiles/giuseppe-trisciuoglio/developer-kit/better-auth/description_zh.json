@@ -1,0 +1,1 @@
+{"description_zh": "为 NestJS 后端和 Next.js 前端提供与 Drizzle ORM 和 PostgreSQL 集成的 Better Auth 模式。适用于使用 NestJS 后端设置 Better Auth、集成 Next.js App Router 前端、配置 Drizzle ORM 模式、实现社交登录（GitHub、Google）、添加插件（2FA、Organization、SSO、Magic Link、Passkey）、实现带会话管理的邮箱/密码认证，或创建受保护路由和中间件。"}

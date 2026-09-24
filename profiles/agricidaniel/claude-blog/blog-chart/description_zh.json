@@ -1,0 +1,1 @@
+{"description_zh": "为博客文章生成兼容暗色模式的内联 SVG 数据可视化图表。支持水平条形图、分组条形图、环形图、折线图、棒棒糖图、面积图和雷达图，并具备自动平台检测（HTML 与 JSX/MDX）功能。强制图表类型多样化、采用无障碍标记（role=img, aria-labelledby）、标注来源，并使用透明背景。当用户说“blog chart”、“generate chart”、“data visualization”、“svg chart”、“blog graph”或“visualize data”时使用。"}

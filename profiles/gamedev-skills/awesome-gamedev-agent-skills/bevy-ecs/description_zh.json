@@ -1,0 +1,1 @@
+{"description_zh": "围绕其实体组件系统（Entity Component System，简称ECS）构建 Bevy 应用：使用插件构建 App，定义组件（Component）与资源（Resource）类型，使用 Query、Res、Commands 编写系统，对系统进行过滤与排序，并利用 Time 资源实现帧率无关的运动。在 Rust 中构建或调试 Bevy 游戏时使用——当用户提及 Bevy、ECS、App::new、add_systems、Query、Commands、组件/系统，或基于 bevy 的 Cargo.toml 时。"}

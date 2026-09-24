@@ -1,0 +1,1 @@
+{"description_zh": "使用 CryptoTokenKit 访问安全令牌和智能卡。适用于构建 TKTokenDriver 或 TKSmartCardTokenDriver 扩展、通过 TKSmartCard/TKSmartCardSlotManager 与智能卡通信、使用 iOS 26+ 的 NFC 智能卡会话、注册智能卡、使用 kSecAttrTokenID 查询基于令牌的可信钥匙串项、监控 TKTokenWatcher，或配置基于证书的智能卡认证等场景。"}

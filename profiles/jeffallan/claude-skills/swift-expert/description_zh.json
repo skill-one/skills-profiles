@@ -1,0 +1,1 @@
+{"description_zh": "构建 iOS/macOS/watchOS/tvOS 应用，实现 SwiftUI 视图与状态管理，设计面向协议的架构，处理 async/await 并发，使用 actor 实现线程安全，并调试 Swift 特定问题。适用于使用 Swift 5.9+、SwiftUI 或 async/await 并发构建 iOS/macOS 应用时。适用于面向协议编程、SwiftUI 状态管理、actor、服务端 Swift、UIKit 集成、Combine 或 Vapor 时调用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用 Browserbase 将无服务器浏览器自动化部署为云函数。适用于用户希望部署浏览器自动化以按计划或定时任务（cron）运行、创建浏览器任务 Webhook 端点、在云端而非本地运行自动化，或咨询 Browserbase Functions 的场景。"}

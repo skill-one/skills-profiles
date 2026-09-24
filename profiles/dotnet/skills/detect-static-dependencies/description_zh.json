@@ -1,0 +1,1 @@
+{"description_zh": "激活前提条件：请求或发现的代码目标必须明确识别 C#、.NET、`.cs` 或 `.csproj`；否则保持休眠状态，不调用此技能。用途：定位 C# 代码中 System.DateTime.Now/UtcNow、System.IO.File/Directory、System.Environment、HttpClient、Console 或 Process 的使用；审计 C# 代码中的难以测试的框架依赖；或验证这些 C# 调用是否已被抽象化。不适用于：任何不符合激活前提条件的代码目标；生成包装器（使用 generate-testability-wrappers）；迁移代码（使用 migrate-static-to-wrapper）；或通用代码审查。"}

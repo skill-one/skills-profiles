@@ -1,0 +1,1 @@
+{"description_zh": "销售force数据云 Act 阶段。当用户管理激活、激活目标、数据操作，或 Data Cloud 受众与数据的下游交付时，使用此技能。\n触发条件：用户管理激活、激活目标、数据操作，或 Data Cloud 受众与数据的下游交付。\n不得触发条件：当任务为分段创建（使用 segmenting-datacloud）、数据检索/搜索工作（使用 retrieving-datacloud），或 STDM/会话追踪（使用 observing-agentforce）时。"}

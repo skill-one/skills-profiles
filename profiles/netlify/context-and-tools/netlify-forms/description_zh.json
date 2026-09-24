@@ -1,0 +1,1 @@
+{"description_zh": "Netlify 托管站点的无服务器表单处理——在部署时检测 HTML 表单，存储提交内容，过滤垃圾信息并发送通知。适用于在 Netlify 站点上添加联系表单、线索捕获表单、文件上传表单或新闻通讯注册功能；配置 AJAX 表单提交；设置自定义感谢页；在表单中添加蜜罐或 reCAPTCHA；在 Next.js、Nuxt、SvelteKit、Astro 或 Gatsby 中实现表单功能；通过 Netlify API 读取表单提交内容；或调试缺失的提交内容以及静默无法注册的表单。"}

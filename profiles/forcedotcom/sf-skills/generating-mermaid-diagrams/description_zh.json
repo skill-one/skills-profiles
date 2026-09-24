@@ -1,0 +1,1 @@
+{"description_zh": "基于 Mermaid 的 Salesforce 架构图（带 ASCII 备用方案）。当需要为 Salesforce 架构、OAuth 流程、ERDs、集成序列或 Agentforce 结构生成文本图时，使用本技能。当用户说“diagram”、“visualize”、“ERD”，或要求生成 Mermaid 中的 sequence diagrams、flowcharts、class diagrams 或 architecture visualizations 时触发。当用户需要 PNG/SVG 图像输出（使用 generating-visual-diagrams），或询问非 Salesforce 系统时，请勿触发。"}

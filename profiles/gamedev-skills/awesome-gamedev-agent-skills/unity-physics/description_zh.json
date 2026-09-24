@@ -1,0 +1,1 @@
+{"description_zh": "在 Unity 6.3 LTS 中设置 3D 物理：刚体移动和力、碰撞器、触发器与碰撞、基于层的碰撞、射线检测和关节。当添加刚体、处理 OnCollisionEnter/OnTriggerEnter、调整碰撞层、进行射线检测，或当用户提及 Unity 物理、AddForce、isKinematic 或 linearVelocity 时使用。"}

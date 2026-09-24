@@ -1,0 +1,1 @@
+{"description_zh": "设置 Tailwind v4 与 shadcn/ui 的主题化 UI（支持深色模式）。安装依赖，通过 @theme inline 配置 CSS 变量，接入深色模式切换开关，并完成验证。当用户提及 Tailwind v4、设置 Tailwind 主题、shadcn/ui 颜色、深色模式，或遇到颜色无法显示、tw-animate-css 错误、@theme inline 冲突、升级后 @apply 失效，以及 v3 → v4 的迁移问题时，使用此功能。"}

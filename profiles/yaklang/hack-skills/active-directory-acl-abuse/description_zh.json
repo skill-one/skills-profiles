@@ -1,0 +1,1 @@
+{"description_zh": "活动目录 ACL 滥用攻击手册。适用于利用配置错误的活动目录权限，包括 GenericAll、WriteDACL、DCSync 权限、影子凭据、LAPS 读取、GPO 滥用以及 BloodHound 引导的攻击路径。"}

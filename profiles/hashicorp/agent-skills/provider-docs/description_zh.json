@@ -1,0 +1,1 @@
+{"description_zh": "使用 HashiCorp 推荐的模式、tfplugindocs 模板及模式描述，创建、更新和审核 Terraform 注册中心的 Provider 文档。在添加或更改 Provider 配置、资源、数据源、临时资源、列表资源、函数、操作或指南时使用；在验证生成文档时使用；以及在排查注册中心文档缺失或不正确的问题时使用。"}

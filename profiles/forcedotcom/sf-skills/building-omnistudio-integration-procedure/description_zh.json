@@ -1,0 +1,1 @@
+{"description_zh": "OmniStudio 集成流程创建与 110 分评分验证。当构建结合 Data Mapper 操作、Apex Remote Actions、HTTP 调用以及条件逻辑的服务器端流程编排时，请使用此技能。\n\n触发条件：用户创建集成流程、添加 Data Mapper 步骤、配置 Remote Actions 或审查现有集成流程配置。\n\n不触发条件：构建 OmniScript（使用 building-omnistudio-omniscript）、直接创建 Data Mapper（使用 building-omnistudio-datamapper）或分析跨组件依赖关系（使用 analyzing-omnistudio-dependencies）。"}

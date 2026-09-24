@@ -1,0 +1,1 @@
+{"description_zh": "创建、编辑、同步、检查、测试并发布可编辑的 draw.io 图表。当用户明确要求使用 draw.io/diagrams.net、需要制作精良的架构图、ERD、UML、序列图、C4、SysML、BPMN、网络、泳道、机器学习或基础设施图、需要将代码/IaC/SQL/OpenAPI/AsyncAPI/Protobuf/GraphQL 转换为图表，或需要对现有图表进行查询、审阅、差异比对、重新样式化、保持同步或制作交互时使用。当请求的产物是代码形式的图表而非可编辑的 draw.io 文件时，优先使用 Mermaid/PlantUML 等其他工具。"}

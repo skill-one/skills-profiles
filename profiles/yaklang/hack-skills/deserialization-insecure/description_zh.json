@@ -1,0 +1,1 @@
+{"description_zh": "不安全的反序列化操作手册。当Java、PHP或Python应用程序通过ObjectInputStream、unserialize、pickle或类似机制反序列化不可信数据，可能引发RCE、文件访问或权限提升时，使用本手册。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在 Luau 中编写 Roblox 体验：获取服务、创建并设置父级实例、连接事件、运行服务端脚本与客户端本地脚本，并使用 RemoteEvents/RemoteFunctions（服务端权威模式）在客户端与服务器端之间进行通信。适用于在构建或调试 Roblox Studio 脚本时使用——当用户提及 Roblox、Luau、服务、RemoteEvent、Instance.new、PlayerAdded 或客户端与服务器端时。如需保存玩家数据，请使用 roblox-datastores。"}

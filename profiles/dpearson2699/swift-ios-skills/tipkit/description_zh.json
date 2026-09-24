@@ -1,0 +1,1 @@
+{"description_zh": "实现并审查适用于 iOS 17+ 应用的 Apple TipKit 功能发现 UI。在添加或审核应用内提示、上下文帮助、coach marks、Tip、TipView、popoverTip、规则、事件、操作、显示频率、测试覆盖、可复用提示标识，或 iOS 18+ TipGroup 与 CloudKit 提示同步时使用；避免用于提示呈现之外的通用 SwiftUI 导航或布局。"}

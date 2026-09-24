@@ -1,0 +1,1 @@
+{"description_zh": "使用 Chakra UI v3 审查、转换和改进 UI 代码。当用户希望审查 Chakra UI 代码以发现问题、将普通 HTML/CSS、Tailwind、CSS Modules 或 styled-components 转换为 Chakra UI、清理杂乱的 Chakra 组件、修复布局结构或 Token 使用，或提出诸如“这个是否正确”、“这里有什么问题”、“审查我的组件”、“重构这个”、“清理”、“转换”或“用 Chakra UI 化这个”等任何请求时，请使用此技能——即使没有使用“审查”或“重构”这两个词。对于任何检查、改进或转换 Chakra UI 代码的请求，无论表述多么随意，都应触发。"}

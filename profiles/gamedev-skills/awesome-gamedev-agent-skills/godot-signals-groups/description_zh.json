@@ -1,0 +1,1 @@
+{"description_zh": "使用信号和节点组构建事件驱动、解耦的 Godot 4.7 游戏：声明并发出自定义信号，通过 Callable 进行连接（包括 bind/one-shot），并通过节点组和 call_group 向多个节点广播。在 Godot 项目中进行节点通信连接时使用，用信号替代紧密的引用，发出/连接事件，或移植 3.x 版本的 connect(\"sig\", self, \"method\") 代码。"}

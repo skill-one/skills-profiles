@@ -1,0 +1,1 @@
+{"description_zh": "摄入并转换数据文件（CSV/JSON/Parquet/Arrow IPC）至 Elasticsearch，支持流处理与自定义转换。适用于加载文件或批量导入数据时使用，不适用于重新索引、通用摄入管道设计，或批量 API 模式。"}

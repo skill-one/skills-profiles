@@ -1,0 +1,1 @@
+{"description_zh": "查询 Google NotebookLM 笔记本，从用户上传的文档中获取基于来源、引用可靠的回答。管理笔记本库，处理 Google 认证，并支持智能发现。可通过 /blog notebooklm 独立运行，或从 blog-write 和 blog-researcher 内部调用，为基于来源的研究场景提供支持。未配置时能够优雅地回退。当用户说“notebooklm”、“notebook”、“query notebook”、“ask notebook”、“notebook research”、“source grounded research”、“document query”、“notebook library”时使用。"}

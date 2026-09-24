@@ -1,0 +1,1 @@
+{"description_zh": "元技能，用于整合 Three.js、GSAP ScrollTrigger、React Three Fiber、Motion 与 React Spring，打造复杂三维网页体验。在构建集成多个三维与动画库的应用程序时使用，此类应用需要跨技术栈的架构模式、状态管理与性能优化。在涉及库集成、多库架构、滚动驱动三维体验、基于物理的三维动画或复杂交互式三维应用程序等任务时触发。"}

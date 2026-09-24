@@ -1,0 +1,1 @@
+{"description_zh": "基于检测到的技术栈生成最小化的 LaunchDarkly SDK 集成方案：选择 SDK 类型（一种或多种），当需要时采用双 SDK 的服务器端+客户端方案，列出需修改的文件与环境变量约定。嵌套于 sdk-install 之下；在 detect 之后、apply 之前执行。"}

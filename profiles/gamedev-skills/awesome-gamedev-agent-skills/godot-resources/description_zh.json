@@ -1,0 +1,1 @@
+{"description_zh": "使用自定义 Resource 类设计数据驱动的 Godot 4.7 游戏：定义类型化数据（通过 class_name + @export），保存/加载 .tres/.res 文件，实例化与复制资源，并通过 ResourceLoader 按需加载（包括线程加载）。适用于在 Godot 项目中以物品、属性、配置等作为数据建模、创建 .tres 资源，或与自定义 Resource 子类及 ResourceLoader/ResourceSaver 协同工作的场景。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在从 v7 升级到 PixiJS v8，或在升级后诊断 v7 损坏代码时使用本技能。覆盖内容：异步 app.init、单一 pixi.js 包（已弃用的 @pixi/* 子包）、Graphics 先定义形状后填充、BaseTexture → TextureSource、shader/uniform 重构、ParticleContainer+Particle、构造函数选项对象、DisplayObject 移除、settings/utils 移除、Ticker 签名、事件重写。触发条件：从 v7 迁移、v8 破坏性变更、@pixi/ import、DisplayObject、beginFill、 endFill、cacheAsBitmap、BaseTexture、已弃用。"}

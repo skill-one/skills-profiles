@@ -1,0 +1,1 @@
+{"description_zh": "OAuth与OIDC配置错误测试手册。适用于审查重定向URI处理、状态与nonce验证、PKCE、令牌受众、回调绑定及身份提供者信任缺陷。"}

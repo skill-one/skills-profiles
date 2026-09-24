@@ -1,0 +1,1 @@
+{"description_zh": "针对使用 Jest、supertest，并通过 Docker（Kafka、PostgreSQL、MongoDB、Redis）提供真实基础设施的 TypeScript/NestJS 项目的 E2E 与集成测试，采用给定-当-则模式。当用户正在处理 `.e2e-spec.ts` 文件或 `test/e2e/` 下的任何内容，或询问搭建、编写、审阅、运行、调试或优化 E2E 或集成测试时使用，涵盖内容包括不稳定测试、用于测试的 docker-compose、Kafka/Redpanda 消费者、测试隔离或 GWT 合规性。"}

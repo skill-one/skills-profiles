@@ -1,0 +1,1 @@
+{"description_zh": "为 TypeScript/Node.js 应用程序提供安全审查能力，对 XSS、注入、CSRF、JWT/OAuth2 漏洞、依赖项 CVE 以及密钥暴露进行代码验证。在开展安全审计、部署前、审查认证/授权实现，或确保 Express、NestJS 和 Next.js 符合 OWASP 标准时使用。当触发“安全审查”、“检查安全问题”、“TypeScript 安全审计”等关键词时触发。"}

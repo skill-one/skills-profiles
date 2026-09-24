@@ -1,0 +1,1 @@
+{"description_zh": "从零开始在 Cloudflare Workers 上构建全栈 TanStack Start 应用——包含 SSR、基于文件的路由、服务端函数、D1+Drizzle、better-auth、Tailwind v4+shadcn/ui。当用户提及 TanStack Start、要求搭建带有 SSR 的全栈 Cloudflare 应用、需要 SSR 仪表盘，或要求构建 React 19 + Cloudflare Workers 应用（包含基于文件的路由与服务端函数）时，即应使用本方案——即便用户并未明确提及 TanStack Start。不使用模板仓库——Claude 会根据每个项目全新生成每一个文件。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用增强输入（Enhanced Input）在 Unreal Engine 5 中设置玩家输入：输入动作、输入映射上下文、修饰符和触发器，添加映射上下文，以及通过 ETriggerEvent 绑定动作。适用于连接移动/视角/跳跃输入、创建 IA_/IMC_ 资源、在 C++ 或蓝图（Blueprints）中绑定，或当用户提及增强输入（Enhanced Input）、输入映射上下文、输入动作、IA_/IMC_ 或 ETriggerEvent 时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "为 Spring Boot 提供事件驱动架构（EDA）模式——创建领域事件，配置 ApplicationEvent 与 @TransactionalEventListener，搭建 Kafka 生产者和消费者，并实现事务性发件箱模式，以保障可靠的分布式消息传递。适用于在 Spring Boot 中实现事件驱动系统、使用 Kafka 设置异步消息、从 DDD 聚合发布领域事件，或需要借助发件箱模式实现可靠事件发布等场景。"}

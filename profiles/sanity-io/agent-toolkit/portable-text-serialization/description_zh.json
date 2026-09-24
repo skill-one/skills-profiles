@@ -1,0 +1,1 @@
+{"description_zh": "将 Portable Text 渲染并序列化为 React、Svelte、Vue、Astro、HTML、Markdown 和纯文本。适用于在任何前端框架中实现 Portable Text 渲染、为非标准区块类型构建自定义序列化器、服务端将 Portable Text 转换为 HTML 字符串、将 Portable Text 转换为 Markdown、从 Portable Text 中提取纯文本，以及排查因 marks、blocks、lists 或自定义类型导致的渲染问题。"}

@@ -1,0 +1,1 @@
+{"description_zh": "栈溢出与ROP利用手册。用于在 Linux 用户态二进制文件中利用缓冲区溢出，通过覆盖返回地址、ROP链、ret2libc、ret2csu、ret2dlresolve 或 SROP 劫持控制流。"}

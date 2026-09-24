@@ -1,0 +1,1 @@
+{"description_zh": "对话/会话来源的统一 wiki-history-ingest 入口点。当用户说 \"/wiki-history-ingest claude\"、\"/wiki-history-ingest copilot\"、\"/wiki-history-ingest codex\"、\"/wiki-history-ingest pi\"，或要求摄入代理历史记录但未指定底层技能时，使用此入口。该路由器会将请求分派至专门的 history 技能。"}

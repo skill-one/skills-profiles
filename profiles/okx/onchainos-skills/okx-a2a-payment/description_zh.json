@@ -1,0 +1,1 @@
+{"description_zh": "已弃用的遗留别名 — a2a-pay 支持已合并至 `okx-agent-payments-protocol`（参见 `references/a2a_charge.md`）。此存根仅用于使引用旧名称的遗留调用能解析到有效的重定向。如果您访问此处，请立即通过 Skill 工具加载 `okx-agent-payments-protocol` 并遵照其指引操作。请勿从此存根执行任何支付逻辑。所有 paymentId / a2a_... / payment-link / payment-status 触发条件现已直接路由至 `okx-agent-payments-protocol`（其 SKILL.md 中的 Path B）。"}

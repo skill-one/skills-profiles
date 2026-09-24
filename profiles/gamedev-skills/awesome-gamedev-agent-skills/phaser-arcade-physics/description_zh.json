@@ -1,0 +1,1 @@
+{"description_zh": "使用 Phaser 4 街机物理：启用世界，为精灵设置刚体，设置速度/加速度/重力，并解决与碰撞器、重叠、组和世界边界的碰撞。当 Phaser 游戏需要移动或碰撞时使用——当用户提及街机物理、this.physics、setVelocity、collider、overlap、gravity、onFloor，或平台跳跃/俯视角控制器时，应使用此功能。游戏配置、场景和加载器请使用 phaser-core。"}

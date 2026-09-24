@@ -1,0 +1,1 @@
+{"description_zh": "完整的 Sentry SDK 设置，适用于 Svelte 和 SvelteKit。当被要求“为 Svelte 添加 Sentry”、“为 SvelteKit 添加 Sentry”、“安装 @sentry/sveltekit”，或为 Svelte 或 SvelteKit 应用程序配置错误监控、追踪、会话重放或日志记录时使用。"}

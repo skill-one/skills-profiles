@@ -1,0 +1,1 @@
+{"description_zh": "为 LangChain4j 与 Spring Boot 提供集成模式。配置 AI 模型 Bean，使用 Spring 上下文设置聊天记忆，将 RAG 流水线与 Spring Data 集成，并处理自动配置、依赖注入以及 Spring 生态系统集成。适用于将 LangChain4j 嵌入 Spring Boot 应用、使用 @Bean 配置构建 Java LLM 应用，或设置 Spring AI 模式时使用。"}

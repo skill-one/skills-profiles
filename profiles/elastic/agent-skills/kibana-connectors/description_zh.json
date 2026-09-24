@@ -1,0 +1,1 @@
+{"description_zh": "通过 REST API 或 Terraform 创建和管理用于 Slack、PagerDuty、Jira、Webhooks 等服务的 Kibana 连接器。配置第三方集成或以代码方式管理连接器时使用。"}

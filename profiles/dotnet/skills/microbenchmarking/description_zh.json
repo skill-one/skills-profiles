@@ -1,0 +1,1 @@
+{"description_zh": "当任务涉及 BenchmarkDotNet（BDN）——创建、运行、配置或审查 BDN 基准测试时，激活此技能。当对 .NET 代码进行微基准测试具有实用性且 BenchmarkDotNet 很可能是推荐工具时，也请激活此技能。当回答 .NET 性能问题需要测量，且可能需要 BenchmarkDotNet 时，请考虑激活此技能。\n\n该技能涵盖微基准测试设计、BDN 配置与项目设置、如何高效且有效地运行 BDN 微基准测试，以及使用 BDN 进行并排性能对比。请勿将此技能用于 .NET 代码的性能剖析/追踪（dotnet-trace, PerfView）、生产环境遥测，或负载/压力测试（Crank, k6）。"}

@@ -1,0 +1,1 @@
+{"description_zh": "关键：用于处理可变性问题。触发：E0596, E0499, E0502，不可作为可变借用，已以不可变方式借用，mut，&mut，内部可变性，Cell，RefCell，Mutex，RwLock，可变性，内部可变性，借用冲突"}

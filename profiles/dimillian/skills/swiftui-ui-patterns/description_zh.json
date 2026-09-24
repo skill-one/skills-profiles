@@ -1,0 +1,1 @@
+{"description_zh": "构建 SwiftUI 视图和组件的最佳实践及基于示例的指导，涵盖导航层级、自定义视图修饰符以及使用栈和网格的响应式布局。在创建或重构 SwiftUI UI、使用 TabView 设计标签页架构、使用 VStack/HStack 组合界面、管理 @State 或 @Binding、构建声明式 iOS 界面，或需要特定组件的模式和示例时使用。"}

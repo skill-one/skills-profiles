@@ -1,0 +1,1 @@
+{"description_zh": "使用 sf CLI v2 的 Salesforce DevOps 自动化。触发条件：当用户部署元数据、创建/管理临时组织（scratch orgs）或沙盒（sandboxes）、设置 CI/CD 流水线，或使用 sf project deploy 排查部署错误时。禁止触发条件：当编写 Apex 代码（使用 generating-apex）、构建 LWC 组件（使用 generating-lwc-components）、创建元数据定义（使用 generating-custom-object 或 generating-custom-field），或使用 handling-sf-data 查询组织数据时。"}

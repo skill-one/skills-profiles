@@ -1,0 +1,1 @@
+{"description_zh": "从零开始在现有项目中引导 Trigger.dev：完成 CLI 认证，安装 @trigger.dev/sdk 和 @trigger.dev/build，编写包含项目引用和任务目录的 trigger.config.ts，使用脚手架创建 /trigger 目录并包含首个任务，配置 tsconfig 与 .gitignore，设置 TRIGGER_SECRET_KEY，并运行开发服务器。当项目尚无 trigger.config.ts，且用户请求“添加 Trigger.dev”、“设置 Trigger.dev”、“初始化 Trigger.dev”或运行首个任务时，加载此内容，包括在 monorepo（单仓库多包）中。项目设置完成后，当你正在编写任务代码时，切换到 trigger-tasks 技能。"}

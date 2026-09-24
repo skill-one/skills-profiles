@@ -1,0 +1,1 @@
+{"description_zh": "Amazon Aurora MySQL —— 专门针对 Aurora MySQL 集群的创建、修改和提供建议（兼容 MySQL 的引擎、Aurora 服务器less、并行查询）。适用于 Aurora MySQL 集群操作、ACU 容量规划、I/O 优化存储、承诺定价或 MySQL 升级规划等场景的触发条件。Aurora MySQL 使用完整的（基于 VPC）配置——简化配置仅适用于 PostgreSQL。如需使用 Aurora PostgreSQL，请改用 amazon-aurora-postgresql。包含安全护栏（safety guardrails）和覆盖默认设置的响应模板。"}

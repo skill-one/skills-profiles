@@ -1,0 +1,1 @@
+{"description_zh": "使用Animator控制器驱动Unity 6.3 LTS角色动画：状态、转换、参数、混合树、动画层与人形Avatar倒帧（IK）。在连接配置Animator、从脚本设置参数（SetFloat/SetBool/SetTrigger）、构建混合树，或当用户提及Animator、Mecanim、状态机、混合树或.controller时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "提供 AWS CDK TypeScript 模式，用于定义、验证和部署 AWS 基础设施即代码。适用于创建 CDK 应用、栈和可复用组件，构建无服务器或基于 VPC 的架构，应用 IAM 和加密默认设置，或测试和审查 `cdk synth`、`cdk diff` 和 `cdk deploy` 的变更。触发条件包括“aws cdk typescript”、“create cdk app”、“cdk stack”、“cdk construct”、“cdk deploy”和“cdk test”。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在 itch.io 上发布并更新游戏：创建项目页面，并使用 butler CLI（butler push）将构建版本上传到指定渠道。可用于 itch.io 发布、butler push、为 Windows/macOS/Linux/HTML5 指定渠道名称、版本上传，或将 jam 或发布构建版本发布到 itch.io。"}

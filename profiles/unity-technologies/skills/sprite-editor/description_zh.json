@@ -1,0 +1,1 @@
+{"description_zh": "通过基于 ISpriteEditorDataProvider 接口 API 生成的 C# 编辑器脚本，编辑 Unity 精灵属性。支持处理精灵矩形、边框、枢轴、轮廓及切片操作（自动、网格、等距）。适用于处理精灵资源、精灵图、纹理图集或进行精灵切片时使用。"}

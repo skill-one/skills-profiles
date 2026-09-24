@@ -1,0 +1,1 @@
+{"description_zh": "首次为 LLM 应用添加 Arize AX 追踪。检测技术栈，路由至唯一匹配的集成文档，在用户确认后配置自动插桩，并验证追踪数据已成功生成。适用于用户需要为其应用进行插桩、从零开始添加追踪、搭建 LLM 可观测性、集成 OpenTelemetry 或 openinference，或开始使用 Arize 追踪的场景。"}

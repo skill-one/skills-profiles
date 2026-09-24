@@ -1,0 +1,1 @@
+{"description_zh": "使用 Lua 构建并调试 LÖVE（Love2D）游戏：love.load/update/draw 循环、基于时间增量的移动、输入和屏幕状态。适用于构建 LÖVE 11.x 游戏（main.lua、conf.lua、.love）。"}

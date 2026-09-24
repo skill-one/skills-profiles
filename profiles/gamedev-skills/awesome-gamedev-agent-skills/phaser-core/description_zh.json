@@ -1,0 +1,1 @@
+{"description_zh": "搭建并调试 Phaser 4 游戏：游戏配置、Scene 生命周期（init/preload/create/update）、资源加载器、相机及跨场景通信。在构建或调试 Phaser 游戏时使用——当用户提到 Phaser、Phaser.Game、Phaser.Scene、preload/create/update、this.load、this.add 或场景转换时使用。如需使用 Arcade Physics 的运动/碰撞，请使用 phaser-arcade-physics。"}

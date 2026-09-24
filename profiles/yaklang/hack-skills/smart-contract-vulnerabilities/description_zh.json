@@ -1,0 +1,1 @@
+{"description_zh": "智能合约漏洞手册。用于审计 Solidity/EVM 合约，防范重入、整数溢出、访问控制、delegatecall、闪电贷、签名重放以及与 MEV 相关的攻击模式。"}

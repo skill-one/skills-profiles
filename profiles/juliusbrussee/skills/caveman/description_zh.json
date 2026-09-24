@@ -1,0 +1,1 @@
+{"description_zh": "超压缩沟通模式。通过以原始人风格说话，同时保持完整的技术准确性，可将 token 使用量减少约75%。支持强度级别：lite（轻量）、full（完整，默认）、ultra（超）、wenyan-lite（文言轻量）、wenyan-full（文言完整）、wenyan-ultra（文言超）。当用户说出“caveman mode”、“talk like caveman”、“use caveman”、“less tokens”、“be brief”或调用 /caveman 时使用。当请求 token 效率时，也会自动触发。"}

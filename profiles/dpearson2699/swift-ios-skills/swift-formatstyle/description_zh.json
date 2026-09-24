@@ -1,0 +1,1 @@
+{"description_zh": "使用 Foundation 的 FormatStyle 和 ParseableFormatStyle，格式化和解析地区感知的数字、小数、货币、百分比、日期、时长、测量值、名称、列表、字节数以及 URL。当替换旧版 Formatter 子类、设计可复用的格式 API、使用 SwiftUI 的 Text(_:format:)、修正可用性，或在本地化环境中测试面向用户的格式化输出时使用。"}

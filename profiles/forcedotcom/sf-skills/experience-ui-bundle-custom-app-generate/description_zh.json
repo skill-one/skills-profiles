@@ -1,0 +1,1 @@
+{"description_zh": "当项目包含 uiBundles/*/src/ 目录，且任务涉及创建或配置用于在 Lightning 体验中托管 UI 包的自定义应用程序时，必须激活。创建 CustomApplication 元数据记录以在应用启动器（App Launcher）中显示 UI 包时，使用本技能。当存在需要修改的、符合 applications/*.app-meta.xml 模式的文件，或当用户希望在无需数字体验站点的情况下，通过 Lightning 应用启动器公开其应用程序时，激活此技能。切勿为此使用 platform-custom-application-generate——UI 包应用程序不使用标签页、操作覆盖或 FlexiPage（灵活页面）。"}

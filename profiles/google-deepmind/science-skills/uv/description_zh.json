@@ -1,0 +1,1 @@
+{"description_zh": "检查 uv Python 包管理器是否已安装，若缺失则进行安装。确保 uv 在 PATH 中。当其他技能需要 uv 作为前置条件时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "提供基于 Gemini 3.0 Flash 和 Gemini 3.0 Pro 模型的 Gemini CLI 委托工作流，用于大上下文分析与复杂推理，包括英文提示词制定、执行标志以及安全结果处理。当用户明确要求使用 Gemini 执行诸如广泛代码库分析、使用 Gemini 3 Flash 快速迭代、使用 Gemini 3 Pro 进行深度架构推理等任务时使用。触发条件为：'use gemini', 'delegate to gemini', 'run gemini cli', 'ask gemini', 'use gemini for this task', 'use gemini 3 flash', 'use gemini 3 pro'."}

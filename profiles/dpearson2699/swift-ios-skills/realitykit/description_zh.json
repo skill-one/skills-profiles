@@ -1,0 +1,1 @@
+{"description_zh": "使用 RealityKit 和 ARKit 构建 iOS 增强现实与 3D 体验。适用于添加 RealityView 内容、加载实体或 USDZ 模型、将对象锚定到平面或世界位置、区分实体命中检测与 ARKit 实际射线检测、处理 AR 摄像头可用性、世界追踪、场景更新，以及 RealityKit 实体手势与交互。"}

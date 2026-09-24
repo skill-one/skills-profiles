@@ -1,0 +1,1 @@
+{"description_zh": "在编写 TypeScript 库或 npm 包时使用——涵盖项目设置、package.json 导出、构建工具（tsdown/unbuild）、API 设计模式、类型推断技巧、测试以及发布到 npm。在打包、配置 CJS/ESM 双格式输出或设置发布工作流时使用。"}

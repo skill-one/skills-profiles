@@ -1,0 +1,1 @@
+{"description_zh": "审查当前 Kelos 分支，或明确指定的 PR、issue 或 diff，以评估 Kubernetes API 和 CRD 的设计质量。当被要求进行 Kelos API 审查、CRD/API 兼容性审查、Kubernetes API 规范审查，或审查 api/、生成的 CRDs、examples/ 或 self-development/ 下的变更时使用。若未指定具体目标，则默认使用当前分支。本技能仅用于审查。"}

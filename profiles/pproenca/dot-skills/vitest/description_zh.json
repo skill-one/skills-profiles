@@ -1,0 +1,1 @@
+{"description_zh": "Vitest 测试框架模式，涵盖测试设置、异步测试、使用 vi.* 进行 mock、快照以及测试性能（原 test-vitest）。编写或调试 Vitest 测试时，应使用此技能。本技能不涵盖 TDD 方法论（使用 test-tdd 技能）、使用 MSW 进行 API mock（使用 test-msw 技能），或 Jest 专用 API。"}

@@ -1,0 +1,1 @@
+{"description_zh": "为在 Managed Service for Apache Airflow（MSAA；原名 Cloud Composer）中迁移 Apache Airflow 的 DAG 提供指南。涵盖向 Airflow 2.11.1（MSAA 第 2 代和第 3 代）和 Airflow 3（MSAA 第 3 代）的迁移，包括环境检查、GCS 下载/上传以及针对破坏性变更的扫描模式。在将 DAG 代码迁移到更新的 Airflow 版本时使用。当检查与代码迁移无关的 DAG 运行失败时不要使用。"}

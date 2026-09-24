@@ -1,0 +1,1 @@
+{"description_zh": "通过 argent 驱动物理 iPhone。当涉及物理 iPhone（即 list-devices 的 iOS 条目，其 kind 为 \"device\"）时使用，且仅在该情况下使用；切勿用于模拟器。如遇线缆、信任或签名问题，请阅读 argent-ios-device-setup。"}

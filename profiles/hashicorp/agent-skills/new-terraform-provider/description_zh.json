@@ -1,0 +1,1 @@
+{"description_zh": "使用本教程，当使用插件框架为新的 Terraform provider 搭建项目时（包括工作区布局、go 模块设置、provider 服务端 main.go，以及包含 schema 和 Configure 的 provider.go）。此外，当用户想要为新的 API 开始构建 provider，或询问如何开始一个 terraform-provider-* 项目时，也请使用本教程。"}

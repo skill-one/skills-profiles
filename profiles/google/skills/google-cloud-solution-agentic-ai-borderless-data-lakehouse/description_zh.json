@@ -1,0 +1,1 @@
+{"description_zh": "发现需求并设计基于 Apache Iceberg 湖仓及 BigQuery 数据代理的无边界开放数据湖仓。适用于构建多云存储基础设施（云存储、AWS S3、Azure Blob）、建立摄入与 AI 服务子系统、配置跨云互联，或部署 Gemini 企业 Agent 平台及 BigQuery 数据代理的场景。不适用于单云数据仓库，或当重点为知识目录元数据治理及 Spark 驱动的 IDE 分析工作流时（请改用 google-cloud-solution-agentic-analytics-spark-knowledge-catalog）。"}

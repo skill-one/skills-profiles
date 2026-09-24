@@ -1,0 +1,1 @@
+{"description_zh": "Prometheus标签策略在Grafana Cloud上的专家评估者。审计、设计并优化标签模式，运用基数评分、访问模式对齐、静态标签规则与动态标签规则、直方图分桶管理规范及仪器化整洁规范。从源头防止高基数问题——包括在应用代码和抓取目标标签中——同时不丢弃能使序列唯一（否则会破坏数据）的标签。对于已存在于Grafana Cloud中序列的成本降低，将引导至adaptive-metrics技能。当用户询问评估、审计、设计或优化Prometheus标签，或询问如何从源头防止高基数时使用。对于“为什么我的Prometheus现在运行缓慢/成本高”的排查，请参阅prometheus-cardinality-troubleshooter。"}

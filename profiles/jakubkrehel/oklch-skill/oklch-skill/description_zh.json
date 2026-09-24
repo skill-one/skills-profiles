@@ -1,0 +1,1 @@
+{"description_zh": "用于Web项目的OKLCH色彩空间。可将hex/rgb/hsl转换为OKLCH，生成配色方案，检查对比度，处理色域边界，并使用Tailwind v4进行主题设置。在OKLCH、颜色转换、配色方案生成、对比度比值、色域、Display P3、设计令牌、色相漂移、色度、深色模式颜色等触发条件时，进行相应处理。"}

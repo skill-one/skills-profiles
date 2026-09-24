@@ -1,0 +1,1 @@
+{"description_zh": "识别 .NET 项目的测试平台、框架、命令模式以及 SDK 风格与传统项目系统。仅用于“测试平台/框架是什么？”、“VSTest 还是 MTP？”，或“该项目使用的运行器是什么？”等查询，包括桥接设置、UseVSTest 的禁用选项，以及不兼容或冲突的 VSTest/MTP 配置。解决 global.json、项目、packages.config、Directory.Build.props 和 Directory.Packages.props 针对 MSTest/xUnit/NUnit/TUnit 的优先级。当用户要求运行/筛选测试，或使用命令、标志、TRX/转储文件，或遇到测试命令/筛选错误时，绝对不要使用；请直接使用运行测试。不要用于热重载或迁移。"}

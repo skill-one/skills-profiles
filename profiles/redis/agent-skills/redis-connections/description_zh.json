@@ -1,0 +1,1 @@
+{"description_zh": "Redis 客户端与连接使用指南涵盖：连接池、多路复用、管道化、基于 RESP3 的客户端缓存、规避慢命令（KEYS、SMEMBERS、HGETALL）以及调整套接字超时。适用于为 Redis 客户端（redis-py、Jedis、Lettuce、NRedisStack）配置，并通过命令批处理提升吞吐量、避免逐请求创建连接、使用 SCAN 遍历大型键空间、为读密集型负载启用客户端缓存，或设置连接与读取超时。"}

@@ -1,0 +1,1 @@
+{"description_zh": "对代码中的内存泄漏及可释放问题进行审计。适用于审查事件监听器、DOM 处理器、生命周期回调，或修复泄漏报告时。涵盖 addDisposableListener、Event.once、MutableDisposable、DisposableStore 以及 onWillDispose 模式。"}

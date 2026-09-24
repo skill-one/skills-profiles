@@ -1,0 +1,1 @@
+{"description_zh": "CRITICAL：用于不安全 Rust 代码审查及 FFI。触发条件：unsafe、裸指针、FFI、extern、transmute、*mut、*const、union、#[repr(C)]、libc、std::ffi、MaybeUninit、NonNull、SAFETY 注释、稳健性、未定义行为、UB、安全封装、内存布局、bindgen、cbindgen、CString、CStr、安全抽象、裸指针、外部函数接口、内存布局、不安全代码、FFI 绑定、未定义行为"}

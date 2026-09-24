@@ -1,0 +1,1 @@
+{"description_zh": "使用 EventKit 和 EventKitUI 创建、读取和管理日历事件及提醒。适用于向用户日历添加事件、创建提醒、设置重复规则、请求日历或提醒访问权限、呈现事件编辑器、选择日历、处理提醒、观察日历变更，或使用 EKEventStore、EKEvent、EKReminder、EKCalendar、EKRecurrenceRule、EKEventEditViewController、EKCalendarChooser 或 EventKitUI 视图。"}

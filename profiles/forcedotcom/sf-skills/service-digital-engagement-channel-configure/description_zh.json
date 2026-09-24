@@ -1,0 +1,1 @@
+{"description_zh": "配置并部署增强聊天消息通道（Messaging for In-App and Web，简称 MIAW）。当用户需要创建、部署并激活采用 Omni-Channel 流程、Omni-Channel 队列、用户或 Agentforce 服务代理路由配置的消息通道时使用。通过元数据 API 生成消息通道元数据，将其部署至目标组织，并使用用户验证、预聊天表单、自动化响应、同意设置及所有可自定义通道选项激活该通道。\n\n当用户提及消息通道、MIAW、增强聊天、应用内消息、网页消息设置，或引用 .messagingChannel-meta.xml 文件时触发。当用户配置遗留 Live Agent 聊天、不含消息的嵌入式服务部署，或不含消息通道的标准 Omni-Channel 路由规则时，请勿触发。"}

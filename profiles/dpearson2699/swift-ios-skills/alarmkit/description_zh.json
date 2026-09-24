@@ -1,0 +1,1 @@
+{"description_zh": "实现 iOS 和 iPadOS 的 AlarmKit 闹钟与倒计时定时器，支持锁定屏幕、灵动岛、睡眠小部件以及与配对 Apple Watch 联动的系统 UI。涵盖 AlarmManager 调度、AlarmAttributes 与 AlarmPresentation、系统停止与 AlarmButton 副操作、授权、状态观察、倒计时小组件与扩展的交接，以及 Live Activity 集成。适用于构建唤醒闹钟、倒计时定时器，或需要 Apple 系统闹钟体验的闹钟样式提醒。"}

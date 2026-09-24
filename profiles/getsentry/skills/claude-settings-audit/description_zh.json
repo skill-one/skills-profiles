@@ -1,0 +1,1 @@
+{"description_zh": "分析仓库以生成推荐的 Claude Code settings.json 权限。在新项目设置、审计现有设置或确定允许哪些只读 bash 命令时使用。可检测技术栈、构建工具和 monorepo 结构。"}

@@ -1,0 +1,1 @@
+{"description_zh": "以场景树和节点组合的方式构建 Godot 4.7 项目：构建可复用场景，在运行时实例化 PackedScenes，安全导航场景树，注册 autoload 单例。用于设计 .tscn 场景、确定节点拆分方式、使用 instantiate() 生成实例、连接 autoloads，或在 Godot 项目中修复\"节点未找到\"与释放节点错误。"}

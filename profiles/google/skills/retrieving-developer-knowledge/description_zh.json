@@ -1,0 +1,1 @@
+{"description_zh": "搜索、检索并综合 Google Cloud、AI/Gemini、Android、Chrome、Web、Flutter、Go、Firebase 及其他 Google 开发者平台上的官方 Google 开发者文档。集成 Developer Knowledge MCP 服务器（search_documents、get_documents、answer_query）或 Developer Knowledge REST API 备用方案。适用于搜索 gcloud CLI 命令、API 语法、IAM 权限、官方文档、架构对比或产品选型概览。不适用于本地文件系统查找或非 Google 文档。"}

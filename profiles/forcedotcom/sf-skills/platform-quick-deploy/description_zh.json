@@ -1,0 +1,1 @@
+{"description_zh": "部署已验证的元数据到生产环境的 Salesforce 组织，无需重新运行测试。当用户想要部署到生产环境时触发，包括使用\"quick deploy\"、\"promote\"、\"ship to prod\"等关键词，或用户刚完成验证并希望将更改上线时触发。需要提供一个最近的 `sf project deploy validate` 任务 ID（不超过10天，使用 `--use-most-recent` 时不超过3天）。禁止为沙盒/临时环境部署触发（应使用 platform-metadata-deploy），也禁止为未经验证的部署触发（应首先使用 platform-deploy-validate）。"}

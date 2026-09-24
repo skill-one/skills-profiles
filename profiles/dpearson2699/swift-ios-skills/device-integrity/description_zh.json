@@ -1,0 +1,1 @@
+{"description_zh": "验证设备合法性与应用完整性，使用DeviceCheck（基于DCDevice的设备位）以及App Attest（DCAppAttestService的密钥生成、证明和断言流程）。适用于实现防欺诈、检测被入侵设备、通过Apple服务器验证应用真实性、以已证明请求保护敏感API接口，或将设备验证集成到后端架构等场景。"}

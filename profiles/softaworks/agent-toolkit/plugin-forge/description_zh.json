@@ -1,0 +1,1 @@
+{"description_zh": "创建和管理 Claude Code 插件，需具备规范的架构、清单及 marketplace 集成。用于为 marketplace 创建插件、添加插件组件（命令、智能体、钩子）、升级插件版本，或处理 plugin.json/marketplace.json 清单文件。"}

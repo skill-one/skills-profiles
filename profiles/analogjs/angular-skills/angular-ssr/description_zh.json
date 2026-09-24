@@ -1,0 +1,1 @@
+{"description_zh": "已弃用 - 该技能未维护。请改用官方 Angular 技能，地址为 https://github.com/angular/skills。使用 @angular/ssr 在 Angular v20+ 中实现服务端渲染与水合。适用于服务端渲染配置、水合策略、静态页面预渲染，以及处理仅浏览器 API。当配置 SSR、修复水合不匹配、预渲染路由或使代码具备 SSR 兼容性时触发。"}

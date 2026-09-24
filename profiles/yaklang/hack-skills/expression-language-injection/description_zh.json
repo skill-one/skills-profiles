@@ -1,0 +1,1 @@
+{"description_zh": "表达式语言注入操作手册。当Java EL、SpEL、OGNL或MVEL表达式可能在Spring、Struts2、Confluence等框架中对攻击者控制的输入进行求值时使用。"}

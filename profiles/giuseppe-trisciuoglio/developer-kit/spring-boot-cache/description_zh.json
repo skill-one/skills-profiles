@@ -1,0 +1,1 @@
+{"description_zh": "提供实现Spring Boot缓存的模式：配置具有TTL和淘汰策略的Redis/Caffeine/EhCache提供者，应用@Cacheable/@CacheEvict/@CachePut注解，验证缓存命中/未命中行为，并通过Actuator暴露指标。在向Spring Boot服务添加缓存、配置缓存过期、清除过期数据或诊断缓存未命中时使用。"}

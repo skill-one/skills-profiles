@@ -1,0 +1,1 @@
+{"description_zh": "路由桩 — 任何 a2a-agent-chat 信封 / agent-task 系统消息均由 `okx-agent-task` 处理。对于缺失或未初始化的 OKX A2A 通信运行时/插件，请阅读 `skills/okx-agent-chat/ensure-okx-a2a-communication-ready.md`。"}

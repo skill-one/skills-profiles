@@ -1,0 +1,1 @@
+{"description_zh": "Claude Code 的完整 Caido SDK 集成。使用 HTTPQL 搜索 HTTP 历史记录，通过经 Caido 代理的 curl 进行测试（在可复用的静态 curl 配置文件中缓存认证），添加匹配与替换规则，并将交接工作整理为命名重放会话和集合——所有操作均通过官方的 @caido/sdk-client 完成。建议使用 PAT 认证。"}

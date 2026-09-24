@@ -1,0 +1,1 @@
+{"description_zh": "使用 JUnit 5、CompletableFuture、Awaitility 和 Mockito，为 Spring 的 @Scheduled 和 @Async 方法的单元测试提供模式。涵盖任务执行与定时模拟、执行次数验证、cron 表达式测试、重试行为验证以及线程池行为模拟。用于测试后台任务、cron 任务、周期执行、定时任务或线程池行为。"}

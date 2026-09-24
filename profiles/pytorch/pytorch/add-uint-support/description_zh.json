@@ -1,0 +1,1 @@
+{"description_zh": "通过更新 AT_DISPATCH 宏，为 PyTorch 算子添加无符号整数（uint）类型支持。在向算子、内核添加 uint16、uint32、uint64 类型支持，或当用户提及启用无符号类型、基础无符号类型或 uint 支持时使用。"}

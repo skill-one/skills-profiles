@@ -1,0 +1,1 @@
+{"description_zh": "在 GitHub Actions 仓库中配置 NuGet 可信发布（OIDC）——将长期有效的 API 密钥替换为短期令牌。\n\n适用场景：可信发布、NuGet OIDC、免密钥 NuGet 发布、从 NuGet API key 迁移、NuGet/login、安全 NuGet 发布。\n\n不适用于：发布到私有 feed 或 Azure Artifacts（OIDC 仅适用于 nuget.org）。\n\n使用方式：shell（powershell 或 bash）、edit、create、ask_user 引导式仓库设置。"}

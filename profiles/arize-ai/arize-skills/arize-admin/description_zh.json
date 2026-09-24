@@ -1,0 +1,1 @@
+{"description_zh": "通过 ax CLI 管理 Arize 用户、组织、空间、项目、角色、角色绑定、资源限制和 API 密钥。用于企业管理员工作流：用户邀请与离场、新团队入职、为 SAML/SSO 映射创建自定义角色、为用户分配角色、限制项目级访问权限，以及为多租户架构管理服务密钥。涵盖 ax users、ax organizations、ax spaces、ax projects、ax roles、ax role-bindings 和 ax api-keys。"}

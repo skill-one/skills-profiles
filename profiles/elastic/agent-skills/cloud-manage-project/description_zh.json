@@ -1,0 +1,1 @@
+{"description_zh": "管理现有的 Elastic Cloud Serverless 项目：列出、获取、更新、删除、重置凭证、恢复以及加载已保存的凭证。通过解析端点和获取范围受限的 Elasticsearch API 密钥连接现有项目。适用于对 Serverless 项目执行 day-2 操作、连接现有项目、加载或重置项目凭证，或查询项目详情时使用。"}

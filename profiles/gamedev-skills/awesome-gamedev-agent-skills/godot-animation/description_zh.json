@@ -1,0 +1,1 @@
+{"description_zh": "在 Godot 4.7 中可通过三种方式实现动画：AnimationPlayer 用于带关键帧的剪辑（包括调用和信号轨道），AnimationTree 借助状态机与混合空间（blends）实现角色动画，以及 Tween 用于通过 create_tween() 创建的程序化/UI 短时补间动画。适用于在 .tscn 中处理 AnimationPlayer/AnimationTree 节点、混合角色状态、精灵图动画或代码驱动的 Tween。"}

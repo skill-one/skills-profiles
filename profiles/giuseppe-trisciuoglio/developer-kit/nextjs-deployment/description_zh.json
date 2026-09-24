@@ -1,0 +1,1 @@
+{"description_zh": "提供 Next.js 应用部署到生产环境的全面模式。在配置 Docker 容器、设置 GitHub Actions CI/CD 流水线、管理环境变量、实现预览部署，或为 Next.js 应用配置监控与日志记录时使用。涵盖独立产物输出、多阶段 Docker 构建、健康检查、OpenTelemetry 插桩以及生产环境最佳实践。"}

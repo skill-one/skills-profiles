@@ -1,0 +1,1 @@
+{"description_zh": "在 Unity 6.3 LTS 中构建并脚本化 2D 瓦片图：Grid 与 Tilemap 组件、瓦片调色板、瓦片图碰撞体、规则瓦片以及运行时 SetTile/GetTile 绘制操作。用于绘制瓦片层级、添加 TilemapCollider2D、使用规则或动画瓦片、通过代码生成瓦片图，或当用户提及 Unity 瓦片图、瓦片调色板、规则瓦片或 Grid 时。"}

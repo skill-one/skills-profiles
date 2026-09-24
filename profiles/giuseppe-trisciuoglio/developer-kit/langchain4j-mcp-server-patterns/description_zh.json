@@ -1,0 +1,1 @@
+{"description_zh": "提供 LangChain4j 实现 MCP（模型上下文协议）服务器、创建 Java AI 工具、暴露工具调用能力及集成 MCP 客户端与 AI 服务的模式。当构建 Java MCP 服务器、在 Java 中实现工具调用、将 LangChain4j 与外部 MCP 服务器连接，或保障智能体工作流中工具暴露的安全时使用。"}

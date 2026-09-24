@@ -1,0 +1,1 @@
+{"description_zh": "在 iOS 应用中，使用 PhotoKit 和 AVFoundation 实现、审查或改进照片选择、相机拍摄与媒体处理。适用于使用 PhotosPicker、PHPickerViewController、相机捕获会话（AVCaptureSession）、照片库访问、图像加载与显示、视频录制或媒体权限时。也适用于在 Swift 应用中从照片库选择照片、拍照、录制视频、处理图像或处理照片/相机隐私权限。"}

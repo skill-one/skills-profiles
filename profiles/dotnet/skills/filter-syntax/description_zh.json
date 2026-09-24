@@ -1,0 +1,1 @@
+{"description_zh": "用于 VSTest 和 MTP 的仅作参考的过滤器语法（支持 MSTest、NUnit、xUnit v3 和 TUnit）。仅在平台/框架已知且消费者需要创建或翻译过滤器时加载。不得用于无过滤器运行或平台检测。由 run-tests 和 mtp-hot-reload 使用；切勿直接调用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用 Semantic Scholar、arXiv 和 OpenAlex 的 API 搜索学术文献。返回包含标题、作者、年份、发表场所、摘要、引用和 BibTeX 的结构化 JSONL。当用户需要查找论文、检查相关工作或构建参考文献列表时使用。"}

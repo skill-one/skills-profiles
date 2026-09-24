@@ -1,0 +1,1 @@
+{"description_zh": "使用 OTel 遥测（EDOT）排查 Kubernetes 工作负载、节点及控制平面问题。适用于诊断 Pod 故障（CrashLoopBackOff、OOMKilled、Error）、节点压力、资源耗尽、镜像拉取失败、准入拒绝、自动扩缩容异常，以及关联 K8s 状态与应用信号等场景。仅支持 OTel 摄入路径——传统 ECS Kubernetes 集成模式不在适用范围。"}

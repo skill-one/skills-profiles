@@ -1,0 +1,1 @@
+{"description_zh": "为现代 .NET 应用程序配置并收集崩溃转储。\n\n用途：为 CoreCLR 或 NativeAOT 启用自动崩溃转储，捕获运行中 .NET 进程的转储，在 Docker 或 Kubernetes 中配置转储收集，使用 dotnet-dump collect 或 createdump。\n\n请勿用于：分析或调试转储，使用 lldb/windbg/dotnet-dump analyze 进行事后分析，性能分析或跟踪，或用于 .NET Framework 进程。"}

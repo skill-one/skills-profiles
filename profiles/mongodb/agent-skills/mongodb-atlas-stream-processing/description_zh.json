@@ -1,0 +1,1 @@
+{"description_zh": "管理 MongoDB Atlas 流处理（ASP）工作流。处理工作区配置、数据源/汇连接、处理器生命周期操作、调试诊断以及层级容量规划。支持 Kafka、Atlas 集群、S3、HTTPS 和 Lambda 的集成，用于流式数据工作负载及事件处理。不适用于通用的 MongoDB 查询或 Atlas 集群管理。需要 MongoDB MCP Server（包含 Atlas API 凭证）。"}

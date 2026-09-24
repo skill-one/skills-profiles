@@ -1,0 +1,1 @@
+{"description_zh": "编写 Unreal Engine 5 C++ 玩法代码：UCLASS/UPROPERTY/UFUNCTION 反射宏、Gameplay Framework（GameMode、Pawn、Character、PlayerController、角色组件）以及模块 Build.cs。适用于编写或调试 UE C++ 时，从 AActor、ACharacter、AGameModeBase 派生，将属性暴露给编辑器和蓝图；或当用户提及 Unreal C++、UCLASS、GENERATED_BODY、GameMode、ACharacter 或 .Build.cs 时使用。"}

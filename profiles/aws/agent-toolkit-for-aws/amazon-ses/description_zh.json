@@ -1,0 +1,1 @@
+{"description_zh": "亚马逊 SES 域名邮件发送入门设置指南。涵盖身份配置、生产环境访问、可选的首次测试发送，以及针对设置、认证或发送失败的故障排除。在设置 SES、恢复未完成的入门设置或离开沙盒环境时使用。不涵盖入站邮件或 Mail Manager、短信/语音、WhatsApp、SNS、Pinpoint 或 WorkMail。"}

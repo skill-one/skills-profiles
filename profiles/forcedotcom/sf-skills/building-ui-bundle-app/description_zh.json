@@ -1,0 +1,1 @@
+{"description_zh": "当用户想要构建、创建或生成 React 应用程序、React 应用、Web 应用程序、单页面应用程序（SPA）或前端应用程序时，必须激活；即使尚未存在任何项目文件。当项目包含 uiBundles/*/src/ 目录或 sfdx-project.json，且提示要求从零创建、构建、搭建或生成新的应用程序、网站或页面时，也必须激活；即使提示也描述了视觉样式。当任务涉及多个 ui-bundle 技能时，也必须激活。当构建完整应用程序的全流程时，使用本技能。不要用于带有自定义对象的 Lightning Experience 应用程序（请使用 generating-lightning-app）。不要用于对现有页面进行单一关注点的编辑（请使用 building-ui-bundle-frontender）。"}

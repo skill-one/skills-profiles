@@ -1,0 +1,1 @@
+{"description_zh": "在 Netlify 上部署和配置 Web 框架——构建设置、SSR/边缘适配器，以及本地平台模拟和环境变量。适用于设置或修复框架部署（Next.js / Astro / Nuxt / SvelteKit / Remix / React Router / TanStack Start / SolidStart / Gatsby / Angular / Vite / Express / Hydrogen / Hugo / Eleventy / Vue / React）时，添加绑定 Netlify 上下文的 SSR 或边缘函数或中间件、修复 SPA 重定向和通配规则、设置构建命令或发布目录，或排查“为什么我的环境变量没有更新”以及框架构建失败的问题。"}

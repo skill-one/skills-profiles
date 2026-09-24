@@ -1,0 +1,1 @@
+{"description_zh": "面向 AI 代理的 React DevTools CLI。当用户请求您在运行时调试 React 或 React Native 应用，检查组件的 props/state/hooks，诊断渲染性能，分析重渲染，查找慢速组件，或理解某元素为何会重渲染时使用。触发场景包括“为何这个组件会重渲染”、“检查组件”、“X 有哪些 props”、“分析应用性能”、“查找慢速组件”、“调试 UI”、“检查组件状态”、“应用运行缓慢”，或任何 React 运行时调试任务。"}

@@ -1,0 +1,1 @@
+{"description_zh": "诊断 .NET Framework CLR 激活问题，使用 mscoree.dll 生成的 CLR 激活日志（CLRLoad 日志）。使用场景：当引导程序（shIM）选择错误的运行时、无法加载任何运行时、出现意外的 .NET 3.5 特性按需加载（FOD）对话框、意外地未显示 FOD 对话框、将 v2 和 v4 同时加载到同一进程中导致故障，或在任何人询问“.NET Framework 激活发生了什么？”时。"}

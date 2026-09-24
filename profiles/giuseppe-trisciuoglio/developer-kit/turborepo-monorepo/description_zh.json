@@ -1,0 +1,1 @@
+{"description_zh": "为 TypeScript/JavaScript 项目提供全面的 Turborepo 单体仓库管理指南。适用于创建 Turborepo 工作区、配置 turbo.json 任务、搭建 Next.js/NestJS 应用、管理测试流水线（Vitest/Jest）、配置 CI/CD、实现远程缓存，或在单体仓库中优化构建性能。"}

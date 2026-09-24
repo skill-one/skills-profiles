@@ -1,0 +1,1 @@
+{"description_zh": "负责处理完整的 DMS Schema Conversion 生命周期，包括创建迁移项目、将数据库模式转换为目标引擎、执行兼容性评估、遍历元数据树、将转换后的 DDL 导出至 S3、将模式变更应用到目标数据库，以及在不同数据库引擎之间转换 SQL 语句。在通过 AWS DMS Schema Conversion 将数据库模式在不同异构数据库引擎之间迁移时适用。"}

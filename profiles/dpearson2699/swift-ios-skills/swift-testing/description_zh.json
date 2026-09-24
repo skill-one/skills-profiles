@@ -1,0 +1,1 @@
+{"description_zh": "编写并迁移Swift Testing框架测试，支持@Test、@Suite、#expect、#require、confirmation、traits、withKnownIssue、Attachment.record、processExitsWith退出测试及捕获列表、Test.cancel、Issue.record警告/手动失败、XCTest 到 Swift Testing 的迁移、Xcode 27 互操作性模式、XCUITest UI 测试边界、性能/快照边界、模拟、异步模式以及测试组织。在编写测试、转换XCTest断言（如XCTUnwrap或XCTFail）、审查高级Swift Testing API可用性，或决定何时保留XCTest/XCUITest时使用。"}

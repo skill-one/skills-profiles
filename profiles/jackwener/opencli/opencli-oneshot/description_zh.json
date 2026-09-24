@@ -1,0 +1,1 @@
+{"description_zh": "适用于从特定 URL 及目标描述快速生成单个 OpenCLI 命令的场景。四步流程：打开页面、捕获 API、编写 TS 适配器、测试。如需对完整站点进行探索，请使用 opencli-explorer。"}

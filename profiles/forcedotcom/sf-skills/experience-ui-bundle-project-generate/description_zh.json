@@ -1,0 +1,1 @@
+{"description_zh": "通过模板生成一个最小化、可立即开始开发的 SFDX 入门项目，而非手动搭建文件。当需要启动一个全新的 Salesforce UI 包应用（React 或 Angular），且需要初始化项目时，使用本技能——触发短语包括创建、启动或搭建新的 UI 包应用、生成入门项目或使用预构建/入门模板。请勿在以下情况下触发：编辑、样式设置或向已有应用添加页面或组件（使用 experience-ui-bundle-fronten-generate）；配置 ui-bundle.json 或元数据文件（使用 experience-ui-bundle-metadata-generate）；部署到组织（使用 experience-ui-bundle-deploy）；或用户明确表示需要从零手动搭建。"}

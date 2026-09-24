@@ -1,0 +1,1 @@
+{"description_zh": "将遥测数据传输至 Grafana Cloud — 指标通过 Prometheus 远程写入或 OTLP，日志通过 Loki 推送或 Alloy，追踪通过 OTLP 发送至 Tempo，性能分析通过 Pyroscope。涵盖基于 Alloy 的管道、直接 SDK/代理集成、云集成目录以及凭证管理。适用于将应用程序或基础设施连接至 Grafana Cloud、设置数据摄取、配置远程写入或选择摄取方法时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "从结构化的创意规范设计新的 Claude 技能。当技能自动生成流水线需要生成 Claude CLI 提示词，以根据仓库规范创建包含完整技能目录（SKILL.md、references、scripts、tests）的提示词时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "提供用于 Java 的 AWS Lambda 集成模式与冷启动优化方案。适用于将 Java 函数部署到 AWS Lambda、在 Micronaut 与原始 Java 方案之间进行选择、将冷启动时间优化至 1 秒以下、配置 API Gateway 或 ALB 集成，或实现 Java 无服务器应用时使用。触发词包括“创建 Java Lambda”、“部署 Java Lambda”、“Micronaut Lambda AWS”、“Java Lambda 冷启动”、“AWS Lambda Java 性能”、“Java 无服务器框架”。"}

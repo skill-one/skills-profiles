@@ -1,0 +1,1 @@
+{"description_zh": "在运行 .NET 测试或通过测试命令及参数作答之前，始终使用。触发条件包括：\"运行测试\"、\"精确的 dotnet test 命令\"、某个测试/类/类别/特性/目标框架、组合过滤条件、`--filter-query`、`--no-build`、`--diag`、诊断日志、TRX、覆盖率采集、崩溃/挂起转储、过滤错误，或未识别的选项。为 MSTest/xUnit/NUnit/TUnit 选择与仓库兼容的经典、VSTest、桥接 MTP 或原生 MTP 语法。不得仅用于平台检测（platform-detection），不得用于编写或调试测试代码、解读现有覆盖率报告、CI 排查、迁移，或持续的 hot reload/watch 循环。"}

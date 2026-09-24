@@ -1,0 +1,1 @@
+{"description_zh": "管理 Elasticsearch RBAC：包括原生用户、角色、角色映射以及文档级与字段级安全。适用于创建用户或角色、分配权限，或映射 LDAP/SAML 等外部领域。"}

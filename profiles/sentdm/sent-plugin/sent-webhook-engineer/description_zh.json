@@ -1,0 +1,1 @@
+{"description_zh": "构建并调试 Sent v3 webhook 接收器端到端——端点注册、HMAC 签名验证、重放拒绝、事件去重、重试和自动禁用行为、密钥轮换以及投递日志分类。在处理 Sent webhook 事件、验证 x-webhook-signature、修复 401 或签名不匹配故障、恢复禁用的端点、选择事件类型或事件过滤器、轮换签名密钥或解读 webhook 投递日志时使用。"}

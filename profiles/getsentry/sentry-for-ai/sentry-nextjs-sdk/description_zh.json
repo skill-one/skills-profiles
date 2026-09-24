@@ -1,0 +1,1 @@
+{"description_zh": "Next.js 完整的 Sentry SDK 配置。适用于被要求“为 Next.js 添加 Sentry”、“安装 @sentry/nextjs”，或为 Next.js 应用配置错误监控、链路追踪、会话重放、日志记录、性能分析、AI 监控或定时任务的场景。支持 Next.js 13 及以上版本，兼容 App Router 和 Pages Router。"}

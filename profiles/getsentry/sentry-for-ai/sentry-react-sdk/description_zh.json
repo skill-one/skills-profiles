@@ -1,0 +1,1 @@
+{"description_zh": "针对 React 的完整 Sentry SDK 配置。当被要求为 React 添加 Sentry、安装 @sentry/react，或为 React 应用程序配置错误监控、链路追踪、会话回放、性能分析或日志记录时使用。支持 React 16+、React Router v5–v7 非框架模式、TanStack Router、Redux、Vite 和 webpack。"}

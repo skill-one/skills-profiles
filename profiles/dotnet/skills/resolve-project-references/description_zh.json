@@ -1,0 +1,1 @@
+{"description_zh": "MSBuild性能摘要中ResolveProjectReferences耗时解读指南。当ResolveProjectReferences作为最耗时的目标出现，且开发者正试图直接对其进行优化时，激活本指南。说明报告的时间包含了依赖项目构建的等待时间，且具有误导性，指导用户转而关注任务自身耗时。请勿为通用构建性能问题激活本指南，应使用build-perf-diagnostics替代。"}

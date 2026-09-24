@@ -1,0 +1,1 @@
+{"description_zh": "从代码创建、配置和管理 Netlify 部署——在以下场景中使用此功能：设置 Git 持续部署、通过命令行运行 netlify deploy 或 netlify deploy --prod、编写 netlify.toml 部署上下文、添加\"Deploy to Netlify\"按钮、配置构建钩子、设置部署预览或分支部署、锁定或跳过部署、修复失败的或包含密钥扫描的部署，或当有人要求\"部署我的网站\"、\"设置预览部署\"、\"添加按分支的构建配置\"或\"在我的 README 中添加部署按钮\"时。"}

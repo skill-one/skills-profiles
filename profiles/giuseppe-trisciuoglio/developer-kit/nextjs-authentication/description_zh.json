@@ -1,0 +1,1 @@
+{"description_zh": "提供基于 Auth.js 5（NextAuth.js）的 Next.js 15+ App Router 认证实现模式。适用于在 Next.js 应用中设置认证流程、实现受保护路由、在 Server Components 和 Server Actions 中管理会话、配置 OAuth 提供商、实现基于角色的访问控制，或处理登录/登出流程。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用 Mantine 的 Combobox 基础组件构建自定义的下拉/选择/自动补全/多选组件。使用此技能当：\n(1) 使用 Combobox 基础组件创建新的类似选择器的自定义组件，\n(2) 构建可搜索的下拉菜单，\n(3) 实现多选或标签输入变体，\n(4) 定制选项渲染，\n(5) 添加自定义筛选逻辑，\n(6) 任何涉及 useCombobox、Combobox.Target、Combobox.Option 或 Combobox.Dropdown 的任务。"}

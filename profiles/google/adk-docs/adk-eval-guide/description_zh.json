@@ -1,0 +1,1 @@
+{"description_zh": "在运行任何 ADK 评估之前必须阅读。ADK 评估方法论——评估指标、evalset schema、LLM-as-judge、工具轨迹评分，以及常见失败原因。用于评估 agent 质量、运行 adk eval 或调试评估结果。不要用于 API 代码模式（使用 adk-cheatsheet）、部署（使用 adk-deploy-guide）或项目搭建（使用 adk-scaffold）。"}

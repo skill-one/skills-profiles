@@ -1,0 +1,1 @@
+{"description_zh": "当项目包含 uiBundles/*/src/ 目录且任务涉及创建或配置站点基础设施时，必须激活。在创建或配置用于托管 UI 包的 Salesforce 数字体验站点时，使用此技能。当存在需要修改的符合 digitalExperiences/、networks/、customSite/ 或 DigitalExperienceBundle 的文件，或者用户希望为其应用程序发布、托管或配置访客访问权限时，激活。"}

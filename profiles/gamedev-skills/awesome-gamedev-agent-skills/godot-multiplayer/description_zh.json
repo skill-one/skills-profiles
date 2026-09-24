@@ -1,0 +1,1 @@
+{"description_zh": "使用 Godot 4.7 构建高级多人网络游戏：搭建 ENetMultiplayerPeer 服务器/客户端，使用 @rpc 注解定义 RPC（通过 rpc()/rpc_id() 调用），设置节点级多人权限，并使用 MultiplayerSpawner 和 MultiplayerSynchronizer 同步状态。适用于向 Godot 项目添加多人/网络功能、编写 @rpc 函数，或在跨对等端同步玩家/世界状态时使用。"}

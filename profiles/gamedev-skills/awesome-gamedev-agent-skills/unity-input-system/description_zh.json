@@ -1,0 +1,1 @@
+{"description_zh": "在 Unity 6.3 LTS 中使用 Input System 包连接玩家输入：包括 Input Actions、action maps、PlayerInput 组件，以及通过回调或轮询方式读取值。使用条件为：项目包含 .inputactions 资产或 com.unity.inputsystem 包，或用户提及 Unity Input System、InputAction、action maps、PlayerInput、控制方案或重绑定时。"}

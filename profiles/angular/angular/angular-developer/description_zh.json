@@ -1,0 +1,1 @@
+{"description_zh": "生成 Angular 代码，并提供架构指导。在创建项目、组件、服务或进行 HTTP 通信时触发，以及针对响应式（signals, linkedSignal, resource, httpResource）、表单、依赖注入、路由、服务端渲染（SSR）、无障碍（ARIA）、动画、样式（组件样式、Tailwind CSS）、测试、命名规范或 CLI 工具的最佳实践时触发。"}

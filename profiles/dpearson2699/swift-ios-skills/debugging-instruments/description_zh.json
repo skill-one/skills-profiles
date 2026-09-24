@@ -1,0 +1,1 @@
+{"description_zh": "使用LLDB、交互式内存图调试器（Memory Graph Debugger）和Instruments，调试iOS应用并分析性能。可用于排查崩溃、检查循环引用、解决卡死、处理构建失败，以及进行通用的CPU、内存、能耗或网络性能分析。使用ios-memgraph-analysis进行.memgraph捕获、排查内存泄漏及命令行所有权路径或持续堆内存增长；使用ios-ettrace-performance进行ETTrace捕获与JSON格式。"}

@@ -1,0 +1,1 @@
+{"description_zh": "设计 Sent Sender Profile 架构，用于多租户、多品牌和多渠道系统。可用于 API 密钥作用域限定、x-profile-id、隔离、继承、共享、计费、WABA、10DLC 营销活动、Webhook 或租户退场。"}

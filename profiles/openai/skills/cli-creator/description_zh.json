@@ -1,0 +1,1 @@
+{"description_zh": "从 API 文档、OpenAPI 规范、现有 curl 示例、SDK、Web 应用、管理工具或本地脚本构建可组合的 Codex CLI。当用户希望 Codex 创建可从任何仓库运行的命令行工具，提供可组合的读写命令，返回稳定的 JSON，管理认证，并与配套技能配对时使用。"}

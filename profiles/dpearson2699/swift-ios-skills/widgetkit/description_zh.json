@@ -1,0 +1,1 @@
+{"description_zh": "实施、审查或改进 WidgetKit 小部件与控制。\n\n在以下场景中使用：\n- 使用时间轴提供者构建主屏幕、锁屏、待机或 CarPlay 小部件；\n- 使用 AppIntentTimelineProvider 的可配置小部件；\n- 通过按钮（Button）和开关（Toggle）连接方式的交互式小部件或控制中心控件；\n- 涉及 WidgetKit 推送刷新、刷新预算、深层链接、Smart Stack 相关性、液态玻璃（Liquid Glass）及强调渲染、小部件扩展设置、WidgetBundle、应用组（App Groups）和权限（entitlements）等内容。"}

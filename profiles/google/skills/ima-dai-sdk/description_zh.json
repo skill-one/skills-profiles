@@ -1,0 +1,1 @@
+{"description_zh": "将 Google 互动媒体广告（IMA）动态广告投放（DAI）SDK 集成到网站、网页应用、移动应用或电视应用中。适用场景：\n- 视频播放器需要在网页应用、Android 应用、iOS 应用、tvOS 应用、Cast（CAF）接收器或 Roku 频道中加载并播放 HLS 或 DASH 流。\n- 应用需要使用 Google DAI 直播事件资产密钥、内容源 CMS ID 或视频点播视频 ID。请勿使用本技能加载并播放 VAST 或 VMAP URL。"}

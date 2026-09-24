@@ -1,0 +1,1 @@
+{"description_zh": "将 .NET 应用程序从经典的 Elastic APM .NET 代理迁移到 EDOT .NET SDK。适用于从 Elastic.Apm.* 包切换为 Elastic.OpenTelemetry 时使用。"}

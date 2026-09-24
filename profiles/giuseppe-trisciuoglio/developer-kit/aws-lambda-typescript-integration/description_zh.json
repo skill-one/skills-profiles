@@ -1,0 +1,1 @@
+{"description_zh": "提供具备冷启动优化的 TypeScript AWS Lambda 集成模式。适用于创建或部署 TypeScript Lambda 函数、在 NestJS 框架与原生 TypeScript 方案之间进行选择、优化冷启动、配置 API Gateway 或 ALB 集成，或实现无服务器 TypeScript 应用。触发词包括“创建 Lambda TypeScript”、“部署 TypeScript Lambda”、“NestJS Lambda AWS”、“原生 TypeScript Lambda”、“AWS Lambda TypeScript 性能”。"}

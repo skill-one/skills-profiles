@@ -1,0 +1,1 @@
+{"description_zh": "使用 `trigger.config.ts` 为 Trigger.dev 项目进行配置。适用于设置 Prisma、Playwright、FFmpeg、Python 的构建扩展，或自定义部署设置。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在编写Spark作业、调试性能问题，或针对Apache Spark应用、分布式数据处理流水线或大数据工作负载配置集群设置时使用。调用以编写DataFrame转换、优化Spark SQL查询、实现RDD流水线、调整shuffle操作、配置executor内存、处理.parquet文件、处理数据分区或构建结构化流式分析。"}

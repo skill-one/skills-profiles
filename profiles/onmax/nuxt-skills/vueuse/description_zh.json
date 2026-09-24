@@ -1,0 +1,1 @@
+{"description_zh": "在使用 VueUse 组合式函数时使用 - 使用 useMouse 追踪鼠标位置，使用 useStorage 管理 localStorage，使用 useNetwork 检测网络状态，使用 refDebounced 对值进行防抖，并响应式地访问浏览器 API。在编写自定义组合式函数之前，请先检查 VueUse - 大多数模式已经实现。"}

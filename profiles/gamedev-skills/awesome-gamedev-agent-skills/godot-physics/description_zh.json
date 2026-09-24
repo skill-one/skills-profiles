@@ -1,0 +1,1 @@
+{"description_zh": "使用 Godot 4.7 在 2D 和 3D 中的物理体与检测：刚体（RigidBody）、静态体（StaticBody）、区域（Area）与角色体（CharacterBody）；碰撞层与遮罩；接触/重叠信号；以及射线检测（RayCast节点与直接空间状态查询）。适用于配置碰撞层/遮罩、使用 Area2D/Area3D 检测重叠、对刚体施加力，或在包含物理体的 Godot 项目（.tscn）中投射射线。"}

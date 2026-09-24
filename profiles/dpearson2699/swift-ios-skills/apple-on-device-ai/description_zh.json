@@ -1,0 +1,1 @@
+{"description_zh": "在 iPhone、iPad 和 Mac 上，使用 Foundation Models、Core ML、MLX Swift 或 llama.cpp 构建私有且在设备端的 AI 功能。适用于以下场景：选择本地模型运行时、构建 Apple Intelligence 聊天机器人或工具调用功能、在 Apple Silicon 上运行 LLM、将 Python 模型转换为或压缩为 Core ML，以及比较在设备上的推理后端。针对 Swift Core ML 的加载与预测代码，请使用 coreml 技能。"}

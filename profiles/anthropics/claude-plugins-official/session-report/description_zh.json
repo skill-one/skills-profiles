@@ -1,0 +1,1 @@
+{"description_zh": "生成一份可探索的 Claude Code 会话使用情况的 HTML 报告（包括 tokens、缓存、子代理、技能、昂贵提示词），数据来源为 ~/.claude/projects 目录下的会话记录。"}

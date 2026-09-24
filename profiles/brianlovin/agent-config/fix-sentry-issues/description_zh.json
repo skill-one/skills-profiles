@@ -1,0 +1,1 @@
+{"description_zh": "使用 Sentry MCP 进行根因分析，以发现、分诊并修复生产环境问题。适用于被要求修复 Sentry 问题、对生产环境错误进行分诊、调查错误激增或清理 Sentry 噪音的场景。需要 Sentry MCP 服务器。触发词包括 \"fix sentry\"、\"triage errors\"、\"production bugs\"、\"sentry issues\"。"}

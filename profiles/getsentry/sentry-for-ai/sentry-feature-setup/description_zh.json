@@ -1,0 +1,1 @@
+{"description_zh": "在基础SDK设置之外，配置特定的Sentry功能。当需要配置OpenTelemetry管道、创建告警和通知，或设置Sentry快照时使用。"}

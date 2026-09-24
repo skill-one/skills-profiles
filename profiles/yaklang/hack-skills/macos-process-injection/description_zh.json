@@ -1,0 +1,1 @@
+{"description_zh": "macOS 进程注入操作手册。当你需要通过 dylib 劫持、DYLD 环境变量、XPC 利用、Mach 端口操纵或 Electron/Chromium 滥用等方式，向运行中或正在启动的 macOS 进程注入代码时使用。"}

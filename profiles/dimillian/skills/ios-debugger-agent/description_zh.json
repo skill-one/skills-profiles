@@ -1,0 +1,1 @@
+{"description_zh": "使用 XcodeBuildMCP 在已启动的模拟器上构建、运行、启动并调试当前 iOS 项目。当请求运行 iOS 应用、与模拟器界面交互、检查屏幕状态、捕获日志/控制台输出或诊断运行时行为时触发，并使用 XcodeBuildMCP 工具。"}

@@ -1,0 +1,1 @@
+{"description_zh": "Salesforce Data Cloud Segment 阶段。当用户创建或发布分群、管理计算洞察，或在 Data Cloud 中排查受众 SQL 时，使用此技能。触发条件：当用户创建或发布分群、管理计算洞察、检查分群数量或成员归属，或在 Data Cloud 中排查受众 SQL 时。不要触发：当任务为 DMO/映射/身份解析工作（使用 data360-harmonize）、激活工作（使用 data360-activate）、查询/搜索索引工作（使用 data360-query），或标准数据模型（STDM）/会话跟踪（使用 agentforce-observe）时。"}

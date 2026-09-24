@@ -1,0 +1,1 @@
+{"description_zh": "**使用 Mermaid 配合 ASCII 回退的 Salesforce 架构图。当生成 Salesforce 架构、OAuth 流程、ERD、集成序列或 Agentforce 结构的基于文本的图时，使用此技能。**\n\n**触发条件：当用户说\"图表\"、\"可视化\"、\"ERD\"，或要求生成 Mermaid 格式的序列图、流程图、类图或架构可视化时触发。**\n\n**无需触发的情况：当用户询问非 Salesforce 系统时。**"}

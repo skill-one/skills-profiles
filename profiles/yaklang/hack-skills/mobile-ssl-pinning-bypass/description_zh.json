@@ -1,0 +1,1 @@
+{"description_zh": "移动端 SSL 证书固定绕过操作手册。适用于拦截在 Android 和 iOS 平台上实现证书固定、公钥固定或 SPKI 哈希固定的移动应用所产生的 HTTPS 流量，包括 React Native、Flutter 和 Xamarin 框架。"}

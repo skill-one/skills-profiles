@@ -1,0 +1,1 @@
+{"description_zh": "NoSQL 注入操作手册。当 MongoDB 风格的运算符、JSON 查询对象、灵活搜索过滤器或后端查询 DSL 可能允许数据或逻辑滥用时使用。"}

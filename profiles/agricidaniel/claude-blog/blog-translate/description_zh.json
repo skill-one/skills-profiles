@@ -1,0 +1,1 @@
+{"description_zh": "使用基于SEO优化的本地化，将现有博客文章翻译为一种或多种目标语言。生成原生质量的翻译，并保留Markdown结构、前置元数据、schema JSON-LD、图片和图表嵌入以及基于证据的解释。根据地区（语言环境）对关键词、元标签、数字、日期、货币及引用样式进行本地化。标记机器翻译产生的瑕疵，以供人工审核。在 blog-localize 之前运行：本功能负责语言转换；blog-localize 则负责翻译完成后的文化适配。当用户说出“translate blog”、“blog translate”、“uebersetzen”、“traduire”、“traducir”、“translate post”、“blog auf Deutsch”、“blog en espanol”时使用。"}

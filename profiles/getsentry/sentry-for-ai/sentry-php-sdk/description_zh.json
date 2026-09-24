@@ -1,0 +1,1 @@
+{"description_zh": "PHP 的完整 Sentry SDK 设置。\n\n当被要求将 Sentry 添加到 PHP 中、安装 sentry/sentry、在 PHP 中设置 Sentry，或为 PHP 应用配置错误监控、追踪、性能分析、日志记录、指标、定时任务（crons）或 AI 监控时使用。\n\n支持纯 PHP、Laravel 和 Symfony。"}

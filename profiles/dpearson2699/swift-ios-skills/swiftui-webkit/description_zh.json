@@ -1,0 +1,1 @@
+{"description_zh": "利用 WebKit for SwiftUI，通过 WebKit 在 SwiftUI 中嵌入并控制网页内容，支持 WebView、WebPage、导航策略、JavaScript 执行、可观测页面状态、链接拦截、本地 HTML 或数据加载以及自定义 URL 方案。适用于构建 iOS 26+ 的文章/详情视图、帮助中心、应用内文档或其他基于 HTML、CSS 和 JavaScript 的嵌入网页体验。"}

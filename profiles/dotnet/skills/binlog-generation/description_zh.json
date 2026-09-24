@@ -1,0 +1,1 @@
+{"description_zh": "生成 MSBuild 二进制日志（binlogs），用于构建诊断与分析。**用途：** 在任何 dotnet 构建、测试、打包、发布或还原命令中添加 /bl:{}，以捕获完整的构建执行轨迹；这是 binlog-失败分析 与 构建性能诊断 技能的前提条件，支持构建后进行错误或性能排查。需要 MSBuild 17.8+ / .NET 8 SDK+ 及 {} 占位符；PowerShell 需使用 -bl:{{}}。**切勿用于：** 非 MSBuild 构建系统（npm、Maven、CMake），以及分析现有 binlog 的情况（请改用 binlog-失败分析技能）。"}

@@ -1,0 +1,1 @@
+{"description_zh": "启用并配置 Kibana 审计日志，用于保存对象访问、登录和空间操作。在设置 Kibana 审计、过滤事件或关联 Kibana 与 ES 审计日志时使用。"}

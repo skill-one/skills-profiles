@@ -1,0 +1,1 @@
+{"description_zh": "在 Unity 6.3 LTS 中添加 AI 导航：使用 AI 导航包（NavMeshSurface）烘焙 NavMesh，使用 NavMeshAgent.SetDestination 移动智能体，并处理动态障碍物。在设置寻路、让敌人追逐玩家、烘焙导航，或当用户提及 NavMesh、NavMeshAgent、NavMeshSurface、NavMeshObstacle 或 Unity 寻路时使用。"}

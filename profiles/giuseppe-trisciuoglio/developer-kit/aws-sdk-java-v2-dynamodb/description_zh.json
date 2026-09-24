@@ -1,0 +1,1 @@
+{"description_zh": "提供基于 AWS SDK for Java 2.x 的 Amazon DynamoDB 模式。适用于在 DynamoDB 表上进行创建、查询、扫描或执行 CRUD 操作，以及使用索引、批处理操作、事务或集成 Spring Boot 应用时使用。"}

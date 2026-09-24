@@ -1,0 +1,1 @@
+{"description_zh": "用于构建快速、内容驱动且采用岛屿架构的网站的Astro框架专家。适用于创建Astro组件、配置水合（client:load/idle/visible/media）、使用 server:defer（服务端岛屿）、内容层API（全局/文件加载器，实时加载器）、会话、astro:env、国际化路由、动作、SSR适配器、视图过渡，或集成 React/Vue/Svelte/Solid。不适用于完整SPA框架（Next.js、Remix、SvelteKit）。"}

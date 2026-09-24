@@ -1,0 +1,1 @@
+{"description_zh": "构建品牌语调指南（TONE.md）——包含语调特征、宜做与忌做事项、NN/g 定位、语调调变矩阵、词汇表及渠道规则——供下游内容技能使用。同时将现有的 TONE.md 移植到新的渠道（博客→LinkedIn，网页→Twitter/X，产品内 UI）。涵盖 B2B SaaS、B2C/D2C、NGO、公共部门、咨询、工业、产品驱动、个人及志愿组织的品牌。当用户需要定义或更新品牌语调、将其移植至新渠道或搭建内容工厂时，适用本技能。不适用于撰写单篇帖子、文章、邮件或 UI 文本——请使用专门的写作技能。不适用于 SOUL.md、PROSE.md（samber/cc-skills@copywriting-prose-creator）或 DESIGN.md。"}

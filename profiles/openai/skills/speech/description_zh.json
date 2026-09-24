@@ -1,0 +1,1 @@
+{"description_zh": "当用户请求文本转语音旁白、配音、无障碍朗读、音频提示，或通过 OpenAI 音频 API 进行批量语音生成时，运行随附的命令行工具（`scripts/path_to_file.py`），使用内置语音，并为实时调用提供 `OPENAI_API_KEY`。自定义语音创建不在范围内。"}

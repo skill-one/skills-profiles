@@ -1,0 +1,1 @@
+{"description_zh": "优化并改善缓慢的Entity Framework Core（EF Core）查询性能：使其生成更少的SQL语句，减少数据库往返，并更快地返回结果。当EF Core或DbContext查询或数据访问路径运行缓慢或需要加速时，即可使用——无论EF Core是否拥有数据库模式。针对EF Core，而非Dapper或原始ADO.NET。"}

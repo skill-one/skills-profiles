@@ -1,0 +1,1 @@
+{"description_zh": "支持使用 AudioAccessoryKit 为已配对的第三方蓝牙耳机或耳塞进行自动音频切换。当配套应用注册音频配件、应用扩展报告佩戴/摘下位置或已连接源设备变更，或需要处理 AccessoryControlDevice 的能力与错误时使用。不可用于一般的 AVAudioSession 路由、蓝牙传输或初始配件配对。"}

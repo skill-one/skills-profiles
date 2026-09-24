@@ -1,0 +1,1 @@
+{"description_zh": "Unity IMGUI（即时模式GUI）专家，专注于基于 OnGUI/即时模式 的遗留编辑器工具。能够生成并修改 IMGUI 编辑器窗口、自定义检视器、属性绘制器，以及包含 IMGUI 代码（OnGUI、OnInspectorGUI）的脚本。适用于维护现有 IMGUI 编辑器代码，或当用户明确要求使用 IMGUI/OnGUI 的场景。"}

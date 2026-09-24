@@ -1,0 +1,1 @@
+{"description_zh": "当用户询问附近停车场或（근처 주차장/공영주차장，即附近停车场/公共停车场）时使用。首先，始终先询问用户的当前位置，然后通过 k-skill-proxy 或 parking-lot-search 包使用官方 Data.go.kr 公共停车数据。"}

@@ -1,0 +1,1 @@
+{"description_zh": "任何通过 Firecrawl CLI 进行的实时网页任务——包括常规网页研究，例如：网络搜索、阅读或提取网页、收集资料来源、发现网站 URL、批量提取、下载整个网站、变更提醒，或需要点击/登录的页面——均仅限网页任务；本地文件则路由至 firecrawl-parse。论文相关请使用 firecrawl-research-index；关于图书馆、API、错误或 Bug 的问题，请使用 firecrawl-developer-index。"}

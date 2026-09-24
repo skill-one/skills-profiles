@@ -1,0 +1,1 @@
+{"description_zh": "使用 StoreKit 2 实施、审查或改进应用内购买与订阅。在构建付费墙时使用 SubscriptionStoreView 或 ProductView，使用 Product 和 Transaction API 处理交易，验证权限，处理购买流程（可消耗、不可消耗、自动续订），实现优惠码或促销/赢回/介绍性优惠，管理订阅状态与续订状态，使用配置文件设置 StoreKit 测试，或集成家庭共享、询问购买、退款处理与计费重试逻辑。"}

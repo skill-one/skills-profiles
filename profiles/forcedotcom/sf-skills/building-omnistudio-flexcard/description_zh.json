@@ -1,0 +1,1 @@
+{"description_zh": "带有130分评分的OmniStudio FlexCard创建与验证。用于构建一目了然式UI卡片、将数据源绑定配置至集成流程，或审查现有FlexCard定义以提升可访问性与性能时使用。触发条件：当用户创建FlexCard、配置数据源、设计卡片布局，或询问OmniUiCard元数据时触发。不触发条件：当构建OmniScripts（使用 building-omnistudio-omniscript）、创建集成流程（使用 building-omnistudio-integration-procedure），或分析依赖项（使用 analyzing-omnistudio-dependencies）时，不触发。"}

@@ -1,0 +1,1 @@
+{"description_zh": "提供 AWS SDK for Java 2.x 客户端配置、凭证解析、HTTP 客户端调优、超时、重试及测试模式。适用于创建或加固 AWS 服务客户端、装配 Spring Boot Bean、调试身份验证或区域问题，或选择同步与异步 SDK 使用方式时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "为 three.js 场景设置光照与阴影：选择材质（MeshStandardMaterial PBR 与无光照的 MeshBasicMaterial），添加环境光/半球光/方向光/点光源/聚光灯，开启阴影贴图，并使用环境贴图（IBL）实现真实反射。适用于 three.js 模型看起来发黑、扁平或效果错误的情况——当用户提及 three.js 材质、MeshStandardMaterial、光源、阴影、envMap 或 PBR 时。渲染器/循环设置请使用 threejs-scene-setup；加载模型请使用 threejs-gltf-loading。"}

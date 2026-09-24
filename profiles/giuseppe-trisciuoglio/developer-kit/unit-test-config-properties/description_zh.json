@@ -1,0 +1,1 @@
+{"description_zh": "提供使用 `@ConfigurationPropertiesTest` 对 `@ConfigurationProperties` 类进行单元测试的模式。验证属性绑定、测试验证约束、验证默认值、检查类型转换，并模拟用于 Spring Boot 配置属性的属性源。当测试应用配置绑定、验证 YAML 或 application.properties 文件、验证特定环境的设置，或测试嵌套属性结构时使用。"}

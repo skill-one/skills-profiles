@@ -1,0 +1,1 @@
+{"description_zh": "提供针对 DynamoDB-Toolbox v2 的 TypeScript 模式，包括模式/表/实体建模、.build() 命令工作流、查询/扫描访问模式、批处理与事务操作，以及带计算键的单表设计。当在 TypeScript 服务或无服务器应用中，使用 DynamoDB-Toolbox v2 实现类型安全的 DynamoDB 访问层时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用 clickhousectl CLI 搭建和管理 ClickHouse —— 为开发安装并运行本地 ClickHouse 服务器，并为生产环境创建托管的 ClickHouse 云服务（涵盖认证、服务创建、模式迁移、应用连接）。适用于用户需要基于 ClickHouse 构建应用程序、搭建本地 ClickHouse 开发环境、创建表并开始查询，或将 ClickHouse 部署到生产环境或 ClickHouse 云，以及从本地环境迁移至云端时使用。"}

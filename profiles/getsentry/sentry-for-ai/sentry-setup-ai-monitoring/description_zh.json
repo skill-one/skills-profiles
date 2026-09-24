@@ -1,0 +1,1 @@
+{"description_zh": "在任何项目中设置 Sentry AI Agent 监控。当被要求监控 LLM 调用、追踪 AI 智能体、追踪对话，或为 OpenAI/Anthropic/Vercel AI/LangChain/Google GenAI/Pydantic AI/Laravel AI 进行配置时使用。检测已安装的 AI SDK 并配置合适的集成。"}

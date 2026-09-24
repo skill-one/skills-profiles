@@ -1,0 +1,1 @@
+{"description_zh": "使用行为树与黑板在虚幻引擎 5 中构建 NPC AI：组合节点（选择器/序列）、任务、装饰器、服务，并从 AIController 运行该树。当创建敌人/NPC AI、BT_/BB_ 资源、自定义 BTTask 或 BTService 节点时使用，或当用户提及行为树、黑板、AIController、BTTask、装饰器或服务时使用。"}

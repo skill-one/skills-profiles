@@ -1,0 +1,1 @@
+{"description_zh": "获取、查询并识别用于 GCP 服务或资源（例如 Compute Engine、Spanner、BigQuery、Cloud Run、Cloud SQL、Pub/Sub、Cloud Storage 等）的相关 Google Cloud Monitoring 指标描述符。当被要求查找、列出、搜索或发现 GCP 指标类型、名称、类型/值架构或描述符时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用 AppMigrationKit 在平台之间传输应用数据。适用于实施在 iOS 与 Android 或其他平台之间的系统编排一次性数据迁移，包括构建 AppMigrationExtension、使用 ResourcesArchiver 打包可传输资源、在目标设备上导入资源、报告导入进度、处理迁移错误和 App Group 清理、检查 MigrationStatus，或使用 AppMigrationTester 测试迁移代码。"}

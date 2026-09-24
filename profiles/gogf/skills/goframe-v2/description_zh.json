@@ -1,0 +1,1 @@
+{"description_zh": "GoFrame v2 开发技能。仅在目标 Go 项目使用或明确采用 GoFrame v2 时使用：最近的 go.mod 包含 github.com/gogf/gf/v2 依赖，现有 Go 文件导入 github.com/gogf/gf/v2 或任何 github.com/gogf/gf/v2/... 组件包，或用户要求使用 GoFrame 进行脚手架搭建、迁移或构建。适用于基于 GoFrame 支持的 Go 开发工作，如 API/控制器/服务、中间件、路由/配置、ORM/DAO/DO/实体/数据库操作、gf CLI/代码生成、HTTP/gRPC 服务以及微服务规范。不适用于缺乏 GoFrame 证据的通用 Go 项目、仅前端工作、Shell 脚本，或不相关的基础设施任务。"}

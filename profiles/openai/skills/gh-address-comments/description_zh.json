@@ -1,0 +1,1 @@
+{"description_zh": "使用 gh CLI 协助处理当前分支开放 GitHub PR 上的评审意见及 Issue 评论；首先验证 gh 认证，若未登录则提示用户进行认证。"}

@@ -1,0 +1,1 @@
+{"description_zh": "指导现有 AI 工作负载（Cloud Run、Gemini API、Gemini Enterprise Agent Platform）通过 gcloud 和 kubectl 迁移至自托管 GKE 推理。适用于以下场景：用户拥有现有 AI 推理工作负载（部署于 Cloud Run、Gemini API、Gemini Enterprise Agent Platform 或自定义虚拟机中），并希望将其迁移至 GKE 自托管推理环境，或在迁移过程中提出相关问题（涉及硬件规模配置、模型暂存、清单生成、验证与流量切换等）。\n\n请勿用于尚无待迁移工作负载的全新 GKE 推理部署（请改用 gke-inference）。若用户意图通过 Gemini Cloud Assist MCP 服务器自动化完成迁移，则请勿使用。"}

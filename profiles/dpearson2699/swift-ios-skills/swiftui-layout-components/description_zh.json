@@ -1,0 +1,1 @@
+{"description_zh": "使用堆叠、网格、列表、滚动视图、表单以及控件，构建 SwiftUI 布局。涵盖 VStack/HStack/ZStack、LazyVGrid/LazyHGrid、带分节与滑动操作的 List、包含 ScrollPosition 与滚动驱动的展示表面的 ScrollView、支持校验的 Form、Toggle/Picker/Slider、.searchable 以及叠加模式。用于构建数据驱动布局、集合视图、分页详情展示、设置界面、搜索界面或临时叠加界面。"}

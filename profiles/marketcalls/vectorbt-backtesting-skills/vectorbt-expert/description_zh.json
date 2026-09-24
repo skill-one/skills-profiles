@@ -1,0 +1,1 @@
+{"description_zh": "VectorBT 回测专家。当用户要求回测策略、生成买入/卖出信号、分析投资组合表现、优化参数、获取历史数据、使用 VectorBT/vectorbt、比较策略、进行仓位管理、查看权益曲线、回撤图表或进行交易分析时使用。此外，还会触发 openalgo.ta 辅助函数（exrem、crossover、crossunder、flip、donchian、supertrEND）的使用。"}

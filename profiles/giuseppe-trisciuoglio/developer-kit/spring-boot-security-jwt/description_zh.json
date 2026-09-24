@@ -1,0 +1,1 @@
+{"description_zh": "为 Spring Boot 3.5.x 提供 JWT 认证与授权模式，涵盖基于 JJWT 的令牌生成、Bearer/cookie 认证、数据库/OAuth2 集成，以及基于 Spring Security 6.x 的 RBAC/基于权限的访问控制。适用于在 Spring Boot 应用程序中实现认证或授权。"}

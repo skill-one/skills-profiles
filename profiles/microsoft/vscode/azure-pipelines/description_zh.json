@@ -1,0 +1,1 @@
+{"description_zh": "在验证用于 VS Code 构建的 Azure DevOps 流水线变更时使用。覆盖排队构建、检查构建状态、查看日志，以及在不等待完整 CI 运行的情况下迭代流水线 YAML 变更。"}

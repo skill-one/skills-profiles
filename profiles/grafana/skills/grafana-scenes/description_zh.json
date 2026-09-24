@@ -1,0 +1,1 @@
+{"description_zh": "使用 @grafana/scenes 框架构建 Grafana 插件页面。用于创建新的场景页面、添加面板/可视化、配置下钻导航、定义变量、配置查询执行器、构建表格/时序/统计面板，或为自定义场景对象扩展 SceneObjectBase 时使用。当 Grafana 插件的任何工作涉及 SceneApp、SceneAppPage、EmbeddedScene、SceneQueryRunner、SceneDataTransformer、PanelBuilders、SceneFlexLayout、QueryVariable，或下钻/标签页配置时触发。"}

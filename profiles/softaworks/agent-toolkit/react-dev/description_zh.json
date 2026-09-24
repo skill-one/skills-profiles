@@ -1,0 +1,1 @@
+{"description_zh": "本技能用于在使用 TypeScript 构建 React 组件、为 Hook 添加类型、处理事件，或在提及 React TypeScript、React 19、服务端组件时。本技能涵盖了适用于 React 18-19 的类型安全模式，包括泛型组件、规范的事件类型定义以及路由集成（TanStack Router、React Router）。"}

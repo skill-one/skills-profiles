@@ -1,0 +1,1 @@
+{"description_zh": "为使用 Drizzle ORM 的 NestJS 应用生成完整的 CRUD 模块。在构建需要数据库操作的 NestJS 服务端功能时使用，包括创建具备完整 CRUD 接口的新实体、使用 Drizzle 查询的服务、Zod 校验的 DTO 以及单元测试。通过“生成用户模块”、“创建产品 CRUD”、“添加带有接口的新实体”等请求触发，或在 NestJS 中配置基于数据库的功能时触发。"}

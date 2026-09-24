@@ -1,0 +1,1 @@
+{"description_zh": "迭代优化 PR（GitHub）、MR（GitLab）或已搁置的变更列表（Perforce），直至 Greptile 为其提供 5/5 置信度分数且无未解决评论。触发 Greptile 评审，修复所有可执行评论，进行推送/重新搁置，重新触发评审并循环重复。当用户希望对 PR/MR/CL 完全符合 Greptile 的代码评审标准进行优化时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用 AWS CLI 部署一个区域性 REST API，该 API 配置自定义域名、Lambda 后端函数以及基于请求的 Lambda 授权器。涵盖 ACM 证书配置、API Gateway REST API 创建、Lambda 函数部署、请求授权器配置、自定义域名配置、基础路径映射以及 Route 53 DNS 记录创建。触发关键词：自定义域名、REST API、Lambda、Route 53、API Gateway、区域端点、请求授权器、基础路径映射。"}

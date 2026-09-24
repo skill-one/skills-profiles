@@ -1,0 +1,1 @@
+{"description_zh": "将编码任务委托给 GitHub Copilot CLI（`copilot`）作为后台实现者，然后审查其差异并自行合并到代码库中。当用户希望将实现工作委托给 Copilot，或使用类似“让 Copilot 实现 X”、“将此项委托给 copilot”、“通过 Copilot CLI 运行”、“使用 copilot 实现/修复/重构”等表述，亦或希望将一系列编码任务通过 Copilot 处理同时自己担任审查者时，请使用此方法。不要用于足够小可直接在行内完成的任务，或用户希望无需委托直接编写代码的情况。"}

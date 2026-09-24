@@ -1,0 +1,1 @@
+{"description_zh": "在 iOS 上实现应用意图用于 Siri、快捷指令、聚焦、小组件、控制中心和 Apple Intelligence。涵盖 AppIntent 操作、AppEntity 和 EntityQuery 模型、AppShortcutsProvider 短语、IndexedEntity 聚焦索引、WidgetConfigurationIntent、SnippetIntent 和助手模式。用于在系统界面中暴露应用操作或实体。"}

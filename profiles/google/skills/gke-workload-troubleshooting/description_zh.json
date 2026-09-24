@@ -1,0 +1,1 @@
+{"description_zh": "通过日志和事件诊断 GKE 工作负载故障（CrashLoopBackOff、OOMKilled、ImagePullBackOff、Pending 等）。适用于 Pod 启动失败或反复崩溃的场景。请勿用于 GKE 集群基础设施配置、节点池创建或非 Kubernetes 的 Google Cloud 服务。"}

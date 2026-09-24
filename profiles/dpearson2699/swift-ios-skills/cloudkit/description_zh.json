@@ -1,0 +1,1 @@
+{"description_zh": "在 iOS/macOS 应用中实现、审查或改进 CloudKit 与 iCloud 同步功能。当涉及 CKContainer、CKRecord、CKQuery、CKSubscription、CKSyncEngine、CKShare、NSUbiquitousKeyValueStore 或 iCloud Drive 文件协调；通过 ModelConfiguration 使用 cloudKitDatabase 同步 SwiftData 模型；处理 CKError 代码以解决冲突、网络故障或配额限制；或执行同步操作前检查 iCloud 账户状态时使用。"}

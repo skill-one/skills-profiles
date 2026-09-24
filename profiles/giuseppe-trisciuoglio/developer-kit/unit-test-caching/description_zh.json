@@ -1,0 +1,1 @@
+{"description_zh": "为 Spring Cache 注解（@Cacheable、@CachePut、@CacheEvict）提供单元测试模式。生成模拟缓存管理器的测试代码，验证缓存命中/未命中行为，测试基于 SpEL 表达式的缓存键生成，校验淘汰策略，并检查条件缓存场景。触发条件：缓存测试、测试 Spring Cache、缓存模拟、Spring Boot 缓存、缓存命中/未命中验证、@Cacheable 测试。"}

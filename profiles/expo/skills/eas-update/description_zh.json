@@ -1,0 +1,1 @@
+{"description_zh": "EAS 服务（付费）。使用 expo-updates 和 EAS CLI 配置并利用 EAS Update 进行 OTA JavaScript 和资产更新。适用于设置 OTA 更新、运行 eas update:configure 或 eas update、发布到预览/预发布/生产渠道、说明分支/渠道/运行时版本、测试更新，或调试已安装的构建版本仍显示旧代码等场景。当 TestFlight、预览或生产更新无法显示时，可用于处理相关问题，包括关于冷启动或重新打开应用的问题。不用于更新健康指标；请使用 eas-update-insights 进行采用度、崩溃和部署监控。"}

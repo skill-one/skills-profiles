@@ -1,0 +1,1 @@
+{"description_zh": "检测在博客文章中是否发生关键词蚕食现象：通过从标题和标题中提取主要关键词，对语义相近的目标进行聚类，并标记出争夺相同搜索意图的博文。支持仅本地模式（基于 grep 方式）和 DataForSEO API 模式（使用 Page Intersection 接口，约 $0.01/次调用）。输出带有严重程度评分的报告，并提供合并或区分处理建议。当用户使用\"cannibalization\"、\"keyword overlap\"、\"competing pages\"、\"duplicate keywords\"或\"cannibalize\"等表述时使用。"}

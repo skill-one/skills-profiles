@@ -1,0 +1,1 @@
+{"description_zh": "编写 Unity 6.3 LTS C# 游戏脚本：包括 MonoBehaviour 生命周期（Awake/OnEnable/Start/Update/FixedUpdate/LateUpdate）、GameObject 与组件访问、协程以及 Inspector 序列化。在 Unity 项目中创建或编辑 .cs 脚本时使用，或当用户提及 MonoBehaviour、Start/Update、GetComponent、SerializeField、协程或“Unity 脚本”时使用。"}

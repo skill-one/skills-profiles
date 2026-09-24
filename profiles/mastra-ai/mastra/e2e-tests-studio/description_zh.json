@@ -1,0 +1,1 @@
+{"description_zh": "REQUIRED：在修改 packages/playground-ui 或 packages/playground 中的任何文件时。触发条件：React 组件创建/修改/重构、UI 变更、新增 playground 功能、影响工作室 UI 的 Bug 修复。生成 Playwright E2E 测试，用于验证 PRODUCT BEHAVIOR，而非仅验证 UI 状态。"}

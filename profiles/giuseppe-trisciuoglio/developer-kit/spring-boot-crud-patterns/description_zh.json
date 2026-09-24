@@ -1,0 +1,1 @@
+{"description_zh": "为Spring Boot 3服务提供并生成完整的CRUD工作流。创建面向功能的架构，包含Spring Data JPA的聚合对象、仓库、数据传输对象（DTO）、控制器和REST API。验证领域不变量与事务边界。适用于为Spring Boot应用建模Java后端服务、REST API端点、数据库操作、Web服务模式或JPA实体。"}

@@ -1,0 +1,1 @@
+{"description_zh": "编写、运行和分析针对 Agentforce 代理的结构化测试套件。触发条件：用户编写或修改测试规范 YAML（AiEvaluationDefinition）；运行 sf agent test create、run、run-eval 或 results 命令；询问测试覆盖率策略、指标选择或自定义评估；解读测试结果或诊断测试失败；询问批量测试、回归套件或 CI/CD 测试集成。不触发条件：用户创建、修改、预览或调试 .agent 文件（使用 developing-agentforce）；部署或发布代理；编写 Agent Script 代码；使用 sf agent preview 进行开发迭代；分析生产会话跟踪（使用 observing-agentforce）。"}

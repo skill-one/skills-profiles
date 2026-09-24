@@ -1,0 +1,1 @@
+{"description_zh": "通过 adspower-browser CLI 进行 AdsPower 配置文件操作：打开/启动/启动浏览器或配置文件，访问环境、配置配置文件、AdsPower；创建/更新/删除/列出配置文件；分组、标签、代理；内核下载/列出；客户端补丁；API 状态检查。用户短语（如 open environment）需映射到相应命令（如 open-browser）。"}

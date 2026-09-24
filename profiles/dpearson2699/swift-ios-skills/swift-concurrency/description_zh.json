@@ -1,0 +1,1 @@
+{"description_zh": "解决 Swift 并发编译器错误，采用通俗化并发（SE-0466），编写数据竞争安全的异步代码。适用于修复 Sendable 一致性错误、actor 隔离警告或严格并发诊断；在采用默认 MainActor 隔离、@concurrent、nonisolated(nonsending) 或 Task.immediate；在设计基于 actor 的架构、结构化并发与 TaskGroup、或后台工作卸载；或在从 @preconcurrency 迁移至完整的 Swift 6 严格并发时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "通过 k-skill-proxy 查询 Naver 搜索的 Open API 新闻搜索（news.json），并谨慎整理最新新闻文章的标题、发布时间、链接与摘要。用户无需单独发放 API 密钥即可调用。"}

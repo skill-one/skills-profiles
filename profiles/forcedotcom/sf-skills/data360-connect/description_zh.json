@@ -1,0 +1,1 @@
+{"description_zh": "Salesforce Data Cloud Connect 阶段。当用户管理数据云连接、连接器或设置新的源系统时，使用此技能。\n触发条件：用户管理数据云连接、连接器、连接器元数据、测试连接、浏览源对象或数据库或设置新的源系统。\n不触发条件：任务涉及数据流或 DLOs（使用 data360-prepare）、DMOs 或身份解析（使用 data360-harmonize）、检索/搜索（使用 data360-query）或 STDM 遥测（使用 agentforce-observe）。"}

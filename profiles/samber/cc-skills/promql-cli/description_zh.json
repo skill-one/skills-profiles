@@ -1,0 +1,1 @@
+{"description_zh": "用于查询 Prometheus 及 PromQL 兼容引擎（Thanos、Cortex、VictoriaMetrics、Grafana Mimir、Grafana Tempo 等）的 CLI — 支持即时查询、范围查询、指标发现（metrics/labels/meta 子命令），输出格式（表格/csv/json/图）。适用于执行 PromQL 查询、排查具备可观测性的软件性能问题、调查延迟、错误率与饱和情况，或分析时序数据时使用。"}

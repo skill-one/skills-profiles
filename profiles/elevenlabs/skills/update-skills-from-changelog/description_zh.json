@@ -1,0 +1,1 @@
+{"description_zh": "从 elevenlabs-dx 合并后的每周更新日志更新 ElevenLabs 智能体技能，然后在 elevenlabs/skills 中发起拉取请求。当 elevenlabs-dx 中的更新日志合并到 main 后触发，或当要求根据更新日志 YYYY-MM-DD 更新技能时触发。"}

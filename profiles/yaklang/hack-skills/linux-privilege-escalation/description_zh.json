@@ -1,0 +1,1 @@
+{"description_zh": "Linux 权限提升操作手册。当你在 Linux 系统上拥有低权限 shell 访问权限，需要通过 SUID/SGID 二进制文件、能力（capabilities）、cron 滥用、内核漏洞利用、配置错误或凭据收集等方式提升到 root 权限时使用。"}

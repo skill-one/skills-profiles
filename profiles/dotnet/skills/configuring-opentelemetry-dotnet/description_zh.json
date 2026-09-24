@@ -1,0 +1,1 @@
+{"description_zh": "使用 .NET OpenTelemetry SDK 在 ASP.NET Core 中配置 OpenTelemetry 分布式追踪、指标和日志。适用于添加可观测性、设置 OTLP 导出器、创建自定义指标/跨度或排查分布式追踪关联问题。"}

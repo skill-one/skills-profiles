@@ -1,0 +1,1 @@
+{"description_zh": "在多个 Obsidian wiki 仓库配置之间切换。当用户说出 \"/wiki-switch NAME\"、\"切换到我的工作 wiki\"、\"切换仓库\"、\"更改 wiki\"、\"我当前在哪个 wiki\"、\"列出我的 wiki\"、\"显示我的仓库\"、\"创建新的仓库配置\" 或 \"添加新的 wiki 配置\" 时，请使用此技能。该技能管理位于 <global config dir>/config.NAME 的命名配置文件，并通过将其符号链接至 <global config dir>/config 来激活对应的配置。"}

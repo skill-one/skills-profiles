@@ -1,0 +1,1 @@
+{"description_zh": "在 JUnit 5 中提供参数化测试模式，使用 @ParameterizedTest、@ValueSource、@CsvSource、@MethodSource 注解生成数据驱动单元测试。创建在多个输入值下运行相同逻辑的测试。当编写数据驱动的 Java 测试、从单个方法创建多个测试用例或进行边界值分析时使用。"}

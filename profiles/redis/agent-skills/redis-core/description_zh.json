@@ -1,0 +1,1 @@
+{"description_zh": "核心 Redis 建模指南——选择合适的数据类型（String、Hash、List、Set、Sorted Set、JSON、Stream、Vector Set），并使用一致的冒号分隔键名。\n\n适用于 Redis 数据模型设计、缓存对象设计、在 Hash 与 JSON 之间进行选择、构建计数器、构建排行榜、创建成员集合或会话存储，以及审查或清理 Redis 键名等场景。"}

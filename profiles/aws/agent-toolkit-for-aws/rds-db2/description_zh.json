@@ -1,0 +1,1 @@
+{"description_zh": "Amazon RDS for Db2 的配置、连接、迁移和运行适用于以下情况：使用 IBM 客户和站点 ID 进行配置（许可证管理器、BYOL、GovCloud），通过 TLS 连接，在 Secrets Manager 轮换后修复 SQL30082N，从 Db2 LUW（Linux、AIX、Windows、AS400）或 z/OS 主机（ADB2GEN、Q 复制）迁移，选择代码页/排序规则（EBCDIC、CCSID），S3 备份/恢复，Multi-AZ 和跨区域备用副本，RDSADMIN 程序，客户管理的 KMS BYOK，自主管理的 Active Directory Kerberos，将 Db2 审计数据发送到 S3，最小 IAM，或托管。"}

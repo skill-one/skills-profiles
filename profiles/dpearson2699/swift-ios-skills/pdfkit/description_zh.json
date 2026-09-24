@@ -1,0 +1,1 @@
+{"description_zh": "使用 PDFKit 显示并操作 PDF 文档。适用于将 PDFView 嵌入以展示 PDF 文件、创建或修改 PDFDocument 实例、添加标注（高亮、批注、签名控件）、使用 PDFSelection 提取文本、导航页面、生成缩略图、填写 PDF 表单，或在 SwiftUI 中封装 PDFView。"}

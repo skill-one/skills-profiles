@@ -1,0 +1,1 @@
+{"description_zh": "使用 AccessorySetupKit 发现并配置蓝牙与 Wi-Fi 配件。适用于提供注重隐私的配件选择器、定义 BLE 或 Wi-Fi 设备的发现描述符、处理配件会话事件、从 CoreBluetooth 基于权限的扫描迁移，或在不要求广泛蓝牙权限的情况下配置配件。"}

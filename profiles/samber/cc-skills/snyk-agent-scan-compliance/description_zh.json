@@ -1,0 +1,1 @@
+{"description_zh": "snyk-agent-scan（智能体技能文件扫描器）合规专家——不适用于其他 Snyk CLI 工具（snyk test、snyk code SAST、snyk iac、snyk container）。通过内容重构修复警报，绝不通过抑制或删除信息来修复。覆盖技能目录中的所有文件：SKILL.md、references/、assets/ 以及任何辅助 Markdown 文件。在编写新技能、编辑现有技能、在本地或 CI（持续集成）中排查 snyk-agent-scan 运行失败，或解除因智能体扫描器失败而阻塞的 PR 时应用。不适用于依赖漏洞、代码安全发现或基础设施配置错误——这些均不在适用范围之内。"}

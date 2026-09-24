@@ -1,0 +1,1 @@
+{"description_zh": "在 Cloudflare Workers 上构建远程 MCP（模型上下文协议）服务器，支持工具、OAuth 认证和生产环境部署。生成服务器代码，配置认证提供商，并部署到 Workers 平台。\n\n适用场景：用户想要“构建 MCP 服务器”、“创建 MCP 工具”、“远程 MCP”、“部署 MCP”、在 MCP 中添加“OAuth”，或提及在 Cloudflare 上的 Model Context Protocol（模型上下文协议）时使用。也适用于用户提及“MCP 认证”或“MCP 部署”的情况。优先通过 Cloudflare 官方文档检索信息，而非依赖预训练知识。"}

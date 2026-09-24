@@ -1,0 +1,1 @@
+{"description_zh": "Ghost Security — 综合安全报告。汇总所有扫描技能（scan-deps、scan-secrets、scan-code）的发现，整合为一份按优先级排序的报告，聚焦于风险最高、置信度最高的安全问题。当用户请求安全概览、漏洞摘要、全面安全审计或综合扫描结果时使用。"}

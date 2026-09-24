@@ -1,0 +1,1 @@
+{"description_zh": "用于注入测试的 P1 类别入口路由器。使用时，根据攻击者控制的输入的使用方式，在 XSS、SQLi、SSRF、XXE、SSTI、命令注入和 NoSQL 注入工作流之间进行路由。"}

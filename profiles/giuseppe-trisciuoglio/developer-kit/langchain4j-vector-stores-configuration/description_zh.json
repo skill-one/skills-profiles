@@ -1,0 +1,1 @@
+{"description_zh": "为RAG应用中的LangChain4J向量存储提供配置模式。适用于构建语义搜索、集成向量数据库（PostgreSQL/pgvector、Pinecone、MongoDB、Milvus、Neo4j）、实现嵌入存储与检索、搭建混合搜索，或为生产级AI应用优化向量数据库性能时使用。"}

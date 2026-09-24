@@ -1,0 +1,1 @@
+{"description_zh": "用于在构建基于 Django REST Framework 的 Django Web 应用或 REST API 时使用。当处理 settings.py、models.py、manage.py 或任何 Django 项目文件时调用。用于创建带有适当索引的 Django 模型，使用 select_related/prefetch_related 优化 ORM 查询，构建 DRF serializer 与 viewset，并配置 JWT 认证。触发术语：Django、DRF、Django REST Framework、Django ORM、Django model、serializer、viewset、Python web。"}

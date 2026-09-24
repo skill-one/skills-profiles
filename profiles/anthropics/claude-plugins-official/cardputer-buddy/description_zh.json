@@ -1,0 +1,1 @@
+{"description_zh": "在设备已通过 m5-onboard 完成配置后，迭代 Cardputer-Adv MicroPython 应用包（Claude Buddy、Snake、Hello）。当用户需要添加新应用、在不重新刷机的前提下推送单个修改后的 .py 文件、查看设备串口日志或执行一次性 REPL 命令时使用。触发条件包括\"添加应用\"、\"推送到 Cardputer\"、\"跟踪设备\"、\"在设备上运行\"，或在 /maker-setup 之后的后续工作中。"}

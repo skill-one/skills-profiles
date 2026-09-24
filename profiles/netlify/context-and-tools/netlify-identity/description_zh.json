@@ -1,0 +1,1 @@
+{"description_zh": "为使用@netlify/identity 的 Netlify 站点添加用户认证——包括注册/登录/登出、Google/GitHub/GitLab/Bitbucket OAuth、服务端 getUser() 检查、基于角色的访问控制以及 Identity 事件函数。当涉及添加登录或注册表单、将内容限制为会员或角色访问、实现\"认证中间件\"或在 Netlify Functions 或 Edge Functions 中验证用户、处理 OAuth 或邮件确认回调、在注册时分配角色，或自定义 Identity 邮件时，请使用它。如需将整个站点锁定为您的公司或仅限员工访问，请改用 netlify-access-control。"}

@@ -1,0 +1,1 @@
+{"description_zh": "实现使用 JSONDecoder、JSONEncoder、CodingKeys 以及自定义的 init(from:) 或 encode(to:) 的 Swift Codable 模型，用于对 JSON 和属性列表进行编码与解码。适用于解析 API 响应、重映射键、将嵌套 JSON 扁平化、处理日期或数据解码策略、解码异构数组，以及将 Codable 与 URLSession、SwiftData 或 UserDefaults 集成。"}

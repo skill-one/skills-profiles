@@ -1,0 +1,1 @@
+{"description_zh": "使用 TypeScript、JavaScript 或 Go 编写、配置并部署 Netlify 无服务器函数。当添加 API 端点或后端路由、配置联系表单处理器、连接认证或 Identity 的注册/登录钩子、构建流式传输或 AI 代理响应、调度 Cron 任务、运行长时后台任务（批量处理/抓取）、响应部署或表单事件、设置速率限制或区域/内存配置，或在函数内部读取环境变量和密钥时，请使用本指南。涵盖文件位置、Request/Context/Response 处理器结构、路径路由、配置选项，以及使用 netlify dev 进行本地测试。"}

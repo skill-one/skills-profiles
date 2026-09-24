@@ -1,0 +1,1 @@
+{"description_zh": "诊断并预防在 GKE TPU v6e 节点上因 TPU 设备重置或高频指标轮询期间的竞争条件导致的 vbar_control_agent 段错误、内存不足（OOM）错误及 TPU 设备初始化失败。在排查 GKE TPU v6e 节点上 vbar_control_agent 崩溃、串口控制台日志中的内存 cgroup OOM、tpu-device-plugin 指标校验和损坏错误或自定义 TPU 指标收集冲突时使用。不可用于一般非 TPU 容器 OOM 故障排查或标准 GKE 节点生命周期操作。"}

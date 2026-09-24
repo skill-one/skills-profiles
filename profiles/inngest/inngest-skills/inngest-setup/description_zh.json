@@ -1,0 +1,1 @@
+{"description_zh": "在 TypeScript 项目中添加持久化执行时使用——用于构建具备重试安全性的 webhook 处理器、在崩溃后仍能存活的后台任务、定时任务，或超出单个请求期限的长期工作流。涵盖 Inngest SDK 的安装、客户端配置、环境变量、服务端点（Next.js、Express、Hono、Fastify）、作为工作进程的连接模式，以及本地开发服务器。"}

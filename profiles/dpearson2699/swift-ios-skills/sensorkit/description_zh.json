@@ -1,0 +1,1 @@
+{"description_zh": "通过 SensorKit 获取研究级传感器数据，用于获批研究。当应用需要设置 SensorKit 权限、Research Sensor & Usage Data 授权，以及获取环境光、记录的运动、设备使用、键盘指标、到访记录、语音、面部、手腕温度、ECG、PPG、声学设置或睡眠会话数据时使用。将普通运动路由至 CoreMotion，将健康记录与锻炼路由至 HealthKit。"}

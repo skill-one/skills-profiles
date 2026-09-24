@@ -1,0 +1,1 @@
+{"description_zh": "基于由xAI开源的X For You算法推广的六阶段Source→Hydrator→Filter→Scorer→Selector→SideEffect框架，设计可组合的推荐、排序及信息流管道。适用于构建任何选择针对（用户，上下文）的\"Top K项\"的系统——内容信息流、搜索排序、RAG重排序、任务优先级排序、通知分诊、广告选择。"}

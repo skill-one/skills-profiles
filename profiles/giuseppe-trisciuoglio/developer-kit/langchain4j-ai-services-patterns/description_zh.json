@@ -1,0 +1,1 @@
+{"description_zh": "提供使用 LangChain4j 在 Java 中构建声明式 AI Services 的模式，支持 LLM 集成、聊天机器人开发、AI Agent 实现以及对话式 AI。利用基于接口的模式、注解、记忆管理以及工具集成，生成类型安全的 AI Services。适用于以最少样板代码创建由 AI 驱动的 Java 应用程序、利用记忆实现对话式 AI，或构建具备函数调用功能的 AI Agent 的场景。"}

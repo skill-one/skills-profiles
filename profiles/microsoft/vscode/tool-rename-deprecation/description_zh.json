@@ -1,0 +1,1 @@
+{"description_zh": "确保重命名的内置工具引用保持向后兼容性。在重命名 toolReferenceName、tool set referenceName 或任何工具标识符时使用。在工具注册代码发生任何变更时运行。覆盖工具和工具集的 legacyToolReferenceFullNames 以及工具集的 legacyFullNames。"}

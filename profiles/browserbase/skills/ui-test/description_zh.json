@@ -1,0 +1,1 @@
+{"description_zh": "通过 browse CLI 进行 AI 驱动的对抗性 UI 测试。分析 git diff 以仅测试变更内容，或探索整个应用以查找 bug。测试功能正确性、可访问性、响应式布局和 UX 启发式规则。适用于用户要求测试 UI 变更、审查 Pull Request、审计可访问性或运行探索性测试时。支持本地浏览器（localhost）和远程 Browserbase（已部署站点）。"}

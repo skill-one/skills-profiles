@@ -1,0 +1,1 @@
+{"description_zh": "使用 PassKit 集成苹果支付和钱包通行证，适用于添加 Apple Pay 按钮、创建支付请求、处理支付授权、将通行证添加到钱包、配置商户功能、管理运输/联系方式字段，或使用 PKPaymentRequest、PKPaymentAuthorizationController、PKPaymentButton、AddPassToWalletButton、PKPass、PKAddPassesViewController、PKPassLibrary、钱包通行证分发，以及用于实体商品、现实世界服务、捐赠和符合条件的周期性支付的苹果支付结账流程。"}

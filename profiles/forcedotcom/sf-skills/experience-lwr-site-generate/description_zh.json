@@ -1,0 +1,1 @@
+{"description_zh": "通过 Digital Experience 元数据创建、修改或管理 Salesforce Experience Cloud LWR 站点。当任务涉及 LWR 站点配置时，必须始终触发，例如创建/修改页面、路由、视图、主题布局、品牌集，以及预览站点，或创建/修改访客共享规则（元数据类型 sharingGuestRules）/访客用户对访客用户的访问/共享记录，或当用户提供访客用户 ID（15 位或 18 位，以 005 开头）时。切勿针对 React 或任何其他 UI 打包框架触发。仅限 LWR 站点。"}

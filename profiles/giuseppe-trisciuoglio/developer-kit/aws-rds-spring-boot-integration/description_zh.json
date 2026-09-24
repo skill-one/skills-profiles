@@ -1,0 +1,1 @@
+{"description_zh": "提供模式，用于配置 AWS RDS（Aurora、MySQL、PostgreSQL）与 Spring Boot 应用。可配置 HikariCP 连接池，实现读写分离，设置 IAM 数据库认证，启用 SSL 连接，并与 AWS Secrets Manager 集成。适用于在 Spring Boot 中设置 RDS 连接、配置连接池或安全地管理数据库凭证。"}

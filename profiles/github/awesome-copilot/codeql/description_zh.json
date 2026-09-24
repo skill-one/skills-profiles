@@ -1,0 +1,1 @@
+{"description_zh": "综合指南：通过 GitHub Actions 工作流和 CodeQL CLI 设置与配置 CodeQL 代码扫描。当用户需要帮助进行代码扫描配置、编写 CodeQL 工作流文件、执行 CodeQL CLI 命令、查看 SARIF 输出、设置安全分析，或排查 CodeQL 分析问题时，应使用本技能。"}

@@ -1,0 +1,1 @@
+{"description_zh": "将文件上传至Govilo，并通过Bot API生成解锁链接。使用场景：(1) 从ZIP、文件夹或单独文件创建Govilo解锁链接，(2) 使用预签名URL自动化将文件上传至Govilo R2存储，(3) 管理Govilo Bot API交互（预签名→上传→创建条目）。需要 GOVILO_API_KEY 和 SELLER_ADDRESS 环境变量。如果缺失，会引导用户前往 https://govilo.xyz/ 注册。"}

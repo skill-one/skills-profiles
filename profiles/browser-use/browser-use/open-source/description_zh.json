@@ -1,0 +1,1 @@
+{"description_zh": "使用 browser-use 开源库编写 Python 代码的文档参考。当用户需要帮助配置 Agent、Browser 或 Tools，编写从 browser_use 导入的代码，或询问 @sandbox 部署、支持的 LLM 模型、Actor API、自定义工具、生命周期钩子、MCP server 设置，或通过 Laminar 或 OpenLIT 进行监控/可观测性时，请使用本技能。当用户询问 browser-use 安装、提示词策略或敏感数据处理时，也应触发本技能。请勿将此技能用于 Cloud API/SDK 的使用或定价——请使用 cloud 技能。请勿将此技能用于通过 CLI 命令直接自动化浏览器——请使用 browser-use 技能。"}

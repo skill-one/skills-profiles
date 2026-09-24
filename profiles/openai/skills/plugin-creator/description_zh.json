@@ -1,0 +1,1 @@
+{"description_zh": "为 Codex 创建并搭建插件目录，包含必需的 `.codex-plugin/plugin.json`、可选的插件文件夹/文件以及可供编辑的基准占位符，您可以在发布或测试前对其进行编辑。当 Codex 需要创建新的本地插件、添加可选插件结构，或生成或更新仓库根目录下的 `.agents/plugins/marketplace.json` 条目，用于配置插件排序与可用性元数据时使用。"}

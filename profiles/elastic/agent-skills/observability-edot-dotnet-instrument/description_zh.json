@@ -1,0 +1,1 @@
+{"description_zh": "使用Elastic Distribution of OpenTelemetry (EDOT) .NET SDK为.NET应用进行插桩，实现自动追踪、指标和日志功能。适用于为没有现有APM代理的.NET服务添加可观测性。"}

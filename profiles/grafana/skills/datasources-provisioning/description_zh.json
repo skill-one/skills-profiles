@@ -1,0 +1,1 @@
+{"description_zh": "根据插件CDN上的标准化设置模式，为任何插件生成可直接复制粘贴的Grafana数据源配置文件（YAML或Terraform）。当用户希望以代码方式配置或初始化数据源时使用——例如“provision infinity”、“datasource yaml for clickhouse”、“terraform for the github datasource”——即使用户只提及插件名称，而不使用“provisioning”一词。"}

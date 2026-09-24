@@ -1,0 +1,1 @@
+{"description_zh": "使用 AuthenticationServices 和 LocalAuthentication 实现 iOS 认证流程。适用于构建\"使用 Apple 登录\"、进行 passkey/WebAuthn 注册或通过 ASAuthorizationPlatformPublicKeyCredentialProvider 注册/登录 ASAuthorization 平台公钥凭据、处理 ASAuthorizationController 的凭据状态与撤销、执行 ASWebAuthenticationSession 的 OAuth 或第三方登录、实现密码自动填充、完成身份令牌服务器验证，或使用 LAContext 进行本地生物特征重新认证。"}

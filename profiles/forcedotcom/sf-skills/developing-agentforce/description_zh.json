@@ -1,0 +1,1 @@
+{"description_zh": "使用 Agentforce Agent Script 构建、修改、调试和部署代理。\n\n**触发条件：** 用户创建、修改或询问 .agent 文件或 aiAuthoringBundle 元数据；更改代理行为、响应或对话逻辑；设计代理操作、工具、子代理或流程控制；编写或审查 Agent Spec；预览、调试、部署、发布或测试代理；使用 Agent Script CLI 命令（sf agent generate/preview/publish/test）。\n\n**请勿触发：** Apex 开发、Flow 构建、提示词模板编写、Experience Cloud 配置，或与 Agent Script 无关的通用 Salesforce CLI 任务。"}

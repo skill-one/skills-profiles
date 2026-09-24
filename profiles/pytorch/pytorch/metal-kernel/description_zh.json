@@ -1,0 +1,1 @@
+{"description_zh": "为 PyTorch 算子编写 Metal/MPS 内核。用于在算子上添加 MPS 设备支持、实现 Metal 着色器，或将 CUDA 内核移植到 Apple Silicon。涵盖 native_functions.yaml 调度、主机端算子以及 Metal 内核实现。"}

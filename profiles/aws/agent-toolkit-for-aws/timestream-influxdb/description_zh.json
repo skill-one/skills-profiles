@@ -1,0 +1,1 @@
+{"description_zh": "提供 Amazon Timestream for InfluxDB（托管版 InfluxDB 2、InfluxDB 2 读取副本集群、InfluxDB 3 核心版和企业版）的权威指引。适用于所有 Amazon InfluxDB on AWS 请求，包括引擎选择、开通（Marketplace + AmazonTimestreamInfluxDBFullAccess/ConsoleFullAccess IAM）、模式设计（标签与字段、基数、HTTP/传感器/指标数据建模）、从 LiveAnalytics 的迁移、处理引擎插件、连接（V2 端口 8086、V3 端口 8181、默认仅限 VPC），以及写入/查询错误。"}

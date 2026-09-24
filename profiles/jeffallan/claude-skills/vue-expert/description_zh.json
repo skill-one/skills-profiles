@@ -1,0 +1,1 @@
+{"description_zh": "使用组合式 API 模式构建 Vue 3 组件，配置 Nuxt 3 SSR/SSG 项目，设置 Pinia 状态管理，搭建 Quasar/Capacitor 移动应用，实现 PWA 功能，优化 Vite 构建。适用于创建使用组合式 API 的 Vue 3 应用、编写可复用组合式函数、使用 Pinia 管理状态、使用 Quasar 或 Capacitor 构建混合移动应用、配置 Service Worker，或调整 Vite 配置与 TypeScript 集成。"}

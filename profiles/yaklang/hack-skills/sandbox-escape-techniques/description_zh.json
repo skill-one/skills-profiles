@@ -1,0 +1,1 @@
+{"description_zh": "沙箱逃逸操作手册。用于从 Python 沙箱、Lua 沙箱、seccomp 过滤器、chroot 沙箱、容器/Docker、浏览器沙箱或命名空间隔离中逃出，以实现不受限制的代码执行或文件访问。"}

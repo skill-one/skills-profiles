@@ -1,0 +1,1 @@
+{"description_zh": "Dynatrace 上的真实用户监控（RUM）—— Web和移动端前端。涵盖核心网页指标、用户会话、页面性能、移动端崩溃、前端错误以及前后端关联。可通过 `user.events`、`user.sessions` 和 `dt.frontended.*` 指标进行查询。不包含合成监控（HTTP/浏览器/网络检查）—— 这是独立的领域。"}

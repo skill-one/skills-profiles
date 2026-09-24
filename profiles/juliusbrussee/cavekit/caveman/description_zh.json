@@ -1,0 +1,1 @@
+{"description_zh": "石器时代编码，用于SPEC.md及周边规格文件的写入操作。由 /spec、/build、/check 加载。相比散文，在保持精确的同时，减少约75%的令牌数量。当对任何SPEC.md进行写入，或用户说出“caveman”、“compress this”、“be brief”时触发。"}

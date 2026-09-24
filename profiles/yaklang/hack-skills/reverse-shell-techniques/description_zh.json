@@ -1,0 +1,1 @@
+{"description_zh": "反向 Shell 技术使用指南。用于建立远程 shell，包括语言一行命令、加密 shell（OpenSSL/socat/ncat）、Web shell、PTY 升级、文件传输方法、PowerShell shell 以及 Windows 载荷生成。"}

@@ -1,0 +1,1 @@
+{"description_zh": "对全新项目、文档缺失的现有代码库，或特定区域（/audit src/auth）运行 /audit，用于初始化项目的 AI 上下文——即后续所有技能读取的 AGENTS.md 文件。它生成与工具无关的 AGENTS.md，并添加精简的 CLAUDE.md 指引，仅补充缺失内容，绝不覆盖精选内容。"}

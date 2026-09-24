@@ -1,0 +1,1 @@
+{"description_zh": "当项目包含 `uiBundles/*/src/` 目录且正在搭建新的 UI bundle 或应用，或正在编辑 `ui-bundle.json`、`.uibundle-meta.xml` 或 CSP 受信站点文件时，必须激活。当使用 `sf template generate ui-bundle` 搭建，配置 `ui-bundle.json`（路由、请求头、outputDir），或注册 CSP Trusted Sites 时，使用此技能。当任务涉及匹配 `*.uibundle-meta.xml`、`ui-bundle.json` 或 `cspTrustedSites/*.cspTrustedSite-meta.xml` 的文件时，激活该技能。"}

@@ -1,0 +1,1 @@
+{"description_zh": "二进制保护绕过操作手册。用于在ELF二进制文件中识别和绕过ASLR、PIE、NX/DEP、栈金丝雀、RELRO、FORTIFY_SOURCE、CET和MTE等保护措施，以实现漏洞利用。"}

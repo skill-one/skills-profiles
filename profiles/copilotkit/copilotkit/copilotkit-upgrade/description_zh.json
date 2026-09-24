@@ -1,0 +1,1 @@
+{"description_zh": "在将 CopilotKit v1 应用迁移至 v2 时使用——更新包导入，替换已弃用的 hooks 和组件，将 GraphQL 运行时切换为 AG-UI 协议运行时，并处理破坏性 API 变更。"}

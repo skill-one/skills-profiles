@@ -1,0 +1,1 @@
+{"description_zh": "基于文件大小，通过步骤函数部署一个事件驱动工作流，将 S3 上传操作路由至 Lambda 或 Fargate。当对象被上传到 S3 时，使用事件总线触发步骤函数状态机。小文件由 Lambda 处理，大文件由 Fargate 任务处理。包含 VPC、ECR 仓库、ECS 集群以及范围受限的 IAM 角色。\n\n触发关键词：步骤函数、Fargate、Lambda、S3 事件、事件总线、ECS、ECR、文件处理、工作流编排、无服务器。"}

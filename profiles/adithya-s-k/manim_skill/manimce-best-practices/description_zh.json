@@ -1,0 +1,1 @@
+{"description_zh": "触发条件：\n（1）用户提及“manIm”“ManIm Community”或“ManImCE”；\n（2）代码中包含 `from manIm import *`；\n（3）用户运行 `manIm` CLI 命令；\n（4）正在使用 Scene、MathTex、Create() 或 ManImCE 特定类。\n\nManIm 社区版最佳实践 —— 社区维护的 Python 动画引擎。涵盖 Scene 结构、动画、LaTeX/MathTex、基于 ThreeDScene 的 3D 场景、相机控制、样式及 CLI 使用。\n\n不适用于 ManImGL/3b1b 版本（该版本使用 `manImlib` 导入和 `manImgl` CLI 命令）。"}

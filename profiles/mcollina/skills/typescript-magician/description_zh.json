@@ -1,0 +1,1 @@
+{"description_zh": "设计复杂的泛型类型，将 `any` 类型重构为严格的替代方案，创建类型守卫和工具类型，并解决 TypeScript 编译器错误。当用户询问 TypeScript (TS) 类型、泛型、类型推断、类型守卫、移除 `any` 类型、严格类型、类型错误、`infer`、`extends`、条件类型、映射类型、模板字面量类型、标记/不透明类型，或类似 `Partial`、`Record`、`ReturnType` 和 `Awaited` 的工具类型时使用。"}

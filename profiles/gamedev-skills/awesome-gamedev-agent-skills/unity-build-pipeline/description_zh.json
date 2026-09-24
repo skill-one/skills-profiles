@@ -1,0 +1,1 @@
+{"description_zh": "构建并发布 Unity 6.3 LTS 玩家：构建设置与场景、玩家/质量设置、IL2CPP 与 Mono 脚本后端、托管代码剥离、脚本化 BuildPipeline.BuildPlayer 以及 CI/无头构建。适用于配置或自动化构建、选择脚本后端、缩小构建体积，或当用户提及 Unity 构建、玩家设置、IL2CPP、代码剥离或 Addressables 时的场景。"}

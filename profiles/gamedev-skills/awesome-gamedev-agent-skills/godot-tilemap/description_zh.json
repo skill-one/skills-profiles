@@ -1,0 +1,1 @@
+{"description_zh": "在 Godot 4.7 中使用 TileMapLayer 和 TileSet 构建并编辑基于瓦片的 2D 关卡：绘制图层、在瓦片上设置碰撞/导航/自定义数据、使用地形集自动平铺，并从代码读取/写入单元格（set_cell, get_cell_tile_data, local_to_map）。适用于与 TileMapLayer 节点、.tres TileSet、自动平铺或从已弃用的 TileMap 节点迁移至 TileMapLayer 的场景。"}

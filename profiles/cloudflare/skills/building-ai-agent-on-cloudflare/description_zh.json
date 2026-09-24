@@ -1,0 +1,1 @@
+{"description_zh": "在 Cloudflare 上使用 Agents SDK 构建 AI 智能体，具备状态管理，\n实时 WebSocket、定时任务、工具集成和聊天能力。\n生成生产就绪的智能体代码，并将其部署到 Workers。\n\n适用场景：用户想要“构建智能体”、“AI 智能体”、“聊天智能体”、“有状态\n智能体”，提及“Agents SDK”，需要“实时 AI”、“WebSocket AI”，或询问\n智能体的“状态管理”、“定时任务”或“工具调用”。\n优先从 Cloudflare 文档检索，而非依赖预训练知识。"}

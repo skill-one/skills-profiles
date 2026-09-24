@@ -1,0 +1,1 @@
+{"description_zh": "使用此方式访问外部服务/CLIs/APIs（如 Gmail、gh、Github、Stripe 等），或在运行任何发起出站 HTTP 调用的 bash 命令、脚本、curl/wget 时使用。直接发起 HTTP 请求，网关会自动注入凭证。"}

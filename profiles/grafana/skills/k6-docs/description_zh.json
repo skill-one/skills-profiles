@@ -1,0 +1,1 @@
+{"description_zh": "编写或审查跨 k6 三个仓库的 k6 文档 —— k6-DefinitelyTyped（TypeScript 类型）、k6-docs（用户文档）和 k6（发布说明 / 变更日志）。应用 k6 文档样式规范，生成 TypeScript 类型定义，草拟发布说明，并在 k6@master 上运行示例以验证其正确性。当处理 k6 文档、k6 变更日志、k6 发布说明、k6 API 参考、k6 TypeScript 类型、负载测试文档，或当用户要求在 k6、k6-docs 或 k6-DefinitelyTyped 仓库中编写、编辑或审查任何内容时使用 —— 即使用户没有明确说明“文档”。"}

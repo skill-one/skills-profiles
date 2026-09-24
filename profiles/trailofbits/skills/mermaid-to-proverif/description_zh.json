@@ -1,0 +1,1 @@
+{"description_zh": "将描述加密协议的Mermaid时序图转换为ProVerif形式化验证模型（.pv文件）。用途：当生成ProVerif模型、对协议进行形式化验证、将Mermaid图表转换为ProVerif、验证协议安全属性（保密性、认证、前向保密性）、检查是否存在重放攻击，或从时序图生成.pv文件时使用。"}

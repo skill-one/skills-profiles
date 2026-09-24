@@ -1,0 +1,1 @@
+{"description_zh": "将 Figma 设计转换为生产就绪且具备 1:1 视觉保真度的应用程序代码。当从 Figma 文件实现 UI 代码、用户提到“界面设计”、“生成代码”、“界面组件”、提供 Figma URL，或要求根据 Figma 规范构建组件时使用。对于通过 `use_figma` 进行的 Figma 画布写入，使用 `figma-use`。"}

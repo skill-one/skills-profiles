@@ -1,0 +1,1 @@
+{"description_zh": "用于为持久函数添加横切关注点的场景——即在全部函数中实现结构化日志或链路追踪、使用 Sentry 进行错误追踪、对敏感数据加密负载、将客户端（如数据库、Stripe 等）注入函数处理程序、实现自定义遥测，或需应用于多个函数中统一生效的行为。涵盖 Inngest 中间件生命周期、创建自定义中间件、dependencyInjectionMiddleware、@inngest/middleware-encryption、@inngest/middleware-sentry 以及自定义中间件模式等内容。"}

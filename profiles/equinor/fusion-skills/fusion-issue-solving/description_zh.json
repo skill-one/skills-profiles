@@ -1,0 +1,1 @@
+{"description_zh": "用于处理诸如 \"solve #123\"、\"lets solve #123\"、\"work on #123\"、\"work on https://github.com/owner/repo/issues/123\" 或直接粘贴 GitHub 问题 URL 作为请求等提示词，实现 GitHub 问题的端到端解决。\n\n**适用用途：** 解决 #123、继续处理 #123 问题、处理 https://github.com/owner/repo/issues/123、粘贴 GitHub 问题链接以开展实施工作。\n\n**不适用场景：** 仅用于问题撰写、仅用于 PR 审查，或非实施性研究。"}

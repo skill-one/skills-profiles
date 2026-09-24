@@ -1,0 +1,1 @@
+{"description_zh": "用于Apple平台（iOS、macOS、tvOS、watchOS、visionOS）的完整Sentry SDK设置。当被要求“为iOS添加Sentry”、“为Swift添加Sentry”或“安装sentry-cocoa”，或为Apple应用程序配置错误监控、追踪、性能分析、会话重放、日志或指标时使用。支持SwiftUI和UIKit。"}

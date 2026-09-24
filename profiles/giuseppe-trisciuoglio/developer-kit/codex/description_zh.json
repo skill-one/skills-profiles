@@ -1,0 +1,1 @@
+{"description_zh": "为使用 OpenAI 的 GPT-5.3-codex 模型处理复杂代码生成与开发任务的 Codex CLI 提供委托工作流程，涵盖英文提示词编写、执行参数、沙箱模式及安全结果处理。当用户明确要求使用 Codex 执行代码生成、重构或架构分析等复杂编程任务时使用。触发关键词包括“use codex”、“delegate to codex”、“run codex cli”、“ask codex”、“codex exec”、“codex review”。"}

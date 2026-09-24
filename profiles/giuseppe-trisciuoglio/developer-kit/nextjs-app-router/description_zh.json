@@ -1,0 +1,1 @@
+{"description_zh": "提供用于使用 App Router 架构构建 Next.js 16+ 应用程序的模式与代码示例。在基于 App Router 创建项目、实现 Server Components 与 Client Components（\"use client\"）、为表单创建 Server Actions、构建 Route Handlers（route.ts）、使用 \"use cache\" 指令（cacheLife、cacheTag）配置缓存、设置并行路由（`@slot`）或拦截路由、迁移至 proxy.ts 或处理 App Router 文件约定（layout.tsx、page.tsx、loading.tsx、error.tsx）时使用。"}

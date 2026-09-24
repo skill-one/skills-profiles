@@ -1,0 +1,1 @@
+{"description_zh": "配置 GKE 边缘网络、流量路由、负载均衡和私有服务端点。在配置 Gateway API 清单、标准 Ingress、Cloud Armor WAF 安全策略、Container-Native Load Balancing（NEGs）、Private Service Connect（PSC）或 GKE 上由 Google 管理的 SSL 证书时使用。不适用于核心集群 IP 规划、Dataplane V2 网络策略或节点 NAT 出口（改用 gke-networking）。"}

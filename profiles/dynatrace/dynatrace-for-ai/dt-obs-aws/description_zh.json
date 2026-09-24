@@ -1,0 +1,1 @@
+{"description_zh": "AWS 云资源监控，包括 EC2、RDS、Lambda、ECS/EKS、VPC 网络、负载均衡器、S3、DynamoDB、SQS/SNS 以及成本优化。适用于分析 AWS 基础设施、资源清单、安全合规、容量规划或成本节约的场景。触发词：“显示 EC2 实例”、“查找 RDS 数据库”、“VPC 资源”、“AWS 成本优化”、“Lambda 函数”、“ECS 服务”、“安全组”、“未附加的 EBS 卷”、“AWS 负载均衡器拓扑”、“公网可访问的数据库”、“AWS 仪表盘”。请勿用于解释已有查询、产品文档问题、通用主机 CPU/内存指标（使用 dt-obs-hosts）、应用级追踪（使用 dt-obs-tracing）或日志分析（使用 dt-obs-logs）。"}

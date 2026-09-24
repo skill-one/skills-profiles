@@ -1,0 +1,1 @@
+{"description_zh": "为 Spring Boot 应用提供 Spring Data Neo4j 集成模式。当您需要处理图数据库、Neo4j 节点与关系、Cypher 查询或 Spring Data Neo4j 时使用。使用 @Node 注解创建节点实体，利用 @Relationship 定义关系，借助 @Query 编写 Cypher 查询，配置命令式和响应式 Neo4j 仓库，实现图遍历模式，并配置嵌入式数据库测试。"}

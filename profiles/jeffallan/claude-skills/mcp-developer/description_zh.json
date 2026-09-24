@@ -1,0 +1,1 @@
+{"description_zh": "用于构建、调试或扩展连接AI系统与外部工具和数据源的MCP服务器或客户端时使用。调用以实现工具处理器、配置资源提供者、设置stdio/HTTP/SSE传输层、使用Zod或Pydantic验证模式、调试协议合规性问题，或基于TypeScript或Python SDK搭建完整的MCP服务器/客户端项目。"}

@@ -1,0 +1,1 @@
+{"description_zh": "对博客文章进行审计并评分，采用涵盖内容质量、SEO优化、E-E-A-T信号、技术元素和AI引用就绪度的5类100分评分体系。包含顾问编辑风格诊断（句子长度变化、配置的短语列表、词汇采样），该诊断不会推断作者身份，也不影响评分。支持导出格式（Markdown、JSON、表格）以及支持排序的批量分析。生成带具体修改建议的优先级推荐（关键/高/中/低）。兼容任何格式（MDX、Markdown、HTML、URL）。当用户说“analyze blog”、“audit blog”、“blog score”、“check blog quality”、“blog review”、“rate this blog”、“blog health check”时使用。"}

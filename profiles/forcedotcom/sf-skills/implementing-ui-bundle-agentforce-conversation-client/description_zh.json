@@ -1,0 +1,1 @@
+{"description_zh": "在使用此技能时，若用户要求在 UI Bundle 项目中添加、嵌入、集成、配置、样式化或移除智能体、聊天机器人、聊天组件、对话客户端或 AI 助手。触发条件：项目包含 uiBundles/*/src/ 目录，且任务涉及添加或修改聊天组件、聊天机器人或对话式 AI；位于 uiBundles/*/src/ 下的文件导入 AgentforceConversationClient；用户要求向页面添加任何聊天或智能体功能。禁止触发条件：用户要求从零开始创建自定义的智能体、聊天机器人或聊天组件；项目中没有 uiBundles 目录。"}

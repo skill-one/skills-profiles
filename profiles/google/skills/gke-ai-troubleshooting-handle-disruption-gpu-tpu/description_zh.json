@@ -1,0 +1,1 @@
+{"description_zh": "可诊断、预测并缓解 GKE 上 GPU 和 TPU 工作负载在 Compute Engine 主机维护及硬件或软件维护事件期间的节点中断。适用于诊断节点中断、预测 GPU/TPU 节点池中的主机维护事件、检查节点中断 PromQL 指标、审计节点污点，或配置工作负载保护策略（优雅终止、机会性维护、PodDisruptionBudgets）。请勿用于一般 GKE 集群创建、网络策略配置或非中断工作负载部署。"}

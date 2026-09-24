@@ -1,0 +1,1 @@
+{"description_zh": "Telegram 机器人绑定：创建机器人、连接到 Starchild、验证、故障排查。\n\n绑定方式有两种：（1）扫码创建（推荐，自动绑定）或（2）手动使用 BotFather + token + 验证。\n\n在设置 Telegram 推送时使用（例如：添加我的 TG 机器人、机器人绑定代码、修复“Telegram 未推送”问题、为 TG 用户账号添加白名单）。"}

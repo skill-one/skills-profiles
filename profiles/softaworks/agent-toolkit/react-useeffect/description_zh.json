@@ -1,0 +1,1 @@
+{"description_zh": "React useEffect 最佳实践（源自官方文档）。适用于编写或审查 useEffect、使用 useState 处理派生值、进行数据获取或实现状态同步。该内容讲解何时不应当使用 useEffect，并提供更优的替代方案。"}

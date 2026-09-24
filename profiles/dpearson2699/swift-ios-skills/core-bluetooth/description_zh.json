@@ -1,0 +1,1 @@
+{"description_zh": "使用核心蓝牙构建低功耗蓝牙（BLE）工作流程。\n\n在实现 BLE 中心或外围设备的 GATT 通信、使用 CBCentralManager 进行扫描与连接、发现服务与特征、使用 CBPeripheral 进行读取/写入/订阅、使用 CBPeripheralManager 发布本地服务、处理蓝牙授权、后台 BLE 模式、状态恢复、写入流程控制，或基于 CBUUID 的工作流程时使用。\n\n对于注重隐私的配件设置/选择流程，请优先使用 accessorysetupkit，并在设置完成后在此处进行 GATT 通信。"}

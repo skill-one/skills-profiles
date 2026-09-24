@@ -1,0 +1,1 @@
+{"description_zh": "在iOS应用中实现计算机视觉功能，包括文本识别（OCR）、人脸检测、条码扫描、图像分割、对象跟踪和文档扫描。内容涵盖现代Swift原生的Vision API（iOS 18及以上版本）和遗留的VNRequest模式，VisionKit的DataScannerViewController用于实时相机扫描，以及CoreMLRequest/VNCoreMLRequest用于自定义模型推理。适用于在Vision中添加OCR、条码扫描、人脸检测或自定义Core ML模型推理的场景。"}

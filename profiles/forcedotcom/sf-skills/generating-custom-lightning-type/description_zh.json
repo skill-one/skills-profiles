@@ -1,0 +1,1 @@
+{"description_zh": "当用户需要使用本技能创建爱因斯坦智能体动作或结构化输入/输出模式的自定义 Lightning 类型（Custom Lightning Types）时，请使用本技能。当用户提及 CLT、Custom Lightning Types、带有 widget/mosaic/fragment 渲染方式/渲染器的 Custom Lightning Types（CLTs）、智能体 JSON 模式、类型定义、lightning__objectType 或编辑器/渲染器配置时，触发本技能。当需要 widget 渲染方式时，您必须先读取本技能 references/ 目录下的 widget-randation.md 参考文件，并遵循其完整工作流。此项工作较为复杂——请始终使用本技能处理 CLT 相关工作。"}

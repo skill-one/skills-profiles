@@ -1,0 +1,1 @@
+{"description_zh": "提供 Spring Boot MCP 服务器模式，该模式通过定义工具处理器、暴露资源、配置提示模板以及设置 AI 函数调用和工具调用的传输，使用 Spring AI 创建模型上下文协议服务器。用于构建 MCP 服务器时，借助 Spring 官方 AI 框架扩展 AI 能力，实现 AI 工具、自定义函数调用或 MCP 客户端集成。"}

@@ -1,0 +1,1 @@
+{"description_zh": "针对显式 qodo-pr-resolver 请求的兼容性别名。请遵循此处嵌入的完整 Qodo PR 审核工作流，并使用 qodo-review-resolver 进行新的调用；生命周期更新来源信息有意使用标准的 qodo-review-resolver release-index 身份。"}

@@ -1,0 +1,1 @@
+{"description_zh": "适用于使用 NeMo Retriever 26.8.1 CLI 对文档集进行搜索、提取、摄入或查询的场景，包括本地 LanceDB 索引和已部署的 Retriever 服务。用于 PDF、图像、Office 文件、HTML、文本、音频和视频；不用于编辑文档或网络搜索。"}

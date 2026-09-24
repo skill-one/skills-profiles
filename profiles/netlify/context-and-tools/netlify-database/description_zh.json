@@ -1,0 +1,1 @@
+{"description_zh": "通过 @netlify/database 为 Netlify 应用提供零配置 Postgres —— 从 Functions/边缘函数查询数据，编写模式迁移，设置 Drizzle ORM，使用 netlify dev 进行本地开发，为部署预览配置数据库分支，以及将现有 Postgres 项目迁移到 Netlify。适用于添加数据库、构建联系表单或 CRUD API、编写 SQL 迁移、连接 Drizzle、执行 netlify database 命令、使用本地 Postgres 进行测试，或从 Neon/Supabase/RDS 迁移到 Netlify Database 等场景。"}

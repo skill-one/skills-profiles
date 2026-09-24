@@ -1,0 +1,1 @@
+{"description_zh": "全栈后端架构与前后端集成指南。\nTRIGGER when: 构建全栈应用、创建前后端集成 REST API、搭建后端服务，\n构建待办事项应用、构建 CRUD 应用、构建实时应用、构建聊天应用，\nExpress + React、Next.js API、Node.js 后端、Python 后端、Go 后端，\n设计服务层、实现错误处理、管理配置/认证，\n设置 API 客户端、实现认证流程、处理文件上传，\n添加实时功能（SSE/WebSocket）、为生产环境加固。\nDO NOT TRIGGER when: 纯前端 UI 工作、纯 CSS/样式工作、仅数据库 schema。"}

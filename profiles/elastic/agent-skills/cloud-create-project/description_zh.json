@@ -1,0 +1,1 @@
+{"description_zh": "通过 REST API 创建弹性云无服务器项目（Elasticsearch、可观测性或安全类），将凭据保存到文件中，并初始化一个受限的 Elasticsearch API 密钥。用于创建新的无服务器项目、配置搜索或可观测性环境，或启动新的弹性云项目时。"}

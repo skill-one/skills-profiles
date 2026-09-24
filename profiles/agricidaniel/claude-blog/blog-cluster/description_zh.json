@@ -1,0 +1,1 @@
+{"description_zh": "用于 claude-blog 的语义主题集群规划与自动化执行引擎。执行基于 SERP 的关键词研究，根据搜索意图和 SERP 重叠度对关键词进行分组，构建中枢-辐射集群架构，生成可交互的 SVG 集群地图，并通过编排博客撰写调用、共享集群上下文并自动注入内链来执行整个集群。填补策略到执行的差距：blog-strategy 规划蓝图，blog-cluster 建造房屋。当用户说出“blog cluster”、“topic cluster”、“content cluster”、“cluster plan”、“cluster execute”、“pillar content”、“hub and spoke”、“content ecosystem”、“cluster map”时使用。"}

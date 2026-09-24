@@ -1,0 +1,1 @@
+{"description_zh": "**Vitest API 与配置参考（Jest 兼容）**\n\n—— 涵盖使用 vi.* 进行模拟、spy 函数、假定时器、覆盖率配置、测试夹具、快照及测试过滤等内容。\n\n在 monorepo 的任何位置，均可用于解答关于 Vitest API 与配置的问题。\n\n针对特定于 Studio 的测试策略和组件测试设置，请先从 studio-testing 和 studio-mock-api-tests 开始。"}

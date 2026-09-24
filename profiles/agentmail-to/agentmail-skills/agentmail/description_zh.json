@@ -1,0 +1,1 @@
+{"description_zh": "使用 AgentMail 的 TypeScript 或 Python SDK 构建以下工作流：收件箱、消息、线程、草稿、附件、域名、允许/阻止列表、pod、webhook 和 WebSocket 工作流，包括程序化代理注册、域名/DNS 管理以及投递性分类（退信、垃圾邮件、阻止邮件）。用于实现或审查 AgentMail API 代码时使用；不得用于直接邮箱操作、CLI 使用、MCP 设置或框架工具集成。"}

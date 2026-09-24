@@ -1,0 +1,1 @@
+{"description_zh": "通过 netlify.toml、_redirects 和 _headers 配置 Netlify 构建和路由。适用于设置构建命令或发布目录、添加重定向或重写或代理、添加 SPA 回退重写、设置自定义响应头或基本认证、管理环境变量和密钥、按部署上下文限定变量、将变量标记为秘密、禁用密钥扫描、配置函数打包、忽略构建，或在 Netlify 上配置单体仓库或 JavaScript SPA。"}

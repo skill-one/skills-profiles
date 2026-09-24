@@ -1,0 +1,1 @@
+{"description_zh": "使用 Apple CryptoKit 为 Swift 提供密码学原语。在以下情况下使用：使用 SHA-2 或 SHA-3 进行哈希，生成 HMAC，使用 AES-GCM 或 ChaChaPoly 进行加密，使用 P256/P384/P521/Curve25519 或 ML-DSA 密钥进行签名，进行 ECDH、HPKE、ML-KEM 或 X-Wing 密钥交换，使用 Secure Enclave 的 CryptoKit 密钥，或将 CommonCrypto 代码迁移至 CryptoKit。"}

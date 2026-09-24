@@ -1,0 +1,1 @@
+{"description_zh": "使用 TabletopKit 在 visionOS 上构建多人空间桌游。适用于创建带有棋盘、棋子、卡片或骰子的桌游体验，管理座位、回合、设备状态、TabletopAction 流程或 TabletopInteraction 委托，通过 FaceTime Group Activities 同步游戏玩法，使用 RealityKit 进行渲染，或在虚拟桌面表面实现吸附、投掷与物理效果。"}

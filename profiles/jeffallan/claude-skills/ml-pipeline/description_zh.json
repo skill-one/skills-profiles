@@ -1,0 +1,1 @@
+{"description_zh": "设计并实现生产级ML流水线基础设施：使用MLflow或Weights & Biases配置实验追踪，创建Kubeflow或Airflow DAGs用于训练编排，使用Feast构建特征存储模式，部署模型注册库，并自动化重训练与验证工作流。\n\n适用于构建ML流水线、编排训练工作流、自动化模型生命周期、实施特征存储、管理实验追踪系统、通过DVC进行数据版本管理、调优超参数，或配置Kubeflow、Airflow、MLflow、Prefect等MLOps工具的场景。"}

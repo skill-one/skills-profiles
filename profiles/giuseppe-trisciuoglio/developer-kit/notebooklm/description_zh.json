@@ -1,0 +1,1 @@
+{"description_zh": "通过 notebooklm-mcp-cli 工具实现与 Google NotebookLM 的交互，支持高级 RAG（检索增强生成）功能。适用于查询存储在 NotebookLM 中的项目文档、管理研究笔记本及来源、检索 AI 生成的合成信息、从笔记本生成音频播客或报告，或针对精选知识库执行上下文查询。触发条件为 \"notebooklm\", \"nlm\", \"notebook query\", \"research notebook\", \"query documentation in notebooklm\"。"}

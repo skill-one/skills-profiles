@@ -1,0 +1,1 @@
+{"description_zh": "Salesforce Data Cloud 获取阶段。当用户执行 Data Cloud SQL、异步查询、向量搜索、搜索索引工作流或对 Data Cloud 对象进行元数据探查时，使用此技能。触发条件：用户执行 Data Cloud SQL、describe、异步查询、向量搜索、搜索索引工作流或对 Data Cloud 对象进行元数据探查时。不要触发条件：任务为标准 CRM SOQL（使用 platform-soql-query）、分群创建或计算洞察设计（使用 data360-segment）、或 STDM/会话追踪/Parquet 分析（使用 agentforce-observe）。"}

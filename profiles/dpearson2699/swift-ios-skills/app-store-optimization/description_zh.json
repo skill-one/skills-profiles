@@ -1,0 +1,1 @@
+{"description_zh": "优化 App Store 产品页面，以提升搜索可见性与转化效果。用于 App Store 优化（ASO）、关键词研究、应用名称/副标题/关键词字段策略、以转化为导向的描述与推广文案、截图说明与排序、分配搜索关键词的自定义产品页面、应用内事件、产品页面优化测试、本地化元数据、评分/评价策略，以及应用内评价提示时机（使用 RequestReviewAction 或 AppStore.requestReview）。同时适用于区分 ASO 与 App Store 评价的路由、隐私/ATT 相关处理，以及 StoreKit 实施边界。"}

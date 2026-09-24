@@ -1,0 +1,1 @@
+{"description_zh": "在 three.js 中使用 GLTFLoader 加载 glTF/GLB 模型，并使用 AnimationMixer 播放其绑定动画，包括 DRACO/Meshopt 压缩网格和 KTX2 纹理。\n\n当将 3D 模型导入 three.js 时使用，用户提及 glTF、GLB、GLTFLoader、AnimationMixer、动画片段、DRACOLoader 或“加载 3D 模型”时适用。场景/相机/渲染器设置使用 threejs-scene-setup；材质和灯光使用 threejs-materials-lighting。"}

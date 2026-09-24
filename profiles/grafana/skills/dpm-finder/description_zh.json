@@ -1,0 +1,1 @@
+{"description_zh": "查找驱动您 Grafana Cloud 账单的 Prometheus 指标。`dpm-finder` 是一款 Grafana 专业服务 CLI，通过每分钟数据点数（DPM）对指标进行排名，并提供按标签集细分、可选的 `--cost-per-1000-series` 定价以及 Prometheus-exporter 模式。当需要调查高 Grafana Cloud 支出、排查噪声/高基数指标、对比录制规则执行前后的基数，或将成本数据引入仪表盘时，请使用本工具——即使用户在不提及 `dpm-finder` 的情况下，说出“我的 Mimir 账单为何如此高昂？”“找出最大的指标”“基数违规者”或“优化 Prometheus 成本”等表述时。"}

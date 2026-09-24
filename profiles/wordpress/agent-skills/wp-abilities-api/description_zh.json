@@ -1,0 +1,1 @@
+{"description_zh": "适用于在 WordPress 能力 API（wp_register_ability, wp_register_ability_category, /wp-json/wp-abilities/v1/*, @wordpress/abilities）中工作时，包括为客户端定义能力、分类、元数据、REST 暴露及权限检查。"}

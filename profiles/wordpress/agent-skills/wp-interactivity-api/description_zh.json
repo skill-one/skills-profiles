@@ -1,0 +1,1 @@
+{"description_zh": "在构建或调试 WordPress Interactivity API 功能时使用（data-wp-* 指令，@wordpress/interactivity store/state/actions，区块 viewScriptModule 集成，wp_interactivity_*()），包括性能、水合和指令行为。"}

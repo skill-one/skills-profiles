@@ -1,0 +1,1 @@
+{"description_zh": "创建 Nuxt 模块时使用：\n（1）发布到 npm 的模块（@nuxtjs/、nuxt-）；\n（2）本地项目模块（modules/ 目录）；\n（3）运行时扩展（components、composables、plugins）；\n（4）服务端扩展（API 路由、middleware）；\n（5）将模块发布到 npm；\n（6）为模块设置 CI/CD 工作流。\n提供 defineNuxtModule 模式、Kit 工具、钩子、端到端测试和发布自动化功能。"}

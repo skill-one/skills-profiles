@@ -1,0 +1,1 @@
+{"description_zh": "Java \"幽灵位\" / 类型转换攻击操作手册（Black Hat Asia 2026）。适用于攻击 Java 服务，当 16 位字符被静默收窄为 8 位字节时，可绕过 WAF/IDS，用于实现 SQL 注入、反序列化 RCE、文件上传（Webshell）、路径穿越、CRLF 注入、请求走私及 SMTP 注入。影响 Tomcat、Spring、Jetty、Undertow、Vert.x、Jackson、Fastjson、Apache Commons BCEL、Apache HttpClient、Angus Mail、JDK HttpServer、Lettuce、Jodd、XMLWriter，并通过 WAF 绕过方式重新启用许多已修复的 CVE 漏洞。"}

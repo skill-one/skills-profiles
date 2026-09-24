@@ -1,0 +1,1 @@
+{"description_zh": "将HTML和Markdown内容转换为Portable Text块，以适配Sanity。适用于从旧版CMS迁移内容、将HTML或Markdown导入Sanity、构建摄取外部内容的内容管道、在不同格式间转换富文本，或程序化创建Portable Text文档等场景。涵盖@portabletop/markdown（markdownToPortableText）、@portabletop/block-tools（htmlToBlocks）、自定义反序列化器，以及用于手动构建块的Portable Text规范。"}

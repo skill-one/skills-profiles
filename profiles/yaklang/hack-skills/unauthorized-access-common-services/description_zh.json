@@ -1,0 +1,1 @@
+{"description_zh": "针对常见暴露服务的未授权访问操作剧本。当Redis、Rsync、PHP-FPM、AJP/Ghostcat、Hadoop YARN、H2 Console或类似管理接口未经认证就暴露时使用。"}

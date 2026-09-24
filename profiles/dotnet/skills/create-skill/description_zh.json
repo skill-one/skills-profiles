@@ -1,0 +1,1 @@
+{"description_zh": "为 dotnet/skills 仓库搭建新的智能体技能。当需要创建新技能、生成 SKILL.md 文件、编写运行时将实际路由到的技能描述，或设置技能目录结构时使用。负责前置元数据生成、章节模板及校验指导。请勿用于修复已无法通过评估的技能（请使用 improve-skill-quality），也不得用于编写 eval.yaml（请使用 create-skill-test）。"}

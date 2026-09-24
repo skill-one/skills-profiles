@@ -1,0 +1,1 @@
+{"description_zh": "通过 HPA 和 VPA 管理 GKE 工作负载的扩缩容。在配置水平 Pod 自动扩展器（HPA）、配置垂直 Pod 自动扩展器（VPA），或应用 GKE 工作负载自动扩展的最佳实践时使用。不可用于集群级自动扩缩容（Cluster Autoscaler）、静态集群配置，或直接配置节点级机器类型。"}

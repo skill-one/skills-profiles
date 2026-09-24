@@ -1,0 +1,1 @@
+{"description_zh": "提供模式，用于在 Spring Boot 3.x 应用中基于 SpringDoc OpenAPI 3.0 和 Swagger UI 生成全面的 REST API 文档。适用于设置 API 文档、配置 Swagger UI、添加 OpenAPI 注解、实现安全文档，或通过示例与模式（Schema）增强 REST 接口。"}

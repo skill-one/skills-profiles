@@ -1,0 +1,1 @@
+{"description_zh": "预构建的 React 动画组件集合，融合 Magic UI（150+ 个 TypeScript/Tailwind/Motion 组件）与 React Bits（90+ 个轻量级依赖动画组件）。在构建落地页、营销网站、仪表盘或交互式 UI，且需要预制动画组件而非手工编写动画时，请使用此技能。当涉及动画 UI 组件、Magic UI、React Bits、shadcn/ui 集成、Tailwind CSS 组件或组件库选型等任务时触发。替代使用 Framer Motion 或 GSAP 手动实现动画。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用 Apollo MCP Server 连接 AI 代理与 GraphQL API 的指南。在以下情况下使用此技能：(1) 设置或配置 Apollo MCP Server；(2) 从 GraphQL 操作定义 MCP 工具；(3) 使用内省工具（introspect, search, validate, execute）；(4) 排查 MCP 服务器连接性或工具执行问题。"}

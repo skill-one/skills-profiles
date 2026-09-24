@@ -1,0 +1,1 @@
+{"description_zh": "检测并修复项目与构建文件中的 MSBuild 反模式。\n\n当被要求审查、审计、代码检查、清理或进行代码审查 .csproj/.vbproj/.fsproj/.props/.targets/.proj（或 Directory.Build.props/.targets）文件时，当被询问\"此项目文件是否正确？\"或\"我的构建文件有什么问题？\"时，或在排查由项目编写方式引起的细微构建缺陷时使用。每个反模式都有一个症状和具体的 BAD→GOOD 修复方案。\n\n禁止用于：非 MSBuild 构建系统（npm、Maven、CMake），或将项目迁移到 SDK 风格（请使用 msbuild-modernization）。"}

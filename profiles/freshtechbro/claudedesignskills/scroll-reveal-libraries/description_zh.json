@@ -1,0 +1,1 @@
+{"description_zh": "使用 AOS（Animate On Scroll）实现简单的滚动触发的显现动画。在构建营销页面、落地页或内容密集型网站时使用本技能，当这些页面需要基本淡入/滑动效果且无需复杂动画编排时，适用本技能。适用于涉及滚动动画、滚动触发的显现、AOS、简单动画或基础滚动效果的任务。对于更简单的应用场景，可作为 GSAP ScrollTrigger 和 Locomotive Scroll 的替代方案。如需对比针对 React 的动画方案，请与 motion-framer 进行对比。"}

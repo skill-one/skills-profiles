@@ -1,0 +1,1 @@
+{"description_zh": "通过运行 SLDS 检查器并修复违规项，将 Lightning Web 组件从 SLDS 1 迁移到 SLDS 2。当用户提及 SLDS 2、SLDS 升级、检查器违规、LWC token 迁移、class 覆盖、需要 SLDS 钩子替换的硬编码 CSS 值，或样式钩子选择时，请使用此技能。涵盖所有样式钩子类别——颜色、间距、尺寸、字体排版、边框、圆角和阴影。当用户提及无硬编码值、无SLDS class覆盖、LWC 至 SLDS 钩子、无 SLDS 1 已弃用 token，或询问 SLDS 组件迁移时，也应使用此技能——即使他们未明确提及“升级”或“迁移”。"}

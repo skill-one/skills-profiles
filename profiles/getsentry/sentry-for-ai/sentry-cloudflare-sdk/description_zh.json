@@ -1,0 +1,1 @@
+{"description_zh": "Cloudflare Workers 和 Pages 的完整 Sentry SDK 配置。适用于被要求“向 Cloudflare Workers 添加 Sentry”、“安装 @sentry/cloudflare”，或为 Cloudflare Workers、Pages、Durable Objects、Queues、Workflows 或 Cloudflare 上的 Hono 配置错误监控、追踪、日志、定时任务（crons）或 AI 监控时使用。"}

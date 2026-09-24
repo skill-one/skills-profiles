@@ -1,0 +1,1 @@
+{"description_zh": "使用 async/await、结构化并发和现代 Swift 模式，结合 URLSession 在 iOS/macOS 应用中进行网络代码的构建、审查与改进。适用于处理 REST API、文件下载、数据上传、WebSocket 连接、分页、重试逻辑、请求中间件、缓存、后台传输或网络可达性监控等工作。亦适用于处理 Swift 应用中的 HTTP 请求、API 客户端、网络错误处理或数据获取等场景。"}

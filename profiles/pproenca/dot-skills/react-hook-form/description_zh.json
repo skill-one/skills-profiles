@@ -1,0 +1,1 @@
+{"description_zh": "React Hook Form 使用 useForm、useWatch、useController、useFieldArray、subscribe() API 以及 Watch、FormStateSubscribe、FieldArray render-prop 组件的客户端表单验证性能优化。涵盖 RHF 7.82 新增功能，包括 resetDefaultValues() 和 disabled 字段数组选项。当使用 React Hook Form 库构建客户端受控表单时，应使用本技能。本技能不包含 React 19 Server Actions、useActionState 或服务端表单处理（对于这些内容，请使用 react-19 技能）。"}

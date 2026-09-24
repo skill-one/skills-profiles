@@ -1,0 +1,1 @@
+{"description_zh": "访问并测试受 Vercel 认证、SSO 或部署保护保护的 Vercel 部署，在以下情况使用：curl、agent-browser、Playwright 或其他自动化请求访问 Vercel 登录或保护页面时；受保护的预览或生产 URL 返回 401 或 403 时；出现 TRUSTED_SOURCES_ENVIRONMENT_MISMATCH 时；或在 `vercel curl` 与 `x-vercel-trusted-oidc-idp-token` 头之间选择时。"}

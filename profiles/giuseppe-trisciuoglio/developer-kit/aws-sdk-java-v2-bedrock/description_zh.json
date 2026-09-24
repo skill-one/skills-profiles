@@ -1,0 +1,1 @@
+{"description_zh": "使用 AWS SDK for Java 2.x 提供 Amazon Bedrock 模式。调用基础模型（Claude、Llama、Titan），生成文本和图像，为 RAG 创建嵌入，流式传输实时响应，并配置 Spring Boot 集成。当询问 Amazon Bedrock 集成、用于 AI 模型的 Java SDK、AWS 生成式 AI、Claude/Llama 调用、用于 RAG 的嵌入，或 Spring Boot AI 配置时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "规划、配置并串联基于仓库的 Nemotron 自定义步骤，形成单步或多步流水线：内容策展、翻译、SFT/PEFT（AutoModel 或 Megatron-Bridge）、预训练/CPT、RL 对齐（DPO/RLVR/GRPO/RLHF）、BYOB/MCQ 基准测试、检查点转换、ModelOpt 优化、环境配置，以及训练检查点或现有/托管端点的评估。当请求涉及 Nemotron 的步骤或工作流，或要求清洗、翻译、训练、微调、对齐、转换、优化、评估或将这些步骤组合为流水线时使用。不得用于前端/仪表板/可视化工作、通用机器学习建议、计费/访问，或非 Nemotron 编码任务。"}

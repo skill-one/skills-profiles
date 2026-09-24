@@ -1,0 +1,1 @@
+{"description_zh": "使用MockMvc和@WebMvcTest，提供对REST控制器进行单元测试的示例模式。生成验证请求/响应映射、验证、异常处理及HTTP状态码的控制器测试。适用于独立测试Web层端点，用于API端点测试、Spring MVC测试、模拟HTTP请求或控制器层单元测试。"}

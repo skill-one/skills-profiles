@@ -1,0 +1,1 @@
+{"description_zh": "搭建一个 three.js 场景：配置 import 映射与 `three/addons` 路径，构建 Scene/PerspectiveCamera/WebGLRenderer 组合，设置 `setAnimationLoop` 渲染循环，实现响应式尺寸调整，并加入 OrbitControls。在启动或调试 three.js 应用时使用——当用户提及 three.js、THREE.Scene、WebGLRenderer、PerspectiveCamera、渲染循环、尺寸调整或 OrbitControls 时使用。针对模型使用 `threejs-gltf-loading`；针对材质/灯光使用 `threejs-materials-lighting`。"}

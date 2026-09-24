@@ -1,0 +1,1 @@
+{"description_zh": "使用 SwiftData 实现、审查或改进数据持久化。用于定义带有 @Attribute、@Relationship、@Transient、#Unique 或 #Index 的 @Model 类；使用 @Query、#Predicate、FetchDescriptor 或 SortDescriptor 进行查询；为 SwiftUI 或 @ModelActor 后台工作配置 ModelContainer 和 ModelContext；使用 VersionedSchema 和 SchemaMigrationPlan 规划模式迁移；使用 ModelConfiguration 设置 CloudKit 同步；或与 Core Data 共存、从 Core Data 迁移时使用。"}

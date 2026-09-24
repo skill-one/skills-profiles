@@ -1,0 +1,1 @@
+{"description_zh": "仅使用 JavaScript（不使用 TypeScript）创建 Vue 3 组件、构建原生 JavaScript 组合式函数、配置 Vite 项目，并设置路由和状态管理。通过 @typedef、@param 和 @returns 注解生成 JSDoc 类型化代码，无需 TS 编译器即可提供完整的类型覆盖。适用于：仅使用 JavaScript（无 TypeScript）构建 Vue 3 应用时；项目需要 JSDoc 基于的类型提示时；从 Vue 2 Options API 向 JS 中的 Composition API 迁移时；团队偏好原生 JavaScript、.mjs 模块，或需要无需 TypeScript 设置的快速原型时。"}

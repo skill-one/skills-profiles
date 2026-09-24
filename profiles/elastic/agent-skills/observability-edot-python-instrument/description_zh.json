@@ -1,0 +1,1 @@
+{"description_zh": "使用 Elastic Distribution of OpenTelemetry（EDOT）的 Python 代理对 Python 应用程序进行插桩，实现自动追踪、指标与日志采集。适用于为没有现有 APM 代理的 Python 服务添加可观测性。"}

@@ -1,0 +1,1 @@
+{"description_zh": "交互式每日站会及会议更新生成器。当用户说 'daily'、'standup'、'scrum update'、'status update'、'what did I do yesterday'、'prepare for meeting'、'morning update'，或 'team sync' 时使用。从 GitHub、Jira 和 Claude Code 会话历史中拉取活动。进行四问式访谈（昨天、今天、阻碍、讨论主题），并生成格式化的 Markdown 更新。"}

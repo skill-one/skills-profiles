@@ -1,0 +1,1 @@
+{"description_zh": "销售force数据云统一化阶段。当用户处理DMOs、映射、关系、身份解析、统一配置、数据图或通用ID时，使用此技能。\n\n触发条件：用户处理DMOs、映射、关系、身份解析、统一配置、数据图或通用ID。\n\n不要触发条件：任务仅涉及流/DLOs（使用data360-prepare）、分群/洞察（使用data360-segment）、检索/搜索（使用data360-query）或STDM/会话追踪（使用agentforce-observe）。"}

@@ -1,0 +1,1 @@
+{"description_zh": "对代码库执行 Trailmark 摘要分析。返回自动检测到的语言、入口点数量和依赖列表。当 vivisect 或 galvanize 需要快速结构概览时使用。触发条件：Trailmark summary、code summary、structural overview。"}

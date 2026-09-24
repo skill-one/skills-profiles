@@ -1,0 +1,1 @@
+{"description_zh": "使用 BGTaskScheduler 在 iOS 上安排并执行后台工作。适用于注册以下任务时使用：BGAppRefreshTask（用于短时后台抓取）、BGProcessingTask（用于长时间维护）、BGContinuedProcessingTask (iOS 26+)（用于前台启动后继续在后台执行的工作）、后台 URLSession 下载，或后台推送通知。涵盖 Info.plist 配置、过期处理、任务完成，以及使用模拟启动进行调试。"}

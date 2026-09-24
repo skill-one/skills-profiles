@@ -1,0 +1,1 @@
+{"description_zh": "使用 HealthKit 读取、写入并查询 Apple Health 数据。涵盖 HKHealthStore 授权、示例查询、统计查询、图表统计查询、保存 HKQuantitySample 数据、后台传输、使用 HKWorkoutSession 和 HKLiveWorkoutBuilder 的运动会话、HKUnit 以及 HKQuantityTypeIdentifier 值。适用于集成 Apple Health、展示健康指标、记录运动或启用后台健康数据传输的场景。"}

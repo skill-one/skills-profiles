@@ -1,0 +1,1 @@
+{"description_zh": "使用Electron构建跨平台桌面应用，涵盖主进程/渲染进程架构、IPC通信、BrowserWindow管理、菜单、托盘图标、打包以及安全最佳实践等内容，适用于用户询问Electron相关内容、需要创建桌面应用、实现Electron功能或搭建跨平台桌面应用时的场景。"}

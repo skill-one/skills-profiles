@@ -1,0 +1,1 @@
+{"description_zh": "使用 WinRM 通信器与 PowerShell 配置器，通过 Packer 构建 Windows 镜像。在创建 Windows AMIs、Azure 镜像或 VMware 模板时使用。"}

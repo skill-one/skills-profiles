@@ -1,0 +1,1 @@
+{"description_zh": "在SwiftUI和UIKit中实现了键盘、方向及场景级别的焦点行为。用于管理@FocusState、默认焦点、焦点状态值、可焦点交互、焦点区域、tvOS几何焦点与Siri Remote导航、watchOS数码表冠输入、visionOS连接设备焦点与注视悬停/输入目标、macOS键盘视图循环与完整键盘访问、展示变化后的焦点恢复、使用UIFocusGuide进行自定义焦点路由，或使用UIFocusDebugger调试焦点。"}

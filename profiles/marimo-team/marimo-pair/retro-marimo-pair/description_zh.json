@@ -1,0 +1,1 @@
+{"description_zh": "改进 marimo-pair 和 marimo._code_mode 的会话复盘。当用户希望分析配对会话中的摩擦、找出问题所在，并围绕技能文档或底层 API 构思改进方案时使用。触发条件：“retro”、“what went wrong”、“ improve the skill”、“session review”、“friction”，或 /retro-marimo-pair。"}

@@ -1,0 +1,1 @@
+{"description_zh": "Salesforce Data Cloud Harmonize 阶段。当用户处理 DMOs、映射、关系、身份解析、统一档案、数据图或通用 ID 时，使用此技能。\n\n触发条件：当用户处理 DMOs、映射、关系、身份解析、统一档案、数据图或通用 ID 时。\n\n不触发条件：当任务仅涉及 streams/DLOs（使用 preparing-datacloud）、segments/insights（使用 segmenting-datacloud）、retrieval/search（使用 retrieving-datacloud）或 STDM/session tracing（使用 observing-agentforce）时，不要触发。"}

@@ -1,0 +1,1 @@
+{"description_zh": "将 Packer 构建元数据推送到 HCP Packer 注册表，用于跟踪和管理镜像生命周期。在将 Packer 构建与 HCP Packer 集成，用于版本控制和治理时使用。"}

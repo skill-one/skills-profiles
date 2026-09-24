@@ -1,0 +1,1 @@
+{"description_zh": "在 ATen C++ 代码中，将 PyTorch AT_DISPATCH 宏转换为 AT_DISPATCH_V2 格式。在将 AT_DISPATCH_ALL_TYPES_AND*、AT_DISPATCH_FLOATING_TYPES* 或其他 dispatch 宏移植到新的 v2 API 时使用。适用于 ATen 内核文件、CUDA 内核和原生算子实现。"}

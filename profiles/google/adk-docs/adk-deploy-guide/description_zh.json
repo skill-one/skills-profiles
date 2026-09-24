@@ -1,0 +1,1 @@
+{"description_zh": "部署任何 ADK 代理之前务必阅读。ADK 部署指南 —— 代理引擎、Cloud Run、GKE、CI/CD 流水线、密钥、可观测性以及生产工作流。适用于将代理部署到 Google Cloud 或排查部署问题。严禁用于 API 代码模式（请使用 adk-cheatsheet）、评估（请使用 adk-eval-guide）或项目搭建（请使用 adk-scaffold）。"}

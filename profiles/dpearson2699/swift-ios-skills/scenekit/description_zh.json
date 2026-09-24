@@ -1,0 +1,1 @@
+{"description_zh": "维护和扩展现有的 SceneKit 3D 场景与可视化效果。\n\n适用于处理 SCNView、SCNScene、SCNNode 场景图、SceneKit 几何体/材质/灯光/相机、SCNAction 动画、SCNPhysicsBody 物理效果、SCNParticleSystem 特效、.scn/.dae/.abc SceneKit 资源、着色器修改器或 SwiftUI SceneView 等场景。\n\nSceneKit 已被软弃用并处于维护模式；请将新应用、重大更新、USD/USDZ 流水线及迁移规划引导至 RealityKit。"}

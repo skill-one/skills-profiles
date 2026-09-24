@@ -1,0 +1,1 @@
+{"description_zh": "使用 Apple 语音框架将语音转写为文本。适用于在实现基于 AVAudioEngine 的实时麦克风转写、识别录制音频文件、处理语音和麦克风授权、选择使用设备端还是服务器支持的 SFSpeechRecognizer 行为，或在 iOS 26+ 上采用 SpeechAnalyzer、SpeechTranscriber、DictationTranscriber、AssetInventory 及异步结果流时使用。"}

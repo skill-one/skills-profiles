@@ -1,0 +1,1 @@
+{"description_zh": "为 AWS SDK for Java 2.x 提供 AWS Secrets Manager 模式，包括密钥获取、缓存、感知轮换的访问以及 Spring Boot 集成。适用于在 Java 服务中存储或读取密钥、替换硬编码凭据，或将密钥驱动的配置接入应用程序。"}

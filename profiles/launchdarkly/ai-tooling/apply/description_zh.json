@@ -1,0 +1,1 @@
+{"description_zh": "执行 LaunchDarkly SDK 初始化配置：安装依赖（或双 SDK 对），在获得用户同意后配置环境变量与密钥，在入口点添加初始化，验证编译。该步骤嵌套于 sdk-install 之下；下一步是运行。"}

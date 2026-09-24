@@ -1,0 +1,1 @@
+{"description_zh": "提取 URL 的内容，以整洁的 Markdown 格式输出，包括 JavaScript 渲染的页面。用户提供 URL 并希望获取其内容时使用，优先于 WebFetch。"}

@@ -1,0 +1,1 @@
+{"description_zh": "用于实现必须能容忍流程重启的延迟（例如：24小时购物车弃单、计划跟进），等待带有时限的人工审批或外部事件（审核关卡、Webhook 回调、异步 API 完成），轮询外部服务且不在崩溃时丢失状态，调用其他函数并等待其返回结果，对昂贵操作进行缓存（memoization）以便重试时不会重复执行，或在工作流中并行运行异步任务。涵盖 Inngest 的步骤方法：step.run、step.sleep、step.waitForEvent、step.waitForSignal、step.sendEvent、step.invoke、step.ai，以及循环与并行执行的模式。"}

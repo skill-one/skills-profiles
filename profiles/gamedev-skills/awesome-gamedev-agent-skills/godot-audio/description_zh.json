@@ -1,0 +1,1 @@
+{"description_zh": "在 Godot 4.7 中播放与混合音频：AudioStreamPlayer（2D/3D 版本）、带音量/静音和特效的音频总线、音乐与音效的路由、dB/线性音量，以及精确的对拍同步播放节奏。适用于在 Godot 项目中播放声音或音乐、将 AudioStreamPlayer 节点路由到总线上、通过 AudioServer 调整总线音量，或将游戏玩法与节拍同步的场景。"}

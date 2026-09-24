@@ -1,0 +1,1 @@
+{"description_zh": "任意写至远程代码执行（RCE）操作手册。当您拥有任意写原语（来自堆利用、格式字符串或越界写），且需要将其转化为代码执行时，通过针对 GOT、钩子、_IO_FILE vtable、exit_funcs、TLS_dtor_list、modprobe_path、.fini_array 或 C++ vtables 进行利用，即可使用本手册。"}

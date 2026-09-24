@@ -1,0 +1,1 @@
+{"description_zh": "在iOS应用中集成Core ML模型，用于设备端机器学习推理。涵盖模型加载（.mlmodel、.mlpackage、.mlmodelc）、使用自动生成的类和MLFeatureProvider进行预测、计算单元配置（CPU、GPU、神经引擎）、MLTensor、VNCoreMLRequest、MLComputePlan、多模型流水线以及部署策略。当加载Core ML模型、进行预测、配置计算单元或分析模型性能时使用。"}

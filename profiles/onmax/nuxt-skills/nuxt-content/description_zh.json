@@ -1,0 +1,1 @@
+{"description_zh": "使用 @nuxt/content 构建类型化、内容驱动的 Nuxt 应用。适用于处理 content.config.ts、collections、queryCollection、Markdown 或 MDC 渲染、内容数据库、钩子、自定义数据源、搜索以及 Content v2 迁移等场景。"}

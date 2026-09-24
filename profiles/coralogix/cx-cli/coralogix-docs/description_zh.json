@@ -1,0 +1,1 @@
+{"description_zh": "使用 **`cx docs search`** 和 **`cx docs fetch`** 搜索并查阅 Coralogix 平台的官方文档。\n\n适用于用户询问 Coralogix 功能如何运作、如何配置或使用 UI、设置集成\n（OpenTelemetry, agents, collectors, webhooks），管理 API 密钥、在产品中探索 Span/Trace/日志、\n配置告警/SLOs/仪表板，或需要权威产品文档 —— 而非实时的租户遥测数据。"}

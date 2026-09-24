@@ -1,0 +1,1 @@
+{"description_zh": "Ghost Security - 软件组成分析（SCA）扫描器。该扫描器用于扫描依赖锁文件中的已知漏洞，识别CVE，并生成带有严重程度级别和修复建议的发现结果。当用户询问依赖漏洞、存在漏洞的软件包、CVE检查、依赖项安全审计，或希望扫描锁文件（如 package-lock.json、yarn.lock、go.sum 或 Gemfile.lock）时使用。"}

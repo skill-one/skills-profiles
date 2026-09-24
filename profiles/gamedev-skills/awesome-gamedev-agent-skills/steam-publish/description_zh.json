@@ -1,0 +1,1 @@
+{"description_zh": "使用 Steamworks 和 SteamPipe 在 Steam 上发布或更新游戏：配置仓库和包，使用 steamcmd 上传构建，在分支上将构建发布上线，并运行发布检查清单。适用于 Steam 发布、app_build.vdf/steamcmd 上传、仓库、测试分支或商店页面发布。"}

@@ -1,0 +1,1 @@
+{"description_zh": "为使用 `@PreAuthorize`、`@Secured`、`@RolesAllowed` 测试 Spring Security 提供单元测试模式。验证基于角色的访问控制与授权策略。适用于测试安全配置和访问控制逻辑。"}

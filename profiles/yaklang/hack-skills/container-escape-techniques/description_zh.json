@@ -1,0 +1,1 @@
+{"description_zh": "容器逃逸手册。\n\n适用于在 Docker 容器、LXC 或 Kubernetes Pod 中操作，且需要通过特权模式、能力、Docker 套接字、cgroup 滥用、命名空间技巧或运行时漏洞逃逸至主机的场景。"}

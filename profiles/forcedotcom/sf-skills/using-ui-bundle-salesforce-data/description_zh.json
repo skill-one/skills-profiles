@@ -1,0 +1,1 @@
+{"description_zh": "当项目包含 `uiBundles/*/src/` 目录且任务涉及任何 Salesforce 记录操作——读取、创建、更新或删除时，必须激活。在构建提交到 Salesforce 的表单、显示 Salesforce 记录的页面，或任何涉及 Salesforce 对象或自定义对象的代码时，使用此技能。当 `uiBundles/*/src/` 目录下的文件从 `@salesforce/sdk-data` 导入，或当 `*.graphql` 文件或 `codegen.yml` 存在时，激活。此技能拥有 UI 包内所有 Salesforce 数据访问模式。不适用于认证/OAuth 设置、模式变更、Bulk/Tooling/Metadata API 或声明式自动化。"}

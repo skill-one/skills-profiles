@@ -1,0 +1,1 @@
+{"description_zh": "验证实现与 OpenSpec 变更产物一致。当用户希望在归档前验证实现是否完整、正确且连贯时使用。当用户输入 \"openspec verify\" 或 \"opsx verify\" 时，也请使用。"}

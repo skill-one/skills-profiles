@@ -1,0 +1,1 @@
+{"description_zh": "提供使用 Bref 框架为 PHP 和 Symfony 打造的 AWS Lambda 集成模式。创建 Lambda 处理器类，配置运行时层，设置 SQS/SNS 事件触发器，实现预热策略，并优化冷启动。适用于将 PHP/Symfony 应用部署到 AWS Lambda、配置 API Gateway 集成、实现基于无服务器的 PHP 应用，或使用 Bref 优化 Lambda 性能。触发器包括“create lambda php”、“deploy symfony lambda”、“bref lambda aws”、“php lambda cold start”、“aws lambda php performance”、“symfony serverless”、“php serverless framework”。"}

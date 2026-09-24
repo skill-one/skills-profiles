@@ -1,0 +1,1 @@
+{"description_zh": "使用 CarPlay 框架构建支持 CarPlay 的应用。在创建面向汽车显示屏的导航、音频、通信、电动汽车充电、停车或食品点餐应用时使用，配合使用 CPTemplateApplicationScene、CPInterfaceController 模板层级、CPListTemplate、CPMapTemplate、CPNowPlayingTemplate，配置 CarPlay 权限，或集成 CarPlay 模拟器进行测试。"}

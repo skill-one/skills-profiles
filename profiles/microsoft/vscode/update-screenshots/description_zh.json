@@ -1,0 +1,1 @@
+{"description_zh": "在“Screenshots & Tests”检查失败后更新已提交的 blocks-ci 截图哈希，或对 PR 上报告的截图差异进行调查。当被要求从 CI 更新、接受或刷新组件截图基线时使用。此技能应以子代理形式运行。"}

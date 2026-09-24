@@ -1,0 +1,1 @@
+{"description_zh": "分析生产环境的 Agentforce agent 行为，使用会话跟踪数据和 Data Cloud。触发条件：用户查询 STDM 会话数据或 Data Cloud 跟踪记录；调查生产 agent 故障、回归问题或性能问题；询问会话跟踪、对话日志或 agent 指标；想在预览中复现已报告的生产问题；执行 findSessions 或跟踪分析查询。不要触发，当：用户在开发期间创建、修改或调试 .agent 文件（使用 developing-agentforce）；编写或运行测试规范（使用 testing-agentforce）；使用 sf agent 预览进行本地开发迭代；部署或发布 agent。"}

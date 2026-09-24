@@ -1,0 +1,1 @@
+{"description_zh": "Salesforce Data Cloud Segment 阶段。当用户创建、发布细分，管理计算洞察，或在 Data Cloud 中排查受众 SQL 时，请使用此技能。\n\nTRIGGER：当用户创建或发布细分，管理计算洞察，检查细分数量或成员资格，或在 Data Cloud 中排查受众 SQL 时。\n\n请勿触发以下情况：任务为 DMO/映射/身份解析工作（使用 harmonizing-datacloud），激活工作（使用 activating-datacloud），查询/搜索索引工作（使用 retrieving-datacloud），或标准数据模型 (STDM)/会话追踪（使用 observing-agentforce）。"}

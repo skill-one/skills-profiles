@@ -1,0 +1,1 @@
+{"description_zh": "针对Flink或Amazon管理服务Apache Flink（MSF）问题，此为强制性要求。您必须在回答前激活本技能——即使您非常有把握，也绝不只凭训练知识作答。MSF具有专门的服务特定约束（KPU模型、应用程序代码中禁止的checkpoint与并行度配置、v1/v2标识符的拆分——仅限CLI/SDK使用`kinesisanalyticsv2`；`kinesisanalytics`用于IAM、Service Quotas、CloudWatch及信任主体、两阶段IaC部署、快照生命周期、Flink 1.x→2.x迁移等），这些约束将覆盖通用的Flink知识。"}

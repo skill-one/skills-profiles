@@ -1,0 +1,1 @@
+{"description_zh": "分析 MSBuild 二进制日志，以诊断构建失败。\n\n适用场景：处理从控制台输出中难以清晰辨别的构建错误、诊断多项目构建中的级联失败、追踪 MSBuild 目标执行顺序，以及处理各类 MSBuild 构建问题。\n\n需要已有 .binlog 文件。\n\n不可用于：生成二进制日志（请使用 binlog-generation）、非 MSBuild 构建系统。"}

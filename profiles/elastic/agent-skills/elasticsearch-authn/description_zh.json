@@ -1,0 +1,1 @@
+{"description_zh": "通过原生、基于文件、LDAP/AD、SAML、OIDC、Kerberos、JWT 或证书身份域向 Elasticsearch 进行认证。适用于凭据连接、身份域选择或 API 密钥管理。假设目标身份域已配置。"}

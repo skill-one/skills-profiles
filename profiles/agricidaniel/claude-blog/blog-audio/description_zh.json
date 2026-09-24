@@ -1,0 +1,1 @@
+{"description_zh": "使用 Google Gemini TTS 为博客文章生成音频旁白。支持摘要旁白、全文朗读，以及双人播客/对白模式，并提供 30 种声音选项。输出 MP3 及 HTML5 音频嵌入代码。可通过 /blog audio 独立运行，或从 blog-write 内部运行。当未配置 API 密钥时，可优雅回退。当用户提到“blog audio”、“narrate blog”、“audio version”、“文本转语音”、“tts”、“podcast mode”、“read aloud”、“audio narration”、“voice”、“narration”、“generate audio”时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "从源代码、RFC、学术论文、伪代码、非正式文本、ProVerif（.pv）或 Tamarin（.spthy）模型中提取协议消息流程，并生成带有密码学注释的 Mermaid 时序图。用于为加密协议绘制图表、可视化握手或密钥交换流程、从规范或 RFC 中提取消息流程、为 ProVerif 或 Tamarin 模型绘制图形，或为 TLS、Noise、Signal、X3DH、Double Ratchet、FROST、DH 或 ECDH 协议绘制时序图。"}

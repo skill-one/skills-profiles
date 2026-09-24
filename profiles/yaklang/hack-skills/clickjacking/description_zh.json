@@ -1,0 +1,1 @@
+{"description_zh": "点击劫持演练手册。用于测试目标页面是否可被嵌入框架、X-Frame-Options 或 CSP frame-ancestors 是否配置正确，以及 UI 伪装攻击是否能够触发敏感操作。"}

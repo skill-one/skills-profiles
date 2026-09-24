@@ -1,0 +1,1 @@
+{"description_zh": "使用 Browserbase CLI（`browse`）处理 Browserbase Functions 和平台 API 工作流。当用户要求运行 `browse`、部署或调用函数、管理会话、项目、上下文或扩展、通过 Browserbase Fetch API 获取页面、通过 Browserbase Search API 搜索网络，或搭建入门模板时使用。优先为交互式浏览使用 Browser skill；仅当用户明确要求使用 CLI 路径时，才使用顶层 `browse` 驱动程序命令（如 `browse open`、`browse get` 等）。"}

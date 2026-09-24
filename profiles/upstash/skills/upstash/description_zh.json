@@ -1,0 +1,1 @@
+{"description_zh": "可与任何 Upstash 产品、SDK 或工具配合使用，包括无服务器 Redis（缓存、会话、排行榜、键值存储）、Ratelimit（速率限制与限流）、QStash（消息队列、cron 定时任务、后台任务）、Workflow（持久化长时间运行函数）、Vector（用于嵌入、语义搜索和 RAG 的向量数据库）、Search（全文搜索与语义搜索）、Box（用于 AI 代理的沙箱云容器，支持 TypeScript/JavaScript 和 Python）、Blob（支持浏览器直接上传的无服务器 S3 兼容文件存储）、Upstash CLI，以及为代理提供的无需注册的临时 Redis。当用户提及 Upstash 或在无服务器、边缘或 Node.js 应用中需要上述任一能力时使用。"}

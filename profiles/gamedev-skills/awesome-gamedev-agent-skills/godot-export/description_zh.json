@@ -1,0 +1,1 @@
+{"description_zh": "导出并构建用于分发的 Godot 4.7 项目：安装导出模板，定义导出预设（Windows/macOS/Linux/Web/Android），为 CI 运行无头命令行导出，并处理 Web（HTML5）下的 COOP/COEP 以及专用服务器/无头构建。当导出 Godot 游戏、配置 export_presets.cfg、针对 Web/桌面/移动端进行构建，或从命令行自动化构建时使用。"}

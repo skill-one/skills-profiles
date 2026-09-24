@@ -1,0 +1,1 @@
+{"description_zh": "在测序数据上运行 nf-core bioinformatics 流水线（rnaseq、sarek、atacseq）。用于分析 RNA-seq、WGS/WES 或 ATAC-seq 数据时使用——无论是本地的 FASTQ 文件，还是来自 GEO/SRA 的公共数据集。触发条件为 nf-core、Nextflow、FASTQ 分析、变异检测、基因表达、差异表达、GEO 再分析、GSE/GSM/SRR 条目，或样本表创建。"}

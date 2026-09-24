@@ -1,0 +1,1 @@
+{"description_zh": "将较长的编码、排查、测试或交互式 CLI 工作交给 tmux 中的内层命令行编码 Agent，由当前外层 Agent 负责拆解任务、读取稳定屏幕快照、纠正方向、执行最终验收，并在本次任务结束后销毁内层 session。适用于用户明确要求使用 cc-use、希望将长时间实现工作交给内层 Agent、需要在真实 Codex CLI 或 Claude Code TUI 中完成受监督工作，或需要评估如何由 cron、launchd、systemd 等外部调度器触发 cc-use。"}

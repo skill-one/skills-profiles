@@ -1,0 +1,1 @@
+{"description_zh": "正确使用 P/Invoke 和 LibraryImport 从 .NET 调用原生（C/C++）库。涵盖函数签名、字符串封送、内存生命周期、SafeHandle 以及跨平台模式。用途：编写新的 P/Invoke 或 LibraryImport 声明，审查或调试现有原生互操作代码，将 C 或 C++ 库封装以便在 .NET 中使用，诊断托管/原生边界处的崩溃、内存泄漏或损坏。不适用于：COM 互操作、C++/CLI 混合模式程序集，或纯托管代码且无原生依赖的情况。"}

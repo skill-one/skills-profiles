@@ -1,0 +1,1 @@
+{"description_zh": "审查项目中的 Pull Requests（PRs），以检查 Seer Bug Prediction 在代码审查中检测出的问题。当被要求审查或修复 Sentry 在 PR 评论中识别出的问题，或查找带有 Sentry 反馈的近期 Pull Requests（PRs）时使用。"}

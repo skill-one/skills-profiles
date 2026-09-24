@@ -1,0 +1,1 @@
+{"description_zh": "计划并执行从 Twilio、Sinch、Infobip、Vonage 或 MessageBird/Bird 到 Sent v3 的迁移——映射发送调用、状态词汇表、Webhook 签名方案、退订存储、模板和租户模型，然后通过双跑和回滚安全切换。适用于替换现有的 CPaaS 服务商、将服务商代码或 Webhook 处理程序转换为 Sent，或规划分阶段切换及其验证关卡的情况。"}

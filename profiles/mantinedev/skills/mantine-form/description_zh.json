@@ -1,0 +1,1 @@
+{"description_zh": "使用 @mantine/form 在 mantine-9 仓库中构建表单。使用此技能时：\n(1) 使用 useForm 设置表单，\n(2) 添加验证规则或异步验证，\n(3) 处理嵌套对象或数组字段，\n(4) 使用 createFormContext 在不同组件间共享表单状态，\n(5) 为提升性能使用非受控模式，\n(6) 使用独立的 useField 钩子，\n或\n(7) 涉及 useForm、getInputProps、onSubmit、insertListItem 或表单验证的任何任务。"}

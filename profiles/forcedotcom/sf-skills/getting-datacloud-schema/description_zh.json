@@ -1,0 +1,1 @@
+{"description_zh": "使用REST API从Salesforce数据云检索数据湖对象（DLO）和数据模型对象（DMO）的模式信息。当您需要检查DLO或DMO的字段定义、数据类型或元数据时，使用此技能。该技能以组织别名和可选的DLO/DMO名称为参数。"}

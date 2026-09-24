@@ -1,0 +1,1 @@
+{"description_zh": "API 认证与 JWT 滥用操作手册。用于测试 Bearer 令牌、API 密钥、claim 信任、header 伪造、速率限制及 API 认证边界脆弱性。"}

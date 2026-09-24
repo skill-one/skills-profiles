@@ -1,0 +1,1 @@
+{"description_zh": "通过系统地解决 IL 裁剪/AOT 分析器警告，使 .NET 项目与 Native AOT 和裁剪（Trimming）兼容。\n\n**适用场景：** 使项目具备 AOT 兼容性；修复裁剪警告；解决 IL 警告（IL2026、IL2070、IL2067、IL2072、IL3050）；添加 DynamicallyAccessedMembers 注解；启用 IsAotCompatible。\n\n**不要用于：** 发布原生 AOT 二进制文件；优化二进制体积；用其他方案替换依赖反射较多的库。\n\n**调用方式：** 无需工具 —— 纯知识技能。"}

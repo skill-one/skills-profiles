@@ -1,0 +1,1 @@
+{"description_zh": "当请求涉及以太坊、EVM或区块链系统时使用。适用于构建、审计、部署或与智能合约、dApps、钱包或DeFi协议交互。涵盖Solidity开发、合约地址、代币标准（ERC-20、ERC-721、ERC-4626等）、二层网络（Base、Arbitrum、Optimism、zkSync、Polygon）以及与Uniswap、Aave、Curve等DeFi协议的集成。包括Gas费用、合约小数位、预言机安全性、重入、MEV、桥接、钱包、查询链上数据、生产环境部署以及协议演进（EIP生命周期、分叉追踪、即将到来的变更）等主题。"}

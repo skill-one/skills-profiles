@@ -1,0 +1,1 @@
+{"description_zh": "NTLM 中继与认证强制操作手册。用于捕获并中继 NTLM 认证，以通过 SMB、LDAP、HTTP 或 MSSQL 中继目标升级权限，并结合 PetitPotam、PrinterBug 及其他强制方法使用。"}

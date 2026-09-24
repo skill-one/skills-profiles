@@ -1,0 +1,1 @@
+{"description_zh": "在引导过程中配置 LaunchDarkly 托管的 MCP 服务器。当父级 LaunchDarkly 引导技能到达 MCP 提供环节，且第一个 flag 生效后使用。支持 Cursor、Claude Code、Windsurf、GitHub Copilot 及其他兼容 MCP 的智能体。使用 OAuth 认证；托管服务器无需 API 密钥。"}

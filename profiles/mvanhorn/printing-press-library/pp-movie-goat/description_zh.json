@@ -1,0 +1,1 @@
+{"description_zh": "这款结合 TMDb 发现引擎与 OMDb 多源评分的电影 CLI，并内置一个 SQLite 观看列表，可实时标记您当前在服务上正在流播的内容。触发短语：`今晚我应该看什么`，`我能在哪里 streaming <title>`，`评价 <title>`，`比较 <title>` 和 <title>`，`查看 <person>` 的电影作品`，`策划 <franchise>` 马拉松观影`，`使用 movie-goat`，`运行 movie-goat`。"}

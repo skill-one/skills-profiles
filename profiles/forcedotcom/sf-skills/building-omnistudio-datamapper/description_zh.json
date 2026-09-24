@@ -1,0 +1,1 @@
+{"description_zh": "OmniStudio 数据映射器（原名 DataRaptor）的创建与验证，采用 100 点评分。当构建提取、转换、加载或 Turbo Extract 数据映射器，映射 Salesforce 对象字段，或审查现有数据映射器配置时使用。触发条件：用户创建数据映射器、配置字段映射、处理 OmniDataTransform 元数据或询问 DataRaptor/Data Mapper 模式时。不触发条件：构建集成过程（使用 building-omnistudio-integration-procedure）、编写 OmniScripts（使用 building-omnistudio-omniscript）、或分析跨组件依赖（使用 analyzing-omnistudio-dependencies）时。"}

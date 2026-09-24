@@ -1,0 +1,1 @@
+{"description_zh": "为博客文章生成包含 Article/BlogPosting、Person、Organization、BreadcrumbList、ImageObject 以及可选 FAQPage 的完整 JSON-LD schema 标记。对照 Google 要求验证，并对已弃用类型发出警告。当用户说“schema”、“blog schema”、“json-ld”、“structured data”、“schema markup”、“generate schema”时使用。"}

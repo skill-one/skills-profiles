@@ -1,0 +1,1 @@
+{"description_zh": "构建 PixiJS v8 渲染层：创建异步 Application，使用 Assets 加载纹理，借助 Container 和 Sprite 组合场景图，驱动 ticker 循环，绑定指针事件，并通过渲染组分组绘制。适用于构建或调试 PixiJS v8 的场景——当用户提及 PixiJS、Pixi、Application、app.stage、Container、Sprite、Assets.load、app.ticker 或 eventMode 时使用。锁定 v8 异步 init() API。"}

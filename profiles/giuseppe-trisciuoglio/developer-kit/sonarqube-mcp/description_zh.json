@@ -1,0 +1,1 @@
+{"description_zh": "通过 Model Context Protocol (MCP) 服务器提供 SonarQube 与 SonarCloud 的集成模式。直接在智能体工作流中实现质量门禁监控、问题发现与分诊、预推送代码分析以及规则教育。当用户需要检查质量门禁、搜索 Sonar 问题、在提交代码前分析代码片段或了解 SonarQube 规则时，即可使用。触发词包括 \"sonarqube\"、\"sonarcloud\"、\"quality gate\"、\"sonar issues\"、\"analyze with sonar\"、\"check sonar\"、\"sonar rule\"、\"pre-push analysis\"。"}

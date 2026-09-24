@@ -1,0 +1,1 @@
+{"description_zh": "当用户请求图表、流程图、架构图或可视化时使用。在解释包含3个及以上组件、复杂数据流，或需借助视觉呈现以彰显优势的关系系统时，也主动使用。通过 @kitschpatrol/tldraw-cli 生成 .tldr JSON 文件，并本地导出为 PNG/SVG。"}

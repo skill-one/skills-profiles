@@ -1,0 +1,1 @@
+{"description_zh": "在 Python 中构建 pygame（pygame-ce）游戏的结构：初始化/事件/更新/绘制循环、基于时间差的移动（delta-time movement）、Surface/Rect 叠加绘制（blitting）、键盘/鼠标输入，以及带有碰撞检测的 Sprite/Group 管理。当构建或调试 pygame 游戏时使用——当用户提及 pygame、pygame-ce、游戏循环、blit、Surface、Rect、精灵组或 clock.tick 时。目标：pygame-ce。"}

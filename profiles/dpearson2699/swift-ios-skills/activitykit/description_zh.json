@@ -1,0 +1,1 @@
+{"description_zh": "使用 ActivityKit 实现、审查或改进 iOS 应用中的“实时活动（Live Activities）”与“灵动岛（Dynamic Island）”体验。适用于在锁屏（Lock Screen）与灵动岛中构建实时更新的小组件——包括配送追踪、体育比分、网约车状态、运动计时器、媒体播放以及任何需要实时更新的时效性信息。当使用 ActivityKit、ActivityAttributes、活动生命周期（请求/更新/结束）或灵动岛布局（紧凑/简约/展开式），以及锁屏实时小组件时，也应使用本功能。"}

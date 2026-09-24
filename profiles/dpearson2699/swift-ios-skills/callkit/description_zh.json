@@ -1,0 +1,1 @@
+{"description_zh": "使用 CallKit 和 PushKit 实现 VoIP 通话，用于构建来电/去电通话流程、注册 VoIP 推送通知、配置 CXProvider 和 CXCallController、处理通话操作、协调音频会话或创建 Call Directory 扩展以支持主叫 ID 和通话拦截的场景。"}

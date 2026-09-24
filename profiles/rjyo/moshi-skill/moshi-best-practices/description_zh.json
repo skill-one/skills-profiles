@@ -1,0 +1,1 @@
+{"description_zh": "用于在准备或验证 Moshi 远程编码主机时使用。针对以下情况触发此功能：Easy Pair 主机配置、SSH 或首选的 Mosh 就绪状态、非交互式 shell 的 PATH 问题、建议使用 Herdr（首选）或 tmux 作为代理多路复用器、基于所选目录创建项目会话、使用 `MOSHI_CLIENT` 环境变量信号调整 shell 或多路复用器行为、为 Claude Code、Codex、OpenCode、Grok Build 及其他受支持的代理安装 Moshi 代理钩子，或使用打包的 `moshi DIR` 启动器。"}

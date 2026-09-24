@@ -1,0 +1,1 @@
+{"description_zh": "用于使用 MetricKit 采集或分析生产环境 iOS 或 iPadOS 性能遥测数据，包括 iOS 27 MetricManager 异步指标或诊断报告、挂起或崩溃故障排查、自定义标志点、扩展启动测量、持久化导出，或 iOS 26 MXMetricManager 兼容性。"}

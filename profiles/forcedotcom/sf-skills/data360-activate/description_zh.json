@@ -1,0 +1,1 @@
+{"description_zh": "Salesforce Data Cloud Act 阶段。当用户管理激活、激活目标、数据操作，或 Data Cloud 受众与数据的下游交付时，使用此技能。触发条件：当用户管理激活、激活目标、数据操作，或 Data Cloud 受众与数据的下游交付时，触发该技能。不要触发：当任务是分段创建（使用 data360-segment）、数据检索/搜索工作（使用 data360-query），或 STDM/会话追踪（使用 agentforce-observe）时。"}

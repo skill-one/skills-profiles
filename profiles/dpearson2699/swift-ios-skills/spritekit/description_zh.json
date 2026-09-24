@@ -1,0 +1,1 @@
+{"description_zh": "使用 SpriteKit 构建 2D 游戏和动画。在创建游戏场景（使用 SKScene 和 SKView）、使用 SKSpriteNode 添加精灵、使用 SKAction 序列进行动画、使用 SKPhysicsBody 和接触检测模拟物理效果、使用 SKEmitterNode 创建粒子效果、构建瓦片地图、使用 SKCameraNode，或在 SwiftUI 中使用 SpriteView 集成 SpriteKit 场景时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "Web应用的竞争条件与TOCTOU测试。用于测试一次性操作、并发HTTP滥用、绕过速率限制、Turbo Intruder 门控、HTTP/2 单包攻击以及CWE-362风格同步间隙等场景。"}

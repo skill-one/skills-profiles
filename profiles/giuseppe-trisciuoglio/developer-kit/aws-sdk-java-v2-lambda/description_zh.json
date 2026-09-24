@@ -1,0 +1,1 @@
+{"description_zh": "使用 AWS SDK for Java 2.x 提供 AWS Lambda 模式。适用于调用 Lambda 函数、创建/更新函数、管理函数配置、使用 Lambda 层，或集成 Lambda 与 Spring Boot 应用。"}

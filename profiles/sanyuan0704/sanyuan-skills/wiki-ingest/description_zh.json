@@ -1,0 +1,1 @@
+{"description_zh": "将文章、文档或笔记整理为结构化的 wiki 知识库。当用户说“ingest to wiki”、“compile to knowledge base”、“update wiki”、“wiki ingest”、“add this to wiki”，或调用 /wiki-ingest 时使用。支持单条与批量导入。触发词：wiki、ingest、knowledge base、compile、digest、index、catalog。"}

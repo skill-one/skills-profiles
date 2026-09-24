@@ -1,0 +1,1 @@
+{"description_zh": "Go语言的完整Sentry SDK设置。当被要求“将Sentry添加到Go”、“安装sentry-go”、“在Go中设置Sentry”，或为Go应用程序配置错误监控、追踪、日志、指标或定时任务时使用。支持 net/http、Gin、Echo、Fiber、FastHTTP、Iris、Negroni 和 gRPC。"}

@@ -1,0 +1,1 @@
+{"description_zh": "构建并部署针对特定服务的 Coralogix 仪表板，数据来源包括其日志、跨度、指标和服务规格。通过 `cx` CLI 命令发现遥测数据，生成可导入的 Coralogix JSON，并通过 `cx` CLI 验证每条 PromQL 和 DataPrime 查询的实时有效性，通过 `cx dashboards create` 和 `cx dashboards replace` 创建或更新仪表板。当用户要求为服务、应用或流程创建、构建、生成、部署、更新、替换或修改 Coralogix 仪表板、监控仪表板或可观测性仪表板时使用本功能。"}

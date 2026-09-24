@@ -1,0 +1,1 @@
+{"description_zh": "重要提示：用于智能指针和资源管理。触发条件：Box, Rc, Arc, Weak, RefCell, Cell, 智能指针, 堆分配, 引用计数, RAII, Drop, 应该使用Box还是Rc，何时使用Arc而不是Rc，智能指针, 引用计数, 堆分配"}

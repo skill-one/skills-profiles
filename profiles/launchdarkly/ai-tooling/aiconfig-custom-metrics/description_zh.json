@@ -1,0 +1,1 @@
+{"description_zh": "已弃用的重定向 — 该技能已更名为 custom-metrics。请勿使用此技能；请改用 custom-metrics 调用。保留此重定向仅用于确保旧对 aiconfig-custom-metrics 的引用仍能将用户指向新名称。"}

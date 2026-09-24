@@ -1,0 +1,1 @@
+{"description_zh": "使用 clickhousectl 命令行工具 (CLI) 搭建和管理 Postgres——在开发环境中运行基于 Docker 的本地 Postgres，并创建和管理托管的 ClickHouse Cloud Postgres 服务（包括连接、TLS 加密、运行时配置、只读副本、故障转移、时间点恢复）。当用户需要为应用程序使用 Postgres 或 PostgreSQL 数据库、搭建本地 Postgres 开发环境、进行 psql 访问，或在 ClickHouse Cloud 中使用托管/生产级 Postgres，或提及将本地 Postgres 迁移至生产环境时使用。"}

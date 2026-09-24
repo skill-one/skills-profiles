@@ -1,0 +1,1 @@
+{"description_zh": "在修改代码时使用，以确保其通过 VS Code 卫生检查。涵盖提交前钩子、Unicode 限制、字符串引用规则、版权页眉、缩进、格式化和 ESLint、stylelint。在宣布工作完成前运行卫生检查。"}

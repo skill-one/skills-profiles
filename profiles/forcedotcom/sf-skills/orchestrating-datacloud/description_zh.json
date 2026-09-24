@@ -1,0 +1,1 @@
+{"description_zh": "Salesforce Data Cloud 产品编排器，用于连接→准备→调和→分段→执行的工作流。当用户需要多步骤 Data Cloud 流水线、跨阶段故障排除或数据空间和数据套件管理时，使用此技能。\n\n触发条件：用户需要多步骤 Data Cloud 流水线、要求设置或跨阶段排查 Data Cloud、管理数据空间或数据套件，或需要跨阶段的 sf data360 工作流。\n\n勿触发条件：工作仅局限于单一阶段（使用对应的阶段特定技能）、任务是 STDM/会话追踪/parquet 遥测（使用 observing-agentforce）、标准 CRM SOQL（使用 querying-soql），或 Apex 实现（使用 generating-apex）。"}

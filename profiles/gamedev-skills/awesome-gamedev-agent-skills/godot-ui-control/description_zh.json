@@ -1,0 +1,1 @@
+{"description_zh": "使用 Control 节点构建 Godot 4.7 用户界面：通过锚点与偏移量实现响应式布局，通过 Container 节点（VBox/HBox/Grid/Margin）实现自动排列，通过主题资源实现统一样式，并支持键盘/游戏手柄焦点导航。在 Godot 项目中布局 HUD、菜单或 UI 时使用，配合 Control/Container 节点、锚点、主题或焦点在 .tscn 中工作。"}

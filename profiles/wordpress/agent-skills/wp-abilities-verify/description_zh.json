@@ -1,0 +1,1 @@
+{"description_zh": "验证 WordPress 插件的能力 API 注册：枚举能力，检查回调行为是否与每个注解所声明的内容一致（对抗性“只读但写入”检测），验证权限和模式，并验证 wp-abilities-audit 生成的审计文档。"}

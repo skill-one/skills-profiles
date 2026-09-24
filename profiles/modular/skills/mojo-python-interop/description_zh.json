@@ -1,0 +1,1 @@
+{"description_zh": "有助于编写使用当前语法和约定与 Python 互操作的 Mojo 代码。在编写与 Python 交互、从 Mojo 调用 Python 库、或向 Python 暴露 Mojo 类型/函数的 Mojo 代码时，请在使用 mojo-syntax 的同时使用本技能。当用户需要使用 Mojo 构建 Python 扩展模块、封装供 Python 使用的 Mojo 结构体，或在 Python 类型与 Mojo 类型之间进行转换时，也应使用本技能。"}

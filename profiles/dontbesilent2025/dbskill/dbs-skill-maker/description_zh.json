@@ -1,0 +1,1 @@
+{"description_zh": "通过需求分析，将反复出现的问题制作成可安装、可分级验证的单个 Skill。在用户要求制作 Skill、将问题沉淀为 Skill、检查或测试候选 Skill 时使用；只有用户明确要求分享或发布时，才准备 GitHub 仓库并验证 `npx skills add`。"}

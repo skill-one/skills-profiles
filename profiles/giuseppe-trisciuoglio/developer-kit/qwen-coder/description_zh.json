@@ -1,0 +1,1 @@
+{"description_zh": "支持使用 Qwen2.5-Coder 和 QwQ 模型进行编码任务的 Qwen Coder CLI 委派工作流，涵盖英文提示词构建、执行参数配置以及安全结果处理。当用户明确要求使用 Qwen 执行代码生成、重构、调试或架构分析等任务时使用。触发条件包括：\"使用 qwen\"、\"使用 qwen coder\"、\"委派给 qwen\"、\"询问 qwen\"、\"请 qwen 给予意见\"、\"qwen 意见\"、\"使用 qwen 继续\"、\"qwen 会话\"等。"}

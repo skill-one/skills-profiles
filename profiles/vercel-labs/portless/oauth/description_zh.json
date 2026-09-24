@@ -1,0 +1,1 @@
+{"description_zh": "配置 OAuth 提供商（Google、Apple、Microsoft、Facebook、GitHub 等），使其能与无端口本地开发 URL 协同工作。适用于设置 OAuth 重定向 URI、修复 \"redirect_uri_mismatch\" 或 \"invalid redirect\" 错误、为本地开发配置登录提供商，以及提供商拒绝 .localhost 子域名时的场景。触发场景包括 \"OAuth 无法与无端口环境配合使用\"、\"重定向 URI 不匹配\"、\"Google/Apple/Microsoft 本地登录失败\"、\"配置 OAuth 用于本地开发\"，或任何涉及无端口域的 OAuth 回调 URL 的相关任务。"}

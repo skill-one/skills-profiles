@@ -1,0 +1,1 @@
+{"description_zh": "严格审查边缘策略设计器提供的策略草稿，评估边缘合理性、过拟合风险、样本量充足性以及执行现实性。当存在 strategy_drafts/*.yaml 且需要质量门禁时，在流水线导出前使用。输出附带置信度评分的 PASS/REVISE/REVISE/REJECT 判定结果。"}

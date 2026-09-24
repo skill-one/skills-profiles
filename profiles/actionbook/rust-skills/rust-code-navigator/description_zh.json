@@ -1,0 +1,1 @@
+{"description_zh": "使用 LSP 导航 Rust 代码。触发条件：\n- /navigate\n- 跳转定义\n- 查找引用\n- 定义在哪\n- 谁用了这个"}

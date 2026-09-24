@@ -1,0 +1,1 @@
+{"description_zh": "XSLT注入测试：处理器指纹识别、XXE与document() SSRF、EXSLT写入原语、PHP/Java/.NET扩展远程代码执行（RCE）攻击面。当用户可控的XSLT/样式表输入或转换端点处于覆盖范围内时使用。"}

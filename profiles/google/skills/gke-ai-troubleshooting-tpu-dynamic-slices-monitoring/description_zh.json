@@ -1,0 +1,1 @@
+{"description_zh": "监控、排查并管理 GKE TPU 动态切片自定义资源。用于检查 TPU 切片生命周期状态、排查切片部署失败、校验单切片或多切片（JobSet）工作负载清单，或安全地修补卡死的 finalizer 并禁用切片控制器。请勿用于通用 GKE 集群节点池创建或标准非 TPU 工作负载管理（请改用 gke-basics 或 gke-cluster-creation）。"}

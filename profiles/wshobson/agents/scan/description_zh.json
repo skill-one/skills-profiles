@@ -1,0 +1,1 @@
+{"description_zh": "扫描代码库以生成 project-doc.md 和 AGENTS.md。适用于搭建新的由智能体驱动的仓库、在架构变更后刷新项目文档，或运行增量扫描以检测偏差。首次使用时执行完整扫描，后续运行执行智能增量扫描。在工具可用时使用 understand-anything + context-mode，否则回退使用原生工具。仅在检测到架构变更且获得人工确认后，才会更新 AGENTS.md。"}

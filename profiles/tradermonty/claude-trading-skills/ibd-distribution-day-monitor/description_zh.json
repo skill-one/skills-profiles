@@ -1,0 +1,1 @@
+{"description_zh": "检测QQQ/SPY的IBD式派发日（在高成交量下下跌至少0.2%），跟踪25个交易日到期与5%无效化情况，统计d5/d15/d25聚类，对市场风险进行分类（NORMAL/CAUTION/HIGH/SEVERE），并发出TQQQ/QQQ敞口建议。应在收盘后使用，或在TQQQ敞口发生变化前使用，或作为FTD/市场状态框架的输入。不执行交易。"}

@@ -1,0 +1,1 @@
+{"description_zh": "实现 Google 的 Material Design 3 (Material You) UI 系统。主要采用 Jetpack Compose Material3 (MaterialTheme, 组件, 自适应布局)。同时支持 Flutter 和有限的 Web (@material/web, 维护模式)。涵盖设计令牌、30多个组件、布局、主题化、M3 Expressive (平台矩阵) 以及无障碍功能。适用场景：\"material design\", \"MD3\", \"material you\", \"Jetpack Compose\", \"MaterialTheme\", \"material component\", \"md3 button\"。"}

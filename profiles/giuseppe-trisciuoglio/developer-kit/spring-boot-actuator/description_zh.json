@@ -1,0 +1,1 @@
+{"description_zh": "提供用于配置 Spring Boot Actuator 以进行生产级监控、健康探测、受保护的管理端点以及 JVM 服务中 Micrometer 指标的配置模式。适用于设置 Spring Boot 应用的监控、健康检查或指标时。"}

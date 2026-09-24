@@ -1,0 +1,1 @@
+{"description_zh": "**活跃的 Prometheus 基数问题诊断指南** —— 慢查询、Prometheus 发生 OOM、Grafana Cloud 活跃序列或 DPM 账单过高、“样本过多”摄入错误、序列频繁变动或内存快速增长。本指南详细梳理 tsdb 状态端点、按指标与按标签的逐项排查、常见元凶库以及修复路径。\n\n当用户*当前正经历*基数（基数）爆发时，请使用本指南。用于从源头预防基数问题的，请路由至 prometheus-label-strategy；用于摄入后聚合的，请路由至 adaptive-metrics；用于 DPM 专项分析的，请路由至 dpm-finder。"}

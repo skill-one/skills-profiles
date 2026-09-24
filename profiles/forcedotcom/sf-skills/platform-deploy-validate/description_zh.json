@@ -1,0 +1,1 @@
+{"description_zh": "在部署前验证 Salesforce 元数据。\n\n**触发条件**：当用户要求验证部署、执行试运行、在部署前进行检查，或任何部署操作针对生产环境时触发。将生产环境目标路由至 `sf project deploy validate`（返回10天快速部署任务ID），并将沙盒/临时目标路由至 `sf project deploy start --dry-run`。\n\n**注意**：不要为实际部署（使用 platform-metadata-deploy）或破坏性变更（使用 platform-destructive-deploy）触发此条件。"}

@@ -1,0 +1,1 @@
+{"description_zh": "针对 Salesforce 组织执行 destructiveChanges.xml 的删除并部署工作流。触发条件：当用户要求从 Salesforce 组织删除/移除自定义对象、字段、Apex 类、流程或任何元数据组件，或在发布过程中执行“破坏性部署”/移除时，触发。该工作流先进行验证，并需经显式确认后方可对生产环境进行门控。请勿针对本地文件删除触发（请使用 Bash），也请勿针对净新增部署触发（请使用 platform-metadata-deploy）。"}

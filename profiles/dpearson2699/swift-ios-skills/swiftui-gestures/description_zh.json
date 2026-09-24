@@ -1,0 +1,1 @@
+{"description_zh": "实现、审查或改进 SwiftUI 手势处理。适用于以下场景：添加点击、长按、拖拽、放大或旋转手势，使用同时、顺序或独占方式组合手势，使用 @GestureState 管理瞬时状态，使用 highPriorityGesture 或 simultaneousGesture 解决父子手势冲突，构建自定义 Gesture 协议遵从，或从已弃用的 MagnificationGesture 迁移至 MagnifyGesture，或使用更新的 RotateGesture。"}

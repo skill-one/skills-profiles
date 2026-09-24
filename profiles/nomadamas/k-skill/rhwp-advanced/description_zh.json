@@ -1,0 +1,1 @@
+{"description_zh": "调试 HWP 布局、导出文档 IR、比较版本、提取缩略图，并使用上游 rhwp Rust CLI（export-svg/dump/dump-pages/ir-diff/thumbnail/convert）解锁只读 HWP。"}

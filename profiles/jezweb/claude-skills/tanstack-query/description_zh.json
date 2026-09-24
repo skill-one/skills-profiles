@@ -1,0 +1,1 @@
+{"description_zh": "使用 TanStack Query v5 在 React 中管理服务端状态。涵盖 useMutationState、简化乐观更新、throwOnError、网络模式（离线/PWA）以及 infiniteQueryOptions。\n\n在设置数据获取、修复 v4→v5 迁移错误（对象语法、gcTime、isPending、keepPreviousData），或使用流式服务端组件调试 SSR/水合问题时使用。"}

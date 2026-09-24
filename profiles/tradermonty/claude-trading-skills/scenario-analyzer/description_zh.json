@@ -1,0 +1,1 @@
+{"description_zh": "基于新闻标题分析18个月情景的技能。\n使用 scenario-analyst 代理执行主要分析，并使用 strategy-reviewer 代理获取第二意见。\n生成涵盖1级/2级/3级影响、推荐股票及批判性评审的全面英文报告。\n示例：/scenario-analyzer \"Fed raises rates by 50bp\"\n触发条件：新闻分析、情景分析、18个月展望、\n中长期投资策略"}

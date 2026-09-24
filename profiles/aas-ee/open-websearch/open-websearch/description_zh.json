@@ -1,0 +1,1 @@
+{"description_zh": "用于 open-websearch 搭建与精准实时检索的单一入口技能，优先采用本地 CLI/守护进程方案，同时兼容工作区暴露的 MCP 工具。"}

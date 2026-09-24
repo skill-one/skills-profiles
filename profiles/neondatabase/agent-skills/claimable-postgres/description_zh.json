@@ -1,0 +1,1 @@
+{"description_zh": "通过 Claimable Postgres by Neon (neon.new) 即时提供临时 Postgres 数据库，无需登录、注册或信用卡。支持 REST API、CLI 和 SDK。当用户请求快速 Postgres 环境、用于原型设计和测试的一次性 DATABASE_URL，或“just give me a DB now”时使用。触发条件包括：“quick postgres”、“temporary postgres”、“no signup database”、“no credit card database”、“instant DATABASE_URL”、“npx neon-new”、“neon.new”、“neon.new API”、“claimable postgres API”。"}

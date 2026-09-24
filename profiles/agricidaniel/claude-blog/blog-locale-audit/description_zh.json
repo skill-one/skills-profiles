@@ -1,0 +1,1 @@
+{"description_zh": "对多语言博客内容目录进行审计，检查其完整性、一致性、hreflang 正确性、meta 标签一致性及时效性。\n构建翻译覆盖矩阵，标记过时翻译，验证 hreflang 与 Schema，并输出包含可执行修复命令的优先级报告。\n当用户输入“locale audit”、“blog locale-audit”、“check translations”、“multilingual audit”、“translation check”、“hreflang check”或“Uebersetzungen pruefen”时使用。"}

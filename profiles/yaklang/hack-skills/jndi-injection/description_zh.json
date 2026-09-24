@@ -1,0 +1,1 @@
+{"description_zh": "JNDI注入操作指南。用于Java应用使用攻击者控制的名称执行JNDI查找的情况，特别是通过Log4j2、Spring，或任何到达InitialContext.lookup()代码路径时。"}

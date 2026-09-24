@@ -1,0 +1,1 @@
+{"description_zh": "关键：用于错误处理。触发词：Result, Option, Error, ?, unwrap, expect, panic, anyhow, thiserror, 何时使用 panic 而非返回 Result, 自定义错误, 错误传播, 错误处理, Result 用法, 什么时候用 panic"}

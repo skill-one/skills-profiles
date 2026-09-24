@@ -1,0 +1,1 @@
+{"description_zh": "将本地 Chrome 的 Cookie 同步到 Browserbase 的持久化上下文中，以便 browse CLI 可以访问已认证的站点。当用户想要以自身身份浏览、同步 Cookie 或通过 Browserbase 登录站点时使用。"}

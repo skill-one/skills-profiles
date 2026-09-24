@@ -1,0 +1,1 @@
+{"description_zh": "通过分析当前分支与上一个发布标签之间的git 变更，提供自动化的文档更新。通过git diff分析识别修改内容，随后遵循《Keep a Changelog》标准更新README.md与CHANGELOG.md，并发现文档文件夹以进行上下文更新。适用于准备发布、维护文档同步或创建拉取请求之前。触发于\"update docs\"、\"update changelog\"、\"sync documentation\"、\"update readme\"、\"prepare release documentation\"。"}

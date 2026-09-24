@@ -1,0 +1,1 @@
+{"description_zh": "Python 版 Sentry SDK 完整配置。当被要求执行“为 Python 添加 Sentry”、“安装 sentry-sdk”、“在 Python 中配置 Sentry”，或为 Python 应用程序配置错误监控、链路追踪、性能剖析、日志记录、指标、定时任务或 AI 监控时使用。支持 Django、Flask、FastAPI、Celery、Starlette、AIOHTTP、Tornado 等框架。"}

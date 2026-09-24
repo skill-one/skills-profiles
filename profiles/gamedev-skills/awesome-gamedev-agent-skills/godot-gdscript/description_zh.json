@@ -1,0 +1,1 @@
+{"description_zh": "为 Godot 4.7 编写地道的 GDScript：静态类型、节点生命周期（_ready/_process/_physics_process）、@export/@onready/@tool 注解、信号，以及用于异步流程的 await。适用于在 Godot 项目（project.godot）中编辑 .gd 脚本、编写或调试 GDScript，或将 3.x GDScript 移植到 4.x（函数签名、yield 改为 await、导出至 @export）。"}

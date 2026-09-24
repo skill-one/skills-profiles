@@ -1,0 +1,1 @@
+{"description_zh": "在 Vercel Workflow SDK 尚未存在于 node_modules 中时，安装并配置 Vercel Workflow SDK。当用户询问为 Next.js、Express、Hono、Fastify、NestJS、Nitro、Nuxt、Astro、SvelteKit 或 Vite 执行“install workflow”、“set up workflow”、“add durable workflows”、“configure workflow sdk”或“init workflow”时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "刚接入的 M5Stack ESP32 设备（Cardputer、Cardputer-Adv、Core、CoreS3、Stick）端到端引导：检测 USB 连接、刷写 UIFlow 2.0 固件，并安装 Claude Buddy MicroPython 应用包。用户插拔设备、需要刷写、配置或重置 M5Stack 或 ESP32 板卡，或说出“m5-onboard go”时，即可使用。"}

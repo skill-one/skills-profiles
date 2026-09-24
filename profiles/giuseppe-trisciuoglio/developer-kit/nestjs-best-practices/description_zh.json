@@ -1,0 +1,1 @@
+{"description_zh": "提供全面的 NestJS 最佳实践，包括模块化架构、依赖注入作用域、异常过滤器、使用 class-validator 进行 DTO 验证以及 Drizzle ORM 集成。在设计 NestJS 模块、实现提供者、创建异常过滤器、验证 DTO 或在 NestJS 应用中集成 Drizzle ORM 时使用。"}

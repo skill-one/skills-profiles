@@ -1,0 +1,1 @@
+{"description_zh": "当用户需要从图片、照片、扫描件、截图或扫描的PDF文件中提取文本时，请使用此技能。该技能返回精确的可机器读取字符串，包含行级文本及可选的bbox坐标，对CJK（中文等）、小字和手写文本具有高准确率。触发词：OCR、文字识别、图片转文字、截图识字、提取图中文字、扫描识字、识字、纯文字提取、坐标、检测框、bbox、bounding box、image to text、screenshot、photo scan、recognize text。"}

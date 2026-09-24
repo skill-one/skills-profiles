@@ -1,0 +1,1 @@
+{"description_zh": "采用 @theme inline 模式与 CSS 变量架构，配置 Tailwind v4 与 shadcn/ui。四步模式：CSS 变量、Tailwind 映射、基础样式、自动暗黑模式。可预防 8 个已记录的错误。\n\n适用于使用 Tailwind v4 初始化 React 项目，或解决颜色不生效、tw-animate-css 错误、@theme inline 暗黑模式冲突、@apply 失效、v3 迁移问题等场景。"}

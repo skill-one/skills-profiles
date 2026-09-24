@@ -1,0 +1,1 @@
+{"description_zh": "提供单元测试 Spring 应用事件的模式。使用 ApplicationEventPublisher 验证事件发布，测试 @EventListener 注解的行为，并验证异步事件处理。在为事件监听器编写测试、模拟应用事件，或验证 Spring Boot 服务中的事件是否已被发布时使用。"}

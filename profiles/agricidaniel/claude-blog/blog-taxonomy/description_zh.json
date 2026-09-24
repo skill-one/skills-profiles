@@ -1,0 +1,1 @@
+{"description_zh": "为所有主要内容管理系统（CMS）平台上的博客文章提取、建议并同步标签与分类。支持 WordPress REST API、Shopify GraphQL、Ghost 内容 API、Strapi REST/GraphQL 和 Sanity GROQ。通过分析内容生成标签建议（包括关键词频率、标题提取和语义分组），通过强制执行最低文章数量阈值以防止标签归档内容单薄，并通过经过身份验证的 API 调用同步分类体系。当用户说出“标签”、“分类”、“分类体系”、“标签建议”、“同步标签”、“WordPress 标签”和“Shopify 标签”时使用。"}

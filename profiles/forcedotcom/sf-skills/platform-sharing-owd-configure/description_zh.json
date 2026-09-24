@@ -1,0 +1,1 @@
+{"description_zh": "当用户需要获取或更新 Salesforce 对象的组织范围默认设置（OWD）共享设置时使用。\n\n**触发条件（TRIGGER）**当：用户询问检查当前 OWD 设置、查看共享默认设置、更改默认访问级别（私有、公开只读、公开读写、受父记录控制）、为标准对象或自定义对象配置内部或外部访问权限、提及组织范围默认设置、希望将记录设为私有或限制谁能查看记录、希望对对象控制默认记录可见性，或引用了 .settings-meta.xml 文件中的共享字段或 .object-meta.xml 文件中的 sharingModel 时。\n\n**不使用（DO NOT TRIGGER）**当：用户询问共享规则、基于条件的共享、角色层级或手动共享——转交至 platform-sharing-rules-generate。"}

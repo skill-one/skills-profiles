@@ -1,0 +1,1 @@
+{"description_zh": "提供基于AWS SDK for Java 2.x的SQS队列与SNS主题消息模式。涵盖消息发送/接收、FIFO队列、死信队列（DLQ）、订阅及发布/订阅模式。在基于SQS或SNS实现消息通信时使用。"}

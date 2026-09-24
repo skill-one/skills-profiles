@@ -1,0 +1,1 @@
+{"description_zh": "当项目包含 `uiBundles/*/src/` 目录或 `sfdx-project.json`，且任务涉及部署、推送到组织或部署后设置时，必须激活。将 UI bundle 应用部署到 Salesforce 组织时，使用此技能。覆盖完整的部署流程：组织认证、部署前构建、元数据部署、权限集分配、数据导入、GraphQL 模式获取及 codegen。当存在 `*.uibundle-meta.xml` 或 `sfdx-project.json` 等文件，且用户提及部署、推送、组织设置或部署后任务时，予以激活。"}

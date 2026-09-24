@@ -1,0 +1,1 @@
+{"description_zh": "将一个Java应用程序从经典Elastic APM Java代理迁移到EDOT Java代理。当从elastic-apm-agent.jar切换到elastic-otel-javaagent.jar时使用。"}

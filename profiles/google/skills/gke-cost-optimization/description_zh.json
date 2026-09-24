@@ -1,0 +1,1 @@
+{"description_zh": "优化 GKE 成本、调整工作负载规模、配置 Spot 虚拟机、容器实例、成本分配及资源配额。适用于优化 GKE 集群或工作负载成本、配置 GKE 成本分配或配额、调整 CPU/内存请求、或选择 Spot 虚拟机及机器类型时使用。不适用于通用计算类 provisioning 或 GPU 选择（应改用 gke-compute-classes）。"}

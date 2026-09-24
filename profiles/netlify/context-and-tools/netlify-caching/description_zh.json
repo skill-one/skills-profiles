@@ -1,0 +1,1 @@
+{"description_zh": "在 Netlify 的 CDN 上缓存由 Functions、边缘函数和代理提供的动态与静态响应，适用于以下操作：为函数响应添加缓存或 cache-control 响应头、调整缓存 TTL 或 stale-while-revalidate（过期缓存重验证）机制、配置持久化缓存、根据查询参数、请求头、Cookie、国家或语言变化缓存键、按站点或缓存标签清除或失效缓存、使用编程式 Cache API（caches.open/match/put）或 @netlify/cache 辅助工具（fetchWithCache/cacheHeaders/getCacheStatus）、加速耗时较长的 API 调用、添加 ISR（增量静态再生）或按需重验证，以及通过 Cache-Status 请求头调试响应为何被缓存或被未缓存。"}

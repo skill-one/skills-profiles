@@ -1,0 +1,1 @@
+{"description_zh": "审计 WordPress 插件的 REST 接口，生成一份标准化审计文档，提出 Abilities API 注册方案。生成包含 YAML 模式与叙述部分的 Markdown 文档，供人类和智能体在规划注册推广时共同查阅使用。支持任何 WordPress 插件。"}

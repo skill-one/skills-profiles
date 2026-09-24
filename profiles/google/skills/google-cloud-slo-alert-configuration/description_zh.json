@@ -1,0 +1,1 @@
+{"description_zh": "为在 App Hub 中注册或单独指定的 Google Cloud 资源配置基于 PromQL 的服务等级目标（SLO）告警策略。生成 Terraform 输出。当用户要求配置 SLO 或服务等级目标时使用。请勿用于标准告警策略。"}

@@ -1,0 +1,1 @@
+{"description_zh": "为 Spring Boot 应用中的 `@ExceptionHandler` 和 `@ControllerAdvice` 单元测试提供模式。校验错误响应格式、模拟异常、验证 HTTP 状态码、测试字段级校验错误，并断言自定义错误载荷。在编写 Spring 异常处理器测试、REST API 错误测试，或模拟控制器建议（`@ControllerAdvice`）时使用。"}

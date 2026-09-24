@@ -1,0 +1,1 @@
+{"description_zh": "Salesforce Data Cloud 准备阶段。当用户创建或管理 Data Cloud 数据流、DLOs、转换或 Document AI 配置时，使用此技能。触发条件：当用户创建或管理 Data Cloud 数据流、DLOs、转换或 Document AI 配置，或询问关于摄取到 Data Cloud 的内容时。不要触发：当任务仅为连接设置（使用 data360-connect）、DMOs 和身份解析（使用 data360-harmonize），或查询/搜索工作时（使用 data360-query）。"}

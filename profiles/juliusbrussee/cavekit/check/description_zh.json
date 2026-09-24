@@ -1,0 +1,1 @@
+{"description_zh": "只读漂移检测器。将 SPEC.md 与当前代码进行差异比对，并按严重程度报告违规项。不写入任何内容——通过规范或构建技能提供修复建议，但从不调用它们。当用户要求检查漂移、审计规范、验证不变量，或询问代码是否仍与规范一致时触发。表述用语：\"check drift\"、\"audit the spec\"、\"does the code still match §V\"、\"check invariants\"、\"spec vs code\"。"}

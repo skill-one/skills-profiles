@@ -1,0 +1,1 @@
+{"description_zh": "OpenClaw Agent工作区文件的加密备份与恢复\n（SOUL.md, MEMORY.md, IDENTITY.md, AGENTS.md, TOOLS.md）。使用 tar + openssl (AES-256-CBC) 加密和 soul-upload.com API。\n每次备份自动生成新的随机密码（请勿复用密码）。当用户需要以下操作时使用：（1）备份或上传代理工作区文件，（2）恢复或下载先前备份，（3）从远程存储删除备份，或（4）管理加密代理持久化。"}

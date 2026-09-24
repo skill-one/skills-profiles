@@ -1,0 +1,1 @@
+{"description_zh": "分析现有测试的断言质量、深度、多样性和虚假置信度。当被要求针对弱、浅、琐碎、恒真、自指、无断言、仅存在性/真值、或断言多样性不足的断言进行分析时，始终使用，包括 MSTest、Jest、pytest 和 Go。切勿用于直接修复：writing-mstest-tests 负责已提供的 MSTest 断言；code-testing-agent 负责编写新用例。当被问及测试是否能够捕获生产环境变更时，使用 test-gap-analysis；在进行一般按严重程度排序的审计时，使用 test-anti-patterns。"}

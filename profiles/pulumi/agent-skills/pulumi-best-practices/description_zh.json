@@ -1,0 +1,1 @@
+{"description_zh": "当用户在编写、审阅或调试 Pulumi TypeScript/Python 程序时加载；询问 Output<T 或 apply() 的使用；想要创建 ComponentResource 类；需要在不破坏资源（使用别名）的情况下重构资源；正在设置密钥或配置；或正在配置 pulumi preview/up CI 工作流。对于资源依赖顺序、父子资源关系或 pulumi.interpolate 相关的问题，也应加载。"}

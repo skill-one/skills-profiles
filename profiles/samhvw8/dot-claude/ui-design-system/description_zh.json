@@ -1,0 +1,1 @@
+{"description_zh": "React UI 组件系统（基于 TailwindCSS + Radix + shadcn/ui）。技术栈：TailwindCSS（样式）、Radix UI（基础原语）、shadcn/ui（组件）、React/Next.js。能力：设计系统架构、无障碍组件、响应式布局、主题定制、深色模式、组件组合。操作：审查、设计、构建、优化、重构 UI 组件。关键词：TailwindCSS、Radix UI、shadcn/ui、设计系统、组件库、无障碍性、ARIA、响应式、深色模式、主题化、CSS 变量、组件架构、原子化设计、设计令牌、变体、插槽、组合。适用场景：构建组件库、实现 shadcn/ui、创建无障碍 UI、搭建设计系统、添加深色模式/主题定制、审查 UI 组件架构。"}

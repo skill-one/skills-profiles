@@ -1,0 +1,1 @@
+{"description_zh": "实现、配置和自定义 Streamdown——一款流式优化的 React Markdown 渲染器，具备语法高亮、Mermaid 图表、数学公式渲染及 CJK 支持。适用于 Streamdown 的设置、配置、插件、样式、安全，以及与 AI 流式交互（例如 Vercel AI SDK）的集成。触发场景包括：\n（1）安装或设置 Streamdown；\n（2）配置插件（代码、Mermaid、数学公式、CJK）；\n（3）对 Streamdown 输出进行样式设置或主题定制；\n（4）与 AI 聊天/流式交互进行集成；\n（5）配置安全、链接安全或自定义 HTML 标签；\n（6）使用 carets、静态模式或自定义组件；\n（7）排查 Tailwind、Shiki 或 Vite 相关问题。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在 Godot 4.7 中使用 CharacterBody2D 和 move_and_slide() 实现 2D 运动学角色移动：支持带重力的平台跳跃、跑动与跳跃，俯视角 8 向运动，斜坡处理，以及读取碰撞。适用于编写 2D 玩家或敌人控制器、平台跳跃角色或俯视角角色，或在带有 CharacterBody2D 的 .tscn 中修复 move_and_slide()/ is_on_floor() 的行为时。"}

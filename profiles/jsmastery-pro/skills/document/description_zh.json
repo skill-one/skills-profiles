@@ -1,0 +1,1 @@
+{"description_zh": "运行 `/document` 下的 `pr`、`changelog`、`release-note`、`postmortem`（或由它来询问），撰写关于变更的面向用户说明。根据真实的提交和差异生成草稿，并写入正确位置。不编写代码、测试或规范。"}

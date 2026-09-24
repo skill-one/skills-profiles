@@ -1,0 +1,1 @@
+{"description_zh": "严重：用于并发/异步。触发条件：E0277 Send（发送）与 Sync（同步），无法在多个线程之间发送，线程，spawn（生成），通道，mpsc，Mutex，RwLock，Atomic，异步，await（等待），Future，tokio，死锁，竞态条件，并发，线程，异步，死锁"}

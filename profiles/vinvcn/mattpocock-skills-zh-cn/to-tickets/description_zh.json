@@ -1,0 +1,1 @@
+{"description_zh": "将 plan、spec 或当前对话拆分为一组 tracer-bullet tickets，每个 ticket 声明 blocking edges，并发布到已配置的 tracker；本地使用每个 ticket 对应文件中的文本 edge，真实 tracker 使用 native blocking links。"}

@@ -1,0 +1,1 @@
+{"description_zh": "通过 UIViewRepresentable、UIViewControllerRepresentable、UIHostingController、UIHostingConfiguration、协调器委托以及 UIKit 对共享 @Observable 状态的自动观察追踪，在 UIKit 与 SwiftUI 之间实现桥接。当需要在 SwiftUI 中包装仅限 UIKit 或第三方 UIKit 的视图/控制器、在 UIKit 中嵌入 SwiftUI、集成邮件、分享、文档、PDF 和文本视图界面，或将 UIKit 应用逐步迁移到 SwiftUI 时使用。"}

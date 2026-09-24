@@ -1,0 +1,1 @@
+{"description_zh": "适用于用户想要获取、下载或抓取某篇论文的 PDF 文件时——可基于 DOI、arXiv ID、论文标题、引用或 DOI 列表。当出现诸如“下载这篇论文”、“为 [DOI] 找到 PDF”、“给我获取 [Nature/bioRxiv/arXiv] 的 X 论文”、“获取开放获取版本”、“我需要这篇文章”，或任何批量论文下载请求等短语时触发，即使用户并未明确提到“PDF”或“DOI”。解析路径为 Unpaywall → Semantic Scholar → arXiv → PubMed Central → bioRxiv/medRxiv → 出版商直连（机构授权确认）→ Sci-Hub 镜像作为最后备选方案。"}

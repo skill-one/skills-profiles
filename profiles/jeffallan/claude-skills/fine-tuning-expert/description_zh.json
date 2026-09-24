@@ -1,0 +1,1 @@
+{"description_zh": "用于微调LLM、训练自定义模型或为特定任务适配基础模型的场景。适用于配置LoRA/QLoRA适配器、准备JSONL训练数据集、设置微调运行、适配器训练与迁移学习的超参数；使用Hugging Face PEFT、OpenAI微调、指令微调、RLHF、DPO进行微调；或对微调后的模型进行量化与部署。触发术语包括：LoRA、QLoRA、PEFT、finetuning、fine-tuning、adapter tuning、LLM训练、model training、custom model。"}

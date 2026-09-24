@@ -1,0 +1,1 @@
+{"description_zh": "设计 Unity 6.3 LTS 的数据架构与解耦，基于脚本对象 (ScriptableObjects)：配置/数据资源、运行时共享变量、事件通道，以及运行时集合/注册表。适用于设计数据驱动系统、替换单例/管理器、使用 CreateAssetMenu 创建 .asset 数据，或当用户提到脚本对象、SO 架构或数据资源时。"}

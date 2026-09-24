@@ -1,0 +1,1 @@
+{"description_zh": "通过其HTTP API与DeerFlow AI智能体平台进行交互。当用户需要向DeerFlow发送消息或问题以进行研究和分析、启动DeerFlow对话会话、检查DeerFlow状态或健康状况、列出DeerFlow中可用的模型/技能/智能体、管理DeerFlow的记忆、将文件上传至DeerFlow的对话会话，或将复杂的调研任务委托给DeerFlow时，请使用此技能。此外，当用户提及deerflow、deer flow，或要求执行DeerFlow可处理的深度研究任务时，也请使用此技能。"}

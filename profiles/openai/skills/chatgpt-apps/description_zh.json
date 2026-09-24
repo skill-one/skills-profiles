@@ -1,0 +1,1 @@
+{"description_zh": "构建、搭建、重构和排查结合了 MCP 服务器与组件 UI 的 ChatGPT 应用 SDK 应用程序。当 Codex 需要设计工具、注册 UI 资源、连接 MCP 应用桥接或 ChatGPT 兼容性 API、配置应用 SDK 元数据、CSP 或域名设置，或生成与文档对齐的项目脚手架时使用。优先采用文档优先的工作流，即在生成代码之前调用 openai-docs 技能或 OpenAI 开发者文档 MCP 工具。"}

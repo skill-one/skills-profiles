@@ -1,0 +1,1 @@
+{"description_zh": "管理 Grafana Cloud 账户——组织、栈、RBAC 角色和分配、SSO/SAML/OAuth/GitHub 认证、用于 CI/CD 的服务账户、用户邀请、团队成员资格以及基于 API 的资源配置。通过 Cloud API 创建栈，签发服务账户令牌，应用角色分配，配置 SSO 提供商，并通过 Terraform 配置团队/文件夹/仪表盘。用于在管理 Grafana Cloud 访问、配置 SSO/SAML/OAuth、为 Terraform/CI/CD 设置服务账户、分配 RBAC 角色、邀请用户、管理多个栈或组织、通过 API 或 Terraform 配置云资源或审计管理员操作时使用——即使用户说“设置 SSO”、“创建栈”、“创建服务账户”或“加入团队”，但并未明确说“管理员”，也可使用。"}

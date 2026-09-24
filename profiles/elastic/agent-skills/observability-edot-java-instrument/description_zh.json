@@ -1,0 +1,1 @@
+{"description_zh": "使用 Elastic Distribution of OpenTelemetry（EDOT）Java Agent 为 Java 应用程序添加埋点，以实现追踪、指标和日志的自动采集。当为没有现有 APM 代理的 Java 服务添加可观测性时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "悬空标记注入操作手册。在可进行 HTML 注入但 JavaScript 执行被阻止（CSP、清洗器剥离事件处理器、WAF 阻止 script 标签）时使用——通过注入未闭合的 HTML 标签截获后续页面内容，窃取 CSRF token、会话数据和页面内容。"}

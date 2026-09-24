@@ -1,0 +1,1 @@
+{"description_zh": "设置、配置并排查 Grafana Cloud 针对 AWS、Azure 及其他云供应商的集成。适用于用户要求连接 AWS CloudWatch、设置 Azure Monitor、配置 Confluent Cloud 可观测性、安装 Grafana 集成、设置托管导出器、使用 AWS Firehose 处理 CloudWatch 日志，或排查云集成问题时。在出现诸如“AWS CloudWatch”、“Azure Monitor”、“Confluent 集成”、“云集成”、“托管导出器”、“AWS Firehose”、“安装集成”、“云指标”或“云日志”等短语时触发。"}

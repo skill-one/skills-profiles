@@ -1,0 +1,1 @@
+{"description_zh": "面向 3D 模型与动画的 Blender 网页导出工作流程。当需要将 Blender 模型导出为网页 glTF、优化用于 Three.js 或 Babylon.js 的 3D 资产、使用 Python 脚本批量处理模型、自动化 Blender 工作流，或创建面向网页的 3D 流水线时，使用此技能。适用于涉及 Blender glTF 导出、bpy 脚本编程、3D 资产优化、模型压缩、纹理烘焙或 Blender 自动化的任务。导出模型以支持 threejs-webgl、react-three-fiber 和 babylonjs-engine 技能。"}

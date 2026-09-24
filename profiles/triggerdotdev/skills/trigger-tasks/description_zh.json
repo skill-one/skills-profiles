@@ -1,0 +1,1 @@
+{"description_zh": "涵盖使用 @trigger.dev/sdk 编写 Trigger.dev 后端任务：定义 task() 和 schemaTask()、运行函数及其 ctx、重试、等待、队列与并发、幂等键、运行元数据、日志、触发其他任务（以及 Result 结构）、定时任务（scheduled/cron）、以及 trigger.config.ts 的基本内容。当您正在 /trigger 目录中编写或编辑代码、定义任务，或编写触发任务的后端代码时，随时加载此内容。实时/React hooks 和 AI 聊天由单独的技能覆盖。"}

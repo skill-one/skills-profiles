@@ -1,0 +1,1 @@
+{"description_zh": "打包并发布一个 Unreal Engine 5 项目：Platforms 菜单下的 Package Project（打包项目）流程、构建配置（开发版与发行版）、内容制作、打包设置、游戏默认地图，以及使用 RunUAT BuildCookRun 进行的命令行构建。当打包构建、制作发行构建、制作内容、配置打包设置，或用户提及打包虚幻、制作内容、制作发行构建或 BuildCookRun 时使用。"}

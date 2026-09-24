@@ -1,0 +1,1 @@
+{"description_zh": "在 Godot 4.7 中使用 C#/.NET：扩展节点类的部分类、帕斯卡大小写生命周期的（_Ready/_Process/_PhysicsProcess）、[Export] 字段、将 [Signal] 委托用作 C# 事件、类型安全的节点查找，以及 C# 与 GDScript 之间的调用。在编写使用 C# 的 Godot 游戏代码（.cs 文件、.csproj）、需要 Godot .NET 构建、将 GDScript 模式转换为 C#，或将 Godot 信号连接为 C# 事件时使用。"}

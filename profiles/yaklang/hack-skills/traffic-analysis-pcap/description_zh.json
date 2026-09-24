@@ -1,0 +1,1 @@
+{"description_zh": "网络流量分析与PCAP取证操作手册。用于分析网络抓包数据，包括Wireshark过滤器、协议分析（HTTP/DNS/FTP/SMTP/USB/WiFi）、数据提取、隐蔽信道检测、PCAP修复、TLS解密以及tshark命令行分析。"}

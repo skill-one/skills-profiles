@@ -1,0 +1,1 @@
+{"description_zh": "创建具有尺寸、字重和行高关系的模块化字体尺度。用于建立排版结构时使用。仅用于行长度计算时使用 `readable-measure`；用于在现有屏幕上评估字体时使用 `critique-typography`（视觉评审）。"}

@@ -1,0 +1,1 @@
+{"description_zh": "本插件内置的两个财务技能的路由/索引：financial-analyst（比率分析、DCF估值、预算差异、滚动预测）和 saas-metrics-coach（ARR/MRR、流失率、CAC/LTV、NRR、速动比率）。当财务请求并不明显匹配某个技能，且需要选择正确的技能时使用（例如：“分析这些财务数据”，“我的SaaS指标健康状况如何？”）。"}

@@ -1,0 +1,1 @@
+{"description_zh": "针对已部署的 NVIDIA RAG Blueprint 服务器进行性能基准测试：由单份 YAML 配置驱动的 profiling 检查 + aiperf 负载测试。不用于准确性 / RAGAS 评分（请使用 rag-eval）或用于部署 / 修复服务（请使用 rag-blueprint）。"}

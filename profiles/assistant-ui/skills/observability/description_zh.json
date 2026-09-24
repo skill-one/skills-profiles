@@ -1,0 +1,1 @@
+{"description_zh": "集成 assistant-ui 和 AI SDK 后端路由与 Langfuse、LangSmith 或 Helicone，并使用实验性 @assistant-ui/react-o11y SpanResource 与 SpanPrimitive API 独立渲染追踪数据。当追踪数据缺失、Serverless 分片被丢弃、AI SDK 调用需要提供商元数据、Helicone 未代理提供商，或需要渲染追踪树或时间线时使用它。流式传输使用 streaming，初始应用配置使用 setup，Assistant Cloud 持久化使用 cloud，复制并设置样式的追踪 UI 使用 elements。"}

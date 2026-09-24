@@ -1,0 +1,1 @@
+{"description_zh": "通过构建时间摘要和 Swift 前端诊断分析 Swift 及混合语言编译热点，并生成优先推荐的源码级优化方案。当开发者报告编译缓慢、类型检查警告、成本较高的清理构建编译阶段、较长的 CompileSwiftSources 任务、warn-long-function-bodies 输出，或需要加速 Swift 类型检查时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "提供针对 Python 的 AWS Lambda 集成模式，并包含冷启动优化。适用于将 Python 函数部署到 AWS Lambda、在 AWS Chalice 与原始 Python 方案之间进行选择、优化冷启动、配置 API Gateway 或 ALB 集成，或实现无服务器 Python 应用。触发条件包括：\"create lambda python\"、\"deploy python lambda\"、\"chalice lambda aws\"、\"python lambda cold start\"、\"aws lambda python performance\"、\"python serverless framework\"。"}

@@ -1,0 +1,1 @@
+{"description_zh": "Linux安全机制绕过指南：当面对受限的bash/rbash、只读或noexec文件系统、AppArmor、SELinux、seccomp过滤器，或需在后期利用阶段规避的审计日志时使用。"}

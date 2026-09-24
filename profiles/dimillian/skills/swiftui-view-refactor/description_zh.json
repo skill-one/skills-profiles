@@ -1,0 +1,1 @@
+{"description_zh": "重构并审查具备强默认值的 SwiftUI 视图文件，需涵盖小型专用子视图、MV 在 MVVM 之上的数据流、稳定的视图树、显式依赖注入以及正确的 Observation 使用。适用于清理 SwiftUI 视图、拆分冗长代码体、移除行内操作或副作用、减少计算型 `some View` 辅助视图，或标准化 `@Observable` 与视图模型初始化模式时的使用场景。"}

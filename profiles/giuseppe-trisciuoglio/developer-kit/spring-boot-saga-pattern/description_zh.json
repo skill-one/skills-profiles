@@ -1,0 +1,1 @@
+{"description_zh": "为 Spring Boot 微服务提供基于 Saga 模式的分布式事务模式。适用于实现跨服务分布式事务、处理补偿事务、确保最终一致性，或基于 Kafka、RabbitMQ 或 Axon Framework 构建协同或编排型 Saga。"}

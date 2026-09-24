@@ -1,0 +1,1 @@
+{"description_zh": "类型化知识图谱，用于结构化智能体记忆与可组合技能。在创建/查询实体（Person、Project、Task、Event、Document）、关联相关对象、强制执行约束、将多步操作规划为图变换，或技能需要共享状态时使用。触发条件包括“remember”“what do I know about”“link X to Y”“show dependencies”、实体 CRUD，或跨技能数据访问。"}

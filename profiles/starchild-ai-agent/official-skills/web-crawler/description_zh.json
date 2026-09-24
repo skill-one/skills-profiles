@@ -1,0 +1,1 @@
+{"description_zh": "网页抓取与社交数据：覆盖 YouTube、TikTok、Instagram、LinkedIn、Reddit、Threads，并支持稳健的网页回退提取。\n\n适用于提取公开帖子、字幕，或JS密集到足以阻碍普通抓取的页面（例如：下载YouTube字幕、抓取TikTok评论、抓取受反机器人/Cloudflare保护的列表页面）。自动回退触发条件：web_fetch 失败、403、反机器人、Cloudflare、JS密集型页面。"}

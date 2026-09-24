@@ -1,0 +1,1 @@
+{"description_zh": "设置 Godot 4.7 3D 场景：Node3D 变换、Camera3D、灯光（DirectionalLight3D/OmniLight3D）、用于天空/环境光/色调映射/后处理的 WorldEnvironment、MeshInstance3D 材质，以及用于基于瓦片的 3D 关卡的 GridMap。\n\n在 Godot 项目中构建 3D 场景、放置相机/灯光、配置环境和后处理，或处理 Node3D/.tscn 3D 内容与 GridMap 时使用。"}

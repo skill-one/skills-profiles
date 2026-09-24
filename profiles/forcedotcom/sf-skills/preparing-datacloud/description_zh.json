@@ -1,0 +1,1 @@
+{"description_zh": "Salesforce数据云准备阶段。当用户创建或管理数据云数据流、DLOs、转换或文档AI配置时，请使用此技能。触发条件：当用户创建或管理数据云数据流、DLOs、转换或文档AI配置，或询问有关数据云接入的内容时，触发此技能。请勿触发条件：任务仅涉及连接设置（请使用connecting-datacloud）、DMOs和身份解析（请使用harmonizing-datacloud），或查询/搜索工作（请使用retrieving-datacloud）。"}

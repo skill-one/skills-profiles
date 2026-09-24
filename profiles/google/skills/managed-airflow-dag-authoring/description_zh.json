@@ -1,0 +1,1 @@
+{"description_zh": "在 Managed Service for Apache Airflow（MSAA；前称 Cloud Composer）中编写 Apache Airflow DAG 的指南。涵盖环境上下文发现、Apache Airflow 2 与 3 的兼容性、编写最佳实践以及本地/远程验证流程。在创建或扩展 Apache Airflow DAG 时使用。请勿在编写与 Apache Airflow DAG 无关的 Python 代码时使用。"}

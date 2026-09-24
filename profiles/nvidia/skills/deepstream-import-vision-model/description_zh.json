@@ -1,0 +1,1 @@
+{"description_zh": "使用此技能，通过端到端自动化，将来自 HuggingFace 或 NVIDIA NGC 的受支持物体检测视觉模型集成到 NVIDIA DeepStream 流程中，包括：ONNX 下载、SafeTensors 导出、TRT 引擎构建、自定义 nvinfer 边界框解析器、多流基准测试及 PDF 报告。仅支持物体检测模型。"}

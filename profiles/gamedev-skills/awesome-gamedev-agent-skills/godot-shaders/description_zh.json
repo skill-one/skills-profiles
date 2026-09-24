@@ -1,0 +1,1 @@
+{"description_zh": "使用 Godot 着色语言编写 Godot 4.7 着色器：编写用于 2D 的画布项着色器、用于 3D 的空间着色器，包含顶点/片段函数、统一变量（源颜色、提示范围）、TIME/UV 动画，以及通过 hint_screen_texture 实现屏幕读取。在编写 .gdshader 文件、编写片段/顶点代码、制作 2D/3D 视觉效果，或将 3.x 着色器（SCREEN_TEXTURE、hint_color）移植到 4.x 时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "利用 BrowserEngineKit 构建替代浏览器引擎。在为支持地区开发 iOS/iPadOS 非 WebKit 浏览器引擎、管理网页内容/渲染/网络扩展进程、配置 GPU 和网络进程能力、检查替代引擎设备资格，或审查 BrowserEngineKit 权限及 Info.plist 配置时使用。"}

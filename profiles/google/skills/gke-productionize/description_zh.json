@@ -1,0 +1,1 @@
+{"description_zh": "统筹针对GKE集群和工作负载的全面生产就绪性评审和评估，覆盖可扩展性、安全性、可靠性、可观测性、备份/灾难恢复以及成本优化。用于在被要求对GKE集群或工作负载进行生产化、准备、评估、审计或审查，并在上线生产前使用。请勿用于单一领域的深度实施（请使用特定领域技能，如gke-workload-scaling、gke-platform-security、gke-workload-security、gke-service-networking、gke-reliability等代替）。"}

@@ -1,0 +1,1 @@
+{"description_zh": "只读 GitHub 分诊，适用于 issues 和 PRs。1 项 = 1 个后台任务（类别：quick）。分析所有未关闭项，并将有证据支持的报告写入 /tmp/{datetime}/。每一项声明均需 GitHub 永久链接作为证明。绝不执行任何 GitHub 操作——不添加评论、不合并、不关闭、不添加标签。仅生成报告。触发条件：'triage'、'triage issues'、'triage PRs'、'github triage'。"}

@@ -1,0 +1,1 @@
+{"description_zh": "通过添加 track() 调用，在代码库中插桩一个 LaunchDarkly 度量事件。当用户需要挂接事件、为度量插桩操作、为功能添加追踪，或确认事件已流向 LaunchDarkly 时使用。"}

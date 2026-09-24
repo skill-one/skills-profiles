@@ -1,0 +1,1 @@
+{"description_zh": "在 Roblox 中使用 DataStoreService 持久化玩家数据：使用 pcall 包装 GetDataStore、GetAsync、SetAsync、UpdateAsync、IncrementAsync，实现加入时加载（load-on-join）、离开时保存（save-on-leave）、BindToClose、重试机制以及 OrderedDataStore 排行榜功能。适用于在 Roblox 体验中保存或加载持久数据的场景——当用户提到 DataStore、DataStoreService、GetAsync、SetAsync、UpdateAsync、保存玩家数据或排行榜时使用。常规 Luau 脚本请使用 roblox-luau。"}

@@ -12,6 +12,6 @@ the Chinese `description_zh` - and `skills.jsonl` is the catalog joining them.
 ## Progress
 
 - **domain**: 9006 of 9007 labelled (100.0%), covering 100.0% of the mirror's installs
-- **translate**: 3051 of 9007 translated (33.9%), covering 91.5% of the mirror's installs
+- **translate**: 6039 of 9007 translated (67.0%), covering 97.2% of the mirror's installs
 - **snapshot**: `dist-2026-09-21`, 2026-09-21T21:18:59Z -> 2026-09-21T21:49:08Z (30m09s)
 - **buildable**: 9007 of 9029 have a readable description; the rest are never built

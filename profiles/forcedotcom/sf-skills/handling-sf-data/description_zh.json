@@ -1,0 +1,1 @@
+{"description_zh": "支持130分评分的Salesforce数据操作。使用此技能，借助sf CLI和匿名Apex，完成Salesforce记录的创建、更新、删除、批量导入与导出、测试数据生成以及组织（org）记录的清理工作。\n\n触发场景：当用户创建测试数据、执行批量导入/导出、使用sf数据CLI命令、需要用于Apex测试的数据工厂模式，或在Salesforce组织中需初始化与清理记录时触发。\n\n不触发场景：仅进行SOQL查询编写（使用querying-soql）、执行Apex测试（使用running-apex-tests）、进行元数据部署（使用deploying-metadata）。"}

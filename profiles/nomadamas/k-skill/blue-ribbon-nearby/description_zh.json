@@ -1,0 +1,1 @@
+{"description_zh": "使用场景：当用户询问附近的餐厅或近处美食店，并需要蓝带（Blue Ribbon）精选推荐时。始终先询问用户的当前位置，然后通过 k-skill-proxy 搜索官方蓝带（Blue Ribbon）餐厅周边的餐厅。"}

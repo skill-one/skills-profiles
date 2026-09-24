@@ -1,0 +1,1 @@
+{"description_zh": "为 Amazon Keyspaces（针对 Apache Cassandra）提供权威的兼容性检查、定价估算、连接故障排查、预热指导及基础设施变更。涵盖 LWT/批量操作、二级索引、物化视图、容量模式、TTL、PITR、CDC、自动扩展、多区域 Keyspaces、UDTs、nodetool 诊断解析、SQL 到 Cassandra 的迁移，以及 Cassandra 到 Keyspaces 的迁移场景。在未加载该技能的情况下，智能体频繁会对 Keyspaces 功能支持给出不完整或不正确的回答。"}

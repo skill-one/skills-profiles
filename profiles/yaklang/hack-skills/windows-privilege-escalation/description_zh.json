@@ -1,0 +1,1 @@
+{"description_zh": "Windows 本地权限提升操作手册。适用于拥有 Windows 低权限 Shell 访问权限，且需要通过令牌滥用、Potato 漏洞利用、服务配置错误、DLL 劫持、UAC 绕过或注册表自启动提升权限的情况。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在发布前，在差异之外找出改动可能造成破坏的位置，并实际运行代码来证明其安全这一唯一依据，而不是仅仅写下来。用于查询 'blast radius of X'、'what could this break'，或在审查你不信任的小差异时。"}

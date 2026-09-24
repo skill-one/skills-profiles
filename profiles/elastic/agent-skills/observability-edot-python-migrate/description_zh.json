@@ -1,0 +1,1 @@
+{"description_zh": "将 Python 应用从经典的 Elastic APM Python 代理迁移到 EDOT Python 代理。当从 elastic-apm 切换到 elastic-opentelemetry 时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "Windows 横向移动操作手册。\n\n当通过 PsExec、WMI、WinRM、DCOM、RDP、哈希传递（pass-the-hash）、哈希超越（overpass-the-hash）或票据传递（pass-the-ticket）等技术在 Windows 主机之间进行横向移动时使用。"}

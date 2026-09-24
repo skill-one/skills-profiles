@@ -1,0 +1,1 @@
+{"description_zh": "当用户要求检查 Sentry 问题或事件、总结近期生产错误，或通过 Sentry CLI 拉取基本 Sentry 健康数据时使用；使用 `sentry` 命令执行只读查询。"}

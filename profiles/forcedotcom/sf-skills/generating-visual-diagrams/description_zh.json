@@ -1,0 +1,1 @@
+{"description_zh": "通过 Nano Banana Pro 为 Salesforce 视觉进行 AI 图像生成。当用户需要渲染 PNG/SVG 输出，如视觉 ERDs（实体关系图）、UI 原型图、线框图或架构插图时，请使用此技能。触发条件：用户要求输出 PNG/SVG、UI 原型图、线框图、视觉 ERD，或提到“生成图像”/“创建原型”。不要触发的情况：用户需要基于文本的 Mermaid 图表（请使用 generating-mermaid-diagrams），或非视觉文档任务。"}

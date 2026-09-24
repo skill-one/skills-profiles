@@ -1,0 +1,1 @@
+{"description_zh": "从当前对话提取 DDD 风格的通用语言词汇表，标记歧义并提出标准术语。保存至 UBIQUITOUS_LANGUAGE.md。适用于用户希望定义领域术语、构建词汇表、收紧术语、创建通用语言，或提及 “domain model” / “DDD” 时。"}

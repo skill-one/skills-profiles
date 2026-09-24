@@ -1,0 +1,1 @@
+{"description_zh": "当没有更具体的 playbook 适用时，设计可审计的 playbook：大规模迁移、具有雄心的多部分变更，或需要人类在离开后审核的工作。将严谨性适配到任务，运行假设循环，并通过 show-me-your-work 记录决策。用于 /figure-it-out、'figure it out'、大规模迁移，或当没有更具体的 playbook 适用时。"}
