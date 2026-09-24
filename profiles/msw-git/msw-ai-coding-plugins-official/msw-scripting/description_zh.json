@@ -1,0 +1,1 @@
+{"description_zh": "**MSW 脚本（.mlua）编写及集成的试玩与调试**\n\n涵盖 .mlua 语法、注解（@Component/@Logic/@ExecSpace/@Sync）、生命周期、执行空间、属性同步、事件系统、文件工作流、构建日志检查、错误分类以及测试/调试循环。\n\n**关键词**：脚本、mlua、lua、Component、Logic、注解、ExecSpace、Sync、事件、play、test、debug、生命周期。"}

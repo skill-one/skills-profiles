@@ -1,0 +1,1 @@
+{"description_zh": "在当前的印刷出版（Printing Press）环境下，从零重新生成已有的已打印CLI，将前期研究、前期新功能以及前期补丁（发布后的手工修复）作为协调上下文带入撰写流程，而非直接丢弃。若CLI不在本地，则从其公共库中拉取，并根据时效性推荐前期研究的复用或重做方式，随后将正确上下文交接至 /printing-press。适用于机器升级对已发布CLI带来的收益大于手动打磨的情形。触发短语：\"reprint <api>\", \"regenerate <api>\", \"redo the <api>-CLI\", \"rebuild <api>-CLI from scratch\", \"this CLI would benefit from a reprint\"。"}

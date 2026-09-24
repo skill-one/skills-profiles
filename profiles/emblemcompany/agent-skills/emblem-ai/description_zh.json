@@ -1,0 +1,1 @@
+{"description_zh": "面向应用的即时用户管理、跨链钱包认证、AI 驱动的助手以及 AI 应用内省。当用户希望让网站用户通过钱包、邮箱/密码或社交登录，并为每位用户创建具备钱包功能的账户，随后嵌入 EmblemAI 对话界面、连接插件或添加 Reflexive 可观测性时使用。提供 React 组件、TypeScript SDK、基于会话的认证，以及针对特定工作流的 React 和 agent-wallet 技能的指引。"}

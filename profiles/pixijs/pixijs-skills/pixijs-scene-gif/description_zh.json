@@ -1,0 +1,1 @@
+{"description_zh": "在使用 PixiJS v8 显示动画 GIF 时使用此技能。涵盖 pixi.js/gif 副作用导入、Assets.load 返回 GifSource、GifSprite 播放（play/stop/currentFrame/animationSpeed）、autoPlay/loop 选项、onComplete/onLoop/onFrameChange 回调、GifSource 共享、克隆、销毁。触发于：GifSprite、GifSource、pixi.js/gif、animationSpeed、currentFrame、autoPlay、onComplete、onFrameChange、constructor options、GifSpriteOptions。"}

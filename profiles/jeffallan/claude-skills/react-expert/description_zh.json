@@ -1,0 +1,1 @@
+{"description_zh": "适用于构建基于 .jsx 或 .tsx 文件的 React 18+ 应用、Next.js App Router 项目或 create-react-app 项目配置。可创建组件、实现自定义 Hook、调试渲染问题、将类组件迁移为函数式组件，并实现状态管理。适用于服务端组件、Suspense 边界、useActionState 表单、性能优化或 React 19 功能。"}

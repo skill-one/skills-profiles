@@ -1,0 +1,1 @@
+{"description_zh": "管理 Firebase Remote Config 模板、功能标志、加载策略以及 Android、iOS SDK。适用于下载/部署 remoteconfig JSON 模板、管理版本历史/功能标志、设置应用内默认值、fetchAndActivate()、实时监听器或 SDK 配置。请勿用于 Firebase Hosting、Auth、Firestore、Data Connect、Crashlytics 或 App Hosting。"}

@@ -1,0 +1,1 @@
+{"description_zh": "将基于 Runpod GraphQL API 或 REST v1 的代码库迁移至 REST v2，需盘点哪些部分使用了哪个 API 版本，重写调用点，标记破坏性变更，并进行验证。当有人询问迁移至 v2、询问 v2 将带来哪些变更，或询问其代码所使用的 Runpod API 版本时使用。若目的是管理基础设施而非迁移代码，请使用 runpod-mcp 或 runpodctl。"}

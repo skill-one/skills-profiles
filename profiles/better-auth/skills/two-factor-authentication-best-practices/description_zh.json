@@ -1,0 +1,1 @@
+{"description_zh": "配置TOTP身份验证应用，通过邮件或短信发送OTP验证码，管理备用验证码，处理受信任设备，并使用Better Auth的twoFactor插件实现2FA登录流程。当用户使用Better Auth需要多因素认证（MFA）、身份验证器设置或登录安全时，即可使用本功能。"}

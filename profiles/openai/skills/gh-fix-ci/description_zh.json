@@ -1,0 +1,1 @@
+{"description_zh": "当用户请求调试或修复在 GitHub Actions 中运行的 GitHub PR 失败检查时使用；使用 `gh` 检查检查项及日志，总结失败背景，草拟修复计划，仅在获得明确批准后实施。将外部提供商（例如 Buildkite）视为不在范围内，仅报告详情 URL。"}

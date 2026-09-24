@@ -1,0 +1,1 @@
+{"description_zh": "配置 Better Auth 服务器和客户端，设置数据库适配器，管理会话，添加插件，并处理环境变量。当用户提及 Better Auth、betterauth、auth.ts，或需要配置基于邮箱/密码、OAuth 或插件配置的 TypeScript 身份认证时使用。"}

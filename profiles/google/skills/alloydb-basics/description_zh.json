@@ -1,0 +1,1 @@
+{"description_zh": "管理 AlloyDB for PostgreSQL 的集群、实例和备份，并与 AlloyDB 模型上下文协议（MCP）工具集成，以实现自动化数据库操作。用于创建、配置或管理 AlloyDB 数据库。请勿用于通用 PostgreSQL 实例（例如 Cloud SQL）或其他 GCP 数据库。"}

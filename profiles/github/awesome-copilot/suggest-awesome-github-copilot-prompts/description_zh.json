@@ -1,0 +1,1 @@
+{"description_zh": "根据当前仓库上下文和聊天记录，从 awesome-copilot 仓库中建议相关的 GitHub Copilot 提示文件，避免与本仓库中已有提示重复，并识别需要更新的过时提示。"}

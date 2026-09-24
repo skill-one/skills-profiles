@@ -1,0 +1,1 @@
+{"description_zh": "将项目注册至 OSS-Fuzz（Google 面向开源项目的免费持续模糊测试服务），并在本地驱动运行。涵盖 project.yaml、Dockerfile 与 build.sh 的配置、辅助脚本、重现 OSS-Fuzz 崩溃报告以及验收标准。适用于为开源项目设置持续模糊测试、重现 OSS-Fuzz 问题报告，或在提交之前测试 OSS-Fuzz 构建。"}

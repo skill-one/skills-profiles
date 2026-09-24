@@ -1,0 +1,1 @@
+{"description_zh": "OmniStudio OmniScript 创建与验证（支持 120 分评分）。\n\n使用场景：构建引导式数字体验、多步骤表单，或编排 Integration Procedures 和 Data Mappers 的交互式流程时。\n\n触发条件：用户创建 OmniScripts、设计步骤流程、配置元素类型，或审查现有 OmniScript 配置时。\n\n不触发条件：构建 FlexCards（使用 omnistudio-flexcard-generate）、直接创建 Integration Procedures（使用 omnistudio-integration-procedure-generate），或分析依赖关系（使用 omnistudio-dependencies-analyze）时。"}

@@ -1,0 +1,1 @@
+{"description_zh": "将 `package:matcher` 中的 `expect` 及类似函数的用法替换为 `package:checks` 中的等效版本。"}

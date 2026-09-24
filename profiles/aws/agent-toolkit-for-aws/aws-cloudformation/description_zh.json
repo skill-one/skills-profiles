@@ -1,0 +1,1 @@
+{"description_zh": "编写、验证与排查 AWS CloudFormation 模板。涵盖在安全默认设置下编写模板，使用 cfn-lint 或 cloudformation-validate 进行本地验证，将 cfn-guard 的安全与合规检查作为推荐的默认设置，账户感知的 CloudFormation 服务部署前验证，CloudFormation Express 模式以实现更快的部署，并使用 CloudFormation 事件与 CloudTrail 关联对失败的堆栈进行根本原因诊断。同时涵盖借助 CloudFormation 语言服务器及发布的 cloudformation-validate 库，在编写阶段为模板提供智能支持。"}

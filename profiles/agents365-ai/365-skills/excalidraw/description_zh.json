@@ -1,0 +1,1 @@
+{"description_zh": "当用户请求图表、流程图、架构图或可视化时使用。也应在解释包含 3 个及以上组件、复杂数据流，或从可视化呈现中受益的关系的系统时，主动使用。生成 .excalidraw 文件，并通过 Kroki API 或本地使用 excalidraw-brute-export-cli 将其导出为 PNG/SVG。"}

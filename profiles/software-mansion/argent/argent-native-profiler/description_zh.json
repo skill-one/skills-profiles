@@ -1,0 +1,1 @@
+{"description_zh": "原生性能剖析：用于 CPU 热点、UI 卡顿、内存问题。iOS 通过 xctrace；Android 通过 Perfetto。适用于诊断原生层面的性能问题。"}

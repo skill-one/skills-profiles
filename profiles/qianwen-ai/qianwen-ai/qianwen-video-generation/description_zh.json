@@ -1,0 +1,1 @@
+{"description_zh": "使用 Wan 和 HappyHorse 模型生成视频。支持文生视频、图生视频、首帧+末帧、基于参考的角色扮演以及视频编辑（VACE）。\n\n**触发条件：当用户想要创建、生成或编辑视频内容，提及视频生成/动画/视频片段/Wan/HappyHorse 模型，或明确以本技能名称调用（例如：使用 qianwen-video-generation）时。**\n\n**不触发条件：当用户想要生成图像（使用 qianwen-image-generation）、理解/分析现有视频（使用 qianwen-vision），或仅执行纯文本任务时。**"}

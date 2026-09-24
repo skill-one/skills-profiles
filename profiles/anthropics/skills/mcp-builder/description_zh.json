@@ -1,0 +1,1 @@
+{"description_zh": "高质量 MCP（模型上下文协议）服务器创建指南：通过精心设计的工具，使大语言模型能够与外部服务进行交互。适用于在 Python（FastMCP）或 Node/TypeScript（MCP SDK）中构建 MCP 服务器，以集成外部 API 或服务。"}

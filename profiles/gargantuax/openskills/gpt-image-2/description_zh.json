@@ -1,0 +1,1 @@
+{"description_zh": "全面覆盖基于 OpenAI 兼容格式的 GPT Image 2，涵盖 images/generations、images/edits 以及使用 image_generation 工具生成 responses。适用于一次性图像辅助功能不足的场景——支持文本生成图像、掩码编辑、多图像批量处理、流式传输、partial_images，以及混合文本+图像 Responses 流程。读取 .env 文件，并遵循进程环境变量；兼容任意 OpenAI 兼容网关。"}

@@ -1,0 +1,1 @@
+{"description_zh": "面向多步骤AI智能体工作的基于文件的持久化规划。将 task_plan.md、findings.md 和 progress.md 保留在磁盘上；生命周期钩子注入所选项目规划上下文。自动恢复仅读取项目规划文件。显式调用 session-catchup.py --metadata 仅读取同项目本地智能体会话记录并仅输出汇总计数；--replay 可能输出受 nonce 边界限制的片段。可选的门控模式仅在宿主系统支持时请求续传，且绝不执行 Markdown 中声明的命令。该技能无网络上传路径。适用于需要 5+ 次工具调用的研究或工作。"}

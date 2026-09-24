@@ -1,0 +1,1 @@
+{"description_zh": "配置、优化和排查 GKE ComputeClass。当需要配置带有按需回退的 Spot VM、针对特定加速器（GPUs/TPUs）或机型族、限制 ComputeClass 访问，或排查与节点池自动创建相关的待处理 Pod 时使用。不可用于集群级节点自动配置或通用 GKE 集群创建。"}

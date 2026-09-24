@@ -1,0 +1,1 @@
+{"description_zh": "生成一个 explore-prompt.md 文件，为 Momentic 的探索代理（`momentic ai explore diff` / `momentic ai explore latest`）提供特定代码库的上下文，包括需要测试的应用程序、测试必须针对的 URL、如何进行身份验证、生成的测试应保存的位置以及代码库的特殊性。在设置或改进通过 `--prompt-file` 参数传递的提示文件时使用。"}

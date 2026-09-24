@@ -1,0 +1,1 @@
+{"description_zh": "使用基于令牌的认证在 Vercel 上部署和管理项目。在通过访问令牌使用 Vercel CLI 而非交互式登录时使用——例如 \"deploy to vercel\", \"set up vercel\", \"add environment variables to vercel\"。"}

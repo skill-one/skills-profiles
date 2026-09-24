@@ -1,0 +1,1 @@
+{"description_zh": "当在 PixiJS v8 画布上叠加 HTML 元素时使用此技能。涵盖 DOMContainer（支持 element、anchor 以及基于场景图的 CSS 变换）、pixi.js/dom 副作用导入、DOMPipe 注册、可见性同步与指针事件处理。触发条件：DOMContainer、pixi.js/dom、DOMPipe、HTML 叠加层、画布输入、iframe 叠加层、DOMContainerOptions、element、anchor、构造函数选项。"}

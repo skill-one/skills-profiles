@@ -1,0 +1,1 @@
+{"description_zh": "使用移动钱包适配器（Mobile Wallet Adapter）与钱包界面（Wallet UI），在 React Native Expo 应用中连接 Solana 钱包，并签名或发送交易。适用于在应用中添加连接钱包按钮、显示已连接地址、进行断开连接、对消息签名、通过 Solana 登录、转账 SOL 或在 Solana 移动应用中发送任意交易等场景。"}

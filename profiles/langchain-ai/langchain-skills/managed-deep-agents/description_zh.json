@@ -1,0 +1,1 @@
+{"description_zh": "在 LangSmith 中使用 mda CLI 构建、测试或部署 Managed Deep Agents 时，调用本技能。逐步引导用户完成首个智能体的端到端流程——与他们交流想要构建的内容，将其映射到 MDA 实际能够实现的功能，然后进行项目搭建并部署。涵盖文件型项目布局；define_deep_agent / defineDeepAgent；指令、技能、记忆、身份、工具、中间件、沙盒、调度、频道和评估；mda init/build/dev/deploy/logs/delete；以及 Context Hub。"}

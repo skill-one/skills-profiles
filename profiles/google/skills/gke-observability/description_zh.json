@@ -1,0 +1,1 @@
+{"description_zh": "配置 GKE 可观测性，包括 Cloud Logging、Cloud Monitoring 以及托管 Prometheus。适用于配置 GKE 监控、设置 GKE 日志或配置 Prometheus 指标采集。不可用于配置本地应用日志框架或 GKE 外部的外部 APM。"}

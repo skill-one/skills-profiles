@@ -1,0 +1,1 @@
+{"description_zh": "基于 @clerk/chrome-extension 的 Chrome 扩展认证，包括：弹出窗口/侧边栏配置、通过 Web 应用为 OAuth/SAML 设置 syncHost、使用 createClerkClient 为 Service Worker 和无头扩展创建客户端，以及稳定的 CRX ID。\n\n触发项：Chrome 扩展认证、Plasmo clerk、弹出窗口登录、syncHost、后台 Service Worker token、createClerkClient、无头扩展。"}

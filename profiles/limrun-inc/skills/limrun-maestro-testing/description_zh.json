@@ -1,0 +1,1 @@
+{"description_zh": "使用 `lim ios maestro` 从任何环境（Linux、Windows、macOS、虚拟机、容器）运行 Maestro YAML 流程，针对 Limrun 云 iOS 模拟器。当用户需要运行、编写或调试 iOS 上的 Maestro 流程或 `maestro test`，将现有 Maestro 套件迁移至远程模拟器，或需要使用 Maestro 进行 UI 测试时，请使用此功能。目前仅支持 iOS 模拟器。使用 Detox 套件时请使用 limrun-detox-testing；如需在无测试框架的情况下驱动模拟器，请使用 limrun-ios-simmer。"}

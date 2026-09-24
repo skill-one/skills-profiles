@@ -1,0 +1,1 @@
+{"description_zh": "执行 `dart analyze` 以识别警告和错误，并使用 `dart fix --apply` 自动修复机械性 lint 问题。在开发过程中使用，以在提交更改之前确保代码质量。"}

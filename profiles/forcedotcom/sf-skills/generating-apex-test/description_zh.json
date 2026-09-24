@@ -1,0 +1,1 @@
+{"description_zh": "生成并验证采用 TestDataFactory 模式、批量测试（251+ 条记录）、Mock 策略、断言最佳实践以及规范的测试修复循环的 Apex 测试类。当创建新的 Apex 测试类、提升测试覆盖率、调试和修复失败的 Apex 测试、运行测试执行与覆盖率分析，或为触发器、服务、控制器、批处理作业、队列任务和集成实现测试模式时，使用此技能。触发条件包括 *Test.cls、*_Test.cls 文件、sf apex run test 工作流、覆盖率报告和测试修复循环。请勿用于生产环境 Apex 代码（请使用 generating-apex）或 Jest/LWC 测试。"}

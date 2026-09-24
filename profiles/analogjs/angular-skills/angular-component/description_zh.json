@@ -1,0 +1,1 @@
+{"description_zh": "已弃用 - 该技能已不再维护。请改用位于 https://github.com/angular/skills 的官方 Angular 技能。按照 v20+ 最佳实践创建现代化的 Angular 独立组件。该技能用于构建具备基于信号的输入/输出、OnPush 变更检测、host 绑定、内容投影和生命周期钩子的 UI 组件。当创建组件、将基于类的输入重构为基于信号、添加 host 绑定，或实现可访问的交互式组件时触发。"}

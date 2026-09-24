@@ -1,0 +1,1 @@
+{"description_zh": "将 Markdown 转换为采用微信兼容主题的样式化 HTML。支持代码高亮、数学公式、Mermaid（通过无头 Chrome 渲染为 PNG）、PlantUML、脚注、警告、信息图，以及为外部链接提供可选的底部引用。当用户要求使用“markdown to html”、“convert md to html”、“md 转 html”、“微信外链转底部引用”，或需要从 Markdown 获取样式化 HTML 输出时使用。"}

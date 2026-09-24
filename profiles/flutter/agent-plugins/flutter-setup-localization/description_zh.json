@@ -1,0 +1,1 @@
+{"description_zh": "添加 `flutter_localizations` 和 `intl` 依赖，在 `pubspec.yaml` 中启用 \"generate true\"，并创建 `l10n.yaml` 配置文件。用于为新 Flutter 项目初始化本地化支持。"}

@@ -1,0 +1,1 @@
+{"description_zh": "对代码库运行 Semgrep 安全扫描：检测语言、选择规则集、展示计划以供明确批准，然后将每个已批准的规则集通过 `scripts/run-scans.sh` 执行，该脚本批量处理 Semgrep 进程并写入 `scans.json`，并将扫描结果合并到 SARIF 文件中。\n\n支持两种扫描模式：\"run all\" 模式覆盖所有规则集，\"important only\" 模式仅针对中高置信度和影响度的安全发现。当可用时，利用 Semgrep Pro 进行跨文件污点分析。\n\n当被要求扫描代码漏洞、使用 Semgrep 进行安全审计、查找缺陷或执行静态分析时使用。如需执行相同扫描但不设置批准流程，请使用 `/static-analysis:semgrep-scan` 工作流。"}

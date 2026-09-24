@@ -1,0 +1,1 @@
+{"description_zh": "在 GKE 上运行批处理和 HPC 工作负载，利用任务队列和并行处理。用于运行 GKE 批处理任务、配置 GKE HPC 或设置 GKE 任务队列时。不要用于标准 Web 应用部署（请使用 gke-app-onboarding 替代）。"}

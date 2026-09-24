@@ -1,0 +1,1 @@
+{"description_zh": "使用 Tavily CLI 进行全面的 AI 驱动的带引用的研究。当用户需要深度研究、详细报告、对比分析、市场分析、文献综述，或提到\"研究\"（research）、\"调查\"（investigate）、\"深度分析\"（analyze in depth）、\"对比X与Y\"（compare X vs Y）、询问\"市场情况如何\"（what does the market look like for），或需要多来源综合并明确引用时，使用此技能。该技能将基于网络来源生成结构化报告。耗时30-120秒。如需快速查找事实信息，请改用 tavily-search。"}

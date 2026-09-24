@@ -1,0 +1,1 @@
+{"description_zh": "TypeScript 与 React 19 应用的代码审查专家。适用于审查 React 代码、识别反模式、评估状态管理或评估代码可维护性。触发条件：代码审查请求、PR 审查、React 架构评估、识别代码异味、TypeScript 类型安全性检查、useEffect 滥用检测、状态管理审查。"}

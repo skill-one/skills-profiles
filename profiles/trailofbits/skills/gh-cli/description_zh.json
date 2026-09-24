@@ -1,0 +1,1 @@
+{"description_zh": "强制执行 gh CLI 的已认证工作流，覆盖未经认证的 curl、WebFetch 和 MCP 获取模式。适用于处理 GitHub 网址、API 访问、拉取请求或问题时使用。"}

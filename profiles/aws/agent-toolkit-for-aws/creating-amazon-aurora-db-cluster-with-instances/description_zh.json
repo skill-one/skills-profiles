@@ -1,0 +1,1 @@
+{"description_zh": "创建包含实例的完整 Amazon Aurora 数据库集群，按正确顺序处理集群创建、实例配置与 Secrets Manager 密码管理。适用于在设置具备生产级配置的新 Aurora MySQL 或 PostgreSQL 集群时使用。"}

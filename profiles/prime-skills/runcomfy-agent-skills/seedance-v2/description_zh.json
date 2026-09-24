@@ -1,0 +1,1 @@
+{"description_zh": "通过 RunComfy 使用字节跳动 Seedance 2.0 Pro 生成电影感短格式视频。阐述 Seedance 2.0 Pro 的优势（多模态参考——最多可包含 9 张图像、3 个视频和 3 段音频——同步过流程音频，实现自然唇形同步与电影感动态精修），以及 4 至 15 秒的时长模式，以及何时应路由至 HappyHorse 1.0 / Wan 2.7 / Kling。通过本地 RunComfy CLI 调用 `runcomfy run bytedance/seedance-v2/pro`。当输入包含“seedance”、“seedance 2”、“seedance v2”、“seedance pro”、“bytedance video”，或任何要求使用本模型生成视频的明确指令时触发。"}

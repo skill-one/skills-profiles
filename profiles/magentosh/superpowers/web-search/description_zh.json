@@ -1,0 +1,1 @@
+{"description_zh": "使用 Tavily 和 Exa 通过 inference.sh CLI 进行网络搜索和内容提取。\n\n**应用：** Tavily Search、Tavily Extract、Exa Search、Exa Answer、Exa Extract\n\n**功能：** 人工智能驱动的搜索、内容提取、直接回答、研究\n\n**用途：** 研究、RAG 流水线、事实核查、内容聚合、智能体\n\n**触发条件：** web search、tavily、exa、search api、content extraction、research、internet search、ai search、search assistant、web scraping、rag、perplexity alternative"}

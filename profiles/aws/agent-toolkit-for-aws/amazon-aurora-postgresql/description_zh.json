@@ -1,0 +1,1 @@
+{"description_zh": "Amazon Aurora PostgreSQL — 专门用于创建、修改及就 Aurora PostgreSQL 集群提供咨询（PostgreSQL 兼容引擎、Aurora 无服务器、快速配置、pgvector、Babelfish）。触发条件包括 Aurora PostgreSQL 集群操作、快速配置速览、ACU 容量规划、I/O 优化存储、承诺定价或 PostgreSQL 升级规划。针对 Aurora MySQL 请使用 amazon-aurora-mysql。包含安全防护机制、优先采用 Express 路由及可覆盖默认设置的自定义响应模板。"}

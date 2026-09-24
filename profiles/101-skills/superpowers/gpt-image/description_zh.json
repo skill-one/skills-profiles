@@ -1,0 +1,1 @@
+{"description_zh": "使用 inference.sh CLI 通过 OpenAI GPT-Image-2 生成和编辑图像。\n\n模型：GPT-Image-2。\n\n能力：文生图、图像编辑、图像修复、基于蒙版的编辑、多图参考、批量生成。\n\n用途：产品原型图、营销视觉、图像编辑、概念艺术、图像修复、照片处理。\n\n触发词：gpt image、gpt-image-2、openai image、chatgpt image、dall-e、dalle、openai image generation、gpt image edit、gpt inpainting、openai dall-e、gpt 4o image"}

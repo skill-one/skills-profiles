@@ -1,0 +1,1 @@
+{"description_zh": "已弃用 - 此技能未维护。请改用官方 Angular 技能，见 https://github.com/angular/skills。使用 Vitest 或 Jasmine，配合 TestBed 和现代测试模式，为 Angular v20+ 应用程序编写单元测试和集成测试。用于测试使用 signals 的组件、OnPush 变更检测、使用 inject() 的服务以及 HTTP 交互。在创建测试、测试基于 signals 的组件、模拟依赖或设置测试基础设施时触发。请勿用于使用 Cypress 或 Playwright 进行的端到端（E2E）测试，或用于测试非 Angular 的 JavaScript/TypeScript 代码。"}

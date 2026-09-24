@@ -1,0 +1,1 @@
+{"description_zh": "Svelte 5 runes、snippets、SvelteKit 模式，以及针对 TypeScript 和组件开发的现代最佳实践。适用于编写、审查或重构 Svelte 5 组件和 SvelteKit 应用程序。触发场景包括：Svelte 组件、runes（$state、$derived、$effect、$props、$bindable、$inspect）、snippets（{#snippet}、{@render}）、事件处理、SvelteKit 数据加载、表单操作、从 Svelte 4 到 Svelte 5 的迁移、从 store 到 rune 的迁移、从 slots 到 snippets 的迁移、TypeScript props 类型定义、泛型组件、SSR 状态隔离、性能优化或组件测试。"}

@@ -1,0 +1,1 @@
+{"description_zh": "用于 EmblemAI 一次性用户管理的 React 集成技能。当用户希望使用 EmblemAuthProvider、ConnectButton 将社交/邮箱/钱包登录及钱包支持的用户添加到 React 应用，涵盖聊天组件、React 认证钩子、React 组合模式或 Migrate.fun React hooks 时使用。"}

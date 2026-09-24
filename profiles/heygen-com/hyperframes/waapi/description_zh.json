@@ -1,0 +1,1 @@
+{"description_zh": "HyperFrames 的 Web Animations API 适配模式。在编写 element.animate() 动画、Animation 的 currentTime 寻址、document.getAnimations()、KeyframeEffect 时序设置、fill 模式，或使用在 HyperFrames 中必须确定性渲染的原生浏览器动画时使用。"}

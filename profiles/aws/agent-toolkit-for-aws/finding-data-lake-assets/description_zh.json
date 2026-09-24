@@ -1,0 +1,1 @@
+{"description_zh": "跨 Glue Data Catalog、S3、S3 Tables 和 Redshift 解决数据湖与湖仓资产引用。触发条件：查找表、我们的数据在哪里、哪个表包含、定位数据集、查找所需数据、搜索目录、哪些表匹配、Redshift 表、湖仓表、数据湖表、仓库表、反向查找 S3 路径。请勿用于：全面目录审计（使用 exploring-data-catalog）、执行查询（使用 querying-data-lake）、创建表（使用 creating-data-lake-table）。"}

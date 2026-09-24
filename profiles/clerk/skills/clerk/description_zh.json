@@ -1,0 +1,1 @@
+{"description_zh": "Clerk 认证路由。当用户询问 Clerk CLI 操作、添加认证、设置 Clerk、自定义登录流程、Swift 或原生 iOS 认证、原生 Android 认证、Next.js 模式、React 模式、Vue 模式、Nuxt 模式、Astro 模式、TanStack Start 模式、Expo 模式、React Router 模式、Chrome 扩展程序模式、组织、计费、订阅、支付、定价、套餐、座位制定价、功能权限、用户同步、测试、模拟用户或本地测试 Webhooks 时使用。根据用户的任务，自动将其路由至相应的技能。"}

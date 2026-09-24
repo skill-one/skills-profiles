@@ -1,0 +1,1 @@
+{"description_zh": "MSW 默认角色（DefaultPlayer）管理。使用 msw-general 模型构建器检查/修改 DefaultPlayer.model 和 Player.model，添加或删除组件，配置移动速度、跳跃力度、生命值、相机，以及按地图模式设置的移动组件。适用于 DefaultPlayer 模型、角色组件、移动速度、跳跃力度、生命值、相机及物理相关场景。关键词：角色、DefaultPlayer、速度、跳跃、生命值、相机、重力、复活、重生、角色。"}

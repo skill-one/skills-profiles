@@ -1,0 +1,1 @@
+{"description_zh": "Runpod 的工作原理与使用方法——pods 与 serverless 的对比、GPU/VRAM 选择、存储、构建容器、网络连接，以及智能体 pod 开发循环（provision → ssh-exec → set up → poll readiness）与 pod 安装卫生规范（uv/apt）。\n\n用于解答“X 的工作原理”、“选择什么 GPU”、“如何构建容器”或“如何在 pod 上启动工作负载”等问题。\n\n作为指导，而非工具——请使用 runpodctl、runpod-mcp 或 flash 执行操作。"}

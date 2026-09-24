@@ -1,0 +1,1 @@
+{"description_zh": "安全地修改 Xcode 项目（.pbxproj），以添加 Swift Packages 和链接文件。当 iOS 项目需要安装依赖（例如 Firebase、Alamifire）时，请使用此技能。"}

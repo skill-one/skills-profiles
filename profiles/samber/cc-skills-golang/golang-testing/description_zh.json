@@ -1,0 +1,1 @@
+{"description_zh": "生产就绪的 Go 测试——表驱动测试、testify 测试套件与 mock、并行测试、模糊测试、测试夹具、基于 goleak 的 goroutine 泄漏检测、快照测试、代码覆盖率、集成测试以及符合惯用法的测试命名。在编写或审查 Go 测试、选择测试方案、搭建 Go 测试 CI 或调试不稳定的测试时使用。关于 testify 特定 API，请参阅 `samber/cc-skills-golang@golang-stretchr-testify`；关于测量方法，请参阅 `samber/cc-skills-golang@golang-benchmark`。"}

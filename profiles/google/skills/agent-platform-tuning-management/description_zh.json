@@ -1,0 +1,1 @@
+{"description_zh": "管理 Agent 平台中的 GenAI 调优任务。使用此功能列出、获取或取消正在进行的模型调优任务。切勿用于模型微调（使用 `agent-platform-tuning`）、将模型部署到端点（使用 `agent-platform-deploy`）或管理服务端点（使用 `agent-platform-endpoint-management`）。"}

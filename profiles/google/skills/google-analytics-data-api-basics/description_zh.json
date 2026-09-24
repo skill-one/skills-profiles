@@ -1,0 +1,1 @@
+{"description_zh": "管理 Google Analytics 报告数据，通过 Cloud CLI 启用 Analytics Data API，并使用 Google Analytics Data API (v1beta) 创建报告。当您需要与 Google Analytics 属性交互、运行定制化分析报告、查询指标（如 activeUsers、screenPageViews）和维度（如 city、date）、检查指标和维度兼容性，或验证 API 启用状态时可使用。不要用于 Google Analytics Admin API 操作（例如创建属性、管理用户）或前端追踪安装。"}

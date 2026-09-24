@@ -1,0 +1,1 @@
+{"description_zh": "使用 @clerk/expo 为 Expo 和 React Native 应用添加 Clerk 认证。适用于 Expo 配置、预构建原生组件（AuthView、UserButton）、自定义登录/注册流程（邮箱、密码、短信/手机号 OTP、多因素认证（MFA））、OAuth/SSO、原生 Google/Apple 登录、Expo Router 受保护路由、生物识别以及推送通知。不适用于原生 Swift/iOS、原生 Android/Kotlin 或纯 Web 框架项目。"}

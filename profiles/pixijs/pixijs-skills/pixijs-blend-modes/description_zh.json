@@ -1,0 +1,1 @@
+{"description_zh": "在 PixiJS v8 中，当组合带有混合模式的显示对象时，使用此技能。涵盖标准模式（正常、叠加、正片叠底、滤色、擦除、最小、最大），通过 pixi.js/advanced-blink-modes 使用高级模式（color-burn、overlay、hard-light 等），支持批量处理的顺序。触发条件：blendsMode, additive, multiply, screen, overlay, color-burn, color-dodge, advanced-blink-modes, glow, erase。"}

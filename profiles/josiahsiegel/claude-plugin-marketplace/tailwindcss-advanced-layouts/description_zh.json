@@ -1,0 +1,1 @@
+{"description_zh": "Tailwind CSS 高级布局技巧，包括 CSS Grid 和 Flexbox 模式。\n主动适用于：(1) 使用 CSS Grid 构建复杂布局，(2) 通过 Tailwind v4 任意值实现 grid-template-areas，(3) 响应式网格（grid-cols-*、auto-fit、minmax），(4) Flexbox 模式（flex-1、flex-grow、gap），(5) 吸顶页眉和页脚，(6) 圣杯布局，(7) 马赛克式布局，(8) 使用 Tailwind 的容器查询（@container），(9) 子网格使用，(10) aspect-ratio 工具类，(11) 杂志风格多列布局。\n提供：网格模板方案、容器查询模式、圣杯模板、马赛克替代方案以及 aspect-ratio 示例。"}

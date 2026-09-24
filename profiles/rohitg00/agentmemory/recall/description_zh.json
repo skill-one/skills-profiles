@@ -1,0 +1,1 @@
+{"description_zh": "在 agentmemory 中，使用混合 BM25、向量和图搜索，搜索关于某主题的过往观察、会话和学习内容。当用户说“recall”、“what did we do about”、“did we ever”、“have we seen”，或需要过往会话的上下文时使用。"}

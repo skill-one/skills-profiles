@@ -1,0 +1,1 @@
+{"description_zh": "创建一个库级 Vue 组合式函数，该函数接受 maybe-reactive 输入 (MaybeRef / MaybeRefOrGetter)，以便调用者可以传入普通值、ref 或 getter。在响应式效果 (watch/watchEffect) 内部使用 toValue()/toRef() 规范化输入，以保持行为可预测且具有响应性。当用户要求创建可适配或可复用的组合式函数时，使用此技能。"}

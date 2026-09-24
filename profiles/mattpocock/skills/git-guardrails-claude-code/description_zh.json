@@ -1,0 +1,1 @@
+{"description_zh": "在 Claude Code 中设置钩子，在执行危险 git 命令（push、reset --hard、clean、branch -D 等）之前进行拦截。当用户需要防止破坏性 git 操作、添加 git 安全钩子或阻止 Claude Code 中的 git push/reset 时使用。"}

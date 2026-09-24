@@ -1,0 +1,1 @@
+{"description_zh": "CrewAI架构决策与项目脚手架。在启动新的 crewAI 项目时使用，用于在 LLM.call()、Agent.kickoff()、Crew.kickoff() 与 Flow 之间进行选择；使用 'crewai create flow' 搭建项目脚手架；配置 YAML 配置文件（agents.yaml、tasks.yaml）；配置 @CrewBase crew.py；使用 @start/@listen 编写 Flow main.py；使用 handle_turn()/chat() 构建实验性对话 Flow，或使用 {variable} 进行插值。"}

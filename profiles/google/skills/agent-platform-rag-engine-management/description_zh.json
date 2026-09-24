@@ -1,0 +1,1 @@
+{"description_zh": "使用 Google GenAI SDK 管理和查询智能体平台的 RAG 引擎语料库，并检索接地上下文。适用于列出 RAG 语料库或文件、检查语料库、检索上下文，或在 RAG 语料库基础上生成内容。不得用于标准数据库查询（请使用 SQL/Spanner 技能），Google Workspace RAG，或 gRAG 等其他 RAG 产品。"}

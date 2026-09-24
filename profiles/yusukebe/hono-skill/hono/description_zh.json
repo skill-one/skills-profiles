@@ -1,0 +1,1 @@
+{"description_zh": "在构建 Hono Web 应用或用户询问 Hono API、路由、中间件、JSX、验证、测试或流式传输时使用。\n\n触发条件：当代码从 'hono' 或 'hono/*' 导入，或用户提及 Hono 时。\n\n使用 `npx hono request` 测试端点。"}

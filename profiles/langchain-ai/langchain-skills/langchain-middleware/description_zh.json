@@ -1,0 +1,1 @@
+{"description_zh": "调用此技能，当您需要人在环中审批、自定义中间件或结构化输出时。涵盖用于对危险工具调用进行人工审批的 HumanInTheLoopMiddleware、创建带有钩子的自定义中间件、Command 恢复模式以及使用 Pydantic/Zod 的结构化输出。"}

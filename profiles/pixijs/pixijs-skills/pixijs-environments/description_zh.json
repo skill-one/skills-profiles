@@ -1,0 +1,1 @@
+{"description_zh": "在标准浏览器之外运行 PixiJS v8 时使用此技能：涵盖 Web Workers、OffscreenCanvas、Node/SSR 或 CSP 受限环境。涵盖 DOMAdapter.set、BrowserAdapter、WebWorkerAdapter、自定义 Adapter 接口，以及针对严格 CSP 的 pixi.js/unsafe-eval。触发条件：DOMAdapter、BrowserAdapter、WebWorkerAdapter、Web Worker、OffscreenCanvas、Node、headless、SSR、CSP、unsafe-eval、Adapter。"}

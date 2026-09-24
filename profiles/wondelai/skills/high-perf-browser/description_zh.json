@@ -1,0 +1,1 @@
+{"description_zh": "通过网络协议、资源加载和浏览器渲染内部机制优化网页性能。当用户提及“我的网站很慢”、“Core Web Vitals”、“HTTP/2 或 HTTP/3”、“资源提示”、“网络延迟”、“渲染阻塞”、“TCP/TLS 优化”、“Service Worker”、“Cache-Control 或缓存策略”或“关键渲染路径”时使用。在诊断页面加载缓慢、优化首字节时间、选择 WebSocket 与 SSE 方案，或减小包体大小时触发。有关 UI 视觉性能优化，请参考 refactoring-ui。有关字体加载，请参考 web-typography。"}

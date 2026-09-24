@@ -1,0 +1,1 @@
+{"description_zh": "如何编写高质量的现代 Swift——以值类型建模、Swift 6 的数据竞争安全性与易于使用的并发编程（@concurrent、默认主Actor、actors、task groups）、协议与泛型（some 与 any）、API 设计、性能与 ARC、Swift 测试、宏，以及智能体尚未了解的现代语言特性。在编写、审查或迁移 Swift 代码时使用；当需要修复并发错误、程序卡死、数据竞争、循环引用或性能问题时也可使用。"}

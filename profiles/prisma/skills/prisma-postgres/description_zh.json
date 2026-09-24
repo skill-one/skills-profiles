@@ -1,0 +1,1 @@
+{"description_zh": "Prisma Postgres 配置与运维指南，涵盖 Console、create-db CLI、Management API 及 Management API SDK。适用于创建 Prisma Postgres 数据库、在 Prisma Console 中操作、使用 create-db/create-pg/create-postgres 进行配置，或通过服务令牌或 OAuth 进行程序化配置集成的场景。"}

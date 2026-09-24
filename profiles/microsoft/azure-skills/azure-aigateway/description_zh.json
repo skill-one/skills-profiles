@@ -1,0 +1,1 @@
+{"description_zh": "**为AI模型、MCP工具和智能体配置Azure API Management作为AI网关**\n\n**场景：** 语义缓存、Token限制、内容安全、负载均衡、AI模型治理、MCP速率限制、越狱检测、添加Azure OpenAI后端、添加AI Foundry模型、测试AI网关、LLM策略、配置AI后端、Token指标、AI成本控制、将API转换为MCP、将OpenAPI导入网关"}

@@ -1,0 +1,1 @@
+{"description_zh": "分析编译二进制文件中的 DWARF 调试信息。在以下情况中使用：使用 dwarfdump/llvm-dwarfdump 或 readelf 检查 .debug_* 节、DIE 树或 DW_TAG_/DW_AT_ 条目，使用 llvm-dwarfdump --verify 验证调试信息，解答 DWARF 标准相关问题，或使用解析 DWARF 的代码（libdwarf、pyelftools、gимli)。"}

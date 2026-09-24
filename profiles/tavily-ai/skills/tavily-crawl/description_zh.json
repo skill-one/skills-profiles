@@ -1,0 +1,1 @@
+{"description_zh": "通过 Tavily CLI 抓取网站并从多个页面提取内容。当用户希望抓取网站、下载文档、提取整个文档部分、批量提取页面、将网站保存为本地 Markdown 文件，或表述为“crawl”（抓取）、“get all the pages”（获取所有页面）、“download the docs”（下载文档）、“extract everything under /docs”（提取 /docs 目录下的所有内容）、“bulk extract”（批量提取），或需要获取同一域名下多个页面的内容时，请使用此技能。支持深度/广度控制、路径过滤、语义指令，并将每页保存为本地 Markdown 文件。"}

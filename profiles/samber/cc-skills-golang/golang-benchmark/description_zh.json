@@ -1,0 +1,1 @@
+{"description_zh": "Go 基准测试、性能分析与性能测量。在编写、运行或对比 Go 基准测试时使用；使用 pprof 对热路径进行性能分析，解读 CPU/内存/调用栈性能分析数据，使用 benchstat 分析测试结果，配置 CI 基准测试回归检测，或使用 Prometheus 运行时指标调查生产环境性能。当开发者需要对特定性能指标进行深度分析时，也应使用本技能——本技能提供测量方法，而 `samber/cc-skills-golang@golang-performance` 提供优化模式。"}

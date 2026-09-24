@@ -1,0 +1,1 @@
+{"description_zh": "使用 `package:mockito` 和 `build_runner` 为外部依赖定义并生成模拟对象。在单元测试依赖 API 或数据库等复杂外部服务的类时使用。"}

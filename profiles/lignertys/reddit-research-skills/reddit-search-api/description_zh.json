@@ -1,0 +1,1 @@
+{"description_zh": "reddapi.dev 纯 API 参考文档——涵盖认证、所有接口（向量搜索、语义搜索、趋势、子版块查询）、请求参数、响应模式及错误码，不包含任何研究流程框架。当用户需要原始接口文档、调试 reddapi.dev 集成、需要精确的请求/响应字段名称，或询问\"reddapi API 参考\"、\"reddapi.dev 接口\"或\"reddapi 错误码\"时使用。对于引导式研究流程和查询操作手册，请参阅 reddit-research。对于 B2B 潜在客户评分，请参阅 reddit-leads。"}

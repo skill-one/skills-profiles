@@ -1,0 +1,1 @@
+{"description_zh": "Runpod 工作流的配套 CLI 工具：HuggingFace、GitHub、Docker 和 AWS。当导入的 ComfyUI 工作流缺乏模型下载元数据时，请改用 runpod-templates 中的 ComfyUI 模型修复指南。"}

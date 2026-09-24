@@ -1,0 +1,1 @@
+{"description_zh": "根据当前仓库上下文与聊天历史，从 awesome-copilot 仓库中推荐相关的 GitHub Copilot 自定义代理文件，避免与本仓库中现有的自定义代理重复，并识别需要更新的过时代理。"}

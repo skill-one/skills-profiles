@@ -1,0 +1,1 @@
+{"description_zh": "适用于需要直接执行 GraphQL 查询/变更以获取数据和进行购物车操作的定制店面。当您需要完全掌控数据获取并自行渲染 UI 时，请选择此方案。不适用于 Web Components——如果提示中提及 <shopify-store>、<shopify-cart> 等 HTML 标签，请改用 storefront-web-components。"}

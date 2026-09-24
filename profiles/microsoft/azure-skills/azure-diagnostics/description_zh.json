@@ -1,0 +1,1 @@
+{"description_zh": "**使用 AppLens、Azure Monitor、资源健康与安全分级排查，调试 Azure 生产环境问题**\n\n**WHEN：**\n调试生产环境问题、排查应用服务、应用服务高 CPU、应用服务部署失败、排查容器应用、排查函数应用、排查 AKS、排查 VM RDP、Linux SSH、虚拟机黑屏、无法连接到虚拟机、重置虚拟机密码、NSG 或防火墙拦截、kubectl 无法连接、kube-system/CoreDNS 故障、Pod 待处理、crashloop、节点未就绪、升级失败、分析日志、KQL、洞察、镜像拉取失败、冷启动问题、健康探针失败、资源健康、错误根本原因、排查事件中心、排查服务总线、消息 SDK 错误、AMQP 连接失败、消息锁丢失、服务总线死信队列。"}

@@ -1,0 +1,1 @@
+{"description_zh": "配置并运行 cargo-fuzz，这是基于 Cargo 的 Rust 项目的标准模糊测试工具。涵盖 cargo fuzz 初始化、nightly 工具链要求、fuzz_target! 测试框架、由 Arbitrary 派生结构化的输入数据、清理器选项、cargo fuzz 覆盖率，以及重现崩溃产物。当对 Rust crate 进行模糊测试、编写 fuzz_target!、在 Rust 中执行 unsafe 代码块或 FFI，或排查 cargo fuzz 崩溃时使用。"}

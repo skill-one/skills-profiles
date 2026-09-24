@@ -1,0 +1,1 @@
+{"description_zh": "采用 PICKLES 方法论和 165 分评分标准的 Lightning Web Components。当用户创建或编辑 LWC 组件、构建 wire service 模式，或编写 LWC 的 Jest 测试时，使用此技能。触发条件：当用户创建/编辑 LWC 组件、操作 lwc/**/*.js、.html、.css、.js-meta.xml 文件，或询问 wire service、SLDS 或 Jest LWC 测试时，触发该技能。不触发条件：当涉及 Apex 类（使用 platform-apex-generate）、Aura 组件或 Visualforce 时，不触发该技能。"}

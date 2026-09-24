@@ -1,0 +1,1 @@
+{"description_zh": "基于 Argent 流程，从测试用例、工单或验收标准创建可复用的 QA 回归 E2E 测试。当用户请求生成或保留自动化回归场景时使用，该场景需具备确定性配置、稳定目标、可执行的（结构或视觉）证据以及连续两次完整通过。对于一次性 UI 检查或缺乏验收标准的可重放路径，请使用 argent-test-ui-flow 或 argent-create-flow。本工具支持 iOS、Android、Chromium 和 Vega（Fire TV），其中记录的电视遥控器步骤替代触摸指令。Apple TV 和 Android TV 不受支持；在此处请使用 argent-tv-interact 并报告相关限制。"}

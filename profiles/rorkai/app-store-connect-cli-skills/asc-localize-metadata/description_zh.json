@@ -1,0 +1,1 @@
+{"description_zh": "使用 LLM 翻译和 asc CLI，自动将 App Store 元数据（描述、关键词、最新动态、字幕）翻译为多种语言并同步。当被要求本地化应用在 App Store 上的上架信息、翻译应用描述，或在 App Store Connect 中添加新语言时使用。"}

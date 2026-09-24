@@ -1,0 +1,1 @@
+{"description_zh": "OmniStudio FlexCard 的创建与校验，采用130分评分机制。适用于构建可即时查看的UI卡片、将数据源绑定至集成流程，或审核现有FlexCard定义以确保可访问性与性能。\n\n**触发条件：** 当用户创建FlexCard、配置数据源、设计卡片布局，或咨询OmniUiCard元数据时触发。\n\n**不触发条件：** 构建OmniScripts（使用 omnistudio-omniscript-generate）、创建集成流程（使用 omnistudio-integration-procedure-generate），或分析依赖关系（使用 omnistudio-dependencies-analyze）时。"}

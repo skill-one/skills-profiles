@@ -1,0 +1,1 @@
+{"description_zh": "审计并加固 Convex 应用的授权：基于参数身份的冒充、缺失的逐文档所有权检查、因客户端提供的 ID 泄露数据的公开查询、以及向调用者不拥有的父级/容器写入数据。扫描这 4 种问题形态，应用 requireIdentity/requireOwner，并用 tsc 验证。触发条件：'secure my app'、'audit auth/authz'、'who can access this data'。当不存在 convex/ 目录时跳过。"}

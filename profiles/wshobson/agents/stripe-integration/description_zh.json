@@ -1,0 +1,1 @@
+{"description_zh": "实现Stripe支付处理，确保结账、订阅和Webhooks等支付流程的健壮性与PCI合规性。适用于集成Stripe支付、构建订阅系统或实现安全结账流程时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "阅读 liarjs 指纹报告，并将每一项失败的检查归因于产生该结果的组件——具体包括检查ID所测量的内容、信号是否源自启动配置、页面修改层、网络路径或机器镜像，以及哪些故障是隐式存在于无头模式或数据中心环境中的。当指纹扫描结果得分偏低，或需要解释 webdriver、worker-consistency、gpu-triad、native-integrity 或 tz 等检查ID时使用。"}

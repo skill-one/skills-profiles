@@ -1,0 +1,1 @@
+{"description_zh": "Go 项目布局与工作区设置 —— cmd/internal/pkg 目录约定、模块与包命名、go.work 工作区以及关键配置文件。适用于创建新的 Go 项目、整理现有代码库、为包含多个包的单一代码仓库（monorepo）进行配置、使用多个 main 包创建 CLI 工具，或讨论包的重组、包的拆分或模块拆分。不适用于在不改变布局的情况下重构现有代码（→ 参见 `samber/cc-skills-golang@golang-refactoring` 技能）。"}

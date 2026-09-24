@@ -1,0 +1,1 @@
+{"description_zh": "通过使用 Pod 中断保护（PDB）、健康探针和拓扑分布约束，提升 GKE 工作负载可靠性。在配置 GKE 工作负载可靠性、设置 PDB 或配置 GKE 健康探针（存活探针 liveness、就绪探针 readiness、启动探针 startup）时使用。请勿用于灾难恢复配置或完整集群备份（请改用 gke-backup-dr）。"}

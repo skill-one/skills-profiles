@@ -1,0 +1,1 @@
+{"description_zh": "Ultracite 是针对 JavaScript/TypeScript 项目的零配置代码检查与格式化预设。使用场景：\n(1) 在项目中设置或初始化 Ultracite（ultracite init），\n(2) 运行代码检查或格式化命令（check、fix、doctor），\n(3) 在已使用 Ultracite 的项目中编写或审查 JS/TS 代码，以遵循其代码规范，\n(4) 排查代码检查/格式化相关问题，\n(5) 在已安装 Ultracite 的项目中，用户提及 'ultracite'、'lint'、'format'、'code quality' 或 'biome/eslint/oxlint'。"}

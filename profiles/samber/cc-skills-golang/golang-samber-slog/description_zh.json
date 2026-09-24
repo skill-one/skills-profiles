@@ -1,0 +1,1 @@
+{"description_zh": "基于 samber/slog-**** 包为 Go 语言提供结构化日志扩展——多处理器流水线（slog-multi）、日志采样（slog-sampling）、属性格式化（slog-formatter）、HTTP 中间件（slog-fiber、slog-gin、slog-chi、slog-echo）以及后端路由（slog-datadog、slog-sentry、slog-loki、slog-syslog、slog-logstash、slog-graylog...）。当使用或采用 slog，或代码库已导入任何 github.com/samber/slog-* 包时适用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "对 AWS Glue Data Catalog 资产的全面盘点与审计，覆盖 S3 Tables、Redshift 联邦及远程 Iceberg 目录。触发条件：盘点目录、数据库审计、列出所有表、目录概览、数据布局、枚举目录、数据盘点、搜索目录。禁止用于查找特定数据（请使用 finding-data-lake-assets）、执行查询（请使用 querying-data-lake）、或创建表（请使用 creating-data-lake-table）。"}

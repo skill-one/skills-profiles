@@ -1,0 +1,1 @@
+{"description_zh": "适用于使用现代 PHP 8.3+ 特性、Laravel 或 Symfony 框架构建 PHP 应用时。支持严格类型校验、PHPStan 第 9 级、Swoole 异步模式以及 PSR 标准。创建控制器、配置中间件、生成迁移、编写 PHPUnit/Pest 测试、定义带类型的 DTO 与值对象、配置依赖注入，并搭建 REST/GraphQL API。适用于使用 Eloquent、Doctrine、Composer、Psalm、ReactPHP 或进行任何 PHP API 开发时。"}

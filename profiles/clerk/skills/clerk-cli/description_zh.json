@@ -1,0 +1,1 @@
+{"description_zh": "操作 Clerk CLI（`clerk` 二进制文件），用于认证、用户/组织/会话管理、身份模拟、本地 Webhook 测试、部署验证、实例配置、环境变量、功能开关，以及任何 Clerk 后端、平台或前端 API 调用。当用户提及 Clerk 管理任务、“list clerk users”、“impersonate a user”、“test webhooks locally”、“enable orgs”、“enable billing”、“clerk env pull”、“clerk doctor”、“clerk deploy”、“clerk api”，或任何临时性的 Clerk API 请求时使用。优先使用 CLI 而非原始 HTTP 请求：它自动处理认证、密钥解析、应用/实例定位，以及格式化。"}

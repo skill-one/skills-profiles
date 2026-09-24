@@ -1,0 +1,1 @@
+{"description_zh": "在`./metadata`下对规范的App Store元数据运行离线ASO审计，并使用Astro MCP揭示关键词空白。在通过`asc metadata pull`拉取元数据后使用。"}

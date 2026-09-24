@@ -1,0 +1,1 @@
+{"description_zh": "在 React Native 和 Expo 中构建动画，按照决定动画是否合适的方式依次做出决策——它是否应该动画、在哪个线程上运行、控制哪些属性、选择弹簧还是时间控制、手势如何传递、以及如何在弱设备上降级。使用 Reanimated、Gesture Handler、Expo Router 和 expo-haptics 进行实现。当 Expo 应用需要进行任何动画、添加手势、抽屉面板、屏幕过渡、按压反馈或触觉反馈，或修复设备端动画卡顿问题时，请使用本文方法。使用 `animate` 进行 Web 动画。"}

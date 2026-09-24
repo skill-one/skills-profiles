@@ -1,0 +1,1 @@
+{"description_zh": "解析并处理来自 CodeQL、Semgrep 等静态分析工具及其他扫描器的 SARIF 文件。在 \"parse sarif\"、\"read scan results\"、\"aggregate findings\"、\"deduplicate alerts\" 或 \"process sarif output\" 时触发。处理 SARIF 数据的过滤、去重、格式转换以及 CI/CD 集成。不进行扫描——扫描请使用 Semgrep 或 CodeQL 技能。"}

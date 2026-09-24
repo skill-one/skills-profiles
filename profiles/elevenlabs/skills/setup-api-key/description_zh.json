@@ -1,0 +1,1 @@
+{"description_zh": "指导用户为 REST API 和 SDK 工作流配置 ElevenLabs API 密钥。当用户需要配置 ElevenLabs API 密钥，或 API/SDK 请求因密钥缺失而失败时使用。首先检查 ELEVENLABS_API_KEY 是否已配置且有效，仅在需要时进行完整设置。"}

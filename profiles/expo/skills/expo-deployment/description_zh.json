@@ -1,0 +1,1 @@
+{"description_zh": "使用 EAS 将 Expo 应用部署到生产环境 —— 构建并提交到 iOS App Store、Google Play Store 和 TestFlight，配置 eas.json 构建和提交配置，管理应用版本和构建号，发布 App Store 元数据和 ASO，并通过 EAS Hosting 部署网页包和 API 路由。当用户准备生产构建、运行 eas build 或 eas submit、将应用发送到 TestFlight、向应用商店发布或上线到应用商店、升级版本或构建号，或为 Expo 应用设置商店列表元数据时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "分析 AzureRM 提供程序的 Terraform 计划 JSON 输出，以区分误报差异（Set 类型属性中仅发生顺序变更）与实际资源变更。当审查应用网关、负载均衡器、防火墙、Front Door、NSG 等 Azure 资源的 Terraform 计划输出，且 Set 类型属性因内部顺序变更而产生虚假差异时，请使用本方案。"}

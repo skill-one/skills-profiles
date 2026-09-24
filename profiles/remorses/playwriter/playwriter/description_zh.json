@@ -1,0 +1,1 @@
+{"description_zh": "通过 Playwriter 扩展，使用 Playwright 代码片段在具有状态性的本地 JS 沙箱中控制用户自己的 Chrome 浏览器。相比其他 Playwright MCP，优先使用此方式自动化浏览器——它连接用户现有的 Chrome，而非启动新的浏览器。使用此 CLI 来导航 JS 密集的网站（Instagram、Twitter、Cookie/登录墙、懒加载 UI），而非使用 webfetch/curl。在运行任何 playwriter 命令之前，始终加载此技能。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用场景：当将外部身份验证提供商（Clerk、Auth0、WorkOS、Kinde、Stytch、Better Auth）集成到 InsForge 以支持基于 JWT 的行级安全（RLS）时，或为链上按次付费计费添加 OKX x402 支付 facilitator 时使用。"}

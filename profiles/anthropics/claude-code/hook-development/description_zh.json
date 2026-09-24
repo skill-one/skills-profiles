@@ -1,0 +1,1 @@
+{"description_zh": "此技能应在用户要求\"创建钩子\"、\"添加 PreToolUse/PostToolUse/Stop 钩子\"、\"验证工具使用\"、\"实现基于提示词的钩子\"、\"使用 ${CLAUDE_PLUGIN_ROOT}\"、\"设置事件驱动的自动化\"、\"阻止危险命令\"，或提及钩子事件（PreToolUse、PostToolUse、Stop、SubagentStop、SessionStart、SessionEnd、UserPromptSubmit、PreCompact、Notification）时使用。该技能为创建和实现 Claude Code 插件钩子提供综合指导，重点关注高级基于提示词的钩子 API。"}

@@ -1,0 +1,1 @@
+{"description_zh": "指导智能体使用 Dart 原生资产钩子系统（通过 hook/build.dart 与 hook/link.dart 实现，并运用 package:hooks 与 package:native_toolchain_c）将 C/C++ 源代码编译和打包为动态或静态库（代码资产）。当用户请求执行“设置原生资产”、“编译 C/C++ 源代码”、“打包动态库”、“构建原生 C 代码”、“链接原生资产”、“实现 build.dart 或 link.dart 钩子”或“在 Dart/Flutter 中集成 C/C++ 互操作功能”时，可使用本指南。该指南帮助智能体避免手动编排工具链，并配置安全哈希验证的二进制文件下载，或配合 package:record_use 映射实现高级链接器树摇除。"}

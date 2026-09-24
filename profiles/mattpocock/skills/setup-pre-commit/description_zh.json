@@ -1,0 +1,1 @@
+{"description_zh": "在当前仓库中配置 Husky 预提交钩子，集成 lint-staged（Prettier）、类型检查及测试。适用于用户需要添加预提交钩子、配置 Husky、配置 lint-staged，或添加提交时格式化、类型检查及测试的场景。"}

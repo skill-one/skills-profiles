@@ -1,0 +1,1 @@
+{"description_zh": "在实现人类在环模式、暂停获取批准或在 LangGraph 中处理错误时调用此技能。涵盖 interrupt()、Command(resume=...)、批准/验证工作流程以及四层错误处理策略。"}

@@ -1,0 +1,1 @@
+{"description_zh": "Golang库与框架选择——按类别（Web、数据库、测试、日志、消息）提供经过验证的生产就绪方案，涵盖新与实验性的标准库包、优先采用标准库的取舍，以及成熟度信号（维护、许可证、导入者数量）。在用户询问库的推荐、希望对比替代方案、需要为特定任务选择库，或将新依赖添加到项目中时，本指南适用。不适用于选定特定库后的API细节（→ 参见该库的专属技能，例如 `samber/cc-skills-golang@golang-samber-lo`），也不适用于go.mod机制、升级或漏洞审计（→ 参见 `samber/cc-skills-golang@golang-dependency-management` 技能）。"}

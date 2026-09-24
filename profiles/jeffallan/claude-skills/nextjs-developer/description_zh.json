@@ -1,0 +1,1 @@
+{"description_zh": "适用于使用 App Router、服务端组件或服务端操作来构建 Next.js 14+ 应用时使用。调用该功能可配置路由处理函数、实现中间件、设置 API 路由、添加流式服务端渲染、编写用于 SEO 的 generateMetadata、搭建 loading.tsx/error.tsx 边界组件，或部署到 Vercel。触发关键词：Next.js、Next.js 14、App Router、RSC、use server、Server Components、Server Actions、React Server Components、generateMetadata、loading.tsx、Next.js 部署、Vercel、Next.js 性能。"}

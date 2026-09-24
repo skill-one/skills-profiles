@@ -1,0 +1,1 @@
+{"description_zh": "SOQL查询生成、优化与分析，带100分评分机制。当用户需要SOQL/SOSL编写或优化时使用本技能：自然语言转查询生成、关系查询、聚合、查询计划分析，以及Salesforce查询的性能或安全性改进。\n\n触发条件：用户编写、优化或调试SOQL/SOSL查询，涉及 .soql 文件，或询问关系查询、聚合或查询性能。\n\n不触发条件：批量数据处理（使用 platform-data-manage），Apex DML逻辑（使用 platform-apex-generate），或报表/仪表盘查询。"}

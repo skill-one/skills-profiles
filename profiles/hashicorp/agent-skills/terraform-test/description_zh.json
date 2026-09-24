@@ -1,0 +1,1 @@
+{"description_zh": "编写和运行 Terraform 测试的全面指南。适用于创建测试文件（.tftest.hcl）、使用 run blocks 编写测试场景、使用断言验证基础设施行为、模拟提供者和数据源、测试模块输出和资源配置，或排查 Terraform 测试语法和执行问题。"}

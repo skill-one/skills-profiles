@@ -1,0 +1,1 @@
+{"description_zh": "使用 HashiCorp Terraform Stacks 的全面指南。适用于创建、修改或校验 Terraform Stack 配置（.tfcomponent.hcl、.tfdeploy.hcl 文件），处理来自本地模块、公开注册表或私有注册表的栈组件与部署，管理多区域或多环境基础设施，或排查 Terraform Stacks 的语法和结构问题。"}

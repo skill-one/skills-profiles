@@ -1,0 +1,1 @@
+{"description_zh": "Golang 项目的 Linting 最佳实践与 golangci-lint 配置—— 运行 linters、配置 .golangci.yml、使用 nolint 指令抑制警告、解析 lint 输出以及选择 linters。在配置 golangci-lint、咨询 lint 警告或 nolint 抑制相关事项、搭建代码质量工具或选择 linters 时使用。当用户提及 golangci-lint、go vet、staticcheck 或 revive 时使用。不适用于将 lint 步骤集成到 GitHub Actions 流水线中（→ 参见 `samber/cc-skills-golang@golang-continuous-integration` 技能）。"}

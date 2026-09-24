@@ -1,0 +1,1 @@
+{"description_zh": "框架 (OSS)。将 Expo 与 React Native 集成至现有原生 iOS 或 Android 应用中。适用于现有应用的 brownfield（现成应用）开发场景，可在 SwiftUI/UIKit 或 Kotlin 中嵌入 React Native 界面，或进行 AAR/XCFramework 打包。涵盖独立与集成两种方案。如需使用 EAS 构建或分发纯原生应用，请使用 eas-app-stores。"}

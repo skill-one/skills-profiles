@@ -1,0 +1,1 @@
+{"description_zh": "使用 Firebase App Hosting 部署和管理支持服务端渲染（SSR）的全栈 Web 应用（Next.js、Angular）。适用于部署 Next.js/Angular 应用、配置 apphosting.yaml 或 firebase.json 中的 apphosting 配置块、管理机密、配置 GitHub CI/CD，或配置 Blaze 计费要求。不适用于经典静态 Web 托管、Auth、Firestore、Crashlytics 或 Xcode。"}

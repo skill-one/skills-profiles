@@ -1,0 +1,1 @@
+{"description_zh": "用于搭建并运行 Ruzzy，它是 Trail of Bits（轨迹）基于覆盖率指导的 Ruby 模糊测试器，也是该语言唯一生产就绪的版本。它涵盖测试框架结构、纯 Ruby 代码模糊测试、仓库（gem）中的内建 C 扩展模糊测试，以及 sanitizer 构建。当需要模糊测试 Ruby 库或 gem、测试 Ruby C 扩展的内存安全性，或询问如何进行 Ruby 模糊测试时使用。"}

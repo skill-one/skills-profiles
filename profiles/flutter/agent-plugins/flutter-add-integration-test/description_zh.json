@@ -1,0 +1,1 @@
+{"description_zh": "为应用交互配置 Flutter 驱动，并将 MCP 操作转换为永久的集成测试。当需要在项目中添加集成测试、通过 MCP 探索 UI 组件，或使用 integration_test 包自动化用户流程时使用。"}

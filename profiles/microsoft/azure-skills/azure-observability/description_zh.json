@@ -1,0 +1,1 @@
+{"description_zh": "Azure 可观测性服务，包括 Azure 监控、应用洞察、日志分析、警报和工作簿。提供指标、APM、分布式跟踪、KQL 查询和交互式报告。\n\n用途：Azure 监控、应用洞察、日志分析、警报、工作簿、指标、APM、分布式跟踪、KQL 查询、交互式报告、可观测性、监控仪表盘。\n\n请勿使用：使用应用洞察 SDK 对应用进行监控（使用 appinsights-instrumentation）、查询 Kusto/ADX 集群（使用 azure-kusto）、成本分析（使用 azure-cost-optimization）。"}

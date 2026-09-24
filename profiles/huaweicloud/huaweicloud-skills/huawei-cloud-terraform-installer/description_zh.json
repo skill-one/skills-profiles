@@ -1,0 +1,1 @@
+{"description_zh": "安装支持华为云镜像源的 Terraform CLI 跨平台版本。当用户提及安装 Terraform、配置 Terraform 环境，或 IaC 任务检测到 Terraform 缺失时，请使用本技能。触发：install terraform, setup terraform, terraform environment, huaweicloud provider。"}

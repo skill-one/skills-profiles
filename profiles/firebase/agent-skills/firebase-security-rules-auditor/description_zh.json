@@ -1,0 +1,1 @@
+{"description_zh": "对 Firebase（Firestore、Cloud Storage）的安全规则进行审计，涵盖漏洞、权限提升、角色绕过、创建与更新不一致、资源耗尽、类型安全、大小限制以及 hasOnly 所有权检查。适用于审计/审查规则、执行红队规则评估，或对照审计员检查清单进行评分。不可用于 Firebase CLI（登录、部署）、Auth、Crashlytics、Remote Config 或数据库查询。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用 Dart 和 Flutter MCP 工具修复 Flutter 布局错误（溢出、无界约束）。当处理“RenderFlex overflowed”、“Vertical viewport was given unbounded height”或类似布局问题时使用。"}

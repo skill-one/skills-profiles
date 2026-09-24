@@ -1,0 +1,1 @@
+{"description_zh": "生成使用 BigQuery DataFrames（BigFrames）的 Python 代码，即基于 BigQuery 的 pandas/Scikit-learn 风格 API。适用于编写 BigFrames 代码，或针对 BigQuery 执行 pandas 风格的 DataFrame/机器学习工作（例如在笔记本中）。请勿用于 SQL 优先的工作流，或用于 google-cloud-bigquery 客户端库的场景——请使用 bigquery-basics。"}

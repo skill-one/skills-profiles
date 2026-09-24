@@ -1,0 +1,1 @@
+{"description_zh": "查找 GitHub 仓库的依赖项中，哪些可以通过 GitHub Sponsors 进行赞助。使用 deps.dev API 在 npm、PyPI、Cargo、Go、RubyGems、Maven 和 NuGet 之间进行依赖解析。检查 npm 资助元数据、FUNDING.yml 文件以及网络搜索。验证所有链接。显示直接依赖和传递依赖，并展示 OSSF Scorecard 健康数据。使用 /sponsor 命令，后跟一个 GitHub 用户/仓库（例如 \"/sponsor expressjs/express\"）。"}

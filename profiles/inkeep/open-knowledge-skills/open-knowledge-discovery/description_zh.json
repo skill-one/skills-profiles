@@ -1,0 +1,1 @@
+{"description_zh": "当用户询问 OpenKnowledge 是什么、希望将其安装到某个仓库、想要打开或预览某个不属于 OpenKnowledge 项目的单个 Markdown 文件、想要与协作者共享一个 OpenKnowledge 项目、询问 OpenKnowledge 是否支持某种特定功能、或询问 `ok init` / `ok cowork` / OK Desktop 如何配置项目时，进行读取。请勿加载执行 OpenKnowledge 的读取/写入操作——初始化 OK 项目中编辑 Markdown 的运行时指导以独立的项目本地技能形式提供，并安装到每个检测到的代理的技能目录（例如 `.claude/skills/open-knowledge/`），在 `ok init` 运行时。"}

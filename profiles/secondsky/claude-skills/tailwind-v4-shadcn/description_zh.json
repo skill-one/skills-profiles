@@ -1,0 +1,1 @@
+{"description_zh": "Tailwind CSS v4 结合 shadcn/ui、Vite 与 React 的生产环境验证配置。适用场景：使用 Tailwind v4 初始化 React 项目、配置 shadcn/ui、实现深色模式、排查 CSS 变量问题、修复主题切换、从 Tailwind v3 迁移，或遇到颜色/主题相关问题时使用。涵盖：@theme 内联模式、CSS 变量架构、结合 ThemeProvider 的深色模式、组件组合、Vite 配置设置、v4 常见陷阱，以及经生产环境验证的解决方案。"}

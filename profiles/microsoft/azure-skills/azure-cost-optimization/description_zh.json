@@ -1,0 +1,1 @@
+{"description_zh": "从使用和支出数据中识别 Azure 成本节省。用途：优化 Azure 成本、减少 Azure 支出/费用、分析 Azure 成本、查找成本节省、生成成本优化报告、识别需要删除的孤立资源、调优 VM、减少浪费、优化 Redis 成本、优化存储成本、AKS 成本分析附加组件、命名空间成本、成本峰值、异常情况、预算警报、AKS 成本可见性。不可用于：部署资源（使用 azure-deploy）、通用 Azure 诊断（使用 azure-diagnostics）、安全问题（使用 azure-security）。"}

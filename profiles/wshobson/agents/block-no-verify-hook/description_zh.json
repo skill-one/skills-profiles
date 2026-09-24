@@ -1,0 +1,1 @@
+{"description_zh": "配置一个 PreToolUse 钩子，以防止 AI 智能体在使用 --no-verify 及其他绕过标志时跳过 git pre-commit 钩子。适用于设置强制执行提交质量门禁的 Claude Code 项目。"}

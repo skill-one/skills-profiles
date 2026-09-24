@@ -1,0 +1,1 @@
+{"description_zh": "Swift 测试专家指导：测试结构、#expect/#require 宏、特性和标签、参数化测试、测试计划、并行执行、异步等待模式以及 XCTest 迁移。适用于编写新的 Swift 测试、现代化 XCTest 套件、调试不稳定的测试，或提升 Apple 平台或 Swift 服务器项目中的测试质量和可维护性。"}

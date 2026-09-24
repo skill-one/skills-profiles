@@ -1,0 +1,1 @@
+{"description_zh": "在 AddressSanitizer（ASAN）下构建并运行代码，以在模糊测试或测试过程中捕获缓冲区溢出、use-after-free（释放后使用）及其他内存错误。涵盖 -fsanitize=address 构建、ASAN_OPTIONS、读取崩溃报告、LeakSanitizer 以及开销与平台权衡。当对包含不安全代码块或 FFI（外部函数接口）的 C/C++ 或 Rust 代码进行模糊测试时，或调试内存损坏崩溃，或读取 ASAN 堆栈跟踪时使用。"}

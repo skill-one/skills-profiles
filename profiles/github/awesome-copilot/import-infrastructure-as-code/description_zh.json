@@ -1,0 +1,1 @@
+{"description_zh": "将现有的 Azure 资源导入 Terraform，可通过 Azure CLI 发现和 Azure 验证模块（AVM）实现。适用于以下场景：对实时的 Azure 基础设施进行逆向工程；基于现有的订阅、资源组、资源 ID 生成基础设施即代码（IaC）；映射依赖关系；从已下载的模块源码推导精确的导入地址；防止配置漂移；以及生成适用于任何 Azure 资源类型、可供验证和规划的基于 AVM 的 Terraform 文件。"}

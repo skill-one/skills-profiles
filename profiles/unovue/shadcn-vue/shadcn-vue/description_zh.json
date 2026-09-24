@@ -1,0 +1,1 @@
+{"description_zh": "管理 shadcn-vue 组件与项目——用于添加、搜索、修复、调试、样式化及组合 UI。提供项目上下文、组件文档和使用示例。适用于使用 shadcn-vue、组件注册表、预设、--preset 代码，或任何包含 components.json 文件的项目。同时，在执行 \"shadcn-vue init\"、\"使用 --preset 创建应用\" 或 \"切换至 --preset\" 时触发。"}

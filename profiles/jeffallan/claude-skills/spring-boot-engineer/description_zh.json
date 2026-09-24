@@ -1,0 +1,1 @@
+{"description_zh": "生成 Spring Boot 3.x 配置，创建 REST 控制器，实现 Spring Security 6 身份验证流程，配置 Spring Data JPA 仓库，并设置响应式 WebFlux 端点。当构建基于 Spring Boot 3.x 的应用程序、微服务或响应式 Java 应用程序时使用；适用于在 Spring Data JPA、Spring Security 6、WebFlux、Spring Cloud 集成、Java REST API 设计或微服务 Java 架构相关场景下调用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "适用于在任何项目中使用图标。\n\n提供用于搜索 200+ 图标库（Iconify）并获取 SVG 的命令行工具（CLI）。\n\n命令：`better-icons search <query>` 用于查找图标，`better-icons get <id>` 用于获取 SVG。\n\n也可作为 MCP 服务器，为 AI 代理提供支持。"}

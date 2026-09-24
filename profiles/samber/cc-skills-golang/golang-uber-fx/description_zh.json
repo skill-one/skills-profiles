@@ -1,0 +1,1 @@
+{"description_zh": "使用 uber-go/fx 的 Go 应用框架 —— fx.New、fx.Provide、fx.Invoke、fx.Module、fx.Lifecycle 钩子、fx.Annotate（名称/组/As）、fx.Decorate、fx.Supply、fx.Replace、fx.WithLogger 以及信号感知的 Run()。当使用或采用 uber-go/fx、当代码库引入 `go.uber.org/fx`，或在通过 fx.New 组装服务时，适用本指南。对于无需生命周期处理的原始依赖注入，请参阅 `samber/cc-skills-golang@golang-uber-dig` 技能。"}

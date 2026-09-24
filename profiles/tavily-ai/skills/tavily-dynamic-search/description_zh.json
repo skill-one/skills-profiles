@@ -1,0 +1,1 @@
+{"description_zh": "程序化 Tavily 搜索与上下文隔离。当网络搜索或提取将返回大量需要过滤、去重或多步筛选后方可进入模型上下文的结果时，使用此功能。普通检索使用 tavily-search，端到端引用综合使用 tavily-research。"}

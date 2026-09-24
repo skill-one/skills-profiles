@@ -1,0 +1,1 @@
+{"description_zh": "编写 OpenCLI 适配器用于新站点或向现有站点添加新命令时使用。提供从首次侦察、字段解码、适配器编码到验证的端到端指南。替代 opencli-oneshot / opencli-explorer。对于临时浏览器控制（无需适配器），请参阅 opencli-browser；对于 OpenCLI 的整体入门指南，请参阅 opencli-usage。"}

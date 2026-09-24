@@ -1,0 +1,1 @@
+{"description_zh": "GSAP 动画参考，适用于 HyperFrames。涵盖 gsap.to()、gsap.from()、gsap.fromTo()、缓动、交错、默认值、时间线（gsap.timeline()、位置参数、标签、嵌套、播放），以及性能（变换、will-change、quickTo）。在 HyperFrames 组合中编写 GSAP 动画时使用。"}

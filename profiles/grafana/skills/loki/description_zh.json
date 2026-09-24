@@ -1,0 +1,1 @@
+{"description_zh": "Grafana Loki 日志聚合与 LogQL 查询语言。涵盖 LogQL 语法（日志查询、指标查询、标签匹配器、行过滤器、解析器：json/logfmt/pattern/regexp/unpack、标签过滤器、行格式）、Loki 架构、通过 Alloy/Promtail/Fluent Bit 进行日志摄入、结构化元数据以及 Logs Drilldown（日志下钻）。适用于编写 LogQL 查询、配置 Loki、排查日志管道或分析日志。"}

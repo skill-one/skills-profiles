@@ -1,0 +1,1 @@
+{"description_zh": "使用 vinext 在 Cloudflare Workers 上构建、迁移和部署 Next.js 应用。适用于在 Cloudflare 上启动 Next.js 项目、将现有应用迁移至 Workers、在 vinext 与 OpenNext 之间进行选择，或为 Workers 配置 vinext。针对配置、迁移与部署，如有缺失，请使用 `npx skills add cloudflare/vinext` 安装 vinext 的上游技能，并阅读、遵循适用的技能及文档。"}

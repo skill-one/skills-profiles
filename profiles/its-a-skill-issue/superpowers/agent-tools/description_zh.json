@@ -1,0 +1,1 @@
+{"description_zh": "通过 inference.sh CLI 运行 AI 应用——支持图像生成、视频创作、LLMs、搜索、3D 及 Twitter 自动化。模型：FLUX、Veo、Gemini、Grok、Claude、Seedance、OmniHuman、Tavily、Exa、OpenRouter 等。适用于运行 AI 应用、生成图像/视频、调用 LLMs、进行网络搜索或实现 Twitter 自动化的场景。触发词：inference.sh、infsh、ai model、run ai、serverless ai、ai api、flux、veo、claude api、image generation、video generation、openrouter、tavily、exa search、twitter api、grok"}

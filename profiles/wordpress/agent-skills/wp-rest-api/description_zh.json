@@ -1,0 +1,1 @@
+{"description_zh": "用于构建、扩展或调试 WordPress REST API 端点/路由时使用：register_rest_route、WP_REST_Controller/controller 类、schema/参数校验、permission_callback/认证、响应整形、register_rest_field/register_meta，或通过 show_in_rest 暴露 CPTs/分类法。"}

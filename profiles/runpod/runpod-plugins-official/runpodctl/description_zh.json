@@ -1,0 +1,1 @@
+{"description_zh": "用于从终端管理 GPU/CPU 工作负载的 Runpod CLI —— pods、serverless endpoints、templates、network volumes、Hub deploys、models、SSH 及文件传输（发送/接收）。可用于终端/CI/脚本编写、Hub 浏览/部署、SSH 设置、`doctor`，或当 Runpod MCP 工具未连接时。对于 MCP 会话中的结构化工具调用，优先使用 runpod-mcp。"}

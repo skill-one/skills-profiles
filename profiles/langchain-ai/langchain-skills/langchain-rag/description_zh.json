@@ -1,0 +1,1 @@
+{"description_zh": "调用此技能，用于构建任何检索增强生成（RAG）系统。涵盖文档加载器、RecursiveCharacterTextSplitter、嵌入（OpenAI）以及向量存储（Chroma、FAISS、Pinecone）。"}

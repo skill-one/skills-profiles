@@ -1,0 +1,1 @@
+{"description_zh": "指导代理使用 `package:ffigen` 自动生成 FFI 绑定，而不是手动编写它们。当任务涉及编写新的 FFI 绑定、扩展 C/Objective-C/Swift 集成，或替换手动编写的 `dart:ffi` 设置时，使用此技能。"}

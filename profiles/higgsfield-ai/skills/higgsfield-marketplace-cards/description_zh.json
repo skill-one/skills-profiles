@@ -1,0 +1,1 @@
+{"description_zh": "通过 Higgsfield 生成符合市场合规要求的产品图片卡片：合规主图、次要产品图片和 A+ 风格内容模块。\n\n当用户询问市场列表图片、产品详情卡片、次要产品图片、产品信息图、生活方式列表展示图、A+ 风格内容、市场图片集或可直接用于销售的成品产品视觉图时，使用此项功能。\n\n后端负责市场合规引用和提示词模板；本技能仅将用户意图路由至 CLI。\n\n不适用于无市场/列表上下文的通用品牌产品摄影（使用 higgsfield-product-photoshoot）、视频生成或 UGC 广告（使用 higgsfield-generate），或 Soul Character 训练（使用 higgsfield-soul-id）。"}

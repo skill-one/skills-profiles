@@ -1,0 +1,1 @@
+{"description_zh": "使用Lambda、API Gateway、Step Functions、EventBridge和SAM/CDK，在AWS上构建、部署、管理、调试、配置和优化无服务器应用。涵盖冷启动、CORS调试、事件源映射、故障排查、并发、SnapStart、Powertools、函数URL、EventBridge Scheduler、Lambda层和生产就绪。当提到Lambda、API Gateway、Step Functions、SAM模板、CDK无服务器堆栈、DynamoDB流触发器、SQS事件源、冷启动、超时、502/504错误、限流、并发、CORS、Powertools或任何AWS上的事件驱动架构，即使没有'serverless'一词时，也会触发。不适用于EC2、ECS/Fargate容器或Amplify托管。"}

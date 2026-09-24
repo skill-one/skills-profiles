@@ -1,0 +1,1 @@
+{"description_zh": "使用类似 `go_router` 的包配置 `MaterialApp.router`，以实现高级的 URL 导航。适用于开发需要特定深度链接和浏览器历史记录支持的网络应用或移动应用。"}

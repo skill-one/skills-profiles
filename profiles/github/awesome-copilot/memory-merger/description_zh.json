@@ -1,0 +1,1 @@
+{"description_zh": "将域记忆文件中的成熟经验合并到其指令文件中。语法：`/memory-merger >domain [scope]`，其中 scope 为 `global`（默认）、`user`、`workspace` 或 `ws`。"}

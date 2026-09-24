@@ -1,0 +1,1 @@
+{"description_zh": "通过 Connect API 从已连接的 Salesforce 组织中获取代理设置提示类别。使用此技能调用 GET /agenticsetup/categories，并返回提示类别列表，可选地包含其嵌套提示。触发条件：当用户要求获取、拉取、列出或显示代理设置类别、提示类别、设置 Copilot 类别、提示库类别、可用设置提示、Agentforce 提示库或 Copilot 提示时。不要触发：当用户想要创建新类别、处理非类别端点或生成 OpenAPI 规范时。"}

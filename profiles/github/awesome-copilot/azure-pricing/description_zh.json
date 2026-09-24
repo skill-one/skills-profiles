@@ -1,0 +1,1 @@
+{"description_zh": "通过 Azure Retail Prices API（prices.azure.com）获取实时 Azure 零售价格，并估算 Copilot Studio 智能体信用消耗。当用户询问任何 Azure 服务的成本、想比较 SKU 价格、需要定价数据用于成本估算、提及 Azure 定价、Azure 成本、Azure 计费，或询问 Copilot Studio 定价、Copilot Credits、智能体使用估算时使用。涵盖计算、存储、网络、数据库、AI、Copilot Studio，以及其他所有 Azure 服务类型。"}

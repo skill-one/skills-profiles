@@ -1,0 +1,1 @@
+{"description_zh": "使用`dart:convert`创建带有`fromJson`和`toJson`方法的模型类。当需要手动将JSON键映射到类属性以处理简单数据结构时使用。"}

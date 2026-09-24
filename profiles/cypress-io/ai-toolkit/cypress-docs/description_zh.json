@@ -1,0 +1,1 @@
+{"description_zh": "从官方文档（docs.cypress.io、cypress.io）中检索并提取 Cypress 相关信息；优先使用 /llm/* 目录下的 LLM Markdown，并拒绝未经验证的 API 或行为声明。"}

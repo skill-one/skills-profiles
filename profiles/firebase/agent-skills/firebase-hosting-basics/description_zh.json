@@ -1,0 +1,1 @@
+{"description_zh": "为静态网站、单页应用（SPAs）和微服务部署并配置经典的 Firebase Hosting。适用于部署静态网站/单页应用、设置自定义域名、配置 firebase.json 托管设置（重定向、重写规则、请求头、多站点），或管理预览渠道的情况。请勿用于 Firebase App Hosting（Next.js/SSR）、认证、Firestore 查询/规则、Data Connect 或 Crashlytics。"}

@@ -1,0 +1,1 @@
+{"description_zh": "解决 Git 合并冲突：仅提取未解决路径、冲突块和紧凑差异，而非将整个文件加载到上下文中。当合并、rebase、cherry-pick 或 stash pop 因冲突而停止，`git status` 显示未合并路径，或文件包含冲突标记时使用。"}

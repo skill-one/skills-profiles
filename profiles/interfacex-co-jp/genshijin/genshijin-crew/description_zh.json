@@ -1,0 +1,1 @@
+{"description_zh": "原始人风格 subagent 委派判断指南。说明何时应将 `genshijin-investigator`（代码位置确定）、`genshijin-builder`（1-2 个文件编辑）、`genshijin-reviewer`（diff 审查）作为 inline 作业或 vanilla `Explore` 的替代方式进行 spawn。子代理输出经原始人压缩后返回主上下文的 tool-result，约缩小 60%，从而维持较长会话。\n\n触发条件：「subagent 委派」「genshijin-crew 使用」「investigator/builder/reviewer 启动」「上下文节省」「压缩 agent 输出」。"}

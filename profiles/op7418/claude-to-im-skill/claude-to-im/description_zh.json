@@ -1,0 +1,1 @@
+{"description_zh": "将 THIS Claude Code 或 Codex 会话桥接至 Telegram、Discord、飞书/Lark、QQ 或微信，以便用户能从手机与 Claude 聊天。\n用途：设置、启动、停止或诊断 claude-to-im 桥接守护进程；将 Claude 的回复转发至消息应用；任何类似“claude-to-im”、“桥接”、“消息推送”、“消息转发”、“桥接”、“连上飞书”、“手机上看claude”、“启动后台服务”、“诊断”、“查看日志”、“配置”的表述。\n子命令：setup、start、stop、status、logs、reconfigure、doctor。\n请勿用于：构建独立机器人、Webhook 集成，或使用消息平台 SDK 进行编程——这些属于常规编程任务。"}

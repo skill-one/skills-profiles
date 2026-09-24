@@ -1,0 +1,1 @@
+{"description_zh": "将提示词和代码从 Claude Sonnet 4.0、Sonnet 4.5 或 Opus 4.1 迁移至 Opus 4.5。当用户希望更新其代码库、提示词或 API 调用以使用 Opus 4.5 时使用。处理因已知 Opus 4.5 行为差异而进行的模型字符串更新和提示词调整。不会迁移 Haiku 4.5。"}

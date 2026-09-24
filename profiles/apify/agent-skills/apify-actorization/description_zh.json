@@ -1,0 +1,1 @@
+{"description_zh": "将现有项目转换为 Apify Actor - 无服务器云程序。将 JavaScript/TypeScript（SDK 含 Actor.init/exit）、Python（异步上下文管理器）或任何语言（CLI 包装器）变为 Actor。用于将代码迁移至 Apify、将 CLI 工具包装为 Actor，或将 Actor SDK 添加到现有项目时使用。"}

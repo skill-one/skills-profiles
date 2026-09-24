@@ -1,0 +1,1 @@
+{"description_zh": "HyperFrames 组合的 Tailwind CSS v4.2 浏览器运行时模式。适用于通过 `hyperframes init --tailwind` 搭建或编辑项目、在组合 HTML 中编写 Tailwind 工具类、添加以 CSS 优先的 Tailwind v4 主题令牌、调试 v3 与 v4 语法差异，或决定何时将 Tailwind 编译为 CSS 而非使用浏览器运行时。"}

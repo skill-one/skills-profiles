@@ -1,0 +1,1 @@
+{"description_zh": "将 Next.js 项目迁移至 vinext（基于 Vite 的 Next.js 重新实现）。当需要从 Next.js 迁移、转换或切换至 vinext 时进行加载。负责兼容性扫描、依赖替换、Vite 配置生成、ESM 转换及部署设置（原生支持 Cloudflare Workers，其他平台通过 Nitro 实现）。"}

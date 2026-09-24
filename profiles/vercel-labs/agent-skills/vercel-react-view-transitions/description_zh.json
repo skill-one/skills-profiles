@@ -1,0 +1,1 @@
+{"description_zh": "使用 React 的 View Transition API 实现流畅、原生感的动画指南（` <ViewTransition>` 组件、`addTransitionType` 以及 CSS view transition pseudo-elements）。当用户需要添加页面过渡、动画路由变化、创建共享元素动画、动画组件的进入/退出、动画列表重排、实现方向性（前进/后退）导航动画，或在 Next.js 中集成视图过渡时，请使用本技能。当用户提及视图过渡、`startViewTransition`、`ViewTransition`、过渡类型，或询问在没有第三方动画库的情况下在 React 中实现 UI 状态之间的动画时，也请使用本技能。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在基于移动钱包适配器（Mobile Wallet Adapter）的Solana Expo Android应用中集成Privy认证，使用Sign-In-With-Solana。当需要安装 @privy-io/expo、挂载 PrivyProvider、使用 useLoginWithSiws 登录用户、将钱包与现有Privy账户关联、从后端读取Privy访问令牌，或调试Privy与移动钱包适配器（MWA）的部署时使用。"}

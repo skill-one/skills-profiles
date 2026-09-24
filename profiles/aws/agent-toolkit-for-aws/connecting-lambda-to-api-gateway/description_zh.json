@@ -1,0 +1,1 @@
+{"description_zh": "通过创建具有资源/方法设置、Lambda 代理集成、权限和部署的 REST 或 HTTP API，将现有的 AWS Lambda 函数连接至 Amazon API Gateway。在连接 Lambda 与 API Gateway 时，始终使用此技能——它能够处理容易遗漏的 CORS、节流、访问日志以及生产环境安全加固。"}

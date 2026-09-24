@@ -1,0 +1,1 @@
+{"description_zh": "创建、记录、编辑、回放或修复可重用的 Argent flow YAML 文件。当用户要求记录或回放可重复的设备路径、设置性能分析或进行 A/B 对比，或调用 argent-qa-flows 背后的作者化引擎时使用。在重复执行三次或以上交互之前，也应使用。对于一次性 UI 检查、验收驱动的回归测试或屏幕录像，分别使用 argent-test-ui-flow、argent-qa-flows 或 argent-screen-recording。"}

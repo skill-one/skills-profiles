@@ -1,0 +1,1 @@
+{"description_zh": "将 dependency-cruiser 接入 TypeScript 仓库，使每个包成为深层模块，其实现隐藏在子文件夹中，仅能通过入口文件访问。由用户调用。"}

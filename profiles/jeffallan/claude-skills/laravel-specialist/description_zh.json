@@ -1,0 +1,1 @@
+{"description_zh": "构建和配置 Laravel 10 及以上版本的应用程序，包括创建 Eloquent 模型和关系、实现 Sanctum 认证、配置 Horizon 队列、使用 API 资源设计 RESTful API，以及使用 Livewire 构建响应式界面。适用于创建 Laravel 模型、设置队列工作进程、实现 Sanctum 认证流程、构建 Livewire 组件、优化 Eloquent 查询或编写用于 Laravel 功能的 Pest/PHPUnit 测试。"}

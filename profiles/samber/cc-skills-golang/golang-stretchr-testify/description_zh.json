@@ -1,0 +1,1 @@
+{"description_zh": "Go语言测试 stretchr/testify 综合指南。深入涵盖 assert、require、mock 和 suite 包，适用于使用 testify 编写测试、创建 mock、配置测试套件，或选择使用 assert 与 require。覆盖 testify 断言、mock 期望、参数匹配器、调用验证、suite 生命周期，以及 Eventually、JSONEq 和自定义匹配器等高级模式。当代码库引入 github.com/stretchr/testify 时适用。"}

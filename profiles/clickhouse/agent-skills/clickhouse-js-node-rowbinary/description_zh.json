@@ -1,0 +1,1 @@
+{"description_zh": "生成 TypeScript/JavaScript 代码，用于读取/解码 ClickHouse HTTP 服务器所需的 ClickHouse `RowBinary` 流，并写入/编码 ClickHouse `RowBinary` 流。当用户需要解析或生成 `RowBinary`、`RowBinaryWithNames` 或 `RowBinaryWithNamesAndTypes` 时，请使用此技能。仅支持 Node.js，不支持浏览器环境。"}

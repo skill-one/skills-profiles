@@ -1,0 +1,1 @@
+{"description_zh": "TypeGPU 与原始 WebGPU 适配模式（适用于 HyperFrames）\n\n适用于使用 TypeGPU、原始 WebGPU、WGSL 片段着色器、计算管线、液态玻璃效果、粒子系统，或任何由 navigator.gpu 驱动并响应 HyperFrames hf-seek 事件的画布层来创建 GPU 渲染合成画面时的使用方式。"}

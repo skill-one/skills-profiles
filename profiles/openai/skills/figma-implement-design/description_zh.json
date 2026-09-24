@@ -1,0 +1,1 @@
+{"description_zh": "将Figma设计转换为具有1:1视觉保真度的生产就绪应用代码。在从Figma文件实现UI代码时使用；当用户提及“实现设计”、“generate code”、“实现组件”，提供Figma链接，或要求根据Figma规格构建组件时使用。对于通过 `use_figma` 进行的Figma画布写入，请使用 `figma-use`。"}

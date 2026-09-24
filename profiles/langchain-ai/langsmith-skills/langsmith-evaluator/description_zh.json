@@ -1,0 +1,1 @@
+{"description_zh": "调用此技能用于构建 LangSmith 评估流程。涵盖三个核心组件：(1) 创建评估器——LLM-as-Judge 与自定义代码；(2) 定义运行函数——如何捕获智能体的输出与轨迹；(3) 运行评估——使用 evaluate() 本地运行，或通过 LangSmith 自动运行。使用 langsmith CLI 工具。"}

@@ -1,0 +1,1 @@
+{"description_zh": "基于 samber/hot 的 Golang 内存缓存——淘汰算法（LRU、LFU、TinyLFU、W-TinyLFU、S3FIFO、ARC、TwoQueue、SIEVE、FIFO）、TTL、缓存加载器、分片、stale-while-revalidate、缺失键缓存和 Prometheus 指标。\n\n适用于使用或采用 samber/hot、代码库导入 github.com/samber/hot，或者项目频繁以高频率加载相同的中等至低基数资源并需要降低延迟或后端压力的场景。"}

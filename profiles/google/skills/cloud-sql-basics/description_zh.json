@@ -1,0 +1,1 @@
+{"description_zh": "该文件用于生成或解释 Cloud SQL 资源。当用户要求为 MySQL、PostgreSQL 或 SQL Server 创建 Cloud SQL 实例或数据库时，请使用此文件。\n\nCloud SQL 将第三方 MySQL、PostgreSQL 和 SQL Server 实例作为 Cloud SQL 资源进行管理。例如，当 Cloud SQL 创建开源的 MySQL 实例时，生成的资源是由 Google Cloud 管理的 Cloud SQL for MySQL 实例。\n\nCloud SQL 处理关系型数据库工作负载的备份、高可用性和安全连接。"}

@@ -1,0 +1,1 @@
+{"description_zh": "适用于 Zustand stores：\n- 列表/详情拆分\n- 状态类型来源\n- 切片\n- 动作\n- 状态更新函数（reducers）\n- 选择器\n- 乐观更新\n- 类动作组合"}

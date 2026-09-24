@@ -1,0 +1,1 @@
+{"description_zh": "创建 Docker 镜像文件，配置 CI/CD 流水线，编写 Kubernetes 清单，生成 Terraform/Pulumi 基础设施模板。负责部署自动化、GitOps 配置、应急响应手册及内部开发者平台工具的开发。适用于配置 CI/CD 流水线、应用容器化、代码即基础设施（IaC）管理、部署至 Kubernetes 集群、配置云平台、自动化发布或响应生产环境故障。适用于流水线、Docker、Kubernetes、GitOps、Terraform、GitHub Actions、值班支持或平台工程等场景。"}

@@ -1,0 +1,1 @@
+{"description_zh": "GitHub Actions 工作流模式：针对 React Native 的 iOS 模拟器与 Android 模拟器云端构建，并支持可下载产物。适用于设置 CI 构建流水线，或通过 gh CLI 和 GitHub API 下载 GitHub Actions 制品。"}

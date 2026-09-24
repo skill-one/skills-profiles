@@ -1,0 +1,1 @@
+{"description_zh": "适用于当用户需要将 OpenTelemetry 收集器接入 ClickHouse Cloud 上的托管 ClickStack 服务时使用，用户既可通过部署新的本地收集器（采用 Docker run 或 Docker Compose 方式），也可配置其现有的收集器，随后发送丰富的合成遥测数据，并验证其在 ClickStack 中可见。"}

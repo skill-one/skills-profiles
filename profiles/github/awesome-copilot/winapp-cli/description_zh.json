@@ -1,0 +1,1 @@
+{"description_zh": "Windows 应用开发 CLI（winapp）用于构建、打包、签名、调试并自动化 Windows UI 的 Windows 应用。适用于在需要初始化 Windows 应用项目、创建 MSIX 包、管理 AppxManifest.xml 或开发证书、以打包后的形式运行应用进行调试、通过 Microsoft UI Automation 自动化 Windows UI、发布至 Microsoft Store 或访问 Windows SDK 构建工具时使用。涵盖 init、pack、run、unregister、manifest、cert、sign、store、ui、tool 等命令。支持 .NET (csproj)、C++、Electron、Rust、Tauri、Flutter 以及其他 Windows 框架。"}

@@ -1,0 +1,1 @@
+{"description_zh": "管理 shadcn-svelte 组件与项目——包括添加、更新、修复、调试、样式化及组合 UI。提供项目上下文、组件文档和使用示例。当涉及 shadcn-svelte、CLI（命令行工具）、设计系统预设，或使用包含 components.json 文件的项目时，此功能会触发。此外，在运行 \"shadcn-svelte init\"、执行 \"add component\" 或访问注册中心 URL 时也会触发。"}

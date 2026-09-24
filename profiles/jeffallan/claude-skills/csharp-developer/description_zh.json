@@ -1,0 +1,1 @@
+{"description_zh": "在构建基于 .NET 8+、ASP.NET Core 应用程序或 Blazor Web 应用时使用。基于最小化或控制器路由构建 REST API，使用 Entity Framework Core 配置数据库访问，实现异步模式与取消功能，通过 MediatR 以 CQRS 模式构建应用程序，并使用状态管理搭建 Blazor 组件。适用于 C#、.NET、ASP.NET Core、Blazor、Entity Framework、EF Core、Minimal API、MAUI、SignalR。"}

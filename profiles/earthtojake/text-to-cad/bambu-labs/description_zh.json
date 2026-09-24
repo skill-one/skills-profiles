@@ -1,0 +1,1 @@
+{"description_zh": "试运行、上传，并谨慎地基于经验证的纯 `.gcode` 文件启动本地 Bambu Lab 打印任务，使用 Bambu LAN FTPS/MQTT 交接。"}

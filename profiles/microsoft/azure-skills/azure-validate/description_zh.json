@@ -1,0 +1,1 @@
+{"description_zh": "部署前验证，确保 Azure 就绪。在部署前对配置、基础设施（Bicep 或 Terraform）、RBAC 角色分配、托管身份权限以及前置条件进行深度检查。\n\n时机：验证我的应用，检查部署就绪状态，执行预检检查，验证配置，检查是否具备部署条件，验证 azure.yaml，验证 Bicep，部署前进行测试，排查部署错误，验证 Azure Functions，验证函数应用，验证无服务器部署，验证 RBAC 角色，检查角色分配，审查托管身份权限，假设情景分析，验证 Container Apps 部署。"}

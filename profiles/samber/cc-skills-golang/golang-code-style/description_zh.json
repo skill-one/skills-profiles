@@ -1,0 +1,1 @@
+{"description_zh": "Golang 代码风格规范——行长度与断行、变量声明、控制流清晰度、注释在何时有益，何时有害。适用于在编写或审查 Go 代码、就风格或清晰度进行询问，或确立项目编码规范时。不适用于命名约定（→ 详见 `samber/cc-skills-golang@golang-naming` 技能）、linter 配置（→ 详见 `samber/cc-skills-golang@golang-lint` 技能），或文档注释（→ 详见 `samber/cc-skills-golang@golang-documentation` 技能）。"}

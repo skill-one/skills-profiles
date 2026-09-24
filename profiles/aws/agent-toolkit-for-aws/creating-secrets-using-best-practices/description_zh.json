@@ -1,0 +1,1 @@
+{"description_zh": "遵循安全最佳实践，在 AWS Secrets Manager 中创建并管理密钥。创建密钥时，始终使用此技能——它配置了专用的 KMS 加密密钥、自动轮换、最小权限的 IAM 策略、CloudTrail 审计以及生命周期管理，这对于生产级密钥管理至关重要。"}

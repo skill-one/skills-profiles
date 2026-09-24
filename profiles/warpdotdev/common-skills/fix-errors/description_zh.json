@@ -1,0 +1,1 @@
+{"description_zh": "修复 warp Rust 代码库中的编译错误、lint 检查问题以及测试失败。涵盖预提交检查、WASM 特定错误以及运行特定测试。当用户遇到构建错误、clippy 或 fmt 失败、测试失败，或在 Pull Request 提交前需要运行或解读预提交检查时使用。"}

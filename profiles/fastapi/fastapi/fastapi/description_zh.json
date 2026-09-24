@@ -1,0 +1,1 @@
+{"description_zh": "FastAPI 最佳实践与规范。适用于使用 FastAPI API、Pydantic 模型、依赖、流式响应（包括服务端推送事件 SSE）以及部署前端应用的场景。能够保持 FastAPI 代码整洁，并紧跟最新的功能与模式。"}

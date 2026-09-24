@@ -1,0 +1,1 @@
+{"description_zh": "使用 @callstack/react-native-brownfield 实现经认可的棕色现场增量迁移，从原生 iOS 或 Android 迁移到 React Native 或 Expo。在选定棕色现场迁移路径之后，在设置集成、打包 XCFramework 或 AAR 工件，或将 React Native 界面添加到原生宿主时使用。"}

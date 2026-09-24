@@ -1,0 +1,1 @@
+{"description_zh": "OmniStudio 集成过程创建与 110 分评分验证。当构建结合数据映射动作、Apex 远程动作、HTTP 调用和条件逻辑的服务端流程编排时，使用本技能。TRIGGER 当：用户创建集成过程、添加数据映射步骤、配置远程动作或审查现有 IP 配置时。DO NOT TRIGGER 当：构建 OmniScripts（使用 omnistudio-omniscript-generate）、直接创建数据映射（使用 omnistudio-datamapper-generate）或分析跨组件依赖关系（使用 omnistudio-dependencies-analyze）时。"}

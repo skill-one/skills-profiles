@@ -1,0 +1,1 @@
+{"description_zh": "runpod-flash — 代码优先的无服务器：在本地编写 Python 代码，使用 `flash dev` 在远程 Runpod 的 GPU/CPU 上运行（支持热重载与实时工作进程日志），随后执行 `flash deploy`。适用于 @Endpoint/@remote 函数、资源配置及 flash 部署调试。仅通过命令行管理基础设施时，请使用 runpodctl 或 runpod-mcp。"}

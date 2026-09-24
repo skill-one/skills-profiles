@@ -1,0 +1,1 @@
+{"description_zh": "检测加密代码中的时序侧信道漏洞。适用于实现或审查加密代码时，在 C、C++、Go、Rust、Swift、Java、Kotlin、C#、PHP、JavaScript、TypeScript、Python 或 Ruby 中遇到对密钥进行除法运算、依赖密钥的分支，或常数时间编程问题时使用。"}

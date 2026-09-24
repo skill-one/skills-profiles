@@ -1,0 +1,1 @@
+{"description_zh": "分析应用程序使用的 Azure 资源（IaC 文件及/或目标资源组（rg）中的资源），并优化成本，为已识别的优化项创建 GitHub Issue。"}

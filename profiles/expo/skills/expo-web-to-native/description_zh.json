@@ -1,0 +1,1 @@
+{"description_zh": "框架（开源）。使用 Expo 将现有的 Web React 应用迁移为原生 iOS/Android 应用。\n适用场景：用户希望将网站转化为移动应用、将 Next.js/Vite/CRA React 代码库迁移至 React Native、逐步在原生端复用 Web 代码，或询问 Web 惯用法（DOM、CSS、React Router、localStorage、window）如何映射至原生。\n本指南为端到端迁移指南；DOM 组件机制本身请使用 `expo-dom` 技能。"}

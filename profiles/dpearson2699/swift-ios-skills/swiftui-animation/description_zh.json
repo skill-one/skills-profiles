@@ -1,0 +1,1 @@
+{"description_zh": "实现、诊断或审阅 SwiftUI 动画，使用显式动画和限定作用域的隐式动画、弹簧动画、过渡动画、PhaseAnimator、KeyframeAnimator、匹配几何或导航缩放、SF Symbol 效果以及自定义 Animation 类型。适用于视图在状态变更、插入、移除、导航或多步编排时进行动画，或在运动必须遵循 Reduce Motion（减少动态效果）和 Swift 并发时使用。"}

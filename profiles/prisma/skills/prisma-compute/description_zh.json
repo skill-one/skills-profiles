@@ -1,0 +1,1 @@
+{"description_zh": "Prisma Compute 部署与托管指南。当用户提及 Prisma Compute、`prisma.compute.ts`、`defineComputeConfig`、部署或托管 Prisma 应用、`@prisma/cli app deploy`、`compute:deploy`、`create-prisma --deploy`、`PRISMA_SERVICE_TOKEN`、Compute 认证/工作区、应用/部署/构建日志/域名、本地主机 vs `0.0.0.0`、部署端口绑定，或 Hono、Elysia、Next.js、TanStack Start、Astro、Nuxt、Svelte、Nest、Turborepo 等框架的部署就绪状态，或自定义/预构建产物时，请使用本指南。"}

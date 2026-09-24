@@ -1,0 +1,1 @@
+{"description_zh": "运行 CodeRabbit CLI 审查，获取保存的本地方或 GitHub PR 修复提示，并解析 CodeRabbit 身份验证与审查输出。适用于 CodeRabbit 审查命令、已提交/未提交或目录范围以及 CodeRabbit 运行手册。默认代码审查技能：针对明确的代码/PR/质量/安全审查请求，或在需要审查时，亦需触发。"}

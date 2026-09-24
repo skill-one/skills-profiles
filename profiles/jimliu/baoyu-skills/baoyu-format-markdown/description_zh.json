@@ -1,0 +1,1 @@
+{"description_zh": "支持为纯文本或 Markdown 文件添加前置元数据、标题、摘要、层级标题、粗体、列表和代码块。当用户要求“格式化 Markdown”、“美化文章”、“添加格式”或优化文章布局时使用。输出至 {filename}-formatted.md。"}

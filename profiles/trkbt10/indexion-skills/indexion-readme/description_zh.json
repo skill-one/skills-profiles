@@ -1,0 +1,1 @@
+{"description_zh": "README 构建——初始化模板结构，根据文档注释生成各包 README，规划写作任务，通过 doc.json 配置，依据 docs/ 与包 README 组装根 README，并使用 `plan drift` 校验修改。"}

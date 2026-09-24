@@ -1,0 +1,1 @@
+{"description_zh": "按照最佳实践和安全标准，创建生产就绪的 Kubernetes 清单，涵盖 Deployments、Services、ConfigMaps 和 Secrets。适用于生成 Kubernetes YAML 清单、创建 K8s 资源或实施生产级 Kubernetes 配置的场景。"}

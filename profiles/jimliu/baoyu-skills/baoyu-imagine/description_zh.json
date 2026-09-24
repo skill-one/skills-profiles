@@ -1,0 +1,1 @@
+{"description_zh": "基于 OpenAI GPT Image 2、Azure OpenAI、Google、OpenRouter、DashScope、Z.AI GLM-Image、MiniMax、Jimeng、Seedream 及 Replicate API 的 AI 图像生成。支持文本转图像、参考图像、比例，以及基于已保存提示词文件的批量生成。默认顺序执行；当用户已有多个提示词，或需要稳定的批量多图吞吐量时，使用批量并行生成。在用户要求生成、创建或绘制图像时使用。"}

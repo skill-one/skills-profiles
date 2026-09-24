@@ -1,0 +1,1 @@
+{"description_zh": "生成一份风格精致、内容自包含的 HTML“读取输出”文档，存放于 ~/.readouts 目录（并附带一个自动维护的索引页）。要么将当前对话中累积的发现直接快照为文档；要么——当被全新调用时，例如“/readout on how github webhook events are processed”——通过提出澄清问题来明确范围，并在记录文档前研究代码库。该工作在一个子代理中运行，因此主对话的上下文保持整洁。当用户调用 /readout，说“write this up”、“turn this into a doc/page”、“make a readout”，或要求生成一份可读、可分享的文档，以记录发现或解释某事物的工作原理时，随时使用此方法。"}

@@ -1,0 +1,1 @@
+{"description_zh": "通过环境变量和类型化设置管理 Python 配置。在外部化配置、配置 pydantic-settings、管理密钥或实现环境特定行为时使用。"}

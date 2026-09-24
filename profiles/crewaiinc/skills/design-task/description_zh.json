@@ -1,0 +1,1 @@
+{"description_zh": "CrewAI 任务设计与配置。适用于创建、配置或调试 CrewAI 任务——编写描述与 expected_output，使用上下文设置任务依赖，配置输出格式（output_pydantic、output_json、output_file），使用护栏进行验证，启用 human_input、异步执行、Markdown 格式化，或调试任务执行问题。"}

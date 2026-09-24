@@ -1,0 +1,1 @@
+{"description_zh": "迁移 Cloudflare Sandbox 应用，从稳定的 @cloudflare/sandbox 迁移至 @cloudflare/sandbox@next（SDK 1.0 预览版）。已使用预览版本的应用，请使用 sandbox-next。"}

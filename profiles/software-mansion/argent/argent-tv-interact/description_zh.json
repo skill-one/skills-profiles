@@ -1,0 +1,1 @@
+{"description_zh": "通过 argent 控制并检查 TV 应用 —— Apple TV（tvOS）、Android TV（leanback）和 Amazon Fire TV（Vega）。启动目标，读取焦点，使用 D-pad 方向键遥控器导航，输入、截图，并在 Vega 上调试 JavaScript 运行时（执行求值、控制台日志、网络检查器）。在任务针对电视（runtimeKind \"tv\"，或 platform \"vega\"），或提及 Apple TV / tvOS / Android TV / leanback / Vega / Fire TV / VVD 时使用。"}

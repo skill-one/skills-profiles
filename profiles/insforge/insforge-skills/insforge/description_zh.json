@@ -1,0 +1,1 @@
+{"description_zh": "在基于 InsForge 或 @insforge/sdk 编写应用代码时使用此技能：包括数据库 CRUD、认证、存储上传 / 存储 RLS、函数、OpenRouter AI、实时、邮件、Stripe 或 Razorpay 支付，或将 S3 兼容工具（aws CLI、AWS SDKs、rclone、Terraform、boto3）指向 InsForge 存储。在出现添加认证、获取数据、上传文件、将存储桶公开、添加结账、出售订阅或发送邮件等请求时触发。对于基础设施、SQL 迁移、CLI 命令或支付提供商设置，请改用 insforge-cli。"}

@@ -1,0 +1,1 @@
+{"description_zh": "编排iOS截图自动化：使用xcodebuild/simctl进行构建运行，借助AXe执行界面操作，应用JSON设置与计划文件，基于Koubou进行定帧（`asc screenshots frame`），以及截图上传（`asc screenshots upload`）。适用于用户请求自动截图捕获、基于AXe的模拟器流程、帧组合或截图至上传流水线等场景。"}

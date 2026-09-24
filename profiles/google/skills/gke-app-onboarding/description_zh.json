@@ -1,0 +1,1 @@
+{"description_zh": "管理 GKE 应用接入，涵盖容器化、部署清单与迁移。适用于首次将应用接入或部署到 GKE，或为 GKE 容器化应用。请勿用于通用的 GKE 集群管理或升级（请改用 gke-basics 或 gke-upgrades）。"}

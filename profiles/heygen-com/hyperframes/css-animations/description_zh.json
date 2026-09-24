@@ -1,0 +1,1 @@
+{"description_zh": "HyperFrames CSS动画适配模式。适用于编写CSS关键帧、基于 `animation-delay` 的时间控制、`animation-fill-mode`、`animation-play-state`，或仅使用CSS实现的运动，HyperFrames在预览和渲染过程中必须对其确定性查找。"}

@@ -1,0 +1,1 @@
+{"description_zh": "为 Linear 发布生成 CI/CD 配置。用于设置发布跟踪、配置 Linear 的 CI 管道或集成部署与 Linear 发布。支持 GitHub Actions、GitLab CI、CircleCI 及其他平台。"}

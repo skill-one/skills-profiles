@@ -1,0 +1,1 @@
+{"description_zh": "在处理 PixiJS v8 中的指针、鼠标、触摸或滚轮输入时使用此技能。涵盖 eventMode（none、passive、auto、static、dynamic）、FederatedEvent 类型、传播和捕获阶段、命中区域、交互子元素、光标和光标样式、拖拽时的全局移动事件以及事件特性配置。触发于：eventMode、FederatedPointerEvent、pointerdown、click、tap、globalpointermove、drag、hitArea、cursor、stopPropagation、persistentDeviceId。"}

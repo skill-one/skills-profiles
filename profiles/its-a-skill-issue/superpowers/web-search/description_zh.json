@@ -1,0 +1,1 @@
+{"description_zh": "使用 inference.sh CLI 进行网页搜索与内容提取，支持 Tavily 和 Exa。\n\n应用：Tavily 搜索、Tavily 提取、Exa 搜索、Exa 答案、Exa 提取。\n\n功能：AI 驱动的搜索、内容提取、直接回答、研究。\n\n适用于：研究、RAG 流水线、事实核查、内容聚合、智能体。\n\n触发词：网页搜索、Tavily、Exa、搜索 API、内容提取、研究、网络搜索、AI 搜索、搜索助手、网页抓取、RAG、Perplexity 替代方案。"}

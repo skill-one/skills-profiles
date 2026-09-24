@@ -1,0 +1,1 @@
+{"description_zh": "将 X（Twitter）的推文和文章转换为带有 YAML front matter 的 Markdown。使用需用户同意的逆向工程 API。当用户提及“X to markdown”、“tweet to markdown”、“save tweet”，或提供用于转换的 x.com/twitter.com 链接时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "借助 Expo 开发客户端迭代，在 Limrun 上准备并运行 Expo / React Native 应用。当用户需要 Expo 开发构建、Metro 隧道、热重载、无需重复原生重建的 JS/TS 迭代，或在远程 iOS 模拟器或 Android 模拟器上运行/测试一个 Expo 应用时使用。"}

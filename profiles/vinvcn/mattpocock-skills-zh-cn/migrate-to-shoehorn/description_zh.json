@@ -1,0 +1,1 @@
+{"description_zh": "将测试文件从 `as` 类型断言迁移到 `@total-typescript/shoehorn`。适用于用户提到 shoehorn、希望替换测试中的 `as`，或需要局部测试数据时。"}

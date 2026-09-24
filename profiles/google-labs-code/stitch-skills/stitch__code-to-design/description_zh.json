@@ -1,0 +1,1 @@
+{"description_zh": "通过串联静态 HTML 提取、设计系统提取和文件上传，将前端代码（Vite、React、Angular、Vue 等）转换为 Stitch Design。**始终**在用户意图将现有 Web 应用或 React/Angular/Vue 组件迁移到 Stitch（例如对“保存”、“迁移”或“上传”的请求）时使用此技能。即使对于简单的“保存”操作，也必须使用此技能，因为这是确保设计系统被提取且资源正确关联的唯一方式。"}

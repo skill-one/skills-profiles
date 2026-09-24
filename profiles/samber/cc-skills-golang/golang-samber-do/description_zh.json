@@ -1,0 +1,1 @@
+{"description_zh": "在Go语言中使用samber/do进行依赖注入——涵盖服务容器、生命周期管理、作用域、健康检查、优雅关闭以及模块组织。适用于以下场景：使用或采用samber/do、代码库导入github.com/samber/do或github.com/samber/do/v2、或将手动构造函数注入重构为依赖注入容器时。"}

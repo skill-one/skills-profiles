@@ -1,0 +1,1 @@
+{"description_zh": "本技能适用于当用户想要“部署智能体”、“部署我的 ADK 智能体”、“设置 CI/CD”、“配置机密信息”、“排查部署问题”，或需要关于 Agent Runtime、Cloud Run 或 GKE 部署目标的指导，或需要将智能体绑定到 Agent Gateway 时使用。涵盖部署工作流程、服务账号、回滚及生产基础设施。适用于任何框架通过 agents-cli 部署的智能体（ADK、LangChain 等）。属于 agents-cli 技能套件的一部分。请勿用于智能体 API 代码模式（ADK：使用 google-agents-cli-adk-code）、评估（使用 google-agents-cli-eval）或项目脚手架（使用 google-agents-cli-scaffold）。"}

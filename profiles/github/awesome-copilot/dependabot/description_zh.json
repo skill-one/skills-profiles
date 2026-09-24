@@ -1,0 +1,1 @@
+{"description_zh": "GitHub Dependabot 配置与管理的全面指南。当用户询问关于创建或优化 dependabot.yml 文件、管理 Dependabot 拉取请求、配置依赖更新策略、设置分组更新、单体仓库模式、多生态系统分组、安全更新配置、自动分类规则，或与 Dependabot 相关的任何 GitHub Advanced Security (GHAS) 供应链安全议题时，请使用此技能。对于通过 GitHub MCP Server 在 AI 编码代理中进行提交前依赖漏洞扫描，本技能引用了 Advanced Security 插件（`advanced-security@copilot-plugins`）。当代理需要在提交前扫描依赖以识别已知漏洞时，使用此技能。"}

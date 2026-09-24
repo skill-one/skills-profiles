@@ -1,0 +1,1 @@
+{"description_zh": "分析一次已完成的 Meticulous 测试运行——将差异与 PR 描述进行对比，以查看预期内容，然后重点关注查找并标记潜在回归问题。从本地仓库的当前提交（默认）或显式测试运行 ID 或 commit SHA 解析测试运行。适用于当需要审阅 Meticulous 测试结果、照看 Pull 请求/合并请求的 Meticulous Tests CI 检查，或自己刚实施前端变更后立即使用的情况。"}

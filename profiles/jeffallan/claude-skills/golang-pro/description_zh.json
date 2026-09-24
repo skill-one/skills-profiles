@@ -1,0 +1,1 @@
+{"description_zh": "使用 goroutine（协程）和 channel（通道）实现并发 Go 模式，使用 gRPC 或 REST 进行微服务的设计与构建，利用 pprof 优化 Go 应用程序性能，并借助泛型、接口与健壮的错误处理机制，践行地道的 Go 开发规范。适用于构建需要并发编程、微服务架构或高性能系统的 Go 应用程序，以及针对 goroutine（协程）、channel（通道）、Go 泛型、gRPC 集成、命令行工具、基准测试或表格驱动测试的应用。"}

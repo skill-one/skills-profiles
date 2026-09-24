@@ -1,0 +1,1 @@
+{"description_zh": "执行并管理 Athena 在默认目录及联邦目录（Glue、S3 Tables、Redshift）中的 SQL 查询。触发条件包括短语，如：查询数据、运行 SQL、Athena 查询、分析表、SQL 查询、工作区状态、配置文件表、查询 Redshift 目录、查询 S3 Tables。请勿用于查找特定数据资产（使用 finding-data-lake-assets）、全面目录审计（使用 exploring-data-catalog）、导入数据（使用 ingesting-into-data-lake）。"}

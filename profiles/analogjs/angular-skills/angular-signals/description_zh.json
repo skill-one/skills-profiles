@@ -1,0 +1,1 @@
+{"description_zh": "已弃用 - 本技能未被维护。请改用官方的 Angular 技能，网址为 https://github.com/angular/skills。在 Angular v20+ 中实现基于信号的响应式状态管理。用于使用 signal() 创建响应式状态，使用 computed() 创建派生状态，使用 linkedSignal() 创建依赖信号，使用 effect() 创建副作用。在遇到状态管理问题、将 BehaviorSubject/Observable 模式转换为信号，或实现响应式数据流时触发。"}

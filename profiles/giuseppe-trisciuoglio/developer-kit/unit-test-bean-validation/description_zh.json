@@ -1,0 +1,1 @@
+{"description_zh": "提供结合 Hibernate Validator 用于 Jakarta Bean Validation（JSR-380）单元测试的模式，涵盖 @Valid、@NotNull、@Min、@Max、@Email 等约束。可生成自定义校验器测试、约束违规断言、校验分组以及参数化校验测试。无需 Spring 上下文即可验证数据完整性逻辑。适用于编写校验测试、Bean 校验测试或测试自定义约束校验器。"}

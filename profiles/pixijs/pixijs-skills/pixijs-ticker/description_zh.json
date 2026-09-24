@@ -1,0 +1,1 @@
+{"description_zh": "当执行逐帧逻辑或控制 PixiJS v8 渲染循环时使用此技能。涵盖 Ticker.add/addOnce/remove、deltaTime 与 deltaMS 与 elapsedMS 的区别、UPDATE_PRIORITY 排序、maxFPS/minFPS 限速、速度缩放、Ticker.shared 与新建实例、逐对象 onRender 钩子及手动渲染。触发条件：Ticker、UPDATE_PRIORITY、deltaTime、deltaMS、elapsedMS、onRender、app.ticker、maxFPS、minFPS、Ticker.shared。"}

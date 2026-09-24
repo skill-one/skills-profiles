@@ -1,0 +1,1 @@
+{"description_zh": "使用 Scrapling 进行网页抓取，具备反机器人绕过（如 Cloudflare Turnstile）、隐身无头浏览、爬虫框架、自适应抓取和 JavaScript 渲染等能力。适用场景包括：被要求从网站抓取、爬取或提取数据；web_fetch 功能失败；网站存在反机器人保护；需要编写 Python 代码进行抓取/爬取；或需要编写爬虫。"}

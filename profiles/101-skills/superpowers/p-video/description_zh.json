@@ -1,0 +1,1 @@
+{"description_zh": "通过 inference.sh CLI 使用 Pruna P-Video 和 WAN 模型生成视频。\n模型：P-Video、WAN-T2V、WAN-I2V。\n功能：文本生成视频、图像生成视频、音频支持、720p/1080p、快速推理。\nPruna 优化模型，在保证画质不受损的前提下提升速度。\n触发词：Pruna 视频、P-Video、Pruna AI 视频、快速视频生成、优化视频、WAN-T2V、WAN-I2V、经济视频生成、低价视频生成、Pruna 文本转视频、Pruna 图像转视频。"}

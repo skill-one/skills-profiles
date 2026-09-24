@@ -1,0 +1,1 @@
+{"description_zh": "将 ~/.agents/skills/ljg-* 中所有更新过的 skills 同步到 GitHub 仓库 (ljg-skills)，先推送到 master 分支（org-mode 输出风格），再切换到 md 分支（markdown 输出风格），完成基础 markdown 化后再推送。当用户说 '/ljg-push'、'push skills'、'推送 skills'、'同步 skills'、'sync ljg'，或每当 ljg-* skills 更新且需要发布时使用。不用于推送非 ljg skills 或任意 git 仓库。"}

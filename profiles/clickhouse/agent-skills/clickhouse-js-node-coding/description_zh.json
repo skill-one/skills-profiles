@@ -1,0 +1,1 @@
+{"description_zh": "使用 ClickHouse Node.js 客户端（`@clickhouse/client`）编写地道的应用代码。当用户*构建*针对 Node.js 客户端时，请使用此技能——包括配置客户端、发送 ping 请求、以 JSON 或原始格式插入行、选择并解析结果、绑定查询参数、管理会话和临时表、处理数据类型或自定义 JSON 解析。请勿用于浏览器/Web 客户端代码。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用 Amazon S3 Tables（s3tables API 命名空间）创建受管理的 Iceberg 表，并具备自动压缩与快照管理功能。  \n设置表桶、命名空间、表、模式、Glue 目录注册、分区以及 IAM 访问控制。  \n触发条件：创建表、数据湖表、分析表、结构化数据存储、S3 Tables、Iceberg、Athena 表、分区策略、访问权限。  \n请勿使用（空缺）进行：导入文件（使用 ingesting-into-data-lake）、存储和查询向量（使用 storing-and-querying-vectors）、查询现有表（使用 querying-data-lake）、或定位现有表（使用 finding-data-lake-assets）。"}

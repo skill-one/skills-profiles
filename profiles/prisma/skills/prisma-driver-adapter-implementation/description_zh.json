@@ -1,0 +1,1 @@
+{"description_zh": "Prisma ORM 7 SQL 驱动适配器工作的必备参考。适用于实现或修改适配器、添加数据库驱动、或涉及 SqlDriverAdapter、Transaction、保存点、结果映射或 DriverAdapterError 行为时使用。涵盖当前事务生命周期、可选保存点钩子、原始数据库错误保留以及验证。"}

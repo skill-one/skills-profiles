@@ -1,0 +1,1 @@
+{"description_zh": "显示当前会话的实际 token 使用量与预估节省量。直接从 Claude Code 会话日志读取数据 — 无需 AI 估算。通过 `/genshijin-stats` 命令启动。输出由 mode-tracker hook 注入，模型本身不进行数值计算。"}

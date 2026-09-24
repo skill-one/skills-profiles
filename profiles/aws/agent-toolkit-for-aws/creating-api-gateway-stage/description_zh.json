@@ -1,0 +1,1 @@
+{"description_zh": "创建符合 AWS 最佳实践的 API Gateway 阶段，支持 CloudWatch 日志、X-Ray 追踪、节流、WAF 集成和 IAM 角色。当将 REST API 部署到开发、测试或生产等不同环境时使用。"}

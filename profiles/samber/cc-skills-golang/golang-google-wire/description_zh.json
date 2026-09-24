@@ -1,0 +1,1 @@
+{"description_zh": "使用 google/wire 在 Go 语言中实现编译期依赖注入，涉及 wire.NewSet、wire.Build、wire.Bind（接口→具体实现）、wire.Struct、wire.Value、wire.InterfaceValue、wire.FieldsOf、清理函数、//go:build wireinject 注入器文件以及生成的 wire_gen.go。\n\n在以下场景中可使用或采用本方案：代码库导入了 `github.com/google/wire`、使用或采用 google/wire、或通过 `wire.Build` 在编译期对应用图进行接线。\n\n关于基于反射的运行时依赖注入，请参考 `samber/cc-skills-golang@golang-uber-dig` 技能。"}

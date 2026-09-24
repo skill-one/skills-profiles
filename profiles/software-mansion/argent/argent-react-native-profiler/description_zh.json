@@ -1,0 +1,1 @@
+{"description_zh": "使用 argent profiler 工具分析 React Native Hermes 应用，以测量重渲染与 CPU 性能。适用于性能优化、修复前后性能测量、识别慢速组件、诊断重渲染、检查 CPU 热点，或生成按优先级排序的问题报告。"}

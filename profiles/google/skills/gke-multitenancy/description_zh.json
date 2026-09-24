@@ -1,0 +1,1 @@
+{"description_zh": "规划和配置 GKE 的多租户。涵盖命名空间隔离、团队 RBAC 规划、资源配额、LimitRanges、网络隔离以及成本分配。在设计和配置 GKE 多租户、配置 GKE 命名空间、设置资源配额或隔离 GKE 团队时使用。请勿用于单租户集群配置或一般部署说明（请改用 gke-basics 或 gke-app-onboarding）。"}

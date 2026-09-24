@@ -1,0 +1,1 @@
+{"description_zh": "实现了先进的 TypeScript 类型系统，创建自定义类型守卫、工具类型与标记类型，并为 tRPC 配置端到端类型安全。适用于构建需要高级泛型、条件类型或映射类型、判别联合类型、monorepo 配置，或使用 tRPC 实现全栈类型安全的 TypeScript 应用。"}

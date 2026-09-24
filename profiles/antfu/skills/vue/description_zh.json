@@ -1,0 +1,1 @@
+{"description_zh": "Vue 3 组合式 API、script setup 宏、响应式系统与内置组件。用于编写 Vue SFC（单文件组件）、使用 defineProps/defineEmits/defineModel、设置 watch 侦听器，或使用 Transition/Teleport/Suspense/KeepAlive。"}

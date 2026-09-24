@@ -1,0 +1,1 @@
+{"description_zh": "对于所有发布到 X (Twitter) 的 Caffeine 构建，必须遵循强制性方案。唯一支持的途径是使用带有 OAuth 2.0 PKCE 的 `x-client` mops 包。自行实现 `ic.http_request` 或 `icBooking.http_request` 对 `api.x.com/2/tweets`、`api.x.com/2/oauth2/token` 或其他任何 X 端点的调用，属于被禁止的反模式——这会绕过 Bearer 认证、复制成本防护措施，以及 `x-client` 的 null 字段处理。当用户、规范或任何先前任务中提及发推、直播发推、发布到 X、发布状态、分享到 Twitter，或任何等效表述时，请加载此技能——并且在编写任何访问 `api.x.com` 的代码之前。"}

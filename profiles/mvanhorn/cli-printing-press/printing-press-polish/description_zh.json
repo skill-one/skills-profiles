@@ -1,0 +1,1 @@
+{"description_zh": "对生成的 CLI 进行润色，使其通过验证并达到发布就绪状态。运行诊断（dogfood、verify、scorecard、go vet、gosec），自动修复所有问题（verify 失败、静态分析发现、死代码、描述、README、MCP 工具质量），报告修改前后的差异，并提供发布选项。在任何 /printing-press 运行之后使用，或在 $PRESS_LIBRARY/ 中的任意 CLI 上使用。触发短语：“润色”、“改进 CLI”、“修复 verify 问题”、“使其发布就绪”、“清理 CLI”、“准备好发布”。"}

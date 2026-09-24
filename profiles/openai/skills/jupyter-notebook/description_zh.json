@@ -1,0 +1,1 @@
+{"description_zh": "当用户请求创建、搭建或编辑 Jupyter notebooks（`.ipynb`）以进行实验、探索或教程时使用；建议优先使用随附的模板，并运行辅助脚本 `new_notebook.py`，以生成简洁的起始笔记本。"}

@@ -1,0 +1,1 @@
+{"description_zh": "升级现有的 assistant-ui 应用，并应用必要的迁移，以适配当前的 AI SDK v7 与 assistant-ui 0.15.x 版本线。在更新、升级或迁移 @assistant-ui/react、@assistant-ui/ai-sdk、旧版 @assistant-ui/react-ai-sdk 别名、ai 或 @ai-sdk/react 时使用；或者在升级过程中暴露了已移除的 hooks、作用域访问器调用、提供器配置、注册表路径、事件名称、传统交互对象或工具注册时使用。对于现有项目、更新后的类型错误、包兼容性、CLI 代码转换工具以及特定版本的迁移顺序，请从此处开始。首次安装或新项目时使用 setup；在编写无需升级的运行时项目时使用 runtime。"}

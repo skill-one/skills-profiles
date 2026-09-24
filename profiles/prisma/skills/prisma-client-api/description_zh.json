@@ -1,0 +1,1 @@
+{"description_zh": "Prisma Client API 参考文档，涵盖模型查询、过滤器、操作符及客户端方法。在编写数据库查询、执行 CRUD 操作、过滤数据或配置 Prisma Client 时使用。触发条件为 \"prisma query\", \"findMany\", \"create\", \"update\", \"delete\", \"$transaction\"。"}

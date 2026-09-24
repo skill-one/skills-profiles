@@ -1,0 +1,1 @@
+{"description_zh": "支持为多区域 AWS CloudTrail 追踪配置 S3 日志存储、CloudWatch Logs 集成及 CloudWatch Logs Insights 查询功能，用于安全监控与合规审计。适用于在所有 AWS 区域设置集中式 API 活动日志记录时使用。"}

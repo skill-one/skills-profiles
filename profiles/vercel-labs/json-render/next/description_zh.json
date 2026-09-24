@@ -1,0 +1,1 @@
+{"description_zh": "json-render 的 Next.js 渲染器，可将 JSON 规范转化为具备路由、布局、SSR（服务端渲染）和元数据的完整 Next.js 应用程序。适用于与 @json-render/next 配合、基于 JSON 规范构建 Next.js 应用，或生成由 AI 创建的动态多页面应用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "通过提示词或复制此模板，为 GitHub Copilot 创建新的智能体技能。当被要求“创建技能”、“新建技能”或“搭建技能”，或在构建带有捆绑资源的专用 AI 能力时使用，将生成带有正确 frontmatter、目录结构和可选 scripts/references/assets 文件夹的 SKILL.md 文件。"}

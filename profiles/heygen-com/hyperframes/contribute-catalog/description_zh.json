@@ -1,0 +1,1 @@
+{"description_zh": "创建新的 HyperFrames 注册块（字幕样式、VFX 块、转场、下三分之一）或组件（文本特效、叠加层、片段），并以上游 PR 的形式提交到 hyperframes 仓库。仅在用户希望向公共目录提交贡献时使用——在项目内进行字幕/转场创作时使用 `hyperframes` skill，安装现有注册项时使用 `hyperframes-registry` skill。"}

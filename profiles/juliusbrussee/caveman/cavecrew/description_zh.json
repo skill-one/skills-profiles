@@ -1,0 +1,1 @@
+{"description_zh": "何时应委托 `cavecrew-investigator`（定位代码）、`cavecrew-builder`（编辑1-2个文件）或 `cavecrew-reviewer`（差异审查）来处理，而不是直接操作或使用 `Explore`。其输出经过压缩，因此主上下文能够持续更长时间。"}

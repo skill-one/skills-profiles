@@ -1,0 +1,1 @@
+{"description_zh": "当用户询问添加 MCP server、集成 MCP、在插件中配置 MCP、使用 .mcp.json、设置 Model Context Protocol、连接外部服务、提及 \"${CLAUDE_PLUGIN_ROOT} with MCP\" 或讨论 MCP server 类型（SSE、stdio、HTTP、WebSocket）时，应使用本技能。为将 Model Context Protocol 服务器集成到 Claude Code 插件中，以实现外部工具和服务集成，提供全面的指导。"}

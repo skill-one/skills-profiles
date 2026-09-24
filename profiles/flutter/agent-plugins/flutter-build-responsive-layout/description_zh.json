@@ -1,0 +1,1 @@
+{"description_zh": "使用 `LayoutBuilder`、`MediaQuery` 或 `Expanded/Flexible` 创建能够适配不同屏幕尺寸的布局。在需要 UI 在移动端和平板/桌面端均呈现良好效果时使用。"}

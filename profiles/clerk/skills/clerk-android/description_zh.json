@@ -1,0 +1,1 @@
+{"description_zh": "使用 Kotlin 和 Jetpack Compose，配合 clerk-android 源码引导模式，为原生 Android 应用实现 Clerk 身份验证。适用于预构建的 AuthView/UserButton 或自定义 API 驱动的身份验证流程。请勿用于 Expo 或 React Native 项目。"}

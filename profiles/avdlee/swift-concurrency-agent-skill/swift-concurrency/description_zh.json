@@ -1,0 +1,1 @@
+{"description_zh": "诊断 Swift 并发问题，将基于回调的代码重构为 async/await，并在使用任务、actor（actor）、@MainActor、Sendable、数据竞争、线程安全，或并发相关的编译器与 linter 警告时，提供 Swift 6 迁移指导。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在 Agent Platform 中管理并编排提示词。在需要创建、列出、获取、版本化或删除 Agent Platform 中的托管提示词时使用。请勿用于模型训练、模型部署到端点，或管理非 Agent Platform 的提示词。"}

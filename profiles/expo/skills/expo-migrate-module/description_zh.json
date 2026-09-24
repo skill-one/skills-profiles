@@ -1,0 +1,1 @@
+{"description_zh": "框架（OSS）。将现有的 Apple/Swift Expo 原生模块从 Expo Modules API 1.0 定义 DSL 迁移至 2.0 宏 API（有时也称为 v2），同时保留其 JavaScript 和 TypeScript 接口契约。在现有模块中转换或逐步采用 @ExpoModule、@JS、@Event、@SharedObject 或 @Record 时使用。不得用于创建新模块、进行通用的 Expo SDK 升级，或执行 Android/Kotlin 迁移。"}

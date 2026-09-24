@@ -1,0 +1,1 @@
+{"description_zh": "基于 @clerk/nuxt 的 Nuxt 3 认证模式——中间件、组合式函数、服务端 API 路由、服务端渲染（SSR）。触发场景：Nuxt 认证、useAuth 组合式函数、Nuxt 的 clerkMiddleware、Clerk 服务端 API、Nuxt 路由保护。"}

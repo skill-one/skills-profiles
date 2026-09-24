@@ -1,0 +1,1 @@
+{"description_zh": "Ghost Security - SAST 代码扫描器。通过规划并执行针对性扫描，在源代码中检测 SQL 注入、XSS、BOLA、BFLA、SSRF 等 OWASP 类别的安全漏洞。支持应用（后端、前端、移动端）和库（原型污染、不安全反序列化、ReDoS、路径穿越、zip slip）的扫描。适用于用户要求进行代码安全审计、SAST 扫描、源代码漏洞扫描，或希望查找代码库或库中安全缺陷时使用。"}

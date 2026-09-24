@@ -1,0 +1,1 @@
+{"description_zh": "从任何已安装的电竞应用（`.asar` 打包文件）中提取资源和 JavaScript，当可用时从 `.js.map` 文件恢复原始源代码，否则使用 Prettier 格式化压缩代码。当用户想要“提取 Electron 应用”、“反编译 Electron”、“获取 <app>` 的源代码”、“检查 app.asar”、“查看 Electron 应用源代码”、“提取 .asar”，或询问桌面 Electron 应用如何构建时使用。会跳过 `node_modules`，并支持 macOS 和 Windows。"}

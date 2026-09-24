@@ -1,0 +1,1 @@
+{"description_zh": "通过终端操作 Resent 平台——通过 `resent` CLI 发送邮件（包括通过 `--react-email` 发送 React Email .tsx 模板），管理域名、联系人、广播、模板、Webhooks、API 密钥、日志、自动化及事件。当用户需要在 shell、脚本或 CI/CD 流水线中运行 Resent 命令，或发送/预览 React Email 模板时使用。运行 `resent` 命令前，请始终加载本技能——其中包含防止静默失败的参数约定与常见陷阱。"}

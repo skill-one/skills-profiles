@@ -1,0 +1,1 @@
+{"description_zh": "对 GitHub Actions 工作流中的安全漏洞进行审计，覆盖 AI 智能体集成场景，包括 Claude Code Action、Gemini CLI、OpenAI Codex 和 GitHub AI Inference。检测攻击者控制的输入在 CI/CD 管道中到达运行 AI 智能体的攻击向量，涵盖环境变量中间代理模式、直接表达式注入、危险沙箱配置以及通配符用户白名单。适用于审查调用 AI 编程智能体的工作流文件、审计 CI/CD 管道安全以防范提示注入风险，或评估智能体操作配置。"}

@@ -1,0 +1,1 @@
+{"description_zh": "已弃用 —— 该技能已停止维护。请改用官方 Angular 技能，地址为 https://github.com/angular/skills。在 Angular v20+ 中创建自定义指令，用于 DOM 操作和行为扩展。适用于修改元素行为/外观的属性指令、用于 portals/overlays 的结构指令，以及用于组合的宿主指令。适用于创建可复用 DOM 行为、扩展元素功能，或在组件之间组合行为。注意：控制流应使用原生的 @if/@for/@switch，而不是自定义结构指令。"}

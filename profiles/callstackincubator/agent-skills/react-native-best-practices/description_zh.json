@@ -1,0 +1,1 @@
+{"description_zh": "为 FPS、TTI、包体积、内存泄漏、重新渲染和动画提供 React Native 性能优化指南。适用于涉及 Hermes 优化、JS 线程阻塞、桥接开销、FlashList、原生模块，或排查卡顿与掉帧的任务。"}

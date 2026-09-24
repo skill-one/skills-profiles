@@ -1,0 +1,1 @@
+{"description_zh": "在 AKS 上部署 AI Runway —— 从裸集群到运行中模型。涵盖集群验证、控制器安装、GPU 评估、提供商设置及首次部署。\nWHEN: “部署 AI Runway”，“接入 AKS 集群”，“安装 AI Runway”，“airunway 部署”，“将模型部署到 AKS”，“AKS 上的 GPU 推理”，“AKS 上的 KAITO 设置”，“在 AKS 上运行 LLM”，“AKS 上的 vLLM”，“在 AKS 上搭建模型服务”，“AI Runway 控制器”。"}

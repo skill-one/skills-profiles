@@ -1,0 +1,1 @@
+{"description_zh": "通过 Caveman Cloud 网关连接仓库，确保每次大语言模型请求都得到测量，且不改变任何行为。用于 '设置 caveman' 或添加 LLM 支出可观测性。"}

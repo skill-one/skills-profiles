@@ -1,0 +1,1 @@
+{"description_zh": "Salesforce DevOps 自动化（使用 sf CLI v2）。\n\n**触发条件为：** 用户部署元数据、创建/管理临时环境或沙箱、设置 CI/CD 流水线，或通过 sf project deploy 排查部署错误。\n\n**不要触发的情况为：** 编写 Apex 代码（使用 platform-apex-generate）、构建 LWC 组件（使用 experience-lwc-generate）、创建元数据定义（使用 platform-custom-object-generate 或 platform-custom-field-generate）、或查询组织数据（使用 platform-data-manage）。"}

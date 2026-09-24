@@ -1,0 +1,1 @@
+{"description_zh": "构建基于 Gemini Live API 的实时、双向流式应用，或将遗留 Live 模型（2.0/2.5/3.1）迁移至 Gemini 3.8 Live 时，请使用本技能。涵盖基于 WebSocket 的音频/视频/文本流式传输、语音活动检测（VAD）、后台推理（扩展思考）、异步函数调用、会话管理、临时令牌、实时转写与实时翻译。涵盖的 SDK：google-genai (Python)、@google/genai (JavaScript/TypeScript)。"}

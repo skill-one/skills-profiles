@@ -1,0 +1,1 @@
+{"description_zh": "设置并运行基于 libFuzzer 构建的覆盖率引导型 Python 模糊测试工具 Atheris。该工具支持 TestOneInput 测试框架、FuzzedDataProvider，可对纯 Python 与原生 C 扩展进行插桩，并可在 AddressSanitizer 环境下运行。适用于对 Python 包进行模糊测试、排查 Python C 扩展中的内存损坏问题，或在为 Python 目标选择 Atheris 与 Hypothesis 时选用。"}

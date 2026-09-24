@@ -1,0 +1,1 @@
+{"description_zh": "在任何 LangChain / LangGraph / Deep Agents 智能体构建项目启动之前，请首先调用 `INVOKE FIRST` 技能。这是获取框架选型（LangChain 与 LangGraph 及 Deep Agents 的对比，以及混合组合方式）、智能体模式、安装步骤、环境配置，以及下一步应调用哪个技能的最新信息所必需的首要步骤。"}

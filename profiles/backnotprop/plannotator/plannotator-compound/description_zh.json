@@ -1,0 +1,1 @@
+{"description_zh": "分析用户的 Plannotator 计划档案，提取拒绝模式、反馈分类体系、随时间演变情况，以及可操作的提示词优化建议；随后生成一份精致的 HTML 仪表板报告。若 Plannotator 数据不可用，则回退使用 Claude Code ExitPlanMode 的拒绝原因。"}

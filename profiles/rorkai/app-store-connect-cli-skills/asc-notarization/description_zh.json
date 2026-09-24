@@ -1,0 +1,1 @@
+{"description_zh": "使用 xcodebuild 和 asc 归档、导出并公证 macOS 应用。适用于需要准备 macOS 应用，通过 Developer ID 签名与 Apple 公证进行 App Store 之外分发的情况。"}

@@ -1,0 +1,1 @@
+{"description_zh": "为 Better Auth 配置限流、管理认证密钥、设置 CSRF 防护、定义可信来源、保护会话和 Cookie、加密 OAuth 令牌、跟踪 IP 地址，并实现审计日志。当用户需要保护其认证设置、防止暴力攻击或加固 Better Auth 部署时，请使用。"}

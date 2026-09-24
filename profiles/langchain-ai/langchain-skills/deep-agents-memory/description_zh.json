@@ -1,0 +1,1 @@
+{"description_zh": "当您的深度智能体需要记忆、持久化或文件系统访问时，调用此技能。涵盖 StateBackend（临时性）、StoreBackend（持久性）、FilesystemMiddleware 以及用于路由的 CompositeBackend。"}

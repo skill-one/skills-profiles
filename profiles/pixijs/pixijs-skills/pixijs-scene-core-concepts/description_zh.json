@@ -1,0 +1,1 @@
+{"description_zh": "在从整体上推理 PixiJS v8 场景图时，使用本技能：容器、叶子、变换和渲染顺序如何协同工作。涵盖叶子与容器的区别、局部/世界坐标、剔除、渲染组、可排序子元素、遮罩、RenderLayer、每个场景节点共有的构造选项，以及哪个叶子技能覆盖哪个显示对象。触发关键词：场景图、显示列表、Container、Sprite、Graphics、Text、Mesh、ParticleContainer、DOMContainer、GifSprite、遮罩、渲染组、RenderLayer、世界变换、构造选项、ContainerOptions。"}

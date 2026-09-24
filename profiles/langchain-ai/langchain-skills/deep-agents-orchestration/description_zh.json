@@ -1,0 +1,1 @@
+{"description_zh": "在 Deep Agents 中使用子代理、进行任务规划或需要人工审批时，调用此技能。涵盖 SubAgentMiddleware、用于规划的 TodoList 以及 HITL 中断。"}

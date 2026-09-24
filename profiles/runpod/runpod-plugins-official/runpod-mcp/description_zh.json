@@ -1,0 +1,1 @@
+{"description_zh": "通过 Runpod MCP 服务器的结构化工具调用管理 Runpod 基础设施—Pod、无服务器端点、任务、模板、网络卷、容器注册表认证、GPU/CPU 目录和计费。当 Runpod MCP 工具（create-pod、list-endpoints 等）在本会话中已连接，或通过托管 OAuth 或本地 npx 进行连接时使用。当 MCP 可用时，对于普通基础设施的 CRUD，优先使用此方法而非 runpodctl；使用 runpodctl 进行终端、文件传输或 SSH 设置。"}

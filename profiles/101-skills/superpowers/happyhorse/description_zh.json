@@ -1,0 +1,1 @@
+{"description_zh": "通过 inference.sh CLI 使用阿里 HappyHorse 1.0 模型生成并编辑视频。  \n模型：HappyHorse T2V、I2V、R2V、Video Edit。  \n功能：文本生成视频、图像生成视频、参考生成视频、支持自然语言的视频编辑、角色保持一致、720P/1080P、最长 15 秒。  \n用途：制作写实视频、视频编辑、角色一致内容、产品演示、社交媒体。  \n触发词：happyhorse、happy horse、alibaba video、happyhorse 1.0、dashscope video、alibaba happyhorse、video editing ai、ai video editor"}

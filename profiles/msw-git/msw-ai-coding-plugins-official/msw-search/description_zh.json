@@ -1,0 +1,1 @@
+{"description_zh": "MSW 搜索集成 — (1) 通过 msw-mcp MCP 服务器（mlua_api_retriever / mlua_document_retriever）对 API 文档和实施指南进行向量搜索， (2) 对资源（精灵 / 动画 / 声音 / 资源包 / 头像）进行 REST API 搜索。适用于“查找不在 .d.mlua 中的详细信息、示例或相关 API”，“需要 SpriteRUID”，“怪物精灵”，“背景图片”，“查找声音”，“头像物品查找”等。关键词：文档搜索、API 详情、示例、指南、检索器、资源、精灵、动画、声音、RUID、资源包、头像。"}

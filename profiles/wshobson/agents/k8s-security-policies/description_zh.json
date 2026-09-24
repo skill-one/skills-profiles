@@ -1,0 +1,1 @@
+{"description_zh": "实施包括网络策略（NetworkPolicy）、Pod 安全策略（PodSecurityPolicy）和基于角色的访问控制（RBAC）在内的 Kubernetes 安全策略，以实现生产级安全。用于保护 Kubernetes 集群、实施网络隔离或执行 Pod 安全标准时。"}

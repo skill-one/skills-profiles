@@ -1,0 +1,1 @@
+{"description_zh": "创建、运行和维护适用于 Android 和 iOS 的 Momentic 移动端 E2E 测试及模块。使用 Momentic MCP 工具进行实时设备验证，仅对高置信度的本地移动端 v2 变更使用直接的 v2 YAML 编辑。"}

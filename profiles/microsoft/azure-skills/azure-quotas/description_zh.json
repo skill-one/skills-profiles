@@ -1,0 +1,1 @@
+{"description_zh": "跨提供商检查/管理 Azure 配额与使用情况。用于部署规划、容量验证、区域选择。触发场景：\n\n“check quotas”, “service limits”, “current usage”, “request quota increase”, “quota exceeded”, “validate capacity”, “regional availability”, “provisioning limits”, “vCPU limit”, “how many vCPUs available in my subscription”"}

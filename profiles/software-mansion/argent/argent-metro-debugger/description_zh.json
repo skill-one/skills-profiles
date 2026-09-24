@@ -1,0 +1,1 @@
+{"description_zh": "使用 argent 调试器工具通过 CDP 调试 JavaScript 运行时。主要路径是通过 Metro 调试 React Native（iOS / Android / Vega）；其中一小部分工具（debugger-connect、debugger-status、debugger-evaluate、debugger-log-registry）也可通过同一接口驱动 Chromium（CDP）应用中的渲染器（Electron 应用，或任何暴露 CDP 的 Chromium 浏览器）。适用于连接运行时、检查 React 组件、读取控制台日志或执行 JavaScript 的场景。"}

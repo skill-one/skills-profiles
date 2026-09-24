@@ -1,0 +1,1 @@
+{"description_zh": "用于内容架构规划的基于SERP的语义主题聚类。按谷歌SERP的实际重叠度（而非文本相似度）对关键词进行分组，设计具有内部链接矩阵的“枢纽-放射（hub-and-spoke）”内容集群，并生成交互式可视化。若已安装 claude-blog，则可选地执行内容创作。当用户说出“topic cluster”、“content cluster”、“semantic clustering”、“pillar page”、“hub and spoke”、“content architecture”、“keyword grouping”或“cluster plan”时使用。"}

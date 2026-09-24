@@ -1,0 +1,1 @@
+{"description_zh": "在构建需要类型安全、异步编程或健壮错误处理的 Python 3.11 及以上版本应用程序时使用。它生成带有类型注解的 Python 代码，将 mypy 配置为严格模式，编写使用 fixtures 和 mock 功能的 pytest 测试套件，并使用 black 和 ruff 对代码进行校验。适用于类型提示、async/await 模式、dataclasses、依赖注入、日志配置以及结构化错误处理。"}

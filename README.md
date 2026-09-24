@@ -1,24 +1,16 @@
 # skills-profiles
 
-The agent skills this repository collects, each profiled from six angles, plus the
-catalog joining the two. Written by `just index` - generated, so do not edit it.
+The agent skills this repository collects, each labelled with one closed-domain
+category by the Jev endpoint and described in Chinese by a chat model, plus the
+catalog joining it all. Written by `just index` - generated, so do not edit it.
 中文: [README.zh-CN.md](README.zh-CN.md)
 
 `skills/<id>/` is the skill as published: copy one into a skills folder and it is
-installed. `profiles/<id>/` is what was written about it, and `skills.jsonl` is the
-catalog of both.
+installed. `profiles/<id>/` holds what is written about it - the domain label and
+the Chinese `description_zh` - and `skills.jsonl` is the catalog joining them.
 
 ## Progress
 
-| angle | built | of | built% | installs% |
-| --- | ---: | ---: | ---: | ---: |
-| `blackbox` | 0 | 9007 | 0.0% | 0.0% |
-| `comments` | 0 | 9007 | 0.0% | 0.0% |
-| `domain` | 9006 | 9007 | 100.0% | 100.0% |
-| `scenario` | 0 | 9007 | 0.0% | 0.0% |
-| `tagline` | 0 | 9007 | 0.0% | 0.0% |
-| `whitebox` | 0 | 9007 | 0.0% | 0.0% |
-| **total** | 9006 | 54042 | 16.7% |  |
-
+- **domain**: 9006 of 9007 labelled (100.0%), covering 100.0% of the mirror's installs
 - **snapshot**: `dist-2026-09-21`, 2026-09-21T21:18:59Z -> 2026-09-21T21:49:08Z (30m09s)
 - **buildable**: 9007 of 9029 have a readable description; the rest are never built

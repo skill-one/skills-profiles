@@ -1,0 +1,1 @@
+{"description_zh": "超压缩提交信息生成。采用 Conventional Commits 格式，标题不超过 50 个字符，更重视“为何”而非“做什么”。支持日英双语。“コミットメッセージ作って”“/commit”“/genshijin-commit”启动。可作为暂存区变更时的自动启动候选。"}

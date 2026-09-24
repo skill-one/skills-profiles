@@ -1,0 +1,1 @@
+{"description_zh": "HyperFrames 的 Three.js 与 WebGL 适配器模式。用于创建确定性 Three.js 场景、WebGL 画布层、AnimationMixer 时间轴、相机运动、着色器驱动视觉效果，或响应 HyperFrames hf-seek 事件的画布渲染。"}

@@ -1,0 +1,1 @@
+{"description_zh": "HyperFrames 作品的音频与媒体素材，由统一的音频引擎（`scripts/audio.mjs`）提供——涵盖多提供商 TTS（HeyGen / ElevenLabs / Kokoro 本地）、背景音乐与音效（默认通过 HeyGen 音频库检索，以本地 Lyria / MusicGen 背景音乐生成为无凭证回退方案，并内置音效库）、Whisper 转录、背景移除以及字幕制作。适用于配音/TTS、背景音乐、音效/声音效果、转录、字幕/字幕/歌词/卡拉OK/逐词样式、声音与提供商选择，以及音乐情绪提示。"}

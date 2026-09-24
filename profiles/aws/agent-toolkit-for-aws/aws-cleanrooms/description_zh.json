@@ -1,0 +1,1 @@
+{"description_zh": "针对自定义机器学习模型训练和推理任务，排查并调试与 IAM 角色、S3 存储桶策略、KMS 密钥、Lake Formation 权限及 CloudWatch 日志相关的 AWS Clean Rooms 协作问题。当客户报告在 AWS Clean Rooms 中出现权限失败、访问错误或日志发布问题时使用。"}

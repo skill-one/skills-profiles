@@ -1,0 +1,1 @@
+{"description_zh": "AWS SDK for Python（boto3/botocore）开发模式。当编写使用 boto3 或 botocore 调用 AWS 服务的 Python 代码时，必须使用此技能。这包括创建服务客户端或资源、配置会话和凭证、使用 ClientError 处理错误、使用分页器（paginators）和等待器（waiters）、S3 文件传输与预签名 URL、DynamoDB 表操作，以及任何 boto3/botocore 客户端配置。每当 Python 代码导入 boto3 或 botocore，或用户询问 Python 中的 AWS 操作时，均使用此技能。"}

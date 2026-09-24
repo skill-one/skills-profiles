@@ -1,0 +1,1 @@
+{"description_zh": "使用 TypeScript 或 Python 配合 CDK 编写、部署和排查 AWS 基础设施。涵盖最佳实践、栈架构与构造模式。适用于编写 CDK 构造、引导环境、运行 cdk deploy/synth/diff、修复 CDK 或 CloudFormation 错误、规划栈结构、导入现有资源、解决漂移，以及在不替换资源的情况下重构栈等场景。"}

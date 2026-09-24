@@ -1,0 +1,1 @@
+{"description_zh": "已弃用 - 该技能已无人维护。请改用官方 Angular 技能，地址为 https://github.com/angular/skills。在 Angular v21+ 中使用新的 Signal Forms API 构建基于信号的表单。用于具有自动双向绑定、基于模式的验证、字段状态管理和动态表单的表单创建。当需要进行表单实现、添加验证、创建多步表单或构建带有条件字段的表单时触发。Signal Forms 是实验性的，但建议用于新的 Angular 项目。不要用于在没有信号或使用 Formly 或 ngx-formly 等第三方表单库的模板驱动表单时使用。"}

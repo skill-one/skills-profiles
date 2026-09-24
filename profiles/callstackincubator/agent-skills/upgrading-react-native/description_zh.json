@@ -1,0 +1,1 @@
+{"description_zh": "将 React Native 应用升级到新版本，具体方法包括应用 rn-diff-purge 模板差异、更新 package.json 依赖项、迁移 iOS 和 Android 原生配置、处理 CocoaPods 和 Gradle 变更，并处理破坏性 API 更新。适用于升级 React Native、提升 RN 版本、从 RN 0.x 更新至 0.y，或在升级 React Native 的同时迁移 Expo SDK 的场景。"}

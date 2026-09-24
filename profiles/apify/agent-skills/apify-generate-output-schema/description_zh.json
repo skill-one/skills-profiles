@@ -1,0 +1,1 @@
+{"description_zh": "通过分析其源代码为 Apify 演员生成输出模式（dataset_schema.json、output_schema.json、key_value_store_schema.json）。在创建或更新演员输出模式时使用。"}

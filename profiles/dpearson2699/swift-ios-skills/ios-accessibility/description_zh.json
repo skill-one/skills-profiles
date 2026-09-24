@@ -1,0 +1,1 @@
+{"description_zh": "构建并审计 SwiftUI、UIKit 和 AppKit 的辅助功能，涵盖 VoiceOver、Voice Control、Switch Control、全键盘访问、动态字体、焦点恢复、标签、特性、操作、遍历、自定义旋转器、NSAccessibility、XCTest 检查、自适应系统偏好以及 App Store 辅助功能声明等。用于实现无障碍 UI、修复辅助功能审计、测试辅助技术行为，或证明 App Store 无障碍营养标签。"}

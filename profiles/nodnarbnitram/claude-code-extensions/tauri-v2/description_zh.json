@@ -1,0 +1,1 @@
+{"description_zh": "使用 Rust 后端进行 Tauri v2+ 跨平台应用开发。适用于配置 tauri.conf.json、实现 Rust 命令（#[tauri::command]）、设置 IPC 模式（invoke、emit、channels）、配置权限/能力、排查构建问题或部署桌面/移动应用的场景。触发关键词：Tauri、src-tauri、invoke、emit、capabilities.json。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在 Next.js 应用中开启部分预取，并深入理解其所展示的洞察。适用于用户需启用或采用部分预取功能时，可切换 `partialPrefetching` 标志、使用 `export const prefetch = 'partial'` 启用路由预取、检查 `Link prefetch={true}` 的行为、使用 `instant()` 测试保留现有预取界面，或解决 `instant-link-prefetch-partial` 与 `instant-shell-url-data` 相关洞察的情况。"}

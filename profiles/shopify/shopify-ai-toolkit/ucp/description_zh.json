@@ -1,0 +1,1 @@
+{"description_zh": "当用户想要使用 UCP CLI 从在线商家查找、比较、购买或追踪商品，或设置并排查用于商家范围操作的本地 UCP 配置文件时使用。涵盖全球目录搜索（“find me X under $Y”）、针对指定商家的交易（“buy this from Z.com”）、订单追踪、`ucp profile init`、`ucp doctor`、购物车、结账、订单以及 UCP 设置/帮助。当直接基于协议的结账不可用时，回退至商家托管的交接流程。"}

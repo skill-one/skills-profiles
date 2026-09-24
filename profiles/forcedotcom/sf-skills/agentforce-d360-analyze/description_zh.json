@@ -1,0 +1,1 @@
+{"description_zh": "Data Cloud 针对单个 Agentforce 会话的360°视图。当用户按会话ID（Agent Session UUID `019d…` 或 MessagingSession ID `0Mw…`）请求追踪、检查、总结或描述特定 Agentforce 会话时触发。当用户尚无会话ID但需要按时间、代理、渠道、结果或对话文本发现/列出/搜索会话时，同样触发。对于设计阶段的架构问题（请使用 agentforce-architecture-analyze 处理）或需要 Data Cloud 之外平台遥测数据才能解答的运行时性能/延迟/SLO 问题，请勿触发。"}

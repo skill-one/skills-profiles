@@ -1,0 +1,1 @@
+{"description_zh": "通过 Bright Data CLI (`bdata scrape`) 以干净的 Markdown/HTML/JSON 格式抓取网页内容。当用户需要获取页面、从一组 URL 中提取内容，或爬取分页列表时使用。对于支持的平台（Amazon、LinkedIn、TikTok、Instagram、YouTube、Reddit 等），将任务转交给 `data-feeds`；当必须首先发现 URL 时，则转交给 `search`。需要 Bright Data CLI；若缺失，主动指导安装与登录。"}

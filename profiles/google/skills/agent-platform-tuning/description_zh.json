@@ -1,0 +1,1 @@
+{"description_zh": "Agent Platform 模型调优。当需要使用 Agent Platform 基础设施对开源模型或 Gemini 模型进行微调时使用。请勿用于 Agent Platform 之外的模型训练、将模型部署到端点（使用 `agent-platform-deploy`），或管理服务端点（使用 `agent-platform-endpoint-management`）。"}

@@ -1,0 +1,1 @@
+{"description_zh": "设置、管理、查询和配置 Cloud Firestore 数据库（标准版/企业版），包括数据建模、安全规则、索引和 SDK 集成（Web、Python、iOS、Android、Flutter）。在创建或列出 Firestore 数据库、定义数据模型/索引、编写 SDK 查询或集成 Firestore SDK 时使用。不适用于 Firebase Hosting、Data Connect、Auth、Storage/GCS、Crashlytics、Functions 或 BigQuery。"}

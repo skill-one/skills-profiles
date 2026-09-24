@@ -1,0 +1,1 @@
+{"description_zh": "配置Amazon Route 53，使用自定义域名将流量路由至CloudFront分发。在设置DNS别名记录、备用域名（CNAMEs）、用于HTTPS的ACM证书以及CloudFront的IPv6支持时使用。"}

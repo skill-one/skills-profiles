@@ -1,0 +1,1 @@
+{"description_zh": "检查 Playwright、Puppeteer、Selenium 或 CDP 驱动的浏览器是否呈现连贯一致的指纹，利用 liarjs 作为库，针对你已有的 Page 进行检查，涵盖 navigator.webdriver、HeadlessChrome 令牌、工作线程与主线程身份、修补的 API 完整性，以及 WebGL 与 WebGPU 的 GPU 身份。适用于以下场景：当被询问自动化浏览器是否看起来像正常浏览器时；当需要测量无头设置或隐身插件的效果而非直接假设时；或者当指纹质量断言属于测试套件的一部分时。"}

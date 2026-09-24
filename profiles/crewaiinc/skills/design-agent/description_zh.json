@@ -1,0 +1,1 @@
+{"description_zh": "CrewAI 智能体设计与配置。用于创建、配置或调试 CrewAI 智能体——选择角色/目标/背景故事、选择大语言模型（LLM）、分配工具、调整 max_iter/max_rpm/max_execution_time、启用规划/代码执行/委托、设置知识来源、使用护栏，或在 YAML 与代码中配置智能体。"}

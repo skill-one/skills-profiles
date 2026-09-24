@@ -1,0 +1,1 @@
+{"description_zh": "将学到的经验转化为按领域组织的记忆指令（全局或工作区）。语法：`/remember [ >domain [scope] ] lesson clue`，其中 scope 为 `global`（默认）、`user`、`workspace` 或 `ws`。"}

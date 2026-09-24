@@ -1,0 +1,1 @@
+{"description_zh": "用于调查或改进 WordPress 性能（仅后端代理）：性能分析与测量（WP-CLI profile/doctor、Server-Timming、通过 REST 头部的 Query Monitor）、数据库/查询优化、自动加载的选项、对象缓存、cron（计划任务）、HTTP API 调用，以及安全验证。"}

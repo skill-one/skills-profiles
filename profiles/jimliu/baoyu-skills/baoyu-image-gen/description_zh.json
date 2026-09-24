@@ -1,0 +1,1 @@
+{"description_zh": "支持 OpenAI GPT Image 2.5、Azure OpenAI、Google、OpenRouter、DashScope、Z.AI GLM-Image、MiniMax、Jimeng、Seedream、Replicate 和 Agnes API 的 AI 图像生成。支持文生图、参考图片、比例设置，以及从已保存的提示词文件中批量生成。默认按顺序生成；当用户已有多个提示词或需要稳定的多图像吞吐量时，请使用批量并行生成。当用户要求生成、创建或绘制图像时使用。"}

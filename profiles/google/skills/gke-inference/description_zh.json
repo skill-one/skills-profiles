@@ -1,0 +1,1 @@
+{"description_zh": "在 GKE 上部署并优化 AI/ML 推理工作负载，使用 GPU、TPU 和模型服务器。适用于部署 GKE 推理服务器、为推理配置 GKE GPU 资源，或在 GKE 上部署大语言模型（LLMs）。不适用于通用批处理任务或 HPC 任务队列（请改用 gke-batch-hpc）。"}
