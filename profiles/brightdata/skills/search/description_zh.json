@@ -1,0 +1,1 @@
+{"description_zh": "通过 Bright Data CLI 进行网络搜索——`bdata search` 用于获取 Google/Bing/Yandex 的 SERP，`bdata discover` 用于获取按意图排序的语义结果。适用于用户需要 SERP 结果、需要将 URL 用于抓取，或希望进行带可选页面内容的语义网络发现等场景。选定目标 URL 后，交由 `scrape` 处理；当用户需要从已知平台获取结构化数据时，则交由 `data-feeds` 处理。需要 Bright Data CLI；若缺失，将主动引导安装与登录。"}

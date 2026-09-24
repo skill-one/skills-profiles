@@ -1,0 +1,1 @@
+{"description_zh": "当用户希望在Next.js 16+ App Router项目中设计或实现缓存时，请使用此技能——包括设置\"use cache\"指令、构建缓存标签注册表、将变更与失效工具关联、为部分预渲染构建Suspense边界、处理缓存边界处的个性化内容、选择cacheLife配置方案、正确调用cacheTag / updateTag / revalidateTag、从unstable_cache迁移，以及调试过期或不正确新鲜的数据。即使用户仅描述了其领域需求（例如：\"我有一个帖子表\"）并询问如何正确缓存，也应当触发本技能。"}

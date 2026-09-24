@@ -1,0 +1,1 @@
+{"description_zh": "Go 数据库访问全面指南：涵盖参数化查询、结构体扫描、可空列、事务、隔离级别、SELECT FOR UPDATE、连接池、批量处理、上下文传播以及迁移工具。适用于编写、审查或调试与 PostgreSQL、MariaDB、MySQL 或 SQLite 交互的 Golang 代码；用于数据库测试；或针对 database/sql、sqlx 或 pgx 的相关问题。不生成数据库模式或迁移 SQL。"}

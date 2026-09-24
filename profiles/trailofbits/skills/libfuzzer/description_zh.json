@@ -1,0 +1,1 @@
+{"description_zh": "设置并运行 LLVM 内置的覆盖率引导模糊测试工具 libFuzzer，对使用 Clang 编译的 C/C++ 代码进行模糊测试。覆盖内容包含测试框架结构、-fsanitize=fuzzer 构建、语料库与词典管理、消毒器集成及活动分类。适用于编写或调试 LLVMFuzzerTestOneInput 测试框架、在 C/C++ 库上启动模糊测试、在 libFuzzer 与 AFL++ 之间进行选择，或排查 libFuzzer 运行却未发现问题的原因。"}

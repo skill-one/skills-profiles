@@ -1,0 +1,1 @@
+{"description_zh": "为 PixiJS v8 应用添加屏幕阅读器与键盘导航功能时，使用此技能。涵盖 AccessibilitySystem 选项（enabledByDefault、debug、activateOnTab、deactivateOnMouseMove）、容器级无障碍属性、Shadow DOM 覆盖层及移动端触摸钩子激活。触发关键词：accessibility、a11y、screen reader、ARIA、keyboard navigation、tab order、AccessibilitySystem、accessibleTitle、accessibleHint、tabIndex 和 accessibleChildren。"}

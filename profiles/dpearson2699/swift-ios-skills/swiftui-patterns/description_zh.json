@@ -1,0 +1,1 @@
+{"description_zh": "利用现代MV架构、状态、组合、隔离预览及迁移指导来构建并审查SwiftUI视图。涵盖 @Observable 所有权、@State/@Bindable/@Environment 连接、视图分解、ViewModifiers、环境值、.task 加载、iOS 26+ 迁移、写作工具、剪贴板可用性以及性能。在构建 SwiftUI 状态结构、管理 @Observable、组合视图、预览有意义的 UI 状态或修正 SwiftUI 模式时使用。"}

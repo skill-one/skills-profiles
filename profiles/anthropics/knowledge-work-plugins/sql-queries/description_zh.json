@@ -1,0 +1,1 @@
+{"description_zh": "支持所有主流数据仓库方言（Snowflake、BigQuery、Databricks、PostgreSQL 等）编写正确且高效的 SQL。适用于编写查询、优化缓慢 SQL、跨方言转换，或构建使用公共表表达式（CTEs）、窗口函数或聚合函数的复杂分析查询。"}

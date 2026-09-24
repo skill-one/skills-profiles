@@ -1,0 +1,1 @@
+{"description_zh": "通过代码审查、Instruments 和可重复性测量，对 SwiftUI 运行时性能进行性能分析、诊断与修复。适用于 SwiftUI 屏幕渲染缓慢、滚动或动画卡顿、视图主体过度更新、列表标识频繁变更、布局工作激增，或广泛 Observation 依赖导致 CPU 开销较高等场景。内容涵盖基于证据的快速分诊、SwiftUI Instruments 工作区、懒加载容器的护栏约束、状态生命周期以及前后对比验证。"}
