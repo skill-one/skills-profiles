@@ -74,8 +74,9 @@ not count as a translation, or the reverse. That has three consequences:
   download replaced with the one it brought and removes the whole profile of every skill whose
   content hash moved - both angles at once, since both came from that `SKILL.md`. A skill that
   vanished upstream is _not_ dropped: its profile was paid for.
-- **There is no partial-failure bookkeeping.** A job that raises (quota, connection) exits non-zero,
-  the pool reports it, and nothing was written - so the next run simply tries again.
+- **Per-skill failures do not end a batch.** A job that raises (quota, connection) is reported by id,
+  writes nothing, and the pool continues; CI records the error details and publishes the successful
+  outputs. The next run retries the skills whose files are still missing.
 
 ## The scripts
 

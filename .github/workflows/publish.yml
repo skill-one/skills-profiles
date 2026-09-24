@@ -59,6 +59,11 @@ env:
   SKILLS_PROFILES_TRANSLATE_API_KEY: ${{ secrets.SKILLS_PROFILES_TRANSLATE_API_KEY }}
   SKILLS_PROFILES_TRANSLATE_BASE_URL: ${{ vars.SKILLS_PROFILES_TRANSLATE_BASE_URL }}
   SKILLS_PROFILES_TRANSLATE_MODEL: ${{ vars.SKILLS_PROFILES_TRANSLATE_MODEL }}
+  # Per-skill failures are reported but do not stop the batch: successful outputs are published,
+  # and the next run retries the skills whose files are still missing.
+  #
+  # The two log paths are supplied by CI. Locally they are optional; without them the batch keeps
+  # the same partial-success behaviour but only the skill id is printed.
   # thinking is on by default for translation, so a call reasons before it answers and outruns the
   # client's own 20s timeout
   SKILLS_PROFILES_TIMEOUT: "120"
@@ -99,11 +104,57 @@ jobs:
 
       - name: Build the missing domain labels
         if: inputs.angle == 'both' || inputs.angle == 'domain'
+        env:
+          GEN_ERR_LOG: ${{ runner.temp }}/generation-errors.log
+          FAIL_LOG: ${{ runner.temp }}/failed-skills.log
         run: just limit="${{ inputs.limit }}" jobs="${{ inputs.jobs }}"
 
       - name: Build the missing Chinese descriptions
         if: inputs.angle == 'both' || inputs.angle == 'translate'
+        env:
+          GEN_ERR_LOG: ${{ runner.temp }}/generation-errors.log
+          FAIL_LOG: ${{ runner.temp }}/failed-skills.log
         run: just limit="${{ inputs.limit }}" jobs="${{ inputs.jobs }}" translate
+
+      - name: Report partial results
+        if: always()
+        shell: bash
+        run: |
+          set -u
+          failures="${RUNNER_TEMP}/failed-skills.log"
+          errors="${RUNNER_TEMP}/generation-errors.log"
+          if [ ! -s "$failures" ]; then
+            echo "No per-skill failures."
+            exit 0
+          fi
+          count=$(wc -l < "$failures" | tr -d ' ')
+          {
+            echo "## Partial publish"
+            echo
+            echo "- Failed skills: $count"
+            echo "- Successful outputs are still indexed and published; missing skills are retried next run."
+            echo
+            echo "### Failed skills"
+            echo '```text'
+            cat "$failures"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "Partial success: $count skill(s) failed; continuing to index and publish."
+          if [ -s "$errors" ]; then
+            echo "First 100 generation error lines:"
+            sed -n '1,100p' "$errors"
+          fi
+
+      - name: Upload per-skill failure reports
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: generation-failures-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/failed-skills.log
+            ${{ runner.temp }}/generation-errors.log
+          if-no-files-found: ignore
 
       - name: Rewrite the index
         run: just index

@@ -183,6 +183,19 @@ def test_a_rejected_body_is_not_retried():
     assert len(calls) == 1
 
 
+def test_a_malformed_json_response_is_named_as_a_failure():
+    """A 200 with a non-JSON body must become a diagnosable failure, not an unclassified decode
+    traceback."""
+    class Fake:
+        def post(self, url, headers=None, json=None):
+            return httpx.Response(200, content=b"not json",
+                                  request=httpx.Request("POST", url))
+
+    client = translate.Translator(common.Config(translate_api_key="k"), client=Fake())
+    with pytest.raises(RuntimeError, match="not valid JSON"):
+        client.ask({})
+
+
 def test_an_empty_answer_is_a_failure():
     """A 200 with no text would otherwise write an empty translation the batch would trust as
     done: it is a failed call instead, so nothing is written and the run retries it."""

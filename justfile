@@ -96,8 +96,9 @@ build angle:
 	[ -n "$skills" ] || { echo "nothing to build: every skill already has its $out" >&2; exit 0; }
 
 	# A failed call must not end the run: the skill is named in FAIL_LOG so the next run redoes
-	# exactly it. stderr progress goes through; only a failing call's traceback is filed away in
-	# GEN_ERR_LOG. `-r` keeps an empty list from running the pool.
+	# exactly it, while the batch returns success so CI can publish the outputs that did build.
+	# GEN_ERR_LOG receives the failing call's detail when CI provides it; otherwise it goes to
+	# /dev/null. `-r` keeps an empty list from running the pool.
 	printf '%s\n' "$skills" | xargs -r -P {{jobs}} -n 1 sh -c '
 		err=$(mktemp)
 		if {{py}} "$SCRIPT" "$1" 2>"$err"; then

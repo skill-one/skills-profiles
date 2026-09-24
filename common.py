@@ -231,7 +231,10 @@ def post_json(client: httpx.Client, url: str, key: str, body: dict, max_retries:
         try:
             response = client.post(url, headers={"Authorization": f"Bearer {key}"}, json=body)
             response.raise_for_status()
-            return response.json()
+            try:
+                return response.json()
+            except ValueError as error:
+                raise RuntimeError("response was not valid JSON") from error
         except httpx.HTTPError as error:
             if attempt >= max_retries or not worth_retrying(error):
                 raise
