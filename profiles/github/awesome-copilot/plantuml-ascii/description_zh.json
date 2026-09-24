@@ -1,0 +1,1 @@
+{"description_zh": "使用 PlantUML 文本模式生成 ASCII 艺术图。当用户请求创建 ASCII 图、文本图、终端友好图，或提及 PlantUML ASCII、文本图、ASCII 艺术图时使用。支持：将 PlantUML 图转换为 ASCII 艺术图；以 ASCII 格式创建时序图、类图和流程图；使用 -utxt 参数生成 Unicode 增强的 ASCII 艺术图。"}

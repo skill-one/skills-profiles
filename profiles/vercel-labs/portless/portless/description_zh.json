@@ -1,0 +1,1 @@
+{"description_zh": "配置并使用 portless 为命名的本地开发服务器 URL（例如，https://myapp.localhost 代替 http://localhost:3000）。在将 portless 集成到项目中、配置开发服务器名称、设置本地代理、处理 .localhost 域名或排查端口/代理问题时使用。"}

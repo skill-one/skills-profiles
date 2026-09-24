@@ -1,0 +1,1 @@
+{"description_zh": "在使用 PixiJS v8 创建、转换或操作颜色时，使用此技能。涵盖 Color 类的输入格式（hex、CSS 名称、RGB/HSL 对象、数组、Uint8Array）、转换方法（toHex、toNumber、toArray、toRgba）、组件访问、setAlpha/multiply/premultiply 以及 Color.shared 单例。触发词：Color、ColorSource、hex、rgb、hsl、tint、premultiply、Color.shared、color conversion。"}

@@ -1,0 +1,1 @@
+{"description_zh": "审查拉取请求的差异，并为发布工作流向 review.json 写入结构化反馈。当需要审查从本地产物（如 pr_diff.txt 和 pr_description.txt）检出的拉取请求，并生成机器可读的评审输出，而非直接发布到 GitHub 时使用。"}

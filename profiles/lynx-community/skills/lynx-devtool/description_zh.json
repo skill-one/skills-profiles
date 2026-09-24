@@ -1,0 +1,1 @@
+{"description_zh": "适用于使用 Lynx DevTool 或调试 Lynx 应用、页面或设备时使用，尤其当任务涉及客户端或会话、CDP 或应用命令、DOM/CSS 检查、运行时或控制台日志、在设备上执行 JavaScript、截图、堆快照、性能跟踪、Page.reload 或 App.openPage、全局开关、交互式快照引用及点击、填充、滚动、检查或搜索 ReactLynx 组件树、将 DOM Snapshot 引用链接至 ReactLynx 组件（`reactlynx link`），或在 Android、iOS 或桌面端修改 ReactLynx 的 props/state/context 时使用。"}

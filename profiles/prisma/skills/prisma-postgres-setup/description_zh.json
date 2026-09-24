@@ -1,0 +1,1 @@
+{"description_zh": "使用管理 API 设置一个新的 Prisma Postgres 数据库，并将其连接到本地项目。当被要求执行“设置数据库”、“创建 Prisma Postgres 项目”、“获取连接字符串”、“将我的应用连接到 Prisma Postgres”或“部署数据库”时使用。"}

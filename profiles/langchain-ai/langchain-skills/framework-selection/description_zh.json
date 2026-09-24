@@ -1,0 +1,1 @@
+{"description_zh": "在任何 LangChain/LangGraph/Deep Agents 项目开始时，在编写任何代理代码之前，调用此技能。该技能用于确定适合该任务的框架层级：LangChain、LangGraph、Deep Agents 或组合。必须在使用其他代理技能之前进行咨询。"}

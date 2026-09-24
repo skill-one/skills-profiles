@@ -1,0 +1,1 @@
+{"description_zh": "本技能适用于在需要 ADK（Agent 开发工具包）API 模式与代码示例的项目中，当用户需要“编写代理代码”、“使用 ADK 构建代理”、“添加工具”、“创建回调”、“定义代理”或“使用状态管理”时使用。它提供代理类型、工具定义、编排模式、回调、状态管理、图 Workflow API 以及参考食谱的快速参考，供学习研究。请勿用于搭建脚手架（请使用 google-agents-cli-scaffold），也请勿用于部署（请使用 google-agents-cli-deploy）。"}

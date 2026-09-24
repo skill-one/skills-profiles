@@ -1,0 +1,1 @@
+{"description_zh": "提供适用于 Golang 微服务的 gRPC 使用指南、protobuf 组织方式及生产就绪模式。适用于在实现、评审或调试 gRPC 服务/客户端，编写 proto 文件，配置拦截器，处理 gRPC 错误及状态码，配置 TLS/mTLS，使用 bufconn 进行测试，或处理流 RPC 等场景时使用。"}

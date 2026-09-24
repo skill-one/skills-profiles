@@ -1,0 +1,1 @@
+{"description_zh": "通过 `aws login` 获取用于 CLI/SDK 访问的 AWS 凭证。当开发者需要为本地开发进行 AWS 身份验证、AWS 操作因缺少或过期的凭证而失败，或有人询问如何设置 AWS 访问时触发。触发条件：\"设置 AWS\"、\"配置 AWS\"、\"aws login\"、\"获取凭证\"、\"身份验证\"、\"会话过期\"、\"令牌过期\"、\"无凭证\"、\"AccessDeniedException\"（未配置凭证时）。"}

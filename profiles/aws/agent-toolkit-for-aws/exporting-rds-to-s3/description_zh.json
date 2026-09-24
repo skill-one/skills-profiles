@@ -1,0 +1,1 @@
+{"description_zh": "将 Amazon RDS 或 Aurora 数据库快照以 Apache Parquet 格式导出至 Amazon S3，用于分析、备份或数据迁移。该功能可处理快照的选择或创建、IAM 角色配置、KMS 加密、S3 存储桶准备、导出任务执行、进度监控和数据验证。适用于将 RDS/Aurora 数据导出至 S3，供 Athena、Glue 或 Redshift Spectrum 使用。"}

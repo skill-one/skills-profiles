@@ -1,0 +1,1 @@
+{"description_zh": "基于 Upstash Redis 的 @upstash/ratelimit TypeScript/JavaScript SDK 为无服务器和边缘应用提供限流能力。适用于在 API 路由、Next.js 中间件、Vercel Edge、Cloudflare Workers 或任意 HTTP 端点上添加限流器或进行限速；返回 429 Too Many Requests；在固定窗口、滑动窗口和令牌桶算法之间进行选择；按用户、IP、API key 或租户进行限流，支持前缀和自定义键；保护登录、注册、表单或 AI 端点免受滥用、机器人及暴力破解的影响；使用拒绝列表、临时缓存、分析、超时以及多区域限流；或估算限流时的 Redis 命令成本。当用户提及限流、限流限制、限速、配额、请求限制或流量保护时，也请使用。"}

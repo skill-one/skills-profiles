@@ -1,0 +1,1 @@
+{"description_zh": "本技能应在用户要求“创建 hook”、“添加 PreToolUse/PostToolUse/Stop hook”、“验证工具使用”、“实现基于 prompt 的 hook”、“使用 ${CLAUDE_PLUGIN_ROOT}”、“设置事件驱动自动化”、“阻止危险命令”，或提及 hook 事件（PreToolUse、PostToolUse、Stop、SubagentStop、SessionStart、SessionEnd、UserPromptSubmit、PreCompact、Notification）时使用。本技能为创建和实施 Claude Code 插件 hook 提供全面指导，侧重于高级基于 prompt 的 hook API。"}

@@ -1,0 +1,1 @@
+{"description_zh": "Anime.js 适配 HyperFrames 的模式。用于在 HyperFrames 组合中编写 Anime.js 动画或时间轴，在 window.__hfAnime 上注册动画，使 Anime.js 按请求驱动且确定性的，或将 Anime.js 示例翻译为渲染安全的 HyperFrames HTML。"}

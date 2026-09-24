@@ -1,0 +1,1 @@
+{"description_zh": "Golang 中惯用的 context.Context 用法：跨 API 边界传播、取消、超时与截止时间、请求作用域的值，以及 context.WithoutCancel 用于后台任务超出请求生命周期的场景。适用于设计跨层级的 context 传播、调试泄漏或未过期的 context、在 context.Background、context.TODO 以及 context.WithoutCancel 之间进行选择，或在 context 中存储值。不适用于仅将 ctx 作为第一个参数接收的代码。"}

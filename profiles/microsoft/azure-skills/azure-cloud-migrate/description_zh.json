@@ -1,0 +1,1 @@
+{"description_zh": "通过报表和代码转换，评估并将跨云工作负载迁移至 Azure。支持 Lambda→Functions、Beanstalk/Heroku/App Engine→App Service、Fargate/Kubernetes/Cloud Run/Spring Boot→Container Apps 的迁移。适用场景：将 Lambda 迁移至 Functions、AWS 迁移至 Azure、迁移 Beanstalk、迁移 Heroku、迁移 App Engine、Cloud Run 迁移、Fargate 迁移至 ACA、ECS/Kubernetes/GKE/EKS 迁移至 Container Apps、Spring Boot 迁移至 Container Apps、跨云迁移。"}

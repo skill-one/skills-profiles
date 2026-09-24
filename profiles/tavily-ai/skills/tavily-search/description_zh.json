@@ -1,0 +1,1 @@
+{"description_zh": "通过 Tavily CLI 搜索网页，获取经 LLM 优化后的结果。当用户想要搜索网页、查找文章、查询信息、获取最新新闻、发现来源，或说出\"search for\"、\"find me\"、\"look up\"、\"what's the latest on\"、\"find articles about\"等关键词，亦或需要从互联网获取最新信息时，使用此技能。返回带有内容片段、相关性评分和元数据的相关结果——专为 LLM 消费优化。支持域名筛选、时间范围和多层搜索深度。"}

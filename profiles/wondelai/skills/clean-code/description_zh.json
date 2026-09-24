@@ -1,0 +1,1 @@
+{"description_zh": "通过规范的命名、小型函数和清晰的错误处理，编写可读、可维护的代码。当用户提到“clean up this code”“this function is too long”“code smells”“naming conventions”“boy scout rule”“single responsibility”或“unit test quality”时，使用。在评审 Pull Request 以提高可读性、拆解混乱的函数、讨论注释风格或改进错误处理模式时，也应触发。涵盖单一职责原则、注释规范、格式化和单元测试。关于重构技术，参见 refactoring-patterns。关于架构和依赖规则，参见 clean-architecture。"}

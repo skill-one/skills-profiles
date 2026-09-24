@@ -1,0 +1,1 @@
+{"description_zh": "用于稳定 canister 状态的仅管理员分页查看器。当用户请求查看器、仪表盘、调试面板，或对后端数据进行管理员浏览时，请随时使用——涵盖用户、商品、订单、日志，或任何稳定的 Map/Set/Array/VarArray/List/Stack/Queue。该查看器通过 `caffeineai-data-viewer` mops 包在每一个 Caffeine 应用中预装；本技能说明其功能，以及如何正确、持续地使用。"}

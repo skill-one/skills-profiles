@@ -1,0 +1,1 @@
+{"description_zh": "在部署或管理 Kubernetes 工作负载时使用。调用以创建部署清单、配置 Pod 安全策略、设置服务账户、定义网络隔离规则、排查 Pod 崩溃、分析资源限制、检查容器日志或优化工作负载规模。适用于 Helm 图表、RBAC 策略、NetworkPolicies、存储配置、性能优化、GitOps 流水线以及多集群管理。"}

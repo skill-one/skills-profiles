@@ -1,0 +1,1 @@
+{"description_zh": "json-render 预构建的自定义指令——格式化、数学、字符串操作和 i18n。在处理 @json-render/directives 时，使用 defineDirective 定义自定义指令，或在规格中添加 $format、$math、$concat、$count、$truncate、$pluralize、$join 或 $t。"}

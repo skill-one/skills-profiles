@@ -1,0 +1,1 @@
+{"description_zh": "当项目包含 uiBundles/*/src/ 目录且任务涉及上传、附加或拖放文件时，必须激活。在 UI bundle 应用中添加文件上传功能时使用此技能。该技能提供进度跟踪和 Salesforce ContentVersion 集成功能。此功能仅提供编程接口——请使用 upload() API 构建自定义 UI。始终使用此方式，而非使用 FormData 或 XHR 从头构建文件上传功能。"}

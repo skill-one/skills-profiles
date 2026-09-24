@@ -1,0 +1,1 @@
+{"description_zh": "使用AWS PrivateLink为私有AWS服务访问配置VPC端点（接口端点和网关端点）。适用于设置与S3、DynamoDB及其他AWS服务的加密私有连接，且无需通过互联网网关、NAT设备或公共IP地址。涵盖端点创建、安全组配置、路由表以及DNS配置。"}

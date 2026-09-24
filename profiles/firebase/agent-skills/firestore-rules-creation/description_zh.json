@@ -1,0 +1,1 @@
+{"description_zh": "设计、编写、重构并加固生产级 Cloud Firestore 安全规则（firestore.rules）。适用于创建安全规则、编写模式/领域校验器、防止更新绕过、强制执行类型安全与资源限制，或实现基于角色的访问控制。不要用于安全规则审计（请使用 firebase-security-rules-auditor）、数据库配置或客户端 SDK 查询。"}

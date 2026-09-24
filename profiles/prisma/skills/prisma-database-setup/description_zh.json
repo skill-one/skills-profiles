@@ -1,0 +1,1 @@
+{"description_zh": "不同数据库提供商（PostgreSQL、MySQL、SQLite、MongoDB 等）的 Prisma 配置指南。在设置新项目、更改数据库或排查连接问题时使用。触发于“configure postgres”、“connect to mysql”、“setup mongodb”、“sqlite setup”。"}

@@ -1,0 +1,1 @@
+{"description_zh": "Microsoft Store 开发者命令行工具 (msstore)，用于将 Windows 应用程序发布到 Microsoft Store。当需要配置 Store 凭证、列出 Store 应用、检查提交状态、发布提交、管理包航班、设置 Store 发布的 CI/CD，或集成 Partner Center 时使用。支持 Windows App SDK/WinUI、UWP、.NET MAUI、Flutter、Electron、React Native 和 PWA 应用程序。"}

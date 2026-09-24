@@ -1,0 +1,1 @@
+{"description_zh": "根据 `./metadata` 目录下的标准元数据，从 git log、要点列表或自由文本生成吸引人且本地化的 App Store 发布说明（What's New）。可选搭配推广文本更新。"}

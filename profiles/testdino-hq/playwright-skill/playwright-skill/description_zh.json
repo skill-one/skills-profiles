@@ -1,0 +1,1 @@
+{"description_zh": "经过实战检验的 Playwright 模式，可用于编写、调试和扩展可靠的测试套件。适用于需要针对端到端（E2E）、API、组件、视觉、无障碍或安全测试的指导，以及 CI/CD、CLI 自动化、页面对象和从 Cypress 或 Selenium 迁移的场景。支持 TypeScript 和 JavaScript。"}

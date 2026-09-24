@@ -1,0 +1,1 @@
+{"description_zh": "提供 Microsoft Entra ID 应用注册、OAuth 2.0 认证与 MSAL 集成的指导。\n适用用途：创建应用注册、注册 Azure AD 应用、配置 OAuth、设置认证、添加 API 权限、生成服务主体、MSAL 示例、控制台应用认证、Entra ID 设置、Azure AD 认证。\n不适用：密钥库（Key Vault）密钥（使用 azure-keyvault-expiration-audit）、通用 Azure 资源安全指导。"}

@@ -1,0 +1,1 @@
+{"description_zh": "设置 Claude Code 工具调用上密码学签名审计轨迹的分步操作指南。在决定采用 protect-mcp 运行时钩子之前，用于解释、评估或演示该模式。涵盖 Cedar 策略、Ed25519 回执、离线验证、防篡改检测、CI/CD 集成及 SLSA 组合。"}

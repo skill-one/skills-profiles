@@ -1,0 +1,1 @@
+{"description_zh": "已于 2026-08-20 弃用并停用。请勿调用，也不要安排。该技能扫描已合并的 PRODUCT.md 规范，并自动起草文档 PR，从而为尚未发布的功能生成了文档。新发布功能的文档现在由每周发布触发，并由 warpdotdev/docs 中的 missing_docs 技能根据文档价值把关。如果你正打算运行此技能以查找文档缺口，请改用 drift-watch 模式运行 missing_docs。"}

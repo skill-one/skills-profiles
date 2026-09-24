@@ -1,0 +1,1 @@
+{"description_zh": "根据 PRODUCT.md 和/或 TECH.md 规范，为新 Warp 功能起草一份完整的文档页面。当工程师已编写规范，需要为 warpdotdev/docs 仓库生成初稿 MDX 草稿时使用。对于没有规范的功能，先研究代码库再进行处理。当工程师提及为功能编写文档、起草文档页面、创建功能文档、启动 eng-docs 工作流，或将规范转化为文档时，调用此技能。需要工程师在场参与交互式会话——在起草前，先确认内容设计计划，随后确认大纲，且无法无人值守运行。对于自动化、由发布触发的文档，请改用 warpdotdev/docs 中的 missing_docs 技能。可在 warp-internal 或 warp-server 中工作。"}

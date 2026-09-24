@@ -1,0 +1,1 @@
+{"description_zh": "使用 samber/ro 在 Go 语言中实现响应式流与事件驱动编程——基于 ReactiveX 的响应式实现，具备 150+ 类型安全操作符、冷/热观察者、5 种主题类型（Publish、Behavior、Reactive、Async、Unicast）、通过 Pipe 的声明式流水线、40+ 插件（HTTP、cron、fsnotify、JSON、日志）、自动背压、错误传播及 Go 上下文集成。\n\n当使用或采用 samber/ro、代码库引入 github.com/samber/ro，或在 Go 中构建异步事件驱动流水线、实时数据处理、流或响应式架构时，应用此方案。\n\n不适用于有限切片转换（→ 参见 `samber/cc-skills-golang@golang-samber-lo` 技能）。"}

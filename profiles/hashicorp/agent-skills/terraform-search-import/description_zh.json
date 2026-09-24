@@ -1,0 +1,1 @@
+{"description_zh": "使用 Terraform 搜索查询发现现有的云资源，并将其批量导入 Terraform 管理。适用于将未受管理的 infrastructure 纳入 Terraform 控制、审计云资源，或向基础设施即代码（IaC）迁移时使用。"}

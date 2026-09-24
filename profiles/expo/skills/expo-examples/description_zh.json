@@ -1,0 +1,1 @@
+{"description_zh": "框架（OSS）。Expo 的官方示例项目——expo/examples 仓库，包含约 70 个 `with-*` 集成（Stripe、Clerk、Supabase、OpenAI、地图、Reanimated、SQLite、Skia、NativeWind 等）。当将第三方库或服务集成到现有的 Expo 应用中，并需要采用规范、版本匹配的适配模式，或通过 `npx create-expo --example` 从这些项目初始化新建项目时，可使用。"}

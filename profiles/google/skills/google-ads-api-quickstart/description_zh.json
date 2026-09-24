@@ -1,0 +1,1 @@
+{"description_zh": "指导开发者完成 Google Ads API 快速入门：配置凭证、从 6 个客户端库/REST 中选择、配置环境，并运行“获取广告系列”脚本。排查常见配置错误：USER_PERMISSION_DENIED、login_customer_id 问题，以及 DEVELOPER_TOKEN_NOT_APPROVED。\n\n使用此技能时：\n- 当用户询问如何开始使用 Google Ads API。\n- 当用户需要设置 Google Ads 凭证或开发者令牌。\n- 当用户希望为 Google Ads 编写快速入门/示例脚本。\n- 当用户遇到 USER_PERMISSION_DENIED 或 DEVELOPER_TOKEN_NOT_APPROVED 等错误。"}

@@ -1,0 +1,1 @@
+{"description_zh": "Golang CLI 应用开发。用于构建、修改或审查 Go CLI 工具时——尤其适用于命令结构、标志处理、配置分层、版本嵌入、退出码、I/O 模式、信号处理、shell 补全、参数验证及 CLI 单元测试。当代码使用 cobra、viper 或 urfave/cli 时也会触发。针对 cobra 特有的 API → 请参阅 `samber/cc-skills-golang@golang-spf13-cobra` 技能；针对 viper 配置分层 → 请参阅 `samber/cc-skills-golang@golang-spf13-viper` 技能。"}

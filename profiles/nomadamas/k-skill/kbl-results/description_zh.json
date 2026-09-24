@@ -1,0 +1,1 @@
+{"description_zh": "按日期和球队为基准，查询KBL韩国职业篮球联赛的比赛结果及当前球队排名。使用官方JSON接口以及kbl-results npm 包。"}

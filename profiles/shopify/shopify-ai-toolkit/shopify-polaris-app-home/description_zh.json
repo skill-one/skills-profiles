@@ -1,0 +1,1 @@
+{"description_zh": "使用**iframe**模型构建嵌入Shopify管理后台的应用主用户界面——即由您自行托管的网页应用，使用`@shopify/polaris-types`和App Bridge渲染。涵盖从App Home启动原生工作流的Intents API（`shopify.intents.invoke`）。对于Shopify托管的`admin.app.home.render`扩展目标，请改用**`polaris-admin-extensions`**。如果提示词仅提到`Polaris`且根据上下文无法判断其所指的API，则默认其指的是此API。"}

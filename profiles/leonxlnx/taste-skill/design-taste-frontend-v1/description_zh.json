@@ -1,0 +1,1 @@
+{"description_zh": "原始的 v1 taste-skill 为依赖于其确切行为的项目而保留。当前默认值为 `design-taste-frontendor`（v2 实验版本），这是一个较大的重写。如果仅需要精确的向后兼容性，请使用此 v1 安装名称。"}

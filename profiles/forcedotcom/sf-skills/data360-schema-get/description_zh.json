@@ -1,0 +1,1 @@
+{"description_zh": "使用 REST 接口从 Salesforce 数据云中检索数据湖对象 (DLO) 和数据模型对象 (DMO) 的模式信息。当您需要检查 DLO 或 DMO 的字段定义、数据类型或元数据时，使用本技能。接收组织别名和可选的 DLO/DMO 名称作为参数。"}

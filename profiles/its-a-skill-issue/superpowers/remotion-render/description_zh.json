@@ -1,0 +1,1 @@
+{"description_zh": "通过 inference.sh 将 React/Remotion 组件代码渲染为视频。输入 TSX 代码，输出 MP4。支持所有 Remotion 接口：useCurrentFrame、useVideoConfig、spring、interpolate、AbsoluteFill、Sequence。支持可配置的分辨率、帧率（FPS）、时长、编码器（codec）。适用于：程序化视频生成、动画图形、动态设计、数据驱动视频、React 动画转视频。触发词：remotion、由代码渲染视频、tsx 转视频、react video、程序化视频、remotion 渲染、代码转视频、动画视频、动态图形代码、react 动画视频"}

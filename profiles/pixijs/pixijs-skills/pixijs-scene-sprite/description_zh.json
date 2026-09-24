@@ -1,0 +1,1 @@
+{"description_zh": "在 PixiJS v8 中绘制图像时使用本技能。该技能涵盖：支持锚点、tint 和纹理的 Sprite；用于帧动画的 AnimatedSprite；用于可缩放 UI 面板的 NineSliceSprite；用于滚动/重复背景的 TilingSprite。触发条件：Sprite、AnimatedSprite、NineSliceSprite、TilingSprite、Sprite.from、anchor、tint、tilePosition、animationSpeed、gotoAndPlay、leftWidth、topHeight、构造选项、SpriteOptions、AnimatedSpriteOptions、NineSliceSpriteOptions、TilingSpriteOptions。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在任意环境（Linux、Windows、macOS、虚拟机、容器）中，使用 `lim gradle build` 在远程 Gradle 沙箱中构建安卓应用，而无需使用本地 Gradle 或 Android Studio。适用于用户需要构建 APK 或 AAB、使用上传密钥对发行版本进行签名、准备 Play 商店发布、检查构建日志，或选择沙箱工具并执行 shell 命令的情况，支持原生安卓项目、React Native 和 Expo。如需在模拟器上运行、点击、截图或与其他方式与构建好的 APK 进行交互，请使用 limrun-android-emulator。进行 iOS 构建时，请使用 limrun-xcode 或 limrun-expo-development。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用 gqlgen 或 graphql-go 在 Go 语言中实现 GraphQL API。适用于构建 GraphQL 服务器、设计 schema、编写 resolver、处理订阅，或将 GraphQL 与现有 Go HTTP 服务集成。此外，当代码库导入 `github.com/99designs/gqlgen` 或 `github.com/graph-gophers/graphql-go` 时，也适用。"}

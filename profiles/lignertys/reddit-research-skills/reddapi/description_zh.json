@@ -1,0 +1,1 @@
+{"description_zh": "原始的 reddapi.dev Reddit 搜索技能（包含向量搜索、语义搜索、趋势、子版块发现），无需 Reddit OAuth 授权或应用注册。该引擎现以 reddit-research 的形式提供，并增加了市场研究操作手册以及对语义搜索与关键词搜索的更全面说明；为现有安装，reddapi 保留原名持续运行，且可独立使用。当用户以“reddapi”名称调用，或希望在不需额外研究流程指导的情况下使用一个最小化的即插即用 Reddit 搜索技能时，请使用本工具。如需使用包含查询操作手册的扩展研究导向版本，请参阅 reddit-research。如需进行 B2B 线索评分，请参阅 reddit-leads。如需获取纯 API 参考，请参阅 reddit-search-api。"}

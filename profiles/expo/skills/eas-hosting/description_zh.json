@@ -1,0 +1,1 @@
+{"description_zh": "EAS服务（付费）。部署Expo网站和Expo Router API路由至EAS托管——导出Web打包文件，运行eas deploy以获取生产环境和PR预览URL，管理环境密钥与自定义域名，并在Cloudflare Workers运行时内工作。此外还涵盖编写API路由（+api.ts处理器、HTTP方法、请求处理、CORS）。适用于部署Expo Web应用或API路由、配置EAS托管，以及配置托管环境和域名。不适用于原生构建或应用商店发布——此类场景请使用eas-app-stores技能。"}

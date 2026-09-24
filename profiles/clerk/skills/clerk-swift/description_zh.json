@@ -1,0 +1,1 @@
+{"description_zh": "通过 ClerkKit 和 ClerkKitUI 的源码引导模式，为原生 Swift 和 iOS 应用实现 Clerk 认证。适用于预构建的 AuthView 或自定义原生流程。不可用于 Expo 或 React Native 项目。"}

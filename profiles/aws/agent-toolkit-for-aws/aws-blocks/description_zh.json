@@ -1,0 +1,1 @@
+{"description_zh": "使用 AWS Blocks 构建全栈应用的指南——一种从代码生成基础设施的框架。在创建 API、选择 Building Blocks（KVStore、DistributedTable、Database、AuthBasic、AuthCognito、Realtime、AsyncJob、FileBucket 等）、进行本地开发或部署 AWS Blocks 应用时适用。此外，还涵盖 AWS Blocks 相关主题，其中包含经过验证且针对不同版本的模式，可防止常见错误。当用户提到 AWS Blocks；项目包含 aws-blocks/ 目录；代码导入 @aws-blocks 包时触发。"}

@@ -1,0 +1,1 @@
+{"description_zh": "Golang数据结构——slices（内部机制、容量增长、预分配、slices包），maps（内部机制、hash桶、maps包），arrays，container/list/heap/ring，strings.Builder vs bytes.Buffer，泛型集合，pointers（unsafe.Pointer、weak.Pointer），copy语义。\n\n用于在选择或优化Go数据结构时、实现泛型容器时、使用container/包时、使用unsafe或weak指针时，或探究slice/map内部机制时使用。\n\n不适用于在性能分析（profiling）已识别瓶颈后应用优化模式（→ 参见 `samber/cc-skills-golang@golang-performance` 技能）。"}

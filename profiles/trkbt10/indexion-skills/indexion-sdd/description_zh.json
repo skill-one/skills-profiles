@@ -1,0 +1,1 @@
+{"description_zh": "从 RFC 和规格说明生成 SDD 需求，并对实现符合性进行定量验证。规范草案 → 规范对齐 → 规范验证 → 与 Codex/Claude 的自动化验证循环。将 spec-to-impl 偏差闸门作为 CI 检查运行。"}

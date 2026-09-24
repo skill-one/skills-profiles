@@ -1,0 +1,1 @@
+{"description_zh": "从 Prisma ORM v6 到 v7 的完整迁移指南，涵盖所有破坏性变更。适用于升级 Prisma 版本、遇到 v7 错误或迁移现有项目时。触发条件：\n- \"upgrade to prisma 7\"\n- \"prisma 7 migration\"\n- \"prisma-client generator\"\n- \"driver adapter required\""}

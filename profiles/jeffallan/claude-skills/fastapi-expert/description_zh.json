@@ -1,0 +1,1 @@
+{"description_zh": "在 FastAPI 和 Pydantic V2 下构建高性能异步 Python API 时使用。调用以创建 REST 端点、定义 Pydantic 模型、实现认证流程、设置异步 SQLAlchemy 数据库操作、添加 JWT 认证、构建 WebSocket 端点，或生成 OpenAPI 文档。触发术语：FastAPI、Pydantic、async Python、Python API、REST API Python、SQLAlchemy async、JWT 认证、OpenAPI、Swagger Python。"}

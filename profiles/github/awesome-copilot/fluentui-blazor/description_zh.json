@@ -1,0 +1,1 @@
+{"description_zh": "Microsoft Fluent UI Blazor 组件库（Microsoft.FluentUI.AspNetCore.Components NuGet 包）在 Blazor 应用中的使用指南。当用户在使用 Fluent UI 组件构建 Blazor 应用、设置该库、使用 FluentUI 组件，如 FluentButton、FluentDataGrid、FluentDialog、FluentToast、FluentNavMenu、FluentTextField、FluentSelect、FluentAutocomplete、FluentDesignTheme，或使用任何以“Fluent”为前缀的组件时，使用此指南。也应在排查缺失提供程序、JS 互操作问题或主题设置时使用。"}

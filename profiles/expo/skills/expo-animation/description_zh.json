@@ -1,0 +1,1 @@
+{"description_zh": "框架（开源）。在 React Native 和 Expo 中构建动画，按决定动画是否合适的顺序进行决策——是否进行动画、运行在哪个线程、使用哪些属性、采用弹簧效果还是时间函数、手势如何交接、以及如何降级。使用 Reanimated、Gesture Handler、Expo Router 和 expo-haptics 编写实现。用于在 Expo 应用中为任何内容添加动画、添加手势、面板、屏幕过渡、按压反馈或触觉反馈，或修复在设备上出现卡顿的动画。对于网页动画，使用 `animate`。"}

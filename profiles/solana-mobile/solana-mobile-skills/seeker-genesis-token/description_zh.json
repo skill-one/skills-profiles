@@ -1,0 +1,1 @@
+{"description_zh": "通过检查使用 Sign-in-with-Solana 和服务器端令牌验证的 Seeker Genesis Token (SGT) 来验证 Seeker 设备所有权。适用于需要对 Seeker 所有者进行内容或奖励限制、验证用户是否持有 SGT、在 Solana 移动应用中添加反女巫检查，或实现一设备一领取逻辑的场景。"}

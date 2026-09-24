@@ -1,0 +1,1 @@
+{"description_zh": "Next.js 性能优化专家级技能，涵盖核心网页指标（Core Web Vitals）、图像与字体优化、缓存策略、流式传输、打包优化及服务端组件最佳实践。适用于优化 Next.js 应用以提升核心网页指标（LCP、INP、CLS）、实现 next/image 与 next/font、配置 unstable_cache 与 revalidateTag 缓存、将客户端组件转换为服务端组件、实施 Suspense 流式传输，或分析并缩减打包体积的场景。支持 Next.js 16 与 React 19 模式。"}

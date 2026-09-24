@@ -1,0 +1,1 @@
+{"description_zh": "在Shopify后台的各个上下文相关位置添加您的应用自定义操作和区块，包括 **应用主页UI扩展** —— Shopify托管的 `admin.app.home.render` 目标（API版本 `2026-07` 或更高版本），用于替代iframe来渲染您的应用落地页。涵盖用于从扩展中启动原生工作流的 Intents API（`shopify.intents.invoke`）。Admin UI扩展还支持使用Shopify CLI命令搭建新的管理扩展。"}

@@ -1,0 +1,1 @@
+{"description_zh": "通过 API 或 Chrome CDP 将内容发布到微信公众号（WeChat Official Account）。支持以 HTML、Markdown 或纯文本输入发布文章（文章），并支持多图发布贴图（原称图文）。Markdown 文章工作流默认将普通外链转换为底部引用，以适配微信友好的输出格式。当用户提及“发布公众号”、“post to wechat”、“微信公众号”或“贴图/图文/文章”时使用。"}

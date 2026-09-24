@@ -1,0 +1,1 @@
+{"description_zh": "通过创建并附加实例配置文件来创建和关联IAM角色，使EC2实例能够安全调用AWS服务，从而消除硬编码凭据。当EC2实例需要借助临时凭据访问S3、DynamoDB、SQS或CloudWatch等AWS服务时使用。"}

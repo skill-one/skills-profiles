@@ -1,0 +1,1 @@
+{"description_zh": "使用 MCP 工具的 execute_metadata_action（执行元数据操作）生成 Salesforce 流程。当用户要求创建、构建或生成流程时使用，包括 Screen、Autolaunched、Record-Triggered（保存前/保存后）、Scheduled 等类型。当出现类似流程的请求时也会触发，例如“当记录创建时”、“每日在...时触发”、“当...时发送邮件”、“当...时更新字段”、“自动化”、“工作流”或“流程 XML/元数据”等请求。这是唯一用于生成 Salesforce 流程的技能。"}

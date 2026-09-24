@@ -1,0 +1,1 @@
+{"description_zh": "提供基础的 Firebase CLI 设置、CLI 安装、版本检查（`firebase-tools@latest --version`）、CLI 登录（包括 `--no-localhost`）、项目创建、项目选择（`firebase use`）以及应用配置文件下载（`google-services.json`、`GoogleService-Info.plist`）。仅用于 CLI 登录、项目创建/切换或下载应用配置文件。请勿用于 Firebase 托管部署、Firestore、Auth、应用托管、Data Connect、Crashlytics 或 Remote Config。"}

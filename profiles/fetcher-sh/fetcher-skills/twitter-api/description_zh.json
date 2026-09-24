@@ -1,0 +1,1 @@
+{"description_zh": "fetcher.sh 上的 Twitter API 与 X API 替代方案——通过 x402 以 USDC 按调用付费，或使用 Bearer key 进行预付费额度，无需 OAuth 和开发者申请。当用户需要时，可用于：根据关键词、标签或高级操作（from:、to:、since:、until:、min_faves:、filter:）搜索推文；按用户名抓取 Twitter/X 个人资料；拉取用户的推文、回复、关注者或粉丝；获取包含回复或转发者的单条推文；读取 Twitter 列表的成员或推文；按国家检查热门话题；以及按名称搜索 X 账户。此外，还涵盖 Twitter 数据管道、竞品监控、标签追踪、情感分析输入及粉丝导出等内容，无需遵循官方 X API 的定价层级或应用审核流程。"}

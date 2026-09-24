@@ -1,0 +1,1 @@
+{"description_zh": "官方 GSAP 性能技巧——优先使用 transform，避免布局抖动（layout thrashing）、will-change 和批处理。当需要优化 GSAP 动画、减少卡顿，或用户询问动画性能、FPS 或流畅的 60fps 时使用。"}

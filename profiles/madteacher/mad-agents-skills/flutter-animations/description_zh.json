@@ -1,0 +1,1 @@
+{"description_zh": "添加、修复、重构、调试、测试或解释 Flutter 动画与运动效果。在涉及以下内容时使用：隐式动画，例如 AnimatedContainer、AnimatedOpacity、AnimatedSwitcher 和 TweenAnimationBuilder；使用 AnimationController、Tween、CurvedAnimation、AnimatedWidget、AnimatedBuilder 及内置转场效果的显式动画；Hero/共享元素路由转场；交错或顺序动画；基于物理的运动、手势、弹簧、抛掷、滚动物理、曲线、性能、无障碍、减少动态效果，以及动画生命周期问题。"}

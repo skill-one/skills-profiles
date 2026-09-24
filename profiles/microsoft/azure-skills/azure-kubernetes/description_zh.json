@@ -1,0 +1,1 @@
+{"description_zh": "规划、创建并配置生产就绪的 Azure Kubernetes Service（AKS）集群。涵盖 Day-0 检查清单、SKU 选择（Automatic 与 Standard）、网络选项（私有 API 服务器、Azure CNI Overlay、出口配置）、安全以及运维（自动扩展、升级策略、成本分析）。\n\n应用场景：创建 AKS 环境、部署 AKS、启用 AKS 可观测性、设计 AKS 网络、选择 AKS SKU、安全加固 AKS、优化 AKS、AKS 闲置节点、AKS Cluster-Autoscaler、AKS Pod 尺寸调整、Pod 资源调整、过度配置 AKS Pod、Pod 资源请求与限制、垂直 Pod 自动扩展器（Vertical Pod Autoscaler）、VPA 建议。"}

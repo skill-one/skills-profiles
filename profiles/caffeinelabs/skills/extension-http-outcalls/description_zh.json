@@ -1,0 +1,1 @@
+{"description_zh": "由后端 canister（而非前端）执行的 HTTP 出站调用，包括对外部 REST API 请求的强制本地验证。"}

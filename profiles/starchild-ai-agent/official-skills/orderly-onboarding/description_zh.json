@@ -1,0 +1,1 @@
+{"description_zh": "Orderly Network 接入：全链永续合约基础设施、MCP 服务器、SDK 与 CLI 快速入门。同时将已执行的 Orderly 交易成交记录索引至 Starchild 交易分析系统。\n\n使用场景：在开始使用 Orderly（例如安装 Orderly MCP、配置 DEX 模板、集成 React SDK、使用 orderly CLI），以及执行任何 Orderly 交易后，需上报成交记录，以便进行索引。"}

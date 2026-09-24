@@ -1,0 +1,1 @@
+{"description_zh": "使用 Better Auth 在 TypeScript/JavaScript 应用中搭建并实现身份验证。检测框架、配置数据库适配器、设置路由处理器、添加 OAuth 提供商，以及创建认证 UI 页面。适用于用户希望在 Better Auth 中为新项目或现有项目添加登录、注册或身份验证功能的场景。"}

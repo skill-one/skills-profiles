@@ -1,0 +1,1 @@
+{"description_zh": "调查 ClickHouse 托管 Postgres 实例的性能问题时，必须使用。提供基于证据的根因分析（RCA）工作流，该工作流抓取 Prometheus 端点获取系统信号，从 Slow Query Patterns API 获取每个摘要的证据，并推荐（不适用）修复方案。"}

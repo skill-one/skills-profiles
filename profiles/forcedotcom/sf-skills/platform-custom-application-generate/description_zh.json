@@ -1,0 +1,1 @@
+{"description_zh": "当用户需要创建或配置包含导航、品牌标识和动作覆盖功能的基于标签的 Salesforce 自定义应用时，使用此技能。当用户提及自定义应用、应用元数据、应用导航，或将标签组织成应用时，触发此技能。当用户想要为标签和页面创建应用容器时，使用此技能。当目标是在 App Launcher 中托管 React UI 包时，请勿使用此技能——应使用 experience-ui-bundle-custom-app-generate 处理该情况。"}

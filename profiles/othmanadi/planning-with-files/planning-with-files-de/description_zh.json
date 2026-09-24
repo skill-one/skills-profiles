@@ -1,0 +1,1 @@
+{"description_zh": "基于持久化文件的方案规划，用于AI Agent进行多层级工作。在存储设备上保留 task_plan.md、findings.md 和 progress.md 文件；生命周期钩子将所选项目的规划方案注入。自动恢复仅读取项目自身的规划文件。仅允许显式调用 session-catchup.py --metadata 来检查同一项目的本地会话元数据；--replay 可输出有限的、基于nonce的摘录。可选的 Gate 模式仅在主机支持的情况下请求继续，且永远不会执行 Markdown 中指定的命令。该技能没有网络上传路径。用于研究或执行超过 5 次工具调用的任务。"}

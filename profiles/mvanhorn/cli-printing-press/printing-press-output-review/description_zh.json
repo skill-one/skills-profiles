@@ -1,0 +1,1 @@
+{"description_zh": "内部子技能：对打印CLI的采样命令输出进行智能体审查，以发现基于规则检查无法编码的合理性问题（包括子串匹配相关性问题、格式错误、静默数据源丢失、排序失败）。该技能通过Skill工具，由主打印技能在阶段4.85以及printing-press-polish SKILL.md的诊断循环期间调用。不可由用户直接调用——其可操作封装接口为/printing-press和/printing-press-polish。"}

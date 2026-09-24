@@ -1,0 +1,1 @@
+{"description_zh": "使用 baoyu-fetch 命令行工具（基于 Chrome 远程调试协议（CDP）及特定站点适配器）获取任意 URL 并转换为 Markdown 格式。内置适配器支持 X/Twitter、YouTube 字幕、Hacker News 帖子，以及利用 Defuddle 处理通用页面。通过交互等待模式处理登录及验证码。当用户需要保存网页为 Markdown 格式时使用。"}

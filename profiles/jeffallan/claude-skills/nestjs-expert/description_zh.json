@@ -1,0 +1,1 @@
+{"description_zh": "为企业级 TypeScript 后端应用创建并配置 NestJS 模块、控制器、服务、数据传输对象（DTO）、守卫与拦截器。在构建 NestJS REST API 或 GraphQL 服务、实现依赖注入、通过脚手架搭建模块化架构、添加 JWT/Passport 认证、集成 TypeORM 或 Prisma，或处理 .module.ts、.controller.ts 和 .service.ts 文件时使用。在 NestJS 项目中调用守卫、拦截器、管道、校验、Swagger 文档以及单元/端到端（E2E）测试。"}

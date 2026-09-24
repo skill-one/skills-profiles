@@ -1,0 +1,1 @@
+{"description_zh": "**适用于v6版本Prisma ORM MongoDB项目的决策与迁移指南（该项目无升级至v7的路径）**\n\n适用于以下场景：MongoDB项目询问Prisma升级相关事宜时；在provider = \"mongodb\"的项目中提及\"升级至prisma 7\"时；或评估迁移至Prisma Next时。\n\n触发关键词：\"upgrade prisma mongodb\"、\"prisma 7 mongodb\"、\"mongodb prisma migration\"、\"prisma next mongodb\"。"}

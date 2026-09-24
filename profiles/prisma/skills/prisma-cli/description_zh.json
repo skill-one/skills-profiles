@@ -1,0 +1,1 @@
+{"description_zh": "Prisma ORM CLI 命令参考，涵盖 init、generate、migrate、db、dev、complete、studio、validate、format、debug 和 mcp。用于 ORM/数据库 CLI 工作流，而非 Prisma Platform CLI。触发于“prisma init”、“prisma generate”、“prisma migrate”、“prisma db”、“prisma complete”、“prisma studio”、“prisma mcp”。"}

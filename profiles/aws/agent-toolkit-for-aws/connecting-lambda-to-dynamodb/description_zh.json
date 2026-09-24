@@ -1,0 +1,1 @@
+{"description_zh": "连接 AWS Lambda 函数与 DynamoDB，支持 IAM 角色、流式事件源映射以及读写权限。适用于设置 Lambda-DynamoDB 集成、处理 DynamoDB 流式事件或部署无服务器事件驱动架构的场景。"}

@@ -1,0 +1,1 @@
+{"description_zh": "当您需要通过 CDP（Chrome DevTools 协议）控制 Chrome 浏览器以复用现有登录会话时，请使用此技能。涵盖内容：以调试模式启动 Chrome、打开网址、等待页面加载、执行 JavaScript 评估、截取截图以及提取认证令牌。触发短语：浏览器自动化、CDP、agent-browser、浏览器操作、操作浏览器、Chrome CDP、复用登录态、从浏览器提取令牌。"}

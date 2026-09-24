@@ -1,0 +1,1 @@
+{"description_zh": "提供全面的 Drizzle ORM 模式，涵盖模式定义、CRUD 操作、关联、查询、事务与迁移。在 Drizzle ORM 的各类开发中，可主动采用这些模式，包括定义数据库模式、编写类型安全的查询、实现关联、管理事务，以及使用 Drizzle Kit 配置迁移。支持 PostgreSQL、MySQL、SQLite、MSSQL 和 CockroachDB。"}

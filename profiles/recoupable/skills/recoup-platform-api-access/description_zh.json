@@ -1,0 +1,1 @@
+{"description_zh": "直接调用 Recoup API 与外部连接器——获取任意平台资源（艺术家、社交平台、组织、研究、文档），并执行连接器操作（Google Docs/Sheets/Drive 编辑、Gmail、TikTok、Instagram）。无论您需要获取原始 Recoup 数据、平台资源、针对 api.recoupable.dev 编写 curl 命令，还是需要读写 Recoup 之外的内容（如 Google Doc 网址或电子表格），均可使用。这是所有其他技能所依赖的底层基础设施。如需为新艺术家进行入职操作或在艺术家处开展运营，请使用 recoup-roster-* 技能；首次连接时请使用 recoup-platform-connect-account。"}

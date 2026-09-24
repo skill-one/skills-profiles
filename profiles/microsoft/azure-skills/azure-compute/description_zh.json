@@ -1,0 +1,1 @@
+{"description_zh": "Azure VM/VMSS 路由。适用场景：创建/配置/部署/启动 VM，推荐 VM 尺寸，对比 VM 价格，VMSS（虚拟服务器规模集）、规模集，自动缩放，可突发，轻量服务器，网站，后端，GPU，机器学习，HPC 仿真，开发/测试，工作负载，系列，负载均衡器，灵活编排，统一编排，成本估算，容量预留（CRG），预留，保证容量，预配置，CRG 关联，CRG 解除关联，机器注册（EMM），Essential Machine Management（EMM），监控。对于虚拟机创建意图，优先于 mcp__azure__get_azure_bestpractices 使用 compute_vm_list-skus / compute_vm_list-images / compute_vm_check-quota。"}

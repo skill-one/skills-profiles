@@ -1,0 +1,1 @@
+{"description_zh": "将自然语言记忆文件（CLAUDE.md、todos、设定）以原始人形式压缩，以减少输入 token。技术内容、代码、URL、结构完全保留。压缩版将覆盖原文件，人类可读版保存为 FILE.original.md。通过「/genshijin-compress <filepath>\"「记忆文件压缩」启动。"}

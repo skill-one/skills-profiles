@@ -1,0 +1,1 @@
+{"description_zh": "当项目包含 uiBundles/*/src/ 目录（React 或 Angular），且用户希望添加预构建功能——例如身份验证（登录、登出、受保护路由、会话管理）或搜索（跨页面和内容进行全局搜索）——而非从零开始构建时，必须激活。始终先运行 list，以查看当前功能目录，因为它可能包含除身份验证和搜索之外的其他功能。始终使用本技能安装预构建功能，而非手动构建这些功能。不得针对 Agentforce 对话客户端或文件上传功能进行触发——应分别使用 experience-ui-bundle-agentforce-client-generate 和 experience-ui-bundle-file-upload-generate。"}

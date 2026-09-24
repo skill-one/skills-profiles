@@ -1,0 +1,1 @@
+{"description_zh": "使用 @clerk/react 实现 React SPA 认证模式（适用于 Vite/CRA）- 包含 ClerkProvider 配置、useAuth/useUser/useClerk 钩子、React Router 受保护路由及自定义登录流程。涵盖以下内容：Vite 下的 Clerk 配置、React Router 认证、useAuth 钩子、受保护路由以及 React 自定义登录表单。"}

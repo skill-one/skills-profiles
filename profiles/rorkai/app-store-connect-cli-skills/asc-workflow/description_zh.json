@@ -1,0 +1,1 @@
+{"description_zh": "使用当前的 `asc workflow` 和 `.asc/workflow.json`，定义、验证、运行、恢复并审计仓库本地的多步骤自动化，包括步骤输出以及安全的发布/TestFlight 工作流。"}

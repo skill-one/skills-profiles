@@ -1,0 +1,1 @@
+{"description_zh": "UWP 到 WinUI 3 迁移参考。将传统 UWP API 映射为正确的 Windows App SDK 对应实现，并提供前后对照的代码片段。涵盖命名空间变更、线程处理（CoreDispatcher 到 DispatcherQueue）、窗口管理（CoreWindow 到 AppWindow）、对话框、选择器、共享、打印、后台任务，以及最常见的 Copilot 代码生成错误。"}

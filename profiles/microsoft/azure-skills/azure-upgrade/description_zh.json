@@ -1,0 +1,1 @@
+{"description_zh": "评估与升级 Azure 工作负载（在不同套餐、层级或 SKU 之间转换），或对源代码中的 Azure SDK 依赖进行现代化改造。\n\n时机：升级消耗式至 Flex 消耗式、升级 Azure Functions 套餐、更改托管计划、更改 function app SKU、将 App Service 迁移至 Container Apps、对遗留的 Azure Java SDK（从 com.microsoft.azure 迁移至 com.azure）进行现代化改造，以及将 Azure Cache for Redis（ACR/ACRE）迁移至 Azure Managed Redis（AMR）。"}

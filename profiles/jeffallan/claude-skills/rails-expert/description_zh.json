@@ -1,0 +1,1 @@
+{"description_zh": "Rails 7+ 专家，通过 includes/eager_load（预加载）优化 Active Record 查询，实现用于页面局部更新的 Turbo Frames 和 Turbo Streams，为 WebSocket 连接配置 Action Cable，设置 Sidekiq 工作进程用于后台任务处理，并编写全面的 RSpec 测试套件。当构建使用 Hotwire、实时功能或后台任务处理的 Rails 7+ Web 应用程序时使用。用于 Active Record 优化、Turbo Frames/Streams、Action Cable、Sidekiq、RSpec Rails 等场景。"}

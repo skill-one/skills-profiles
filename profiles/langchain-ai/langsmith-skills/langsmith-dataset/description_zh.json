@@ -1,0 +1,1 @@
+{"description_zh": "在创建评估数据集、将数据集上传到 LangSmith 或管理现有数据集时，调用此技能。涵盖数据集类型（final_response、single_step、trajectory、RAG）、CLI 管理命令、基于 SDK 的创建以及示例管理。使用 langsmith CLI 工具。"}

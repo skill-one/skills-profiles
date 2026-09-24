@@ -1,0 +1,1 @@
+{"description_zh": "在 Salesforce 中创建、读取、更新和删除 ManagedEventSubscription 元数据。使用此技能处理任何涉及托管事件订阅、平台事件订阅、事件通道订阅者或 .managedEventSubscription-meta.xml 文件的工作。触发条件为：用户要求订阅平台事件、创建托管订阅、设置事件重放、配置事件通道订阅者、更新重放预设、激活或停用订阅、删除订阅或管理 ManagedEventSubscription 元数据。跳过条件为：用户需要自行创建平台事件通道（使用 platform-custom-object-generate 技能）或需要使用基于 Flow 的事件订阅（使用 automation-flow-generate 技能）。"}

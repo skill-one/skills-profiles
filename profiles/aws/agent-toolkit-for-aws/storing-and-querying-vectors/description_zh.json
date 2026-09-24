@@ -1,0 +1,1 @@
+{"description_zh": "使用 Amazon S3 Vectors 存储和查询向量嵌入，该服务是一种拥有自身 API 命名空间（s3vectors）的经济实惠的长期向量存储服务。触发场景：创建 S3 向量桶、建立向量索引、存储嵌入向量、语义搜索、RAG 向量存储、相似度搜索、向量数据库、从其他向量数据库迁移。请勿用于：查询表格数据（使用 querying-data-lake）、S3 对象存储，或数百/数千的持续 QPS（使用 OpenSearch）。"}

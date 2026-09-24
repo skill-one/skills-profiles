@@ -1,0 +1,1 @@
+{"description_zh": "从 Trail of Bits Testing Handbook (appsec.guide) 生成 Claude Code 技能，分析手册页面，并生成每种技能类型所要求的 SKILL.md 文件结构。当从手册内容创建或刷新技能，或当用户提及测试手册或 appsec.guide 时使用。不用于回答安全测试问题——生成的技能涵盖这些内容。"}

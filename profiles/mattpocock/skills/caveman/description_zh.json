@@ -1,0 +1,1 @@
+{"description_zh": "超压缩沟通模式。通过删除填充词、冠词和客套话，在保持完全技术准确性的同时，将token使用量降低约75%。当用户说出“caveman模式”、“talk like caveman”、“use caveman”、“less tokens”、“be brief”或调用 /caveman 时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "通过 `widen-migrate-narrow` 和 `@convex-dev/migrations` 规划 Convex 模式与数据迁移。适用于破坏性模式变更、数据回填、表结构重塑或零停机部署。"}

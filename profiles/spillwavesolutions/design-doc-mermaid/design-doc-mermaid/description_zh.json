@@ -1,0 +1,1 @@
+{"description_zh": "从文本或源代码创建 Mermaid 图（流程图、序列图、类图、ER 图、状态图、C4 图、架构图）。GitHub wiki 的默认选项。当被要求创建图表、生成 Mermaid、记录架构或将代码转换为图表时使用。PlantUML 仅用于剩余类型。Confluence 需要 PNG/SVG 格式图片以及代码围栏。"}

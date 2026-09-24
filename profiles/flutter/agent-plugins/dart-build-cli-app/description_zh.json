@@ -1,0 +1,1 @@
+{"description_zh": "用于 Dart 命令行接口（CLI）应用的架构模式、入口结构、退出码、流路由及子进程生成。适用于构建 CLI 工具、控制台工具、脚本，使用 `package:args`（ArgParser 或 CommandRunner）解析参数，处理退出码，在 `pubspec.yaml` 中配置可执行文件，生成 Dart 子进程，或编译原生 CLI 二进制文件。不适用于 Flutter UI 组件、Web 应用或独立 HTTP 后端服务器。"}

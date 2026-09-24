@@ -1,0 +1,1 @@
+{"description_zh": "Zod 模式验证最佳实践，涵盖类型安全、解析和错误处理。当定义 z.object 模式、使用 z.string 验证、调用 safeParse 或使用 z.infer 时，应使用此技能。本技能不覆盖 React Hook Form 集成模式（使用 react-hook-form 技能）或 OpenAPI 客户端生成（使用 orval 技能）。"}

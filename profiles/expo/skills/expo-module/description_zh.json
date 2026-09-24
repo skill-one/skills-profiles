@@ -1,0 +1,1 @@
+{"description_zh": "框架（OSS）。使用 Expo 模块 API（Swift、Kotlin、TypeScript）创建和编写 Expo 原生模块与视图的指南。涵盖模块定义 DSL、原生视图、共享对象、配置插件、生命周期钩子、自动链接和类型系统。在构建或修改 Expo 原生模块时使用。不适用于将现有 Swift 模块从模块定义 DSL 迁移到 Expo Modules API 2.0 宏；请使用 expo-migrate-module（来自 expo-experiments 插件）进行该迁移。"}

@@ -1,0 +1,1 @@
+{"description_zh": "将编码任务委派给 Google Antigravity CLI（`agy`）作为后台执行者，随后审查其 diff 并自行合入落地。当用户希望将实现工作交由 Antigravity 或 agy（诸如“让 Antigravity 完成 X”、“将此项委派给 agy”、“通过 agy 运行”、“使用 Antigravity 实现/修复/重构”等表述），或希望将一批编码任务通过 agy 运行，同时自己担任审查者时，请使用此功能。对于足够小可直接内联完成的任务，或当用户要求不经过委派直接编写代码时，切勿使用。"}

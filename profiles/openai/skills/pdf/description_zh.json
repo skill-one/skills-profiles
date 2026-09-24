@@ -1,0 +1,1 @@
+{"description_zh": "适用于涉及读取、创建或审阅 PDF 文件，且渲染与布局至关重要的任务；优先通过渲染页面（Poppler）进行视觉检查，并使用 Python 工具（如 `reportlab`、`pdfplumber` 和 `pypdf`）进行生成与提取。"}

@@ -1,0 +1,1 @@
+{"description_zh": "扫描Android APK文件中的Firebase安全配置错误，包括开放的数据库、存储桶、认证问题和暴露的云函数。适用于分析APK文件中的Firebase漏洞、执行移动应用安全审计或测试Firebase端点安全性时使用。仅限授权安全研究使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "跨 XLayer、Solana、Ethereum、Base、BSC、Arbitrum、Polygon 等 20 条以上链的公共地址投资组合查询。当用户提供钱包地址并希望查询其：余额、代币持仓、投资组合总值或 DeFi 头寸（例如“查询 0xAbc 的余额”、“0xAbc 持有哪些代币”、“该地址的投资组合价值”）。需要明确的地址——若用户自身已登录的钱包没有地址，则使用 okx-agentic-wallet。"}

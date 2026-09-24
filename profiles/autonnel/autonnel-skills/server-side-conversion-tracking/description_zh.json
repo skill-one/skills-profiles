@@ -1,0 +1,1 @@
+{"description_zh": "设置服务端转化追踪，确保在 iOS 限制、广告拦截器和 Cookie 丢失的情况下，购买数据仍能被准确报告给 Facebook、TikTok、Google 和 Bing。适用于以下情况：转化数据被低估；平台报告的购买与实际情况不匹配；被询问关于转化 API、事件 API、离线转化或 CAPI 时；点击 ID 透传（fbclid、ttclid、gclid、msclkid）；或追踪变更后广告优化出现下降。"}

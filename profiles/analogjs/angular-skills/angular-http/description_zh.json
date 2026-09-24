@@ -1,0 +1,1 @@
+{"description_zh": "已弃用 - 此技能未处于维护状态。请改用官方 Angular 技能（https://github.com/angular/skills）。使用 resource()、httpResource() 和 HttpClient 在 Angular v20+ 中实现 HTTP 数据获取。适用于 API 调用、基于 signals 的数据加载、请求/响应处理以及拦截器。触发场景包括数据获取、API 集成、加载状态、错误处理，或将基于 Observable 的 HTTP 转换为基于 signals 的模式。"}

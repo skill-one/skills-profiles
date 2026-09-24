@@ -1,0 +1,1 @@
+{"description_zh": "使用 AWS Transform (ATX) CLI 执行代码升级、迁移和转换，适用于升级语言版本、迁移 AWS SDK、迁移框架（Angular、Vue.js、Spring Boot、React）、升级库、优化性能、将 x86 迁移至 Graviton、分析代码库/生成文档，或利用自然语言定义自定义转换时。可在本地针对少数仓库运行，或通过 AWS Batch/Fargate 以大规模处理数百个仓库。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用 React Native 和 Expo 构建、优化并调试跨平台移动应用。实现导航层级（标签页、栈、抽屉）、配置原生模块，利用 memo 和 useCallback 优化 FlatList 渲染，并处理 iOS 与 Android 的特定平台代码。适用于构建 React Native 或 Expo 移动应用、设置导航、集成原生模块、提升滚动性能、处理 SafeArea 或键盘输入，或配置 Expo SDK 项目。"}

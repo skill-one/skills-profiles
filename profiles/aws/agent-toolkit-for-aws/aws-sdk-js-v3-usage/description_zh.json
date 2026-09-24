@@ -1,0 +1,1 @@
+{"description_zh": "AWS SDK for JavaScript v3 开发模式。在编写通过 @aws-sdk/* 包（aws-sdk-js-v3）使用 AWS 服务的 JavaScript 或 TypeScript 代码时使用，或在 JS/TS AWS SDK 的上下文中，当被询问有关模式、运行时验证、序列化或代码生成的问题时使用。"}

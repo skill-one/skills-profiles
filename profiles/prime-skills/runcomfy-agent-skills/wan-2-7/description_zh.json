@@ -1,0 +1,1 @@
+{"description_zh": "在 RunComfy 上使用 Wan 2.7（Wan-AI 的旗舰动作模型）生成文本到视频。文档说明 Wan 2.7 的优势（多参考条件生成、通过 `audio_url` 实现的音频驱动唇形同步、更流畅的转场、提示词扩展），以及时长、分辨率、宽高比的参数设置，以及何时应改用 HappyHorse 1.0 / Seedance 2.0 / Kling / LTX 2 等其他模型。通过本地 RunComfy CLI 调用 `runcomfy run wan-ai/wan-2-7/ text-to-video`。在出现 'wan'、'wan 2.7'、'wan-2-7'、'wan video' 或任何明确要求使用此模型生成视频的请求时触发。"}

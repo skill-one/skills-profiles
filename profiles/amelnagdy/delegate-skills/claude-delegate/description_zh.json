@@ -1,0 +1,1 @@
+{"description_zh": "将编码任务委托给独立的 Claude Code CLI 进程或另一个 Claude 会话作为实施者，然后审查其差异并自行合入。仅在用户明确要求将实现任务委托给 Claude Code、另一个 Claude 会话或 `claude` CLI 时使用——例如，“让另一个 Claude 实现此任务”、“将此项委托给 Claude Code”或“通过另一个 Claude 会话处理该队列”。不要仅因当前编排者为 Claude 而触发，并且当用户要求当前 Claude 直接实施而不进行委托时也不要使用。"}

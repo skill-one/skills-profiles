@@ -1,0 +1,1 @@
+{"description_zh": "在 Claude Code 中配置 AI agent 评审动作的人工在环门控。适用于设置项目时：agent 可能提交 PR 评审、评论、合并或修改 CI 配置，同时需要可密码学审计的审批轨迹，并由 Cedar 强制执行门控。"}

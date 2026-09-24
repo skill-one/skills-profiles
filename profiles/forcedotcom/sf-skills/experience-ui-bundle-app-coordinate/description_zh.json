@@ -1,0 +1,1 @@
+{"description_zh": "当用户想要构建、创建或生成 React 应用（React app）、Web 应用、单页应用（SPA）或前端应用时，必须激活——即使目前尚无项目文件。当项目包含 uiBundles/*/src/ 目录或 sfdx-project.json，且提示要求从零创建、构建、构造或生成新的应用、网站或页面时，也必须激活——即使提示中也包含视觉样式描述。当任务涉及多个 ui-bundle 技能时，也必须激活。在端到端构建完整的项目应用时，使用此技能。不要用于具有自定义对象的 Lightning Experience 应用（请使用 platform-lightning-app-coordinate）。不要用于对现有页面进行单一关注点的修改（请使用 experience-ui-bundle-fronten-generate）。"}

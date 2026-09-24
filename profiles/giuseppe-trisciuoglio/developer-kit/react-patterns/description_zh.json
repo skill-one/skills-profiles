@@ -1,0 +1,1 @@
+{"description_zh": "为服务端组件、服务端动作、useOptimistic、useActionState、useTransition、并发特性、Suspense 边界以及 TypeScript 集成提供全面的 React 19 模式。生成可执行的代码模式，验证公共端点的安全性，并通过 React Compiler 或手动记忆化优化性能。在使用 Next.js App Router 构建 React 19 应用、实现乐观 UI 或优化并发渲染时，请主动使用。"}

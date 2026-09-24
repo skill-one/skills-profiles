@@ -1,0 +1,1 @@
+{"description_zh": "Go 语言中使用 samber/oops 的结构化错误处理——错误构建器、堆栈跟踪、错误码、错误上下文、错误包装、错误属性、面向用户与开发者的消息、panic 恢复以及日志记录器集成。适用于使用或采用 samber/oops，或代码库已导入 github.com/samber/oops 的情况。"}

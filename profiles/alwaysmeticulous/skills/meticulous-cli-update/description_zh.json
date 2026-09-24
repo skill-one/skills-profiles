@@ -1,0 +1,1 @@
+{"description_zh": "检查 Meticulous CLI（@alwaysmeticulous/cli）和技能是否已安装并更新至最新版本；若未安装或未更新，则进行安装/更新。在每次启动其他 Meticulous 技能时都会被自动调用，因为 CLI 和技能处于积极开发中，且会频繁进行变更和改进。"}

@@ -1,0 +1,1 @@
+{"description_zh": "启动 CAD 查看器，并获取 CAD 和机器人描述文件的审查链接。用于在可视化审查 `.step`、`.stp`、`.glb`、`.stl`、`.3mf`、`.dxf`、`.urdf`、`.srdf` 或 `.sdf` 文件时使用，尤其在从 CAD、URDF、SRDF 或 SDF 生成技能移交文件时使用。"}

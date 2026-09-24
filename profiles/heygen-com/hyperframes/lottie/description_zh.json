@@ -1,0 +1,1 @@
+{"description_zh": "HyperFrames 中的 Lottie 与 dotLottie 适配模式。用于嵌入 lottie-web JSON 动画、.lottie 文件、@lottiefiles/dotlottie-web 播放器，在 window.__hfLottie 上注册实例，或在 HyperFrames 中使 After Effects 导出具备确定性。"}

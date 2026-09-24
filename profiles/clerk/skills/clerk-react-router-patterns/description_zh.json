@@ -1,0 +1,1 @@
+{"description_zh": "**Clerk 与 React Router v7/v8 的集成模式** —— rootAuthLoader、loaders 中的 getAuth、clerkMiddleware、受保护路由、SSR 用户数据、组织切换。\n\n触发场景：\n- react-router 认证\n- rootAuthLoader\n- getAuth loader\n- react-router 受保护路由\n- loader 认证\n- SSR 认证、react-router\n- useNavigate 仅在 Router 上下文中可用"}

@@ -1,0 +1,1 @@
+{"description_zh": "编辑 HWP 文档 —— 插入/删除文本、全部替换、创建表格、设置单元格文本 —— 使用 k-skill-rhwp CLI（封装 @rhwp/core WASM 引擎，由 Edward Kim 开发的 rhwp）。"}

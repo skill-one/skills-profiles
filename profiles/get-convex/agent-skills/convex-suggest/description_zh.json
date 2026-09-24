@@ -1,0 +1,1 @@
+{"description_zh": "当用户手工实现一种可被其解决的模式（crons、sharded-counter、rate-limiter、storage、search、presence、workflow、RAG、prosemirror-sync）时，建议匹配的 Convex 组件。被动——任务完成后建议，绝不中断。未经同意切勿安装。"}

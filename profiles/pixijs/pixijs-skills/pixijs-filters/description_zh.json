@@ -1,0 +1,1 @@
+{"description_zh": "当需要通过滤镜管线为 PixiJS v8 容器应用视觉效果时使用此技能。涵盖内置滤镜（AlphaFilter、BlurFilter、ColorMatrixFilter、DisplacementFilter、NoiseFilter）、支持 GLSL/WGSL 的自定义 Filter.from()、选项（resolution、padding、antialias、blenderRequired），filterArea 优化，pixi-filters 社区包。触发条件：filters、BlurFilter、ColorMatrixFilter、DisplacementFilter、NoiseFilter、Filter.from、GLSL filter、pixi-filters、filterArea。"}

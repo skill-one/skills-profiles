@@ -1,0 +1,1 @@
+{"description_zh": "使用OpenXML SDK (.NET) 进行专业的DOCX文档创建、编辑和格式化。三个流程：(A) 从零开始创建新文档；(B) 填写/编辑现有文档内容；(C) 应用模板格式化，并进行XSD验证门控检查。每当用户想要生成、修改或格式化Word文档时，必须使用此技能——包括当用户说“write a report”、“draft a proposal”、“make a contract”、“fill in this form”、“reformat to match this template”，或任何最终输出为.docx文件的任务时。即使用户没有明确提及“docx”，如果任务隐含需要可打印/正式文档，也使用此技能。"}

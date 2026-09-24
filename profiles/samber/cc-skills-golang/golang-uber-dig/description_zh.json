@@ -1,0 +1,1 @@
+{"description_zh": "使用 uber-go/dig 在 Golang 中实现依赖注入——基于反射的容器、Provide/Invoke、dig.In/dig.Out 参数与结果对象、命名值、值组、可选依赖、作用域及 Decorate。\n\n在使用或采用 uber-go/dig、代码库导入 `go.uber.org/dig`，或在启动时搭建应用程序图时适用。\n\n对于更高层次的生命周期与模块，参见 `samber/cc-skills-golang@golang-uber-fx` 技能。"}

@@ -1,0 +1,1 @@
+{"description_zh": "EAS 服务（付费）。使用 EAS 将 iOS 和 Android 应用构建并提交至 TestFlight、App Store 或 Google Play。支持 Expo 及其他 React Native 项目，以及现有原生应用。适用于 eas.json 配置、发布流水线、签名、应用版本和构建编号、商店提交以及列表元数据。对于 Expo 网站和 API 路由，使用 eas-hosting；为在原生应用中添加 React Native 界面，使用 expo-brownfield。"}

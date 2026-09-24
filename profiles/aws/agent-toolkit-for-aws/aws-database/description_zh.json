@@ -1,0 +1,1 @@
+{"description_zh": "将任何涉及AWS数据库的任务——包括选择、比较、推荐、入门操作或管理数据库——路由至正确的特定服务技能。以训练后服务更新、修正后的限制说明及决策流程取代通用的训练数据知识，针对关系型（Aurora、DSQL、RDS）、键值型（DynamoDB）、宽列型（Keyspaces）、文档型（DocumentDB）、图型（Neptune）、时序型（Timestream）以及内存型/缓存型（ElastiCache、MemoryDB）工作负载。当用户描述在AWS上构建将存储、获取或管理数据的应用程序时触发，即使用户未明确提及“数据库”。"}

@@ -1,0 +1,1 @@
+{"description_zh": "Svelte 5 文档查找与代码分析的命令行工具。在创建、编辑或分析任何 Svelte 组件（.svelte）或 Svelte 模块（.svelte.ts/.svelte.js）时，必须使用。如果可能，此技能应在 svelte-file-editor agent 内执行，以获得最佳效果。"}

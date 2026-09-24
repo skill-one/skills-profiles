@@ -1,0 +1,1 @@
+{"description_zh": "将自然语言记忆文件（CLAUDE.md、todos、preferences）压缩为caveman格式，以节省输入token。保留所有技术内容、代码、URL和结构。压缩版本将覆盖原始文件。人类可读的备份保存为FILE.original.md。触发：/caveman:compress FILEPATH 或 “compress memory file”"}

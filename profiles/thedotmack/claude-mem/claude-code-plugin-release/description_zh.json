@@ -1,0 +1,1 @@
+{"description_zh": "Claude Code 插件的自动化语义化版本控制与发布工作流。负责在 package.json、marketplace.json、plugin.json 清单文件中进行版本递增、构建验证、Git 打标签、GitHub 发布及变更日志生成。NPM 发布（以便 `npx claude-mem@X.Y.Z` 能够正常解析）交由人工维护者处理，该维护者负责 NPM 安全相关事宜。"}

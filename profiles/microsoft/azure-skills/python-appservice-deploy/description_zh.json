@@ -1,0 +1,1 @@
+{"description_zh": "将 Python (Flask/Django/FastAPI) 代码部署到 Azure App Service Linux。\n适用场景：“Flask App Service”、“Django App Service”、“FastAPI App Service”、“将 Python 部署到 App Service”。\n不适用场景：Container Apps、Functions、非 Python、Terraform/Bicep/IaC、完整基础设施 —— 使用 azure-prepare。"}

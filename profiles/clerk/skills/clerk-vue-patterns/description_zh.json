@@ -1,0 +1,1 @@
+{"description_zh": "与 Clerk 集成的 Vue 3 模式——组合式函数（useAuth、useUser、useClerk、useOrganization）、Vue Router 路由守卫、Pinia 认证 store 集成。\n\n触发关键词：vue clerk、useAuth vue、clerk 组合式函数、vue router clerk guard、pinia auth clerk。\n\n若使用 Nuxt，请改用 clerk-nuxt-patterns。"}

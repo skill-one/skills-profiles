@@ -1,0 +1,1 @@
+{"description_zh": "Golang 性能优化模式与方法论——如果 X 存在瓶颈，则应用 Y。涵盖分配减少、CPU 效率、内存布局、GC 调优、池化、缓存和热路径优化。当性能剖析或基准测试已识别出瓶颈，且需要合适的优化模式来修复该瓶颈时使用。在执行性能代码审查时，也用于建议改进方案或基准测试，以帮助识别快速性能提升。不适用于测量方法论（→ 参见 `samber/cc-skills-golang@golang-benchmark` 技能）或调试流程（→ 参见 `samber/cc-skills-golang@golang-troubleshooting` 技能）。"}

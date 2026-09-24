@@ -1,0 +1,1 @@
+{"description_zh": "使用ATXP基于认证构建面向智能体的Web体验，遵循ClawDirect模式。在构建AI智能体通过MCP工具与之交互的网站、实现基于Cookie的智能体认证，或为Web应用创建智能体技能时使用此技能。提供基于@longrun/turtle、Express、SQLite和ATXP的模板。"}

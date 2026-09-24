@@ -1,0 +1,1 @@
+{"description_zh": "在稳定的 @cloudflare/sandbox 包中构建或维护 Cloudflare Sandbox 应用。使用 sandbox-next 构建预览应用，并使用 sandbox-migrate-to-next 进行稳定版到预览版的迁移。"}
