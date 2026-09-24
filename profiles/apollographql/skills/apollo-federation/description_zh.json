@@ -1,0 +1,1 @@
+{"description_zh": "Apollo 联邦子图模式编写指南。\n\n使用此技能当：\n(1) 为联邦超级图创建新的子图模式，\n(2) 使用 @key 定义或修改实体，\n(3) 使用 @shareable 在子图之间共享类型/字段，\n(4) 处理联邦指令 (@external, @requires, @provides, @override, @inaccessible)，\n(5) 排查组合错误，\n(6) 任何涉及联邦模式设计模式的任务。"}

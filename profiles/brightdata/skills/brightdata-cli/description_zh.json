@@ -1,0 +1,1 @@
+{"description_zh": "**Bright Data CLI（brightdata / bdata）使用指南——用于抓取网站、搜索网络、从40多个平台提取结构化数据、管理代理区域以及查询账户余额。**\n\n**当用户需要从终端执行以下操作时，请使用此技能：抓取URL、在Google、Bing、Yandex上搜索、从Amazon、LinkedIn、Instagram、TikTok、YouTube、Reddit或其他任何平台提取数据、查询其Bright Data账户余额或代理区域，或执行任何终端内的网络数据采集相关操作。**\n\n**此外，当用户提及brightdata、bdata、网页抓取CLI、SERP API，或希望将Bright Data技能安装到其编码代理中时，也应触发此技能。**"}

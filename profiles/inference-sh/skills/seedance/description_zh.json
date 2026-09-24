@@ -1,0 +1,1 @@
+{"description_zh": "通过 inference.sh CLI 使用字节跳动 Seedance 2.0 生成视频。统一的模型支持文生视频、图生视频和参考视频生成，并同步音频，最高 1080p 分辨率，时长 4-15 秒。提供 Pro 与 Fast 版本。Studio 版本内置私有素材库，保障人物一致性。适用于：社交媒体视频、音乐视频、产品演示、动态内容、带声音的 AI 视频。触发词：seedance、seedance 2、bytedance video、seedance t2v、seedance i2v、seedance r2v、video with audio、seedance 2.0、bytedance seedance、seedance studio"}

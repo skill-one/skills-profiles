@@ -1,0 +1,1 @@
+{"description_zh": "TAO 执行 SDK：用于在支持的平台（Brev、SLURM、本地 Docker、Kubernetes）上提交与监控 GPU 训练任务。当用户希望通过 SDK 运行 TAO 任务、获取任务跟踪、进行 S3 I/O 封装、执行多节点分布式训练，或使用 docker-run 无法提供的平台特定功能时使用。触发短语包括\"使用 TAO SDK\"、\"调用 tao_sdk\"、\"AutoMLRunner\"、\"ActionWorkflow\"、\"Job handles\"、\"S3 I/O wrapping\"、\"TAO platform run\"。"}

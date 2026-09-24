@@ -1,0 +1,1 @@
+{"description_zh": "将 .NET 测试项目从 xUnit.net v2 迁移到 xunit.v3 并修复 v3 兼容性问题。适用于包/CPM 转换，配置 OutputType=Exe，保留 VSTest 或 MTP 运行器（包括目前使用 YTest.MTP.XUnit2 的项目）、不兼容的 TFM、async void 测试、将字符串转换为类型的属性、自定义 Fact/Theory/BeforeAfterTest 属性、Xunit.SkippableFact、xunit.abstractions/extensibility 整合，以及 Xunit.Combinatorial/StaFact 兼容性。不得用于框架转换或仅迁移运行器。对于 xUnit v3 的 MTP 过滤语法，请同时使用 migrate-vstest-to-mtp。"}

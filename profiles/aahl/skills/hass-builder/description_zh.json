@@ -1,0 +1,1 @@
+{"description_zh": "用于构建和管理 Home Assistant 配置的技能。使用场景：使用 Home Assistant 构建器（`hab`）CLI 检查、创建、更新、删除、操作或排查 Home Assistant 资源；当用户从终端提及 hab、Home Assistant CLI 自动化、Lovelace/仪表盘编辑、辅助工具、自动化、脚本、备份、ESPHome 或 Home Assistant 操作时使用。"}

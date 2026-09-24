@@ -1,0 +1,1 @@
+{"description_zh": "用于将单个 CT DICOM 序列文件夹转换为带仿射证据的 HU NIfTI 体。不适用于多帧 DICOM 或临床用途。"}

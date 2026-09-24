@@ -1,0 +1,1 @@
+{"description_zh": "适用于 .NET 10 应用的缓存策略。涵盖 HybridCache（默认）、输出缓存、响应缓存和分布式缓存模式。当实施缓存、优化读取性能、降低数据库负载，或用户提及“cache”、“HybridCache”、“Redis”、“output cache”、“response cache”、“distributed cache”、“IMemoryCache”、“cache invalidation”、“stampede protection”或“cache-aside”时，请加载此技能。"}

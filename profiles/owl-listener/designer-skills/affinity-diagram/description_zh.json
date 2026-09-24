@@ -1,0 +1,1 @@
+{"description_zh": "将大量定性数据点聚类为主题与洞察陈述。在跨多个会话或来源进行综合时使用。对于单条转录稿，使用 `summarize-interview`；对于某个片段的内心状态，使用 `empathy-map`。"}

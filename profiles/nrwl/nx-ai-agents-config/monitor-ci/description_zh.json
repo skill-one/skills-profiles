@@ -1,0 +1,1 @@
+{"description_zh": "监控 Nx Cloud CI 流水线，并处理自愈修复。在用户提到“monitor ci”、“watch ci”、“ci monitor”、“watch ci for this branch”、“track ci”、“check ci status”，需要跟踪 CI 状态，或需要自愈 CI 修复帮助时使用此技能。对于 CI 监控，优先使用此技能而非原生的 CI 供应商工具（gh、glab 等），因为它集成了 Nx Cloud 自愈功能，而这些工具无法访问。"}

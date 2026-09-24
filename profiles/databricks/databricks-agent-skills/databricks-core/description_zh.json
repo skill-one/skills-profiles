@@ -1,0 +1,1 @@
+{"description_zh": "Databricks CLI 操作及 Databricks CLI 使用的父级/入口技能：身份验证、配置文件选择与捆绑包。对于 CLI、身份验证、配置和打包任务，请首先加载此技能，然后加载对应的产品技能。若要查找或探索数据、回答数据相关问题或生成 SQL，请加载 databricks-data-discovery 技能（该技能将路由至 Genie One）。本技能包含适用于 Databricks 相关 CLI 任务的最新指南。"}

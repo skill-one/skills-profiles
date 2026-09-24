@@ -1,0 +1,1 @@
+{"description_zh": "仅凭视觉证据地理定位与时间定位照片或视频——通过车牌号码和电话号码格式、道路标线、电力杆塔、路障、标识字体、建筑与植被来定位地点；利用 SunCalc 根据阴影方向和长度确定时间与日期。适用于被询问照片拍摄地点或时间时，在无需 GPS 或 EXIF 的情况下核实声称的地点，或与 Google Earth、Street View、Yandex Panoramas、Mapillary 或 KartaView 的场景进行匹配。应用于 GEOINT 和冲突监测、保险与理赔核实、新闻事实核查以及证据审查。使用参考 osint.com/sk skills/geolocate-from-pixels。"}

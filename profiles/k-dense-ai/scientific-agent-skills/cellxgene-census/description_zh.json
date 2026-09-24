@@ -1,0 +1,1 @@
+{"description_zh": "程序化查询 CZ CELLxGENE Census，以获取带有版本标记的公开单细胞及空间转录组学数据。\n\n适用于需要获取群体规模的细胞元数据、基因表达数据切片、Census 汇总计数、数据来源 H5AD URI/下载信息、嵌入数据、空间 Census 数据，或在不同生物体、组织、疾病、实验及细胞类型之间进行参考图谱对比等场景。若需分析您本地的单细胞数据，请使用 scanpy、anndata 或 scvi-tools。"}

@@ -1,0 +1,1 @@
+{"description_zh": "获取依赖项源代码，为 AI 智能体提供更深入的实现上下文。当智能体需要理解库的内部工作原理、读取包源代码、获取依赖项的实现细节，或探索 npm/PyPI/crates.io 包构建方式时使用。触发条件包括 \"fetch source for\"、\"read the source of\"、\"X 在内部如何运作\"、\"get the implementation of\"、\"opensrc 路径\"，或任何需要访问依赖项源代码（超出类型与文档范畴）的任务。"}

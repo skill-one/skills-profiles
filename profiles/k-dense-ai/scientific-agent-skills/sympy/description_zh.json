@@ -1,0 +1,1 @@
+{"description_zh": "当需要在 Python 中进行精确符号数学运算时使用——包括代数、微积分、方程求解、符号线性代数，或通过 lambdify/LaTeX 生成代码。当浮点近似足够时，优先使用 NumPy 或 SciPy。"}

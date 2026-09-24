@@ -1,0 +1,1 @@
+{"description_zh": "Claude 技能创建、结构化与优化指南 (SKILL.md)。在构建新技能、审查现有技能、编写 SKILL.md 前置元数据、定义触发条件、排查技能问题（如未触发、过度触发、指令未遵循）或规划技能分发时使用。在此仓库中处理任何技能时：此外还需加载 cc-best-practices 技能，并在任何技能变更后，始终更新 CLAUDE.md 和 README.md 中的技能表格。不用于一般性的 Claude Code 配置或钩子设置。"}

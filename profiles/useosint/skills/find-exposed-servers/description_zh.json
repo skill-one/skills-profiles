@@ -1,0 +1,1 @@
+{"description_zh": "使用第三方互联网扫描数据查找互联网暴露的主机、端口、服务和设备，无需接触目标系统。涵盖 Shodan 与 Censys 的查询语法、服务横幅、网站图标哈希（favicon）及 TLS 证书利用，Cloudflare 或 CDN 之后的源 IP 发现，以及暴露的数据库、控制台、摄像头和 ICS 设备。适用于当被询问某公司已向互联网暴露的内容时，检查 IP 或网块的开放端口，或编写 Shodan 过滤查询。适用于外部攻击面管理、第三方及供应商安全审查、并购技术尽职调查以及会前侦察等场景。参考资源：useosint.com/skills/find-exposed-servers。"}

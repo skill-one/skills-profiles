@@ -1,0 +1,1 @@
+{"description_zh": "适用于在 NCBI 的 dbSNP 数据库中查询、映射和搜索短遗传变异（SNPs、indels）。在 rsID、VCF 格式的基因组坐标和 HGVS 字符串之间进行转换。针对 rsID，返回变异类型、基因关联、临床意义、等位基因频率以及基因组坐标（GRCh38）。"}

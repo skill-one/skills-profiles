@@ -1,0 +1,1 @@
+{"description_zh": "启动或复用 CAD Explorer 查看器，返回审阅链接，并为显式 CAD 与机器人描述文件创建已保存的快照。当需要渲染或可视化审阅 `.step`、`.stp`、`.glb`、`.stl`、`.3mf`、`.dxf`、`.urdf`、`.srdf` 或 `.sdf` 文件时使用，尤其适用于由 CAD、URDF、SRDF 或 SDF 生成技能生成并移交的文件。"}

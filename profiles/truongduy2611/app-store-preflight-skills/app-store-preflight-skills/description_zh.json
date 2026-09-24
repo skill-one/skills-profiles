@@ -1,0 +1,1 @@
+{"description_zh": "在提交前扫描 iOS/macOS Xcode 工程，排查常见的 App Store 拒绝模式。适用于为 App Store 审核准备应用、收到 Apple 的拒绝后，或审计元数据、订阅、隐私清单、权限声明与设计合规性时。与 asc CLI 集成，用于元数据检查。"}

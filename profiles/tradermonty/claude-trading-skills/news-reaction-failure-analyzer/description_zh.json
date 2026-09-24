@@ -1,0 +1,1 @@
+{"description_zh": "判断市场是否未能对有利于拥挤投机头寸的新闻作出反应——这是Jason Shapiro的COT逆向流程的第二步。其接收一份COT逆向检测报告（或明确的指令）及一份由Claude整理的事件JSON，通过文档化回退链获取底层价格序列，并使用经统计验证的漂移显著性检验，产出fail-closed的 CONFIRMED / NOT_CONFIRMED / INSUFFICIENT_EVIDENCE 判定结果（而非朴素的失败率，后者在纯噪声中会导致误确认）。该功能超越COT，可复用于PEAD及宏观拥挤度新闻失败检查。当用户要求检查新闻失败确认情况、判断拥挤市场是否对利好/利空新闻“视而不见”，或希望对拥挤多头（CROWDED_LONG）/拥挤空头（CROWDED_SHORT）市场运行Shapiro第二步时使用。"}

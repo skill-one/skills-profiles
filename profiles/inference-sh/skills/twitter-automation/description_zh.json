@@ -1,0 +1,1 @@
+{"description_zh": "使用 inference.sh CLI 通过发布、互动及用户管理，自动化 Twitter/X。\n\n应用：x/post-create（文本和媒体）、x/post-like、x/post-retweet、x/dm-sEND、x/user-follow。\n\n功能：发布推文、安排内容、点赞帖子、转发、发送私信、关注用户、获取个人资料。\n\n适用场景：社交媒体自动化、内容排期、互动机器人、受众增长、X API。\n\n触发条件：twitter api、x api、推文自动化、向 Twitter 发布、Twitter 机器人、社交媒体自动化、X 自动化、推文排期、Twitter 集成、发布推文、Twitter 发布、X 发布、发送推文"}

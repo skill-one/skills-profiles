@@ -1,0 +1,1 @@
+{"description_zh": "NeMo AutoModel 中选择并配置分布式训练策略指南，包括 FSDP2、Megatron FSDP、DDP 及并行度设置。"}

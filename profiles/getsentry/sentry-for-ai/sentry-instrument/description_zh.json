@@ -1,0 +1,1 @@
+{"description_zh": "用 Sentry 配置应用程序 — 检测平台，如需则安装并初始化 SDK，并配置相关信号：错误监控、追踪/性能、日志记录、指标、性能分析、会话回放、用户反馈、计划任务检查，以及 AI/大语言模型监控（涵盖 OpenAI、Anthropic、Vercel AI、LangChain、Google GenAI、Pydantic AI、Laravel AI、Eve、Flue、Cloudflare Agents SDK 和 Workers AI 的 Agent 运行、Token 消耗与对话）。用于在项目中集成 Sentry，或捕获比错误监控范围更广的问题。"}

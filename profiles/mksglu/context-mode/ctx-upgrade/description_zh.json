@@ -1,0 +1,1 @@
+{"description_zh": "从 GitHub 更新 context-mode，并修复 hooks/settings。\n拉取最新版本，构建，安装，更新 npm 全局，配置 hooks。\n触发：/context-mode:ctx-upgrade"}

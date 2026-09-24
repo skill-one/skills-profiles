@@ -1,0 +1,1 @@
+{"description_zh": "启动或修复 Dynamo 路由器模式，并执行路由器端点冒烟测试。适用于轮询、KV 感知、最少负载或设备感知的路由配置；使用 recipe-runner 进行配方部署，并使用 troubleshoot 进行故障诊断。"}

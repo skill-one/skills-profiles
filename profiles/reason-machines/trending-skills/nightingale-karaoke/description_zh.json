@@ -1,0 +1,1 @@
+{"description_zh": "ML驱动的Rust卡拉OK应用，使用Bevy、WhisperX和Demucs实现人声分离、歌词转录和音高评分。"}

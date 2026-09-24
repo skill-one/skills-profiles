@@ -1,0 +1,1 @@
+{"description_zh": "Redis搜索指南，涵盖FT.CREATE模式设计、字段类型选择（TEXT、TAG、NUMERIC、GEO、GEOSHAPE、VECTOR、JSON路径）、DIALECT 2查询语法、FT.SEARCH / FT.AGGREGATE / FT.HYBRID命令选择、基于HNSW或FLAT的向量相似度、结合词法与向量排序的混合检索、RAG流水线、通过别名实现零停机索引更新以及使用FT.PROFILE和FT.EXPLAIN进行调试。当需要在Hash或JSON文档上定义搜索索引、编写包含过滤条件、排序、聚合或向量KNN的FT.SEARCH查询、调优HNSW参数、构建RAG检索流水线，或排查搜索结果缓慢或为空的问题时使用。"}

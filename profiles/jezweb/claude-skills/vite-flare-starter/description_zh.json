@@ -1,0 +1,1 @@
+{"description_zh": "基于 vite-flare-starter 模板搭建一个全栈 Cloudflare 应用 —— React 19 + Hono + D1+Drizzle + better-auth + Tailwind v4+shadcn/ui + TanStack Query + R2 + Workers AI。运行 setup.sh 以克隆、配置并部署。当用户需要开箱即用的全栈 Cloudflare 应用、vite-flare-starter 脚手架，或是具备认证、数据库及 Workers AI 功能且开箱即用的 React + Cloudflare 应用时，即可使用。"}

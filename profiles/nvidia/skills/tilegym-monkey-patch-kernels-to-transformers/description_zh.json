@@ -1,0 +1,1 @@
+{"description_zh": "将 TileGym 内核集成到 Hugging Face `transformers` 模型中，通过替换库的子模块和某些类的实现，并在实例化模型之前修补某些类的 `init`、`forward` 和加载权重（`load weight`）方法。用于当用户需要将 TileGym 内核集成到 `transformers` 模型时。"}

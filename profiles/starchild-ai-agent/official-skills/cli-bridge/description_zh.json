@@ -1,0 +1,1 @@
+{"description_zh": "管理用于授权本地 starchild CLI 与本代理进行通信的短代码包，包括 agent-shell 本地执行通道和本地 MCP 代理（用户机器上的 stdio MCP 服务器）。\n\n用于连接或断开 starchild CLI（例如：生成 CLI 桥接码、列出我的 CLI 包、撤销旧的 CLI 会话、允许代理在用户自身机器上执行 shell 命令，或通过 stdio MCP 服务器驱动本地应用——如 Blender、Figma、Godot、电脑使用等应用）。"}

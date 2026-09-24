@@ -1,0 +1,1 @@
+{"description_zh": "为测试分析技能（断言质量、测试反模式、测试缺口分析、测试异味检测、测试标注）提供特定语言参考文件的文件路径。调用此技能以发现可用的扩展文件（例如，dotnet.md 用于 .NET/MSTest/xUnit/NUnit/TUnit，python.md 用于 pytest/unittest，typescript.md 用于 Jest/Vitest/Mocha，java.md 用于 JUnit/TestNG 等）。请勿直接使用——由 test-quality-auditor 代理和多语言分析技能调用，这些技能需要框架特定的查询表（测试标记、断言 API、skip 注解、睡眠模式、神秘访客指示器、集成标记、设置/清理、标签支持能力）。"}

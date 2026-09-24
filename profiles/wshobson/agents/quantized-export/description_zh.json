@@ -1,0 +1,1 @@
+{"description_zh": "以正确的部署格式导出已推广的微调模型——合并的 safetensors、仅 LoRA、带 imatrix 的 GGUF，或 FP8。当 checkpoint 通过推广、为目标设备选择量化格式，或导出的模型未通过冒烟测试时使用。"}

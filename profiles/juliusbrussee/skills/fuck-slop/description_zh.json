@@ -1,0 +1,1 @@
+{"description_zh": "对任意文本的 De-slop 处理：检测并消除 AI 写作的统计特征（否定性并列 /“不是 X 而是 Y”、破折号滥用、三连词法则、虚假区间、浮夸词汇、节奏统一、双向缓和措辞），并将文本改写为对应的目标语域——学术文章、推文、Reddit 帖子、邮件、博客，以及两者之间的任何体裁。当用户说“fuck slop”、“f*ck slop”、“deslop”、“de-slop this”、“remove the AI tells”、“humanize this”、“make this not sound like AI”，或调用 /fuck-slop 时使用。在发布任何由 Agent 起草的文本之前，也请使用。"}

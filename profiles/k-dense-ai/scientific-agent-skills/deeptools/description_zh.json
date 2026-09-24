@@ -1,0 +1,1 @@
+{"description_zh": "NGS分析工具包。BAM转bigWig转换、QC（相关性分析、主成分分析、指纹）、热图/图谱（转录起始位点、峰），适用于ChIP-seq、RNA-seq、ATAC-seq的可视化分析。"}

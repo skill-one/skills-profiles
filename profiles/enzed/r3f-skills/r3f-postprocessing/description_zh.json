@@ -1,0 +1,1 @@
+{"description_zh": "配置 React Three Fiber 后处理，包括 bloom、选区效果和环境光遮蔽、景深。用于合成管线和屏幕空间效果，而非网格材质着色器。"}

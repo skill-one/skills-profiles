@@ -1,0 +1,1 @@
+{"description_zh": "在将遗留 Dune 应用迁移至新的 Flows 应用托管基础设施时，必须使用。它负责协调完整的迁移流程：审计当前状态，将 app.json 更新为 appsApi 基础设施，将认证配置委托给 setup-flows-auth，创建或更新 manifest.json 的网络权限，并更新部署脚本以使用 @cognite/cli。每当用户提出\"迁移至 Flows\"、\"迁移至新基础设施\"、\"从 Dune 迁移至 Flows\"、\"迁移遗留应用\"，或希望将现有应用迁移至新的 Flows 应用托管时，请使用此功能。"}

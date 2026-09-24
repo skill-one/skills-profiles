@@ -1,0 +1,1 @@
+{"description_zh": "采用 120 分评分的 Salesforce 集成架构。触发条件：当用户设置命名凭据、外部服务、REST/SOAP 调用、平台事件、CDC，或触碰 .namedCredential-meta.xml 文件时，触发。不触发条件：当使用 Connected App/OAuth 配置（使用 sf-connected-apps）、仅 Apex 逻辑（使用 sf-apex），或进行数据导入/导出（使用 sf-data）时，不触发。"}

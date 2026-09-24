@@ -1,0 +1,1 @@
+{"description_zh": "当用户希望在本地 MicroK8s 或 Azure AKS 上，为合成数据生成工作流配置、扩展、验证或加固 NVIDIA 物理 AI 基础设施，涵盖 Kubernetes 集群、推理端点部署、OSMO 部署、工作负载提交就绪状态以及基础设施故障恢复时使用。\n\n触发关键词：物理 AI 基础设施、弹性扩展、SDG 基础设施、MicroK8s、Azure AKS、NVCF 部署、NIM Operator、OSMO 部署、工作流扩展。\n\n不触发条件：除非已请求基础设施配置、扩展、验证或恢复，否则不适用于 OSMO 日志摘要或仅工作负载操作。"}

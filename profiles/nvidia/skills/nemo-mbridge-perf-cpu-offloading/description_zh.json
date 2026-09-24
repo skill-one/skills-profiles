@@ -1,0 +1,1 @@
+{"description_zh": "验证并应用 Megatron Bridge 中的 CPU 卸载功能，包括使用 HybridDeviceOptimizer 进行层级激活卸载和分数优化器状态卸载。"}

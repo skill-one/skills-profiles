@@ -1,0 +1,1 @@
+{"description_zh": "使用 news-aggregator-skill 获取最新新闻，将其格式化为 Markdown 格式的播客脚本，并使用 tts skill 生成播客音频文件。当用户要求获取最新新闻并以播客形式朗读时使用。"}

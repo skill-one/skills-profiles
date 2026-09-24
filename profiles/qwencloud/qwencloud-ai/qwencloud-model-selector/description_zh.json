@@ -1,0 +1,1 @@
+{"description_zh": "推荐最佳的Qwen模型和参数。  \n触发条件：当：在Qwen模型之间进行选择、比较Qwen模型定价、了解Qwen模型功能能力、询问在Token Plan上有哪些可用模型、查看成本历史、执行技能需要模型选择建议时，或用户通过名称明确调用此技能（例如：使用qwencloud-model-selector）。  \n不触发条件：当：涉及非Qwen模型讨论（如OpenAI、Gemini等）或与Qwen无关的通用AI问题时，不触发。"}

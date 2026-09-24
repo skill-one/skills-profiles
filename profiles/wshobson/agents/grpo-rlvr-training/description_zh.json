@@ -1,0 +1,1 @@
+{"description_zh": "使用GRPO（Group Relative Policy Optimization）和基于可验证奖励的强化学习（RLVR）来训练推理与可验证任务行为。适用于任务成功结果可通过算法检查（如数学、代码、工具调用、结构化输出）的场景、设计GRPO奖励函数时，以及GRPO运行偏离或出现奖励作弊的情况。"}

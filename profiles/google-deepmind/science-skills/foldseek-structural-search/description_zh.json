@@ -1,0 +1,1 @@
+{"description_zh": "利用Foldseek API对蛋白质执行针对各类数据库（PDB、AlphaFold、CATH、MGnify等）的3D结构搜索。仅在用户提供物理3D坐标文件（.cif、.mmcif或.pdb）并希望查找结构相似蛋白质时使用。若用户仅提供蛋白质序列、基因名称或UniProt ID，则不得使用。"}

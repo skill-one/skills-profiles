@@ -1,0 +1,1 @@
+{"description_zh": "通过依次执行任务，并进行测试与验证，实现已批准的规范提案。当实施变更、应用提案、执行规范任务或基于已批准的方案构建时使用。触发器包括“openspec implement”，“ implement”，“apply change”，“execute spec”，“work through tasks”，“build feature”，“start implementation”。"}

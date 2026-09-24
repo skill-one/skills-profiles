@@ -1,0 +1,1 @@
+{"description_zh": "将参考的 Instagram Reel 转化为适合您本人口吻、并基于您的通讯录内容重新改编的脚本。接受 Reel 网址或 Notion 参考链接，使用 Apify 抓取视频，将其发送至 Gemini 2.5 Flash 进行完整转录、钩子与结构分析，随后基于相同的模式，为您的通讯录主题撰写新脚本。当用户表示“编写 Reel 脚本”、“进行 Reel 脚本制作”、“将此内容转化为 Reel”、粘贴 Instagram Reel 网址，或引用其 Notion 异常 Reel 数据库时，使用此技能。URL 转视频分析流程需要 APIFY_API_TOKEN 和 GOOGLE_AI_API_KEY；若提供输入内容，可跳过相应阶段。"}

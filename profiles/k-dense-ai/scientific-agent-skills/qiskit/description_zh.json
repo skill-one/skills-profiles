@@ -1,0 +1,1 @@
+{"description_zh": "构建、模拟、转译并执行基于 Qiskit 和 IBM Quantum Runtime 的量子电路。适用于 Qiskit 2.x 电路和算子、V2 Sampler 或 Estimator 原语、目标感知转译、本地或有噪声的模拟、IBM QPU 执行、运行时会话或批次、错误缓解，以及 Qiskit 生态系统软件包。"}

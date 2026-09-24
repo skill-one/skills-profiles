@@ -1,0 +1,1 @@
+{"description_zh": "检索并分析针对某蛋白质的AlphaFold预测结构。当用户提供具体的UniProt Accession ID，并需要结构置信度指标（pLDDT）、结构域边界分析或无序评估时使用。如果用户仅有蛋白质名称、基因名称或氨基酸序列，则不要使用——请首先询问用户所需的UniProt ID。"}

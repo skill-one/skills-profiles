@@ -1,0 +1,1 @@
+{"description_zh": "使用当前最佳实践的超参数配置 LoRA 与 QLoRA 的监督微调。在编写或审查 LoRA/QLoRA 训练配置、选择 rank/alpha/目标模块，或决定采用 LoRA、QLoRA 还是全量微调时使用。"}

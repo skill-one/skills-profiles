@@ -1,0 +1,1 @@
+{"description_zh": "Typst 文档创建与包开发。适用场景：\n（1）处理 .typ 文件，\n（2）用户提及 typst、typst.toml 或 typst-cli，\n（3）创建或使用 Typst 包，\n（4）开发文档模板，\n（5）将 Markdown/LaTeX 转换为 Typst"}

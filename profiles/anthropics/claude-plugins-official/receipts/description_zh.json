@@ -1,0 +1,1 @@
+{"description_zh": "从本机的本地会话记录中生成一份个人 Claude Code 使用与影响报告（\"receipts\"）——用于向经理说明 Claude Code 的使用情况/支出、进行自我评审，或进行\"我这段时间内都使用它来做什么\"的例行检查。在本地挖掘 `~/.claude/projects` 下的数据（除最终撰写总结外，不进行额外的 API 调用），与本地 git 历史进行交叉参考，并将一份 Markdown 报告以及一份自包含的 HTML 收据写入你的家庭目录。当用户请求\"receipts\"、\"impact report\"、\"usage report\"、希望\"展示我的 Claude Code 活动\"、\"证明 Claude Code 的价值\"，或执行 `/receipts` 命令时使用本功能。"}

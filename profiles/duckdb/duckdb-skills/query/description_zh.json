@@ -1,0 +1,1 @@
+{"description_zh": "针对所附 DuckDB 数据库执行 SQL 查询，或临时对文件执行查询。支持原始 SQL 或自然语言提问。采用 DuckDB 友好的 SQL 惯用写法。"}

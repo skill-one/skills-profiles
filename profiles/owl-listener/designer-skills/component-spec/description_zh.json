@@ -1,0 +1,1 @@
+{"description_zh": "指定一个组件——属性（props）、状态（states）、变体（variants）、可访问性（accessibility）和使用规则。在定义库组件时使用。对于可复用的文档脚手架，使用 `documentation-template`；对于问题-解决方案模式，使用 `pattern-library`。"}

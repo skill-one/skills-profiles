@@ -1,0 +1,1 @@
+{"description_zh": "生成并审查采用 150 分评分的 Salesforce Apex 代码。\n\n触发条件：当用户编写、审查或修复 Apex 类、触发器、测试类、批处理/队列任务/可调度任务，或触及 .cls/.trigger 文件时。\n\n不得触发：当使用 LWC JavaScript（使用 sf-lwc）、Flow XML（使用 sf-flow）、仅使用 SOQL 的查询（使用 sf-soql），或非 Salesforce 代码时。"}

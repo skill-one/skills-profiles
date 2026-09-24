@@ -1,0 +1,1 @@
+{"description_zh": "使用 FlowIO 读取、检查并写入 Flow Cytometry Standard (FCS) 2.0、3.0 和 3.1 文件，适用于低级 FCS 元数据与通道检查、NumPy 事件提取、多数据集文件、表格导出及 FCS 3.1 文件创建；使用 FlowKit 进行补偿、流式细胞术变换、设门操作或 FlowJo 工作区管理。"}

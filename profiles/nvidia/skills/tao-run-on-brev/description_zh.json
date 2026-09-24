@@ -1,0 +1,1 @@
+{"description_zh": "Brev 管理支持 Docker 的 GPU 实例。在 Brev GPU 实例上运行 TAO 训练、评估或推理，管理 Brev 部署，或通过 Brev CLI 调度 TAO 任务时使用。触发短语包括：\"在 Brev 上运行\"、\"Brev GPU 实例\"、\"提交任务至 Brev\"、\"Brev CLI 部署\"。"}

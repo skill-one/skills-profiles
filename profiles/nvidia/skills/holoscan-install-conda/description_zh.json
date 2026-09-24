@@ -1,0 +1,1 @@
+{"description_zh": "在CUDA 13环境下通过Conda安装Holoscan SDK v4.3+。用于Conda安装；将CUDA 12主机重定向至容器/Wheel。"}

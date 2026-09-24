@@ -1,0 +1,1 @@
+{"description_zh": "高性能 Python ETL、分析与 pandas 迁移的 DataFrame 库。用于基于表达式的数据操作，支持惰性查询优化、并行执行、流式外存处理、Arrow 互操作性以及可选的 GPU 执行。"}

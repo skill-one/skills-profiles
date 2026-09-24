@@ -1,0 +1,1 @@
+{"description_zh": "从 AWS S3、Google Cloud Storage 或 Azure Blob 迁移至 Tigris——通过 `tigris buckets set-migration` 设置影子桶、通过 `tigris buckets migrate` 主动排空、批量复制、SDK 端点切换、零中断迁移"}

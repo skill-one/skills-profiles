@@ -1,0 +1,1 @@
+{"description_zh": "如何在SLURM集群上启动分布式Megatron-LM训练任务。本文涵盖最小sbatch骨架、torch.distributed.run的环境变量配置、跨硬件与并行模式的CUDA_DEVICE_MAX_CONNECTIONS规则、容器规范、监控以及各rank故障诊断。"}

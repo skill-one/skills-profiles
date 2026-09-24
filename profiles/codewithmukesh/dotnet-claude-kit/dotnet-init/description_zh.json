@@ -1,0 +1,1 @@
+{"description_zh": "交互式项目初始化。检测项目类型、询问架构问题，并生成定制化的 CLAUDE.md，无需手动复制模板。使用场景：\"init project\"、\"setup project\"、\"initialize\"、\"new project setup\"、\"generate CLAUDE.md\"、\"configure for dotnet-claude-kit\"，或在全新的或现有的 .NET 代码库上启动 Claude Code。"}

@@ -1,0 +1,1 @@
+{"description_zh": "支持双轨工作流和100分评分的Agentforce智能体测试。触发条件：用户测试Agentforce智能体、执行 sf agent test commands、创建测试规格、验证主题路由，或分析智能体测试覆盖率。不触发条件：Apex单元测试（使用 sf-testing）、构建智能体（使用 sf-ai-agentforce）、或 Agent Script DSL（使用 sf-ai-agentscript）。"}

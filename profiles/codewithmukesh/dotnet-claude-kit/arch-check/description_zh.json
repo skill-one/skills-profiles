@@ -1,0 +1,1 @@
+{"description_zh": "架构符合性检查：验证现有代码库是否符合其声明的架构（VSA、Clean Architecture、DDD、Modular Monolith）——依赖方向、层级违规、模块边界泄漏以及循环依赖——使用 token 成本较低的 Roslyn MCP 分析。调用时机：“check architecture”、“architecture violations”、“layer violations”、“dependency direction”、“module boundaries”、“arch check”、“is my architecture clean”、“enforce architecture”、“conformance check”。如需选择架构，请改用 architecture-advisor。"}

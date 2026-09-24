@@ -1,0 +1,1 @@
+{"description_zh": "Claude Code 插件自动化语义化版本管理及发布工作流。该工作流覆盖 package.json、marketplace.json、plugin.json 等清单文件中的版本号递增，以及构建验证、git 打标签、GitHub 发布和变更日志生成。由于维护者提出了 npm 安全相关事项，NPM 发布是最终需要人工交接的环节。"}

@@ -1,0 +1,1 @@
+{"description_zh": "连接正在运行的 ComfyUI 实例，排队工作流、监控执行并获取结果。支持在线（REST API）和离线（JSON 导出）两种模式。适用于执行 ComfyUI 工作流或检查服务器状态时。"}

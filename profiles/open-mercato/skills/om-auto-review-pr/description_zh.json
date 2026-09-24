@@ -1,0 +1,1 @@
+{"description_zh": "在隔离的工作树中，按编号审查或重新审查一个PR。运行 `om-code-review` 技能——或针对仅规格设计的PR进行规范审查——提交批准/请求变更，管理流水线标签。当请求变更时，自动修复循环（fix/test/validate/re-review，直到合并就绪）在自动化自身的PR上运行，或使用 --autофикс；其他作者的PR仅进行审查和交接。用法：/om-auto-review-pr <PR-number] [--autофикс]"}

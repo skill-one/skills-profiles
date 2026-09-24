@@ -1,0 +1,1 @@
+{"description_zh": "必须用于在 Flows/Fusion 应用中添加 AI、Atlas、智能体、聊天界面或 LLM 功能时。通过 @cognite/app-sdk 使用 Atlas/EOS 侧边栏——不要使用 useAtlasChat、vendored atlas-agent 或按行聊天补全。触发器：atlas, EOS, PAIA, agent chat, chat UI, sendAgentMessage, sendAgentLayoutMode, registerAgentServer, connectToHostApp, useAtlasChat, LLM。应用内聊天：仅在宿主侧边栏无法工作的情况下集成 integrate-atlas-chat。"}

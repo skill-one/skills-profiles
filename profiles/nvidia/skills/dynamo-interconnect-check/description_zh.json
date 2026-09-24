@@ -1,0 +1,1 @@
+{"description_zh": "验证 Dynamo 部署的 NIXL/UCX/NCCL 互连是否已就绪，以支持基于 RDMA/NVLink 的解耦服务。在 recipe-runner 启动部署后（尤其针对 disagg/多节点场景）使用相应操作确认 KV 传输正确；使用 troubleshoot 诊断已失败的 Pods。"}

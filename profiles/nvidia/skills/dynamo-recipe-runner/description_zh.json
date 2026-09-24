@@ -1,0 +1,1 @@
+{"description_zh": "选择、验证、修补并部署现有的 NVIDIA Dynamo Kubernetes 配方。用于模型、后端、GPU、部署模式等场景的配方配置启动；使用 router-starter 进行仅路由器模式相关工作，并通过 troubleshoot 排查损坏的部署。"}

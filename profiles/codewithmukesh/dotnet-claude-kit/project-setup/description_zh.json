@@ -1,0 +1,1 @@
+{"description_zh": ".NET 项目技术栈选型顾问：数据库、认证、缓存、消息、可观测性与弹性方面的推荐默认值，并说明每个默认值的理由。在为用户选择或审查项目技术栈时，或在用户说“tech stack”、“which database”、“pick a stack”、“recommended defaults”或“what should I use for”时加载。项目初始化使用 dotnet-init，代码库评估使用 health-check，升级和模式变更使用 migrate。"}

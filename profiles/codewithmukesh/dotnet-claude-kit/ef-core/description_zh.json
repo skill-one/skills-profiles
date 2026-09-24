@@ -1,0 +1,1 @@
+{"description_zh": "针对 .NET 10 的 Entity Framework Core 模式。涵盖 DbContext 配置、迁移工作流、拦截器、编译查询、ExecuteUpdateAsync、ExecuteDeleteAsync、值转换器以及查询优化。当需要处理数据库、编写查询、管理模式变更，或用户提及以下内容时，请加载此技能：“EF Core”、“Entity Framework”、“DbContext”、“migration”、“LINQ query”、“database”、“SQL”、“N+1”、“Include”、“split query”、“value converter”、“interceptor”、“compiled query”。"}

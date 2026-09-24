@@ -1,0 +1,1 @@
+{"description_zh": "适用于将 Java 源代码文件转换为符合规范的 Kotlin 代码时使用；当用户提及 \"java to kotlin\"、\"j2k\"、\"convert java\"、\"migrate java to kotlin\"，或使用需要转换为 .kt 文件的 .java 文件时。支持对 Spring、Lombok、Hibernate、Jackson、Micronaut、Quarkus、Dagger/Hilt、RxJava、JUnit、Guice、Retrofit 和 Mockito 等框架的感知型转换。"}

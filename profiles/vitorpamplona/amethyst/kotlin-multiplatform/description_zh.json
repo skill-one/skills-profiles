@@ -1,0 +1,1 @@
+{"description_zh": "Amethyst KMP 项目的平台抽象决策指导。指导用户判断何时进行抽象处理、何时保留平台特定逻辑，明确源码集放置（commonMain、jvmAndroid、platform-specific）及预期与实际模式。覆盖主要目标（Android、JVM/桌面、iOS，均已成熟），并将 web/wasm 作为可能的未来目标。集成 gradle-expert 以解决依赖问题。\n\n触发于：抽象决策（“我是否应该共享此部分？”）、源码集放置问题、预期/实际模式创建、build.gradle.kts 配置工作、错误放置检测、KMP 依赖建议。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使最终 PDF 中的每一个数字都能追溯到生成它的确切代码行。使用 \\hypertarget/\\hyperlink LaTeX 命令以及编译时求值的 \\num{formula}。用于可重复性和数据完整性验证。"}

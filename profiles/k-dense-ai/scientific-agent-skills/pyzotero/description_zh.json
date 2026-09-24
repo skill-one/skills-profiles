@@ -1,0 +1,1 @@
+{"description_zh": "使用 pyzotero Python 客户端与 Zotero 参考文献管理库交互。通过 Zotero Web API v3 检索、创建、更新和删除条目、集合、标签和附件。当需要以编程方式处理 Zotero 库、管理书目参考文献、导出引用、搜索库内容、上传 PDF 附件，或构建与研究 Zotero 集成的自动化研究工作流程时，请使用本技能。"}

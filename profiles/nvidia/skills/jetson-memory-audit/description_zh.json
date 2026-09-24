@@ -1,0 +1,1 @@
+{"description_zh": "测量 Jetson DRAM/NvMap 使用情况，并基于实时审计数据验证内存回收前后的状态。"}

@@ -1,0 +1,1 @@
+{"description_zh": "针对全栈 Python/React 应用的 Playwright 端到端测试模式。适用于编写完整用户流程（登录、增删改查、导航）的端到端测试、关键路径回归测试或跨浏览器验证。涵盖测试结构、页面对象模型、选择器策略（data-testid > role > label）、等待策略、认证状态复用、测试数据管理以及 CI 集成。不涵盖单元测试或组件测试（请使用 pytest-patterns 或 react-testing-patterns）。"}

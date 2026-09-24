@@ -1,0 +1,1 @@
+{"description_zh": "基于 Polars DataFrames 的高性能基因组区间操作与生物信息文件 I/O。针对 BED/VCF/BAM/GFF 区间，支持重叠、最近、合并、覆盖、补集、减法操作。流式、云原生，更快的 bioframe 替代方案。"}

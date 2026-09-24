@@ -1,0 +1,1 @@
+{"description_zh": "为 NVIDIA Nemotron 内容安全护栏生成用户自带（BYO）自定义安全策略——支持 Nemotron-Content-Safety-Reasoning-4B（文本）和多模态 Nemotron-3-Content-Safety。生成 Markdown 策略、JSON 分类体系以及可直接使用的推理提示词。将粗糙词汇或现有策略映射至 V2 类别，并支持添加自定义类别或话题相关规则。"}

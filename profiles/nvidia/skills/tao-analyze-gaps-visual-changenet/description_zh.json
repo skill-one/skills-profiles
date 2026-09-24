@@ -1,0 +1,1 @@
+{"description_zh": "通过直接调用固定的 TAO 数据服务容器执行 `docker run … gap_analysis vcn_aoi …`，对 NVIDIA TAO VCN Classify（视觉组件网络）实验进行差距分析——选取最优决策阈值，对逐样本弱点进行排序，并为下游数据增强生成按照明条件展开的前 K 个最弱 parquet 文件。适用于分析 VCN 分类失败、选取 SDA 增强目标，或审计 PASS/NO_PASS 边界情况。"}

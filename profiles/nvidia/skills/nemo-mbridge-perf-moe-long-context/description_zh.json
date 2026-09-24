@@ -1,0 +1,1 @@
+{"description_zh": "长上下文 MoE 训练指南（适用于 Megatron Bridge）。涵盖计算单元规模配置、选择性重计算、调度器选择，以及基于 DSV3、Qwen3 和 Qwen3-Next 长上下文实验的实用经验模式。"}

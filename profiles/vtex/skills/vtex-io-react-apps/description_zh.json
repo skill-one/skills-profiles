@@ -1,0 +1,1 @@
+{"description_zh": "适用于在 VTEX IO 应用中，于 react/ 目录下构建 React 组件或于 store/ 目录下配置 store 区块时使用。涵盖 Site Editor 的 interfaces.json 与 contentSchemas.json、管理应用的 VTEX Styleguide 以及店面样式所需的 css-handles。适用于在 VTEX IO react 构建器生态系统中创建自定义店面组件、管理面板、像素应用，或进行任何前端开发。"}

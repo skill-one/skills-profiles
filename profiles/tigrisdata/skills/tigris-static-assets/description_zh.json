@@ -1,0 +1,1 @@
+{"description_zh": "用于将静态资源（CSS、JS、字体、构建产物）部署到 Tigris——资源管道、缓存头、CDN 分发，覆盖 Next.js、Remix、Rails、Django、Laravel、Express。"}

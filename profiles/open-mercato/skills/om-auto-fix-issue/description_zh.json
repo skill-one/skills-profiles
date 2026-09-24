@@ -1,0 +1,1 @@
+{"description_zh": "通过单条命令端到端地修复或实现跟踪器问题——接收问题 ID 或纯文本问题描述（需先通过 om-prepare-issue 提交），进行分类后，驱动 Bug 自动修复链路（针对 UI 修复：om-verify-in-repo、om-root-cause、om-fix、om-open-pr、om-auto-review-pr、om-auto-qa-pr），或驱动功能路径（规格说明通过 om-auto-write-spec 生成，实现通过 om-auto-implement-spec 构建）。提供独立的 Worktree、认领协议与干净的终止机制，适用于执行“修复问题 123”或粘贴问题描述。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用 cuOpt 的 LP、MILP 和 QP（beta）——仅支持命令行（CLI）（MPS/LP/QPS 文件，cuopt_cli）。当用户通过命令行从 MPS 或 LP 文件求解 LP、MILP 或 QP 问题时使用。"}

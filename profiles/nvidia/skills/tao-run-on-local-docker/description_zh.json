@@ -1,0 +1,1 @@
+{"description_zh": "使用配备 NVIDIA GPU 运行时的 Docker 守护进程，对 TAO SDK 作业容器进行本地或远程 Docker 执行。运行 TAO 作业时，适用于以下场景：当前机器、直接连接的 Docker 主机或通过 DOCKER_HOST 暴露的远程 GPU 设备。触发短语包括“运行本地”、“本地 Docker”、“远程 Docker”、“使用我的 GPU”、“在我的机器上运行”、“主机 Docker 守护进程”。"}

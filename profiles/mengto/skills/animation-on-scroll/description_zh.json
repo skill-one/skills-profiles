@@ -1,0 +1,1 @@
+{"description_zh": "使用 IntersectionObserver 创建滚动动画触发器，并配合适配 Tailwind 的动画类与关键帧。当需要实现滚动显现、滚动触发动画，或元素进入视口时的序列化动画效果时使用。"}

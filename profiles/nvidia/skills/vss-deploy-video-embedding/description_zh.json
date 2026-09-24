@@ -1,0 +1,1 @@
+{"description_zh": "当部署、运行或集成 VSS 3.2 GA RT-Embed Video Embedding 微服务时，请使用本技能。本技能涵盖 Docker Compose 启动、GPU 与存储的依赖条件、`/v1` REST API（文件上传、文本与视频嵌入、实时 RTSP 流、健康检查与指标）、Redis/Kafka/OTel 集成、常见故障模式以及拆除操作。"}

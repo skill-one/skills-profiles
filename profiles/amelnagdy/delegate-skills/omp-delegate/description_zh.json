@@ -1,0 +1,1 @@
+{"description_zh": "将编码任务委托给 Oh My Pi (`omp`)，作为后台实现者，然后审查其差异（diff）并自行合并。在以下情况下使用此方法：用户希望将实现工作委托给 Oh My Pi / omp，例如使用 \"have omp implement X\"、\"delegate this to oh my pi\"、\"run it through omp\"、\"use oh-my-pi to implement/fix/refactor\" 等表述，或希望将一系列编码任务通过 omp 执行但自己保持审查者身份。\n\n切勿用于以下情况：任务小到可以直接内联完成；用户希望直接编写代码而无需进行委托；或用户指的是原始的 Pi CLI (`pi`)（即 pi-delegate）。"}

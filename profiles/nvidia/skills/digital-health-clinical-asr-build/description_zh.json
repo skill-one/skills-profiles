@@ -1,0 +1,1 @@
+{"description_zh": "临床ASR飞轮第二阶段。在整理临床术语、标注IPA、合成NeMo清单时使用。不用于评分（使用 /digital-health-clinical-asr-eval）。"}

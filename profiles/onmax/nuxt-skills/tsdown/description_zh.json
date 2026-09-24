@@ -1,0 +1,1 @@
+{"description_zh": "打包 TypeScript 库时使用：提供 tsdown 配置、双 ESM/CJS 输出、.d.ts 生成、包校验以及插件编写支持。"}

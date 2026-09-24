@@ -1,0 +1,1 @@
+{"description_zh": "用于在包含 .sops.yaml、加密的环境文件或 pnpm secrets script 的仓库中进行密钥或密钥设置。"}

@@ -1,0 +1,1 @@
+{"description_zh": "盘点并优先处理产品范围内的累积设计不一致问题。当漂移随时间推移逐渐累积时使用。专门针对 token 覆盖情况，请使用 `design-token-audit`（designer-toolkit）；针对 WCAG 差距，请使用 `accessibility-audit`（design-systems）。"}

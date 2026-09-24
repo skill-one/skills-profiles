@@ -1,0 +1,1 @@
+{"description_zh": "涵盖认证（requirepass 和 ACL 用户）、TLS、基于 ACL 的最低权限访问控制、通过 bind 和 protected-mode 限制网络暴露、防火墙规则，以及禁用危险命令的 Redis 安全指南。适用于部署 Redis 至生产环境、为应用定义 ACL 用户、配置 TLS 连接、在防火墙后加固 Redis 实例，或审计 Redis 部署以进行安全加固。"}

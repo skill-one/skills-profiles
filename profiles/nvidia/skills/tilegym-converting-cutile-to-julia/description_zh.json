@@ -1,0 +1,1 @@
+{"description_zh": "将 cuTile Python GPU 内核（@ct.kernel）转换为 cuTile.jl Julia 的对应版本。处理内核语法转换、从0索引到1索引的转换、广播机制差异、内存布局（行优先到列优先）、类型系统映射以及启动API差异。适用于将 cuTile Python 内核转换为 Julia cuTile.jl、进行移植或翻译，或用于调试与优化现有的 Julia cuTile 翻译。"}

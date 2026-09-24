@@ -1,0 +1,1 @@
+{"description_zh": "NeMo-RL 文档规范。涵盖 docs/index.md 更新及 docstring 格式。禁止用于：bug 修复、测试修复、依赖升级、重构、CI/CD 变更、性能调优，或不涉及编写或更新文档的任务。"}

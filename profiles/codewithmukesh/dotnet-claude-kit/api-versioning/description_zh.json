@@ -1,0 +1,1 @@
+{"description_zh": "ASP.NET Core 的 API 版本策略。涵盖 Asp.Versioning 库、URL 路径段、请求头、查询字符串策略、版本弃用及 OpenAPI 集成。当为 API 添加版本控制、为 API 进行破坏性变更的演进，或用户提及“API version”、“versioning”、“v1/v2”、“Asp.Versioning”、“deprecation”、“breaking change”或“backward compatibility”时，加载此技能。"}

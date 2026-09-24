@@ -1,0 +1,1 @@
+{"description_zh": "Google量子计算框架。当针对Google量子AI硬件、设计抗噪声电路或开展量子表征实验时使用。最适用于Google硬件、噪声建模及低层电路设计。使用IBM硬件请选用qiskit；进行带自动微分的量子机器学习请选用pennylane；进行物理模拟请选用qutip。"}

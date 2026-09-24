@@ -1,0 +1,1 @@
+{"description_zh": "通用发布工作流。自动检测版本文件和变更日志。支持 Node.js、Python、Rust、Claude 插件、GitHub Releases、带注释的标签、历史发布回填及通用项目。当用户说“release”、“发布”、“新版本”、“bump version”、“push”、“推送”、“release notes”、“GitHub Release”或“回填 Release”时使用。"}

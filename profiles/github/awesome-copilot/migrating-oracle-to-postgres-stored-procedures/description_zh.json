@@ -1,0 +1,1 @@
+{"description_zh": "将 Oracle PL/SQL 存储过程迁移至 PostgreSQL PL/pgSQL。将 Oracle 特定语法转换为 PostgreSQL 语法，保留方法签名与类型锚定的参数，在适当情况下利用 orafce，并应用显式排序规则映射（仅在适当情况下使用 `COLLATE \"C\"`，按需要应用本地化排序规则）。适用于数据库迁移期间将 Oracle 存储过程或函数转换为 PostgreSQL 等价物时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "场景文本检测 OCDNet。基于可微二值化方法，对自然图像中的任意方向文本区域进行检测。适用于在 TAO OCDNet 模型上进行训练、评估、导出、剪枝、量化、重训练或运行推理。触发短语包括：“train OCDNet”、“scene text detection”、“arbitrary-oriented text boxes”、“differentiable binarization detector”。"}

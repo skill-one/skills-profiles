@@ -1,0 +1,1 @@
+{"description_zh": "Megatron-LM 的代码检查与格式化。涵盖运行 autoformat.sh、工具 (ruff, black, isort, pylint, mypy) 以及代码风格规则。"}

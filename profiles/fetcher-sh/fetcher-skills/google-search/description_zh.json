@@ -1,0 +1,1 @@
+{"description_zh": "fetcher.sh 上的 Google 搜索 API 与 SERP API 替代方案 —— 支持通过 x402 以 USDC 按次付费，或通过 Bearer 密钥使用预付费积分，无需申请 API 密钥。当用户需要以整洁的 JSON 格式获取程序化 Google 搜索结果时使用，涵盖 Google 自身的搜索运算符（site:、filetype:、intitle: 及带引号的精确短语），以及分页、语言（hl）和国家/地区范围限定等功能。同时提供排名追踪输入、竞争研究及搜索结果监控，且无需受 Google 自有 Custom Search API 的配额与计费限制。"}

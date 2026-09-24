@@ -1,0 +1,1 @@
+{"description_zh": "查询 QuickGO 和证据与结论本体（ECO）的 REST API。当您需要将基因映射到生物过程、分子功能或细胞组分，查找与特定通路/GO术语相关的基因，或探索基因本体（Gene Ontology）层级时，请使用此功能。请勿用于查询药物靶点（请使用 OpenTargets）或机制性信号通路图（请使用 KEGG）。"}

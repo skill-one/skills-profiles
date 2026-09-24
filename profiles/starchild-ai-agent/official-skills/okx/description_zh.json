@@ -1,0 +1,1 @@
+{"description_zh": "OKX OnChainOS：覆盖 20+ 条链的链上交易、分析、安全与 DeFi。\n\n适用于运行 OKX 路由的链上操作（例如在以太坊上交换、扫描代币风险、追踪聪明钱、检查钱包投资组合）。\n\n钱包：默认使用用户的 Agent Wallet（通过 `wallet` 技能）。仅在用户明确要求时，才使用 OnchainOS TEE 钱包（`onchainos wallet login <email>`）。"}

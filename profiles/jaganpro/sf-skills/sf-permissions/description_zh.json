@@ -1,0 +1,1 @@
+{"description_zh": "权限集分析、层级查看器和访问审计。\n\n触发条件：当用户询问“谁有权访问 X？”、分析权限集/组，或访问 .permissionset-meta.xml / .permissionsetgroup-meta.xml 文件时。\n\n不触发条件：创建新元数据（使用 sf-metadata）、部署权限集（使用 sf-deploy），或 Apex 共享逻辑（使用 sf-apex）。"}

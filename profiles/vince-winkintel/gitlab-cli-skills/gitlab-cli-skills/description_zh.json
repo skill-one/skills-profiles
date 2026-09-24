@@ -1,0 +1,1 @@
+{"description_zh": "面向终端的全面 GitLab CLI（glab）命令参考与工作流程，覆盖所有 GitLab 操作。当用户提及 GitLab CLI、glab 命令、GitLab 自动化、通过 CLI 进行 MR/问题管理、CI/CD 流水线命令、Artifact Registry 令牌交换、仓库操作、身份验证设置，或任何 GitLab 终端操作时使用。将请求路由至针对认证、CI、MR、问题、发布、仓库以及 30 多项其他 glab 命令的专用子技能。触发条件包括 glab、GitLab CLI、GitLab 命令、GitLab 终端、GitLab 自动化。"}

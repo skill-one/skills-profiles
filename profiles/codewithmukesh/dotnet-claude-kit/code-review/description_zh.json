@@ -1,0 +1,1 @@
+{"description_zh": "MCP驱动的.NET项目多维度代码审查。利用Roslyn分析工具对反模式、诊断、引用和依赖图进行检测，并结合结构化人工审查。通过爆炸半径评分优先分配审查精力——数据访问、安全性、并发性与集成边界的检查优先于风格检查——并产出按严重程度分类的发现项，附带可操作的修复方案。\n\n适用场景：\"review\"、\"code review\"、\"PR review\"、\"review this\"、\"review my code\"、\"check code quality\"、\"review changes\"、\"what should I review\"、\"review priorities\"、\"blast radius\"、\"critical path\"。"}

@@ -1,0 +1,1 @@
+{"description_zh": "审计产品内 token 的使用情况，检查覆盖率、漂移与硬编码值。当 token 存在且你怀疑它们被绕过时使用。首次定义 token 时，使用 `design-token`（design-systems）。"}

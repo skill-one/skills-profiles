@@ -1,0 +1,1 @@
+{"description_zh": "为 Rust crate 技能的动态管理提供内部命令支持。仅在 /sync-crate-skills、/clean-crate-skills 或 /update-crate-skill 显式调用时使用。"}

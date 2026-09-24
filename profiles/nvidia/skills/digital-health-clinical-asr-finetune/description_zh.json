@@ -1,0 +1,1 @@
+{"description_zh": "临床 ASR 飞轮的第四阶段。当优先级 KER 高于 0.3 时使用，在 Parakeet TDT v2 上运行原始 NeMo SFT 并执行离线周期 N+1 重新评估。不用于通用词汇增强（使用 /finetune-asr）。"}

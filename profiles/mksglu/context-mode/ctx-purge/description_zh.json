@@ -1,0 +1,1 @@
+{"description_zh": "清除 context-mode 知识库。永久删除所有索引内容并重置会话统计。此操作具有破坏性，且无法撤销。触发：/context-mode:ctx-purge"}

@@ -1,0 +1,1 @@
+{"description_zh": "检查并调整社交媒体平台的图片大小。运行 `scripts/check.js` 来验证任何图片是否符合 Instagram、Facebook、X（Twitter）、LinkedIn、TikTok、YouTube、Pinterest、Snapchat 和 Threads 的规格，获取按优先级排列的匹配列表及精确的调整大小命令。运行 `scripts/resize.js` 导出尺寸正确的副本。适用于用户要求验证图片尺寸、为平台调整图片大小、检查图片是否符合规格，或为社交媒体发布或广告准备素材的场景。"}

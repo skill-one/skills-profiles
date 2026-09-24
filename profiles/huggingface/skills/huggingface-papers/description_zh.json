@@ -1,0 +1,1 @@
+{"description_zh": "查找并阅读以Markdown格式呈现的Hugging Face论文页面，并使用papers API获取结构化元数据（如作者、关联的模型/数据集/空间、GitHub仓库和项目页面）。当用户分享Hugging Face论文页面URL、arXiv URL或ID，或要求总结、解释或分析AI研究论文时使用。"}

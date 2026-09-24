@@ -1,0 +1,1 @@
+{"description_zh": "完全定制化的底层绘图库。当您需要精细控制每个绘图元素、创建新型绘图类型或集成特定科学工作流时，请使用本库。支持导出为 PNG/PDF/SVG 以用于出版。快速生成统计图表请使用 seaborn；交互式图表请使用 plotly；符合期刊样式要求的出版级多面板图表请使用 scientific-visualization。"}

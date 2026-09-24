@@ -1,0 +1,1 @@
+{"description_zh": "运行 context-mode 诊断。检查运行时、钩子、FTS5，\n插件注册、npm 和市场版本。\n触发：/context-mode:ctx-doctor"}

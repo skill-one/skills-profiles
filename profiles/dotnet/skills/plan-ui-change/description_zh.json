@@ -1,0 +1,1 @@
+{"description_zh": "通过将复杂 Blazor UI 功能分解为聚焦的组件，规划复杂的 Blazor UI 功能。使用场景：构建包含多个部分的复杂 Blazor 页面，规划组件分解，设计多区域仪表板或布局，将大型 UI 功能拆解为可组合组件，带有侧边栏和内容面板的页面，任何具有 3 个及以上不同视觉区域或多个相互交互子功能的页面，识别父子关系和数据流。不使用场景：从零创建新的 Blazor 项目或应用（使用 create-blazor-project），实现单个独立组件（使用 author-component），使用参数和 EventCallback 编写组件代码（使用 author-component），或简单的单组件页面。"}

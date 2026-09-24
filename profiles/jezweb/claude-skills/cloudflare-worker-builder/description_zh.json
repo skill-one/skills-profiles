@@ -1,0 +1,1 @@
+{"description_zh": "搭建并部署集成 Hono 路由、Vite 插件与静态资源的 Cloudflare Workers。详细描述项目、脚手架结构、绑定配置及部署流程。当用户需要创建 Worker 项目、在 Cloudflare 上设置 Hono、配置 D1 / R2 / KV / 队列绑定，或排查 Worker 导出语法、API 路由冲突、HMR 问题及部署失败等问题时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在任何技能被添加或更新后，自动同步文档与配置；每次执行 AI 代码时自动触发，以确保 README Available Skills 和 .claude-plugin/marketplace.json 始终保持最新。"}

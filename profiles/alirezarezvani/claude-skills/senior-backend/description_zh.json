@@ -1,0 +1,1 @@
+{"description_zh": "设计并实现包括REST API、微服务、数据库架构、认证流程以及安全加固在内的后端系统。当用户请求进行“设计REST API”、“优化数据库查询”、“实现认证”、“构建微服务”、“审查后端代码”、“配置GraphQL”、“处理数据库迁移”或“对API进行负载测试”时使用。涵盖Node.js/Express/Fastify开发、PostgreSQL优化、API安全以及后端架构模式。"}

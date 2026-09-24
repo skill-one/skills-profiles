@@ -1,0 +1,1 @@
+{"description_zh": "Brev 实例操作指南：针对在 /home/ubuntu/RL 目录下、工作区磁盘容量有限、/ephemeral volume 较大且可选 /home/ubuntu/RL/.env 密钥的 NeMo-RL 智能体。用于运行 nemo-rl-auto-research 任务、实验、训练作业、模型或数据集下载、缓存密集的共享命令、生成日志的运行、检查点生成、W&B 或 Hugging Face 认证工作流，以及任何可能在 Brev 上生成大文件的工作流。"}

@@ -1,0 +1,1 @@
+{"description_zh": "PufferLib强化学习环境、向量化、策略、PuffeRL训练、评估及安全检查点审查的版本感知指南。适用于将Gymnasium/PettingZoo环境适配至已发布的PufferLib 3.0.0版本，或在处理重新设计的原生4.0源码版本线时使用。"}

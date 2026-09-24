@@ -1,0 +1,1 @@
+{"description_zh": "当用户希望通过终端经由 Xdrop 服务器发送或获取文件、要求自动化加密 Xdrop 分享链接的工作流、提供 Xdrop 的 `/t/:transferId#k=...` 链接以在本地下载并解密，或需要 Xdrop CLI 参数，如 `--quiet`、`--json`、`--expires-in`、`--output` 或 `--api-url`，即使用户未明确提及该技能名称时，使用本技能。"}

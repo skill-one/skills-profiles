@@ -1,0 +1,1 @@
+{"description_zh": "在 Megatron-Bridge 中验证并使用 MoE专家并行通信重叠，包括 overlap_moe_expert_parallel_comm、delay_wgrad_compute，以及 DeepEP 和 HybridEP 等灵活调度后端。"}

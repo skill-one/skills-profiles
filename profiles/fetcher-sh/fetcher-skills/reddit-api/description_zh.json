@@ -1,0 +1,1 @@
+{"description_zh": "fetcher.sh 上的 Reddit API 替代方案：可通过 x402 以 USDC 按调用付费，或使用 Bearer key 购买预付额度，无需 OAuth 应用注册。适用于用户需要时，按关键词搜索所有子版块的 Reddit 帖子，并按热门（top）、热度（hot）、新帖（new）或讨论最多（most-discussed）排序；按关键词搜索子版块或用户；获取子版块信息或其热门/新帖/热门帖信息流；获取包含评论树和评论回复的单个帖子；拉取全站最佳（best）/热度（hot）/新帖（new）/热门（top）信息流；或获取用户个人资料、帖子及评论。此外，还涵盖 Reddit 情感分析输入、子版块监控、关键词追踪及 Reddit 数据流水线功能，无需注册 Reddit 自身的 API 应用或遵循其速率限制层级。"}

@@ -1,0 +1,1 @@
+{"description_zh": "运行 DEFT 的 embed-then-mine 工作流，用于 VCN AOI 迭代 — 嵌入差距分析目标 parquet，嵌入源池，并挖掘最近的邻域源图像，用于下游数据增强。当从挖掘子集中扩展真实图像数据增强队列时，将其作为紧随 `tao-route-visual-changenet-samples` 之后的步骤使用。"}

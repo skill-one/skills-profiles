@@ -1,0 +1,1 @@
+{"description_zh": "烧录连接至NVIDIA开发套件的HSB板上的FPGA。支持HSB Lattice板（FPGA版本2407、2412、2507、2510）以及Leopard Imaging VB1940“一体化”相机（FPGA版本2507、2510）。使用特定发布的YAML清单和板卡类型特定的程序命令。Lattice与VB1940命令绝不能混用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "用于细粒度视觉识别的度量学习识别（ml-recog）。使用三元组/对比损失学习用于检索式匹配（例如，零售产品识别）的嵌入。用于训练、评估、导出或运行 TAO 度量学习识别模型的推理。触发短语包括“train metric learning”、“ml-recog”、“retrieval embeddings”、“triplet loss recognition”、“fine-grained matching”。"}

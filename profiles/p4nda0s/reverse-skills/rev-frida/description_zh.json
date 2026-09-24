@@ -1,0 +1,1 @@
+{"description_zh": "使用现代 Frida API 生成 Frida hook 脚本。当用户需要编写 Frida 脚本时启用，用于在运行时钩住函数、追踪调用、参数或返回值、拦截原生、ObjC 或 Java 方法、转储内存或导出数据，以及处理 Android 及其他目标上的原生模块加载时机。"}

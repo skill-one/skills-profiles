@@ -1,0 +1,1 @@
+{"description_zh": "使用 Apollo Rover CLI 管理 GraphQL 模式与联邦的指南。使用此技能时：\n(1) 发布或获取子图/图模式，\n(2) 本地或通过 GraphOS 组合超图模式，\n(3) 使用 rover dev 进行本地超图开发，\n(4) 使用 check 和 lint 命令验证模式，\n(5) 配置 Rover 认证与环境，\n(6) 使用 rover schema describe / rover schema search 探索或搜索图的模式以进行智能体驱动的发现。"}

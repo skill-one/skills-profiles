@@ -1,0 +1,1 @@
+{"description_zh": "通过CRM过滤器识别不活跃/有风险的客户，并批量创建后续任务。基于`bulk-operations`；将活动创建的具体细节推迟至`sales-execution`。"}

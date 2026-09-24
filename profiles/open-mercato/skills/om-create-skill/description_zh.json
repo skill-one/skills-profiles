@@ -1,0 +1,1 @@
+{"description_zh": "根据简报编写新的 OM 技能，或将过大的 SKILL.md 拆分为分层参考/文件——谨慎地，在 lint 完整性检查门禁通过后。了解分层理念、lint 不变量、追踪器抽象和跨技能契约，因此输出符合组织惯例。用于“create a skill for……”, “new om-skill”, “split this skill into references”。"}

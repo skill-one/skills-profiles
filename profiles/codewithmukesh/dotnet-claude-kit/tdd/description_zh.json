@@ -1,0 +1,1 @@
+{"description_zh": ".NET 10 使用 xUnit v3、WebApplicationFactory、Testcontainers 和 Verify 快照的引导式测试驱动开发工作流。严格遵循红绿重构循环。适用场景：执行“TDD”、“测试驱动”、“让我们采用 TDD”、“红绿重构”或“先编写测试”，或在进行具有明确验收标准的功能构建时使用。"}

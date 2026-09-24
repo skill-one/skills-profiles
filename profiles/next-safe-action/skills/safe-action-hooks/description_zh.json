@@ -1,0 +1,1 @@
+{"description_zh": "用于在React客户端组件中执行下一步安全操作或构建乐观UI时使用——使用useAction、useOptimisticAction、useStateAction、useOptimisticStateAction、状态/回调（onSuccess/onError/onSettled）、execute与executeAsync、formAction、reset，以及排队或序列化的变更，例如拖拽排序、看板、重叠保存、累积的变更和共享的待处理变更列表。"}

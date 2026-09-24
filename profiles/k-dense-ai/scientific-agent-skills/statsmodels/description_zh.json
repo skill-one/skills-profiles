@@ -1,0 +1,1 @@
+{"description_zh": "Python 统计模型库。当您需要特定模型类（OLS、GLM、混合模型、ARIMA）以及详细的诊断、残差和推断功能时使用。最适合计量经济学、时间序列分析，以及配合系数表进行严谨推断。如需进行指导性的统计检验选择及 APA 报告撰写，请使用 statistical-analysis。"}

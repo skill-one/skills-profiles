@@ -1,0 +1,1 @@
+{"description_zh": "管理 spartan/ui（Angular UI 库）——使用 Brain（无头原语）和 Helm（已样式）层对 UI 进行添加、组合、修复、调试与样式化。提供项目上下文、组件 API 和使用示例。当使用 spartan/ui、@spartan-ng/brain、@spartan-ng/helm、@spartan-ng/cli 生成器，或在任何包含 components.json 文件的 Angular 项目时生效。亦适用于执行“spartan init”、“添加 spartan 组件”或“设置 spartan/ui”等操作。"}

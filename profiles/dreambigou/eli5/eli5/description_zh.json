@@ -1,0 +1,1 @@
+{"description_zh": "根据特定受众的理解水平，为任何主题、代码、概念或错误进行定制化解释。当用户说出“explain like I am”、“ELI5”、“explain this to my”、“break this down for”、“dumb it down”、“simplify this for”等表述，或要求向特定人物或受众类型进行解释时，使用本技能（例如：“向管理者解释这个”、“我该如何向妈妈解释这个”、“让这个内容对五年级学生易于理解”）。此外，当用户表示希望以特定水平理解某事物，或要求针对非技术受众进行解释时，也应触发本技能。即使“explain to my wife”或“tell my boss”这类部分匹配的情况，也应触发本技能。"}

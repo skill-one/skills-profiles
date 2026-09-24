@@ -1,0 +1,1 @@
+{"description_zh": "通过提取音频、使用 whisper.cpp 进行转写并生成结构化摘要，对抖音（TikTok中国）视频进行总结。当用户分享抖音链接并希望获取视频内容的文本摘要时使用。支持可选同步至飞书（Lark）文档。支持基于抖音网址（v.douyin.com、douyin.com/video/）触发。"}

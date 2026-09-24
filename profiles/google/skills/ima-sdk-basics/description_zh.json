@@ -1,0 +1,1 @@
+{"description_zh": "使用本技能进行交互式媒体广告（IMA）SDK 客户端广告插入，适用于当需要将视频广告以客户端方式插入网站、应用、电视或其他支持 VAST 或 VMAP 的平台时。请勿用于动态广告插入（DAI）、SSAI 或 SGAI（请改用 `ima-sdk-dai-basics` 技能）。"}

@@ -1,0 +1,1 @@
+{"description_zh": "适用于编写或审查 Jetpack Compose 动画时：处理可见性进入/退出、将单个属性动画化至目标值、颜色或尺寸过渡、从一个状态过渡多个属性、切换可组合内容，或在 AnimatedVisibility、animate*AsState、rememberTransition、AnimatedContent 与 Crossfade 之间进行选择。"}

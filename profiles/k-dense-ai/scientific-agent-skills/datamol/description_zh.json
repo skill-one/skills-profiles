@@ -1,0 +1,1 @@
+{"description_zh": "基于 RDKit 的 Pythonic 封装，具备简化的接口与合理的默认设置。适用于标准药物发现，包括 SMILES 解析、标准化、描述符、指纹、聚类、3D 构象及并行处理。返回原生的 rdkit.Chem.Mol 对象。如需高级控制或自定义参数，请直接使用 RDKit。"}

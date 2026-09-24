@@ -1,0 +1,1 @@
+{"description_zh": "将 @cognite/reveal-widget npm 包集成到 Flows 应用中，以提供可交互的 Cognite Reveal 3D 场景/CAD/点云/360 图像查看器。当向 Flows 应用添加 3D 查看器、3D 可视化、Reveal、CAD 模型、点云模型、360 图像集合、场景、RevealWidget、RevealWidgetController、DM 3D 映射、资产 3D 模型、模型浏览器或 Cognite 3D 内容时使用。"}

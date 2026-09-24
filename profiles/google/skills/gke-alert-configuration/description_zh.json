@@ -1,0 +1,1 @@
+{"description_zh": "在 Terraform 中，使用 PromQL 和 Google Cloud Managed Service for Prometheus 为 Google Kubernetes Engine（GKE）集群、工作负载和服务配置告警策略。适用于编写、分析、验证或部署 Terraform 告警策略，以监控 GKE 服务的延迟、流量和错误率，以及内存饱和和集群健康状态（如 CrashLoopBackOff 和 Node NotReady 条件）。请勿用于非 GKE 计算运行时，例如独立的 Compute Engine 虚拟机或未使用 GKE 的独立 Cloud Run 服务。"}

@@ -1,0 +1,1 @@
+{"description_zh": "高级 om-auto-continue-pr（针对由 om-auto-create-pr-loop 发起的 PR）——认领 PR，在隔离工作树中从 PLAN.md 的第一个未完成 Tasks 行恢复，保持逐步骤提交与检查点纪律（集成测试与 UI 截图），在结束时运行完整门禁，将仅规范的设计 PR 保持为仅设计 PR（实现通过 om-auto-implement-spec 在独立 PR 中发布），并保留运行文件夹与标签契约。对于简单运行，请使用普通的 om-auto-continue-pr。"}

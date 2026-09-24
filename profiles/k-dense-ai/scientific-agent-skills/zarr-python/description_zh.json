@@ -1,0 +1,1 @@
+{"description_zh": "适用于云端存储的分块 N-D 数组（Zarr-Python 3）。支持压缩数组、并行 I/O、通过 fsspec 访问 S3/GCS，兼容 NumPy/Dask/Xarray，适用于大规模科学计算流程。"}

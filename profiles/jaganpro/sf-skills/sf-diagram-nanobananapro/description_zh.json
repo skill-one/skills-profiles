@@ -1,0 +1,1 @@
+{"description_zh": "通过 Nano Banana Pro 为 Salesforce 视觉内容提供 AI 驱动的图像生成。触发条件：用户要求 PNG/SVG 输出、UI 模拟图、线框图、可视化 ERD，或说“生成图像”/“创建模拟图”。不要触发条件：基于文本的 Mermaid 图表（使用 sf-diagram-mermaid），或非视觉文档任务。"}

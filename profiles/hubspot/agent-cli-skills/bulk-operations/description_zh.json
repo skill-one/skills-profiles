@@ -1,0 +1,1 @@
+{"description_zh": "`hubspot` CLI 的基础模式——JSONL 管道、批量读取、分页、破坏性操作的试运行/摘要/确认，以及 `hubspot history` 用于恢复。其他所有技能均建立于此基础之上。"}

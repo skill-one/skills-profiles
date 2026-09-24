@@ -1,0 +1,1 @@
+{"description_zh": "使用 Promptfoo 框架配置并运行 LLM 评估。适用于设置提示词测试、创建评估配置（promptfooconfig.yaml）、编写 Python 自定义断言、为 LLM-as-judge 实现 llm-rubric，或管理提示词中的 few-shot 示例。匹配 promptfoo、eval、\"LLM评估\"、\"提示词测试\"或\"模型对比\"等关键词时触发。"}

@@ -1,0 +1,1 @@
+{"description_zh": "通过手动分区 + 叶节点 @task 启动，将分片、存储在磁盘上的数据集（分片 .npy、Parquet/Arrow、原始二进制、分片 HDF5、自定义布局）加载为分布式的 cuPyNumeric ndarray，支持 CPU/OMP/GPU 变体。当没有单次调用加载器能够适配时使用，包括各分片文件中的行数不同的情况。当适用时，优先使用 cupynumeric.load 或 legate.io.hdf5.from_file。"}

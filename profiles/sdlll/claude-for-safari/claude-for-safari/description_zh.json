@@ -1,0 +1,1 @@
+{"description_zh": "通过 AppleScript、页面 JavaScript、截图以及经过严格验证的系统事件输入，控制用户在 macOS 上的真实 Safari 浏览器。适用于智能体需要检查或操作用户现有的 Safari 标签页和登录会话时，包括读取页面、导航、点击、填写非敏感表单、截图、观察页面级别的获取（fetch）/XHR 元数据，或排查 Safari 特有的 UI 行为。"}

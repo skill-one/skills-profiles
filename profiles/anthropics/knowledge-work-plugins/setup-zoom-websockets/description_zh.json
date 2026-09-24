@@ -1,0 +1,1 @@
+{"description_zh": "Zoom WebSockets 参考技能。当持久连接、更快的消息投递或安全约束使得 WebSockets 优于 webhooks 时，在路由到低延迟事件工作流后使用。"}

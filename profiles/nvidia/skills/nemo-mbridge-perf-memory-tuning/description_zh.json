@@ -1,0 +1,1 @@
+{"description_zh": "降低 Megatron Bridge 峰值 GPU 内存的技术 —— 可扩展分段、PEFT + SP 输入重新聚合、并行度调整、激活值重计算、CPU 卸载限制，以及常见的 OOM 修复方案。"}

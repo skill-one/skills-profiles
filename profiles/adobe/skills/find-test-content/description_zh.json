@@ -1,0 +1,1 @@
+{"description_zh": "此功能适用于在 AEM Edge Delivery Services 项目中查找已使用特定块（block）的现有页面，例如，在块开发过程中用于定位测试内容或示例。它覆盖带有出现次数和块变体的页面 URL 的报告。该功能用于搜索现有内容；如需从 URL 导入新页面，请使用 page-import。"}

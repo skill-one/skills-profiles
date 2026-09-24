@@ -1,0 +1,1 @@
+{"description_zh": "结合 pandas 集成的统计可视化。适用于快速探索分布、关系与分类比较，并配备美观的默认设置。非常适合箱线图、小提琴图、配对图及热力图。基于 Matplotlib 构建。若需交互式图表，请使用 plotly；若需出版级样式，请使用 scientific-visualization。"}

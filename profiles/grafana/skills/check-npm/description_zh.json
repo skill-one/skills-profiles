@@ -1,0 +1,1 @@
+{"description_zh": "审计 JavaScript/TypeScript 仓库的 npm、yarn 或 pnpm 配置，以进行供应链加固，包括工具版本、生命周期脚本、不安全的依赖协议以及最小发布年龄≥3天。当用户在 Grafana 插件或 JavaScript/TypeScript 项目中调用 /check-npm 命令，或请求审计包管理器安全、生命周期脚本、git 依赖、忽略脚本、最小发布年龄、允许 git、已批准 Git 仓库、严格依赖构建或阻止奇特子依赖等内容时使用。"}

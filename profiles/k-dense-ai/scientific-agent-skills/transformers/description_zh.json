@@ -1,0 +1,1 @@
+{"description_zh": "Hugging Face Transformers 用于加载 Hub 模型、运行流程推理、文本生成，并针对自然语言处理、视觉、音频及多模态任务进行 Trainer 微调。适用于 AutoModel、pipelines、tokenizer 或 TrainingArguments 相关的操作，不用于 Transformers 库之外的通用机器学习。"}

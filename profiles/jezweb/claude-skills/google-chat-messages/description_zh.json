@@ -1,0 +1,1 @@
+{"description_zh": "通过传入 Webhook 发送 Google Chat 消息——文本、富媒体卡片（cardsV2）及线程回复。提供 TypeScript 类型、卡片构建工具及内联组件参考。当用户需要从脚本发布至 Google Chat、构建聊天机器人回复、发送通知卡片、搭建 Google Chat Webhook 集成，或排查卡片/线程问题时，即可使用。"}

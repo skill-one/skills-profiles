@@ -1,0 +1,1 @@
+{"description_zh": "讲解 Core Web Vitals 的资源加载顺序优化。当需要通过重新调整关键资源的发现与加载顺序，以提升 FCP、LCP 或 FID 时使用。"}

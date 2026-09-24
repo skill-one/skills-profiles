@@ -1,0 +1,1 @@
+{"description_zh": "无需使用 ASP.NET Core CLI 脚手架及代码生成工具，即可生成或搭建 ASP.NET Core 代码（涵盖 Razor Pages、Blazor 组件、MVC 控制器、视图以及 Minimal API 端点）。\n\n适用场景包括：（1）添加由实体框架（EF Core）与数据库支撑的 CRUD 页面、视图或 API 端点；（2）使用 DbContext 编写代码，实现数据的创建、读取、更新与删除；（3）搭建符合项目现有 CSS 框架及编码规范的 UI 组件；（4）为模型类创建数据驱动的表单、表格及导航。\n\n不适用于非 ASP.NET 项目，亦不适用于当首选基于 CLI 的脚手架时。"}

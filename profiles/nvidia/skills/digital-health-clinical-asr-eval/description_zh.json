@@ -1,0 +1,1 @@
+{"description_zh": "临床 ASR 飞轮第 3 阶段：对 NeMo 清单进行评分，生成五段式 KER 排行榜（按 ipa_source 诊断）。不用于 ASR 认证（/riva-asr）。"}

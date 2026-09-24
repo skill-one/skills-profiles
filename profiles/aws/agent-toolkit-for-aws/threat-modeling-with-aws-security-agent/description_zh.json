@@ -1,0 +1,1 @@
+{"description_zh": "针对规格/设计文档运行 AWS 安全代理威胁模型审查。当用户要求审查安全规格、运行威胁模型、检查设计是否引入安全风险、审查 requirements.md 或 design.md 中的安全态势变更，或进行 STRIDE 分析时使用。"}

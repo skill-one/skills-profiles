@@ -1,0 +1,1 @@
+{"description_zh": "用于在操作n8n内置数据表、设计表结构、插入/更新/upsert数据行、进行去重或查询时使用。当触发条件涉及“Data Table”、“data table”、`n8n-nodes-base.dataTable`、“dedup”、“idempotency”、“lookup”、“persistent state”、“store across executions”或n8n内的任何表结构设计讨论时触发。"}

@@ -1,0 +1,1 @@
+{"description_zh": "面向需要 Astropy 接口的天文学与天体物理学工作流的核心 Python 库，涵盖单位/数量、坐标、FITS 读写、表、时间系统、WCS 和宇宙学等 Astropy 接口。用于在使用 Astropy 实现或调试天文学数据分析代码时。"}

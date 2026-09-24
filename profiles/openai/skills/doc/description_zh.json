@@ -1,0 +1,1 @@
+{"description_zh": "当任务涉及读取、创建或编辑 `.docx` 文档，尤其是格式或版式保真度至关重要时，优先使用 `python-docx` 及内置的 `scripts/render_docx.py` 进行可视化检查。"}

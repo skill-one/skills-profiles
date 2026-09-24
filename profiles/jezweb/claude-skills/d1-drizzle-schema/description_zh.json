@@ -1,0 +1,1 @@
+{"description_zh": "为 Cloudflare D1 数据库生成包含正确 D1 特定模式的 Drizzle ORM 模式。生成模式文件、迁移命令、类型导出以及 DATABASE_SCHEMA.md 文档。处理 D1 特殊之处：外键始终强制生效，无原生 BOOLEAN/DATETIME 类型，绑定参数限制为 100，JSON 以 TEXT 存储。适用于创建新数据库、添加表或搭建 D1 数据层。"}

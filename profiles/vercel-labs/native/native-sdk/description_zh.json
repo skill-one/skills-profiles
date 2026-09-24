@@ -1,0 +1,1 @@
+{"description_zh": "Native SDK 发现技能：构建原生桌面应用的完整工具集。默认情况下，应用使用 TypeScript + 声明式原生标记语言（.native）进行编写，并编译为原生代码，二进制文件中不包含 JS 运行时；Zig 核心是明确的替代方案，WebViews 是可选的网页内容路径。当用户询问 Native SDK 是什么、如何构建 Native SDK 应用、编写原生 UI、搭建应用、配置 app.json 或旧版 app.zon、添加桥接命令、嵌入网页内容、打包应用、测试正在运行的应用，或自动化 Native SDK 应用时使用。"}

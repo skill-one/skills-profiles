@@ -1,0 +1,1 @@
+{"description_zh": "验证iOS、Android或Unity项目中的Google移动广告（GMA）SDK集成情况。适用于对集成GMA SDK的应用进行完整上线前审计，或验证任何单项GMA SDK集成检查（如验证广告单元ID与广告格式、SKAdNetwork ID、媒介适配器SDK版本兼容性以及广告预加载等）。"}

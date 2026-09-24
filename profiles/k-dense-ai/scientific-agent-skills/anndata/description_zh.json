@@ -1,0 +1,1 @@
+{"description_zh": "单细胞分析中的带注释矩阵的数据结构。当处理 .h5ad 文件或集成 scverse 生态系统时使用。这是数据格式技能——进行数据分析工作流时使用 scanpy；进行概率模型使用时使用 scvi-tools；进行大规模人群查询时使用 cellxgene-census。"}

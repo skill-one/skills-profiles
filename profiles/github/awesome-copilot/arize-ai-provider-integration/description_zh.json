@@ -1,0 +1,1 @@
+{"description_zh": "创建、读取、更新和删除存储评估器及其他 Arize 功能所使用的 LLM 提供商凭据的 Arize AI 集成。支持任何 LLM 提供商（例如 OpenAI、Anthropic、Azure OpenAI、AWS Bedrock、Vertex AI、Gemini、NVIDIA NIM）。当用户提及 AI 集成、LLM 提供商凭据、创建集成、列出集成、更新凭据、删除集成，或将其 LLM 提供商连接到 Arize 时使用此功能。"}

@@ -1,0 +1,1 @@
+{"description_zh": "调查邮箱地址——进行 MX 与语法校验、Gravatar 查询、企业邮箱格式推断、泄露暴露分析，并完整分析邮件头部，涵盖 Received 链、Message-ID、SPF、DKIM 与 DMARC 结果。用于邮箱 OSINT，包括验证地址是否存在、查找已注册该地址的账户、推测公司邮箱格式，或追踪可疑邮件实际来源。适用于商业邮件 compromise（BEC）与发票欺诈调查、钓鱼邮件排查与分流、供应商付款核实以及前期调研。参考：useosint.com/skills/what-an-email-reveals。"}

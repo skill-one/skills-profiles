@@ -1,0 +1,1 @@
+{"description_zh": "管理 LaTeX 论文中的 BibTeX 引用。利用 Semantic Scholar 从草稿中收集缺失的引用，对照 .bib 文件验证引用键，去重条目，并格式化工参考文献。适用于处理引用、BibTeX 或引用文献时的场景。"}

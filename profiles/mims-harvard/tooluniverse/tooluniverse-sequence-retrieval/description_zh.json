@@ -1,0 +1,1 @@
+{"description_zh": "从 NCBI 和 ENA 获取带有歧义消解功能的 DNA/RNA/蛋白质序列。\n\n质量层级：RefSeq（NM_/NP_） > RefSeq 预测序列（XM_/XP_） > GenBank 提交记录。\n\n用于按 accession 获取特定序列、按基因符号查询序列、获取转录本异构体，以及根据已整理提交与原始提交之间的偏好进行获取。"}

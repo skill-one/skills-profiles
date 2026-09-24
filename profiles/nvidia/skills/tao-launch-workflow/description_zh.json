@@ -1,0 +1,1 @@
+{"description_zh": "适用于任何 TAO 工作流或操作的共享启动入口。当用户需要运行 TAO AutoML、训练、评估、推理、导出，或生成 TensorRT 引擎、在执行平台上启动 DEFT/工作流任务时使用。"}

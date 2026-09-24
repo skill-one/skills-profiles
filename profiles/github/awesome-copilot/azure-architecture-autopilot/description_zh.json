@@ -1,0 +1,1 @@
+{"description_zh": "使用自然语言设计 Azure 基础设施，或分析现有 Azure 资源以自动生成架构图，并通过对话进行优化，使用 Bicep 进行部署。\n何时使用本技能： - “在 Azure 上创建 X”、“搭建 RAG 架构”（新建设计） - “分析我当前的 Azure 基础设施”、“为 rg-xxx 绘制架构图”（已有分析） - “Foundry 运行缓慢”、“我想要降低成本”、“加强安全性”（自然语言修改） - Azure 资源部署、Bicep 模板生成、IaC 代码生成 - Microsoft Foundry、AI Search、OpenAI、Fabric、ADLS Gen2、Databricks 以及所有 Azure 服务"}

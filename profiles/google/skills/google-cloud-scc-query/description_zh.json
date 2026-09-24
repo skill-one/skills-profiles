@@ -1,0 +1,1 @@
+{"description_zh": "从 Google Cloud 安全指挥中心查询和检索活跃安全发现、外部暴露、有毒组合、漏洞、威胁及敏感数据风险。用于通过名称检索安全发现详细信息、验证发现范围（例如，验证 findingClass 是否为 TOXIC_COMBINATION、VULNERABILITY、EXTERNAL_EXPOSURE 或 THREAT），或获取发现详细信息以进行分诊。勿用于草拟修复方案、应用补丁或执行配置。"}

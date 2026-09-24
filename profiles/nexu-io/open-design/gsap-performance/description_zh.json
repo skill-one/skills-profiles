@@ -1,0 +1,1 @@
+{"description_zh": "GSAP 性能优化官方技能——优先使用 transform，避免布局抖动、will-change 和批量处理。在优化 GSAP 动画、减少卡顿，或当用户询问动画性能、帧率（FPS）或流畅的 60fps 时使用。"}

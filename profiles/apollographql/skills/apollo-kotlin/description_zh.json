@@ -1,0 +1,1 @@
+{"description_zh": "使用 Apollo Kotlin（Android 和 Kotlin 的 GraphQL 客户端库）构建应用程序的指南。当使用本技能时，请执行以下操作：(1) 在 Android、Kotlin/JVM 或 KMP 项目的 Gradle 项目中设置 Apollo Kotlin；(2) 为 GraphQL 服务配置模式下载与代码生成；(3) 配置支持身份验证、拦截器和缓存的 `ApolloClient`；(4) 编写查询、变更或订阅，"}

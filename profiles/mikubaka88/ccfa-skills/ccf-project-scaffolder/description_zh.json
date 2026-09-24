@@ -1,0 +1,1 @@
+{"description_zh": "初始化 CCF 项目文件夹、LaTeX 模板、产物目录以及 ccfa.yaml。可用于项目初始化、目录搭建、模板配置及可复现工作区搭建。保留现有文件。工作流规划由 ccf-pipeline-orchestrator 负责；研究内容由其专属负责人负责。"}

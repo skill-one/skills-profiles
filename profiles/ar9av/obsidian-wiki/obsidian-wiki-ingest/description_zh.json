@@ -1,0 +1,1 @@
+{"description_zh": "使用 wiki-ingest 管道自动化文档导入 Obsidian wiki（obsidian-wiki）。通过 manifest、frontmatter 和交叉链接处理去重；根据 obsidian-wiki 项目上下文中的用户请求触发。"}

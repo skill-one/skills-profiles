@@ -1,0 +1,1 @@
+{"description_zh": "规划、配置并加固 Google Kubernetes Engine (GKE) 的安全。覆盖工作负载身份联合、Secret Manager 集成、基于角色的访问控制（RBAC）加固、二进制备份授权、网络策略（Dataplane V2）、Pod 安全标准及 IAM 角色。适用于保护 GKE 集群、设置工作负载身份、加固 RBAC 配置或配置 GKE 的 Secret。不适用于一般网络路由配置（请改用 gke-networking）。"}

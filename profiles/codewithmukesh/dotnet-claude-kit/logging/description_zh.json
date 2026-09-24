@@ -1,0 +1,1 @@
+{"description_zh": ".NET 10 可观测性概述与集成：各部分如何整合，以及此处负责的横切部分——ASP.NET 健康检查端点（/health）、关联ID和日志级别策略。若要深度配置 Serilog，请加载 `serilog`；若需追踪与指标，请加载 `opentelemetry`。当从零开始搭建可观测性、配置健康检查端点或关联ID，或当用户提及“logging”、“observability”、“monitoring setup”、“liveness”、“readiness”或“ILogger”时，请加载此技能。"}

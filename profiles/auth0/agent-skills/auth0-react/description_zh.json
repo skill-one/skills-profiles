@@ -1,0 +1,1 @@
+{"description_zh": "在向 React 单页应用（SPA）添加 Auth0 登录、登出、受保护路由或用户会话时使用。集成了 @auth0/auth0-react — 即使用户说“为我的 React 应用添加登录”或“保护我的 React 路由”而未提及该 SDK，也请使用。"}

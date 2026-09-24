@@ -1,0 +1,1 @@
+{"description_zh": "捆绑的 Zoom MCP 连接器使用指南。在规划或排障对会议、录制、会议资产或转录内容进行工具访问时，请于将请求路由至 MCP 工作流之后使用。请将 Zoom Docs 请求路由至专用的 Docs MCP 服务器，并将特定于白板的请求路由至 `zoom-mcp/whiteboard`。"}

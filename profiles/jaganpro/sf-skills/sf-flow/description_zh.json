@@ -1,0 +1,1 @@
+{"description_zh": "创建并验证采用 110 分评分的 Salesforce 流程。  \n触发条件：用户构建或编辑记录触发、屏幕、自动启动或定时流程，或操作 `.flow-meta.xml` 文件时。  \n不触发条件：Apex 自动化（使用 sf-apex）、仅过程构建器迁移问题，或非流程声明式配置（使用 sf-metadata）。"}

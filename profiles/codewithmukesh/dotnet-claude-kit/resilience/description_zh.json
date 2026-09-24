@@ -1,0 +1,1 @@
+{"description_zh": "使用 Polly v8 的 .NET 10 应用程序韧性模式。涵盖重试、熔断器、超时、降级、限流器、对冲以及组合韧性流水线。当实现重试逻辑、熔断器、处理瞬时故障，或用户提到“Polly”、“resilience”、“retry”、“circuit breaker”、“timeout”、“fallback”、“rate limit”、“hedging”、“transient fault”、“HttpClient resilience”或“resilience pipeline”时，请加载此技能。"}

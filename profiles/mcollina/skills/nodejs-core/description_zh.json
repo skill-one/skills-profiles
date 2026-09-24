@@ -1,0 +1,1 @@
+{"description_zh": "参与并调试 Node.js 核心，包括 nodejs/node 提交与拉取请求的风格、贡献工作流、原生崩溃、V8 性能、node-gyp 构建、N-API 绑定以及 libuv 问题。起草或审查 Node.js 核心提交或拉取请求、在 nodejs/node 中工作，或诊断 C++ 插件、binding.gyp 失败、段错误、原生内存泄漏、V8 反优化以及事件循环内部问题时使用。"}

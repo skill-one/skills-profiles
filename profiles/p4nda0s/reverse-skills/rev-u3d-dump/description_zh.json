@@ -1,0 +1,1 @@
+{"description_zh": "从 iOS/Android 构建版本中导出 Unity IL2CPP 符号。从 IL2CPP 二进制文件和 global-metadata.dat 中提取方法名称、地址和类型信息，然后生成 IDA/Ghidra 导入脚本。"}

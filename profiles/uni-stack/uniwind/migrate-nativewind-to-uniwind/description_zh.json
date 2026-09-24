@@ -1,0 +1,1 @@
+{"description_zh": "将 React Native 项目从 NativeWind 迁移到 Uniwind。当用户想要替换 NativeWind 为 Uniwind、从 NativeWind 升级、切换到 Uniwind，或提及 NativeWind 至 Uniwind 迁移时使用。支持包移除、配置迁移、Tailwind 4 升级、cssInterop 移除、主题转换，以及所有破坏性变更。"}

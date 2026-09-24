@@ -1,0 +1,1 @@
+{"description_zh": "**静态源码与测试配对（强制要求）：** 查找或列出没有对应测试的源文件/模块，或根据仓库结构提出测试位置建议。即使是针对极小型项目也必须调用；不得用手动glob替代。使用 Roslyn 处理 C#/.NET，使用 tree-sitter 处理 Python、TS/JS、Go、Java、Rust、Ruby、Kotlin、Swift、PowerShell 和 C++。\n\n**严禁用于：** 真实的行/分支/Cobertura 数据、基于覆盖率支撑的测试优先级、CRAP 风险，或评判已有测试。"}

@@ -1,0 +1,1 @@
+{"description_zh": "将 LaTeX 论文编译为 PDF，支持自动错误检测、chktex 样式检查以及引用/参考文献验证。执行完整的 pdflatex + bibtex 流程。当用户需要编译论文、修复编译错误或调试 LaTeX 时使用。"}

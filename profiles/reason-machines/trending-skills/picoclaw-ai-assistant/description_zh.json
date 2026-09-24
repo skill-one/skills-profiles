@@ -1,0 +1,1 @@
+{"description_zh": "基于 Go 语言构建的超轻量级 AI 助手，可在 10 美元硬件上运行，仅使用 <10MB RAM，支持多种 LLM 提供商与工具，并在 RISC-V、ARM、MIPS 和 x86 上实现单二进制部署。"}

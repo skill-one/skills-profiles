@@ -1,0 +1,1 @@
+{"description_zh": "Salesforce 元数据生成与查询（基于 120 分评分）。\n\n触发条件：用户创建自定义对象、字段、验证规则，或触及 `.object-meta.xml`、`.field-meta.xml`、`.profile-meta.xml` 文件。\n\n不触发条件：权限集分析（使用 `sf-permissions`）、元数据部署（使用 `sf-deploy`），或 Flow XML（使用 `sf-flow`）。"}

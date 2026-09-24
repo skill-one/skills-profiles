@@ -1,0 +1,1 @@
+{"description_zh": "Visual ChangeNet 用于 AOI 缺陷检测中的二值图像分类与分割。在 PCB 缺陷检测或视觉检测中，用于训练、评估、导出或运行推理，对比图像对进行 PASS/NO_PASS 分类，或生成变化分割掩码。触发短语包括“训练 Visual ChangeNet”、“ChangeNet 分类”、“ChangeNet 分割”、“AOI 缺陷检测”、“PCB 检测模型”。"}

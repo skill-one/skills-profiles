@@ -1,0 +1,1 @@
+{"description_zh": "将你的智能体部署到 AWS，或在部署失败时使用。处理部署前验证、CDK/IAM/配额错误诊断、版本管理、回滚及金丝雀部署。\n\n触发条件：\n- \"deploy my agent\"\n- \"agentcore deploy\"\n- \"deploy failed\"\n- \"CDK error\"\n- \"rollback\"\n- \"canary deploy\"\n- \"pin version\"\n- \"redeploy\"\n- \"deploy stuck\"\n\n不用于生产环境加固——使用 agents-harden。\n不用于在部署前添加功能——使用 agents-build 或 agents-connect。\n不适用于 VPC 配置错误——使用 agents-build。"}

@@ -1,0 +1,1 @@
+{"description_zh": "将 Kotlin 多平台 (KMP) 项目迁移至 Android Gradle Plugin 9.0 及以上版本。处理插件替换（com.android.kotlin.multiplatform.library）、模块拆分、DSL 迁移以及新的默认项目结构。适用于升级 AGP、因 KMP 与 AGP 不兼容导致构建失败，或用户提及 AGP 9.0、Android 多平台插件、KMP 迁移或 com.android.kotlin.multiplatform.library 的场景。"}

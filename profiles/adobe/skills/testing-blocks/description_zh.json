@@ -1,0 +1,1 @@
+{"description_zh": "当您对 AEM Edge Delivery Services 的区块、脚本或样式进行了代码修改，并需要在提交拉取请求前验证这些修改时，请使用此文档。文档涵盖对工具类和逻辑的单元测试、使用 Playwright 进行的浏览器测试、代码检查（linting），以及关于测试内容和方法方面的指导。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在 Blazor 中构建表单、验证数据并响应用户输入。用途：用于添加表单、搜索框、筛选面板、内联编辑、数据录入界面、文件上传、验证（注解或自定义）、处理表单提交以及绑定输入控件。涵盖 EditForm、内置输入组件、DataAnnotationsValidator、自定义验证、SSR 表单模式（SupplyParameterFromForm, FormName, AntiforgeryToken, Enhance）以及用于简单交互控件的 @bind。不要用于项目脚手架（参见 create-blazor-project）或预渲染问题（参见 support-prerendering）。"}

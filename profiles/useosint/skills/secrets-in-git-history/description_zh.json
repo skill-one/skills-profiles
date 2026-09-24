@@ -1,0 +1,1 @@
+{"description_zh": "在GitHub、GitLab及git历史中，通过提交作者邮箱、GitHub代码搜索、提交.patch端点、trufflehog、gitleaks、git log pickaxe及全引用历史扫描等方式，检索身份信息、基础设施与泄露凭证。适用于在GitHub上调查开发者或组织、在代码中查找泄露的API密钥、AWS密钥或令牌、枚举组织成员及其个人仓库，或恢复已从HEAD删除但仍存在于历史记录或分叉中的机密信息。适用于软件供应链风险、凭证泄露应对、M&A技术尽职调查及内部威胁调查。使用参考：useosint.com/skills/secrets-in-git-history。"}

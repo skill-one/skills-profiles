@@ -1,0 +1,1 @@
+{"description_zh": "Turso Cloud —— 可通过网络访问的完全托管的 SQLite 兼容数据库平台。适用于连接应用程序与 Turso Cloud 数据库、创建或限定授权令牌（JWT、细粒度权限、JWKS/外部身份验证提供程序）、以及配置和管理云数据库的场景。涵盖各语言 SDK（JavaScript/TypeScript、Python、Go、Rust）、身份验证与授权，以及市场集成（Vercel）。"}

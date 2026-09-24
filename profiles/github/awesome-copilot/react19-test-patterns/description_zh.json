@@ -1,0 +1,1 @@
+{"description_zh": "为将测试文件迁移至 React 19 兼容性提供迁移前/后模式，包括 act() 导入、Simulate 移除以及 StrictMode 调用次数变更。"}

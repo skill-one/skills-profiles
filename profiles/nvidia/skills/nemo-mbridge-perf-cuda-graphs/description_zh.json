@@ -1,0 +1,1 @@
+{"description_zh": "在 Megatron Bridge 中验证并使用 CUDA 图捕获，包括本地全迭代图和 Transformer Engine 作用域图，用于注意力、MLP 和 MoE 模块。"}

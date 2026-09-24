@@ -1,0 +1,1 @@
+{"description_zh": "使用无服务器模式和 IaC 模板为初创公司设计 AWS 架构。在要求设计无服务器架构、创建 CloudFormation 模板、优化 AWS 成本、设置 CI/CD 流水线或迁移至 AWS 时使用。涵盖 Lambda、API Gateway、DynamoDB、ECS、Aurora 以及成本优化。"}

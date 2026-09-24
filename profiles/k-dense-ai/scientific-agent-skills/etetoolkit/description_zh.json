@@ -1,0 +1,1 @@
+{"description_zh": "使用ETE 4分析、操作、比较、注释和可视化系统发育树或其他层次结构树。用于Newick/Nexus树输入输出、拓扑编辑和模式匹配、Robinson-Foulds比较、基因树进化事件与调和、NCBI/GTDB分类学、SmartView探索及出版渲染。请勿使用它从原始序列推断树；应先比对序列并推断树。"}

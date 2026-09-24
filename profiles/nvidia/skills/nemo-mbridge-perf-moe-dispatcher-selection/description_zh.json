@@ -1,0 +1,1 @@
+{"description_zh": "根据硬件、EP 度和优化阶段选择合适的 MoE token 调度器（`alltoall`、DeepEP 或 HybridEP）。总结了 DSV3、Qwen3、Qwen3-Next 以及 VLM 上线工作的模式。"}

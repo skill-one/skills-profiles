@@ -1,0 +1,1 @@
+{"description_zh": "将该 JSON 文件中的审查结果以 GitHub Pull Request 的内联评论形式发布，并将每条评论关联到其文件及行。\n\n当您有一份列表/JSON 格式的审查结果（每条结果包含文件路径、行号和消息，例如 summary/failure_scenario），并希望将其作为行内审查评论发布到 PR 时使用。\n\n触发条件包括：“在 PR 中发布这些审查评论”、“将评论关联到 PR 中的文件”、“将审查结果发布到 PR”。"}

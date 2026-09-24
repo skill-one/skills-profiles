@@ -1,0 +1,1 @@
+{"description_zh": "Entity Framework Core 最佳实践，包括默认使用 NoTracking、对导航集合进行查询拆分、迁移管理、专用迁移服务，以及应避免的常见陷阱。"}

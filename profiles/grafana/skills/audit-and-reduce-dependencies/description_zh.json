@@ -1,0 +1,1 @@
+{"description_zh": "使用 pnpm 可在保持 lockfile、workspace 布局和依赖范围样式的同时，减小 JavaScript 依赖足迹。首先运行 /check-npm，然后移除未使用的依赖、去重版本、对传递闭包进行排序，并报告 Keep/Replace/Remove 分类。在清理 pnpm 依赖、减小 lockfile 大小或缩小 Grafana 插件中的 node_modules 时使用；不适用于 Go 模块或完整的 GitHub Actions 工作流审计。"}

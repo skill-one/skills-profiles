@@ -1,0 +1,1 @@
+{"description_zh": "在 Blazor 中调用 API、将数据加载到组件、处理异步生命周期。**用于**：从后端获取数据、向 API 提交数据、显示加载/错误状态、注册 HttpClient、为 Auto/WebAssembly 渲染模式构建服务抽象。**不要用于**：表单验证（参见 collect-user-input）、预渲染持久化（参见 support-prerendering）或项目脚手架（参见 create-blazor-project）。"}

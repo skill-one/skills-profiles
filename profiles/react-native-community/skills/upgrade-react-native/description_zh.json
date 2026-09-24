@@ -1,0 +1,1 @@
+{"description_zh": "用于将 react-native 升级到新版本时使用。处理版本升级、原生项目变更（Android/iOS）、依赖更新及破坏性变更迁移。使用 `/upgrade-react-native <version>` 调用。"}

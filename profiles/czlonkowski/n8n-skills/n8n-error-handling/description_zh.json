@@ -1,0 +1,1 @@
+{"description_zh": "配置 n8n 错误处理，确保失败被明确、结构化且可恢复。\n\n构建任何 Webhook/API 工作流、定时或无人值守工作流，或任何存在静默失败会导致用户可见工作失效的路径时使用；且当用户提及错误处理、onError、continueErrorOutput、错误分支/输出、重试、retryOnFail、响应 Webhook 状态码、4xx/5xx、Error Trigger，或“我的工作流静默失败”时使用。\n\n涵盖各节点的错误输出与连接配置、重试/自愈机制、基于错误触发的工作流，以及 4xx/5xx 响应格式。"}

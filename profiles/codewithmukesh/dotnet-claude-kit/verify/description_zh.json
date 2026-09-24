@@ -1,0 +1,1 @@
+{"description_zh": "为.NET项目运行全面的7阶段验证流水线：构建、分析器、反模式检测、测试、安全性、格式化及差异审查。每个阶段均输出PASS/FAIL结果及可操作输出内容，并在出现关键故障时使流水线短路。同时，作为验证策略的权威：确定针对特定变更应运行哪些阶段、设置质量门禁以及执行修复重试循环。适用场景：\"verify\"、\"check everything\"、\"is this ready\"、\"pre-PR check\"、\"run all checks\"、\"quality gate\"、\"verification strategy\"、\"which checks should run\"，或在完成功能或重构后使用。"}

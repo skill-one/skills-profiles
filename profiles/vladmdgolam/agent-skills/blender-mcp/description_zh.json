@@ -1,0 +1,1 @@
+{"description_zh": "Blender MCP 专家，擅长场景检视、Python 脚本编程、GLTF 导出以及材质/动画提取。激活条件包括：(1) 使用 Blender MCP 工具（如 get_scene_info、execute_python、screenshot 等）；(2) 编写用于提取或处理的 Blender Python 脚本；(3) 将场景导出为 GLTF/GLB 以供网页（Three.js、R3F）使用；(4) 排查材质或纹理导出损失问题；(5) 使用 gltf-transform 优化 GLB 文件；(6) 使用资产集成（PolyHaven、Sketchfab、Hyper3D Rodin、Hunyuan3D）。涵盖关键导出陷阱、材质映射保持有效、纹理优化流程、无头 CLI 模式及已知故障模式。"}

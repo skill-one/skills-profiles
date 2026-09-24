@@ -1,0 +1,1 @@
+{"description_zh": "用于通过 MCP 连接 Xcode、使用 xcrun mcpbridge 或无头 mcp-server，或使用任何 Xcode MCP 工具（XcodeRead、BuildProject、RunSomeTests、RenderPreview）时。涵盖设置、工具参考、工作流程及故障排除。"}

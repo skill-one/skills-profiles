@@ -1,0 +1,1 @@
+{"description_zh": "Agentforce 会话追踪提取与分析。触发条件：用户从 Data Cloud 提取 STDM 数据、分析 agent 会话追踪、通过遥测调试 agent 对话，或处理 Agentforce 的 .parquet 文件。不触发条件：测试 agent（使用 sf-ai-agentforce-testing）、Apex 调试日志（使用 sf-debug），或构建 agent（使用 sf-ai-agentforce）。"}

@@ -1,0 +1,1 @@
+{"description_zh": "查找不完整记录，批量标准化字段值，使用 `hubspot objects merge` 去重，并审计自定义属性。基于 `bulk-operations` 支持 JSONL 管道处理以及试运行/摘要/确认。"}

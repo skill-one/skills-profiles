@@ -1,0 +1,1 @@
+{"description_zh": "当构建、调试、打包或发布用于 Tampermonkey 或 ScriptCat 的浏览器用户脚本时使用，包括 GM API、元数据块、权限问题、@match/@grant/@connect 设置、ScriptCat 后台或定时脚本、UserConfig 块或订阅工作流。"}

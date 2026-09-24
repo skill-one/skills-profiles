@@ -1,0 +1,1 @@
+{"description_zh": "为在 Oracle 到 PostgreSQL 迁移过程中发现的缺陷创建结构化的 Bug 报告。在记录 Oracle 与 PostgreSQL 之间的行为差异时使用，将其作为包含严重性、根本原因和修复步骤的可操作 Bug 报告。"}

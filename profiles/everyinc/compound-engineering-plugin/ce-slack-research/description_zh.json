@@ -1,0 +1,1 @@
+{"description_zh": "在 Slack 中搜索解读后的组织上下文——决策、约束和讨论脉络——，并生成包含交叉分析的综合研究简报。当用户说出 'search slack for'、'what did we discussed about'、'slack context for' 或 'what does the team think about' 时使用此功能。该功能与 slack:find-discussions 不同，后者返回未经合成的原始消息结果。"}

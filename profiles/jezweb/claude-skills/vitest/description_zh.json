@@ -1,0 +1,1 @@
+{"description_zh": "在任何项目中配置 Vitest 测试 — 自动检测项目类型（Cloudflare Workers、React、Node、库），生成 vitest.config.ts、测试配置、工具函数及示例测试。涵盖 Mock 模式、覆盖率配置、工作区设置与 Jest 迁移。当用户提及添加测试、设置 Vitest、配置测试、从 Jest 迁移、修复测试基础设施，或询问“我该如何测试这个”时使用。"}

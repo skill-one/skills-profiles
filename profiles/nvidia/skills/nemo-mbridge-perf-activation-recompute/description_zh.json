@@ -1,0 +1,1 @@
+{"description_zh": "在Megatron Bridge中验证并使用选择性激活重计算和完整激活重计算，以额外的计算开销为代价降低GPU显存占用。适用于激活内存OOM或涉及recompute_granularity、recompute_num_layers、recompute_modules、recompute_method、选择性重计算、完整重计算或激活检查点的情况。"}

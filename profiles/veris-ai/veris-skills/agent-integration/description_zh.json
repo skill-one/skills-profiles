@@ -1,0 +1,1 @@
+{"description_zh": "将原始客户代理仓库与 Veris 进行端到端集成。安装或验证 veris-cli，登录，创建或复用 Veris 环境，分析仓库，生成或更新 `.veris/veris.yaml`、`.veris/Dockerfile.sandbox`、`.veris/.dockerignore`，配置运行时环境变量，并可通过 `veris env push` 完成。适用于仓库尚未配置 Veris，或现有 `.veris/` 集成过时且需要刷新的情况。"}

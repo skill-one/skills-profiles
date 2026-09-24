@@ -1,0 +1,1 @@
+{"description_zh": "模式：创建或更新 WordPress 块模式（起始页面、模板、模板部件、查询循环布局），审查模式注册、区块标记、分类、无障碍、i18n/转义，或提升模式设计质量。将自定义区块路由至 wp-block-development；将前端交互路由至 wp-interactivity-api。"}

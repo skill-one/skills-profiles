@@ -1,0 +1,1 @@
+{"description_zh": "**具备50分评分的Agentforce智能体深度人设设计**\n\n**TRIGGER**：当用户进行智能体人设设计、定义智能体性格与身份、创建人设文档、将人设编码至Agentforce构建器字段或Agent脚本、将品牌规范转化为智能体语音表达，或询问智能体语调、语气、语体相关内容时，触发。\n\n**DO NOT TRIGGER**：当进行智能体元数据构建（使用 sf-ai-agentforce）、测试智能体（使用 sf-ai-agentforce-testing）或编写Agent Script DSL（使用 sf-ai-agentscript）时，不触发。"}

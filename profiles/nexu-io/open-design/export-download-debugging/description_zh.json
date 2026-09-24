@@ -1,0 +1,1 @@
+{"description_zh": "诊断并修复浏览器、预览或 Electron 的导出/下载失败问题，特别是涉及 Save As、Blob/数据 URL、文件系统访问 API、createWritable 失败以及 0 KB 文件的图片导出问题。"}

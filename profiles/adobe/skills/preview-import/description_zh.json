@@ -1,0 +1,1 @@
+{"description_zh": "当您需要预览并验证在本地 localhost 上导入的 AEM Edge Delivery Services (EDS, Franklin, Helix) 开发服务器中的内容时，请使用此工具。它会针对导入的 HTML 启动开发服务器，检查区块渲染，检查 DOM 结构，与原始页面进行对比，并排查损坏的引用和 404 错误。"}

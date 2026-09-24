@@ -1,0 +1,1 @@
+{"description_zh": ".NET 解决方案与项目结构规范。涵盖 .slnx 格式、Directory.Build.props、用于集中包管理的 Directory.Packages.props、全局使用以及命名规范。在设置新解决方案、添加项目、配置构建属性，或当用户提到“解决方案结构”、“.slnx”、“Directory.Build.props”、“集中包管理”、“Directory.Packages.props”、“全局使用”、“.editorconfig”、“项目布局”或“命名规范”时，加载此技能。"}

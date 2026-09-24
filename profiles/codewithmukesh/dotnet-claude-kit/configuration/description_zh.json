@@ -1,0 +1,1 @@
+{"description_zh": "适用于 .NET 10 应用程序的配置模式。涵盖 Options 模式、IOptionsSnapshot 与 IOptions 的区别、密钥管理以及基于环境的配置。在设置应用程序配置、管理密钥、绑定配置部分时，或当用户提及“配置”、“appsettings”、“Options 模式”、“IOptions”、“IOptionsSnapshot”、“密钥”、“用户密钥”、“环境变量”、“连接字符串”或“配置绑定”时，应加载此技能。"}

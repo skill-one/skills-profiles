@@ -1,0 +1,1 @@
+{"description_zh": "恢复任意已开启的 PR——由 `om-auto-create-pr` 启动，或在流水线之外打开的。将其认领，并在隔离的工作树中从该 PR 执行计划的第一个未检查步骤继续执行；没有执行计划的 PR 也会被采用——从描述、评论、评审反馈、关联问题和 diff 中重建目标，然后执行。用法 - /om-auto-continue-pr <PR-number>>"}

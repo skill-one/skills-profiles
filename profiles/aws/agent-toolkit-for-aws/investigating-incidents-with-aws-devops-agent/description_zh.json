@@ -1,0 +1,1 @@
+{"description_zh": "对 AWS DevOps Agent 进行深入的根本原因调查。适用于用户描述事件、警报、故障或无法解释的行为时——关键词包括“5xx”、“503”、“OOM”、“latency spike”、“deployment failure”、“rollback”、“sev1”、“investigate”、“root cause”、“debug”、“alarm fired”、“service down”。轮询并流式传输进度，随后呈现建议。"}

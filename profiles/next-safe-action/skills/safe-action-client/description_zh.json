@@ -1,0 +1,1 @@
+{"description_zh": "适用于在创建或配置 next-safe-action client、定义带有输入/输出验证的动作、处理服务端错误，或在设置 createSafeActionClient 时使用 Standard Schema（Zod、Yup、Valibot）。"}

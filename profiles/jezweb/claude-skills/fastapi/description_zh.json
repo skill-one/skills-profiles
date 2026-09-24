@@ -1,0 +1,1 @@
+{"description_zh": "使用 FastAPI、Pydantic v2 和 SQLAlchemy 2.0 异步特性构建 Python API。涵盖项目结构、JWT 认证、数据验证及与 uv 包管理器的数据库集成，规避 7 种已记录错误。\n\n适用场景：创建 Python API、实现 JWT 认证，或排查 422 验证错误、CORS、异步阻塞、表单数据、后台任务或 OpenAPI 模式错误。"}

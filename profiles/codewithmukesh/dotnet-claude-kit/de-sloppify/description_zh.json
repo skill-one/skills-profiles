@@ -1,0 +1,1 @@
+{"description_zh": "针对.NET项目的系统化代码清理流水线。运行7个有序步骤：格式化、未使用的using、分析器警告、死代码删除、TODO解决、密封类审计以及CancellationToken传播。每个步骤在阶段之间通过测试独立验证。当使用以下触发词时加载此技能： \"clean up\", \"de-sloppify\", \"tidy up\", \"remove dead code\", \"code cleanup\", \"housekeeping\", \"tech debt\", \"fix warnings\", \"seal classes\", \"add CancellationToken\", \"unused usings\", \"format code\"."}

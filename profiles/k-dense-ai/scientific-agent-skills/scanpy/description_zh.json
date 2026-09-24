@@ -1,0 +1,1 @@
+{"description_zh": "标准单细胞RNA-seq分析流程。可用于质量控制（QC）、归一化、降维（PCA/UMAP/t-SNE）、聚类、差异表达、可视化，以及将Seurat或SingleCellExperiment等兼容R的单细胞格式（如RDS文件）转换为Scanpy所需的h5ad格式。非常适合采用成熟工作流程的探索性scRNA-seq分析。如需使用深度学习模型，请使用scvi-tools；若有关于数据格式的问题，请使用anndata。"}

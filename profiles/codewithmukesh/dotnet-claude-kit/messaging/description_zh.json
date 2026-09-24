@@ -1,0 +1,1 @@
+{"description_zh": ".NET 应用的异步消息模式。涵盖 Wolverine 和 MassTransit、outbox 模式、saga 和编排，以及 RabbitMQ 和 Azure Service Bus 的消息代理配置。当实现事件驱动通信、后台处理、模块间消息通信，或用户提及“Wolverine”、“MassTransit”、“消息总线”、“RabbitMQ”、“Azure Service Bus”、“事件”、“发布”、“消费者”、“outbox”、“saga”、“集成事件”、“队列”或“发布/订阅”时，加载此技能。"}

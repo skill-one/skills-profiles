@@ -1,0 +1,1 @@
+{"description_zh": "适用于需要可恢复性与严格步骤追踪的长周期、多步骤规格实现的高级 om-auto-create-pr——运行目录（PLAN/HANDOFF/NOTIFY）、每个步骤提交一个精简提交、每约5个步骤执行包含集成测试与 UI 截图的检查点验证、完成时实施全量门禁，并输出标记为“已就绪”的 PR。可通过 om-auto-continue-pr-loop 实现续作。针对小修小补，使用常规的 om-auto-create-pr。"}

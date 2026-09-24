@@ -1,0 +1,1 @@
+{"description_zh": "Megatron Bridge 中的 MoE 专家并行通信重叠。涵盖调度/合并重叠、弹性调度器后端以及专家权重梯度调度。"}

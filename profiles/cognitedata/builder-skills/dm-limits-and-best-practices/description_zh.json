@@ -1,0 +1,1 @@
+{"description_zh": "CDF 数据建模限制：并发限制（429）、分页、批量、搜索与筛选、QueuedTaskRunner，以及对查询结果进行 LLM 调用时的限额（默认 5，最大 50，支持缓存）。触发条件：DMS 限制、429、分页、nextCursor、cdfTaskRunner、instances.query、对查询结果的聊天补全。"}

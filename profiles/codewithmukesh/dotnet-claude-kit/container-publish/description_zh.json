@@ -1,0 +1,1 @@
+{"description_zh": "使用 .NET 10 SDK 容器发布功能实现无需 Dockerfile 的容器化。涵盖 MSBuild 属性、chiseled 镜像、多架构构建和注册表发布——全部无需编写 Dockerfile。当用户希望在不使用 Dockerfile 的情况下进行容器化，或提及“dotnet publish container”、“PublishContainer”、“ContainerRepository”、“ContainerFamily”、“chiseled”、“distroless”、“container publish”、“SDK container”、“no Dockerfile”或“containerize without Docker”时，请加载此技能。"}

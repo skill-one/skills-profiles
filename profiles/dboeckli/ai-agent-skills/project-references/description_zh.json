@@ -1,0 +1,1 @@
+{"description_zh": "查阅你本地检出至 ~/projects/referenzen/ 目录下的自己 GitHub 仓库中的约定、模式及具体实现。\n\n当你对代码库家族中某项操作的执行方式存在不确定性时，请使用本技能，例如 Helm chart 结构、Kubernetes manifests、框架配置模式、Docker Compose 约定、CI/CD 流水线配置，或任何其他反复出现的架构决策。在自行猜测约定之前，请主动调用该技能；采纳某一模式时，务必引用来源项目和路径。\n\n当用户要求检出、更新或搜索参考仓库，或要求生成 GitHub Actions 触发器（push、pull_request、schedule/cron）在多个仓库中的概览/报告时，也请使用本技能。"}

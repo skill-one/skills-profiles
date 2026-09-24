@@ -1,0 +1,1 @@
+{"description_zh": "适用于构建任何基于webhook触发的工作流、定时/生产绑定的工作流、为每个节点配置错误输出，或任何静默失败会导致用户可见工作丢失的工作流。触发条件包括\"webhook\"、\"respond to webhook\"、\"API\"、\"production\"、\"error\"、\"failure\"、\"5xx\"、\"try/catch\"、\"error workflow\"、\"onError\"、\"continueErrorOutput\"、\"error branch\"、\"node error output\"、\"output(1)\"、\"main[1]\"、\"scheduled\"，或任何无人值守运行的工作流。"}

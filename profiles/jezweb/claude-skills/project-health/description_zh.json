@@ -1,0 +1,1 @@
+{"description_zh": "**一站式项目配置与健康管理**\n\n设置新项目（settings.local.json、CLAUDE.md、.gitignore），审计现有项目（权限、上下文质量、MCP 覆盖、泄露的机密信息、过期的文档），清理累积的冗余文件，捕获会话学习成果，并添加权限预设。使用子代理进行深度分析，以保持主上下文整洁。通过 `project health`、`check project`、`setup project`、`kickoff`、`bootstrap`、`tidy permissions`、`clean settings`、`capture learnings`、`audit context`、`add python permissions` 或 `init project` 触发。"}

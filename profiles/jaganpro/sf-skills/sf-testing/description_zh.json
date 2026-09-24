@@ -1,0 +1,1 @@
+{"description_zh": "120分评分的 Apex 测试执行、覆盖率分析与测试修复循环。\n\n**触发条件：** 当用户运行 Apex 测试、检查代码覆盖率、修复失败测试，或修改 *Test.cls / *_Test.cls 文件时触发。\n\n**不触发条件：** 编写 Apex 生产代码（使用 sf-apex）、进行 Agentforce 智能体测试（使用 sf-ai-agentforce-testing）或执行 Jest/LWC 测试（使用 sf-lwc）时不触发。"}

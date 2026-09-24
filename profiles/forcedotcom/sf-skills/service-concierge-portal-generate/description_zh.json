@@ -1,0 +1,1 @@
+{"description_zh": "部署 LWR 体验云站点上的 Agentforce 礼宾门户：设置站点、配置礼宾组件、设置品牌标识、关联客户代理、启用访客访问并发布。当用户需要搭建帮助门户/Agentforce 礼宾门户（可独立部署，或作为帮助代理设置中的渠道步骤）时使用。需要组织内已存在且活跃的 Agentforce 服务代理。当用户仅需要在现有站点上嵌入聊天组件时，切勿触发（请改用 service-digital-engagement-deployment-configure）。"}

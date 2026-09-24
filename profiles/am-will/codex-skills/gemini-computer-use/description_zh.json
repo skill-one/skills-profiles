@@ -1,0 +1,1 @@
+{"description_zh": "使用 Playwright 构建并运行 Gemini 2.5 Computer Use 浏览器控制代理。当用户希望通过 Gemini Computer Use 模型自动化网页浏览器任务、需要代理循环（截图 → 函数调用 → 动作 → 函数响应），或要求为高风险 UI 操作集成安全确认时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": ".NET 10 应用的 Docker 容器化。涵盖多阶段构建、.NET 容器镜像、非 root 用户配置、健康检查以及 .dockerignore。当使用 Dockerfile 对应用进行容器化、优化镜像大小、为本地开发配置 Docker Compose，或当用户提及“Docker”、“Dockerfile”、“container”、“docker-compose”、“image”、“multi-stage”、“non-root”、“.dockerignore”或“容器健康检查”时，加载此技能。对于无需 Dockerfile 的 SDK 发布（`dotnet publish /t:PublishContainer`），请改用容器发布技能。"}

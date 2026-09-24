@@ -1,0 +1,1 @@
+{"description_zh": "仅基于首尔行政洞名称的正式名优先且允许的决定性表记别称，按标准 place_id 解析后，在 hosted k-skill proxy 中仅对 ASK 首尔的地点级气象风险预测时段（weather_place_risk_window）单一产品进行只读查询。无需提供用户 API Key 及 place_id 输入。"}

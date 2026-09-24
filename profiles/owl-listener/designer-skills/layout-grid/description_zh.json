@@ -1,0 +1,1 @@
+{"description_zh": "定义响应式网格——列、栏间距、外边距和断点行为。用于建立页面结构。组件内部的空间尺度使用 `spacing-system`；跨设备行为使用 `responsive-design`。"}

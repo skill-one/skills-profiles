@@ -1,0 +1,1 @@
+{"description_zh": "调用此技能用于 Arize Prompt Hub 和 `ax prompts` 工作流：编写或导入模板并保存（工作流 A–B）、标记/提升（C），或列出/获取/编辑/删除/复制（D）。当用户提及 ax prompts、Prompt Hub、创建/编辑/保存提示、`{变量}` 占位符或生产/预发布标签时使用。使用 traces 或 eval scores 优化提示文本时，请使用 arize-prompt-optimization。运行实验时，请使用 arize-experiment。"}

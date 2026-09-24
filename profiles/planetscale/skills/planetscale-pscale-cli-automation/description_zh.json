@@ -1,0 +1,1 @@
+{"description_zh": "在自动化代理中调用 PlanetScale CLI (pscale) 时，需指定 --format json、auth check、pscale sql，并每次命令均使用 --force。直接驱动 pscale 时，应于其他 PlanetScale 技能之前运行。当用户要求自动化 pscale、以无头模式运行 CLI 命令，或从代理中验证 pscale 认证时使用。"}

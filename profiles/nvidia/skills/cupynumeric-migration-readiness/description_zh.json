@@ -1,0 +1,1 @@
+{"description_zh": "将 NumPy 迁移至 cuPyNumeric 的迁移前就绪性评估者。在开始实质性迁移工作之前使用，适用于用户询问代码是否能在 GPU 上扩展、是否应迁移至 cuPyNumeric、哪些 NumPy 模式能够顺利迁移、迁移前需要重构什么，或提及迁移前评估、扩展性分析或重构规划时使用。检查用户源代码，查询 NumPy 使用方式，对照 cuPyNumeric API 支持清单进行交叉核对，并区分有利于分布式扩展的模式与阻碍，如不受支持的 API、标量同步、主机往返、Python/对象密集控制流、依据形状/数据依赖的分支，以及就地修改风险。输出 READY、LIGHT REFACTOR、SIGNIFICANT REFACTOR 或 NOT RECOMMENDED 的结论，并提供具体的重构指引。"}

@@ -1,0 +1,1 @@
+{"description_zh": "汇总当前学术证据，用于科学论文或研究简报。在用户明确要求收集文献、参考文献、背景证据、不同研究结果，或论文研究资料包时使用。默认使用 Parallel Search，源验证使用 Parallel Extract，用于明确深度/详尽研究时使用 Parallel Research，可选明确使用 Parallel Chat，仅在请求或允许作为失败回退时使用 Perplexity。"}

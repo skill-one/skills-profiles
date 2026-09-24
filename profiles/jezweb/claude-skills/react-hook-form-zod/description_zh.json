@@ -1,0 +1,1 @@
+{"description_zh": "使用 React Hook Form v7 和 Zod v4 构建类型安全的已验证表单。通过 z.infer 实现完整的 TypeScript 推断，单一 schema 可在客户端和服务器端通用。\n\n适用于构建表单、多步向导，或修复无控警告、解析器错误、useFieldArray 问题以及大型表单的性能问题。"}

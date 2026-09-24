@@ -1,0 +1,1 @@
+{"description_zh": "面向所有视觉输出的 UI/UX 质量门禁与构建指南——包括落地页、仪表盘、Web 应用、作品集及各类工具。ui-design 始终作为主要入口。\n\n集成模型：ui-design 主分支 + taste-skill 覆盖层。\n- ui-design 主导工程质量（轨道选择、组件库策略、可访问性、响应式、主题设置、性能、预览交付）\n- taste-skill 在 ui-design 工作流内部被调用，用于风格决策（简报推理、设计旋钮、反平庸硬性规则）\n\n当项目产出视觉 HTML/CSS/JS 时，必须与 project-builder 一同使用。"}

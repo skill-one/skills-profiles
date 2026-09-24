@@ -1,0 +1,1 @@
+{"description_zh": "将编码任务委托给 Command Code CLI（`cmd`）作为后台执行者，然后自行审查其 diff 并落地。当用户希望将实现工作交给 Command Code 时，使用此方法——例如使用“让 Command Code 执行 X”、“将此任务委托给 commandcode”、“通过 cmd 运行它”或“使用 Command Code 实现/修复/重构”等表述；或者同时让多个编码任务队列通过 Command Code 处理，同时自己担任审查者。对于足够小可以直接内联完成的任务，或者用户要求直接编写代码而不进行委托时，请勿使用。"}

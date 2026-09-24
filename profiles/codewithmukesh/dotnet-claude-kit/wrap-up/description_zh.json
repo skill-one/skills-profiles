@@ -1,0 +1,1 @@
+{"description_zh": "负责会话交接生命周期：完成结束会话仪式，将已完成的工作、待办事项和学习成果记录至 .claude/handoff.md，并执行会话开始时的加载协议，重新加载该记录。\n\n触发条件：/wrap-up、\"wrap up\"、\"done for today\"、\"that's all\"、\"END SESSION\"、\"signing off\"、\"handoff\"，以及会话开始时：\"start session\"、\"session start\"、\"load handoff\"、\"pick up where we left off\"、\"what were we working on\"。"}

@@ -1,0 +1,1 @@
+{"description_zh": "将单节点脚本转换为多节点 Slurm sbatch 作业，并排查常见多节点故障。涵盖 srun 原生方式与 uv run torch.distributed 方式、容器配置、NCCL 超时、MoE 模型的 OOM 内存配置，以及交互式资源分配。"}

@@ -1,0 +1,1 @@
+{"description_zh": "为任意 NVIDIA Jetson 上的 LLM/VLM 工作负载，选择合适的服务栈和每个运行时的内存标志（vLLM、SGLang、llama.cpp、TensorRT Edge-LLM）。"}

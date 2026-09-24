@@ -1,0 +1,1 @@
+{"description_zh": "异常路径。使用 integrate-fusion-agent 处理 Atlas/chat/agent。仅在用户明确要求在应用内使用 useAtlasChat，且 connectToHostApp 无法提供 EOS 侧边栏（独立应用，始终拒绝）时适用。触发条件：useAtlasChat、应用内 Atlas 聊天、嵌入式聊天、内置 atlas-agent。不适用于通用的“添加聊天”。"}

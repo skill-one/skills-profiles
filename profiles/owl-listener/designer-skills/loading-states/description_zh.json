@@ -1,0 +1,1 @@
+{"description_zh": "设计等待体验——加载旋转、骨架屏、乐观更新与渐进式展示。当内容需要较长时间加载时使用。针对延迟预算本身，使用 `doherty-threshold`；针对成功确认，使用 `feedback-patterns`。"}

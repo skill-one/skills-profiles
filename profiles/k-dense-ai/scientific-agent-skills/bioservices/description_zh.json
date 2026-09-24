@@ -1,0 +1,1 @@
+{"description_zh": "面向40+生物信息服务的统一Python接口。适用于在单一工作流中查询多个数据库（UniProt、KEGG、ChEMBL、Reactome），并具备统一API的场景。最适合跨数据库分析与跨服务ID映射。若需快速进行单数据库查询，请使用 gget；如需进行序列/文件操作，请使用 biopython。"}

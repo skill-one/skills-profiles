@@ -1,0 +1,1 @@
+{"description_zh": "优化GKE成本、调整工作负载规模，并配置Spot VM和CUD。适用于优化GKE成本、调整GKE工作负载规模或配置GKE Spot VM时。不适用于通用计算类资源配置或GPU选择（请改用gke-compute-classes）。"}

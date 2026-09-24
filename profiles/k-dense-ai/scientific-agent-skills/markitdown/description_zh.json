@@ -1,0 +1,1 @@
+{"description_zh": "通过 Microsoft MarkItDown 将异构文档和选定 URI 转换为 Markdown，以支持文本分析、搜索以及 LLM/RAG 数据摄取。涵盖安全的本地转换、流式处理、Office、PDF 及数据格式、批处理工作流、插件、视觉 OCR、Azure 提取与官方 MCP 服务器。"}

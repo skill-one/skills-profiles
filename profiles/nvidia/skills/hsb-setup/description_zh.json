@@ -1,0 +1,1 @@
+{"description_zh": "克隆最新的 NVIDIA Holoscan Sensor Bridge 仓库，确认使用了哪个受支持的 devkit，根据平台配置主机，构建正确的演示容器，运行它，并通过 ping 192.168.0.2 验证 HSB 连接性。用于 Holoscan Sensor Bridge 的设置、构建、容器启动及首次连接联调。"}

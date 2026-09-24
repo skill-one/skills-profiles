@@ -1,0 +1,1 @@
+{"description_zh": "为自上次发布以来合并的每个 PR，以表情符号驱动的格式起草一份 CHANGELOG.md 发布条目；然后将任务委托给 om-auto-create-pr，使其作为 docs PR 在配置的基准分支上落地。遵守 Supersede Credit Rule（取代信用规则），并根据提交作者身份核验每一项信用归属，从而确保跨分支跟进合并和伞形合并将贡献者而非合并者计入信用。发布时使用。"}

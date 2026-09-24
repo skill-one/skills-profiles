@@ -1,0 +1,1 @@
+{"description_zh": "阿里云 SLS（简单日志服务）日志查询与分析技能。使用本技能通过 aliyun CLI 帮助用户编写、解释、优化、执行或排查 SLS 索引检索、SQL 分析以及 SPL 扫描/流水线语句。\n\n触发词：“SLS 查询”、“SLS 分析”、“日志查询”、“日志分析”、“log query”、“analyze sls logs”、“aliyun log query”。"}

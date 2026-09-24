@@ -1,0 +1,1 @@
+{"description_zh": "构建高级搜索引擎查询和Google dork，以挖掘隐藏文件、文档和提及。涵盖 site:、filetype:、inurl:、intitle:、intexit: 和 before:/after: 操作符，原文搜索，暴露的目录列表，配置文件，备份和开放的 S3 桶，以及 Google、Bing、DuckDuckGo 和 Yandex 之间的操作符差异。用于构建 Google dork、追踪泄露文档，或在粘贴站点和文档仓库中搜索姓名、邮箱或选择器时使用。适用于数据暴露审计、预接触侦察、竞争和监管研究，以及内部泄露调查。参见 useosint.com/skills/google-like-a-spy。"}

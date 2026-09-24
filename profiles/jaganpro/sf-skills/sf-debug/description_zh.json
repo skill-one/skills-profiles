@@ -1,0 +1,1 @@
+{"description_zh": "带有100分评分的Salesforce调试日志分析与故障排除。\n\n**触发条件：** 用户分析调试日志、触及 governor 限制、读取堆栈跟踪信息，或接触来自 Salesforce 组织的 .log 文件。\n\n**不要触发：** 运行 Apex 测试（使用 sf-testing）、修复 Apex 代码（使用 sf-apex），或进行 Agentforce 会话追踪（使用 sf-ai-agentforce-observability）。"}

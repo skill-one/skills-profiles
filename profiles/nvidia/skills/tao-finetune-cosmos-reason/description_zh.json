@@ -1,0 +1,1 @@
+{"description_zh": "Cosmos3-Nano 视频问答监督微调，支持可变宽度 GPU 配置下的 FSDP 并行性。适用于训练或评估视频问答模型、使用 SFT/LoRA 对 Cosmos3-Nano 或兼容的 Cosmos Reason 模型进行微调，或涉及 Cosmos-RL 的工作。触发短语包括“fine-tune Cosmos”、“Cosmos3 Nano Reasoner”、“Cosmos-RL SFT”、“video QA fine-tune”、“Cosmos3-Nano training”。"}

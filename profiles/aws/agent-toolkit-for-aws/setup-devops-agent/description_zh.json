@@ -1,0 +1,1 @@
+{"description_zh": "AWS DevOps Agent MCP 连接的设置和诊断。当 aws-devops-agent 在 .mcp.json 中缺失、连接中断，或用户说 \"设置 DevOps 代理\" / \"配置代理\" 时触发。如果 MCP 已连接并正常工作，则不会触发。"}

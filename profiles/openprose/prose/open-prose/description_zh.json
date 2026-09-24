@@ -1,0 +1,1 @@
+{"description_zh": "当用户输入 `prose ...`、打开带有 `kind:` frontmatter 的 `.prose.md` 文件、打开 `.prose` 文件，或请求可复用的多智能体编排时，激活。将 `prose run ...` 视为会话内指令：自行扮演 OpenProse VM；不要通过 shell 调用 `prose` 二进制文件。激活后，读取 Markdown 契约，选择状态后端，对接职责，使用宿主原语执行，并将运行状态持久化到所选 OpenProse 根目录下。  \n对于一次性问题，予以拒绝——普通提示往往就是正确的答案。"}

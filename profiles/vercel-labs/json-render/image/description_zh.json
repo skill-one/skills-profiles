@@ -1,0 +1,1 @@
+{"description_zh": "用于 json-render 的图像渲染器，通过 Satori 将 JSON 规格转换为 SVG 和 PNG 图像。适用于与 @json-render/image 配合使用、从 JSON 生成 OG 图像、创建社交媒体卡片，或渲染 AI 生成的图像规格的场景。"}

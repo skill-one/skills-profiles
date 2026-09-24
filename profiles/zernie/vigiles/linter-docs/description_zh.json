@@ -1,0 +1,1 @@
+{"description_zh": "编写或调试 vigiles enforce() 规则的深度检查器参考指南——涵盖 ESLint、Ruff、Pylint、RuboCop、Stylelint 及 Clippy 的插件表、AST 选择器、类型感知规则、自动修复与边界情况。当您需要针对特定检查器获取准确的规则名称或配置时使用，而非用于运行检查器。(JVM/Go 检查器——detekt、ktlint、Checkstyle、golangci-lint——以及 Cedar 尚无深度解析文档；其参考内容位于 docs/linter-support.md。)"}

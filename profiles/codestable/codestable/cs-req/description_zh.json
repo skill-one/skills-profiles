@@ -1,0 +1,1 @@
+{"description_zh": "能力愿景维护。触发：起草/回填/更新 requirements，或 design/acceptance 需要 req delta。不得用于单个功能实现方案（cs-feat design）、大需求拆解排期（cs-epic）、开放式发散讨论（cs-brainstorm）、领域术语/ADR 建模（cs-domain）。"}

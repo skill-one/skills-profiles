@@ -1,0 +1,1 @@
+{"description_zh": "通过 [inference.sh](https://inference.sh) 在安全的沙盒环境中执行 Python 代码。已预装：NumPy、Pandas、Matplotlib、requests、BeautifulSoup、Selenium、Playwright、MoviePy、Pillow、OpenCV、trimesh，以及 100 余个更多库。用途：数据处理、网页抓取、图像编辑、视频制作、3D 模型处理、PDF 生成、API 调用、自动化脚本。触发词：Python、执行代码、运行脚本、网页抓取、数据分析、图像处理、视频编辑、3D 模型、自动化、Pandas、Matplotlib"}

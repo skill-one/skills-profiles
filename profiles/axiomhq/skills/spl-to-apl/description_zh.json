@@ -1,0 +1,1 @@
+{"description_zh": "将 Splunk SPL 查询转换为 Axiom APL。提供命令映射、函数等价及语法转换。适用于从 Splunk 迁移、转换 SPL 查询，或学习 SPL 模式在 APL 中的等价形式。"}

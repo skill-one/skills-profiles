@@ -1,0 +1,1 @@
+{"description_zh": "通过 QwenCloud 上可用的 Qwen 模型与第三方模型，生成文本、进行对话、编写代码、进行推理并调用函数。TRIGGER：当用户要求与 Qwen 对话、使用 Qwen 生成文本、使用 Qwen 编写代码、使用 Qwen 函数调用、通过 QwenCloud 调用第三方模型（deepseek、kimi、glm 等），或明确以名称调用本技能（例如使用 qwencloud-text）时。DO NOT TRIGGER：当使用非 QwenCloud 平台（直接调用 OpenAI API、Google Gemini API 等）、与 QwenCloud 无关的一般编程问题、图像/视频理解（使用 qwencloud-vision）、图像/视频/音频生成时。"}

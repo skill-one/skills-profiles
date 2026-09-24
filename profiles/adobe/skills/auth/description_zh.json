@@ -1,0 +1,1 @@
+{"description_zh": "通过 AEM 边缘交付服务进行身份验证。将打开浏览器进行登录并捕获令牌。无论内容来源（文档创作、SharePoint 或 Google Drive）如何，均适用于 admin.hlx.page 与配置服务 API。"}

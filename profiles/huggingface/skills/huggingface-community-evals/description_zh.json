@@ -1,0 +1,1 @@
+{"description_zh": "使用 inspect-ai 和 lighteval 在本地硬件上对 Hugging Face Hub 模型进行评估。可用于后端选择、本地 GPU 评估，以及在 vLLM / Transformers / accelerate 之间进行选择。不用于 Hugging Face Jobs 编排、模型卡 PR、.eval_results 发布或社区评估自动化。"}

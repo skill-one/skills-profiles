@@ -1,0 +1,1 @@
+{"description_zh": "json-render 的 React 邮件渲染器：使用 @react-email/components 和 @react-email/render，将 JSON 规范转换为 HTML 或纯文本邮件。适用于配合使用 @json-render/react-email、从 JSON 构建事务性邮件或营销邮件、创建邮件目录、渲染 AI 生成的邮件规范，或当用户提及 react-email、HTML 邮件或事务性邮件时使用。"}

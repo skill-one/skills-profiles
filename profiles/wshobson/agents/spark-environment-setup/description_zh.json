@@ -1,0 +1,1 @@
+{"description_zh": "在 NVIDIA DGX Spark（GB10, aarch64, CUDA 13）上搭建可用的机器学习训练/推理环境。该内容适用于在 DGX Spark 上安装 PyTorch/Unsloth/TRL/vLLM、解决 aarch64 平台出现的 libcudart 或 wheel-ABI 错误，以及在 NGC 容器与直接 pip 安装之间做出选择等场景。"}

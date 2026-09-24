@@ -1,0 +1,1 @@
+{"description_zh": "诊断 Dynamo 部署是否失败或不健康。当 pods、模型缓存任务、PVC、workers、前端/路由健康、端点或基准测试任务失败时使用；在正常启动前，先使用 recipe-runner/router-starter。"}

@@ -1,0 +1,1 @@
+{"description_zh": "针对 AWS Secrets Manager、密钥管理、凭据、API 密钥、令牌和密码的密钥安全。防止 AI 代理直接获取密钥值，并通过 asm-exec 实现运行时动态引用，确保明文永远不会进入 LLM 上下文窗口。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用 useGLTF、useLoader、Suspense 和 preloading 在 React Three Fiber 中加载和复用 3D 资源。用于模型加载、解码器设置、缓存、克隆或加载/错误界面。"}

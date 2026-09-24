@@ -1,0 +1,1 @@
+{"description_zh": "使用 FlowStudio MCP 服务器调试失败的 Power Automate 云流程。Graph API 仅显示顶层状态码。此技能为您的代理提供操作级别的输入和输出，以便查找实际根本原因。当需要调试流程、调查失败的运行、了解流程为何失败、检查操作输出、查找流程错误的根本原因、修复损坏的 Power Automate 流程、诊断超时、追踪 DynamicOperationRequestFailure、检查连接器认证错误、阅读运行错误详情或排查表达式失败问题时，请加载此技能。需要 FlowStudio MCP 订阅——参见 https://mcp.flowstudio.app"}

@@ -1,0 +1,1 @@
+{"description_zh": "用于添加、修改、优化或调试CuTile自动调优代码时使用。触发信号：代码中的 `exhaustive_search` / `replace_hints` / `hints_fn` / `cuda.tile.tune`，文件名中的 `autotune`，或自动调优的CuTile内核存在正确性/性能问题。涵盖：tune-once/cache/launch模式，按架构配置（sm80–sm120），参数空间设计（tile sizes, occupancy, num_ctas），以及7个常见陷阱及解决方案。"}

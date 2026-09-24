@@ -1,0 +1,1 @@
+{"description_zh": ".NET 解决方案的依赖健康报告：过期的 NuGet 包、存在漏洞的版本以及商业许可陷阱（MediatR、MassTransit、FluentAssertions、AutoMapper）——由 get_nuget_packages MCP 工具驱动。\n\n调用时：当出现“过期的包”、“检查依赖项”、“过时的包”、“包审计”、“依赖健康”、“我的包是否为最新版本”、“许可检查”、“存在漏洞的包”或“NuGet 审计”时。"}

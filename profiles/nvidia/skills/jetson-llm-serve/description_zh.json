@@ -1,0 +1,1 @@
+{"description_zh": "在 Jetson 上搭建 vLLM 或 SGLang 服务；使用 Thor 与 Orin JetPack 7.2+ 上的上游 vLLM，并在较旧的 Orin 上使用 NVIDIA-AI-IOT vLLM。"}

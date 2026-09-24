@@ -1,0 +1,1 @@
+{"description_zh": "在审查AEM Edge Delivery Services (EDS, Franklin, Helix)代码时，无论是在开发完成后打开PR之前进行自我审查，还是审查现有拉取请求，均需使用此方式。该功能验证块结构、CSS和JS模式、DOM输出、Lighthouse性能及无障碍性是否遵循EDS最佳实践，并将相关发现以审查评论或GitHub建议的形式发布。"}

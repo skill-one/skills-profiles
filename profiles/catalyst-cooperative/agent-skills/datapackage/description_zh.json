@@ -1,0 +1,1 @@
+{"description_zh": "探索并查询任何已使用 Frictionless Data Package 描述符（datapackage.json）进行标注的数据集。当用户需要发现数据集包含哪些表格或资源、查询列名与描述、呈现嵌入元数据中的使用警告，或了解如何从由 datapackage.json 描述的数据集加载数据（包括从 Parquet 文件、DuckDB 或 SQLite 数据库以及 CSV 文件中加载）时，均应使用此技能。当用户拥有 datapackage.json 并希望了解其内容、如何高效查询，或如何将元数据与实际数据文件关联时，也应使用此技能。该技能与数据集特定技能（如 `pudl`）配合使用效果良好，后者在此基础上叠加领域知识。"}

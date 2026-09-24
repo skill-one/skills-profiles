@@ -1,0 +1,1 @@
+{"description_zh": "基于 PyDESeq2 的 bulk RNA-seq 差异基因表达分析，包括公式设计、Wald 检验、FDR 校正、LFC 收缩及结果可视化。"}

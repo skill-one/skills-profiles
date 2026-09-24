@@ -1,0 +1,1 @@
+{"description_zh": "使用 scVelo 进行 RNA 速度分析。从未剪接/剪接 mRNA 动力学估计细胞状态转变，推断轨迹方向，计算潜在时间，并在单细胞 RNA-seq 数据中识别驱动基因。与 Scanpy/scVI-tools 互补，用于轨迹推断。"}

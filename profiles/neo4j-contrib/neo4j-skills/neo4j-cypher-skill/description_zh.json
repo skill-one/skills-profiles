@@ -1,0 +1,1 @@
+{"description_zh": "为 Neo4j 2025.x 和 2026.x 生成、优化并验证 Cypher 25 查询。适用于编写新 Cypher 查询、优化慢查询、图模式匹配、向量或全文检索、子查询以及批量写入。涵盖 MATCH、MERGE、CREATE、WITH、RETURN、CALL、UNWIND、FOREACH、LOAD CSV、SEARCH、表达式、函数、索引和子查询。不处理驱动程序迁移或 API 变更——请使用 neo4j-migration-skill。不涵盖数据库管理或服务器运维——请使用 neo4j-cli-tools-skill。"}

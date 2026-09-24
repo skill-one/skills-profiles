@@ -1,0 +1,1 @@
+{"description_zh": "调查电话号码——使用 libphonenumber 进行 E.164 标准化、phoneinfoga 扫描、运营商和线路类型识别、VoIP 和虚拟号码检测、即时通讯应用注册验证以及反向查询和来电号码来源。用于手机 OSINT 和电话反向查询，查询\"这个号码是谁的\"、识别虚拟号码或 VoIP 号码，或检查号码是否在 WhatsApp、Telegram 或 Signal 上注册。适用于语音钓鱼和商业邮件钓鱼调查、发送付款前验证交易对方、招聘及市场交易诈骗检查以及欺诈分类。参考 useosint.com/skills/whose-number-is-this。"}

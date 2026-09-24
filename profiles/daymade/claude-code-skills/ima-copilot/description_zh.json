@@ -1,0 +1,1 @@
+{"description_zh": "安装、排查并个性化配置官方腾讯 IMA 技能（一个编排上游 ima-skill 的包装层，而非替代品）。当用户提及 IMA、腾讯 IMA、ima.qq.com、ima-skill、安装或配置 ima-skill、IMA API key / credentials、跨 IMA 知识库搜索、知识库搜索、笔记搜索、按偏好知识库进行扇出搜索及优先级提升，或希望诊断、修复或个性化配置 ima-skill 安装时使用。此外，在 ima-skill 子模块 SKILL.md 文件出现缺少 YAML frontmatter 的 Bug，以及出现类似 \"Skipped loading skill(s) due to invalid SKILL.md\" 的错误时，也应触发。"}

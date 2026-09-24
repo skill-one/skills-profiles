@@ -1,0 +1,1 @@
+{"description_zh": "当用户需要使用 Code节点、在 n8n 中提及编写 JavaScript 或 Python，或在工作流设计中涉及任何自定义逻辑时使用。触发于：“Code节点”、“Code”、“JavaScript”、“Python”、“自定义逻辑”、“数据转换”、“$input”、“$json transformation”、“代码中的循环”、“编写函数”，或任何情况下明显答案为“将其放入代码中”时。"}

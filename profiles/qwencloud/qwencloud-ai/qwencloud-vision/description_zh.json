@@ -1,0 +1,1 @@
+{"description_zh": "使用 Qwen 视觉模型理解图片和视频。触发条件：当用户希望对图片或视频进行分析、描述或提取信息，进行 OCR 文本提取、图表/表格阅读、视觉推理、多图比较、截图理解、视频理解，或明确以名称调用本技能（例如使用 qwencloud-vision）时。不得触发的情况：当用户希望生成/创建图片（使用 qwencloud-image-generation）、生成视频（使用 qwencloud-video-generation）、仅文本任务且无视觉输入，或非 Qwen 视觉任务时。"}

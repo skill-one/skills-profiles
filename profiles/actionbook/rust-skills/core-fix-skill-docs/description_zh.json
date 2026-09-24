@@ -1,0 +1,1 @@
+{"description_zh": "用于检查并修复生成的 Rust 技能文档引用的内部维护支持。仅在显式调用 /fix-skill-docs 时使用。"}

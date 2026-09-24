@@ -1,0 +1,1 @@
+{"description_zh": "应用动画原则——缓动、阶段化、余动——到特定的 UI 动效中。用于调整动画质感时使用。全产品的持续时间与缓动令牌请使用 `motion-system`（设计系统）；如需完整的交互规范，请使用 `micro-interaction-spec`。"}

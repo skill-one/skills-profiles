@@ -1,0 +1,1 @@
+{"description_zh": ".NET 10 应用程序的错误处理策略。涵盖 Result 模式、ProblemDetails（RFC 9457）、全局异常处理、FluentValidation 以及结构化错误响应。当实现错误处理、验证或设计 API 错误契约时，或当用户提及“错误处理”、“Result 模式”、“ProblemDetails”、“异常”、“验证”、“FluentValidation”、“错误响应”、“全局异常处理器”或“RFC 9457”时，请加载此技能。"}

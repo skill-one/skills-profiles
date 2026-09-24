@@ -1,0 +1,1 @@
+{"description_zh": ".NET 10 最小 API — 构建 HTTP 端点的默认方式。涵盖 MapGroup、端点过滤器、TypedResults、OpenAPI 元数据、参数绑定和路由约定。当创建 API 端点、配置路由、设置 OpenAPI 文档，或用户提到“端点”、“MapGet”、“MapPost”、“MapGroup”、“TypedResults”、“路由”、“最小 API”、“OpenAPI”、“swagger”、“限流”或“输出缓存”时，加载本技能。"}

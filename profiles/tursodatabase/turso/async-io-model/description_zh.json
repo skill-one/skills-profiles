@@ -1,0 +1,1 @@
+{"description_zh": "tursodb 常用异步模式的说明。涉及 IOResult、状态机、重入陷阱、CompletionGroup。在进行任何 IO 操作时，在 `core` 中始终使用这些模式。"}

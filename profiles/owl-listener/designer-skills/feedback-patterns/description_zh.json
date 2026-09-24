@@ -1,0 +1,1 @@
+{"description_zh": "设计确认、状态更新以及通知用户操作已注册的消息。当系统需要确认成功或变更时使用。对于等待状态，使用 `loading-states`；对于失败情况，使用 `error-handling-ux`。"}

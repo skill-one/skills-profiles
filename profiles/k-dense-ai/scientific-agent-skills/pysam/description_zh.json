@@ -1,0 +1,1 @@
+{"description_zh": "用于基因组文件的 Python/HTSlib 工作流。在使用 pysam 读取、查询、筛选或写入 SAM/BAM/CRAM、VCF/BCF、FASTA/FASTQ 或 tabix 数据时适用，包括堆叠图、覆盖率、索引及 CRAM 参考等操作。"}

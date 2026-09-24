@@ -1,0 +1,1 @@
+{"description_zh": "为将 Android XML View 迁移至 Jetpack Compose 提供结构化的工作流程。本技能详细说明了从规划与依赖配置、主题与布局迁移、验证及 XML 清理的逐步流程。当您需要在 Android 项目中将 XML View 迁移至 Jetpack Compose 时，请使用本技能。它解决了将遗留 XML View 的界面转换为现代声明式 Compose 组件，同时保持互操作性的问题。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用反向 alpha 混合，移除图像中可见的 Gemini AI 水印。当被要求去除 Gemini 水印、批量处理 Gemini 图像，或构建/修改用于移除右下角 Gemini 水印的 CLI 脚本（无需使用 HTML 或服务器端组件）时使用。"}

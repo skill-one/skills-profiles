@@ -1,0 +1,1 @@
+{"description_zh": "全面的分子生物学工具包。可用于序列操纵、文件解析（FASTA/GenBank/PDB）、系统发育，以及通过程序访问 NCBI/PubMed（Bio.Entrez）。最适合批量处理、定制化生物信息学流程、BLAST 自动化。快速查找请使用 gget；多服务集成请使用 bioservices。"}

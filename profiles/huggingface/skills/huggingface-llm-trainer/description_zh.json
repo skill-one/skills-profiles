@@ -1,0 +1,1 @@
+{"description_zh": "使用 TRL（Transformer 强化学习）或 Unsloth 配合 Hugging Face Jobs 基础设施，训练或微调语言和视觉模型。涵盖 SFT、DPO、GRPO 和奖励建模训练方法，以及用于本地部署的 GGUF 格式转换。包含关于 TRL Jobs 包的指导、采用 PEP 723 格式的 UV 脚本、数据集准备与验证、硬件选择、成本估算、Trackio 监控、Hub 认证、模型选择/排行榜以及模型持久化的相关指导。适用于涉及云端 GPU 训练、GGUF 转换的任务，或在用户提及在 Hugging Face Jobs 上训练但未配置本地 GPU 时使用。"}

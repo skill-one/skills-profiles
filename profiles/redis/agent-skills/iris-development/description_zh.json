@@ -1,0 +1,1 @@
+{"description_zh": "Iris 是 Redis 在 AI 相关产品领域的统一平台。当与 Redis Cloud 上的 Iris Redis Agent Memory (RAM) 数据平面集成时，请使用此技能——记录 AI 代理的会话事件、创建或检索长期记忆、配置记忆存储，或调整后台记忆提升功能。代码示例使用官方的 `redis-agent-memory` (Python) 和 `@redis-iris/agent-memory` (TypeScript) SDK。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在 TileGym 中添加新的 cuTile GPU 内核算子。涵盖 ops.py 中的调度注册、cuTile 后端实现、__init__.py 导出、测试创建，以及 tests/benchmark 中的基准测试。在 TileGym 中添加、创建或实现新的 cuTile 算子/内核时使用，或在询问如何注册新的 cuTile 算子时使用。"}

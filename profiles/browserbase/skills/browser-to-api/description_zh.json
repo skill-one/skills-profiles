@@ -1,0 +1,1 @@
+{"description_zh": "通过分析 `browser-trace` 捕获，将网站的可见 HTTP 流量转换为尽力而为的 OpenAPI 3.1 规范。当用户需要从浏览器会话中发现/提取 API 端点、从网络流量构建 OpenAPI 文档，或为客户端集成记录第三方网站的 XHR/fetch 接口面时使用。"}

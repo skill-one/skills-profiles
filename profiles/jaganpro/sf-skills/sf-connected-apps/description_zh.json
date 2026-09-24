@@ -1,0 +1,1 @@
+{"description_zh": "120分评分机制的Salesforce连通应用与OAuth配置。触发条件：用户配置OAuth流程、JWT Bearer认证、连通应用，或操作/触及 .connectedApp-meta.xml / .eca-meta.xml 文件时触发。不触发条件：调用（调用输出）具名凭据（使用 sf-integration）、权限策略（使用 sf-permissions），或API端点代码（使用 sf-apex）时不触发。"}

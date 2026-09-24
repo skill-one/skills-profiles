@@ -1,0 +1,1 @@
+{"description_zh": "应用 Doherty Threshold — 保持系统响应时间低于 400ms 以保障用户流畅性。在诊断感知缓慢或设置性能预算时使用。对于不可避免等待期间要展示的内容，使用 `loading-states`。"}

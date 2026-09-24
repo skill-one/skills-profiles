@@ -1,0 +1,1 @@
+{"description_zh": "完全定义一个微交互——触发、规则、反馈、循环与模式。当将单个交互交付给工程团队时使用。仅针对动态制作，使用 `animation-principles`；针对多状态组件，使用 `state-machine`。"}

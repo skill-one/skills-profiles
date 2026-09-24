@@ -1,0 +1,1 @@
+{"description_zh": "查询 JASPAR 数据库中的转录因子（TF）结合谱。用于获取特定转录因子的位置频率矩阵（PFMs）或位置权重矩阵（PWMs），将基因符号解析为 JASPAR 矩阵ID，或获取转录因子元数据。支持多种输出格式（MEME、TRANSFAC、PFM、JASPAR、YAML）。"}

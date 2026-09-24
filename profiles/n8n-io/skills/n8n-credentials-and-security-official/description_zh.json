@@ -1,0 +1,1 @@
+{"description_zh": "用于处理 n8n 工作流中的任何认证、API 密钥、令牌、OAuth、Bearer 令牌、基本认证或秘密值时使用。当触发关键词\"API key\"、\"token\"、\"bearer\"、\"OAuth\"、\"secret\"、\"auth\"、\"credentials\"、\"Authorization header\"、\"x-api-key\"，或提及第三方服务的任何节点配置时触发。"}

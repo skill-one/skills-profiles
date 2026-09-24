@@ -1,0 +1,1 @@
+{"description_zh": "在 React Three Fiber 中实现自定义 GLSL 或 TSL 材质，包括 uniform 和顶点变形。用于着色器代码与着色器调试，而非普通的 PBR 设置或合成器效果。"}

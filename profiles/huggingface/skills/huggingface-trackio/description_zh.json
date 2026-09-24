@@ -1,0 +1,1 @@
+{"description_zh": "使用 Trackio 跟踪并可视化机器学习训练实验。可用于在训练期间记录指标（Python API）、触发训练诊断告警，或获取/分析已记录指标（CLI）。支持实时仪表盘可视化、带 Webhooks 的告警、HF Space 同步，以及用于自动化的 JSON 输出。"}

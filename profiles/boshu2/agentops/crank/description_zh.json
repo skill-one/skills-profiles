@@ -1,0 +1,1 @@
+{"description_zh": "执行一次由调用方选择的波次：每车道调用一次RPI，并返回波次证据，然后停止。触发条件：\"crank\"、\"execute the next wave\"、\"run this wave\"。"}

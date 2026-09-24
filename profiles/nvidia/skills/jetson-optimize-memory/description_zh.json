@@ -1,0 +1,1 @@
+{"description_zh": "通过禁用 MB1 BCT、MB2 BCT、内核保留内存及 SWIOTLB 中的未使用子系统来回收 DRAM。适用于无头或无摄像头的 Jetson 部署；不适用于 CPU/GPU 频率调优。"}

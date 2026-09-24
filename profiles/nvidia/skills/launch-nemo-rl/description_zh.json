@@ -1,0 +1,1 @@
+{"description_zh": "通过 nrl-k8s CLI 在 Kubernetes 集群上启动、监控、停止和调试 NeMo-RL 配方的操作指南。涵盖临时与长期运行的 RayCluster 模式、在运行过程中迭代优化，以及调试卡死或失败的训练任务。"}

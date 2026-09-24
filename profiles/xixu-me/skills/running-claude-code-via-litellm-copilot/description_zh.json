@@ -1,0 +1,1 @@
+{"description_zh": "当通过本地 LiteLLM 代理将 Claude Code 路由至 GitHub Copilot 时使用，减少直接向 Anthropic 支出费用，配置 ANTHROPIC_BASE_URL 或 ANTHROPIC_MODEL 覆盖项，或排查 GitHub Copilot 代理配置故障，例如模型未找到、无本地主机流量、GitHub 401/403 认证错误。"}

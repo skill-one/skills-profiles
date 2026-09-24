@@ -1,0 +1,1 @@
+{"description_zh": "通过 SpikeInterface 对 Neuropixels 胞外记录进行端到端分析。涵盖 SpikeGLX/Open Ephys/NWB 数据加载、预处理、漂移/运动校正、Kilosort4（及 CPU）脉冲排序、质量指标以及单元整理（基于阈值的、基于模型的 UnitRefine 以及 AI 辅助视觉审查）。适用于 Neuropixels 1.0/2.0 记录、脉冲排序或胞外电生理分析工作。"}

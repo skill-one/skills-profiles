@@ -1,0 +1,1 @@
+{"description_zh": "在 fetcher.sh 上提供 Google News API 的替代方案——可通过 x402 以 USDC 实现按次付费，或使用 Bearer 密钥预先充值积分，无需抓取 RSS。当用户需要关键词搜索 Google News 并按语言版本进行限定、获取板块标题（包括世界、商业、科技、娱乐、体育、科学、健康，或特定主题 ID）、最新标题、支持的语区域码列表，或将 Google News 重定向 URL 解码为实际文章 URL 时，均可使用。此外，还涵盖无需直接抓取 Google News RSS 订阅源即可实现的新闻监控、标题聚合、媒体追踪及媒体提及提醒功能。"}

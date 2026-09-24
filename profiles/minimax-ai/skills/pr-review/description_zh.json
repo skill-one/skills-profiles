@@ -1,0 +1,1 @@
+{"description_zh": "审查 MiniMax Skills 仓库的 Pull Request。在审查 PR、验证新的技能提交或检查现有技能是否符合合规要求时使用。首先运行验证脚本进行硬性检查，然后根据质量指南进行内容审查。触发条件：PR 审查、Pull Request、验证技能、检查技能。"}

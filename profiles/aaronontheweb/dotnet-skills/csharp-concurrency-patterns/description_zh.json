@@ -1,0 +1,1 @@
+{"description_zh": "在 .NET 中选择合适的并发抽象——从用于 I/O 的 async/await，到用于生产者/消费者的 Channels，再到用于有状态实体管理的 Akka.NET。\n\n除非绝对必要，否则避免使用锁和手动同步。"}

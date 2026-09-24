@@ -1,0 +1,1 @@
+{"description_zh": "C# 应用程序的 .NET 时区处理指南。适用于在 TimeZoneInfo、DateTimeOffset、NodaTime、UTC 转换、夏令时、跨时区调度、跨平台 Windows/IANA 时区 ID 等方面工作，或当 .NET 用户需要为城市、地址、地区或国家查找时区，并获取可直接复制使用的 C# 代码时使用。"}

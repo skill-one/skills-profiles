@@ -1,0 +1,1 @@
+{"description_zh": "将 .NET 测试从 xUnit.net v2/v3 转换为 MSTest v4，同时保留 VSTest 或 MTP。用于替换 xunit 程序包、Fact/Theory/InlineData/MemberData、断言、IClassFixture/ICollectionFixture、ITestOutputHelper、TestContext 取消机制、traits/Owner、跳过、超时以及 xUnit 并行化。当“将 xUnit 转换为 MSTest”的请求可能已经迁移完成时，也使用：检查并报告 no-op。不得用于 xUnit v2 至 v3 转换、MSTest 升级、NUnit/TUnit 转换，或仅运行器的 VSTest 至 MTP 迁移。"}

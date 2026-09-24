@@ -1,0 +1,1 @@
+{"description_zh": "在 Megatron Bridge 中训练 MoE VLMs 的实践指导。本文对比了 FSDP 与 3D 并行方法，并基于 Qwen3-VL、Qwen3-Next 及其他多模态实验所积累的实战经验。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在 TresJS (Vue Three.js) 中构建 3D 场景时使用：提供 TresCanvas、composables（useTres，useLoop）、Cientos 辅助工具（OrbitControls，useGLTF，Environment）以及后处理效果"}

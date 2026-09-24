@@ -1,0 +1,1 @@
+{"description_zh": "根据自然语言描述，生成、构建、创建或设计 ComfyUI 工作流 JSON。能够生成有效的节点图，其中 class_types、连接关系、输出索引以及适配模型的设置均正确。支持 txt2img、img2img、inpainting、ControlNet、LoRA 叠加、放大以及人脸精修等流程。不涵盖 ComfyUI 安装、自定义节点开发、Python 脚本编写、模型训练、硬件建议或架构说明。"}

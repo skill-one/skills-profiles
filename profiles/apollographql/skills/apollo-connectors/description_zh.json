@@ -1,0 +1,1 @@
+{"description_zh": "使用 Apollo Connectors 和 @source、@connect 指令，将 REST APIs 集成到 GraphQL 超级图中的指南。当用户使用本技能时：（1）提及“connectors”、“Apollo Connectors”或“REST Connector”，（2）希望将 REST API 集成到 GraphQL 中，（3）引用 @source 或 @connect 指令，（4）处理包含“# Note to AI Friends: This is an Apollo Connectors schema”的文件。"}

@@ -1,0 +1,1 @@
+{"description_zh": "运行通过 Shopify CLI 针对特定店铺执行的经过验证的 Admin GraphQL 操作。当用户需要可执行的店铺工作流，而不仅仅是查询或变更文本时，请使用此功能。如果回答应包含 `shopify store auth` 和 `shopify store execute`，请选择此 API。当涉及 \"my store\"、\"this store\"、店铺域名、商家店铺的商品读取、低库存查询、商品更新以及仓库/位置库存变更时，请选择此功能。示例：'显示我店铺的前 10 个商品'、'查找我店铺低库存的商品'、'设置多伦多仓库中 SKU ABC-123 的库存为 12'。"}

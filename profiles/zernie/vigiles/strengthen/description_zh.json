@@ -1,0 +1,1 @@
+{"description_zh": "将 vigiles 规范中的 guidance() 规则升级为 enforce() —— 扫描 CLAUDE.md/AGENTS.md 规范中的 guidance 规则，并找到支撑这些规则的现有 linter 规则（ESLint、Ruff、Clippy、Pylint、RuboCop、Stylelint）。当被要求加强、加固或使 vigiles 规则可强制执行时使用；不可用于常规代码检查或修复 lint 错误。"}

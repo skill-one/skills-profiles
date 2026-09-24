@@ -1,0 +1,1 @@
+{"description_zh": "通过 OpenAI Docs MCP 服务器使用 CLI (curl/jq) 查询 OpenAI 开发者文档。当任务涉及 OpenAI API (Responses、Chat Completions、Realtime 等)、OpenAI SDKs、ChatGPT Apps SDK、Codex、MCP 集成、接口模式、参数、限制或迁移，且需要最新官方指导时使用。"}

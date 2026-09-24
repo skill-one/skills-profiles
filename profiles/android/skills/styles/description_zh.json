@@ -1,0 +1,1 @@
+{"description_zh": "使用此技能将 Jetpack Compose Styles API 集成到 Android 项目中。本技能将指导您升级依赖项、设置组件主题、使自定义组件可样式化，以及将现有布局属性迁移为采用统一样式。迁移自定义设计系统组件，用 Style 属性替换硬编码参数，并利用 Modifier.styleable 处理交互状态。"}

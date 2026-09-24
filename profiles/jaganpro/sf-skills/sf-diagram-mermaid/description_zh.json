@@ -1,0 +1,1 @@
+{"description_zh": "使用 Mermaid 并带有 ASCII 备选方案的 Salesforce 架构图。触发条件：当用户提到“diagram”、“visualize”、“ERD”，或要求生成 Mermaid 中的时序图、流程图、类图或架构可视化图时。不触发条件：当用户需要 PNG/SVG 图片输出（使用 sf-diagram-nanobananapro），或询问非 Salesforce 系统时。"}

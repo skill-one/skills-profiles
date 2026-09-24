@@ -1,0 +1,1 @@
+{"description_zh": "用于 json-render 的 Vue 3 渲染器。当从 JSON 规范构建 Vue UI、使用 @json-render/vue、定义 Vue 组件注册表，或在 Vue 中渲染 AI 生成的规范时使用。"}

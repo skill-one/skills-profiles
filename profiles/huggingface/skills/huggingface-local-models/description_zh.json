@@ -1,0 +1,1 @@
+{"description_zh": "用于选择使用 llama.cpp 和 GGUF 在 CPU、Mac Metal、CUDA 或 ROCm 上进行本地运行的模型。涵盖查找 GGUF 文件、选择量化精度、运行服务器、精确查找 GGUF 文件、进行转换，以及提供兼容 OpenAI 的本地服务。"}

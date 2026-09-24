@@ -1,0 +1,1 @@
+{"description_zh": "使用 Serilog 为 .NET 10 应用程序实现结构化日志。涵盖两阶段引导、appsettings 配置、增强器、处理程序、请求日志、解构以及 Serilog.Expressions。当设置 Serilog、配置日志处理程序、增强器或结构化日志，或者当用户提及“Serilog”、“结构化日志”、“日志增强”、“Seq”、“LogContext”、“UseSerilog”、“WriteTo”、“消息模板”、“Serilog.Expressions”、“请求日志”、“日志处理程序”、“滚动文件”或“审计日志”时，请加载此技能。"}

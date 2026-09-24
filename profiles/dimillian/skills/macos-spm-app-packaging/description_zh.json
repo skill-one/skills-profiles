@@ -1,0 +1,1 @@
+{"description_zh": "无需Xcode项目即可搭建、构建并打包基于SwiftPM的macOS应用。适用于您需要从零开始构建macOS应用布局、SwiftPM目标/资源、自定义.app捆绑组装脚本，或执行Xcode之外的签名、公证、应用列表（appcast）等步骤的场景。"}

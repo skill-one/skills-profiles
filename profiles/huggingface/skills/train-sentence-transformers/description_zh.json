@@ -1,0 +1,1 @@
+{"description_zh": "在 `SentenceTransformer`（双编码器、用于检索、相似度、聚类、分类、释义挖掘、去重及多模态的稠密或静态嵌入模型）、`CrossEncoder`（重排序器，用于两阶段检索/成对分类的成对评分）、`SparseEncoder`（SPLADE，用于学习式稀疏检索的稀疏嵌入模型）及 `MultiVectorEncoder`（ColBERT / 晚期交互，使用 MaxSim 进行逐 token 嵌入评分）上进行句子嵌入模型的训练或微调。涵盖损失选择、硬负样本挖掘、评估器、知识蒸馏、LoRA、Matryoshka 及 Hugging Face Hub 发布。适用于任何句子嵌入模型的训练任务。"}

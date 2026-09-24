@@ -1,0 +1,1 @@
+{"description_zh": "对现有的 CCF 声明、数字、术语和引用进行审计，并与已提供或经核实的证据进行核对。用于引用核验、声明审计、数字一致性和 BibTeX/context 检查。完整的科学评审由 ccf-paper-reviewer 负责；新的文献发现由 ccf-literature-searcher 负责。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用此技能对归档视频执行顶层 VSS 融合搜索，或将视频文件/RTSP 流摄取用于搜索。请勿将此技能用于即时视觉问答（请使用 vss-ask-video）、实时字幕（请使用 vss-deploy-dense-captioning）或视频摘要与报告（请使用 vss-summarize-video）。"}

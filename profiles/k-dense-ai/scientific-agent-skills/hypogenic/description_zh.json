@@ -1,0 +1,1 @@
+{"description_zh": "关于使用芝加哥HAI HypoGeniC/HypoRefine 从标注文本数据集中生成 LLM 辅助假设的计划与审计。该工具适用于 `hypogenic` 包、其任务配置、假设库或 HypoBench 数据集——不可用于手动假设制定或科学验证。"}

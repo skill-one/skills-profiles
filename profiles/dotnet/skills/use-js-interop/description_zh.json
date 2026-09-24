@@ -1,0 +1,1 @@
+{"description_zh": "在 Blazor 组件中添加、审查或修复 JavaScript 互操作。\n\n**用途：** 从 Blazor 调用 JavaScript，从 JavaScript 调用 .NET，并置 .razor.js 模块，IJSRuntime，IJSObjectReference 生命周期，DotNetObjectReference，ElementReference，JS 可用时的定时规则，使用 IAsyncDisposable 释放 JS 引用，服务端 JavaScript 互操作的安全性。\n\n**切勿使用：** 不涉及 JavaScript 互操作的一般 Blazor 组件开发（使用 author-component），表单（使用 collect-user-input）。"}

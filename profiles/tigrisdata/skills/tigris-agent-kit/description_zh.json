@@ -1,0 +1,1 @@
+{"description_zh": "使用场景：在 Tigris 上构建 AI 智能体存储工作流时——通过 forks 实现数据集副本的隔离，通过工作区为具有 TTL 的每个智能体提供桶，通过 checkpoint 进行快照与恢复，以及通过桶 webhook 协调事件驱动流水线。\n\n触发关键词：@tigrisdata/agent-kit、\"智能体存储\"、\"智能体工作区\"、\"智能体 forks\"、\"智能体隔离环境\"、\"checkpoint 与恢复\"、\"桶 webhook\"、\"多智能体流水线\""}

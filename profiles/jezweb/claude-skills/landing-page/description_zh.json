@@ -1,0 +1,1 @@
+{"description_zh": "根据简要描述生成完整的、可部署的落地页。生成一个单一、自包含的 HTML 文件，其中包含通过 CDN 引入的 Tailwind CSS、响应式设计、深色模式、语义化 HTML 及 OG 元标签。版块：包含行动号召（CTA）的 hero 区域、功能特性、社会证明、定价（可选）、常见问题（FAQ）和页脚。适用于构建营销页面、产品发布页面、即将上线页面，或任何独立落地页。触发词：‘landing page’，‘create a page’，‘marketing page’，‘launch page’，‘coming soon page’，‘one-page site’。"}

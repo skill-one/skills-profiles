@@ -1,0 +1,1 @@
+{"description_zh": "深度学习框架（PyTorch Lightning / lightning 包）。将 PyTorch 代码组织为 LightningModules，为多 GPU/TPU 配置 Trainer，实现数据管道、回调及日志记录（W&B、TensorBoard、MLflow），进行分布式训练（DDP、FSDP、DeepSpeed），以支持可扩展的神经网络训练。"}

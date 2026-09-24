@@ -1,0 +1,1 @@
+{"description_zh": "Redis 可观测性指南——应监控哪些指标（内存、连接数、命中率、每秒操作数、被拒绝连接数），在事故排查时应使用哪些内置命令（SLOWLOG、INFO、MEMORY DOCTOR、CLIENT LIST、FT.PROFILE），以及何时使用 Redis Insight 图形界面。适用于为 Redis 实例设置监控或告警、诊断性能回归问题、对缓慢的 FT.SEARCH 查询进行性能剖析，或将 Redis 指标接入 Prometheus、Datadog 或类似系统时使用。"}

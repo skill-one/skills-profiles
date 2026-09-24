@@ -1,0 +1,1 @@
+{"description_zh": "使用 Zustand 在 React 中构建类型安全的全局状态。支持 TypeScript、持久化中间件、DevTools、切片模式以及处理水合的 Next.js SSR。防止 6 种已记录的错误。\n\n适用于设置 React 状态、从 Redux/Context 迁移，或排查水合错误、TypeScript 推断、无限渲染循环、持久化竞态条件等问题。"}

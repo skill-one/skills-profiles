@@ -1,0 +1,1 @@
+{"description_zh": "定义并组织颜色、间距、字体与层级令牌，并制定命名和使用规则。在建立令牌层时使用。审计现有用法时使用 `design-token-audit`（designer-toolkit）；进行多品牌映射时使用 `theming-system`。"}

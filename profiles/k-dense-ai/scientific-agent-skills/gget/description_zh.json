@@ -1,0 +1,1 @@
+{"description_zh": "支持快速的CLI/Python查询，可访问20多个生物信息学数据库。用于快速查询：基因信息、BLAST/BLAT、病毒序列下载、AlphaFold结构、富集分析、OpenTargets、COSMIC、CELLxGENE以及8cube小鼠特异性和表达数据。最适合交互式探索和简单查询。如需批量处理或高级BLAST查询，请使用biopython；如需跨数据库的Python工作流，请使用bioservices。"}

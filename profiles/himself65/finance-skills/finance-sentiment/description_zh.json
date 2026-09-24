@@ -1,0 +1,1 @@
+{"description_zh": "通过 Adanos Finance API 获取涵盖 Reddit、X.com、新闻和 Polymarket 的结构化股票情绪。当用户询问某只股票被讨论的程度、特定股票代码在社交平台上的热度、某家公司有多少 Polymarket 投注、各信息源是否一致，或比较多个股票代码的情绪时，请使用此技能。触发条件包括：“TSLA 的社会情绪”，“NVDA 在 X.com 上有多火”，“AAPL 有多少 Reddit 提及”，“比较 AMD 和 NVDA 的情绪”，“微软有多少 Polymarket 投注”，“META 在 Reddit 和 X 上是否一致”，“股票热度”，“看涨百分比”，以及任何涉及跨来源股票情绪研究的提及。该技能为只读（READ-ONLY），不执行交易，也不修改任何内容。"}

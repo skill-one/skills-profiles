@@ -1,0 +1,1 @@
+{"description_zh": "设计能够适配屏幕尺寸和输入方式的布局与交互。当一种设计需要服务于多个视口时使用。底层列网格使用 `layout-grid`；操作系统特定模式使用 `platform-conventions`。"}

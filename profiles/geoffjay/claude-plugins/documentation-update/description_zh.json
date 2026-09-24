@@ -1,0 +1,1 @@
+{"description_zh": "基于市场数据使用 Jinja 模板重新生成文档文件（agents.md、agent-skills.md、plugins.md、usage.md）。当插件被添加、更新或移除时使用，以保持文档同步。"}

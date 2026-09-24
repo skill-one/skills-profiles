@@ -1,0 +1,1 @@
+{"description_zh": "将带有硬编码 LLM 提示词的应用迁移到完整的 LaunchDarkly AgentControl 实现，需经历五个阶段：审计代码、封装调用、迁移工具、添加跟踪、挂载评估器。适用场景包括：用户希望将模型/提示词配置外部化、将调用从直接供应商（OpenAI、Anthropic、Bedrock、Gemini、Strands）迁移至受管配置，或推进硬编码到 LaunchDarkly 的全面迁移。"}

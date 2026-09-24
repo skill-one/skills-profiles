@@ -1,0 +1,1 @@
+{"description_zh": "端到端执行任意自主任务，并将其作为 Pull Request 提交至配置的基准分支。起草由 Progress 跟踪的执行计划，在全新的工作树分支上提交代码，逐阶段实现功能，运行配置的验证门，应用流水线标签。长计划会自动交接给 om-auto-create-pr-loop，可通过 om-auto-continue-pr 恢复。"}

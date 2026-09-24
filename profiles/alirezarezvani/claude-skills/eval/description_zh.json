@@ -1,0 +1,1 @@
+{"description_zh": "针对 AgentHub 会话，通过指标或 LLM 评判对智能体结果进行评估和排序。在用户运行 /hub:eval 命令或要求对已完成的 AgentHub 智能体进行评分、比较或挑选获胜者时使用。"}

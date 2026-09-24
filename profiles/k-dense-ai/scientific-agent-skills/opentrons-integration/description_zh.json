@@ -1,0 +1,1 @@
+{"description_zh": "编写、审查、迁移、模拟和排查 Flex 与 OT-2 机器人官方 Opentrons Python Protocol API v2 协议。用于特定机器人的液体处理、工作面板与实验器材配置、移液器、模块、运行时参数、液体类以及 Opentrons App 分析。当某个工作流需要支持多个机器人供应商时，改用 pylabrobot。"}

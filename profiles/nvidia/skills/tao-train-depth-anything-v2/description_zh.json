@@ -1,0 +1,1 @@
+{"description_zh": "基于 Metric Depth Anything v2 或 Relative Depth Anything 架构的单目深度估计。从单张 RGB 图像预测每个像素的深度。适用于训练、评估、导出或对 TAO 单目深度模型进行推理。触发短语包括：“train monocular depth”、“DepthAnything v2”、“metric depth from single image”、“monocular depth estimation”。"}

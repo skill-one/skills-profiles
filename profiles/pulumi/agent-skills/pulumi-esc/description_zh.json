@@ -1,0 +1,1 @@
+{"description_zh": "关于使用 Pulumi ESC（环境、密钥和配置）的指导。当用户询问有关管理密钥、配置、环境、短期凭证、为 AWS、Azure、GCP 配置 OIDC、与密钥存储（AWS Secrets Manager、Azure Key Vault、HashiCorp Vault、1Password）集成，或在 Pulumi 栈中与 ESC 配合使用的问题时，使用本指南。"}

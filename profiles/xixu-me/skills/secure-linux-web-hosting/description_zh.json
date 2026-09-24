@@ -1,0 +1,1 @@
+{"description_zh": "用于自托管场景下云服务器的设置、加固与审查，内容涵盖DNS、SSH、防火墙、Nginx、静态站点托管、应用反向代理、基于Let's Encrypt或ACME客户端的HTTPS配置、安全的HTTP到HTTPS重定向，以及上线后可选的网络调优（如BBR）。"}

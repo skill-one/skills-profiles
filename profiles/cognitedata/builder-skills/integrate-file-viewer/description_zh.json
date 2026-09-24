@@ -1,0 +1,1 @@
+{"description_zh": "集成 CogniteFileViewer 到 Flows 应用中以预览 CDF 文件（PDF、图像、文本）时，必须使用本技能。请勿手动连接 react-pdf 或文件解析——本技能负责安装、Vite 配置、工作线程配置及组件使用。触发词：文件查看器、文件预览、CogniteFileViewer、PDF 查看器、查看 CDF 文件、文档查看器、预览文件。"}

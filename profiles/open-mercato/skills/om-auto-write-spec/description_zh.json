@@ -1,0 +1,1 @@
+{"description_zh": "自主将简报或功能请求（FR）问题转化为规格说明并合入就绪的 PR——运行 om-spec-writing --autonomous（默认值已发布，可覆盖），当存在浏览器提供商时，附加 UI 原型和当前应用截图作为 PR 证据，应用完整的 SDLC 标签，并生成 PR/规格说明标记以链接到 om-auto-implement-spec。适用于执行“为 X 编写规格说明并开启 PR”、“规格说明此问题”等操作。"}

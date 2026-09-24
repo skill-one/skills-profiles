@@ -1,0 +1,1 @@
+{"description_zh": "每晚自动更新 OpenClaw。当用户希望其智能体与最新的 OpenClaw 版本保持同步时使用。运行一个 cron 任务，停止网关，执行更新并重新启动。在用户提及以下内容时触发：\"update yourself\"、\"auto update\"、\"nightly update\"、\"keep updated\"、\"self update\"，或任何对智能体进行更新的变体。"}

@@ -1,0 +1,1 @@
+{"description_zh": "为 Vue 3 + TypeScript + Vitest + Pinia 的代码库编写和审查单元测试。在创建或更新针对组件、组合式函数和状态管理库的测试时，使用 createTestingPinia 来 mock Pinia；应用 Vue Test Utils 模式；并以黑盒断言取代实现细节。"}

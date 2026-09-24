@@ -1,0 +1,1 @@
+{"description_zh": "Flutter跨平台开发指南，涵盖组件模式、Riverpod/Bloc状态管理、GoRouter导航、性能优化及特定平台实现。内容包括const优化、响应式布局、测试策略及DevTools性能分析。\n\n适用于：构建Flutter应用、实现状态管理（Riverpod/Bloc）、配置GoRouter导航、创建自定义组件、优化性能、编写组件测试、跨平台开发。"}

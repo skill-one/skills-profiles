@@ -1,0 +1,1 @@
+{"description_zh": "在 macOS 上创建、解析和控制 Excel 文件。使用 openpyxl 进行专业格式化，使用标准库 zipfile+xml 解析用于投资银行财务模型的复杂 xlsm，并通过 AppleScript 控制 Excel 窗口。当需要创建格式化的 Excel 报告、解析 openpyxl 无法处理的财务模型，或实现 macOS 上的 Excel 自动化时使用。"}

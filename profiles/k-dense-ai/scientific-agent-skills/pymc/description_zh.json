@@ -1,0 +1,1 @@
+{"description_zh": "基于 PyMC 的贝叶斯建模。构建层级模型、MCMC (NUTS)、变分推断、LOO/WAIC 比较与后验检验，适用于概率编程与推断。"}

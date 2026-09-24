@@ -1,0 +1,1 @@
+{"description_zh": "发布前验证自定义 dotnet new 模板的正确性，捕获缺失字段、参数缺陷、短名称冲突、约束问题以及导致模板静默失败的常见编写错误。用途：在发布或测试前检查 template.json 文件是否存在错误，诊断模板安装后未出现的原因，审查模板参数定义，检查类型不匹配和缺失默认值的问题，查找与 dotnet CLI 命令的短名称冲突，验证后操作与约束配置。禁止使用：查找或使用现有模板（使用模板发现，template-discovery），根据模板创建项目（使用模板实例化，template-instantiation），从现有项目创建模板（使用模板创作，template-authoring）。"}

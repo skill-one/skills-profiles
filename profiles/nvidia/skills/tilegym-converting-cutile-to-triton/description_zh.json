@@ -1,0 +1,1 @@
+{"description_zh": "将 cuTile GPU 内核（@ct.kernel）转换为 Triton（@triton.jit）。处理仓库内标准转换、调试（cudaErrorIllegalAddress、形状不匹配、数值不匹配），并将 cuTile 惯用法（ct.load/ct.store、ct.Constant、ct.launch）映射为 Triton 等价实现。依据 translations/advanced-patterns.md，涵盖双内核布局标志（例如 transpose=True/False 且通过 META 自动调整网格）。在将 cuTile 内核转换为、移植或翻译为 Triton，或调试现有 Triton 翻译时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "构建或审查 Langfuse 后端代码，用于 tRPC 路由、公开 REST API、BullMQ 处理器、服务、中间件、Prisma 或 ClickHouse 访问、OpenTelemetry、Zod、环境配置或后端测试。"}

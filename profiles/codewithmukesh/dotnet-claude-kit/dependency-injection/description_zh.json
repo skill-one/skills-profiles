@@ -1,0 +1,1 @@
+{"description_zh": ".NET 10 依赖注入模式。涵盖服务生命周期、键值服务、装饰器模式、工厂模式及常见的依赖注入陷阱。在注册服务、解决生命周期问题、设计服务组合，或当用户提及“DI”、“依赖注入”、“服务注册”、“AddScoped”、“AddTransient”、“AddSingleton”、“键值服务”、“装饰器”、“Scrutor”、“IServiceCollection”或“captive dependency”时，加载此技能。"}

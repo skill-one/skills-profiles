@@ -1,0 +1,1 @@
+{"description_zh": "审查 Prisma Next 迁移在合并或部署时将运行的内容，渲染迁移图，解决并发/菱形收敛冲突，并为 CI 配置环境引用。适用于“将运行的迁移”、“部署时运行的内容”、“合并冲突”、“菱形收敛”、“并发迁移”、“迁移状态”、“引用管理”、“预发布”、“生产”、“MIGRATION.DIVERGED”、“MIGRATION.NO_MARKER”、“MIGRATION.MARKER_NOT_IN_HISTORY”、“prisma migrate status”、“prisma migrate diff”、“prisma migrate resolve”。"}

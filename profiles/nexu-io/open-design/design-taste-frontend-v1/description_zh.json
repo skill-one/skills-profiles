@@ -1,0 +1,1 @@
+{"description_zh": "原始的 v1 taste-skill，为依赖其精确行为的项目保留。当前的默认值为 `design-taste-frontview`（v2 实验版本），这是一次大幅重写。仅在需要精确向后兼容时，才使用此 v1 安装名称。"}

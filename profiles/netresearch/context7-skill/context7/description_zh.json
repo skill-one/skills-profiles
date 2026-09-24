@@ -1,0 +1,1 @@
+{"description_zh": "用于查询任何库（React、Next.js、Vue、Django、Laravel 等）的文档、API 参考、框架模式或代码示例，且 Context7 MCP 服务器不可用或未配置时使用。通过 Context7 REST API 作为后备方式直接获取相同最新文档。触发条件：如何使用这些库、API 文档、框架模式、导入用法、库示例。"}

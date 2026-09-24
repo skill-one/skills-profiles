@@ -1,0 +1,1 @@
+{"description_zh": "当用户明确使用 Quarto、.qmd 文件、_quarto.yml、Quarto 项目，或 Quarto 功能（如提示框、交叉引用、引用、Mermaid 图表、扩展、网站、书籍、演示文稿和报告）时使用。也用于将 R Markdown、bookdown、blogdown、xaringan、distill 或 Jupyter 笔记本明确迁移至 Quarto，或对比这些格式与 Quarto。不用于一般的 R Markdown 或相关格式问题，除非明确提及 Quarto 或向 Quarto 的迁移。"}

@@ -1,0 +1,1 @@
+{"description_zh": "通过 HuggingFace Diffusers 使用 Stable Diffusion 模型，实现最先进的文本到图像生成。适用于从文本提示生成图像、进行图像到图像翻译、图像修补或构建自定义扩散流水线。"}

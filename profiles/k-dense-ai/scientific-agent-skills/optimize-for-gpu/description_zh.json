@@ -1,0 +1,1 @@
+{"description_zh": "基于NVIDIA硬件，为科学Python提供GPU加速，并验证结果正确且速度更快。用于CUDA/GPU优化；处理CPU密集型NumPy、SciPy、pandas、scikit-learn、NetworkX、scikit-image、vector-search、图像处理、图分析、仿真或文件I/O任务；CuPy、cuDF、cuML、cuGraph、cuVS、cuCIM、KvikIO、Warp、Newton、Numba-CUDA或RAFT相关需求；以及性能剖析、内存传输、内核或多GPU瓶颈问题。当大规模数据并行Python代码运行缓慢，且GPU加速是可行选项时，也应使用，即使用户并未提及CUDA。"}

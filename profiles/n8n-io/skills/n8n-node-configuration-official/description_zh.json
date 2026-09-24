@@ -1,0 +1,1 @@
+{"description_zh": "配置任何 n8n 节点时使用：HTTP、webhooks、database、通讯（Slack/Gmail/Discord）、AI、触发器、合并、任何节点。在以下情况下触发：任何节点构建器调用（`node(...)`、`trigger(...)`、`tool(...)`、`memory(...)`、`languageModel(...)`、`ifElse(...)`、`merge(...)` 等），配置参数，`useDataOfInput`，`numberOfInputs`，扇入收敛，或任何特定节点调试。"}

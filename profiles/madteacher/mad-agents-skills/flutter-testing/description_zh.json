@@ -1,0 +1,1 @@
+{"description_zh": "为应用、库和插件编写、修复、审查、调试并验证 Flutter 测试。用于在添加单元测试、组件测试、集成测试、MethodChannel 或插件模拟对象、Mockito 或 mocktail 测试替身、金色或无障碍检查、CI 测试命令、测试失败、MissingPluginException、pump 或 pumpAndSettle 问题、查找器错误、build_runner 模拟生成、设备集成测试、Web 集成测试或不稳定的 Flutter 测试时使用。"}

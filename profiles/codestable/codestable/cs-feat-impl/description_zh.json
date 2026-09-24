@@ -1,0 +1,1 @@
+{"description_zh": "已弃用兼容入口：供旧 cs-feat-impl 调用使用；请改用 cs-feat --stage impl。新请求不要主动选择。"}

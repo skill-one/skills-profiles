@@ -1,0 +1,1 @@
+{"description_zh": "从UCSC基因组浏览器中获取进化保守性评分（phyloP、phastCons）及转录因子结合位点（TFBS）。在主要项目（ENCODE、JASPAR、ReMap）中，用于分析基因组变异或区域是否在进化上保守、功能上重要，或受转录因子调控边界限制。"}

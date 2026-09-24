@@ -1,0 +1,1 @@
+{"description_zh": "使用 Wan 模型生成视频。支持文生视频、图生视频、首尾帧、基于参考的角色扮演，以及视频编辑（VACE）。触发条件：用户希望创建、生成或编辑视频内容，提及视频生成/动画/视频片段/Wan 模型，或明确调用本技能名称（例如使用 qwencloud-video-generation）。不要触发：用户想要生成图片（使用 qwencloud-image-generation）、理解/分析现有视频（使用 qwencloud-vision）、纯文本任务。"}

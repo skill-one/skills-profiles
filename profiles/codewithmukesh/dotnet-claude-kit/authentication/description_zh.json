@@ -1,0 +1,1 @@
+{"description_zh": "ASP.NET Core 认证与授权。涵盖 JWT Bearer 令牌、OpenID Connect、ASP.NET Identity、授权策略、基于角色和声明的授权以及 API 密钥认证。当实现登录、保护端点、设计授权规则时，或用户提及“auth”、“JWT”、“bearer token”、“OIDC”、“OpenID Connect”、“Identity”、“claims”、“roles”、“authorize”、“RequireAuthorization”、“API key”或“cookie auth”时，请加载此技能。"}

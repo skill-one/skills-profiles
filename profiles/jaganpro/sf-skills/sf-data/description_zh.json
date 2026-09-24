@@ -1,0 +1,1 @@
+{"description_zh": "Salesforce 数据操作（130 分评分）。\n\n触发：当用户创建测试数据、执行批量导入/导出、使用 sf 数据命令行命令，或需要为 Apex 测试使用数据工厂模式时。\n\n禁止触发：仅编写 SOQL 查询（使用 sf-soql）、执行 Apex 测试（使用 sf-testing），或进行元数据部署（使用 sf-deploy）时。"}

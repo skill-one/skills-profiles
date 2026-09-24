@@ -1,0 +1,1 @@
+{"description_zh": "为 MSBuild 的 CopyToOutputDirectory / CopyToPublishDirectory 属性选择模式：Never、PreserveNewest、Always、IfDifferent（MSBuild 17.13+），以及 $(SkipUnchangedFilesOnCopyAlways)。用途：消除每次构建的 Always 复制性能开销；重置构建之间发生变更的输出文件。请勿用于：一般增量构建诊断（使用 incremental-build）；非 MSBuild 构建系统。"}

@@ -1,0 +1,1 @@
+{"description_zh": "将 Chakra UI 项目从 v2 迁移到 v3，涵盖包变更、codemods、提供程序设置、颜色模式、属性重命名、复合组件、主题、配方和 Next.js 更新。当用户升级 Chakra UI 版本、在升级后遇到破坏性变更、转换旧版 v2 模式（ColorModeScript、useColorModeValue、styleConfig、extendTheme、isDisabled、colorScheme、@chakra-ui/icons、framer-motion 依赖项）、修复复合组件模式，或询问 Chakra UI v2 与 v3 之间的差异时，应使用此技能——即使他们没有明确提及“迁移”或“升级”。"}

@@ -1,0 +1,1 @@
+{"description_zh": "针对已获批准的应用内 useAtlasChat UI 的 Pyodide Python 工具。EOS 侧边栏 Python 工具从 agent CDF 配置运行——不要 vendor Pyodide。触发器：Pyodide、pythonRuntime、usePyodideRuntime、runPythonCode。"}

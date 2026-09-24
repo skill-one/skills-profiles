@@ -1,0 +1,1 @@
+{"description_zh": "使用 yt-dlp 和 ffmpeg，从 Mux、Vimeo 等平台下载 YouTube 视频与 HLS 流（m3u8）。当用户需要下载视频、提取音频、处理带有认证头的受保护流，或排查 nsig 提取失败、403 错误、Cookie 提取问题等下载故障时，请使用此技能。"}

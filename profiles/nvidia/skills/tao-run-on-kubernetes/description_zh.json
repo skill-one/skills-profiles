@@ -1,0 +1,1 @@
+{"description_zh": "Kubernetes 执行平台——将 TAO 容器任务提交为支持 NVIDIA GPU 调度的单 Pod k8s 任务。适用于在已安装 NVIDIA GPU Operator 的 EKS / GKE / AKS / 本地（on-prem）集群上运行，或将 TAO 集成到现有的 k8s 原生 ML 平台时。"}

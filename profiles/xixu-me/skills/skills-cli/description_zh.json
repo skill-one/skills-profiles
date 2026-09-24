@@ -1,0 +1,1 @@
+{"description_zh": "当用户请求发现、安装、列出、检查、更新、移除、备份、恢复、同步或初始化 Agent Skills，提及 `bunx skills`、`npx skills`、`skills.sh` 或 `skills-lock.json`，询问\"为 X 查找技能\"，或希望借助可安装技能扩展 Agent 能力时使用。"}

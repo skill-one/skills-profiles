@@ -1,0 +1,1 @@
+{"description_zh": "分析 Trigger.dev 任务、调度与运行，以发现成本优化机会。当被要求减少支出、优化成本、审计使用情况、调优机器规模或审查任务效率时使用。通过 Trigger.dev MCP 工具（list_runs、get_run_details、get_current_worker），将静态源码分析与实时运行分析相结合。"}

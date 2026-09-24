@@ -1,0 +1,1 @@
+{"description_zh": "统一定义动效令牌（时长、缓动词汇和减弱动态效果处理），以确保全产品的一致性。用于在系统中标准化动效。为创作单个特定动画时，使用 `animation-principles` (interaction-design)。"}

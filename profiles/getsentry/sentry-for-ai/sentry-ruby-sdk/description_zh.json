@@ -1,0 +1,1 @@
+{"description_zh": "Ruby 的完整 Sentry SDK 配置。适用于被要求为 Ruby 添加 Sentry、安装 sentry-ruby、在 Rails/Sinatra/Rack 中配置 Sentry，或为 Ruby 应用配置错误监控、追踪、日志记录、指标、性能剖析及定时任务（crons）时使用。同时支持从 AppSignal、Honeybadger、Bugsnag、Rollbar 或 Airbrake 迁移。支持 Rails、Sinatra、Rack、Sidekiq 及 Resque。"}

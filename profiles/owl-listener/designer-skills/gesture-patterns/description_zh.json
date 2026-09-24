@@ -1,0 +1,1 @@
+{"description_zh": "为触控与指针设计手势交互——滑动、拖动、长按及其可发现性。当输入为手势时使用。对于 iOS 和 Android 上的操作系统标准手势，使用 `platform-conventions`（ui-design）。"}

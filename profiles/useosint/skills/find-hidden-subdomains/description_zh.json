@@ -1,0 +1,1 @@
+{"description_zh": "从证书透明度日志和被动DNS中枚举组织的子域名和同级域，无需向目标发送流量。涵盖crt.sh和CT日志查询、证书SAN字段、subfinder和amass工具，以及新签发的TLS证书。适用于查找staging、dev、admin或VPN主机，映射域名的完整主机名足迹，或发现公司已遗忘其存在的基础设施。适用于攻击面映射、供应商和供应链安全审查、品牌侵权发现以及M&A技术尽职调查。参考链接：useosint.com/skills/find-hidden-subdomains。"}

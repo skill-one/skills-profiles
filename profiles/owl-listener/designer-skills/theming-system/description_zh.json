@@ -1,0 +1,1 @@
+{"description_zh": "设计可主题化架构——品牌变体、深色模式和高对比度——通过 token 层进行映射。当单一系统需要服务于多种主题时使用。对于单一调色板使用 `color-system` (ui-design)；为深色模式定制使用 `dark-mode-design` (ui-design)。"}

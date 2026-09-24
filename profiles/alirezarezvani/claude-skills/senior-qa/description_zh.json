@@ -1,0 +1,1 @@
+{"description_zh": "为 React/Next.js 应用程序生成单元测试、集成测试与 E2E 测试。扫描组件以创建 Jest 与 React Testing Library 的测试桩，分析 Istanbul/LCOV 覆盖率报告以识别覆盖漏洞，基于 Next.js 路由搭建 Playwright 测试文件，使用 MSW 模拟 API 调用，创建测试夹具，并配置测试运行器。适用于用户提出\"生成测试\"、\"编写单元测试\"、\"分析测试覆盖率\"、\"搭建 E2E 测试\"、\"配置 Playwright\"、\"配置 Jest\"、\"实现测试模式\"或\"提升测试质量\"等需求时使用。"}

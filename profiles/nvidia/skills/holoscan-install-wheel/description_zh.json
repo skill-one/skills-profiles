@@ -1,0 +1,1 @@
+{"description_zh": "通过 pip 在虚拟环境（venv）中安装 Holoscan SDK Python wheel。仅用于 Python 安装；不可用于原生 C++/apt 或 Conda 安装。"}

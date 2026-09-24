@@ -1,0 +1,1 @@
+{"description_zh": "将 KMP 项目从 CocoaPods（kotlin(\"native.cocoapods\")）迁移至 Swift Package Manager（swiftPMDependencies DSL）——用 swiftPackage() 替换 pod()，将 cocoapods.* 导入转换为 swiftPMImport.*，并重新配置 Xcode 项目。"}

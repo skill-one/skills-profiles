@@ -1,0 +1,1 @@
+{"description_zh": "基于跨模型的对抗性代码审查。由对抗模型生成审查者（Claude使用Codex，Codex使用Claude），以不同的批判视角挑战审查工作。产出包含发现与主要判断的综合裁决。触发：'adversarial review'。"}

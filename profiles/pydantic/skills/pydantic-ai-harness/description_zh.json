@@ -1,0 +1,1 @@
+{"description_zh": "将开箱即用的 pydantic-ai-harness 能力扩展至 Pydantic AI 代理 —— Code Mode（将多次工具调用合并为一次沙盒化的 Python 执行）、文件系统与 Shell、子代理、规划、上下文压缩等。当用户提及 pydantic-ai-harness、CodeMode、Monty、code mode 或工具沙盒时使用；当需要为 Pydantic AI 代理提供第一方文件系统/Shell/子代理/规划/压缩能力时使用；当希望代理运行由代理编写的 Python 时使用；或当 Pydantic AI 代理能从在单个沙盒脚本中协调多次工具调用中受益时使用。"}

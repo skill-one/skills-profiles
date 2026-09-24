@@ -1,0 +1,1 @@
+{"description_zh": "发现 .NET 解决方案中的所有项目，为每个项目分类其 Oracle 到 PostgreSQL 的迁移适用性，并生成一份持久的总体迁移计划。当开始多项目 Oracle 到 PostgreSQL 迁移、创建迁移清单，或评估哪些 .NET 项目包含 Oracle 依赖时使用。"}

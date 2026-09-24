@@ -1,0 +1,1 @@
+{"description_zh": "将任何 MCP 服务器、OpenAPI 规范或 GraphQL 端点转换为 CLI。当用户希望通过命令行与 MCP 服务器、OpenAPI/REST API 或 GraphQL API 进行交互、发现可用工具/端点、调用 API 操作或根据 API 生成新的技能时，使用本技能。触发条件包括 \"mcp2cli\"、\"调用此 MCP 服务器\"、\"使用此 API\"、\"从...列出工具\"、\"为此 API 创建技能\"、\"graphql\"，或任何涉及 MCP 工具调用、OpenAPI 端点调用或 GraphQL 查询且不编写代码的任务。"}

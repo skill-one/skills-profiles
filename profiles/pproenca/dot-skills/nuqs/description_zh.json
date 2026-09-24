@@ -1,0 +1,1 @@
+{"description_zh": "nuqs（类型安全的 URL 查询状态）面向 Next.js 及其他 React 框架的最佳实践。本技能应在编写、审查或重构使用 nuqs 进行 URL 状态管理的代码时使用。适用于涉及 useQueryState、useQueryStates、搜索参数、URL 状态、查询参数、nuqs 解析器、limitUrlUpdates、Standard Schema、NuqsAdapter 或 Next.js 带状态路由的任务。"}

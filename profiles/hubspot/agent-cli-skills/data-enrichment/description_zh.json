@@ -1,0 +1,1 @@
+{"description_zh": "将外部CSV/JSONL记录匹配至CRM联系人（按邮箱）或公司（按域名），并使用`hubspot objects upsert`一次性回写增强后的数据。"}

@@ -1,0 +1,1 @@
+{"description_zh": "通过调用者选择的执行器恰好一次派发明确的不相交数据包。触发器：\"swarm\"、\"dispatch disjoint packets\"、\"parallel explicit tasks\"。"}

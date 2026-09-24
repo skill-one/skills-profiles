@@ -1,0 +1,1 @@
+{"description_zh": "基于 MCP 工具的编程式画布工具包，支持创建、编辑和精修 Excalidraw 图表，具备实时画布同步能力。当智能体需要（1）在实时画布上绘制或布局图表，（2）使用 describe_scene 和 get_canvas_screenshot 迭代优化图表，以查看自身工作，（3）导出/导入 .excalidraw 文件或 PNG/SVG 图片，（4）保存/恢复画布快照，（5）将 Mermaid 转换为 Excalidraw，或（6）执行元素级增删改查（CRUD）、对齐、分布、分组、复制和锁定操作时使用。需要运行中的画布服务器（EXPRESS_SERVER_URL，默认 http://localhost:3000）。"}

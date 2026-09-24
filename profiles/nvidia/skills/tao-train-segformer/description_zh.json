@@ -1,0 +1,1 @@
+{"description_zh": "SegFormer 用于语义分割。基于Transformer的轻量级架构，具有层次化特征提取，高效适用于实时分割任务。用于训练、评估、导出、量化或为 TAO SegFormer 模型运行推理。触发短语包括'训练 SegFormer'、'语义分割'、'轻量级Transformer分割器'、'实时语义分割'。"}

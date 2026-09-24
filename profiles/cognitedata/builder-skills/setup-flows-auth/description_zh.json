@@ -1,0 +1,1 @@
+{"description_zh": "必须在将现有 React 应用迁移到 Flows，或当未配置 Flows 认证时使用。从 `app.json` 的 `infra` 字段检测经典与 Apps API 流程，安装正确的包，并配置入口文件。当已存在有效的认证配置时，无需操作。触发条件：迁移到 Flows、添加 Flows 认证、DuneAuthProvider、AppSdkAuthProvider、connectToHostApp、useDune、Flows 设置、设置认证、缺少认证提供者、CDF 认证、Fusion iframe 认证。"}

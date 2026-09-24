@@ -1,0 +1,1 @@
+{"description_zh": "使用 Blazor 创建一个新的 ASP.NET Core Web 应用或网站。\n\n适用场景：\n- 创建新的 Blazor Web 应用\n- 搭建新的 Web 项目\n- 启动新网站\n- 选择渲染模式（静态服务端渲染、交互式服务端、交互式 WebAssembly、自动）\n- 使用正确的选项运行 dotnet new blazor\n- 设置初始项目结构\n\n不适用于：\n- 向现有项目添加功能\n- 更改现有应用的渲染方式\n- 组件开发（使用 author-component）"}

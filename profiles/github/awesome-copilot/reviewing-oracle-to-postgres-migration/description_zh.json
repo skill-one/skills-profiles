@@ -1,0 +1,1 @@
+{"description_zh": "通过交叉比对代码与已知行为差异（空字符串、refcursor（引用游标）、类型强制转换、排序/排序规则、UNION ALL 规划器风险、物化视图刷新要求、时间戳、并发事务等），识别 Oracle 至 PostgreSQL 的迁移风险。\n\n适用于规划数据库迁移、审查迁移产物，或验证集成测试是否覆盖 Oracle/PostgreSQL 差异时使用。"}

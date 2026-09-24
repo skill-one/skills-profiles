@@ -1,0 +1,1 @@
+{"description_zh": "为 Spring Data JPA 和 Hibernate 正确建模 Kotlin 持久化代码。涵盖实体设计、标识与相等性、唯一性约束、关系、获取计划，以及针对 Kotlin 的常见 ORM（对象关系映射）陷阱。在创建或审查 JPA（Java Persistence API）实体、诊断 N+1 或 LazyInitializationException 问题、设置索引和唯一性规则，或防止 Kotlin 特有的 bug（如 data class 实体和失效的 equals/hashCode）时使用。"}

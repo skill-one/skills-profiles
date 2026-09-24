@@ -1,0 +1,1 @@
+{"description_zh": "在 Docker 沙箱环境中安装 npm 包。当您需要在通过 virtiofs 挂载工作区的容器内安装、重新安装或更新 node_modules 时，请使用此技能。原生二进制文件（esbuild、lightningcss、rollup）在 virtiofs 上会崩溃，因此包必须在本地 ext4 文件系统上安装，并符号链接回。"}

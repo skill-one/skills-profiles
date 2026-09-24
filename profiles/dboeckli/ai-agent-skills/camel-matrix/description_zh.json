@@ -1,0 +1,1 @@
+{"description_zh": "通过运行 `camel-springboot-matrix.sh` 脚本，生成 Apache Camel Spring Boot、Spring Boot 和 Apache CXF 版本的 Markdown 兼容矩阵。适用于用户请求生成或更新 Camel 兼容矩阵、检查 Camel Spring Boot 版本兼容性，或运行 `camel-springboot-matrix.sh` 脚本的场景。支持可选的版本范围参数（min max）。"}

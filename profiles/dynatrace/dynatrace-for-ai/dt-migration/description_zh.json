@@ -1,0 +1,1 @@
+{"description_zh": "将 Dynatrace 经典版和 Gen2 实体版 DQL 迁移至 Smartscape 的等价实现。覆盖三种场景：\n（1）基于经典实体条件过滤的批量数据查询——先迁移至直接维度过滤，Smartscape 仅作为备选方案；\n（2）使用实体子查询进行过滤的批量数据查询——采用相同的“先维度、后实体”策略；\n（3）纯实体列表查询——将 fetch dt.entity.* 迁移至 smartscapeNodes。\n此外，还处理 entityName、entityAttr、classicEntitySelector 以及经典关系模式。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在 AEM Edge Delivery Services（EDS、Franklin、Helix）中实施代码更改时，请使用此方法，无论是新增区块还是修改区块，无论是核心功能（scripts.js、styles、delayed.js 等），还是两者兼有。该方法会创建并修改区块文件夹和装饰函数，更新核心脚本，限定 CSS 范围，并配置延迟加载。整个开发过程中请使用内容驱动开发。"}

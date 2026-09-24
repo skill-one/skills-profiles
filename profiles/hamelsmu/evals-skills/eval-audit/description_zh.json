@@ -1,0 +1,1 @@
+{"description_zh": "审计LLM评估流水线并发现问题：缺少错误分析、未经验证的评审者、虚荣指标等。当继承评估系统、不确定评估是否可信，或没有评估基础设施时，可作为起点使用。当目标是“从零开始”构建新的评估器时，不要使用（请改用 error-analysis、write-judge-prompt 或 validate-evaluator 替代）。"}

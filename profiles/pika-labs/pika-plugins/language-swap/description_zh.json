@@ -1,0 +1,1 @@
+{"description_zh": "当用户要求语言互换或与以下示例匹配的任务时使用。将视频翻译成另一种语言并进行配音。一次 worker 调用即可保留每位说话者的声音，翻译语音内容，并返回完全 A/V 同步的视频。默认开启同步（Lipsync）。当用户说“translate this video”, “dub this in <language＞”, “make this Spanish/French/Japanese”, “translate the audio”，或在配音/语言转换输出上要求双语字幕时使用。不适用于：仅字幕/片名（subtitles/captions）（使用 add_captions 或 video-captions）、仅转录（直接使用 transcribe_audio）、或翻译屏幕文字叠加层。"}

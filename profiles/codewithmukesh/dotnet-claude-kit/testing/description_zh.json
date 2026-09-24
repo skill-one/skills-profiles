@@ -1,0 +1,1 @@
+{"description_zh": ".NET 10 应用的测试策略。涵盖 xUnit v3、用于集成测试的 WebApplicationFactory、用于真实数据库测试的 Testcontainers、用于快照测试的 Verify，以及 AAA 模式。当编写测试、搭建测试基础设施、审查测试覆盖率时，或当用户提及“测试”、“xUnit”、“WebApplicationFactory”、“Testcontainers”、“集成测试”、“单元测试”、“bUnit”、“快照测试”、“Verify”、“测试覆盖率”、“AAA 模式”、“WireMock”或“FakeTimeProvider”时，请加载本技能。"}

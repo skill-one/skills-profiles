@@ -1,0 +1,1 @@
+{"description_zh": "查询和分析 Logfire 遥测数据——涵盖 traces、logs、spans、metrics、summaries 和 SQL 结果。\n\n当用户询问“查询 logfire”、“搜索 traces”、“查找 logs”、“查询数据”、“搜索 spans”、“在 logfire 中查找错误”、“从 logfire 获取 metrics”、“分析遥测”、“总结错误”、“查找根本原因”，或为代码添加 Logfire 查询功能时，使用此技能。\n\n不得将此技能用于直接的 Logfire UI、浏览器、实时视图、Explore 页面或链接打开请求；请改用 logfire-ui。若“show”或“view”表述存在歧义，请询问用户需要的是 UI 视图还是查询分析。"}

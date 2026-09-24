@@ -1,0 +1,1 @@
+{"description_zh": "基于LiDAR点云的PointPillars，用于3D目标检测。该方法通过柱体表示将点云编码为伪图像，随后应用二维检测，广泛应用于自动驾驶和机器人技术领域。适用于对TAO PointPillars模型进行训练、评估、导出、剪枝、再训练或运行推理。触发短语包括\"train PointPillars\"、\"LiDAR 3D detection\"、\"point-cloud object detection\"、\"pillar-based 3D detector\"。"}

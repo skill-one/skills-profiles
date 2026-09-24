@@ -1,0 +1,1 @@
+{"description_zh": "运行完整的DEFT AOI改进循环，用于NVIDIA TAO VisualChangeNet / ChangeNet PCB检测模型：基线评估、RCA、Cosmos AnomalyGen / AMP合成缺陷、k-NN挖掘、重新训练和部署门控，直至FAR/召回率KPI目标达标。用于类似“运行DEFT循环”、“在召回率为100%时持续微调，直至FAR降至0.1%以下”或“使用RCA和合成缺陷改进我的AOI ChangeNet模型”等提示词；不得用于独立的TAO训练、一次性推理、通用异常生成或仅RCA分析。"}

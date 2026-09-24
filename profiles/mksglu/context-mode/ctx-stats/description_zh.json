@@ -1,0 +1,1 @@
+{"description_zh": "显示本次会话中 context-mode 为上下文窗口节省了多少内容。\n展示令牌消耗、上下文节省比例以及按工具划分的明细。\n只读 —— 仅显示统计数据，不支持重置功能。\n如需彻底清除整个知识库，请使用 ctx_purge 代替。\n触发：/context-mode:ctx-stats"}

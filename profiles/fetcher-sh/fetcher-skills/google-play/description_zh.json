@@ -1,0 +1,1 @@
+{"description_zh": "在 fetcher.sh 上的 Google Play Store API 替代方案——通过 x402 使用 USDC 按调用付费，或使用 Bearer key 获取预付费积分，无需访问 Google Play Console。当用户需要按关键词搜索 Android 应用，并结合价格（免费/付费）和国家商店界面进行筛选，获取应用完整详情，获取按最新、评分、有用性排序的评论，以及权限或数据安全披露，列出与指定应用相似的应用，或获取开发者的应用目录时使用。此外还涵盖 Android 应用商店优化（ASO）研究、竞品应用监控、评论情感输入，以及无需 Google Play Console 开发者访问权限的应用发现。"}

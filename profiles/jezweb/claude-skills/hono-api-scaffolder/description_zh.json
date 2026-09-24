@@ -1,0 +1,1 @@
+{"description_zh": "为 Cloudflare Workers 搭建 Hono API 路由。生成路由文件、中间件、类型化绑定、Zod 校验、错误处理以及 API_ENDPOINTS.md 文档。在项目已通过 cloudflare-worker-builder 或 vite-flare-starter 搭建完成后，当您需添加 API 路由、创建端点或生成 API 文档时使用。"}

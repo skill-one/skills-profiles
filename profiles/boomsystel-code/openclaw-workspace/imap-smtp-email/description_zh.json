@@ -1,0 +1,1 @@
+{"description_zh": "通过 IMAP/SMTP 读取并发送电子邮件。检查新消息和未读消息，获取内容，搜索邮箱，将邮件标记为已读/未读，并发送带有附件的邮件。支持任何 IMAP/SMTP 服务器，包括 Gmail、Outlook、163.com、vip.163.com、126.com、vip.126.com、188.com 和 vip.188.com。"}

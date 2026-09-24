@@ -1,0 +1,1 @@
+{"description_zh": "通过 SCREEN GraphQL API 查询 ENCODE 顺式调控元件注册库（cCREs），或为实验和文件（ChIP-seq 峰区等）向 ENCODE Portal REST API 发起自定义查询。在需要跨人类细胞类型查询调控注释或原始实验数据时使用。"}

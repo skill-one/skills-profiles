@@ -1,0 +1,1 @@
+{"description_zh": "用于构建 NuxtHub v0.10.6 应用程序——提供数据库（基于 sqlite/postgresql/mysql 的 Drizzle ORM）、KV 存储、Blob 存储和缓存 API。涵盖配置、模式定义、迁移、多云部署（Cloudflare、Vercel），以及新的 hub:db、hub:kv、hub:blob 虚拟模块导入。"}

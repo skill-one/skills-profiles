@@ -1,0 +1,1 @@
+{"description_zh": "在 **Cursor** 中构建任何代码库中的功能时使用，且工作需要经历规范的构建 → 审查 → 测试 → 修复循环。在“run the build loop”、“build the next task”、“continue the plan”、“build this feature properly”或任何要求根据计划文件或直接功能提示实现工作的请求时触发。根据计划（或若不存在计划则根据提示）构建，运行 Cursor 的 `/review` 并修复发现的所有问题，对功能进行端到端的测试与验证，修复任何测试中暴露的问题，并在完成后报告。持续进行，直到所有计划任务均已完成。"}

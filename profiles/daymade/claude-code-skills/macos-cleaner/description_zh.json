@@ -1,0 +1,1 @@
+{"description_zh": "诊断并安全回收 macOS 磁盘空间。当 Mac 存储空间不足、报告“Caching needs more space”，显示 Apple Content Caching 或 AssetCacheManagerUtil 的大规模占用，或需要对缓存、日志、应用程序残留、大文件或重复文件、Docker 或 OrbStack、Chromium 代码签名副本、Homebrew、npm、pip、Xcode 及其他开发者存储进行分析时使用。在全面扫描之前，将已知嫌疑对象路由到定向只读诊断，区分名义路径计算与实际释放，在状态变更前要求制定影响与恢复计划并提供明确确认，并在之后验证磁盘空间和共存服务。"}

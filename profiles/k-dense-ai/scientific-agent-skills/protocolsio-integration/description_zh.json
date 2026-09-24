@@ -1,0 +1,1 @@
+{"description_zh": "读取、验证并安全地导出 protocols.io 数据，基于当前官方的 REST/MCP 合约，或创建不执行的变更计划。随附的客户端仅在明确使用 --execute 参数时才执行有界的官方主机 GET 请求。仅用于明确针对 protocols.io 或其特定协议版本的任务。"}

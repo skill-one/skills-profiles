@@ -1,0 +1,1 @@
+{"description_zh": "Redis 集群与复制指南：涵盖多键操作的哈希标签、规避 CROSSSLOT 错误，以及从从节点读取以扩展高读量工作负载。适用于设计分片 Redis 集群的键、调试 MGET / SDIFF / pipelines 中的 CROSSSLOT 错误、在集群中配置多键事务，或为缓存、分析、仪表盘将读取路由至从节点。"}

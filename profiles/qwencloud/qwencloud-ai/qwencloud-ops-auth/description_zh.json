@@ -1,0 +1,1 @@
+{"description_zh": "配置认证（API 密钥、端点）。触发条件：设置 QWEN_API_KEY、排查 401/认证错误、其他技能报告缺少凭据，或用户按名称明确调用本技能（例如使用 qwencloud-ops-auth）时。当执行非认证 Qwen 任务、一般 API 使用问题时，不要触发。"}

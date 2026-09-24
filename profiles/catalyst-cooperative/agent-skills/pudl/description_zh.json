@@ -1,0 +1,1 @@
+{"description_zh": "探索并理解 PUDL 能源数据：发现现有表格，查询列含义与使用警告，并从 S3 或本地目录加载 Parquet 文件。无需 PUDL Python 包。当用户询问 PUDL 数据包含哪些内容、希望了解某个具体表格或列、询问数据质量或限制、需要帮助将数据加载到笔记本或脚本中，或想了解哪个表格涵盖电力生产、公用事业财务、燃料成本、电厂位置、排放、容量因子、FERC 财务数据或 EIA 调查数据等主题时，均需使用本技能。当用户提及 PUDL、Catalyst Cooperative 能源数据，或 PUDL 导入的任何具体数据源（EIA-860、EIA-861、EIA-923、FERC 表格 1、FERC 表格 714、FERC EQR、EPA CEMS、EPA CAMD 等）时，也使用本技能。"}

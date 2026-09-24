@@ -1,0 +1,1 @@
+{"description_zh": "在 RunComfy 上使用 Google Nano Banana 2（图像到图像编辑端点）编辑图像。说明 Nano Banana Edit 的优势（保持主体身份、替换背景、使用空间语言进行局部化编辑、支持最多 20 个输入的批量多图编辑），该 schema，以及何时应改用 GPT Image 2 edit / Flux Konxt / Nano Banana 2 t2i 进行处理。通过本地的 RunComfy CLI 调用 `runcomfy run google/nano-banana-2/edit`。在触发词“nano banana edit”、“edit with nano banana”、“image edit nano banana”或任何明确要求使用该模型进行编辑的请求时触发。"}

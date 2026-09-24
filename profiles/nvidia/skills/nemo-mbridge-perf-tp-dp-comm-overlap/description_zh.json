@@ -1,0 +1,1 @@
+{"description_zh": "Megatron-Bridge 启用张量并行（TP）、数据并行（DP）与流水线并行（PP）通信重叠的操作指南，涵盖配置旋钮、代码锚点、潜在陷阱及验证。"}

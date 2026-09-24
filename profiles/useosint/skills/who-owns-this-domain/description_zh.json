@@ -1,0 +1,1 @@
+{"description_zh": "利用WHOIS、RDAP和DNS确定域名的注册者与运营者。适用于执行WHOIS查询、RDAP查询、查询A、AAAA、MX、NS、TXT、SOA或CAA记录，解析SPF include、DKIM选择器或DMARC rua地址，查找注册商、注册人或名称服务器，进行反向DNS、PTR、ASN或netblock查询，或查找历史WHOIS记录与被动DNS数据。适用于钓鱼及品牌滥用内容下架、域名纠纷与UDRP证据、付款前供应商核验，以及基础设施归属。参考 useosint.com/skills/who-owns-this-domain。"}

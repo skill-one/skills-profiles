@@ -1,0 +1,1 @@
+{"description_zh": "使用 `pull_request_template.md` 从规范创建 GitHub Pull Request。\n\n使用场景：规范需要转换为 Pull Request，规范已准备好审核/合并，需要从规范文件自动创建 Pull Request，并根据模板生成正文与标题。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在 Megatron-Bridge 中验证并采用打包序列与长上下文训练，包括离线 LLM 打包、收集阶段 VLM 打包、Energon 在线打包及 CP 约束。"}

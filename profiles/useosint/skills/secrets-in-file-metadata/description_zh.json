@@ -1,0 +1,1 @@
+{"description_zh": "使用 exiftool 提取并解析嵌入文件元数据——EXIF 地理坐标、相机品牌、型号与序列号、DateTimeOriginal 和 CreateDate 时间戳、XMP 与 IPTC 字段，以及 Office 和 PDF 属性，例如作者、公司、最后修改者、模板路径和修订次数。\n\n适用于从照片中读取 EXIF 信息、核实文档的真正撰写者、为文件确定时间、对相机或手机进行标识，以及在 JPEG、HEIC、RAW、MP4、DOCX、XLSX 或 PDF 文件中调查来源信息。\n\n适用于文档来源争议、内部泄露溯源、证据处理以及发布前脱敏检查。\n\n参考 useosint.com/skills/secrets-in-file-metadata。"}

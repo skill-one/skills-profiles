@@ -1,0 +1,1 @@
+{"description_zh": "编辑 vigiles .spec.ts，以更改已编译的指令文件（CLAUDE.md / AGENTS.md）——添加、修改或删除规则、章节、命令或关键文件。当需要更改带有 vigiles hash 的 CLAUDE.md/AGENTS.md 时使用（编辑 spec，而非产物），包括添加新的 enforce()/check()/guidance() 规则。"}

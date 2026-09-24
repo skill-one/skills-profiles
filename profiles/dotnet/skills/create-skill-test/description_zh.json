@@ -1,0 +1,1 @@
+{"description_zh": "在 dotnet/skills 代码仓库中，为智能体技能构建 eval.yaml 评估规范。在创建技能测试、编写评估刺激、定义评分员与评分标准、为评估确定统计功效或设置测试夹具文件时使用。处理 Vally eval.yaml 模式、测试夹具组织及防止过拟合。不得用于运行或调试现有评估（请使用 improve-skill-quality），也不用于技能编写（请使用 create-skill）。"}

@@ -1,0 +1,1 @@
+{"description_zh": "使用 faster-whisper 的本地语音转文字。比 OpenAI Whisper 快 4-6 倍，且准确率完全相同；GPU 加速支持约 20 倍实时转写。支持 SRT/VTT/TTML/CSV 字幕、说话人分离、URL/YouTube 输入、批量处理及预计完成时间（ETA）、转写文本搜索、章节检测、逐文件语言映射。"}

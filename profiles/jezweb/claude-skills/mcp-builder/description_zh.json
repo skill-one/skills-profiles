@@ -1,0 +1,1 @@
+{"description_zh": "使用 FastMCP 在 Python 中构建 MCP 服务器。定义工具、资源、提示词，构建服务器，在本地进行测试，部署到 FastMCP Cloud 或 Docker。当用户提及构建 MCP 服务器、向 LLM 暴露工具、FastMCP、构建 Claude 集成，或排查 FastMCP 模块级服务器、存储、生命周期、中间件、OAuth 或部署错误时使用。"}

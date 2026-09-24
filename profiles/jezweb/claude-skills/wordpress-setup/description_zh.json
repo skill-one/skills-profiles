@@ -1,0 +1,1 @@
+{"description_zh": "通过 WP-CLI 在 SSH 或 REST API 上连接到 WordPress 网站。检查 CLI，测试 SSH，设置认证，验证访问权限，保存配置。在用户需要连接到 WordPress 网站、设置 WP-CLI 访问权限、创建应用密码或排查 WordPress 连接/认证问题时使用。"}

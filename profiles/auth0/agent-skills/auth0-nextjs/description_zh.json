@@ -1,0 +1,1 @@
+{"description_zh": "在向 Next.js 应用添加 Auth0 登录、登出、受保护页面或中间件时使用。支持基于 @auth0/nextjs-auth0 使用 App Router 和 Pages Router——即使用户表示“为我的 Next.js 应用添加登录”或“保护我的 Next.js 路由”，也应使用。"}

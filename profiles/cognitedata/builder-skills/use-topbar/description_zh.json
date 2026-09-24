@@ -1,0 +1,1 @@
+{"description_zh": "将 Aura Topbar (@aura/topbar) 集成到 Flows/Fusion 应用中：包含面包屑导航、可选的 Tabs/Segmented 控件、右侧栏（分享、通知、主题、Atlas、用户头像），支持浅色/深色模式。Atlas 打开 EOS 侧边栏 —— 通过 integrate-fusion-agent 连接上下文；不要嵌入聊天界面。在添加顶栏、页眉、面包屑导航、主题切换器或 Atlas 启动器时使用。"}

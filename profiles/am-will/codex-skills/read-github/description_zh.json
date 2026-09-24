@@ -1,0 +1,1 @@
+{"description_zh": "通过 gitmcp.io MCP 服务读取并搜索 GitHub 仓库文档。\n\n**何时使用：**\n- 用户提供 GitHub URL\n- 用户以 owner/repo 格式提及特定仓库\n- 用户询问“这个仓库是做什么的？”“阅读 X 仓库的文档”等类似问题\n- 用户希望在仓库内搜索代码或文档"}

@@ -1,0 +1,1 @@
+{"description_zh": "审查 Clojure 和 ClojureScript 代码变更，确保符合 Metabase 编码标准，检查是否存在风格违规和代码质量问题。适用于审查包含 Clojure/ClojureScript 代码的拉取请求或差异时使用。"}

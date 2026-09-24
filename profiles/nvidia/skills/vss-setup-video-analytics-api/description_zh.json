@@ -1,0 +1,1 @@
+{"description_zh": "用于独立部署 vss-video-analytics-api REST 服务（配置源、数据日志绑定、Elasticsearch，可选 Kafka）。不适用于完整的仓库部署。"}

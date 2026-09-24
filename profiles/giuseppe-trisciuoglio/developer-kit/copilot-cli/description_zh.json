@@ -1,0 +1,1 @@
+{"description_zh": "在非交互模式下提供GitHub Copilot CLI的任务委托，支持多模型（Claude、GPT、Gemini），具备权限控制、输出分享及会话恢复功能。适用于用户请求将任务委派给Copilot、比较模型，或从Claude Code以编程方式运行Copilot的情况。"}

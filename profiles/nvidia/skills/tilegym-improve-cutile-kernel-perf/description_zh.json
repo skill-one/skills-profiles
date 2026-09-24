@@ -1,0 +1,1 @@
+{"description_zh": "通过系统化的性能剖析、瓶颈分析、IR对比与针对性调优，迭代优化cuTile内核性能。覆盖瓦片大小、占用率、autotune配置、TMA、延迟提示、持久调度、num_ctas、flush_to_zero以及IR级调试等内容。适用于被要求执行\"优化cuTile内核\"、\"提升内核性能\"、\"调优cuTile性能\"、\"加速内核\"等操作，或在TileGym项目中迭代地测试并优化cuTile GPU内核的场景。"}

@@ -1,0 +1,1 @@
+{"description_zh": "根据账本（MYOB、NetSuite、QuickBooks、Xero 或 Zoho Books）以及 PayPal、Stripe 和 Airwallex 的数据，起草逾期发票提醒邮件，并匹配每个客户的支付记录与语气（对优质客户采用温和语气，对多次逾期付款的客户采用坚决语气）。通过 PayPal 发送邮件，需经负责人审批；其余内容作为邮件草稿加入队列，若存在 Airwallex 托管支付链接，则一并包含在内。当用户询问“谁该还我钱”、提及逾期发票或希望跟进未付发票时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在CMDB功能已启用后，针对生产环境或沙盒组织，于Service Cloud ITSM中部署（安装）CMDB基础内容包。当用户要求安装CMDB包、部署CMDB基础架构、设置CMDB基础内容、安装CMDB开箱即用内容，或使用基础包完成CMDB设置时使用。\n\n触发条件：安装CMDB包、部署CMDB基础架构、CMDB基础内容、CMDB内容包、bundleInstallation、完成CMDB设置。\n\n不应触发：用户希望对组织启用CMDB功能（即CMDB功能启用技能）、将CMDB权限组分配给用户（即CMDB访问分配技能）、安装可选的非基础附加包、部署通用（非CMDB）元数据或包，或直接处理CMDB记录。"}

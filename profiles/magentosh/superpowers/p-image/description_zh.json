@@ -1,0 +1,1 @@
+{"description_zh": "通过 inference.sh CLI 使用 Pruna P-Image 模型生成图像。\n模型：P-Image、P-Image-LoRA、P-Image-Edit、P-Image-Edit-LoRA。\n功能：文生图、图像编辑、LoRA 风格、多图合成、快速推理。\nPruna 优化模型以提升速度，同时确保质量不损失。\n触发词：pruna、p-image、pruna image、快速图像生成、优化后的 Flux、pruna ai、p image、快速 AI 图像生成、经济型图像生成、廉价图像生成"}

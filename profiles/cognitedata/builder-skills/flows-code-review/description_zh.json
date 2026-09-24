@@ -1,0 +1,1 @@
+{"description_zh": "在本地 Git 应用中执行 Flows 应用认证的技术（代码）审查步骤。加载实际 bar 对应的 flows-review-checks，随后在 reviews/code-review/feedback-round-<-N>-/ 目录下写入产物。适用场景：当用户请求 Flows 代码审查、技术审查、预提交审查、应用认证代码审查，或执行 \"run flows-code-review\" 时使用。重新运行，直到 open Must Fix 项为 0，再继续执行 flows-design-review。"}

@@ -1,0 +1,1 @@
+{"description_zh": "会话中期保存点：创建一段描述性的 git 提交，并编写一份简短的交接说明，然后继续工作。适用于风险变更或重构之前、切换任务时，或在不结束会话的情况下暂存进度。触发词：/checkpoint、\"checkpoint\"、\"save progress\"、\"commit and handoff\"、\"save state\"、\"pause here\"、\"before a risky change\"。如需进行包含学习提取的完整会话结束仪式，请使用 /wrap-up 代替。"}

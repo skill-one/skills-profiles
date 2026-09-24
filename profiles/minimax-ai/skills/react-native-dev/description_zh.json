@@ -1,0 +1,1 @@
+{"description_zh": "React Native 和 Expo 开发指南\n涵盖组件、样式、动画、导航、状态管理、表单、网络请求、性能优化、测试、原生能力，以及工程（项目结构、部署、SDK 升级、CI/CD）。\n\n适用场景：\n构建 React Native 或 Expo 应用、实现动画或原生 UI、管理状态、获取数据、编写测试、优化性能、将应用部署到 App Store/Play Store、配置 CI/CD、升级 Expo SDK，或配置 Tailwind/NativeWind。"}

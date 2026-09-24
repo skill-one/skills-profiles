@@ -1,0 +1,1 @@
+{"description_zh": "在CT NIfTI图像/标签数据集上对NV-Segment-CT VISTA3D运行标准或固定通道的softmax微调，可选使用MONAI原生的MLflow追踪及检查点证据。使用softmax对预定义且互斥的类别进行运算；当需要点提示或运行时变量类别时，保留标准流程。不适用于临床验证。"}
