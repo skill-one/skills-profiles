@@ -6,7 +6,7 @@ catalog joining it all. Written by `just index` - generated, so do not edit it.
 中文: [README.zh-CN.md](README.zh-CN.md)
 
 `skills/<id>/` is the source page every angle was built from; the full skill lives
-in its own repository, at the `url` the catalog names. `profiles/<id>/` holds what
+in its own repository. `profiles/<id>/` holds what
 is written about it - the domain label, the Chinese `description_zh`, and the
 Chinese `skill_zh` page - and `skills.jsonl` is the catalog joining them.
 

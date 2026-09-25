@@ -4,8 +4,7 @@
 中文描述，外加把这些连起来的清单。由 `just index` 从这棵树生成——不要手改。
 English: [README.md](README.md)
 
-`skills/<id>/` 是各角度共用的构建源；完整的 skill 在它自己的仓库里，清单的 `url`
-指向它。`profiles/<id>/` 里是为它写的东西：domain 分类、中文 `description_zh` 和
+`skills/<id>/` 是各角度共用的构建源；完整的 skill 在它自己的仓库里。`profiles/<id>/` 里是为它写的东西：domain 分类、中文 `description_zh` 和
 中文 `skill_zh` 页面；`skills.jsonl` 是把它们连起来的清单。
 
 ## 进度
