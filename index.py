@@ -101,9 +101,6 @@ def _row(entry: dict, config: Config, skill: str) -> dict:
     label = angle_output(config, skill, common.DOMAIN_ANGLE)
     row["domain"] = label.get("domain")
     row["confidence"] = label.get("confidence")
-    # the one text angle: the row carries its presence, the page itself stays in the profile
-    row[common.SKILL_ZH_ANGLE] = (common.profile_dir(config, skill)
-                                  / f"{common.SKILL_ZH_ANGLE}.md").is_file() or None
     return row
 
 

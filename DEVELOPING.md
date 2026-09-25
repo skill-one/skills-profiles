@@ -175,9 +175,9 @@ skill with no call and no file.
 `index.py` joins the mirror's rows with the tree and writes `output/skills.jsonl`. It has no
 arguments, no network and no call, and it is not in the build's path: `just index` is a verb you run
 when you want the catalog, and `just sync` runs it because a sync moves the source layer under it.
-Each row carries the mirror's fields, then `description`, `description_zh`, `domain`, `confidence`,
-and `skill_zh` - the angles read from their own files, independently and missing independently
-(`skill_zh` is a presence marker: the page itself is the answer). The same run
+Each row carries the mirror's fields, then `description`, `description_zh`, `domain` and
+`confidence` - the angles read from their own files, independently and missing independently
+(the Chinese page stays in its profile; a consumer falls back to the original without it). The same run
 writes `output/README.md` and its Chinese twin - `readme.py` holds the words, `index.py` hands it
 the numbers - the one thing the catalog cannot answer: **how much of the dataset is labelled**
 (domain coverage; translation coverage is not on the page). It reads the snapshot's own identity

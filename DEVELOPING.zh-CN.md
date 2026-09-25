@@ -154,8 +154,8 @@ uv run python skill_zh.py <owner>/<repo>/<slug> --print   # 打印请求就停�
 
 `index.py` 把镜像的行与树拼接，写 `output/skills.jsonl`。它无参数、无网络、无调用，也不在构建
 路径上：`just index` 是你想要清单时跑的命令，`just sync` 跑它是因为 sync 移动了它下面的源层。
-每行先带镜像字段，然后是 `description`、`description_zh`、`domain`、`confidence` 和 `skill_zh`——
-各角度从自己的文件读出，互相独立、也各自缺失（`skill_zh` 是存在标记：页面本身就是回答）。同一次
+每行先带镜像字段，然后是 `description`、`description_zh`、`domain` 和 `confidence`——
+各角度从自己的文件读出，互相独立、也各自缺失（中文页面留在 profile 里；没有时消费者回退原文）。同一次
 运行写 `output/README.md` 和它的中文双胞胎——
 `readme.py` 装措辞，`index.py` 给数字——即清单回答不了的那件事：**数据集标了多少**（domain 覆
 盖率；翻译覆盖率不在页面上）。它读快照自己的身份（`upstream/latest`、`upstream/stats.json`）而
