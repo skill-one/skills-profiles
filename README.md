@@ -16,4 +16,4 @@ Chinese `skill_zh` page - and `skills.jsonl` is the catalog joining them.
 - **translate**: 8316 of 9006 translated (92.3%), covering 90.2% of the mirror's installs
 - **skill_zh**: 3878 of 9006 skill pages translated (43.1%), covering 92.9% of the mirror's installs
 - **snapshot**: `dist-2026-09-24`, 2026-09-24T20:52:29Z -> 2026-09-24T21:22:24Z (29m54s)
-- **buildable**: 9006 of 9028 have a readable description; the rest are never built
+- **catalog**: 9006 of the mirror's 9028 listed skills have a description; the rest are left out of the catalog
