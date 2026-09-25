@@ -72,6 +72,9 @@ env:
   # thinking is on by default for translation, so a call reasons before it answers and outruns the
   # client's own 20s timeout
   SKILLS_PROFILES_TIMEOUT: "120"
+  # the 302.ai GLM-4-9B-0414 channel answers 400 above a 16384-token budget, and the default
+  # (32768) would 400 every call; the length guard in translate.py catches what still truncates
+  SKILLS_PROFILES_TRANSLATE_MAX_TOKENS: "16384"
 
 jobs:
   publish:
