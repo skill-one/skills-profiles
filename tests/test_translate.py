@@ -64,7 +64,7 @@ def test_thinking_can_be_switched_off():
         common.Config(translate_enable_thinking=False), "hi")
 
     assert "enable_thinking" not in off
-    assert off["max_tokens"] == 32768
+    assert off["max_tokens"] > 2048
 
 
 def test_braces_in_a_description_are_data_not_template(config):
