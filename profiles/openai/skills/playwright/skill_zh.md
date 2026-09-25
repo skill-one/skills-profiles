@@ -1,0 +1,141 @@
+# Playwright CLI 技能
+
+使用 `playwright-cli` 从终端驱动真实浏览器。优先使用捆绑的包装脚本，这样即使未全局安装，CLI 也能正常工作。
+将此技能视为 CLI 优先的自动化。除非用户明确要求测试文件，否则不要转向 `@playwright/test`。
+
+## 前置条件检查（必需）
+
+在提出命令之前，检查 `npx` 是否可用（包装脚本依赖于它）：
+
+```bash
+command -v npx >/dev/null 2>&1
+```
+
+如果不可用，暂停并要求用户安装 Node.js/npm（它提供 `npx`）。提供以下步骤原文：
+
+```bash
+# 验证 Node/npm 是否已安装
+node --version
+npm --version
+
+# 如果缺失，安装 Node.js/npm，然后：
+npm install -g @playwright/cli@latest
+playwright-cli --help
+```
+
+一旦 `npx` 存在，即可继续使用包装脚本。`playwright-cli` 的全局安装是可选的。
+
+## 技能路径（一次性设置）
+
+```bash
+export CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
+export PWCLI="$CODEX_HOME/skills/playwright/scripts/playwright_cli.sh"
+```
+
+用户范围的技能安装在 `$CODEX_HOME/skills` 下（默认：`~/.codex/skills`）。
+
+## 快速入门
+
+使用包装脚本：
+
+```bash
+"$PWCLI" open https://playwright.dev --headed
+"$PWCLI" snapshot
+"$PWCLI" click e15
+"$PWCLI" type "Playwright"
+"$PWCLI" press Enter
+"$PWCLI" screenshot
+```
+
+如果用户倾向于全局安装，这也是有效的：
+
+```bash
+npm install -g @playwright/cli@latest
+playwright-cli --help
+```
+
+## 核心工作流程
+
+1. 打开页面。
+2. 快照以获取稳定的元素引用。
+3. 使用最新快照中的引用进行交互。
+4. 导航或重要 DOM 变化后重新快照。
+5. 在需要时捕获工件（截图、PDF、跟踪记录）。
+
+最小循环：
+
+```bash
+"$PWCLI" open https://example.com
+"$PWCLI" snapshot
+"$PWCLI" click e3
+"$PWCLI" snapshot
+```
+
+## 何时再次快照
+
+在以下情况下再次快照：
+
+- 导航
+- 点击会显著改变 UI 的元素
+- 打开/关闭模态框或菜单
+- 标签切换
+
+引用可能会过期。当命令因缺少引用而失败时，再次快照。
+
+## 推荐模式
+
+### 表单填写和提交
+
+```bash
+"$PWCLI" open https://example.com/form
+"$PWCLI" snapshot
+"$PWCLI" fill e1 "user@example.com"
+"$PWCLI" fill e2 "password123"
+"$PWCLI" click e3
+"$PWCLI" snapshot
+```
+
+### 使用跟踪记录调试 UI 流程
+
+```bash
+"$PWCLI" open https://example.com --headed
+"$PWCLI" tracing-start
+# ...交互...
+"$PWCLI" tracing-stop
+```
+
+### 多标签工作
+
+```bash
+"$PWCLI" tab-new https://example.com
+"$PWCLI" tab-list
+"$PWCLI" tab-select 0
+"$PWCLI" snapshot
+```
+
+## 包装脚本
+
+包装脚本使用 `npx --package @playwright/cli playwright-cli`，因此 CLI 可以在没有全局安装的情况下运行：
+
+```bash
+"$PWCLI" --help
+```
+
+除非存储库已经标准化全局安装，否则优先使用包装脚本。
+
+## 参考
+
+仅打开您需要的：
+
+- CLI 命令参考：`references/cli.md`
+- 实用工作流程和故障排除：`references/workflows.md`
+
+## 安全限制
+
+- 始终在引用元素 ID（如 `e12`）之前快照。
+- 当引用似乎过期时，重新快照。
+- 除非需要，否则优先使用显式命令而不是 `eval` 和 `run-code`。
+- 当您没有最新的快照时，使用占位符引用（如 `eX`）并说明原因；不要使用 `run-code` 跳过引用。
+- 当视觉检查有帮助时，使用 `--headed`。
+- 在此存储库中捕获工件时，使用 `output/playwright/` 并避免引入新的顶级工件文件夹。
+- 默认使用 CLI 命令和工作流程，而不是 Playwright 测试规范。
