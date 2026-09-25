@@ -63,10 +63,14 @@ def translation(payload: object) -> str:
     """The answer text out of a chat completion payload; a body without one is a failed call.
 
     The endpoint answers 200 with an empty `content` when it has nothing to say, which would
-    otherwise write an empty translation the batch would trust as done.
+    otherwise write an empty translation the batch would trust as done. A `finish_reason` of
+    `length` means the token budget cut the answer mid-document: that half translation is
+    unusable input too, because a file is whole or absent.
     """
     choices = payload.get("choices") if isinstance(payload, dict) else None
     first = choices[0] if isinstance(choices, list) and choices else None
+    if isinstance(first, dict) and first.get("finish_reason") == "length":
+        raise RuntimeError("answer hit the token budget - translation truncated")
     message = first.get("message") if isinstance(first, dict) else None
     text = message.get("content") if isinstance(message, dict) else None
     if not isinstance(text, str) or not text.strip():

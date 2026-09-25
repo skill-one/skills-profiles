@@ -212,6 +212,14 @@ def test_an_empty_answer_is_a_failure():
     assert translate.translation({"choices": [{"message": {"content": f"  {ZH}  "}}]}) == ZH
 
 
+def test_a_truncated_answer_is_a_failure():
+    """`finish_reason=length` means the budget cut the document mid-way: a half translation is
+    unusable input, not a file the batch would trust as done."""
+    payload = {"choices": [{"finish_reason": "length", "message": {"content": "半截译文"}}]}
+    with pytest.raises(RuntimeError, match="truncated"):
+        translate.translation(payload)
+
+
 def test_the_reasoning_is_read_around_not_as_the_answer():
     """With thinking on, the same message carries `reasoning_content` too: it is the model's draft,
     and the translation is still `content` alone - trimmed, the thinking never written to disk."""
