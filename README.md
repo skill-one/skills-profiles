@@ -24,7 +24,7 @@ output/
 │   ├── description_zh.json          one Chinese translation of the one-line description
 │   └── skill_zh.md                  the SKILL.md body, translated into Chinese
 ├── skills.jsonl                     `just index`: one flat line per skill — the mirror's own row
-│                                    (id, installs, url, hash, fetchedAt) plus description,
+│                                    (id, installs, hash, fetchedAt) plus description,
 │                                    description_zh and domain
 ├── README.md                        ... and the front page beside it: what this directory is, and
 ├── README.zh-CN.md                  how much of it is built — the first is in English, this Chinese
@@ -111,13 +111,13 @@ the source page every angle was built from, and `output/profiles/<id>/` holds wh
 about it: `domain.json`, `description_zh.json` and the Chinese page `skill_zh.md`.
 `<id>` is the path under both, with a `:` or an `&` spelled `_`. Nothing here is an installation:
 a skill ships more than its `SKILL.md` — scripts, references, assets — and the whole of it lives
-in its own repository, which the catalog's `url` names.
+in its own repository.
 
 ```bash
 # what a skill is, what it is worth, and what it was labelled
 jq -r '[.id, .installs, (.domain[0] // "-")] | @tsv' output/skills.jsonl | head
 
-# a skill's source page: what the batches read; the full skill is at the url the catalog names
+# a skill's source page: what the batches read; the full skill is at its own repository
 cat output/skills/mattpocock/skills/grill-me/SKILL.md
 
 # what was written about it, beside it: the label and the Chinese description

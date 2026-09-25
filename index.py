@@ -4,8 +4,8 @@
 `output/skills.jsonl` is the catalog: every skill the mirror lists, carrying the description read
 out of that skill's own `SKILL.md`, its Chinese translation, the domain Jev labelled it with, and
 how sure the endpoint was of it. It is what a consumer reads instead of walking the tree - and
-instead of going back to the mirror's own index for the installs, the url and the hash - and
-`just index` rewrites it whole.
+instead of going back to the mirror's own index for the installs and the hash - and `just index`
+rewrites it whole.
 
 The same run writes the README that goes with it, out of the same walk: the numbers here, said for
 a reader by `readme.py`.
@@ -24,7 +24,7 @@ from common import Config
 MIRROR = Path(common.UPSTREAM_DIR) / common.INDEX  # the mirror's own listing: the join's left side
 # The mirror's row, forwarded field by field rather than whole, so that every row of the catalog
 # has the same shape and a field upstream adds later is a decision made here rather than a surprise.
-MIRROR_FIELDS = ("id", "installs", "url", "hash", "fetchedAt")
+MIRROR_FIELDS = ("id", "installs", "hash", "fetchedAt")
 NOTHING = "—"  # an em dash: what the README shows where the tree cannot answer
 
 

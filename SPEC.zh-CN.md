@@ -25,7 +25,7 @@ English: [SPEC.md](SPEC.md)
 └── upstream/                         # 树会读取的镜像文件：skills.jsonl、latest、stats.json
 ```
 
-这里的一切都不需要镜像：清单写明每个 skill 及其所在仓库（`url`），profile 里是为它建的东西。
+这里的一切都不需要镜像：清单写明每个 skill，profile 里是为它建的东西。
 `skills/` 是生成器读取的源，与由它建出的产物放在一起——其中没有任何东西是安装件。
 
 `<id>` 是 skill id，`{owner}/{repo}/{slug}`。行里按镜像的拼写携带它；两个目录把 `:` 和 `&` 拼
@@ -44,7 +44,7 @@ English: [SPEC.md](SPEC.md)
 - 每个 skill 一个目录、三个文件：`domain.json`，即端点完整的类型化回答；`description_zh.json`，
   一句话描述的中文翻译；以及 `skill_zh.md`，SKILL.md 正文的中文翻译。
 - **清单是入口。** `skills.jsonl` 由 `just index` 写：每个 skill 扁平一行，按镜像自己的顺序，由
-  镜像的行——`id`、`installs`、`url`、`hash`、`fetchedAt`——加上从该 skill 自己的 `SKILL.md` 读出
+  镜像的行——`id`、`installs`、`hash`、`fetchedAt`——加上从该 skill 自己的 `SKILL.md` 读出
   的 `description`、它的 `description_zh`、标的 `domain` 和标注时的 `confidence`。四者未知时为
   `null`，所以行陈述的是数据集而不是在制品：`.domain != null` 是已标注、`.description_zh != null`
   是已翻译的部分，`.installs` 给未建成的排序。清单取三个标签字段中的两个，回答本身住在 profile

@@ -27,9 +27,9 @@ commands only decide which part of it gets written.
                                       # latest, stats.json
 ```
 
-Nothing here needs the mirror: the catalog names every skill and the repository it lives in
-(`url`), and the profiles hold what was built about it. `skills/` is the source the generator
-reads, kept beside what was built from it - nothing in it is an installation.
+Nothing here needs the mirror: the catalog names every skill, and the profiles hold what was
+built about it. `skills/` is the source the generator reads, kept beside what was built from it
+- nothing in it is an installation.
 
 `<id>` is the skill id, `{owner}/{repo}/{slug}`. A row carries it the way the mirror spells it; the
 two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py` is handed.
@@ -50,7 +50,7 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py`
   `description_zh.json`, the Chinese translation of the one-line description; and `skill_zh.md`,
   the SKILL.md body translated into Chinese.
 - **The catalog is the way in.** `skills.jsonl` is written by `just index`: one flat line per skill,
-  in the mirror's own order, being the mirror's row — `id`, `installs`, `url`, `hash`, `fetchedAt` —
+  in the mirror's own order, being the mirror's row — `id`, `installs`, `hash`, `fetchedAt` —
   plus the `description` read out of that skill's own `SKILL.md`, its `description_zh`, the `domain`
   it was labelled with, and the `confidence` it was labelled at. The four are `null` while unknown,
   so a row states the dataset rather than the work: `.domain != null` is what has been labelled,

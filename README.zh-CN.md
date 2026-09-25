@@ -22,7 +22,7 @@ output/
 │   ├── description_zh.json          一句话描述的一份中文翻译
 │   └── skill_zh.md                  SKILL.md 正文的中文翻译
 ├── skills.jsonl                     `just index`：每个 skill 一行——镜像自己的行
-│                                    （id、installs、url、hash、fetchedAt）外加 description、
+│                                    （id、installs、hash、fetchedAt）外加 description、
 │                                    description_zh 和 domain
 ├── README.md                        ……以及旁边的首页：这个目录是什么、建了多少——
 ├── README.zh-CN.md                  一份英文，这份中文
@@ -97,14 +97,13 @@ just index             # 按磁盘内容重建 output/skills.jsonl 和两个 REA
 清单说明一个 skill 是什么；两个目录是实际内容。`output/skills/<id>/` 装着各角度所依据的构建
 源，`output/profiles/<id>/` 里是为它写的东西：`domain.json`、`description_zh.json` 和中文页面
 `skill_zh.md`。`<id>` 在两处都是路径，其中的 `:` 或 `&` 写作 `_`。这里没有任何东西用于安装：
-一个 skill 自带的远不止 `SKILL.md`——脚本、参考、资源——完整内容在它自己的仓库里，清单的
-`url` 指向它。
+一个 skill 自带的远不止 `SKILL.md`——脚本、参考、资源——完整内容在它自己的仓库里。
 
 ```bash
 # 一个 skill 是什么、值多少、被标成什么
 jq -r '[.id, .installs, (.domain[0] // "-")] | @tsv' output/skills.jsonl | head
 
-# 一个 skill 的构建源：批次读的就是它；完整 skill 在清单 url 指向的仓库里
+# 一个 skill 的构建源：批次读的就是它；完整 skill 在它自己的仓库里
 cat output/skills/mattpocock/skills/grill-me/SKILL.md
 
 # 为它写的东西，就在旁边：标签和中文描述

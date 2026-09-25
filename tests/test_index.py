@@ -20,7 +20,6 @@ DOMAIN = {"domain": "office-productivity", "confidence": 0.9,
 ALPHA_ROW = {
     "id": ALPHA,
     "installs": "300",
-    "url": None,
     "hash": "a" * 64,
     "fetchedAt": None,
     "description": "Tidies a note list, folds the loose ends into a running index, and keeps "
@@ -74,7 +73,7 @@ def test_a_description_nothing_can_be_read_from_is_null(workdir):
     """`delta` is a skill the scraper recorded and never fetched, so there is no `SKILL.md` to read.
     It is still the mirror's row - and `null` is how the catalog says the batch cannot touch it."""
     assert row(common.Config(), "owner-d/repo-d/delta") == {
-        "id": "owner-d/repo-d/delta", "installs": "90", "url": None, "hash": None,
+        "id": "owner-d/repo-d/delta", "installs": "90", "hash": None,
         "fetchedAt": None, "description": None, "description_zh": None,
         "domain": None, "confidence": None, "skill_zh": None}
 
@@ -138,7 +137,7 @@ def test_a_profile_the_mirror_dropped_is_still_a_row(workdir):
 
     lines = indexed(config)
 
-    assert lines[-1] == {"id": "owner-z/repo-z/zeta", "installs": None, "url": None, "hash": None,
+    assert lines[-1] == {"id": "owner-z/repo-z/zeta", "installs": None, "hash": None,
                          "fetchedAt": None, "description": None, "description_zh": None,
                          "domain": "office-productivity", "confidence": 0.9, "skill_zh": None}
     assert len(lines) == 7  # the six the mirror lists, plus the one it does not

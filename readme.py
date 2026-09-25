@@ -28,7 +28,7 @@ TEXT: dict[str, dict[str, Any]] = {
                  "catalog joining it all. Written by `just index` - generated, so do not edit it.\n"
                  "中文: [README.zh-CN.md](README.zh-CN.md)",
         "where": "`skills/<id>/` is the source page every angle was built from; the full skill lives\n"
-                 "in its own repository, at the `url` the catalog names. `profiles/<id>/` holds what\n"
+                 "in its own repository. `profiles/<id>/` holds what\n"
                  "is written about it - the domain label, the Chinese `description_zh`, and the\n"
                  "Chinese `skill_zh` page - and `skills.jsonl` is the catalog joining them.",
         "progress": "Progress",
@@ -48,8 +48,8 @@ TEXT: dict[str, dict[str, Any]] = {
         "intro": "本仓库收集的那些 agent skills，每个由 Jev 端点标注一个封闭分类、由聊天模型给出\n"
                  "中文描述，外加把这些连起来的清单。由 `just index` 从这棵树生成——不要手改。\n"
                  "English: [README.md](README.md)",
-        "where": "`skills/<id>/` 是各角度共用的构建源；完整的 skill 在它自己的仓库里，清单的 `url`\n"
-                 "指向它。`profiles/<id>/` 里是为它写的东西：domain 分类、中文 `description_zh` 和\n"
+        "where": "`skills/<id>/` 是各角度共用的构建源；完整的 skill 在它自己的仓库里。\n"
+                 "`profiles/<id>/` 里是为它写的东西：domain 分类、中文 `description_zh` 和\n"
                  "中文 `skill_zh` 页面；`skills.jsonl` 是把它们连起来的清单。",
         "progress": "进度",
         "bullet": "- **$label**：$value",
