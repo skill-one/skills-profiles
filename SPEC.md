@@ -23,8 +23,8 @@ commands only decide which part of it gets written.
 ├── skills.jsonl                      # `just index`: the catalog, one flat line per skill
 ├── README.md                         # ... and the front page beside it: what this directory is,
 ├── README.zh-CN.md                   #     and how much of it is built; the same page, in Chinese
-└── upstream/                         # the mirror's own files the tree reads: skills.jsonl,
-                                      # latest, stats.json
+└── upstream/                         # the mirror's own files as fetched: skills.jsonl,
+                                      # latest, stats.json, and the rest beside them
 ```
 
 Nothing here needs the mirror: the catalog names every skill, and the profiles hold what was
@@ -49,12 +49,14 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py`
 - One directory per skill, three files: `domain.json`, the endpoint's whole typed answer;
   `description_zh.json`, the Chinese translation of the one-line description; and `skill_zh.md`,
   the SKILL.md body translated into Chinese.
-- **The catalog is the way in.** `skills.jsonl` is written by `just index`: one flat line per skill,
-  in the mirror's own order, being the mirror's row — `id`, `installs`, `hash`, `fetchedAt` —
-  plus the `description` read out of that skill's own `SKILL.md`, its `description_zh`, the `domain`
-  it was labelled with, and the `confidence` it was labelled at. The four are `null` while unknown,
-  so a row states the dataset rather than the work: `.domain != null` is what has been labelled,
-  `.description_zh != null` what has been translated, and `.installs` ranks what has not. The catalog
+- **The catalog is the way in.** `skills.jsonl` is written by `just index`: one flat line per
+  skill the mirror lists whose own `SKILL.md` yields a description - a skill without one is not
+  in the catalog at all - in the mirror's own order, being the mirror's row — `id`, `installs`,
+  `hash`, `fetchedAt` — plus the `description` read out of that skill's own `SKILL.md`, its
+  `description_zh`, the `domain` it was labelled with, and the `confidence` it was labelled at.
+  The last three are `null` while unknown, so a row states the dataset rather than the work:
+  `.domain != null` is what has been labelled, `.description_zh != null` what has been translated,
+  and `.installs` ranks what has not. The catalog
   takes two of the three label fields; the profile is where the answer lives.
 - **The READMEs are the front page**, written by the same command from the same walk: two lines on
   what the directory is, then how much of the dataset is labelled — the count and its share of the
@@ -170,13 +172,14 @@ The batch knobs above are **not** environment variables: a run changes only beca
 - **A failure loses nothing.** A failed call writes no file and does not end the batch; the next run
   retries exactly it.
 - **A skill nothing can be read from is never built.** Its front matter has to yield a description
-  before a call is made, so the catalog writes `description: null` for it and the window skips the
-  row: no call, no file, no failure to retry - for either angle.
+  before a call is made, so the catalog leaves it out and the window never sees it:
+  no call, no file, no failure to retry - for either angle.
 - **A file is whole or absent.** The json is renamed into place, so a half-written one is never
   visible.
 - **One turn per file.** No ordering, no dependency between the angles, no cascade.
 - **The catalog is derived and complete.** `just index` rebuilds it whole from the tree, offline: one
-  row per skill the mirror lists, and one for a skill it has dropped while a profile remains — with
+  row per skill the mirror lists that has a description - a skill without one, or dropped upstream
+  while only a profile remains, is not listed - with
   the READMEs written from the same walk, so no two things there can describe different trees.
 - **The layout is the only contract.** Publish `output/` as it is; the mirror's own files included.
 

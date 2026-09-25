@@ -71,9 +71,10 @@ def profile_path(output: Path, skill_id: str) -> Path:
 
 def branch_files(entries: list[dict]) -> dict[str, str]:
     """The files the fake mirror's branch holds: its index, one directory per skill, and the
-    metadata a real branch carries beside them."""
+    metadata a real branch carries beside them - including a directory of its own (avatars/)."""
     files = {"skills.jsonl": "".join(json.dumps(index_row(entry)) + "\n" for entry in entries),
-             "repos.jsonl": '{"repo": "owner-a/repo-a", "stars": 1}\n'}
+             "repos.jsonl": '{"repo": "owner-a/repo-a", "stars": 1}\n',
+             "avatars/owner-a.png": "png bytes"}
     for entry in entries:
         text = skill_md_text(entry)
         if text:
@@ -85,13 +86,10 @@ def branch_files(entries: list[dict]) -> dict[str, str]:
 
 def write_snapshot(output: Path, entries: list[dict] | None = None) -> None:
     """A snapshot already unpacked into the output tree, the way `just sync` leaves one: each
-    skill's SKILL.md alone, and only the mirror's files the tree reads beside it."""
+    skill's SKILL.md alone, and the mirror's own files beside it."""
     for name, content in branch_files(SKILLS if entries is None else entries).items():
-        if name.startswith("skills/"):
-            if not name.endswith("/" + common.SKILL_MD):
-                continue  # sync strips everything a skill ships but its SKILL.md
-        elif name != "skills.jsonl":
-            continue  # sync keeps only the mirror's files the tree reads
+        if name.startswith("skills/") and not name.endswith("/" + common.SKILL_MD):
+            continue  # sync strips everything a skill ships but its SKILL.md
         where = output / name if name.startswith("skills/") else output / common.UPSTREAM_DIR / name
         where.parent.mkdir(parents=True, exist_ok=True)
         where.write_text(content, encoding="utf-8")

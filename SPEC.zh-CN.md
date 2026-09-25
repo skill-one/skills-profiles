@@ -22,7 +22,7 @@ English: [SPEC.md](SPEC.md)
 ├── skills.jsonl                      # `just index`：清单，每个 skill 扁平一行
 ├── README.md                         # ……以及旁边的首页：这个目录是什么、
 ├── README.zh-CN.md                   #     建了多少；同一页面，中文一份
-└── upstream/                         # 树会读取的镜像文件：skills.jsonl、latest、stats.json
+└── upstream/                         # 镜像自己的文件，原样保留：skills.jsonl、latest、stats.json 等
 ```
 
 这里的一切都不需要镜像：清单写明每个 skill，profile 里是为它建的东西。
@@ -43,9 +43,10 @@ English: [SPEC.md](SPEC.md)
 
 - 每个 skill 一个目录、三个文件：`domain.json`，即端点完整的类型化回答；`description_zh.json`，
   一句话描述的中文翻译；以及 `skill_zh.md`，SKILL.md 正文的中文翻译。
-- **清单是入口。** `skills.jsonl` 由 `just index` 写：每个 skill 扁平一行，按镜像自己的顺序，由
+- **清单是入口。** `skills.jsonl` 由 `just index` 写：镜像列出的、能从其自身 `SKILL.md` 读出
+  description 的每个 skill 扁平一行——读不出的根本不入清单——按镜像自己的顺序，由
   镜像的行——`id`、`installs`、`hash`、`fetchedAt`——加上从该 skill 自己的 `SKILL.md` 读出
-  的 `description`、它的 `description_zh`、标的 `domain` 和标注时的 `confidence`。四者未知时为
+  的 `description`、它的 `description_zh`、标的 `domain` 和标注时的 `confidence`。后三者未知时为
   `null`，所以行陈述的是数据集而不是在制品：`.domain != null` 是已标注、`.description_zh != null`
   是已翻译的部分，`.installs` 给未建成的排序。清单取三个标签字段中的两个，回答本身住在 profile
   里。
@@ -149,13 +150,13 @@ translate.py <id> [--print]   # 一次聊天：两个翻译模板用那句话描
 - **失效即删除。** 改 `_system.md` 本身不使任何东西失效；新快照使它改变的东西失效，`just
 refresh` 是删除那些 profile 的动词——两个文件一起删，因为它们都来自同一个源。
 - **失败不丢任何东西。** 失败的调用不写文件，也不结束批次；下次运行恰好重试它。
-- **读不出东西的 skill 永不构建。** 调用前它的 front matter 必须给出 description，所以清单为它
-  写 `description: null`，窗口跳过该行：不调用、不写文件、没有要重试的失败——两个角度都一样。
+- **读不出东西的 skill 永不构建。** 调用前它的 front matter 必须给出 description，所以清单里没有
+  它，窗口也看不到它：不调用、不写文件、没有要重试的失败——两个角度都一样。
 - **文件要么完整要么不存在。** json 原地改名写入，所以写了一半的永远不可见。
 - **每个文件一次对话。** 无排序、角度之间无依赖、无级联。
-- **清单是派生且完整的。** `just index` 离线地从树整体重建它：镜像列出的每个 skill 一行，镜像
-  已删除但 profile 仍在的 skill 也一行——README 从同一次遍历写出，所以那里没有两样东西能描述不
-  同的树。
+- **清单是派生且完整的。** `just index` 离线地从树整体重建它：镜像列出的、有 description 的
+  skill 一行——没有 description 的、或上游已删除只剩 profile 的不入清单——README 从同一次遍历
+  写出，所以那里没有两样东西能描述不同的树。
 - **目录结构是唯一的契约。** 原样发布 `output/`；包括镜像自己的文件。
 
 ## 6. 待定——成为正式 spec 前先达成一致

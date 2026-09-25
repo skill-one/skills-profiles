@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Index the profile tree: one flat line per skill, the mirror's own row joined with both angles.
 
-`output/skills.jsonl` is the catalog: every skill the mirror lists, carrying the description read
-out of that skill's own `SKILL.md`, its Chinese translation, the domain Jev labelled it with, and
-how sure the endpoint was of it. It is what a consumer reads instead of walking the tree - and
-instead of going back to the mirror's own index for the installs and the hash - and `just index`
-rewrites it whole.
+`output/skills.jsonl` is the catalog: every skill the mirror lists that has a description of its
+own - the rest are not in it, there is nothing to lead a build with - carrying the description
+read out of that skill's own `SKILL.md`, its Chinese translation, the domain Jev labelled it
+with, and how sure the endpoint was of it. It is what a consumer reads instead of walking the
+tree - and instead of going back to the mirror's own index for the installs and the hash - and
+`just index` rewrites it whole.
 
 The same run writes the README that goes with it, out of the same walk: the numbers here, said for
 a reader by `readme.py`.
@@ -36,23 +37,6 @@ def mirror_rows(config: Config) -> list[dict]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
 
 
-def skill_ids(config: Config) -> list[str]:
-    """Every skill the profile tree holds, in path order.
-
-    A skill the mirror has since dropped is still a population: its profile was paid for, and a
-    catalog that left it out would hide work that is on disk. The walk is an `os.walk` rather than
-    a glob - a glob drops a leading dot, and `.claude` is a repo name people use.
-    """
-    root = config.output_dir / common.PROFILES_DIR
-    ids = []
-    for dirpath, dirnames, _ in os.walk(root):
-        path = Path(dirpath)
-        if len(path.relative_to(root).parts) == 3:
-            dirnames[:] = []  # a skill directory is the leaf
-            ids.append(path.relative_to(root).as_posix())
-    return sorted(ids)
-
-
 def description(config: Config, skill: str) -> str:
     """The skill's own one line, out of its `SKILL.md`; empty when there is none to read."""
     try:
@@ -70,20 +54,17 @@ def angle_output(config: Config, skill: str, angle: str) -> dict:
 
 
 def rows(config: Config) -> list[dict]:
-    """One row per skill: the mirror's row, plus what this project read and decided about it.
+    """One row per skill the mirror lists whose own `SKILL.md` yields a description: the mirror's
+    row, plus what this project read and decided about it.
 
-    The joined fields are `null` while unknown. A skill the mirror no longer lists is a row too,
-    named the way the tree spells it, with the mirror's fields left empty.
+    A skill without a description is not in the catalog at all - there is nothing to lead a build
+    with, so no row and no batch work. The joined fields are `null` while unknown.
     """
     out = []
-    listed = set()
     for entry in mirror_rows(config):
-        skill = common.skill_dir_name(entry.get("id", ""))
-        listed.add(skill)
-        out.append(_row(entry, config, skill))
-    for skill in skill_ids(config):
-        if skill not in listed:
-            out.append(_row({"id": skill}, config, skill))
+        row = _row(entry, config, common.skill_dir_name(entry.get("id", "")))
+        if row["description"]:
+            out.append(row)
     return out
 
 
@@ -107,8 +88,7 @@ def _row(entry: dict, config: Config, skill: str) -> dict:
 def write(config: Config, rows: list[dict]) -> Path:
     """Write the catalog, renamed into place: a half-written one would read as a whole one.
 
-    Compact, like the mirror's own listing: the justfile matches the `"description":null` spelling
-    in it to keep an undescribable skill out of the window.
+    Compact, like the mirror's own listing.
     """
     text = "".join(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n"
                    for row in rows)
@@ -130,36 +110,33 @@ def facts(config: Config, indexed: list[dict]) -> dict:
     """What the README says: how much of the dataset is built for each angle, and the tree the
     numbers come from.
 
-    The denominator is what can be built rather than what the mirror lists - a skill whose front
-    matter yields no description is never built, so counting it would pin the number below 100%
-    forever. The installs share is a second reading of the same count: the batch works the most
-    installed skills first, so the count says how much is left and the weight says what it is
-    worth. Everything here is a string, ready to be dropped into a sentence.
+    The denominator is the catalog itself: every row in it has a description, and the skills the
+    mirror lists without one are in neither the catalog nor these numbers. The installs share is a
+    second reading of the same count: the batch works the most installed skills first, so the
+    count says how much is left and the weight says what it is worth. Everything here is a string,
+    ready to be dropped into a sentence.
     """
-    on_mirror = {common.skill_dir_name(entry.get("id", "")) for entry in mirror_rows(config)}
-    orphan = sum(1 for row in indexed if common.skill_dir_name(row["id"]) not in on_mirror)
-    buildable = [row for row in indexed if row["description"]]
-    weight = sum(_installs(row) for row in buildable)
-    dirs = {row["id"]: common.skill_dir_name(row["id"]) for row in buildable}
+    weight = sum(_installs(row) for row in indexed)
+    dirs = {row["id"]: common.skill_dir_name(row["id"]) for row in indexed}
     domain_done = built_skills(config, f"{common.DOMAIN_ANGLE}.json")
     translate_done = built_skills(config, f"{common.TRANSLATE_ANGLE}.json")
     skill_zh_done = built_skills(config, f"{common.SKILL_ZH_ANGLE}.md")
-    domain_here = [row for row in buildable if dirs[row["id"]] in domain_done]
-    translate_here = [row for row in buildable if dirs[row["id"]] in translate_done]
-    skill_zh_here = [row for row in buildable if dirs[row["id"]] in skill_zh_done]
+    domain_here = [row for row in indexed if dirs[row["id"]] in domain_done]
+    translate_here = [row for row in indexed if dirs[row["id"]] in translate_done]
+    skill_zh_here = [row for row in indexed if dirs[row["id"]] in skill_zh_done]
     return {
         "tag": _read_text(config.output_dir / common.UPSTREAM_DIR / "latest").strip() or NOTHING,
         "scan": _scan(_read_json(config.output_dir / common.UPSTREAM_DIR / "stats.json")),
-        "listed": str(len(indexed) - orphan),
-        "buildable": str(len(buildable)),
+        "total": str(len(mirror_rows(config))),
+        "buildable": str(len(indexed)),
         "built": str(len(domain_here)),
-        "percent": _percent(len(domain_here), len(buildable)),
+        "percent": _percent(len(domain_here), len(indexed)),
         "installs": _percent(sum(_installs(row) for row in domain_here), weight),
         "translated": str(len(translate_here)),
-        "translate_percent": _percent(len(translate_here), len(buildable)),
+        "translate_percent": _percent(len(translate_here), len(indexed)),
         "translate_installs": _percent(sum(_installs(row) for row in translate_here), weight),
         "skillzh": str(len(skill_zh_here)),
-        "skillzh_percent": _percent(len(skill_zh_here), len(buildable)),
+        "skillzh_percent": _percent(len(skill_zh_here), len(indexed)),
         "skillzh_installs": _percent(sum(_installs(row) for row in skill_zh_here), weight),
     }
 

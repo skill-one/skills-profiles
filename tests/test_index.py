@@ -51,11 +51,11 @@ def test_a_row_is_the_mirrors_own_fields_plus_ours(workdir):
     assert indexed(config)[0] == ALPHA_ROW
 
 
-def test_every_skill_the_mirror_lists_is_a_row(workdir):
-    """The catalog is the dataset, not the work in progress: it lists the skills with no label yet,
-    in the mirror's order - the batch's own."""
+def test_every_describable_skill_the_mirror_lists_is_a_row(workdir):
+    """The catalog is the dataset, not the work in progress: it lists the describable skills with
+    no label yet, in the mirror's order - the batch's own."""
     assert [line["id"] for line in indexed(common.Config())] == [
-        ALPHA, BETA, "owner-c/repo-c/gamma", HOTEL, DOT, "owner-d/repo-d/delta"]
+        ALPHA, BETA, "owner-c/repo-c/gamma", HOTEL, DOT]
 
 
 def test_the_description_is_read_out_of_the_skill_itself(workdir):
@@ -68,13 +68,18 @@ def test_the_description_is_read_out_of_the_skill_itself(workdir):
     assert row(config, BETA)["description"] == "Drafts a release note."
 
 
-def test_a_description_nothing_can_be_read_from_is_null(workdir):
-    """`delta` is a skill the scraper recorded and never fetched, so there is no `SKILL.md` to read.
-    It is still the mirror's row - and `null` is how the catalog says the batch cannot touch it."""
-    assert row(common.Config(), "owner-d/repo-d/delta") == {
-        "id": "owner-d/repo-d/delta", "installs": "90", "hash": None,
-        "fetchedAt": None, "description": None, "description_zh": None,
-        "domain": None, "confidence": None}
+def test_a_skill_with_no_description_has_no_row(workdir):
+    """`delta` is a skill the scraper recorded and never fetched: no `SKILL.md`, no description -
+    and no row either, the catalog holding only what a build could start from. A source whose
+    front matter yields no description is out the same way."""
+    config = common.Config()
+    source = skill_path(config.output_dir, ALPHA) / "SKILL.md"
+    source.write_text("---\nname: alpha\n---\n\nBody.\n", encoding="utf-8")
+
+    ids = [line["id"] for line in indexed(config)]
+
+    assert "owner-d/repo-d/delta" not in ids
+    assert ALPHA not in ids
 
 
 def test_the_domain_is_null_until_it_is_built(workdir):
@@ -115,27 +120,19 @@ def test_the_id_is_the_mirrors_own_spelling(workdir):
     assert skill_path(config.output_dir, HOTEL).is_dir()
 
 
-def test_a_profile_the_mirror_dropped_is_still_a_row(workdir):
-    """Upstream delisting a skill does not unpick the label already paid for, so its row stays -
-    with the mirror's fields left empty - and it is named the way the tree spells it."""
+def test_a_profile_the_mirror_dropped_is_not_a_row(workdir):
+    """Upstream delisting a skill unpicks its row, the same rule as any skill without a readable
+    description - its source is gone with the snapshot, so nothing could be rebuilt. The label
+    paid for stays on disk; it is just not listed."""
     config = common.Config()
     common.write_json(common.profile_path(config, "owner-z/repo-z/zeta", common.DOMAIN_ANGLE),
                       DOMAIN)
 
     lines = indexed(config)
 
-    assert lines[-1] == {"id": "owner-z/repo-z/zeta", "installs": None, "hash": None,
-                         "fetchedAt": None, "description": None, "description_zh": None,
-                         "domain": "office-productivity", "confidence": 0.9}
-    assert len(lines) == 7  # the six the mirror lists, plus the one it does not
-
-
-def test_an_orphan_is_walked_rather_than_globbed(workdir):
-    """The second population is read off the profile tree, and a glob would drop a leading dot -
-    which is a repo name people use."""
-    config = common.Config()
-    common.write_json(common.profile_path(config, DOT, common.DOMAIN_ANGLE), DOMAIN)
-    assert index.skill_ids(config) == [DOT]
+    assert len(lines) == 5  # the mirror's describable rows, and nothing beside them
+    assert "owner-z/repo-z/zeta" not in [line["id"] for line in lines]
+    assert common.profile_path(config, "owner-z/repo-z/zeta", common.DOMAIN_ANGLE).is_file()
 
 
 # -------------------------------------------------------------------- the file
@@ -147,14 +144,6 @@ def test_a_missing_mirror_index_says_what_to_run(workdir):
     (common.Config().output_dir / index.MIRROR).unlink()
     with pytest.raises(SystemExit, match="just sync"):
         index.rows(common.Config())
-
-
-def test_a_null_is_spelled_the_way_the_justfile_matches_it(workdir):
-    """`just` keeps an undescribable skill out of the window by matching `"description":null` in the
-    line, so the spelling is a contract between the two."""
-    config = common.Config()
-    line = index.write(config, index.rows(config)).read_text(encoding="utf-8")
-    assert '"description":null' in line
 
 
 def test_write_is_whole_or_absent(workdir):
@@ -180,7 +169,7 @@ def test_main_writes_and_reports_the_catalog(workdir, capsys):
     assert first["confidence"] == 0.9
     assert first["description_zh"] is None  # the second angle has not been built in this tree
     assert "probabilities" not in first  # the row takes what a consumer uses, the profile keeps it
-    assert "indexed 6 skills" in capsys.readouterr().err
+    assert "indexed 5 skills" in capsys.readouterr().err
 
 
 # ------------------------------------------------------------------ the numbers
@@ -212,12 +201,12 @@ def test_the_numbers_count_each_angle_independently(workdir):
     assert (numbers["skillzh"], numbers["skillzh_percent"]) == ("1", "20.0%")
 
 
-def test_the_denominator_is_what_can_be_built(workdir):
-    """`delta` is a skill the mirror lists and never fetched, so it can never be labelled: counting
-    it would pin the number below 100% forever."""
+def test_the_denominator_is_the_catalog(workdir):
+    """`delta` is a skill the mirror lists and never fetched: it is in neither the catalog nor the
+    numbers, so the denominator is the catalog itself and a full build reaches 100%."""
     numbers = facts(common.Config())
 
-    assert (numbers["buildable"], numbers["listed"]) == ("5", "6")
+    assert (numbers["buildable"], numbers["total"]) == ("5", "6")
 
 
 def test_a_leftover_directory_is_not_progress(workdir):
@@ -230,8 +219,8 @@ def test_a_leftover_directory_is_not_progress(workdir):
 
 
 def test_a_profile_the_mirror_dropped_is_not_coverage(workdir):
-    """A dropped skill keeps the label paid for, and its row stays in the catalog - but it is not
-    part of the dataset, so it is in neither side of the count."""
+    """A dropped skill keeps the label paid for on disk, but it is not in the catalog, so it is in
+    neither side of the count."""
     config = common.Config()
     common.write_json(common.profile_path(config, "owner-z/repo-z/zeta", common.DOMAIN_ANGLE),
                       DOMAIN)
@@ -239,7 +228,7 @@ def test_a_profile_the_mirror_dropped_is_not_coverage(workdir):
     numbers = facts(config)
 
     assert numbers["built"] == "0"
-    assert (numbers["listed"], numbers["buildable"]) == ("6", "5")
+    assert (numbers["buildable"], numbers["total"]) == ("5", "6")
 
 
 def test_the_installs_share_weighs_the_same_count(workdir):

@@ -28,14 +28,15 @@ output/
 │                                    description_zh and domain
 ├── README.md                        ... and the front page beside it: what this directory is, and
 ├── README.zh-CN.md                  how much of it is built — the first is in English, this Chinese
-└── upstream/                        the mirror's own files the tree reads: its index, the version
-                                     pointer, the scan stats
+└── upstream/                        the mirror's own files as fetched: its index, the version
+                                     pointer, the scan stats, and the rest beside them
 ```
 
-`skills.jsonl` is the way in. It lists every skill the mirror has, in the mirror's own order — the
-most installed first — with the `description` read out of that skill's own `SKILL.md`, its
-`description_zh`, the `domain` this project labelled it with, and how sure the endpoint was of it.
-All four are `null` while they are unknown, so the labelled part of the dataset is a filter away:
+`skills.jsonl` is the way in. It lists every skill the mirror has that yields a description of its
+own — the rest are not listed — in the mirror's own order, the most installed first, with the
+`description` read out of that skill's own `SKILL.md`, its `description_zh`, the `domain` this
+project labelled it with, and how sure the endpoint was of it. The last three are `null` while
+they are unknown, so the labelled part of the dataset is a filter away:
 
 ```bash
 jq -r 'select(.domain == "development") | [.installs, .id] | @tsv' output/skills.jsonl | head

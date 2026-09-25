@@ -235,15 +235,15 @@ def test_the_window_follows_the_snapshots_own_order(project):
 
 
 def test_a_skill_with_no_source_on_disk_is_not_a_target(project):
-    """The mirror lists `delta` but saved no source for it, so its row carries no description and
-    the window cannot fail on it forever."""
+    """The mirror lists `delta` but saved no source for it: no description, no row in the catalog,
+    so the window has nothing to say about it."""
     assert just(project, "limit=0", "jobs=4").returncode == 0
     assert not outputs(project, DELTA).exists()
 
 
 def test_a_skill_nothing_can_be_read_from_is_not_a_target(project):
-    """A header that is not YAML is a skill the state cannot lead with, so the catalog says
-    `description: null` and the window skips the row."""
+    """A header that is not YAML is a skill the state cannot lead with, so the catalog leaves it
+    out and the window never sees it."""
     (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").write_text(
         "---\nname: alpha\ndescription: DEPRECATED: renamed elsewhere\n---\n\nBody.\n",
         encoding="utf-8")
@@ -390,12 +390,10 @@ def test_translate_then_index_carries_the_chinese_into_the_catalog(project):
 
     lines = [json.loads(line) for line in
              (project / OUTPUT / "skills.jsonl").read_text(encoding="utf-8").splitlines()]
-    assert [line["id"] for line in lines] == [
-        ALPHA, BETA, GAMMA, HOTEL, DOT, DELTA]
+    assert [line["id"] for line in lines] == [ALPHA, BETA, GAMMA, HOTEL, DOT]
     assert lines[0]["description_zh"].startswith("【占位】")  # dry-run value, shaped like the answer
     assert lines[0]["description_zh"].endswith("the whole pile searchable.")
     assert lines[0]["domain"] is None  # only the translation was built
-    assert lines[5]["description_zh"] is None  # delta has no source to read a description from
 
 
 def test_the_documented_dry_switch_works(project):
@@ -466,20 +464,19 @@ def test_just_clean_drops_the_profiles_and_keeps_the_sources(project):
 
 
 def test_just_index_joins_the_mirror_with_the_profiles(project):
-    """`just index` writes the catalog: a row per skill the mirror lists, in the mirror's order,
-    carrying the description and the label - and `null` where neither has happened. It writes the
-    report beside it from the same walk, so the two cannot describe different trees."""
+    """`just index` writes the catalog: a row per skill the mirror lists with a description, in
+    the mirror's order, carrying the description and the label - and `null` where the label has
+    not happened. It writes the report beside it from the same walk, so the two cannot describe
+    different trees."""
     assert just(project, "limit=0", "jobs=4").returncode == 0
     (outputs(project, ALPHA) / "domain.json").unlink()
     assert just(project, "index").returncode == 0
 
     lines = [json.loads(line) for line in
              (project / OUTPUT / "skills.jsonl").read_text(encoding="utf-8").splitlines()]
-    assert [line["id"] for line in lines] == [
-        ALPHA, BETA, GAMMA, HOTEL, DOT, DELTA]
+    assert [line["id"] for line in lines] == [ALPHA, BETA, GAMMA, HOTEL, DOT]
     assert lines[0]["description"].startswith("Tidies a note list")
     assert lines[0]["domain"] is None  # the label was deleted; the skill is still listed
-    assert lines[5]["description"] is None  # no source to read a description from
     text = (project / OUTPUT / readme.README).read_text(encoding="utf-8")
     assert "- **domain**: 4 of 5 labelled (80.0%)" in text  # the deleted json is not progress
 
@@ -514,8 +511,9 @@ def test_just_sync_unpacks_the_branch_into_its_two_layers(project, tmp_path):
     # everything a skill ships but its SKILL.md is stripped by the sync
     assert not (snapshot(project / OUTPUT, ALPHA) / "extra.md").exists()
     assert (project / OUTPUT / common.UPSTREAM_DIR / "skills.jsonl").is_file()
-    # the mirror's own files the tree never reads are pruned by the sync
-    assert not (project / OUTPUT / common.UPSTREAM_DIR / "repos.jsonl").exists()
+    # the mirror's other files are kept as fetched, its metadata and avatars beside the index
+    assert (project / OUTPUT / common.UPSTREAM_DIR / "repos.jsonl").is_file()
+    assert (project / OUTPUT / common.UPSTREAM_DIR / "avatars" / "owner-a.png").is_file()
     # and GitHub's <repo>-<branch>/ wrapper is stripped, not nested
     assert not (project / OUTPUT / ARCHIVE_ROOT).exists()
 
@@ -530,7 +528,8 @@ def test_just_sync_rewrites_the_catalog_it_moved_the_sources_under(project, tmp_
     assert just(project, f"snapshot=file://{tarball}", "sync").returncode == 0
 
     lines = (project / OUTPUT / "skills.jsonl").read_text(encoding="utf-8").splitlines()
-    assert [json.loads(line)["id"] for line in lines] == [entry["id"] for entry in SKILLS]
+    assert [json.loads(line)["id"] for line in lines] == [
+        entry["id"] for entry in SKILLS if entry.get("description")]
 
 
 def test_just_sync_replaces_the_snapshot_wholesale(project, tmp_path):

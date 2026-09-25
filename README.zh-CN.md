@@ -26,12 +26,13 @@ output/
 │                                    description_zh 和 domain
 ├── README.md                        ……以及旁边的首页：这个目录是什么、建了多少——
 ├── README.zh-CN.md                  一份英文，这份中文
-└── upstream/                        树会读取的镜像文件：它的索引、版本指针、扫描统计
+└── upstream/                        镜像自己的文件，原样保留：索引、版本指针、扫描统计，以及其余文件
 ```
 
-`skills.jsonl` 是入口。它按镜像自己的顺序（安装量从高到低）列出镜像有的每个 skill，带着从该
-skill 自己的 `SKILL.md` 读出的 `description`、它的 `description_zh`、本项目标的 `domain`，以及
-端点对该标签的确信度。四者未知时都是 `null`，所以已标注的部分一个过滤就能取出：
+`skills.jsonl` 是入口。它按镜像自己的顺序（安装量从高到低）列出镜像有的、能读出 description
+的每个 skill——读不出的不入清单——带着从该 skill 自己的 `SKILL.md` 读出的 `description`、它的
+`description_zh`、本项目标的 `domain`，以及端点对该标签的确信度。后三者未知时都是 `null`，所以
+已标注的部分一个过滤就能取出：
 
 ```bash
 jq -r 'select(.domain == "development") | [.installs, .id] | @tsv' output/skills.jsonl | head

@@ -15,7 +15,7 @@
 # the rest of what a skill ships stays upstream, and installing means fetching the skill's own
 # repository. `profiles/` is what this project writes
 # about them - one domain.json, one description_zh.json and one skill_zh.md per skill.
-# `upstream/` holds the mirror's own files the tree reads, its index above all.
+# `upstream/` holds the mirror's own files as fetched, its index above all.
 # `skills.jsonl` at the root is the catalog: one row per
 # skill, the mirror's fields plus the description read out of the skill itself, its Chinese
 # translation, and the domain it was labelled with. Publishing is copying that one directory.
@@ -68,9 +68,8 @@ build angle:
 	# The order the run works in: the catalog's own, which is the mirror's.
 	#
 	# `skills.jsonl` is written with the mirror's rows in the mirror's order, so reading it is the
-	# whole ordering - the most installed skills come first, and nothing is sorted. A row whose
-	# description is `null` is a skill nothing could be read from, and neither batch touches it.
-	# An id it names whose SKILL.md is not on disk is skipped.
+	# whole ordering - the most installed skills come first, and nothing is sorted. Every row
+	# names a skill with a description; an id whose SKILL.md is not on disk is skipped.
 	#
 	# No catalog, or one whose ids do not parse, falls back to the directory listing in path order:
 	# a `find` rather than a glob (a glob drops a leading dot, and `.claude` is a repo name people
@@ -78,8 +77,7 @@ build angle:
 	[ -d {{output_dir}}/skills ] || { echo "no sources under {{output_dir}} - run \`just sync\` first" >&2; exit 1; }
 	ordered=
 	if [ -f {{output_dir}}/skills.jsonl ]; then
-		ordered=$(grep -v '"description":null' {{output_dir}}/skills.jsonl \
-			| sed -En 's/^ *\{ *"id" *: *"([^"]*)".*/\1/p' \
+		ordered=$(sed -En 's/^ *\{ *"id" *: *"([^"]*)".*/\1/p' {{output_dir}}/skills.jsonl \
 			| tr ':&' '__' \
 			| while read -r skill; do
 				if [ -f {{output_dir}}/skills/"$skill"/SKILL.md ]; then echo "$skill"; fi
@@ -205,10 +203,6 @@ sync:
 	find "{{output_dir}}/skills.new" -type d -empty -delete
 	mkdir -p "{{output_dir}}/upstream.new"
 	find "$stage" -mindepth 1 -maxdepth 1 -exec mv {} "{{output_dir}}/upstream.new/" \;
-	# The same reading for the mirror's own files: the tree reads its index, the version pointer
-	# and the scan stats, so those three are all that survive.
-	find "{{output_dir}}/upstream.new" -mindepth 1 -maxdepth 1 \
-		! -name skills.jsonl ! -name latest ! -name stats.json -exec rm -rf {} +
 	rm -rf "{{output_dir}}/skills" "{{output_dir}}/upstream"
 	mv "{{output_dir}}/skills.new" "{{output_dir}}/skills"
 	mv "{{output_dir}}/upstream.new" "{{output_dir}}/upstream"

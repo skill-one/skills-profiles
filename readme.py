@@ -17,7 +17,7 @@ README = "README.md"
 README_ZH = "README.zh-CN.md"
 # What the bullets under Progress say, in this order. Each name is a sentence in TEXT below and a
 # `<name>_label` beside it, so the two languages cannot drift apart in structure.
-FACTS = ("domain", "translate", "skill_zh", "snapshot", "buildable")
+FACTS = ("domain", "translate", "skill_zh", "snapshot", "catalog")
 
 # One page per language: the same thing said in the same order. `$name` is filled from the numbers
 # index.py reads; the rest is prose and markdown. The two hold the same keys - a test says so.
@@ -37,12 +37,12 @@ TEXT: dict[str, dict[str, Any]] = {
         "translate_label": "translate",
         "skill_zh_label": "skill_zh",
         "snapshot_label": "snapshot",
-        "buildable_label": "buildable",
+        "catalog_label": "catalog",
         "domain": "$built of $buildable labelled ($percent), covering $installs of the mirror's installs",
         "translate": "$translated of $buildable translated ($translate_percent), covering $translate_installs of the mirror's installs",
         "skill_zh": "$skillzh of $buildable skill pages translated ($skillzh_percent), covering $skillzh_installs of the mirror's installs",
         "snapshot": "`$tag`, $scan",
-        "buildable": "$buildable of $listed have a readable description; the rest are never built",
+        "catalog": "$buildable of the mirror's $total listed skills have a description; the rest are left out of the catalog",
     },
     "zh": {
         "intro": "本仓库收集的那些 agent skills，每个由 Jev 端点标注一个封闭分类、由聊天模型给出\n"
@@ -57,12 +57,12 @@ TEXT: dict[str, dict[str, Any]] = {
         "translate_label": "translate",
         "skill_zh_label": "skill_zh",
         "snapshot_label": "快照",
-        "buildable_label": "可建",
+        "catalog_label": "清单",
         "domain": "$buildable 个里已标 $built 个（$percent），覆盖镜像安装量的 $installs",
         "translate": "$buildable 个里已翻译 $translated 个（$translate_percent），覆盖镜像安装量的 $translate_installs",
         "skill_zh": "$buildable 个里已有 $skillzh 个中文页面（$skillzh_percent），覆盖镜像安装量的 $skillzh_installs",
         "snapshot": "`$tag`，$scan",
-        "buildable": "$listed 个里有 $buildable 个可读出 description；其余的永远不会被构建",
+        "catalog": "镜像列出的 $total 个里 $buildable 个有 description；其余的不进清单",
     },
 }
 
