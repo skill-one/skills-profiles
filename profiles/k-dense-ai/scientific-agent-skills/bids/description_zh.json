@@ -1,0 +1,1 @@
+{"description_zh": "在处理脑成像数据结构（BIDS）数据集时使用此功能：整理神经科学和生物医学数据（MRI、EEG、MEG、iEEG、PET、显微镜、NIRS、运动捕捉、EMG、磁共振波谱、行为学），查询BIDS布局，验证合规性，将DICOM转换为BIDS，编写元数据侧车文件，或创建BIDS衍生数据。"}

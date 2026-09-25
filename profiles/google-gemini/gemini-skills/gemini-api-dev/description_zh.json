@@ -1,0 +1,1 @@
+{"description_zh": "在编写调用 Gemini API 进行文本生成、多轮对话、多模态理解、图像生成、视频生成、语音生成（TTS）、语音设计、语音复制、流式响应、背景研究任务、函数调用、结构化输出或从旧的 generateContent API 迁移的代码时，请使用此技能。涵盖 Python 和 TypeScript 中 Gemini 模型和代理的 SDK 使用和最佳实践。"}

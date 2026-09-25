@@ -1,0 +1,1 @@
+{"description_zh": "2130 标准Salesforce对象（如Account、Contact、Opportunity、Lead、Case、ApexClass等）的权威字段/模式参考——包括sObject和Tooling字段API名称、类型、属性（可筛选/可排序/可分组/可更新）以及关系。当字段/类型/功能未验证时，与SOQL/Apex技能一同加载——仅用于查询语法或优化。在SOQL/SOSL查询或针对标准对象执行的DML中验证/调试字段时触发。自定义__c对象/字段不在此范围内——请使用实时组织的sobject描述（sf sobject describe）。禁止用于编写/部署*-meta.xml或sfdx源（使用元数据API技能）。"}

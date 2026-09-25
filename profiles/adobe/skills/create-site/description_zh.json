@@ -1,0 +1,1 @@
+{"description_zh": "当用户希望从零开始创建全新的AEM Edge Delivery站点，且目前不存在GitHub仓库或DA内容时，请使用此功能。触发条件包括“设置新站点”、“创建新的EDS项目”或“上线新站点”。该功能涵盖从模板创建GitHub仓库、安装aem-code-sync、初始化DA内容（导航、页脚、首页）以及返回可预览的URL。若需导入或迁移现有页面，请使用page-import；若要在现有站点上构建组件，请使用content-driven-development。"}

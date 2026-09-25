@@ -1,0 +1,1 @@
+{"description_zh": "使用 FoundationStereo 进行立体深度估计。从立体图像对中预测视差图，用于 3D 重建。在训练、评估、导出或运行 TAO FoundationStereo 模型的推理时使用。触发短语包括“训练立体深度”、“FoundationStereo”、“立体视差估计”、“立体 3D 重建”。"}

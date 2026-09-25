@@ -1,0 +1,1 @@
+{"description_zh": "用于弱监督分割的MAL（Mask Auto-Label）。使用ViT-MAE主干网络，根据极少量标注（点或框标注）生成分割掩码。在训练、评估或运行TAO MAL模型推理时使用。触发短语包括“训练MAL”、“Mask Auto-Label”、“弱监督分割”、“框提示分割”、“极少量标注掩码预测”。"}

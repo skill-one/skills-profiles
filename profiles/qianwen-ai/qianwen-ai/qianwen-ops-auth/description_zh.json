@@ -1,0 +1,1 @@
+{"description_zh": "配置认证（API密钥、端点）。触发条件：设置QIANWEN_API_KEY时、解决401/auth错误时、当其他技能报告凭证缺失时，或用户通过名称显式调用此技能（例如使用qianwen-ops-auth）。不触发条件：非认证Qwen任务、一般API使用问题。"}

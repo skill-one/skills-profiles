@@ -1,0 +1,1 @@
+{"description_zh": "当用户想要从CCPM注册中心搜索、发现、安装或管理Claude Code技能时，应使用此技能。触发条件包括类似“查找PDF技能”、“搜索代码审查技能”、“安装cloudflare-troubleshooting”、“列出我的已安装技能”、“skill-creator是什么”等请求，或任何提及查找/安装/管理Claude Code技能或插件的表述。"}

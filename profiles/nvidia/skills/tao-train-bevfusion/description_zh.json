@@ -1,0 +1,1 @@
+{"description_zh": "用于多传感器三维目标检测的 BEVFusion。在鸟瞰视图（BEV）空间中融合 LiDAR 点云和相机图像，用于自动驾驶的鲁棒三维感知。在训练、评估或运行 TAO BEVFusion 模型的推理时使用。触发短语包括“训练 BEVFusion”、“LiDAR + 相机融合”、“BEV 三维检测”、“多传感器三维感知”。"}

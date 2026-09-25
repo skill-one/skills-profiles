@@ -1,0 +1,1 @@
+{"description_zh": "安装、诊断、修复和个性化官方腾讯IMA技能（这是一个围绕上游ima-skill的封装，并非替代品），包括在IMA知识库中进行分叉搜索并优先提升。当用户提及IMA / 腾讯IMA / ima-skill、需要IMA API密钥设置、知识库搜索 / 笔记搜索，或遇到“由于无效的SKILL.md而跳过加载技能”时使用（ima-skill缺少YAML前导内容的bug）。"}

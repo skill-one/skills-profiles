@@ -1,0 +1,1 @@
+{"description_zh": "用于涉及Dagster、dg CLI、资产、材料化、组件、数据工具或数据管道的任何任务，与Dagster技能处理的场景相匹配。这是已弃用的dagster-expert插件。它不提供任何Dagster指导，仅存在告知用户迁移到dagster插件的用途。"}

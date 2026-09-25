@@ -1,0 +1,1 @@
+{"description_zh": "优化 GKE 成本，合理配置工作负载，并配置 Spot VM、CUD、成本分配和资源配额。在优化 GKE 集群或工作负载成本、配置 GKE 成本分配或配额、合理配置 CPU/内存请求，或选择 Spot VM 和机器类型时使用。不适用于通用计算类资源配置或 GPU 选择（请使用 gke-compute-classes）。"}

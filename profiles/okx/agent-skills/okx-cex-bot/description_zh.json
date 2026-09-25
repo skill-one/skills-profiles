@@ -1,0 +1,1 @@
+{"description_zh": "在 OKX 上管理网格机器人（现货/合约/币质保证金）和 DCA 马丁格尔机器人（现货 DCA / 合约 DCA）。涵盖创建、停止、修改、监控 P&L、TP/SL、保证金/投资调整以及 AI 推荐参数。需要 API 凭证。不适用于常规订单（okx-cex-trade）、市场数据（okx-cex-market）或账户信息（okx-cex-portfolio）。"}

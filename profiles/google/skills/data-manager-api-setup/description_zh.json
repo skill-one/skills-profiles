@@ -1,0 +1,1 @@
+{"description_zh": "指导开发者完成 Data Manager API 客户端库的安装和身份验证设置步骤。当用户开始使用 Data Manager API 并需要配置本地环境、安装客户端库或设置 API 访问权限时，请使用此技能。不应用于实现受众或事件摄取逻辑（请使用 data-manager-api-audience-ingestion 或 data-manager-api-event-ingestion 技能代替）。"}

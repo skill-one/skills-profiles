@@ -1,0 +1,1 @@
+{"description_zh": "管理核心 GKE 集群的创建、凭证、Autopilot 与标准模式的选型以及工作负载部署。在创建 GKE 集群、获取 kubectl 凭证、配置工作负载身份或决定在 Autopilot 和标准模式之间选择时使用。不应用于专门的 GKE 网络配置（请使用 gke-networking）、高级安全加固（请使用 gke-platform-security 或 gke-workload-security）或集群升级（请使用 gke-upgrades）。"}

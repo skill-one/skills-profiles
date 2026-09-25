@@ -1,0 +1,1 @@
+{"description_zh": "诊断并安全回收 macOS 磁盘空间：缓存、日志、应用程序残留、大文件/重复文件、Docker/OrbStack、Chromium 代码签名克隆、开发者缓存。当 Mac 存储空间不足、显示“缓存需要更多空间”或删除任何内容前使用以避免数据丢失。不适用于 Windows/Linux 或权限问题（请使用 macos-permissions）。"}

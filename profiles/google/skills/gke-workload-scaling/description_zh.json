@@ -1,0 +1,1 @@
+{"description_zh": "使用HPA和VPA管理GKE工作负载的扩展。在配置水平Pod自动缩放器（HPA）、配置垂直Pod自动缩放器（VPA）或应用GKE工作负载自动缩放最佳实践时使用。不应用于集群级自动缩放（Cluster Autoscaler）、静态集群规模设置或直接配置节点级机器样式。"}

@@ -1,0 +1,1 @@
+{"description_zh": "此技能应在用户需要“设置跟踪”、“监控我的代理”、“配置日志记录”、“添加可观察性”、“调试生产流量”，或需要有关监控已部署代理（包括ADK（代理开发套件）代理）的指导时使用。涵盖Cloud Trace、提示-响应日志记录、BigQuery Agent Analytics、第三方集成（AgentOps、Phoenix、MLflow等）以及故障排除。属于agents-cli技能套件的一部分。请勿用于部署设置（使用google-agents-cli-deploy）或API代码模式（使用google-agents-cli-adk-code）。"}

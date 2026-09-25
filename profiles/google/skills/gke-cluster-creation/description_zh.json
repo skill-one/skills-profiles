@@ -1,0 +1,1 @@
+{"description_zh": "使用预定义模板（Autopilot、标准区域、GPU/AI推理、AI超计算）规划和执行GKE集群创建、资源调配和生产就绪审核。在创建GKE集群、资源调配GKE环境、选择集群模式或审核GKE集群时使用。不应用于应用程序引导或部署配置（请使用gke-app-onboarding）。"}

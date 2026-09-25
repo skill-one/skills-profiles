@@ -1,0 +1,1 @@
+{"description_zh": "创建一个没有 Sprite 或 Spritesheet 输入的空 RuleTile 资产。仅当用户想要一个空白 RuleTile、六边形 RuleTile 或等距 RuleTile 以进行自定义规则配置，并且没有提供或引用任何精灵时才使用。如果用户提到现有的精灵、地形艺术、边缘瓦片或瓦片文件夹，请使用 tilemap-ruletile-createfromsegment，而不是这个技能。"}

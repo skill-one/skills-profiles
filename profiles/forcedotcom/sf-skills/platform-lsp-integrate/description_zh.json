@@ -1,0 +1,1 @@
+{"description_zh": "Salesforce LSP MCP工具和不可用性处理的参考/合同。在询问如何使用LSP、哪些工具存在、apex.diagnostics / validate_soql / complete_soql的作用、为什么某个工具会因lsp_disabled、no_apex_workspace或no_org_connected而报错，或如何调试/禁用它时使用。禁止触发编辑Apex/LWC/metadata（platform-apex-generate）、部署（platform-metadata-deploy）或SOQL编写（platform-soql-query）；仅限于LSP层/MCP工具相关问题的范围。"}

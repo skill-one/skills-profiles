@@ -1,0 +1,1 @@
+{"description_zh": "用作 WordPress Playground 路由包装器，用于模糊的 Playground 工作，通过 @wp-playground/cli 进行本地 CLI 运行，playground.wordpress.net 分享链接，浏览器预览，WebMCP 网站工具，快照，挂载，版本切换以及 Xdebug。对于 Blueprint JSON 的编写或审查，直接使用 blueprint 技能。"}

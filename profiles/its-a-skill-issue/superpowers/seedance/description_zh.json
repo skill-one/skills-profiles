@@ -1,0 +1,1 @@
+{"description_zh": "通过 inference.sh 命令行界面使用字节跳动 Seedance 2.0 生成视频。统一模型支持文本转视频、图像转视频和参考转视频，并具有同步音频，最高支持 1080p 分辨率，时长 4-15 秒。提供专业版和快速版。Studio 版本配备私有资产库，用于保持人像一致性。适用于：社交媒体视频、音乐视频、产品演示、动画内容、带声音的 AI 视频。触发词：seedance、seedance 2、字节跳动视频、seedance t2v、seedance i2v、seedance r2v、带音频的视频、seedance 2.0、字节跳动 Seedance、seedance Studio"}

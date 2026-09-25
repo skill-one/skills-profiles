@@ -1,0 +1,1 @@
+{"description_zh": "通过 notebooklm-py CLI 或 typed async Python API 安装、认证、排错和操作 Gemini Notebook。用于笔记本和源管理、基于事实的聊天和研究，以及当用户提及 Gemini Notebook、notebooklm-py、notebooklm CLI 或其 Python API 时进行工件生成或下载。不要用于通用 Gemini API 或无关内容创建。"}

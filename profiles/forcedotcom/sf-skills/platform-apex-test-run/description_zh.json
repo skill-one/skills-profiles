@@ -1,0 +1,1 @@
+{"description_zh": "Apex 测试执行、覆盖率分析和测试-修复循环，采用 120 分制评分。当用户运行 Apex 测试、检查代码覆盖率、修复失败测试或修改 *Test.cls / *_Test.cls 文件时使用。**禁止**在编写 Apex 生产代码时触发（请使用 platform-apex-generate）、Agentforce 代理测试时触发（请使用 agentforce-test）或 Jest/LWC 测试时触发（请使用 experience-lwc-generate）。"}

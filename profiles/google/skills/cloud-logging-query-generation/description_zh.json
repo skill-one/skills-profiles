@@ -1,0 +1,1 @@
+{"description_zh": "从自然语言生成用于 Google Cloud Logging 的日志查询语言（LQL）查询。当您需要查询日志数据或进行问题调试时，请使用此技能。您可以通过 Google Cloud 服务过滤日志数据。不要使用此技能查询其他数据库，例如 SQL 或 Cloud Spanner。"}

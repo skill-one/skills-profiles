@@ -1,0 +1,1 @@
+{"description_zh": "在 GKE 上运行批处理和高性能计算工作负载，利用作业队列和并行处理。在运行 GKE 批处理作业、配置 GKE 高性能计算或设置 GKE 作业队列时使用。标准 Web 应用部署请勿使用（请使用 gke-app-onboarding）。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在用户创建、生成或验证 Salesforce Lightning 报表元数据（.report-meta.xml）时使用——包括表格、汇总、矩阵或联合报表，这些报表具有列、分组、过滤器、图表、交叉过滤器、数据桶、公式或时间范围过滤器。在“创建报表”、“构建报表”、“添加图表”或 .report-meta.xml 部署错误时触发。不适用于自定义报表类型元数据（请使用 platform-custom-report-type-generate）、仪表板、列表视图、UI 中的运行报表或 SOQL。"}

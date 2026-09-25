@@ -1,0 +1,1 @@
+{"description_zh": "基于文件的持续规划，用于AI代理的多步骤任务。在磁盘上维护task_plan.md、findings.md和progress.md；生命周期钩子注入项目规划中选择的上下文。自动恢复仅读取项目规划文件。session-catchup.py --metadata，明确请求时，可检查同一项目的本地会话元数据；--replay可发出带nonce的有限提取和框架。带可选网关的模式仅请求主机继续（如果主机支持），且永不执行Markdown中声明的命令。该技能没有网络加载路径。用于需要5次或更多工具调用的研究或工作。"}

@@ -1,0 +1,1 @@
+{"description_zh": "从固定点（commit、branch、tag 或 merge-base）开始，沿 Standards（代码是否符合本仓库记录的编码标准？）和 Spec（代码是否符合来源 issue/spec 的要求？）两个维度审查变更。两个审查将在并行子代理中并行运行，并同步报告结果。适用于用户需要审查 branch、PR、进行中的变更，或要求“自 X 时间以来的审查”时。"}

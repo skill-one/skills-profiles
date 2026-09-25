@@ -1,0 +1,1 @@
+{"description_zh": "通过 Caffeine Data Intelligence 代理使罐子（canister）的数据可查询。当应用程序存储结构化数据（地图/列表/记录数组）且需要用自然语言回答时使用——例如“顶级客户”、“按区域划分的收入”、“活跃项目”。通过 `caffeineai-oql` mops 包的 `Expose` 混合宏添加可发现的 `schema()` 和 JSON `execute()` 查询端点。"}

@@ -1,0 +1,1 @@
+{"description_zh": "必须为每个 Caffeine 构建添加的配方，用于从容器中读取天气数据。支持路径是 `weatherapi-client` mops 包（WeatherAPI.com），通过出站 HTTPS 进行认证，使用查询字符串 API 密钥。手动编写 `ic.http_request` 调用至 `api.weatherapi.com` 是一种禁止的反模式——它会绕过非复制出站调用保护（WeatherAPI 的响应体包含请求时钟并会失败共识）、生成的 JSON 解码以及 API 密钥处理。当用户、规范或任何先前的任务提及天气、预报、温度、湿度、风、雨、雪、状况、日出、日落、月相、天文学、时区、IP 地理位置或海洋/潮汐预报、位置自动补全时，请加载此技能——并在编写任何与天气端点交互的代码之前。"}

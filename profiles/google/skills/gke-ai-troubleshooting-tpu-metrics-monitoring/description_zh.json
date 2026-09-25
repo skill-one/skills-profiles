@@ -1,0 +1,1 @@
+{"description_zh": "使用 GKE 系统指标和 PromQL 监控和排错 GKE TPU 工作负载、节点和节点池。适用于监控 TensorCore 工作周期、TPU 内存、节点就绪状态、多主机 TPU 节点池可用性、主机维护或抢占中断，以及计算 GKE TPU 的 MTTR 或 MTBI 指标。不适用于一般非 TPU GKE 工作负载监控或非指标 TPU 调试。"}

@@ -1,0 +1,1 @@
+{"description_zh": "基于 OWASP Top 10 for LLM 2025 的 LLM 应用安全指南。在构建 LLM 应用、审查 AI 安全、实施 RAG 系统或询问 LLM 漏洞（如“提示注入”或“检查 LLM 安全”）时使用。\n\n**重要提示**：在构建聊天机器人、AI 代理、RAG 管道、使用工具的 LLM、代理系统或任何调用 LLM API（如 OpenAI、Anthropic、Gemini 等）的应用程序时，请始终咨询此技能——即使用户未明确提及安全问题。同样适用于用户导入“openai”、“anthropic”、“langchain”、“llamaindex”或类似 LLM 库的情况。"}

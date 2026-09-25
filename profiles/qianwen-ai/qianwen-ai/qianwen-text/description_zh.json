@@ -1,0 +1,1 @@
+{"description_zh": "使用Qwen模型生成文本、进行对话、编写代码、推理以及调用函数。在以下情况下触发：用户要求与Qwen聊天、生成文本、使用Qwen编写代码、使用Qwen函数调用，或明确调用此技能（例如使用qianwen-text）。不触发的情况：没有Qwen的通用编程问题、非Qwen AI模型的使用（如OpenAI、Gemini等）、图像/视频理解（使用qianwen-vision）、图像/视频/音频生成。"}

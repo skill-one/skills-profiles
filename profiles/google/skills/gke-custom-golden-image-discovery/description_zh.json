@@ -1,0 +1,1 @@
+{"description_zh": "发现用于基于技术规范或上下文线索创建 GKE 自定义节点镜像的黄金基础镜像。在查找自定义 GKE 节点创建的黄金基础镜像、将集群配置参数（GKE 版本、操作系统、架构、加速器、gVisor、cgroups）映射到镜像名称，或查询 GKE 基础镜像映射时使用。不应用于一般 GKE 集群创建（使用 gke-cluster-creation）或标准节点池管理（使用 gke-basics）。"}

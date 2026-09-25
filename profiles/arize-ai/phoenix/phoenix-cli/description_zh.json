@@ -1,0 +1,1 @@
+{"description_zh": "使用 Phoenix CLI 调试 LLM 应用。获取跟踪记录、跨度、会话，进行标注，分析错误，检查数据集，审查实验，查询标注配置，并使用 GraphQL API。用户从终端与 Phoenix 实例交互时，均可使用。"}

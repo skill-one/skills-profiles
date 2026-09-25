@@ -1,0 +1,1 @@
+{"description_zh": "用于创建、生成或验证 Salesforce GlobalValueSet（跨字段共享的可重用选择列表）或自定义 StandardValueSet（内置选择列表，如行业、潜在客户来源、机会阶段）。在全局/标准值集、可重用选择列表、.globalValueSet-meta.xml 或 .standardValueSet-meta.xml 上触发，或在向标准选择列表添加值时出现部署错误时触发。对于单个字段上的非重用一次性内联选择列表，请勿触发——使用 platform-custom-field-generate。"}

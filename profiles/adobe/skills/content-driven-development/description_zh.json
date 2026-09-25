@@ -1,0 +1,1 @@
+{"description_zh": "在进行任何 AEM Edge Delivery Services (EDS, Franklin, Helix) 代码更改时使用——新增模块、模块修改、CSS 样式、错误修复、核心功能（scripts.js、样式、delayed.js）或任何需要验证的 JavaScript/CSS 工作。涵盖内容驱动开发流程——在编写代码前识别或创建真实测试内容、设计用户友好的内容模型，并在整个开发过程中针对该内容进行验证。仅用于文档更改或不会影响内容编辑的配置更改。"}

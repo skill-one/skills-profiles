@@ -1,0 +1,1 @@
+{"description_zh": "必须用于 C#/.NET 确定性测试，这些测试需要 DateTime/Task.Delay/File/Environment/Guid/Random 的最小生产缝隙、静态 API 保留、嵌套/并行覆盖或无实际 I/O。仅在目标工作区包含 C# 源代码以及 .csproj 或 .sln 文件时使用。禁止用于审计、批量迁移、已存在可注入缝隙的代码，或显式迁移到用户命名的现有抽象（migrate-static-to-wrapper）。当请求的测试无法在不修改生产代码的情况下实现，且缝隙选择仍开放时，可替代通用测试生成使用。"}

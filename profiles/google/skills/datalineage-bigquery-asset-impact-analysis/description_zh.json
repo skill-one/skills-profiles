@@ -1,0 +1,1 @@
+{"description_zh": "分析当 BigQuery 表或视图出现损坏、过时或被修改时对下游产生的影响（影响范围）。识别所有受影响的下游表、仪表板和流程。使用场景：- 对 BigQuery 表或视图进行影响范围或影响分析。- 评估修改、删除或暂停 BigQuery 资产更新的后果。- 识别 BigQuery 资产的下游依赖项（表、仪表板、流程）。不适用场景：- 一般的 BigQuery 查询或数据分析（请使用相关的 BigQuery 工具）。- 非BigQuery资产（例如 Cloud Storage 文件），除非它们是 BigQuery 传承的一部分。- 直接创建或修改传承链接。"}

@@ -1,0 +1,1 @@
+{"description_zh": "安全地构建和部署 Firebase SQL Connect（又名 Firebase Data Connect）的后端，使用 PostgreSQL。在设计包含表和关系的模式、编写授权的查询和变更、配置实时数据更新或生成类型安全的 SDK 时使用。当您需要在 Firebase 中使用关系型数据库，或用户提到 SQL Connect 或 Data Connect 时使用。"}

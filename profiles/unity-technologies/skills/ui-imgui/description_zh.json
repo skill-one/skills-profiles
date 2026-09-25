@@ -1,0 +1,1 @@
+{"description_zh": "Unity IMGUI（即时模式GUI）专家，适用于使用OnGUI/即时模式的旧版编辑器工具。生成和修改IMGUI编辑器窗口（EditorWindows）、自定义检查器（Inspectors）、属性绘制器（PropertyDrawers）以及使用IMGUI代码（OnGUI、OnInspectorGUI）的脚本。在维护现有IMGUI编辑器代码时或用户明确要求使用IMGUI/OnGUI时使用。不应用于新建的编辑器窗口或工具：新编辑器UI默认使用UI Toolkit（ui-uitk），除非项目已专门使用IMGUI或用户明确要求使用OnGUI。"}

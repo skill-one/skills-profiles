@@ -1,0 +1,1 @@
+{"description_zh": "自动诊断 GKE JobSet 的中断、重启和抢占，用于 AI/ML 训练工作负载。在排错 JobSet 重启循环、Spot VM 抢占、节点就绪失败、主机 VM 问题或协调工作进程崩溃时使用。不适用于一般 GKE 集群创建、基本工作负载部署或非 JobSet 应用问题。"}

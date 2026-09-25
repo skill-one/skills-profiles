@@ -1,0 +1,1 @@
+{"description_zh": "将 OpenClaw 代理历史记录导入 Obsidian 维基。当用户希望挖掘其过去的 OpenClaw 会话以获取知识、导入其 ~/.openclaw 文件夹、从之前的 OpenClaw 对话中提取见解，或说出类似“处理我的 OpenClaw 历史记录”、“将我的 OpenClaw 会话添加到维基”、“导入 ~/.openclaw”或“我在 OpenClaw 中做了什么”等语句时，使用此技能。此外，当用户提及 OpenClaw 会话日志、MEMORY.md、每日笔记或 ~/.openclaw/workspace 时也会触发。"}

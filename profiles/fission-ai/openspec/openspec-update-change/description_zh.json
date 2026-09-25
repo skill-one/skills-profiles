@@ -1,0 +1,1 @@
+{"description_zh": "更新 OpenSpec 变更，通过修订其现有的规划文档并保持它们之间的一致性。当用户想要修订变更的计划、将新决策整合到其中，或在编辑后协调其文档时使用。也用于当用户输入“openspec update change”或“opsx update”时。如果用户指的是刷新生成文件的 OpenSpec 更新 CLI 命令，请运行该命令。切勿编辑代码。"}

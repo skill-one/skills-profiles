@@ -1,0 +1,1 @@
+{"description_zh": "Kubernetes执行平台——将TAO容器作业作为k8s作业提交，并支持NVIDIA GPU调度；单节点使用单Pod，多节点分布式训练使用Indexed Jobs。适用于在安装了NVIDIA GPU Operator的EKS/GKE/AKS/本地集群上运行，或是在现有k8s原生ML平台上集成TAO时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "从VLM二元分类问题（BCQ，即“是/否”）预测中提取假阳性（false positives）和假阴性（false negatives）的差距。当用户要求“分析VLM BCQ差距”、“提取VLM假阳性和假阴性”或从预测的JSON文件中识别失败案例，用于二元分类VLM工作流的DEFT根本原因分析时使用。"}

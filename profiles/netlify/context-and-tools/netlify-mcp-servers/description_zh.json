@@ -1,0 +1,1 @@
+{"description_zh": "在 Netlify 上构建、部署和保障 Model Context Protocol (MCP) 服务器。每当任务涉及创建 MCP 服务器、将应用程序或 API 作为 MCP 工具暴露给 AI 代理、让 Claude / Cursor / Claude Code 调用自定义远程服务器，或向现有 Netlify 网站添加 MCP 工具时，均可使用。涵盖 MCP SDK + Streamable HTTP 传输在 Netlify Function 上的实现、认证（共享密钥与 Netlify Identity 的用户级 API 密钥）、读写安全、文件上传以及客户端连接。即使用户仅说“MCP”、“为代理创建工具服务器”或“让 AI 使用我的 API”时，也可使用。"}

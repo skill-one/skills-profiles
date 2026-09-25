@@ -1,0 +1,1 @@
+{"description_zh": "核心包，用于定义模式、目录以及为 json-render 生成 AI 提示。在与 @json-render/core 一起使用时，用于定义模式、创建目录或构建用于 UI/视频生成的 JSON 规范。"}

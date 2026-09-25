@@ -1,0 +1,1 @@
+{"description_zh": "使用 FastFoundationStereo (FFS)，即 FoundationStereo 的精炼版 bp2 商业变体，进行实时立体深度估计。相较于完整的 FoundationStereo，其生成立体图像对视差图的延迟降低了约 10 倍。适用于对 TAO FastFoundationStereo (FFS) 模型进行训练、评估、导出或运行推理。触发短语包括“训练快速立体”、“实时立体视差”、“FastFoundationStereo”、“精炼立体深度”。"}

@@ -1,0 +1,1 @@
+{"description_zh": "在 Terraform 中为 Google Kubernetes Engine (GKE) 集群、工作负载和服务配置警报策略，使用 PromQL 和 Google Cloud 托管的 Prometheus 服务。在编写、分析、验证或部署 Terraform 警报策略以使用多窗口多燃烧率 SLO 警报监控 GKE 服务延迟、流量、错误率，以及内存饱和和集群健康（如 CrashLoopBackOff 和 Node NotReady 条件）时使用。不适用于非 GKE 计算运行时，例如独立的 Compute Engine VM 或没有 GKE 的独立 Cloud Run 服务。"}

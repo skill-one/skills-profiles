@@ -1,0 +1,1 @@
+{"description_zh": "将 Android 应用从旧的、传统的 Google Mobile Ads (GMA) SDK (com.google.android.gms:play-services-ads) 迁移到新的 GMA Next-Gen SDK (com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk)。提供全面的映射表，用于导入、类和方法的签名，以帮助确定迁移步骤。在将现有 Android 代码库从旧的、传统的 GMA SDK 迁移到 GMA Next-Gen SDK 时使用。"}

@@ -1,0 +1,1 @@
+{"description_zh": "当用户需要为Einstein Agent动作或结构化输入/输出模式创建自定义Lightning类型（CLT）时，请使用此技能。当用户提及CLT、自定义Lightning类型、代理的JSON模式、类型定义、lightning__objectType或编辑器/渲染器配置时，将触发此技能。对于将CLT与组件包结合使用的组件渲染，请使用platform-lightning-type-widget-coordinate协调器。这很复杂——始终使用此技能进行CLT工作。"}

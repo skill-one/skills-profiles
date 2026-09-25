@@ -1,0 +1,1 @@
+{"description_zh": "在用户询问在企业环境中使用 Gemini，或明确提到 Vertex AI、Google Cloud 或 Agent Platform 时使用。指导如何在 Agent Platform 上使用 Google Gen AI SDK 进行 Gemini API 的使用。涵盖 SDK 使用（Python、JS/TS、Go、Java、C#），以及多模态输入、工具、媒体生成、缓存、批量预测和 Live API 等功能。"}

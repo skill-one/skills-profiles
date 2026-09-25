@@ -1,0 +1,1 @@
+{"description_zh": "评估渲染屏幕的色彩——对比度比例、调色板一致性以及语义意义。在审查单个屏幕时使用。对于全产品的 WCAG 审计，请使用 `accessibility-audit`（设计系统）；对于构建调色板，请使用 `color-system`（UI 设计）。"}

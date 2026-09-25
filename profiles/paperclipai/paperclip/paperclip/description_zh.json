@@ -1,0 +1,1 @@
+{"description_zh": "与 Paperclip 控制平面 API 交互，用于任务协调和管理。在检查分配、更新问题状态、发布评论、委派工作、管理常规或调用 Paperclip API 端点时使用。"}

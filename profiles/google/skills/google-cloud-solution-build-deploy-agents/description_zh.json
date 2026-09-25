@@ -1,0 +1,1 @@
+{"description_zh": "在 Google Cloud 上设计、构建和部署 AI 代理或多代理系统。提供交互式工作流程，用于收集需求、推荐定制化架构并生成部署说明。适用于在 Google Cloud 上设计或实施代理系统时使用。不适用于通用 Google Cloud 解决方案架构（请使用 google-cloud-solution-architecture）或针对无代理上下文单个产品的狭窄任务。"}

@@ -1,0 +1,1 @@
+{"description_zh": "Salesforce连接应用和外部客户端应用的OAuth配置，采用120分制评分。使用此技能配置Salesforce中的OAuth流程、JWT令牌认证、连接应用和外部客户端应用。触发条件：当用户配置OAuth流程、JWT令牌认证、连接应用、外部客户端应用（ECA），或触碰 .connectedApp-meta.xml / .eca-meta.xml 文件时。不触发条件：配置调用Named Credentials（使用 integration-connectivity-generate）、审核权限策略（使用 platform-metadata-deploy）、或编写Apex令牌处理代码（使用 platform-apex-generate）。"}

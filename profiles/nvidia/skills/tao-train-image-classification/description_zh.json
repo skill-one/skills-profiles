@@ -1,0 +1,1 @@
+{"description_zh": "基于 PyTorch 的 TAO 图像分类。支持多种骨干网络（FAN、EfficientNet、ResNet 等），并支持蒸馏和量化以进行部署。用于对 TAO 图像分类（PyT）模型进行训练、评估、蒸馏、量化、导出或运行推理。触发短语包括“训练图像分类器”、“TAO 分类”、“ResNet/EfficientNet/FAN 骨干网络分类器”、“classification-pyt”。"}

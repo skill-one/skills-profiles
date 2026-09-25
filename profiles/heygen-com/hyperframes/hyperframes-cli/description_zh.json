@@ -1,0 +1,1 @@
+{"description_zh": "使用 HyperFrames CLI 开发循环：init、add、catalog、capture、lint、check、snapshot、compare、grade-compare、preview、play、present、beats、keyframes、单次或批量渲染、发布、云、cloudrun、反馈、lambda、doctor、浏览器、info、升级、技能、组合、时间轴、文档、基准测试、遥测、转录、认证、语音合成（tts）和移除背景。在诊断构建或渲染失败时也使用。validate、inspect 和 layout 是已弃用的别名；请使用 check。涵盖本地、HeyGen 托管的云、AWS Lambda 和 Google Cloud Run 渲染。"}

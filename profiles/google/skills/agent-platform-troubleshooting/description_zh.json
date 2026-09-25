@@ -1,0 +1,1 @@
+{"description_zh": "解决 Google Cloud Gemini Enterprise Agent 平台问题（Agent Gateway、Registry、Identity、Policies、Model Armor、Identity-Aware Proxy (IAP)）。当代理请求返回 403（尤其是未授权的出站访问）、代理运行时查询返回 500，或网关/IAP 日志显示权限错误时使用。不适用于一般 Google Cloud 身份和访问管理 (IAM) 调试或与 Agent 平台堆栈无关的网络问题。"}

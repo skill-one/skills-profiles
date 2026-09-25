@@ -1,0 +1,1 @@
+{"description_zh": "配置嵌入式消息部署，用于应用内和网页消息（MIAW）。当用户需要使用Connect API从默认设置创建新的嵌入式消息部署，或使用Metadata API更新现有部署的设置时使用。为新部署生成Connect API请求负载，为更新生成EmbeddedServiceConfig元数据XML。当用户提及嵌入式消息部署、嵌入式服务部署、MIAW部署、消息小部件设置、聊天小部件配置、嵌入式聊天部署，或引用.EmentedServiceConfig-meta.xml文件时触发。当用户创建消息频道（使用service-digital-engagement-channel-configure）、配置传统Live Agent嵌入式服务，或生成网站嵌入的JavaScript代码片段时不触发。"}

@@ -1,0 +1,1 @@
+{"description_zh": "管理 Google Analytics 账户和属性设置，通过 Cloud CLI 启用 Analytics Admin API，列出账户和属性，并管理数据流、自定义维度、转换事件和集成。当您需要以编程方式配置 Google Analytics 账户、配置属性、管理数据保留、配置测量协议密钥或管理 Firebase 和 Google Ads 链接时使用。"}

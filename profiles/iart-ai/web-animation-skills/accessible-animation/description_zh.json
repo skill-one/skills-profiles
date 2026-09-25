@@ -1,0 +1,1 @@
+{"description_zh": "当用户要求“尊重 prefers-reduced-motion”、“尊重 reduced motion”、“使我的动画可访问”、“解决前庭功能/运动病问题”、“添加 useReducedMotion 钩子”、“为 reduced motion 禁用 GSAP / Framer Motion / Lenis”或“满足 WCAG 2.3.3 / C39”时，应使用此技能。在 CSS 和 JS 中提供分层的（非全有或全无的）reduced-motion 模式。"}

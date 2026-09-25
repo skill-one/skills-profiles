@@ -1,0 +1,1 @@
+{"description_zh": "使用 BigQuery 账单导出、成本分配数据和实时集群监控指标来回答自然语言问题，并对 GKE 集群和工作负载成本进行分析。适用于跨项目、命名空间或工作负载查询 GKE 成本、在 BigQuery (`bq`) 中分析账单报告、检查集群成本预算 (`gcloud billing`) 或诊断成本驱动因素（如 Pod 请求与实际利用率对比 (`kubectl top`)）的情况。不适用于应用成本优化变更、创建资源调整清单（VPA/MPA）或选择 ComputeClasses（请使用 gke-cost-optimization）。"}

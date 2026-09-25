@@ -1,0 +1,1 @@
+{"description_zh": "通过检查节点状态、事件、kubelet/containerd 日志和节点指标来诊断报告 NotReady 或 Unknown 状态的 GKE 节点，并提出安全的修复建议。当节点显示 NotReady、kubelet 停止发布节点状态，或由于节点健康问题导致工作负载被驱逐或卡在 Pending 状态时使用。不适用于 Pod 级别的应用故障（请使用 gke-workload-troubleshooting）、自动缩放器 scale-up/scale-down 决策（请使用 gke-cluster-autoscaler）或非 GKE 计算。"}

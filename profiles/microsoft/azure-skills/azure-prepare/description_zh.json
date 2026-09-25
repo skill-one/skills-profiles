@@ -1,0 +1,1 @@
+{"description_zh": "为部署准备基于azd的Azure项目：为Azure开发者CLI（azd）工作流程生成azure.yaml、基础设施（Bicep/Terraform）和Dockerfile。仅在用户明确希望将azd用作部署工具，或项目已存在azure.yaml文件时使用。禁止用于：非azd部署、Python App Service纯代码部署（请使用python-appservice-deploy），或跨云迁移（请使用azure-cloud-migrate）。适用场景：为azd准备应用、创建azure.yaml、设置azd基础设施、使用azd将应用现代化迁移至Azure、使用azd部署、函数应用、定时触发器、服务总线触发器、事件驱动函数、托管身份、生成Bicep、生成Terraform、创建并部署至Azure。"}

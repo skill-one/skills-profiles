@@ -1,0 +1,1 @@
+{"description_zh": "用于从源目录、组件列表或组织自省生成 package.xml（以及可选的 destructiveChanges.xml / Pre / Post）。在以下情况下触发：\"从此文件夹生成 package.xml\"、\"为这些类创建清单\"、\"我需要一个部署清单\"或\"用于删除的 destructiveChanges.xml\"。根据元数据类型编码通配符与显式成员规则。禁止用于部署（platform-metadata-deploy）、删除（platform-destructive-deploy）或检索（platform-metadata-retrieve）。"}

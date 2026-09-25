@@ -1,0 +1,1 @@
+{"description_zh": "使用 OpenTelemetry (OTel) 指标为 AI 代理配置最佳实践警报策略，并生成 Terraform (.tf) 配置文件输出。在分析、编写或部署警报策略以监控代理延迟、错误率、令牌使用量和质量指标时使用。不应用于与 AI 代理无关的标准基础设施监控，或代理未使用 OpenTelemetry 进行instrumentation（用于可靠性、成本、安全性和安全性警报）。注意：可靠性、成本、安全性和安全性警报使用通用 OTel 指标，并跨运行时（如 Cloud Run、Vertex AI）工作。质量警报依赖于 Vertex AI 在线监控器，并严格绑定于 Vertex AI 部署。"}

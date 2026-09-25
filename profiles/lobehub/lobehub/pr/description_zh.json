@@ -1,0 +1,1 @@
+{"description_zh": "为当前分支创建一个 PR（默认目标为 `canary`），包括将一个跨层分支拆分为有序堆叠的 PR，以便较低层（数据库 / 共享包 / 服务器 TRPC）在它们的调用者（桌面端 / CLI / UI）之前合并。在用户请求创建/提交 PR，或因客户端调用尚未在主干上的服务器合约而拆分分支时使用。触发于 'pr', 'create pr', 'submit pr', 'open a PR', 'pull request', 'split this PR', 'stacked PR', 'backend should merge first', '提 PR', '提个 PR', '新建 PR', '拆 PR', '后端先合', '分层合并'。"}

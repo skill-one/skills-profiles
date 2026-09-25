@@ -1,0 +1,1 @@
+{"description_zh": "运行匿名 Apex，针对连接的组织（.apex 文件或粘贴的代码片段），捕获调试日志，并显示错误。在以下情况下触发：\"运行此匿名 Apex\"、\"针对我的组织执行此脚本\"、\"此代码返回什么\"，或 \"执行 scripts/foo.apex\"。脚本将使用 savepoint+rollback 进行包装；在生产环境中运行前会发出警告。禁止针对 .cls/.trigger 文件（platform-apex-generate）、Apex 单元测试（platform-apex-test-run）或调试日志分析（platform-apex-logs-debug）触发。"}

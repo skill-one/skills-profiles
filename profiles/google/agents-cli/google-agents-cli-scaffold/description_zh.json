@@ -1,0 +1,1 @@
+{"description_zh": "当用户想要“创建代理项目”、“启动新的ADK项目”、“为我构建一个新的代理”、“为我的项目添加CI/CD”、“添加部署”、“增强我的项目”或“升级我的项目”时，应使用此技能。它是agents-cli技能套件的一部分。涵盖`agents-cli scaffold create`、`scaffold enhance`和`scaffold upgrade`命令、模板选项、部署目标以及原型优先工作流程。请勿用于编写代理代码（ADK项目：使用google-agents-cli-adk-code）或部署操作（使用google-agents-cli-deploy）。"}

@@ -1,0 +1,1 @@
+{"description_zh": "此技能应在用户需要“部署代理”、“部署我的ADK代理”、“设置CI/CD”、“配置密钥”、“排查部署问题”，或需要有关Agent Runtime、Cloud Run或GKE部署目标指导，或需要将代理绑定到Agent Gateway时使用。涵盖部署工作流、服务账户、回滚和生产基础设施。适用于任何使用agents-cli部署的框架代理（ADK、LangChain等）。是agents-cli技能套件的一部分。请勿用于代理API代码模式（ADK：使用google-agents-cli-adk-code）、评估（使用google-agents-cli-eval）或项目脚手架（使用google-agents-cli-scaffold）。"}

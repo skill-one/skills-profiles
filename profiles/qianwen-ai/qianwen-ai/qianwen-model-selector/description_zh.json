@@ -1,0 +1,1 @@
+{"description_zh": "推荐最佳Qwen模型和参数。在以下情况时触发：选择Qwen模型、比较Qwen模型价格、了解Qwen模型功能、检查使用量或账单、查看成本历史、执行技能需要模型选择建议，或用户通过名称显式调用此技能（例如使用qianwen-model-selector）。不触发情况：非Qwen模型讨论（OpenAI、Gemini等）、与Qwen无关的一般AI问题。"}

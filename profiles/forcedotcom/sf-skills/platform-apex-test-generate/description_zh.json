@@ -1,0 +1,1 @@
+{"description_zh": "用于生成和验证遵循 TestDataFactory 模式的 Apex 测试类、批量测试（251+ 条记录）、模拟、断言以及规范的测试-修复循环。在创建 Apex 测试类（用于触发器、服务、控制器、批处理作业、队列任务和调用）时使用，以提高覆盖率、调试或修复失败的 Apex 测试，或运行测试/覆盖率分析。*Test.cls 文件中的触发器、sf apex run test、覆盖率报告。**禁止**用于生产 Apex（请使用 platform-apex-generate）或 Jest/LWC 测试。"}

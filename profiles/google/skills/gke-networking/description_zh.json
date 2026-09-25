@@ -1,0 +1,1 @@
+{"description_zh": "规划、配置和管理核心GKE集群网络。涵盖私有集群、VPC原生配置、DNS、节点出站、Dataplane V2以及IP规划。在设计GKE网络布局、配置私有集群、设置Dataplane V2、规划GKE IP范围或管理VPC原生集群模式时使用。不适用于应用入站、负载均衡或服务网络（请使用gke-service-networking）。"}

@@ -1,0 +1,1 @@
+{"description_zh": "创建经过润色、验证的架构图、工作流图、时序图、数据流图和生命周期/状态图，以可探索的独立HTML格式呈现，支持内联SVG、明暗主题、可选的轨迹动画，并支持PNG/JPEG/WebP/SVG/WebM导出。可接受自然语言需求或粘贴的Mermaid flowchart、sequenceDiagram和stateDiagram输入；当图表需要反映实际代码时，可检查代码库证据。适用于用户要求可视化系统架构、基础设施、云/安全/网络拓扑、技术工作流、API调用序列、请求生命周期、数据管道、ETL/ELT、数据血缘、状态机，或用于转换/美化Mermaid的场景。"}

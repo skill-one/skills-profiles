@@ -1,0 +1,1 @@
+{"description_zh": "发现需求并设计一个无边界开放数据湖屋，使用 Lakehouse for Apache Iceberg 和 BigQuery 数据代理。在构建多云存储基础设施（Cloud Storage、AWS S3、Azure Blob）、建立摄取和 AI 服务子系统、配置跨云互联，或部署 Gemini Enterprise Agent 平台和 BigQuery 数据代理时使用。不适用于单云数据仓库，或在重点在于知识目录元数据治理和 Spark 驱动的 IDE 分析工作流时使用（请使用 google-cloud-solution-agentic-analytics-spark-knowledge-catalog）。"}

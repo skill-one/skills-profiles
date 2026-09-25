@@ -1,0 +1,1 @@
+{"description_zh": "发现需求，并使用知识目录和Apache Spark（闪电引擎）的托管服务设计一个端到端受管理的代理式分析解决方案。在跨结构化和非结构化分布式数据（包括S3、Azure Blob、AlloyDB和Iceberg）设计数据科学和分析工作流、使用知识目录方面类型建立元数据治理，或通过使用Google Cloud数据代理工具包为代理式IDE（VS Code、Antigravity）奠定基础时使用。不应用于配置无边界数据湖屋基础设施（请使用google-cloud-solution-agentic-ai-borderless-data-lakehouse）。"}

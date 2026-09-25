@@ -1,0 +1,1 @@
+{"description_zh": "运行 `tao-daft convert` 命令，可在支持的格式之间转换 NVIDIA TAO DAFT 数据集。不要用于非 DAFT 数据。当用户要求转换 DAFT 数据集、更改 DAFT 格式、更改 TAO 数据集格式或运行 `tao-daft convert` 时使用。"}

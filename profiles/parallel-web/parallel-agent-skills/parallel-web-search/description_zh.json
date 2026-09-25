@@ -1,0 +1,1 @@
+{"description_zh": "基于CLI的网页搜索。当用户明确调用此技能、需要仅CLI控制的选项或保存JSON输出，或没有可用的Parallel web_search MCP工具时使用。当捆绑的Parallel Search MCP可用时，优先使用其web_search工具进行常规查找和当前信息查询。仅当用户明确要求深度或详尽研究时，才使用parallel-deep-research。"}

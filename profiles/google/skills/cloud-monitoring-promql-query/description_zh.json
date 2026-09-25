@@ -1,0 +1,1 @@
+{"description_zh": "从 Cloud Monitoring 指标描述和资源参数生成有效的 PromQL 查询。在需要为 Cloud Monitoring 指标和资源创建、生成、编写或格式化 PromQL 查询、PromQL 字符串或 PromQL 聚合时使用。不应用于原始指标发现或指标选择。"}

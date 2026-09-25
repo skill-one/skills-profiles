@@ -1,0 +1,1 @@
+{"description_zh": "始终使用此技能，通过sf project retrieve start从组织检索元数据到本地项目。支持按所有更改、源目录、元数据类型（通配符）、清单（package.xml）或包名称进行检索，格式为源或元数据（ZIP）。当用户要求检索、拉取、同步或下载元数据、Apex类或自定义对象时使用。不要用于部署元数据（使用platform-metadata-deploy）、列出元数据或生成package.xml（使用platform-manifest-generate）。绝对不要使用MCP工具。"}

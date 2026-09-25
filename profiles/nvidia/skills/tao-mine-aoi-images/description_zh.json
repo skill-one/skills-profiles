@@ -1,0 +1,1 @@
+{"description_zh": "运行 DEFT 嵌入然后挖掘工作流程，用于 VCN AOI 迭代——嵌入差距分析目标 Parquet 文件，嵌入一个源池，并挖掘最近邻源图像以进行下游增强。在从挖掘子集中扩展真实图像增强队列时，作为 `tao-route-visual-changenet-samples` 的直接下一步步骤使用。"}

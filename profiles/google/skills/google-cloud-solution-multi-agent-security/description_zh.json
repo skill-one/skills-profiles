@@ -1,0 +1,1 @@
+{"description_zh": "设计、部署和保障 Google Cloud Agent Gateway 解决方案。当用户需要配置涉及 Model Armor、IAP 和 Agent Registry 的多代理安全、入站（CLIENT_TO_AGENT）或出站（AGENT_TO_ANYWHERE）模式时使用。不适用于一般 Cloud Load Balancing 或与 Agent Gateway 无关的基本 VPC 设置。"}

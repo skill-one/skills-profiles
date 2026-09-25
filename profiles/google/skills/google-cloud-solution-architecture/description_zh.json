@@ -1,0 +1,1 @@
+{"description_zh": "交互式地发现需求，并设计适用于 Google Cloud 上复杂工作负载的整体、多产品系统架构、解决方案蓝图和部署建议。在设计端到端云解决方案、选择和集成 Google Cloud 服务、生成架构图或对新云工作负载或迁移进行需求发现时使用。不适用于单产品任务（使用特定产品技能）、初始引导或身份验证（使用 google-cloud-recipe-*）、Well-Architected Framework 审查或审计（使用 google-cloud-waf-*），或由专业解决方案技能覆盖的工作负载。"}

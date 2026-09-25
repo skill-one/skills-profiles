@@ -1,0 +1,1 @@
+{"description_zh": "CLIP视觉语言模型用于图像-文本检索、零样本分类、嵌入提取、ONNX导出和TensorRT部署。在微调或训练CLIP、运行零样本分类、计算图像嵌入或将CLIP部署到ONNX/TensorRT时使用。这是一个单步操作模型技能；不要用于迭代弱属性改进循环，该循环会不断重新训练和评估直到进度停止，这属于tao-run-deft-pas。"}

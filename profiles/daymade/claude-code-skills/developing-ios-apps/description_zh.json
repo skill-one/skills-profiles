@@ -1,0 +1,1 @@
+{"description_zh": "使用 XcodeGen、SwiftUI 和 SPM 构建、部署 iOS/macOS 应用：Xcode 构建修复、设备部署、Apple Developer 签名/验证、CI/CD 管道。适用于 XcodeGen project.yml 配置、\"Library not loaded @rpath\" 崩溃、代码签名错误（错误 -25294、adhoc 回退）、或 Electron 验证失败。不适用于 TCC 权限对话框（使用 macos-permissions）或磁盘清理（使用 macos-cleaner）。"}

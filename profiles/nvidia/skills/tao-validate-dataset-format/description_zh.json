@@ -1,0 +1,1 @@
+{"description_zh": "运行 `tao-daft validate` 来检查 NVIDIA TAO DAFT 数据集的结构、模式以及交叉引用错误。不要用于非 DAFT 格式。当用户要求验证 DAFT 数据集、检查 DAFT 模式、验证 TAO 数据集格式或运行 `tao-daft validate` 时使用。"}

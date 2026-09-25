@@ -1,0 +1,1 @@
+{"description_zh": "从远程目录索引中按需定位并加载正确的 Google 产品技能，而不是预先加载所有技能。在涉及 Google 产品、API 或开发者平台的任何请求开始时使用——包括 Google Cloud（GKE、Cloud Run、IAM、BigQuery、Vertex AI、Spanner）、Google Ads、Google Analytics、Google Workspace（Gmail、Drive、Admin SDK）、Chrome 和 Chrome 扩展、Android、Firebase、YouTube、Google Maps、Gemini 和 Gemini API、Google Play 以及 Flutter。在从内存中回答或搜索网络之前，请先查询索引。不要用于非 Google 产品。"}

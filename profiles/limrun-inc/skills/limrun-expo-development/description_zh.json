@@ -1,0 +1,1 @@
+{"description_zh": "在 Limrun 上使用 Expo dev-client 迭代准备和运行 Expo / React Native 应用。当用户需要 Expo 开发构建、Metro 隧道、热重载、无需重复原生重建的 JS/TS 迭代，或要在远程 iOS 模拟器或 Android 模拟器上运行/测试 Expo 应用时使用。"}

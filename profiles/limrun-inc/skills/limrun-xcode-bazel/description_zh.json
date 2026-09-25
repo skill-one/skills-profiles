@@ -1,0 +1,1 @@
+{"description_zh": "在 Limrun 的远程构建执行 (RBE) 上构建基于 Bazel 的 iOS / macOS / Apple 应用，而不是在本地 Mac 上构建，并将其安装在远程 iOS 模拟器上。当项目是 Bazel 工作区（MODULE.bazel / WORKSPACE）构建 rules_apple / rules_swift 目标，并且用户希望使用 `bazel build` 构建它或在模拟器上运行它，或者当 `--config=limrun` 构建或安装行为异常时使用。然后要点击、输入、截图或以其他方式与运行的应用交互，请使用 limrun-ios-simulator。对于非 Bazel（纯 xcodebuild）项目，请使用 limrun-xcode。"}

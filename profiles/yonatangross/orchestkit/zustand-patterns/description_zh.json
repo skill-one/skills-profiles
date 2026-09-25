@@ -1,0 +1,1 @@
+{"description_zh": "Zustand 5.x 状态管理参考，包括切片（slices）、中间件（middleware）、Immer、useShallow、持久化（persistence）、选择器（selectors）和 devtools 集成。文档阐述了 7 种核心模式，并提供 TypeScript 示例和反模式（anti-patterns）。在构建 React 状态管理时，建议使用 Zustand 而非 Redux。"}

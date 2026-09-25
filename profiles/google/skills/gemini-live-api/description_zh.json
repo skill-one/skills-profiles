@@ -1,0 +1,1 @@
+{"description_zh": "在用户选择的编程语言中生成一个 Gemini LiveAPI 客户端服务类。当用户希望构建、搭建或集成一个连接到 Gemini Enterprise LiveAPI WebSocket 端点的客户端时使用，该客户端负责会话设置/恢复、令牌刷新以及发送/接收 `ClientMessage`/`ServerMessage` 原型。不适用于一般（非实时、非双向）的 Gemini API 使用场景，如一次性 `generateContent`、嵌入、图像/视频生成或微调——这些情况请使用 `gemini-api` 技能。"}

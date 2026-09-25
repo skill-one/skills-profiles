@@ -1,0 +1,1 @@
+{"description_zh": "根据 Google Cloud Well-Architected Framework (WAF) 的可持续性支柱，提供有关环境可持续性、碳足迹减少和能源效率的建议。当用户要求评估、设计或优化 Google Cloud 工作负载以实现可持续性时使用——包括共享责任模型、选择低碳区域（CFE%）、减少资源和 AI/ML 能源浪费、设计高效的软件和存储生命周期，或使用 Google Cloud 碳足迹测量和跟踪排放。不适用于降低财务成本（请使用 google-cloud-waf-cost-optimization）、延迟和吞吐量调优（请使用 google-cloud-waf-performance-optimization）或高可用性和灾难恢复（请使用 google-cloud-waf-reliability）。"}

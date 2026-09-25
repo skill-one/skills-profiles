@@ -1,0 +1,1 @@
+{"description_zh": "HyperFrames的所有动画知识——包括原子运动规则、多阶段场景蓝图、场景过渡、更广泛的运动设计技巧，以及七种运行时适配器（GSAP默认适配器，以及Lottie、Three.js、Anime.js、CSS关键帧、Web动画API、TypeGPU）。适用于任何运动或动画任务：选择2-4条规则进行组合，或加载一个蓝图，或查找特定运行时的API（例如GSAP缓动函数/Lottie播放器/Three.js混合器）。还涵盖了审核现有组合的编排（动画映射）和24种命名文本动画效果。HyperFrames原生特性：单个暂停时间轴、安全搜索、确定性。"}

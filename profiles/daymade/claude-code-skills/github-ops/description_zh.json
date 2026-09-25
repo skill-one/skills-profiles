@@ -1,0 +1,1 @@
+{"description_zh": "通过 gh CLI 和 REST/GraphQL 操作 GitHub — PR、问题、操作、仓库、协作者、组织权限、2FA — 具有明确的目标、授权和独立的回读功能。当写入操作报告成功但状态未发生变化时，或选择仅使用 gh/REST/GraphQL/UI 时使用。不适用于本地 Git 恢复（使用 git-safety-net）、维护者 PR 审查（使用 github-review-pr）或上游贡献（使用 github-contributor）。"}

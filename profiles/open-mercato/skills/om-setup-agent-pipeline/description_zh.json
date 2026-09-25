@@ -1,0 +1,1 @@
+{"description_zh": "一次性管道配置器。检查代码库（默认分支、验证脚本、标签），询问几个问题，生成.ai/agentic.config.json文件——该文件被其他所有技能读取——安装追踪描述符，并生成缺失的项目文档（SDLC.md、CODE_REVIEW.md、BACKWARD_COMPATIBILITY.md、AGENTS.md入门文档）。当工具链或标签分类发生变化时重新运行。验证跨技能覆盖范围，并为缺失的技能打印安装命令。"}

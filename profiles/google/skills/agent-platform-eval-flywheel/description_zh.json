@@ -1,0 +1,1 @@
+{"description_zh": "使用Eval Quality Flywheel方法在Google Cloud上衡量和改进AI模型和代理的质量。在生成合成用户场景、评估代理或模型、构建评估数据集、选择或编写评估指标、分析失败、比较修复前后的结果，或需要Agent Platform评估方法指导时（包括数据集模式、LLM作为裁判的评分和常见失败原因）时使用。进行微调时，请使用agent-platform-tuning。进行通用生产部署时，请使用agent-platform-deploy。"}

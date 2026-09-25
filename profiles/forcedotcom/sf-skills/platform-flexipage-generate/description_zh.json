@@ -1,0 +1,1 @@
+{"description_zh": "在用户创建、生成、修改或验证 Salesforce Lightning 页面（FlexiPages）时使用。在以下情况触发：RecordPage、AppPage、HomePage、Lightning 页面、向页面添加组件、页面自定义（例如“自定义记录页面”）或 .flexipage-meta.xml 文件（区域、组件、部署错误）。**不**在 Visualforce 页面、UI 中的页面布局分配、UI Bundle/Experience Cloud 站点页面或无 FlexiPage 上下文的 Aura/Lightning Web Component 开发时触发。"}

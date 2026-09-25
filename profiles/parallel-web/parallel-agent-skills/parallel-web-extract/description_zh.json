@@ -1,0 +1,1 @@
+{"description_zh": "基于CLI的URL提取。当用户明确调用此技能、需要仅CLI控制的选项或保存JSON输出，或没有可用的Parallel web_fetch MCP工具时使用。当捆绑的Parallel Search MCP可用时，优先使用其web_fetch工具处理普通网页、文章、PDF和JavaScript密集型网站。"}

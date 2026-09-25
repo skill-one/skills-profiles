@@ -1,0 +1,1 @@
+{"description_zh": "总结 Google Cloud Data Lineage 图，帮助用户调试数据质量问题并理解 BigQuery/GCS 的数据来源。在总结上游和下游数据流，以及将复杂的 Lineage 数据以直观的 Markdown 报告形式呈现时使用。不应用于通用 BigQuery 查询、编辑 Lineage 关系或下游弃用。不应用于下游爆炸半径影响分析（应使用 datalineage-bigquery-asset-impact-analysis 技能）。"}

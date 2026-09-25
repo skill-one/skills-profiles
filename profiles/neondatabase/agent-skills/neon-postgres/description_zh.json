@@ -1,0 +1,1 @@
+{"description_zh": "与 Neon 上的 Lakebase Postgres 合作指南和最佳实践：连接、池化与直接连接、模式迁移、分支、自动扩展、零扩展、即时恢复、读副本、IP 允许列表、逻辑复制以及 Lakebase 搜索。当工作涉及现有 DATABASE_URL、SQL、模式、检查或搜索时使用。新后端、认证、文件、函数和 LLM 调用则归入父级 `neon` 技能。同样适用于 \"@neondatabase/serverless\"、\"@neondatabase/neon-js\"、\"neon inspect db\"、\"语义搜索\"、\"向量搜索\"、\"全文搜索\"、\"BM25\" 或 \"混合搜索\"。"}

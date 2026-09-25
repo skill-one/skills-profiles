@@ -1,0 +1,1 @@
+{"description_zh": "关闭最近通过 PR 合并且由 `fixes`/`closes`/`resolves` 关键字或 `closingIssuesReferences` 正式修复的追踪问题，并在 PR 未合并或合并到非主分支的问题上发布信息性评论。用于合并后的清理工作和发布准备。尊重声明锁定，并且永远不会对裸 `#N` 提及采取行动。"}

@@ -1,0 +1,1 @@
+{"description_zh": "基于持久化文件的多阶段AI代理工作规划。在本地存储 task_plan.md、findings.md 和 progress.md 文件；生命周期钩子将项目选定的规划上下文写入其中。自动恢复功能仅读取项目规划文件。仅通过调用 session-catchup.py --metadata 才能检查同一项目的本地会话元数据；--replay 可输出有限、随机数帧限制的摘要。可选的 Gate 模式仅在主机支持时才请求继续执行，且绝不会执行 Markdown 中指定的命令。该技能没有网络上传路径。适用于研究或超过5次工具调用的工作。"}

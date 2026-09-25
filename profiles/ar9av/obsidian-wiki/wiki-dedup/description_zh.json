@@ -1,0 +1,1 @@
+{"description_zh": "扫描 Obsidian 维基以查找页面级别的身份冲突——即不同页面以不同名称涵盖同一概念（例如“RSC”与“React Server Components”）——并将它们合并。当用户说“dedup my wiki”、“find duplicate pages”、“merge duplicates”、“identity resolution”、“consolidate my wiki”、“I have duplicate pages”或“my wiki has two pages for the same thing”时，使用此技能。与 wiki-lint（检查结构）和 cross-linker（添加链接）不同——此技能会进行破坏性的页面级别合并，并需要谨慎确认。"}

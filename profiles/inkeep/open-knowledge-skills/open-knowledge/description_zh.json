@@ -1,0 +1,1 @@
+{"description_zh": "权威的 agent-runtime 合约，用于在 OpenKnowledge 项目内部工作——这是一个通过 MCP 暴露的 markdown-CRDT 知识库。在读取、列出、搜索、编辑或校验项目中的任何 `.md` 或 `.mdx` 文件时，以及在调用任何 `mcp__open-knowledge__*` 工具（`exec`、`search`、`write`、`edit`、`lint` 等）之前，均需使用该合约。由 `ok init` 安装，因此其存在意味着这是一个 OpenKnowledge 项目，并管理此处的所有 markdown 文件。它涵盖了读写工具界面、基础和链接规则、文件夹/模板规范、实时浏览器预览，以及 OK 的 MCP 工具（而非原生文件工具）处理作用域内 markdown 的规则。"}

@@ -1,0 +1,1 @@
+{"description_zh": "Odoo 18 开发参考（Python 模型和 ORM（搜索、域、read_group、计算字段）、XML/CSV 数据和视图、OWL/JS 客户端代码、QWeb 报表、安全（ACL、记录规则、组）、cron 和服务器操作、迁移和模块升级、测试、i18n 和性能）。在涉及 Odoo 18 或自定义附加组件的任何工作中，请使用这项技能——即使用户仅粘贴了异常堆栈信息、提及了 addons/ 或 __manifest__.py、描述了表单/列表/看板/XML 错误、HTTP 控制器或模型上的业务规则（包括构建功能、修复错误、重构或审查附加组件代码）。还包括为 Odoo 附加组件编写和审查 CSS/SCSS 资产。"}

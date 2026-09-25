@@ -1,0 +1,1 @@
+{"description_zh": "使用Sentry为应用程序进行监控——检测平台，在需要时安装并初始化SDK，并连接任何信号——错误监控、追踪/性能、日志记录、指标、性能分析、会话回放、用户反馈、定时任务检查以及AI/LLM监控（包括代理运行、令牌成本和OpenAI、Anthropic、Vercel AI、LangChain、Google GenAI、Pydantic AI、Laravel AI、Eve、Flue、Cloudflare Agents SDK以及Workers AI的对话）。用于将Sentry添加到项目中或捕获比错误更多的情况。"}

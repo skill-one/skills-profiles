@@ -1,0 +1,1 @@
+{"description_zh": "使用 BigQuery DataFrames（BigFrames）生成 Python 代码。默认情况下，用于涉及 BigQuery 的任何 Python 数据任务，包括数据处理、分析和机器学习。不适用于以 SQL 为主的流程或 google-cloud-bigquery 客户端库——请使用 bigquery-basics。"}

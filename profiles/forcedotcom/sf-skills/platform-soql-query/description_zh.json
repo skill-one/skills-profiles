@@ -1,0 +1,1 @@
+{"description_zh": "当用户需要编写或优化 SOQL/SOSL 时使用：自然语言到查询的生成、关系查询、聚合、查询计划/选择性分析以及性能或安全性的改进。触发条件：当用户编写、优化或调试 SOQL/SOSL、接触 .soql 文件，或询问关于关系查询、聚合或查询性能时。不触发用于批量数据操作（使用 platform-data-manage）、Apex DML 逻辑（使用 platform-apex-generate）或报告/仪表板查询。"}

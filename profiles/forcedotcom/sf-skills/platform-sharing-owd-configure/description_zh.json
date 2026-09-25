@@ -1,0 +1,1 @@
+{"description_zh": "当用户需要检索或更新 Salesforce 对象的全组织默认（OWD）共享设置时使用。在 OWD 上触发，检查/查看共享默认设置、更改默认访问级别（私有、公共只读、公共读写、由父级控制）、标准或自定义对象的内/外部访问、将记录设为私有，或在 .object-meta.xml 文件中的 sharingModel。不应用于共享规则、基于条件的共享、角色层次结构或手动共享——将这些委托给 platform-sharing-rules-generate。"}

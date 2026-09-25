@@ -1,0 +1,1 @@
+{"description_zh": "在用户提及组件模型、组件定义、组件过滤器、通用编辑器的块配置、UE块设置、向UE添加新块、配置块属性或块作者字段，或希望使用通用编辑器创建支持通用编辑器的EDS/Franklin块、修改块字段或向部分过滤器添加块时使用。涵盖创建和编辑控制AEM Edge Delivery Services块在通用编辑器中显示和行为的三种JSON文件——component-definition.json、component-models.json和component-filters.json。"}

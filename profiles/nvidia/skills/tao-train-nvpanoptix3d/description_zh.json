@@ -1,0 +1,1 @@
+{"description_zh": "NVPanoptix3D 用于从姿态 RGB 图像中进行全景 3D 场景重建。生成带占用补全的全景 3D 分割（语义、实例和全景掩码）。基于 VGGT 主干，采用 Mask2Former 风格的头部和 3D 极限锥重建。用于训练、评估、导出或运行 TAO NVPanoptix3D 模型的推理。触发短语包括“训练 NVPanoptix3D”、“全景 3D 重建”、“3D 场景分割”、“占用补全”。"}

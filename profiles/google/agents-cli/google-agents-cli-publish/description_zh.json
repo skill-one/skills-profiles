@@ -1,0 +1,1 @@
+{"description_zh": "当用户想要“发布代理”、“发布我的ADK代理”、“向Gemini Enterprise注册代理”、“发布到Gemini Enterprise”，或需要关于agents-cli publish gemini-enterprise命令的指导时，应使用此技能。同样适用于用户想要“在Agent Registry中管理代理”、“列出/更新/删除已注册的代理”，或“注册MCP服务器”的情况。涵盖ADK与A2A注册模式、程序化与交互式使用、标志参考、从部署元数据自动检测、Agent Registry舰队管理以及故障排除。属于agents-cli技能套件的一部分。不应用于部署（请使用google-agents-cli-deploy）。"}

@@ -1,0 +1,1 @@
+{"description_zh": "从模板生成一个最小化、可直接开发的SFDX启动项目，而不是手动搭建文件。在开始一个全新的Salesforce UI组件应用（React或Angular）且初始项目必须进行搭建时使用此技能——触发短语包括“创建”、“开始”或“搭建一个新的UI组件应用”、“生成启动项目”，或使用预构建/启动模板。以下情况不触发：编辑、样式化或向现有应用添加页面或组件（使用experience-ui-bundle-frontend-generate）；配置ui-bundle.json或元数据文件（使用experience-ui-bundle-metadata-generate）；部署到组织（使用experience-ui-bundle-deploy）；或当用户明确表示他们希望从零手动搭建。"}

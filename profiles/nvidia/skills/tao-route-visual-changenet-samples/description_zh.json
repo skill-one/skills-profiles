@@ -1,0 +1,1 @@
+{"description_zh": "将最弱的 VCN 样本（`tao-analyze-gaps-visual-changenet` 的输出）根据每个模块的标签资格路由到每个增强模块的子集中。当用户要求“路由 VCN 间隙样本”、“为 k-NN 矿掘和 AnomalyGen 分割 AOI 间隙”，或在 VCN AOI SDA 迭代中 DEFT 间隙分析后的下一步准备时使用。"}

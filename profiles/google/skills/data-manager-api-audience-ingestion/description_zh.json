@@ -1,0 +1,1 @@
+{"description_zh": "指导开发者使用数据管理器API及其相关客户端库来管理（添加、删除和清除）Google产品的受众成员。当用户需要上传受众成员、删除特定用户或清除/替换整个受众（用于Customer Match、移动设备ID受众或数据管理器API支持的任何其他受众使用场景）时，请使用此技能。不要用于上传事件或转化（应使用data-manager-api-event-ingestion技能）。"}

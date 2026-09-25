@@ -1,0 +1,1 @@
+{"description_zh": "对NVIDIA TAO Visual ChangeNet分类实验进行深度根本原因分析（RCA），采用图像证据驱动的调查方法。在分析ChangeNet模型故障、调查召回率/FAR/PASS-NO_PASS指标不佳、审核视觉检查流程质量，或为AOI缺陷检测模型运行RCA报告时使用。触发短语包括“我的ChangeNet模型进行RCA”、“我的AOI模型为何失败”、“审计ChangeNet预测”、“调查FAR回归”、“视觉ChangeNet根本原因分析”。"}

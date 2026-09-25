@@ -1,0 +1,1 @@
+{"description_zh": "使用130分制评分的Salesforce数据操作。用于创建、更新、删除、批量导入/导出、生成测试数据以及通过sf CLI和匿名Apex清理组织记录。在创建测试数据、批量导入/导出、sf数据CLI命令、Apex测试的数据工厂模式或播种/清理组织记录时触发。仅针对SOQL查询编写不触发（使用platform-soql-query）、Apex测试执行不触发（使用platform-apex-test-run）或元数据部署不触发（使用platform-metadata-deploy）。"}

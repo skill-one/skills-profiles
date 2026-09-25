@@ -1,0 +1,1 @@
+{"description_zh": "必须为所有通过用户自己的Gmail账户发送电子邮件的Caffeine构建添加此配方。唯一支持的方式是使用`googlemail-client` mops包（Gmail REST API）与`google-oauth` mops包（令牌交换+刷新+PKCE）的组合。手动编写`ic.http_request`调用以访问`oauth2.googleapis.com`或`gmail.googleapis.com`是禁止的反模式——它会绕过令牌认证、复制成本保护机制以及`google-oauth`库的百分比编码和JSON解析。每当用户、规范或任何先前的任务提及发送电子邮件、Gmail、\"通过电子邮件通知\"、\"通过电子邮件转发结果\"或任何等效表述时，请加载此技能——并且在编写任何与Google端点交互的代码之前。"}

@@ -1,0 +1,1 @@
+{"description_zh": "运行完整的DEFT AOI改进循环，针对NVIDIA TAO VisualChangeNet/ChangeNet PCB检测模型：基线评估、RCA、Cosmos AnomalyGen/AMP合成缺陷、k-NN挖掘、重新训练，以及基于客户定义的主要指标和可选约束条件的部署门控。仅在请求明确标识AOI/自动光学检测、PCB缺陷、VisualChangeNet或ChangeNet工作流时使用。支持预置资产的离线运行。切勿从通用迭代改进语言中推断AOI。不应用于CLIP/SigLIP图像检索、属性标记图像数据、独立TAO训练、一次性推理、通用异常生成或仅RCA分析。"}

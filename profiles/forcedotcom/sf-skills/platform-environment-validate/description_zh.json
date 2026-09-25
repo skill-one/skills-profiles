@@ -1,0 +1,1 @@
+{"description_zh": "验证并配置本地 Salesforce 开发环境。对所需工具进行前提条件扫描，并提供安装或更新缺失项的选项。当用户要求“检查我的设置”、“验证工具”、“验证前提条件”、“我设置正确吗”，或报告某个工具缺失或无法工作时使用。禁止触发 org 认证（/salesforce-development:login）、部署问题（platform-metadata-deploy）或状态检查（/salesforce-development:status）。"}

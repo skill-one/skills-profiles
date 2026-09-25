@@ -1,0 +1,1 @@
+{"description_zh": "在NVIDIA Brev GPU实例上运行TAO训练/评估/推理容器。实例的创建、搜索、停止、删除和登录等操作由官方brev-cli代理技能或Brev MCP服务器负责；该技能仅涵盖TAO特定的部分——通过`brev exec`和四动词docker合约来运行容器。触发短语包括\"在Brev上运行\"、\"Brev GPU实例\"、\"Brev上的TAO\"、\"提交任务到Brev\"。"}

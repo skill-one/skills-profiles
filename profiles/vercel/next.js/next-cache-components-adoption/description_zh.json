@@ -1,0 +1,1 @@
+{"description_zh": "在 Next.js 应用中启用缓存组件，并解决其呈现的阻塞路由。当用户希望启用、采用或迁移到缓存组件时使用，切换 `cacheComponents` 标志，处理大量阻塞预渲染/即时验证错误，运行 `cache-components-instant-false` 代码转换工具，或在通过 `export const instant = false` 将路由排除在外与就地修复之间进行选择。"}

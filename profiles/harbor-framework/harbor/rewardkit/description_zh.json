@@ -1,0 +1,1 @@
+{"description_zh": "使用Reward Kit编写Harbor任务验证器。在创建或编辑任务的tests/目录、添加评分标准、设置LLM/代理判罚者，或设计生成奖励分数的验证器时使用。"}

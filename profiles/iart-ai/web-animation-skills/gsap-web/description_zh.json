@@ -1,0 +1,1 @@
+{"description_zh": "当用户要求“创建滚动动画”、“添加 ScrollTrigger”、“在滚动时固定某个部分”、“使用动画进行滚动”、“创建英雄时间轴”、“执行水平滚动部分”、“拆分文本并逐字动画”、“使用 GSAP Flip 动画布局变化”、“将 ScrollTrigger 与 Lenis 同步”、“Lenis 平滑滚动出现抖动”、“ScrollTrigger 标记漂移”、“ScrollTrigger 在 Lenis/Locomotive 中失效”或“使用 GSAP 固定设置平滑滚动”时，应使用此技能。涵盖 GSAP 时间轴、ScrollTrigger、SplitText、Flip 以及 Lenis/Locomotive 平滑滚动同步，用于代码驱动的网页动效。"}
