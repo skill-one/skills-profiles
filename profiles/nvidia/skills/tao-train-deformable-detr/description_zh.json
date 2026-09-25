@@ -1,1 +1,0 @@
-{"description_zh": "用于二维目标检测的可变形 DETR。使用可变形注意力实现高效的多尺度特征处理，比 DINO 更轻量，且具有竞争力精度。用于训练、评估、导出、量化或运行推理的 TAO 可变形 DETR 模型。触发短语包括“train deformable-detr”、“Deformable DETR object detection”、“lightweight DETR detector”。"}

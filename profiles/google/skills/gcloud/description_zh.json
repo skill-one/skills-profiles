@@ -1,1 +1,0 @@
-{"description_zh": "针对 Google Cloud Platform (GCP) 各服务及基础设施上的 gcloud CLI 操作，提供关键安全验证、护栏及数据缩减。用于规划、生成、构建、提议、描述或执行任何 gcloud CLI 命令时，包括回答有关 gcloud 语法的问题或格式化标志时。不要用于编写 Google Cloud 客户端库代码或原始 REST/gRPC API 请求。"}

@@ -1,6 +1,6 @@
 ---
 name: platform-architecture-analyze
-description: "Analyze a Salesforce project against the Salesforce Well-Architected framework (Trusted / Easy / Adaptable). Use when the developer asks to \"review the architecture\", \"run a Well-Architected check\", \"audit this project\", \"is this project well-architected?\", \"assess security/governor-limit/packageability risk across the project\", or wants a holistic code-and-metadata health report. Grades the criteria that are observable from code and metadata (sharing/FLS, bulkification, selective SOQL, trigger-handler separation, legacy tech, packageability) with file:line evidence, and emits a human checklist for governance/process pillars it cannot see (security matrix, BCP, roadmaps, AI governance). Distinct from `dx-code-analyzer-run` (single-tool Code Analyzer scan of Apex) — this skill is a multi-pillar architectural review that orchestrates several analysis skills and maps findings to Well-Architected. Read-only: it grades and advises, never edits."
+description: "Use when the developer asks to \"review the architecture\", \"run a Well-Architected check\", \"audit this project\", \"is this project well-architected?\", or wants to assess security/governor-limit/risk as a holistic code-and-metadata health report. Grades observable criteria (sharing/FLS, bulkification, SOQL selectivity, packageability) with file:line evidence; emits a governance checklist for what it can't see. Read-only, never edits. DO NOT TRIGGER for single-tool Apex scans (dx-code-analyzer-run)."
 allowed-tools:
   - Bash
   - Read

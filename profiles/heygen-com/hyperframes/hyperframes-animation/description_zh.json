@@ -1,1 +1,0 @@
-{"description_zh": "HyperFrames 的全部动效知识——原子运动规则、多阶段场景蓝图、场景转场、更广泛的动态设计技法，以及七种运行时适配器（GSAP 默认，以及 Lottie、Three.js、Anime.js、CSS 关键帧、Web Animations API、TypeGPU）。用于任何动效或动画任务：选择 2-4 条规则进行组合，或加载蓝图，或查阅特定运行时的 API（如 GSAP 缓动 / Lottie 播放器 / Three.js mixer）。同时涵盖对现有合成的动作编排（动画映射）的审计，以及 24 种命名文本动画效果。HyperFrames 原生特性：单个暂停时间线、跳转安全、确定性。"}

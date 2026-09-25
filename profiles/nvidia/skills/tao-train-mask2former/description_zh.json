@@ -1,1 +1,0 @@
-{"description_zh": "Mask2Former 用于通用图像分割（全景、实例和语义）。基于Transformer架构、采用掩码注意力机制，可实现高质量分割结果。适用于为TAO Mask2Former模型训练、评估、导出、量化或推理。触发短语包括“训练Mask2Former”、“通用分割”、“全景分割/实例分割/语义分割”、“掩码注意力Transformer分割器”。"}

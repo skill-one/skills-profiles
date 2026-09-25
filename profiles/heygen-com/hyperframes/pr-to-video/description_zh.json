@@ -1,1 +1,0 @@
-{"description_zh": "将 GitHub 拉取请求（PR URL、owner/repo#N，或已检出仓库中的“本 PR”）转换为代码变更讲解视频——从差异（diff）、提交（commits）和文件中构建，涵盖更新日志、功能展示、修复或重构讲解：输入是代码变更，而非网站。非产品推广（/product-launch-video）或针对无 PR 主题的讲解（/faceless-explainer）。若不明确 → /hyperframes。"}

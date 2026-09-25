@@ -1,1 +1,0 @@
-{"description_zh": "使用此技能通过公开的客户端库和 REST API 管理 Google Cloud 工作负载管理器的评估、规则、扫描资源和验证结果。当您需要检查工作负载最佳实践规则、为 Google Cloud 通用最佳实践、SAP、SQL Server 或自定义组织规则创建并运行评估、审查违规情况、将结果导出至 BigQuery，或因无服务专用的公开 CLI 或 MCP 服务器而需通过客户端库自动化工作负载管理器时，请使用本技能。请勿用于一般的 Google Compute Engine 实例管理、VPC 配置或标准的 IAM 审计。"}

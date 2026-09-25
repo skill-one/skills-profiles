@@ -1,1 +1,0 @@
-{"description_zh": "配置 GKE 备份：配置 BackupRestore 集群插件、BackupPlan 和 RestorePlan 资源、恢复工作流以及 CMEK 加密备份。用于备份策略、灾难恢复或 GKE 集群恢复。请勿用于数据库备份。"}

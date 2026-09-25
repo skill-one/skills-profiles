@@ -1,1 +1,0 @@
-{"description_zh": "MAL（Mask Auto-Label）用于弱监督分割。使用 ViT-MAE 骨干网络，从最少标注（点标注或框标注）生成分割掩码。适用于训练、评估或对 TAO MAL 模型进行推理。触发短语包括“train MAL”、“Mask Auto-Label”、“weakly-supervised segmentation”、“box-prompted segmentation”、“minimal-annotation mask prediction”。"}

@@ -1,3 +1,0 @@
-# Test deps for the decision-records skill. CI always installs pytest; the tool
-# itself is dependency-free (standard library only).
-pytest

@@ -1,1 +1,0 @@
-{"description_zh": "OneFormer 通用图像分割。采用任务条件查询，以单一架构统一全景分割、实例分割和语义分割。适用于为 TAO OneFormer 模型进行训练、评估、导出、量化或运行推理。触发短语包括“train OneFormer”、“universal segmentation”、“task-conditioned segmentation”、“panoptic / instance / semantic in one model”。"}

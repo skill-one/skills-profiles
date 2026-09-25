@@ -1,1 +1,0 @@
-{"description_zh": "管理 GKE 存储，包括 PVCs（持久卷声明）、持久卷（PersistentVolumes）、文件存储（Filestore）和 GCS FUSE。在配置 GKE 存储、创建 PVCs 或于 GKE 上设置 GCS FUSE 时使用。对于诊断存储故障（卷附加/挂载错误、磁盘性能/节点存储压力，或 Cloud Storage FUSE OOM（内存溢出）），请改用 gke-storage-troubleshooting 技能。不要用于数据库管理或卷配置上下文之外的复制策略。"}

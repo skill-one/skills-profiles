@@ -1,1 +1,0 @@
-{"description_zh": "借助 XcodeGen、SwiftUI 与 SPM 技术开发 iOS/macOS 应用，涵盖 Apple 开发者签名、公证及 CI/CD 流水线配置。适用于构建 iOS/macOS 应用、修复 Xcode 构建失败、将应用部署至真实设备或配置 CI/CD 签名等场景。触发条件包括：XcodeGen 的 project.yml、SPM 依赖问题、代码签名错误（错误 -25294、钥匙串不匹配、adhoc 回退、EMFILE、公证凭证冲突）、\"Library not loaded @rpath\"、Electron 的 @electron/osx-sign / @electron/notarize、notarytool，或证书/描述文件问题。"}

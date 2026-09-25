@@ -1,1 +1,0 @@
-{"description_zh": "通过委托容器执行至相应的平台技能，启动、查询和停止网络专用的TAO推理微服务（{network_arch}-inference-microservice）。其负责容器镜像解析、任务负载JSON构造以及服务注册。适用于用户需要使用微服务容器对TAO模型检查点进行推理、部署TAO推理端点或停止正在运行的推理容器时。"}

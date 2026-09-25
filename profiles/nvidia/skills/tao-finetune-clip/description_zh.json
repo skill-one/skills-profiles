@@ -1,1 +1,0 @@
-{"description_zh": "CLIP 视觉语言模型，支持图像-文本检索、零样本分类、嵌入提取、ONNX 导出及 TensorRT 部署。适用于微调或训练 CLIP、运行零样本分类、计算图像嵌入，或将 CLIP 部署到 ONNX/TensorRT。"}

@@ -1,1 +1,0 @@
-{"description_zh": "本技能适用于用户需要“运行评估”、“评估我的代理”、“评估我的 ADK 代理”、“编写评估数据集”、“分析评估失败”、“对比评估结果”、“优化代理”，或需要关于 Agent 平台评估方法论与质量飞轮的指导的情况。涵盖评估指标、数据集架构、大语言模型（LLM）作为裁判的评分以及常见失败原因。适用于任何 agents-cli 项目，无论代理采用何种框架编写。不用于代理 API 代码模式（ADK：使用 google-agents-cli-adk-code）、部署（使用 google-agents-cli-deploy）或项目脚手架（使用 google-agents-cli-scaffold）。"}

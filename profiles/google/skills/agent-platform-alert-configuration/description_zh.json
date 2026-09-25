@@ -1,1 +1,0 @@
-{"description_zh": "使用 OpenTelemetry (OTel) 指标为 AI 智能体配置最佳实践告警策略，并以 Terraform (.tf) 配置文件格式生成输出。适用于分析、编写或部署用于监控智能体延迟、错误率、令牌使用情况和质量指标的告警策略。不适用于与 AI 智能体无关的标准基础设施监控，或智能体未通过 OpenTelemetry 进行插桩的情况（针对可靠性、成本、安全性和安全告警）。注意：可靠性、成本、安全性和安全告警使用通用的 OTel 指标，可在多种运行时（如 Cloud Run、Vertex AI）中运行。质量告警依赖于 Vertex AI Online Monitors，并且严格绑定于 Vertex AI 部署。"}

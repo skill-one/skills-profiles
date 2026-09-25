@@ -1,1 +1,0 @@
-{"description_zh": "用于 HyperFrames 作品需要切入、切出、缩放、重新构图、Ken Burns 处理、镜头运动、视觉匹配/快速切换交接，或其他跳转安全的 2D/3D 关键帧的场景；也用于 GSAP、CSS 关键帧、Anime.js、WAAPI、FLIP、路径、遮罩、SVG 变形/绘制、文本轨迹、3D 深度，或 `hyperframes keyframes` 诊断。不适用于整体场景策略、品牌设计、媒体素材获取、字幕，或一般视频规划。"}

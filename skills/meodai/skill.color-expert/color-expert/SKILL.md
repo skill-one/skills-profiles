@@ -36,8 +36,9 @@ The test for a sequential ramp is **flat perceptual derivative** — plot the pe
 - **Generation in historical / non-digital color spaces** (RYBitten) — work in RYB or one of 26 historical color cubes when you want a painterly feel that strict sRGB/OKLCH can't reach.
 - **Palette cycling / indexed color** — store an index buffer and a small palette, then animate the palette (rotate, ease, or drive from an OKLCH trajectory) instead of the pixels; motion for one lookup per pixel. Works only if each cycle range is a perceptually even closed ramp. See `references/techniques/color-cycling-indexed-palette-animation.md`.
 - **Scene-light sampling** (ray-color) — raytrace a sphere in a room with up to 3 colored lights and sample colors off its surface; coherence comes from shared illumination physics (like an object photographed under one light) rather than color-space geometry.
+- **Sun-lit ramps** (Lightfield, tol.is) — same idea aimed at design tokens: OKLCH pigments on a flat-shaded city under a Planckian-locus sun; each 50–950 ramp is a sweep of surface orientations, re-spaced in L. Adds relative chroma, cusp pull, and a hue-profiled Bezold–Brücke/Abney warm shift (toward red going dark, toward yellow going light; cool hues untouched).
 
-See `references/techniques/` for tyler-hobbs, fontana, mattdesl, iq-cosine, spectraljs, poline, rampensau, pro-color-harmonies, rybitten, ray-color (these document the techniques, not styles to imitate).
+See `references/techniques/` for tyler-hobbs, fontana, mattdesl, iq-cosine, spectraljs, poline, rampensau, pro-color-harmonies, rybitten, ray-color, lightfield (these document the techniques, not styles to imitate).
 
 **General color question** — "what is OKLCH?", "why does my gradient go gray in the middle?", "is APCA better than WCAG?" Answer directly from this skill file or `references/INDEX.md`, and cite the relevant reference. Skip tooling unless they're asking how to do something. **Approachable and accurate usually conflict** — the tidy model (RYB primaries, 12-hue wheel, "red is opposite green") is easy precisely because it summarizes beliefs rather than measurements. Give the tidy version *and* say where it breaks; don't let "easy" quietly become "wrong." (Color Nerd, `references/contemporary/color-theory-dogma-problem.md`)
 
@@ -191,6 +192,10 @@ Complementary, triadic, tetradic intervals are weak predictors of mood, legibili
 
 Organize by character (pale/muted/deep/vivid/dark), not hue. Finding: **hue is usually a weaker predictor of emotional response than chroma and lightness** — a muted palette often reads as calm across many hues. Relaxed vs intense is driven more by chroma + lightness than hue alone.
 
+### Colour meaning in a story is per-story, not a symbolism table (Lewis Bond)
+
+For narrative work (film, games, illustration, brand storytelling) ask two questions instead of "what does red mean": what subject is the colour **associated** with by repetition, and does it **transition** as that subject changes (*The Godfather* makes orange mean death; *Blue Is the Warmest Colour* tracks the affair by blue's saturation). A single saturated outlier on a balanced scheme is a focal device; a new hue entering a settled scheme reads as disruption. See `references/contemporary/colour-in-storytelling-lewis-bond.md`.
+
 ### Legibility = lightness variation
 
 Grayscale is a quick sanity check for lightness separation, not an accessibility proof. You still need to verify contrast with WCAG/APCA and consider text size, weight, polarity, and CVD. Same character + varied lightness is often more readable. Same lightness regardless of hue is usually illegible.
@@ -258,6 +263,7 @@ Note: coolors.co does not generate palettes — it picks randomly from 7,821 pre
 - **dittoTones** — extract Tailwind/Radix "perceptual DNA", apply to your hue
 - **FarbVelo** — random palettes with dark→light structure
 - **ray-color** — palettes from a raytraced scene ("edit the conditions, not the colors"): sphere + five-sided room + up to 3 colored lights, mirror walls as virtual light sources; sample geodesic lines/circles off the surface. Deterministic, linear-RGB shading, zero deps, ~6 kB, DOM-free for headless use; interactive playground with draggable lights and PNG/code export
+- **Lightfield** (tol.is) — drag a sun around a 3D city; every face is a swatch. Token ramps from surface-orientation sweeps under one light, with relative chroma, cusp pull, hue-profiled warm shift, tinted named neutrals (Slate, Sand, Mauve…); exports OKLCH-only CSS/JSON/Tailwind. See `references/techniques/lightfield-sunlit-city-palettes.md`.
 - **IQ Cosine Formula** — `color(t) = a + b*cos(2π(c*t+d))`, 12 floats = infinite palette
 - **aek palettes** (Kensler) — the other optimizer approach, tuned for *general-purpose drawing* rather than dataviz categories: anneal on two competing CIEDE2000 objectives, maximin separation (pushes to saturated cube faces) vs. RMS coverage of the RGB cube (pulls to duller interior). Ready-made free 16/32/48/54-color palettes, perceptually even-stepped by construction. Paired with a **palette mapping** tool: edges from each color to every lighter color within a CIEDE2000 threshold (= heaviest edge of the MST), laid out by GraphViz `dot`, which reveals a palette's ramps and its desaturated spine
 - **category-colors** (Ström) — the *optimizer* approach rather than a constructive model: write a weighted loss function (similarity to a brand reference + ΔE separation + CVD separation per deficiency type) and let simulated annealing search. Best when your criteria conflict and no color-space geometry expresses them; the weights become the explicit, auditable design decision. `npx categorycolors run`; pluggable evaluators (energy, range, JND, similarity, WCAG contrast, avoid-these-colors, saliency), per-channel locking so a brand hue survives while lightness/saturation move, and `categorycolors report` to audit any existing palette for JND collisions under simulated CVD. Node + Culori, MIT
@@ -280,6 +286,7 @@ Note: coolors.co does not generate palettes — it picks randomly from 7,821 pre
 - **RYBitten** — RGB↔RYB with 26 historical color cubes
 - **colorgram** — 1 kB image palette extraction; 64-bucket HLS+luminance quantization, ~15 ms for 340×340, fixed memory
 - **Art Palette** — JS palette extraction from `ImageData` + Python/TensorFlow perceptual palette embeddings for search-by-color (Google Arts & Culture, Apache 2.0)
+- **Palette Studio** (meditationsincolor.com, Pixel Symphony) — best-in-class on paintings and posters: OKLab k-means for coverage *plus* an accent-salience pass, so small vivid touches survive instead of averaging into mud; then coverage is measured back for proportions. Pigment-vocabulary names. Browser-only, nothing uploaded.
 - **random-display-p3-color** — generate random Display P3 colors constrained by named hue/saturation/lightness, zero deps, ESM (by mrmrs / mrmrs.cc)
 
 ### Sorting Colors

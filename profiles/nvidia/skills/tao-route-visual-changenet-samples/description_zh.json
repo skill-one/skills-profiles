@@ -1,1 +1,0 @@
-{"description_zh": "根据每个模块的标签资格，将最弱的VCN样本（`tao-analyze-gaps-visual-changenet`的输出）划分为各个增强模块的子集。当用户要求“route VCN gap samples”、“split AOI gaps for k-NN mining and AnomalyGen”，或在VCN AOI SDA迭代中，于DEFT间隙分析后准备下一步操作时使用。"}

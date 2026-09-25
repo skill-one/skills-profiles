@@ -1,1 +1,0 @@
-{"description_zh": "使用 120 分评分进行 Salesforce 连接应用和外部客户端应用 OAuth 配置。使用此技能在 Salesforce 中配置 OAuth 流程、JWT bearer 认证、连接应用和外部客户端应用。\n\n**触发条件**：当用户配置 OAuth 流程、JWT bearer 认证、连接应用、ECAs 或触碰 `.connectedApp-meta.xml` / `.eca-meta.xml` 文件时触发。\n\n**以下情况不触发**：配置用于调用的命名凭证（使用 integration-connectivity-generate）、审核权限策略（使用 platform-metadata-deploy），或编写 Apex 令牌处理代码（使用 platform-apex-generate）。"}

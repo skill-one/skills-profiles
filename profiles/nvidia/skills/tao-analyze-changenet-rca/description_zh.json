@@ -1,1 +1,0 @@
-{"description_zh": "对 NVIDIA TAO Visual ChangeNet 分类实验执行深入的根因分析（RCA），并以图像证据驱动的方式开展排查。适用于分析 ChangeNet 模型故障、排查召回率/FAR/PASS-NO_PASS 指标不佳、审计视觉检查流程质量，或为 AOI 缺陷检测模型生成 RCA 报告。触发短语包括：“对我的 ChangeNet 模型进行 RCA”、“我的 AOI 模型为何会失败”、“审计 ChangeNet 预测结果”、“排查 FAR 回归问题”、“对 Visual ChangeNet 进行根因分析”。"}

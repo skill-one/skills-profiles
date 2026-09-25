@@ -1,1 +1,0 @@
-{"description_zh": "DINO（改进去噪锚框的 DETR）用于二维目标检测。这是一款基于 Transformer 的检测器，具备去噪训练、多尺度特征以及可选的蒸馏支持。适用于为 TAO DINO 检测器进行训练、评估、导出、蒸馏、量化或运行推理。触发短语包括“train DINO”、“DETR object detection”、“TAO 2D detection”、“DINO with distillation”。"}

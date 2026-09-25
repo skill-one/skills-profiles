@@ -1,1 +1,0 @@
-{"description_zh": "用于基于文本引导的实例分割的Mask Grounding DINO。在Grounding DINO基础上增加了用于文本提示引导的开集分割的掩码预测头。用于TAO Mask-Grounding-DINO模型训练、评估、导出、量化及运行推理。触发短语包括“train Mask Grounding DINO”、“开放词汇分割”、“基于文本提示的实例分割”、“grounded mask DETR”。"}

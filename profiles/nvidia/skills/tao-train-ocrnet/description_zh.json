@@ -1,1 +1,0 @@
-{"description_zh": "OCRNet 用于 scene text recognition。从裁剪后的文本区域图像中识别文本内容，并支持 CTC 和基于注意力机制的解码器。适用于为 TAO OCRNet 模型进行训练、评估、导出、剪枝、量化、重新训练或运行推理。触发短语包括“train OCRNet”、“scene text recognition”、“OCR cropped text”、“CTC / attention text decoder”。"}

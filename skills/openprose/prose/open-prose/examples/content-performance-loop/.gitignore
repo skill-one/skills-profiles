@@ -1,9 +1,0 @@
-dist/manifest.*.json
-runs/*
-state/world-model/*
-state/agents/*
-deps/*
-!dist/.gitkeep
-!runs/.gitkeep
-!state/.gitkeep
-!deps/.gitkeep

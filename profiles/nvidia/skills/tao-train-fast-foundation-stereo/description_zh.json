@@ -1,1 +1,0 @@
-{"description_zh": "基于FastFoundationStereo (FFS)的实时立体深度估计，FastFoundationStereo是FoundationStereo的蒸馏bp2商用变体。该模型能从立体图像对中预测视差图，相比完整的FoundationStereo延迟降低约10倍。适用于训练、评估、导出或运行TAO FastFoundationStereo (FFS)模型的推理任务。触发短语包括\"train fast stereo\"、\"real-time stereo disparity\"、\"FastFoundationStereo\"、\"distilled stereo depth\"。"}

@@ -1,1 +1,0 @@
-{"description_zh": "一次性流水线配置器。检查仓库（默认分支、验证脚本、标签），提出几个问题，写入 .ai/agentic.config.json——其他所有技能读取的文件——安装追踪描述符，并生成缺失的项目文档（SDLC.md、CODE_REVIEW.md、BACKWARD_COMPATIBILITY.md、AGENTS.md 起始文件）。当工具链或标签分类发生变化时重新运行。验证跨技能覆盖情况，并为缺失技能打印安装命令。"}

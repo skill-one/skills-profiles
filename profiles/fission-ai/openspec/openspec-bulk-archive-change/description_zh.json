@@ -1,1 +1,0 @@
-{"description_zh": "一次性归档多个已完成的 OpenSpec 变更。\n\n归档多个并行变更时使用。\n\n此外，适用于批量归档请求——\"openspec bulk-archive\"、\"opsx bulk-archive\"、\"openspec archive all\" 或 \"openspec archive these changes\"。"}

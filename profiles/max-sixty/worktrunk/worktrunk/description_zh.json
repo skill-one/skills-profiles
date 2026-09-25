@@ -1,1 +1,0 @@
-{"description_zh": "Worktrunk (wt CLI) 使用指南——git 工作树管理、钩子和配置。当需要确定 `wt` 命令将作用于哪个工作树，或需要使用全局 `-C <path>` 来指定目标；编辑 `.config/wt.toml` 或 `~/.config/worktrunk/config.toml`；添加、修改或调试钩子（如 post-merge、post-start、pre-commit、pre-merge、post-switch 等）；配置提交信息生成或命令别名；或排查 `wt` 行为问题时，请参考本指南。本指南还解答关于 Worktrunk/`wt` 的一般问题。"}

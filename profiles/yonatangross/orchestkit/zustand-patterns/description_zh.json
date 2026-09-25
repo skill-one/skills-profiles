@@ -1,1 +1,0 @@
-{"description_zh": "Zustand 5.x 状态管理参考指南，涵盖 slices、中间件、Immer、useShallow、持久化、selectors 和开发工具集成。文档介绍 7 种核心模式，并提供 TypeScript 示例与反模式。适用于使用 Zustand 构建 React 状态管理并替代 Redux 的场景。"}

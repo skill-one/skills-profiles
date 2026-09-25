@@ -1,1 +1,0 @@
-{"description_zh": "适用于在编辑器外部以编程方式添加、移除、升级或发现 Unity (UPM) 包——通过 C# UnityEditor.PackageManager.Client API 进行无头模式或 CI 环境下的包安装，核对包 ID/版本是否符合 Unity 注册表，或根据游戏类型、平台和商业化模式选择游戏所需的包。Unity CLI 不管理 UPM 包，因此本技能覆盖这一空白。触发条件包括\"安装 Unity 包\"、\"添加 com.unity.*\"、\"在无头模式/CI 环境下配置包\"、\"为 [游戏类型] 游戏选择所需包\"等。"}

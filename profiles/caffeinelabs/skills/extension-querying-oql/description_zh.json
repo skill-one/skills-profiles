@@ -1,1 +1,0 @@
-{"description_zh": "Caffeine Data Intelligence 代理通过 `icp` CLI 针对项目 `backend` 容器查询暴露 OQL 的容器（`schema()` + `execute()`）的快速参考指南：读取模式，构建 JSON 查询（筛选 / 排序 / 分页 / 聚合 / 点路径边），并解析 Candid 结果行。"}

@@ -1,1 +1,0 @@
-{"description_zh": "查询华为云网络资源（VPC/EIP/ELB/NAT/VPN/DNS）。涵盖VPC、子网、安全组、防火墙、路由表、流量日志、弹性公网IP、带宽、负载均衡器、监听器、池、健康监视器、NAT网关、SNAT/DNAT规则、VPN网关、VPN连接、DNS区域、记录集、PTR记录和端点。无写操作。当用户需要查询网络拓扑、安全组规则、负载均衡配置、NAT规则、VPN状态或DNS解析信息时，请使用此技能。触发词：VPC、子网、安全组、EIP、弹性公网IP、ELB、负载均衡、NAT网关、VPN、DNS、域名解析、路由表、防火墙、带宽、network、subnet、security group。"}

@@ -1,1 +1,0 @@
-{"description_zh": "将 Hermes 智能体历史导入 Obsidian 维基。当用户希望从过往的 Hermes 会话中挖掘知识、导入其 ~/.hermes 文件夹、从之前的 Hermes 对话中提取见解，或说出诸如“处理我的 Hermes 历史数据”、“将我的 Hermes 记忆添加到维基”、“导入 ~/.hermes”或“我在 Hermes 中做了哪些工作”等表述时，请使用此技能。当用户提及 Hermes 记忆、Hermes 会话、~/.hermes/memories 或 Hermes 技能日志时，也会触发此技能。"}

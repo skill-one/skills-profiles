@@ -1,1 +1,0 @@
-{"description_zh": "通过 SSH 远程执行 SLURM GPU 集群任务，使用 sbatch/srun、Pyxis/Enroot 容器以及基于 Lustre 的结果。适用于在本地或 DGX SLURM 集群上运行 TAO 训练/评估/推理任务。触发短语包括“run on SLURM”、“submit sbatch”、“DGX SLURM cluster”、“Pyxis/Enroot container”、“Lustre dataset”。"}

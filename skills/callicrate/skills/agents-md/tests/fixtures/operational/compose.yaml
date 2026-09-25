@@ -1,3 +1,0 @@
-services:
-  lab:
-    image: python:3.12-slim

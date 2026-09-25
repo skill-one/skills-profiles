@@ -1,1 +1,0 @@
-{"description_zh": "使用此技能在已连接的Salesforce组织中运行匿名Apex —— 无论是从.apex文件还是粘贴的代码片段 —— 捕获调试日志、揭示编译和运行时错误，并总结结果。在诸如“运行此匿名Apex”、“将此脚本执行于我的组织”、“运行此Apex代码片段”、“此代码返回什么”或“执行scripts/foo.apex”等短语时触发。该技能在保存点和回滚机制中包裹验证类脚本，确保组织状态不受影响，并在针对生产环境运行前发出警告。切勿在编写.cls或.trigger文件（使用 platform-apex-generate）、运行Apex单元测试（使用 platform-apex-test-run）或进行深入调试日志分析（使用 platform-apex-logs-debug）时触发。"}

@@ -1,1 +1,0 @@
-{"description_zh": "本技能适用于当用户希望“设置追踪”、“监控我的智能体”、“配置日志”、“添加可观测性”、“调试生产环境流量”，或需要有关监控已部署智能体（包括 ADK (智能体开发套件) 智能体）的指导时。涵盖 Cloud Trace、提示-响应日志、BigQuery Agent Analytics、第三方集成（AgentOps、Phoenix、MLflow 等）以及故障排查。属于 agents-cli 技能套件的一部分。请勿用于部署设置（请使用 google-agents-cli-deploy）或 API 代码模式（请使用 google-agents-cli-adk-code）。"}

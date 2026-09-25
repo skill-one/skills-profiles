@@ -1,1 +1,0 @@
-{"description_zh": "总结 Google Cloud 数据血缘图谱，帮助用户排查 BQ/GCS 的数据质量问题并理解数据溯源。适用于总结上下游数据流转，并将复杂的血缘数据以直观的 Markdown 报告呈现。\n\n不适用于通用式 BigQuery 查询、编辑血缘关系或下游弃用。不适用于下游爆炸半径影响分析（请改用 datalineage-bigquery-asset-impact-analysis 技能）。"}

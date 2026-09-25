@@ -1,1 +1,0 @@
-{"description_zh": "使容器（canister）的数据可被 Caffeine Data Intelligence 智能体查询。当应用存储需要以自然语言回答的结构化数据（记录映射/列表/数组）时使用 —— 例如“顶级客户”、“各区域收入”、“进行中的项目”。通过 `caffeineai-oql` mops 包的 `Expose` 混入添加可发现的 `schema()` 和 JSON `execute()` 查询接口。"}

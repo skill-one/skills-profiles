@@ -1,1 +1,0 @@
-{"description_zh": "NVDINOv2 用于自监督视觉表征学习。通过自蒸馏（教师-学生）方式训练视觉 Transformer，无需标签，并生成通用视觉特征。适用于为 TAO NVDINOv2 骨干网络进行训练、导出或运行推理。触发短语包括“train NVDINOv2”、“self-supervised ViT pretraining”、“DINOv2 backbone”、“visual representation learning”。"}

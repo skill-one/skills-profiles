@@ -1,1 +1,0 @@
-{"description_zh": "将 CLAUDE.md 或待办事项列表等内存文件压缩为简化版格式，以节省输入 token，同时保留可读的备份。触发命令：/caveman-compress。"}

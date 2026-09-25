@@ -1,1 +1,0 @@
-{"description_zh": "为 AEM Edge Delivery Services 区块创建或编辑 Universal Editor 组件配置（component-definition.json、component-models.json、component-filters.json）。当用户提及组件模型、组件定义、组件过滤器、Universal Editor 区块配置、UE 区块设置、向 UE 添加新区块、配置区块属性、区块编写字段，或任何涉及控制区块在 Universal Editor 中显示方式的三个 JSON 配置文件的任务时，请使用此技能。当用户需要创建带有 UE 支持的 EDS/Franklin 区块、修改区块字段、将区块添加到区块分区过滤器，或询问区块如何与 Universal Editor 连接时，也请触发。"}

@@ -1,1 +1,0 @@
-{"description_zh": "当用户需要为爱因斯坦智能体的动作或结构化输入/输出模式创建自定义闪电类型（CLT）时，请使用此技能。当用户提及 CLT、自定义闪电类型、智能体 JSON 模式、类型定义、lightning__objectType 或编辑器/渲染器配置时，请触发此技能。对于将 CLT 与控件包结合使用的控件呈现，请改用 platform-lightning-type-widget-coordinate orchestrator。此任务较为复杂——对于 CLT 工作，请务必使用此技能。"}

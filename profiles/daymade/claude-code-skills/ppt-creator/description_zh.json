@@ -1,1 +1,0 @@
-{"description_zh": "【DEPRECATED · 已废弃】本 skill 已于 2026-08-07 停止维护。针对作者本机环境：其方法论已整体并入 deck-creator（私有仓 daymade-skills-pro 的 Route B · draft），安装了 deck-creator 的环境不要调用本 skill。对外部用户：这是最终版本，保留安装兼容性，不再接收更新——你可以继续按照本文档使用，但请知悉上游已冻结。将在 daymade-docs v2.0.0 中物理移除。"}

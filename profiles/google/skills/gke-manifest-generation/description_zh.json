@@ -1,1 +1,0 @@
-{"description_zh": "生成并更新针对 GKE Autopilot 和 GKE Standard 集群优化、安全且可用于生产环境\n的 Kubernetes YAML 清单。在创建或修改 GKE 部署清单、配置容器安全上下文、设置 CPU/内存资源限制、定义就绪、存活和启动探针、挂载秘密和卷、配置 GKE Gateway API 路由、针对 Spot 虚拟机或部署 AI 模型推理工作负载（vLLM、TGI、Gemma）时使用本工具。\n\n请勿用于集群实时操作、容器编排单元故障排除（请使用 gke-workload-troubleshooting），或集群基础设施配置（请使用 gke-cluster-creation）。"}

@@ -1,1 +1,0 @@
-{"description_zh": "具备 120 分制评分的 Apex 测试执行、覆盖率分析与测试修复循环。\n\n适用场景：当用户需要执行 Apex 测试、检查代码覆盖率、修复失败测试，或处理 *Test.cls / *_Test.cls 文件时使用。\n\n触发条件：当用户执行 Apex 测试、检查代码覆盖率、修复失败测试，或接触 *Test.cls / *_Test.cls 文件时触发。\n\n不触发条件：编写 Apex 生产代码（使用 platform-apex-generate）、进行 Agentforce 智能体测试（使用 agentforce-test），或执行 Jest/LWC 测试（使用 experience-lwc-generate）。"}

@@ -1,1 +1,0 @@
-{"description_zh": "发现需求并设计利用 Knowledge Catalog 与 Apache Spark 托管服务（Lightning Engine）构建的端到端受治理智能体分析解决方案。当需要在结构化与非结构化分布式数据（包括 S3、Azure Blob、AlloyDB 和 Iceberg）上设计数据科学与分析工作流、使用 Knowledge Catalog 的方面类型建立元数据治理，或使用 Google Cloud Data Agent Kit 为智能体 IDE（VS Code、Antigravity）奠定基础时使用。不适用于配置无边界数据湖仓基础设施（请使用 google-cloud-solution-agentic-ai-borderless-data-lakehouse 代替）。"}

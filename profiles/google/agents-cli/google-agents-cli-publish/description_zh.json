@@ -1,1 +1,0 @@
-{"description_zh": "本技能适用于以下场景：用户希望“发布智能体”、“发布我的 ADK 智能体”、“向 Gemini Enterprise 注册智能体”、“向 Gemini Enterprise 发布智能体”，或需要关于 `agents-cli publish gemini-enterprise` 命令的指导。此外，也适用于用户希望“管理 Agent Registry 中的智能体”、“列出/更新/删除已注册的智能体”或“注册 MCP 服务器”的情况。本技能涵盖 ADK 与 A2A 的注册模式、编程式与交互式使用、参数说明、根据部署元数据自动检测、Agent Registry 舰队管理以及故障排查。它是 `agents-cli` 技能套件的一部分。**请勿用于部署（请使用 `google-agents-cli-deploy`）。**"}

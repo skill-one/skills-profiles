@@ -1,1 +1,0 @@
-{"description_zh": "将OpenClaw智能体的历史记录导入Obsidian wiki。当用户想要挖掘其过往OpenClaw会话中的知识、导入其~/.openclaw文件夹、从之前的OpenClaw对话中提取见解，或说\"处理我的OpenClaw历史记录\"、\"将我的OpenClaw会话添加到wiki\"、\"导入~/.openclaw\"或\"我在OpenClaw中完成了哪些工作\"等表述时，请使用此技能。当用户提及OpenClaw会话日志、MEMORY.md、日常笔记或~/.openclaw/workspace时，也会触发此技能。"}

@@ -1,1 +1,0 @@
-{"description_zh": "OpenAI Agents SDK (Python) 开发。适用于使用 `openai-agents` / `agents` Python 包构建 AI 代理、多代理交接、函数工具、护栏、会话、流式传输或追踪，包括通过 LiteLLM 使用 Azure OpenAI 时。触发条件包括从 `agents` 导入、使用 `Runner.run_sync` / `Runner.run_streamed`、`@function_tool`、`AgentOutputSchema`、`SQLiteSession`，或关于 openai-agents-python SDK 的问题。仅 Python — 非 TypeScript `@openai/agents` SDK。"}

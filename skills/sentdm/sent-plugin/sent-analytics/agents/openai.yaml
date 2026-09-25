@@ -1,4 +1,0 @@
-interface:
-  display_name: "Sent Analytics"
-  short_description: "Query Sent number and messaging analytics"
-  default_prompt: "Use $sent-analytics to review Sent deliverability for a specific period."

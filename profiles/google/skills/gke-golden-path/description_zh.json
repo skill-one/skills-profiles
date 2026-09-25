@@ -1,1 +1,0 @@
-{"description_zh": "提供 GKE 黄金路径配置默认值、生产就绪检查清单及集群默认模式。设计 GKE 集群、验证 GKE 生产就绪或对照 GKE 默认值检查配置时使用。请勿用于专门设置工作负载自动扩缩容（请改用 gke-workload-scaling）。"}

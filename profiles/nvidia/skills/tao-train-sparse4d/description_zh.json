@@ -1,1 +1,0 @@
-{"description_zh": "Sparse4D 用于多相机时序 3D 目标检测与跟踪。采用稀疏查询，并结合跨相机视角与时间域的可变形注意力，实现端到端的 3D 感知，并配备实例库用于时序跟踪。适用于对 TAO Sparse4D 模型进行训练、评估、导出、量化或运行推理。触发短语包括“train Sparse4D”、“multi-camera 3D detection”、“temporal 3D tracker”、“sparse query 3D perception”。"}

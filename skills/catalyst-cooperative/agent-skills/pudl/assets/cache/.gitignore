@@ -1,3 +1,0 @@
-# Downloaded PUDL descriptor files — regenerate with:
-#   python scripts/fetch_descriptor.py
-*.json

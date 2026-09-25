@@ -1,1 +1,0 @@
-{"description_zh": "通过 gh CLI 和 REST/GraphQL API 操作 GitHub，具备明确的目标、授权、影响预览和独立回读功能。适用于处理拉取请求、问题、动作、仓库、协作者、团队、组织成员权限、基础权限、2FA 强制执行、仓库设置、API 自动化、并行或已被替代的拉取请求合并，以及公共或企业级 GitHub。同时，在 GitHub 写入操作返回成功但请求状态未发生变化，或在判断某项设置是否可通过 CLI、REST、GraphQL 或仅 GitHub UI 进行写入时使用。"}

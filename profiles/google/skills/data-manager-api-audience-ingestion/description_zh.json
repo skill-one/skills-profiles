@@ -1,1 +1,0 @@
-{"description_zh": "使用 Data Manager API 及其关联客户端库，引导开发者管理（添加、移除和清空）用于 Google 产品的受众成员。当用户需要上传受众成员、移除特定用户，或为 Customer Match、移动设备 ID 受众以及 Data Manager API 支持的任何其他受众使用场景清空/替换整个受众时，使用此技能。不要用于上传事件或转化（请使用 data-manager-api-event-ingestion 技能）。"}

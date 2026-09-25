@@ -1,1 +1,0 @@
-{"description_zh": "安装、配置、自定义或排查 Claude Code 状态栏（cwd、模型、token 数量）。当用户需要设置或更改状态栏、切换最小化与完整布局、以绝对 token 数量（例如 ctx 108K / 1M）替代百分比显示、通过 ccusage 或 git status 添加成本、导出 Claude Code 传递给脚本的 stdin JSON、或修复空白、无输出、卡住、显示“permission denied”、或在脚本编辑后停止更新的状态栏（通常缺少 chmod +x）时使用。\n\n触发短语：“配置状态栏”、“状态栏空白”、“状态栏不显示”、“状态栏损坏”、“状态栏显示 token 数量”、状态栏、状态栏不显示、状态栏空白、显示工作目录、显示 token 数。"}

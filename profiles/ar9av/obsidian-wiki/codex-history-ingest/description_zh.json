@@ -1,1 +1,0 @@
-{"description_zh": "将Codex CLI的对话历史导入到Obsidian wiki中。当用户希望挖掘其过往的Codex会话以获取知识、导入其 ~/.codex 文件夹、从之前的编程会话中提取见解，或者说出诸如“处理我的Codex历史”、“将我的Codex对话添加到wiki中”、“我在Codex中以前讨论过什么”之类的话时，请使用此技能。此外，当用户提及“.codex sessions”、rollout文件、session_index.jsonl或Codex转录日志时，也会触发本技能。"}

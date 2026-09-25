@@ -1,1 +1,0 @@
-{"description_zh": "通过 Eval Quality Flywheel 方法论，采取措施并改进 Google Cloud 上的 AI 模型与智能体质量。\n\n在评估智能体或模型、构建评估数据集、选择或编写评估指标、分析失败案例、比较修复前后的结果，或需要 Agent Platform 评估方法论指导时使用——包括数据集模式、LLM 作为评判者的评分以及常见失败原因等。\n\n进行微调时，使用 agent-platform-tuning。进行通用生产部署时，使用 agent-platform-deploy。"}

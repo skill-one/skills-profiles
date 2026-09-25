@@ -1,1 +1,0 @@
-{"description_zh": "协助进行 Bigtable 的实例/表配置、高性能 schema 设计与数据查询。当设计 Bigtable 行键、配置列族、编写用于 Bigtable 的 SQL 查询或客户端库代码（Java、Go、Python），或诊断性能/热点问题时使用。此外，使用 gcloud 或 cbt CLI 配置 Bigtable 集群时也可使用。请勿用于通用的 Cloud SQL 管理。"}

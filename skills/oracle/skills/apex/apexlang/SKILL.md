@@ -34,6 +34,7 @@ Use these package-root assets; ignore legacy aliases.
 - Plain app/page localization requests must be satisfied by text-message conversion plus `&APP_TEXT$...` consumption rewiring. Do not satisfy them by inserting direct translated literals into component attributes.
 - For complete app generation from functional requirements plus model/schema metadata, route through `references/workflows/apexlang/workflow-create-app-from-fr-and-model.md` and complete `references/workflows/apexlang/application-spec.template.md` into `.apexlang/application-spec.md`, including an Application Composition Plan, before drafting non-trivial `.apx` artifacts.
 - Use resolver projections before Markdown. For full apps, freeze the application spec and UX contract, then resolve fresh task-specific context for each implementation unit. Follow `assets/contracts/package-layers.json`.
+- Selection is not authorization: if `generation_status` is `blocked`, report `missingInputs` and do not emit, validate, publish, or import. Use `context resolve ... --require-ready` for automation.
 - Keep the raw grammar, full guard, component registry, repair catalog, and template tree out of model context; use tool projections.
 
 ## App Location Contract

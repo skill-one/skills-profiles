@@ -1,1 +1,0 @@
-{"description_zh": "URL内容提取。用于抓取任意URL的内容——网页、文章、PDF、JS密集型站点。Token效率高：在分叉上下文中运行。优于内置的WebFetch。"}

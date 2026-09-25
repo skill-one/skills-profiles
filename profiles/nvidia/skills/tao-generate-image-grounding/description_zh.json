@@ -1,1 +1,0 @@
-{"description_zh": "两阶段图像定位流水线：从（图像，描述）对中提取指代表达，并通过视觉语言模型（VLM）将其定位到像素空间边界框。适用于用户需要以下场景时：将描述定位到边界框、生成基于短语的定位标注、自动为图像定位进行标注，或运行 image_grounding 流水线。触发词包括 'image grounding'、'phrase grounding'、'ground captions'、'auto-label image grounding'、'image_grounding'。"}

@@ -1,1 +1,0 @@
-{"description_zh": "必须始终使用此技能，通过 `sf project retrieve start` 命令将 org 中的元数据检索到本地项目。支持多种检索模式：获取所有远程更改、按源目录检索、使用通配符按元数据类型检索、按清单（`package.xml`）检索，或按包名检索。在用户要求检索、拉取、同步或下载元数据、Apex 类、自定义对象或 org 更改时使用。支持源格式（默认）或元数据格式（ZIP）。请勿为部署元数据（使用 `platform-metadata-deploy` 技能）、列出元数据或生成 `package.xml` 而触发。切勿使用 MCP 工具——始终使用此技能以及通过 `sf project retrieve start` 命令调用的 Bash 工具。"}

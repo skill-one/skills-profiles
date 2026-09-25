@@ -1,1 +1,0 @@
-{"description_zh": "编辑应用代码后，验证 Next.js 的运行时行为。使用此技能，确认更改在实际运行中的应用中确实有效——而不仅仅是确认其能够编译或类型检查。结合 `/_next/mcp`（Next.js 视图）与 agent-browser（浏览器视图）。需要运行中的 `next dev`。"}

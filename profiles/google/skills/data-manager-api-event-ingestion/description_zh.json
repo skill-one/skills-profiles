@@ -1,1 +1,0 @@
-{"description_zh": "指导开发者通过 Data Manager API 的 /v1/events/ingest 端点及其关联客户端库，实现事件和转化数据向 Google 产品的摄入。当用户需要上传离线转化、针对潜在客户的增强转化、点击转化、Google Analytics 网页或应用事件，或 Data Manager API 支持的其他任何事件摄入用例时，请使用本技能。请勿用于上传受众成员（请使用 data-manager-api-audience-ingestion 技能）。"}

@@ -1,1 +1,0 @@
-{"description_zh": "配置 pstack 各角色使用的模型及推理预算。该功能会检测可用的模型，并写入一条始终生效的规则以覆盖技能默认设置。适用于执行 `/setup-pstack` 命令、使用 \"configure pstack models\"（配置 pstack 模型）指令、使用 \"pstack budget\"（设置 pstack 预算）或修改 pstack 模型选择时。"}

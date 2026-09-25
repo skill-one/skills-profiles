@@ -1,1 +1,0 @@
-{"description_zh": "RT-DETR（Real-Time DEtection TRansformer）是一款面向二维目标检测的模型。其设计专注于实时推理，具备高准确性，并支持知识蒸馏与量化，以实现部署优化。适用于对 TAO RT-DETR 模型进行训练、评估、知识蒸馏、量化、导出或运行推理。触发短语包括：\"train RT-DETR\"、\"real-time DETR\"、\"低延迟目标检测\"、\"RT-DETR 知识蒸馏/量化\"。"}

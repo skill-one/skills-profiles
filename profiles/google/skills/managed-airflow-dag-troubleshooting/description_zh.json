@@ -1,1 +1,0 @@
-{"description_zh": "为在 Managed Service for Apache Airflow（MSAA；原 Cloud Composer）中对 Apache Airflow DAGs（失败的 DAG 运行和任务实例）进行故障排查提供指导。适用于排查 DAG 运行或任务实例失败原因时使用。当需要为 Managed Airflow 环境性能提供整体建议时，请勿使用。"}

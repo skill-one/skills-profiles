@@ -1,1 +1,0 @@
-{"description_zh": "在 Google Cloud 上设计、构建和部署 AI 智能体或多智能体系统。提供交互式工作流，用于收集需求、推荐量身定制的架构，并生成部署说明。在 Google Cloud 上设计或实现智能体系统时适用。不适用于通用的 Google Cloud 解决方案架构（请使用 google-cloud-solution-architecture 替代），也不适用于仅针对单一产品且无智能体上下文约束的特定任务。"}

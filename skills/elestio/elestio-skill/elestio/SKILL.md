@@ -1,22 +1,25 @@
 ---
 name: elestio
-description: Deploy and manage services on the Elestio DevOps platform. Use when the user wants to deploy apps, databases, or infrastructure on Elestio, manage projects, services, CI/CD pipelines, backups, domains, firewall, volumes, or billing. Covers 400+ open-source templates across 9 cloud providers.
-compatibility: Requires Node.js >= 18, the official Elestio CLI (npm install -g elestio), and an Elestio account with API token
+description: Deploy and manage services on the Elestio DevOps platform. Use when the user wants to deploy apps, databases, or infrastructure on Elestio, manage projects, services, clusters, CI/CD pipelines, backups, domains, firewall, volumes, or billing. Covers 400+ open-source templates across 9 cloud providers, database clustering, and deploying catalog software as CI/CD pipelines.
+compatibility: Requires an Elestio account with an API token, and either the official Elestio CLI >= 1.2.0 (Node.js >= 18, npm install -g elestio) or the Elestio MCP connector
 metadata:
   author: getateam
-  version: "2.0"
+  version: "2.3"
 ---
 
 # Elestio Skill
 
-**Version:** 2.0
+**Version:** 2.3
 **Purpose:** Deploy and manage services on Elestio DevOps platform
 **Status:** Ready to use
-**Last Updated:** 2026-02-19
+**Last Updated:** 2026-09-22
 
 Elestio is a fully managed DevOps platform. Dedicated VMs (not shared Kubernetes). 400+ open-source templates, 9 cloud providers, 100+ regions. Handles deployment, security, updates, backups, monitoring, support.
 
 This skill uses the **official Elestio CLI** (`elestio` command, installed via `npm install -g elestio`).
+When the **Elestio MCP connector** is available instead (tools such as `deploy_template`,
+`deploy_catalog_pipeline`, `list_clusters`), use its tools: the rules below apply the same way. See
+"Using the Elestio MCP connector" for the tool that matches each command.
 
 ---
 
@@ -48,29 +51,107 @@ Use this skill when:
 
 ## Decision Tree: What Should I Deploy?
 
-```
-Does user want to deploy their own custom code?
-+-- YES (from GitHub/GitLab) -> Automated CI/CD deployment
-|   1. elestio deploy cicd --project <id>
-|   2. elestio cicd create --auto --target <vmID> --name my-app --repo owner/repo --mode github
-|   (CLI auto-handles: SSH key, repo discovery, Dockerfile fix, build, start)
-|
-+-- YES (custom Docker) -> Manual CI/CD
-|   1. elestio deploy cicd --project <id>
-|   2. elestio ssh-keys add <vmID> --name "name" --key "key"
-|   3. elestio cicd create <pipeline.json>
-|   4. SSH in and configure
-|
-+-- NO -> Check if software is in catalog
-    |
-    +-- FOUND -> Use Phase 3 (Catalog Deploy)
-    |   elestio deploy <template> --project <id>
-    |
-    +-- NOT FOUND -> Use Phase 4 (CI/CD Target)
+There are THREE deployment shapes, not two. Choosing wrong is the single most
+common cause of a failed deployment.
 
-To check catalog:
-  elestio templates search <software-name>
 ```
+Is the software in the Elestio catalog?  (elestio templates search <name>)
+|
++-- YES
+|   |
+|   +-- Does the user want a managed, isolated VM?  (production databases,
+|   |   anything needing backups / monitoring / support)
+|   |       -> MANAGED SERVICE
+|   |          elestio deploy <template> --project <id>
+|   |
+|   +-- Does the user want replication / high availability?
+|   |       -> CLUSTER   (19 templates only: elestio clusters templates)
+|   |          elestio deploy <template> --cluster --nodes <n> --project <id>
+|   |
+|   +-- Does the user want it cheap, or several apps on one VM?
+|           -> PIPELINE FROM CATALOG TEMPLATE
+|              elestio cicd deploy-template <software> --target <vmID>
+|
++-- NO, it is the user's own code
+    |
+    +-- In a Git repo?
+    |       -> elestio cicd create --auto --target <vmID> --name X --repo owner/repo
+    |
+    +-- Just a docker-compose file?
+            -> elestio cicd create <pipeline.json>
+```
+
+### CRITICAL: catalog software in a pipeline
+
+To run catalog software (Vaultwarden, Redis, Metabase, ...) on a CI/CD target,
+you MUST use `elestio cicd deploy-template` (MCP: `deploy_catalog_pipeline`). You
+must NOT use `elestio cicd create` (MCP: `create_pipeline_docker` /
+`create_pipeline_auto`).
+
+`cicd create` builds an EMPTY pipeline. It does not know the software's ports,
+environment variables or install scripts, so the pipeline deploys and nothing
+runs. This is the most frequently reported failure.
+
+`deploy-template` reads the template's `elestio.yml` (from
+`github.com/elestio-examples/<software>`) and configures the pipeline from it.
+
+```bash
+# RIGHT
+elestio cicd deploy-template vaultwarden --target <vmID>
+
+# WRONG -- produces an empty pipeline
+elestio cicd create --auto --target <vmID> --name vaultwarden --repo elestio-examples/vaultwarden
+```
+
+Some catalog software cannot run as a pipeline today: n8n, Rybbit and WordPress
+mount files from their template repo, which only the git route provides, and the
+git route is unavailable. Both the CLI and the MCP refuse them with the file
+names. Offer a managed service instead (`elestio deploy <template>`).
+
+To check the catalog:
+  elestio templates search <software-name>     # everything
+  elestio cicd templates <software-name>       # deployable as a pipeline
+  elestio clusters templates                   # supports clustering
+
+---
+
+## Using the Elestio MCP connector
+
+When the Elestio MCP tools are available (claude.ai connector, Claude Code MCP
+server...), use them instead of the CLI. They cover the same operations, and
+every rule in this skill applies to them. Destructive tools require
+`"confirm": true`: ask the user first, exactly as you would before `--force`.
+
+| Task | CLI | MCP tool |
+|---|---|---|
+| Find software | `elestio templates search <name>` | `search_templates` |
+| Deploy a managed service | `elestio deploy <template>` | `deploy_template` |
+| Deploy a cluster | `elestio deploy <template> --cluster --nodes N` | `deploy_template` with `cluster_nodes` (and `cluster_mode`) |
+| What can cluster | `elestio clusters templates` | `list_cluster_templates` |
+| Wait for a deployment | `elestio wait <vmID>` | `wait_for_deployment` (for a cluster, pass the comma-separated `providerServerID` as-is) |
+| CI/CD target | `elestio deploy CI-CD-Target` | `deploy_cicd_target` |
+| **Catalog software in a pipeline** | `elestio cicd deploy-template <software> --target <vmID>` | **`deploy_catalog_pipeline`** (supports `dry_run`) |
+| Your own repo in a pipeline | `elestio cicd create --auto ...` | `create_pipeline_auto` |
+| Your own compose in a pipeline | `elestio cicd create <pipeline.json>` | `create_pipeline_docker` |
+| Pipelines on a target | `elestio cicd pipelines <vmID>` | `list_pipelines` |
+| Clusters in a project | `elestio clusters` | `list_clusters` |
+| Cluster and its nodes | `elestio clusters info <clusterID>` | `get_cluster` |
+| Promote a replica | `elestio clusters promote <clusterID> <vmID> --force` | `promote_cluster_node` |
+| Automatic failover on/off | `elestio clusters failover <clusterID> on\|off` | `set_cluster_auto_failover` |
+| Rebuild replicas | `elestio clusters resync <clusterID> --force` | `resync_cluster` |
+| Lock / unlock a cluster | `elestio clusters lock\|unlock <clusterID>` | `lock_cluster` / `unlock_cluster` |
+| Add a node | `elestio clusters add-node <clusterID> [--dry-run]` | `add_cluster_node` (supports `dry_run`) |
+| Remove a node | `elestio clusters remove-node <clusterID> <vmID> --force` | `remove_cluster_node` |
+| Cluster firewall | `elestio clusters firewall\|firewall-restrict\|firewall-open <clusterID>` | `get_cluster_firewall` / `set_cluster_port_access` |
+| Delete a cluster | `elestio clusters delete <clusterID> --force` | `delete_cluster` |
+| Build history of a pipeline | `elestio cicd pipeline-history <vmID> <pipelineID>` | `get_pipeline_history` |
+| Delete a pipeline | `elestio cicd pipeline-delete <vmID> <pipelineID> --force` | `delete_pipeline` |
+| Live logs of a service | `elestio logs <vmID>` | `get_service_logs` |
+| Audit trail of a service | `elestio audits <vmID>` | `get_service_audits` |
+
+The MCP has no dry run for `deploy_template`: before a cluster, state the VM
+count and monthly cost yourself (`list_providers_and_sizes` gives the price per
+VM) and get the user's go-ahead.
 
 ---
 
@@ -130,22 +211,102 @@ elestio deploy redis --project 112
 elestio deploy wordpress --project 112
 ```
 
-### Deploy Custom App from GitHub (Automated -- Recommended)
+### Deploy a Cluster (replication / HA)
+
+```bash
+# 1. Check the software supports clustering and see its minimum node count
+elestio clusters templates
+
+# 2. ALWAYS dry-run first: billing is per VM, --nodes 3 bills 3 VMs
+elestio deploy postgresql --cluster --nodes 3 --project 112 --dry-run
+
+# 3. Deploy
+elestio deploy postgresql --cluster --nodes 3 --project 112
+
+# 4. Follow it
+elestio clusters list --project 112
+elestio clusters info <clusterID>
+```
+
+Rules:
+- `--nodes` is the TOTAL, primary included. `--nodes 3` = 1 primary + 2 replicas.
+- ClickHouse, Vault, OpenSearch, RabbitMQ, rke2 and Nats need at least 3 nodes.
+- Everything else starts at 2. Maximum is 15.
+- `--cluster-mode multi-master` works for MySQL only; all others are
+  `primary-replica` (the default).
+
+### Deploy Catalog Software as a Pipeline (Vaultwarden, Redis, Metabase...)
+
+This is the route to use whenever the user wants catalog software on a CI/CD
+target rather than a dedicated VM.
+
+```bash
+# 1. Create a CI/CD target if none exists (this is a VM; pipelines share it)
+elestio deploy CI-CD-Target --project 112 --name my-target
+# -> note the vmID
+
+# 2. Confirm the software is available as a pipeline template
+elestio cicd templates vaultwarden
+
+# 3. ALWAYS dry-run first: it prints the ports, env vars and lifecycle hooks
+#    that will be applied, and creates nothing
+elestio cicd deploy-template vaultwarden --target <vmID> --dry-run
+
+# 4. Deploy
+elestio cicd deploy-template vaultwarden --target <vmID>
+```
+
+On success the CLI prints the software's URL, login and generated password.
+
+**Two routes:**
+
+| | compose (default) | git (`--owner <git-user>`) |
+|---|---|---|
+| Needs a connected Git account | No | Yes |
+| Lifecycle scripts (preInstall/postInstall) | Skipped | Run |
+| Repo files the compose mounts | Unavailable | Available |
+| Works for | Templates needing no repo files | Every template |
+
+**The git route is currently unavailable**: it needs
+`POST /api/cicd/createRepoByTemplate`, which the Elestio API returns 404 for
+(the controller exists but is not registered in the backend route whitelist).
+
+**The compose route does not work for every template.** If the compose
+bind-mounts a file from the repo, the CLI refuses with the file names. Do NOT
+pass --force to get past it: Docker creates the missing file as a directory and
+the container fails to start. Tell the user that software needs the git route,
+which is currently blocked, and offer a managed service instead
+(`elestio deploy <template>`).
+
+Verified: vaultwarden, redis and metabase deploy cleanly on the compose route;
+n8n, rybbit and wordpress need the git route.
+
+ALWAYS verify a deployment instead of assuming it worked:
+
+```bash
+elestio cicd pipelines <vmID>                          # Build column must say "success"
+elestio cicd pipeline-history <vmID> <pipelineID>      # Status, duration, log file
+```
+
+### Deploy Custom App from GitHub (user's own code)
 
 ```bash
 # 1. Deploy CI/CD target
-elestio deploy cicd --project 112 --name my-cicd
+elestio deploy CI-CD-Target --project 112 --name my-cicd
 
-# 2. Auto-create pipeline (handles everything: SSH, Dockerfile, build, start)
+# 2. Auto-create pipeline
 elestio cicd create --auto --target <vmID> --name my-app --repo owner/repo --mode github --auth-id <authID>
 # -> Site is live at https://<name>-u<userID>.vm.elestio.app/
 ```
+
+Use this ONLY for the user's own repository. For catalog software, use
+`cicd deploy-template` instead -- see above.
 
 ### Deploy Custom App (Manual -- Docker mode)
 
 ```bash
 # 1. Deploy CI/CD target
-elestio deploy cicd --project 112 --name my-cicd
+elestio deploy CI-CD-Target --project 112 --name my-cicd
 
 # 2. Add SSH key for agent access
 elestio ssh-keys add <vmID> --name "agent-key" --key "ssh-ed25519 AAAA..."
@@ -165,71 +326,119 @@ cd /opt/app/<pipeline-name>
 
 #### Pipeline JSON Reference (Docker mode -- `createCiCdExistServer` payload)
 
-**CRITICAL:** The pipeline.json must match the API format exactly. Common mistakes are documented below.
+**Do not write this by hand.** Generate it with `elestio cicd template docker` and
+replace the `REPLACE` values. The endpoint takes the dashboard's whole form state, and every divergence
+has produced a 500 or a pipeline that never builds. Current shape (CLI 1.1.0,
+verified live):
 
 ```json
 {
-  "CICDMode": "DockerCompose",
-  "pipelineName": "my-pipeline",
-  "configData": {
-    "runTime": "Docker Compose",
-    "framework": "NoFramework",
-    "version": "20",
-    "buildCommand": "",
-    "runCommand": "",
-    "installCommand": "",
-    "buildDir": ""
+  "cluster": {
+    "isCluster": false,
+    "createNew": false,
+    "target": {
+      "displayName": "REPLACE",
+      "id": "REPLACE",
+      "serverName": "REPLACE",
+      "vmID": "REPLACE",
+      "vmProvider": "REPLACE",
+      "vmRegion": "REPLACE",
+      "levelName": "Elestio-services",
+      "projectID": "REPLACE"
+    }
   },
+  "gitData": {},
   "imageData": {
     "isPrivate": false,
-    "compose": "version: '3.3'\nservices:\n  app:\n    image: nginx:alpine\n    restart: always\n    ports:\n      - 172.17.0.1:3000:80",
+    "compose": "services:\n  nginx:\n    image: nginx:alpine\n    ports:\n      - \"172.17.0.1:3000:80\"\n    volumes:\n      - ./html:/usr/share/nginx/html:ro",
     "dockerExample": "",
     "repoName": "CustomDocker"
   },
-  "gitData": {},
-  "authID": null,
-  "isPublicGitRepo": false,
-  "gitVolumeConfig": [{}],
-  "cluster": {
-    "target": {
-      "vmID": 848528,
-      "vmProvider": "netcup",
-      "vmRegion": "nbg",
-      "levelName": "MEDIUM-2C-4G",
-      "projectID": 74333
-    }
+  "configData": {
+    "buildDir": "/",
+    "rootDir": "/",
+    "runTime": "NodeJs",
+    "buildCmd": "",
+    "runCmd": "",
+    "installCmd": "",
+    "framework": "NoFramework",
+    "version": "20"
   },
   "ports": [
     {
       "protocol": "HTTPS",
-      "targetPort": 443,
-      "publishedPort": "3000",
-      "isDefault": "yes",
+      "targetProtocol": "HTTP",
+      "listeningPort": "443",
+      "targetPort": 3001,
+      "public": true,
+      "targetIP": "172.17.0.1",
+      "path": "/",
+      "isAuth": false,
+      "login": "",
+      "password": "",
       "loginTitle": ""
     }
   ],
-  "lifeCycleCommand": {
-    "preInstallCommand": "", "postInstallCommand": "",
-    "preBackupCommand": "", "postBackupCommand": "",
-    "preRestoreCommand": "", "postRestoreCommand": "",
-    "preUpdateCommand": "", "postUpdateCommand": "",
-    "preDeployCommand": "", "postDeployCommand": ""
-  },
-  "monoRepoWorkSpaces": [""],
-  "copyCommandConfig": [],
   "variables": "",
+  "isPublicGitRepo": false,
+  "exposedPorts": [
+    {
+      "protocol": "HTTP",
+      "hostPort": "3000",
+      "containerPort": "3000",
+      "interface": "172.17.0.1"
+    }
+  ],
+  "gitVolumeConfig": [
+    {}
+  ],
+  "isNeedToCreateRepo": false,
   "gitUserFormData": {
-    "selectedUser": "", "searchGitUser": "",
-    "gitOrgsFilteredList": { "GITHUB": [], "GITLAB": [] },
-    "gitOrgsList": [], "selectedRepo": {},
-    "thirdPartyRepoInput": "", "gitScopesUsers": [],
+    "selectedUser": "",
+    "searchGitUser": "",
+    "gitOrgsFilteredList": {
+      "GITHUB": [],
+      "GITLAB": []
+    },
+    "gitOrgsList": [],
+    "selectedRepo": {},
+    "thirdPartyRepoInput": "",
+    "gitScopesUsers": [],
     "thirdPartyRepoScopeName": "",
-    "getGitScopeUser": { "GITHUB": [], "GITLAB": [] },
-    "thirdPartyRepoName": "", "thirdPartyRepoPrivate": false,
+    "getGitScopeUser": {
+      "GITHUB": [],
+      "GITLAB": []
+    },
+    "thirdPartyRepoName": "",
+    "thirdPartyRepoPrivate": false,
     "loadSearch": false
-  }
+  },
+  "lifeCycleCommand": {
+    "preInstallCommand": "",
+    "postInstallCommand": "",
+    "preBackupCommand": "",
+    "postBackupCommand": "",
+    "preRestoreCommand": "",
+    "postRestoreCommand": "",
+    "preUpdateCommand": "",
+    "postUpdateCommand": "",
+    "preDeployCommand": "",
+    "postDeployCommand": ""
+  },
+  "monoRepoWorkSpaces": [
+    ""
+  ],
+  "copyCommandConfig": [],
+  "CICDMode": "DockerCompose",
+  "projectID": "REPLACE",
+  "pipelineName": "REPLACE",
+  "isMovePipeline": false,
+  "authID": null
 }
 ```
+
+`cluster.target` values come from `elestio cicd targets`: `id` is the target's
+**serverID** (the backend reads it), `vmID` its vmID.
 
 **Common payload mistakes to avoid:**
 
@@ -238,16 +447,17 @@ cd /opt/app/<pipeline-name>
 | `CICDMode` | `"DOCKER"` | `"DockerCompose"` |
 | `configData.runTime` | `runtime` (lowercase t) | `runTime` (capital T) |
 | `configData.framework` | `""` | `"NoFramework"` |
-| `configData.version` | `""` | `"20"` |
 | `imageData` | `{ imageName, imageTag, registryUrl }` | `{ isPrivate, compose, dockerExample, repoName }` |
 | `gitData` (docker mode) | `{ projectName, branch, ... }` | `{}` (empty object) |
 | `authID` (docker mode) | `"0"` | `null` |
 | `isPublicGitRepo` | `"false"` (string) | `false` (boolean) |
 | `gitVolumeConfig` | `[]` | `[{}]` |
-| `ports[].loginTitle` | (missing) | `""` (empty string, required) |
-| `nonRepoWorkSpaces` | present | remove — use `monoRepoWorkSpaces` instead |
-| `cluster.target` | only `vmID` | must include `vmProvider`, `vmRegion`, `levelName`, `projectID` |
-| `variables` | omitted or `[]` (array) | `""` (empty string; backend runs variables.trim()) |
+| `ports[]` | `{ targetPort, publishedPort, isDefault }` | `{ protocol, targetProtocol, listeningPort, targetPort, targetIP, public, path, isAuth, login, password, loginTitle }` |
+| `exposedPorts` | omitted | `[{ protocol, hostPort, containerPort, interface }]` |
+| `cluster.target` | only `vmID` | `id` (serverID), `vmID`, `vmProvider`, `vmRegion`, `levelName`, `projectID`, `displayName`, `serverName` |
+| `nonRepoWorkSpaces` | present | remove -- use `monoRepoWorkSpaces` instead |
+| `variables` | omitted or `[]` (array) | `""` or `"KEY=value\nKEY2=value2"` (string; backend runs variables.trim()) |
+| `lifeCycleCommand` (compose, no repo) | hook paths such as `./scripts/preInstall.sh` | all `""`: the agent chmods the paths before docker compose and fails the build |
 
 ---
 
@@ -292,7 +502,8 @@ elestio services                   # List all services
 elestio services --project 123     # Filter by project
 elestio service <vmID>             # Service details
 elestio deploy <template> --project X --name Y
-elestio deploy cicd --project X    # Deploy CI/CD target
+elestio deploy <template> --cluster --nodes 3   # Cluster (see Clusters below)
+elestio deploy CI-CD-Target --project X         # Deploy a CI/CD target VM
 elestio delete-service <vmID> --force
 elestio move-service <vmID> <targetProjectId>
 elestio wait <vmID>                # Wait for deployment
@@ -404,6 +615,8 @@ elestio ssh <vmID>                 # SSH terminal URL
 elestio ssh <vmID> --direct        # Direct SSH command
 elestio vscode <vmID>              # VSCode web URL
 elestio files <vmID>               # File explorer URL
+elestio logs <vmID>                # Live app logs (temporary URL); --mode install for the install log
+elestio audits <vmID> [--days 7]   # Who did what on the service
 ```
 
 ### Volumes
@@ -421,14 +634,72 @@ elestio volumes delete <vmID> <volumeID>
 elestio volumes protect <vmID> <volumeID>
 ```
 
+### Clusters
+
+```bash
+elestio clusters templates                  # Software that supports clustering
+elestio clusters                            # List clusters in the project
+elestio clusters info <clusterID>           # Details + nodes
+elestio clusters nodes <clusterID>          # Active nodes only
+
+# Creation goes through deploy, not through clusters
+elestio deploy <template> --cluster --nodes <n> [--cluster-mode multi-master]
+
+# Operations -- all destructive ones require --force
+elestio clusters promote <clusterID> <vmID> --force   # Promote a replica
+elestio clusters failover <clusterID> on|off          # AUTOMATIC failover switch, does not switch now
+elestio clusters resync <clusterID> --force           # ERASES replica data
+elestio clusters lock <clusterID>                     # Termination protection
+elestio clusters unlock <clusterID>
+elestio clusters delete <clusterID> --force           # Deletes ALL nodes (not delete-service)
+
+# Nodes -- dry-run add-node first: billed as one more VM
+elestio clusters add-node <clusterID> --dry-run       # Copies the primary: provider, region, size, version
+elestio clusters add-node <clusterID> [--size X] [--region Y]
+elestio clusters remove-node <clusterID> <vmID> --force   # Replicas only
+
+# Firewall -- applies to every node; the cluster's own nodes stay allowed
+elestio clusters firewall <clusterID>
+elestio clusters firewall-restrict <clusterID> --port 25432 --ips 203.0.113.7,198.51.100.0/24
+elestio clusters firewall-open <clusterID> --port 25432
+```
+
+**Constraints (the CLI enforces these before calling the API):**
+
+| Rule | Value |
+|---|---|
+| `--nodes` counts | Total nodes, primary included |
+| Minimum, most software | 2 |
+| Minimum: ClickHouse, Vault, OpenSearch, RabbitMQ, rke2, Nats | 3 (quorum) |
+| Maximum | 15 |
+| `--cluster-mode multi-master` | MySQL only |
+| Billing | Per VM. `--nodes 5` bills 5 VMs. |
+| Switching primary by hand | `promote`, NOT `failover` (which only toggles automatic failover) |
+| Replicas | Read-only, and no SSL: `sslmode=require` fails on a replica |
+| `add-node` prerequisites | Remote backups on the primary (`elestio backups auto-enable <vmID>`), primary-replica mode |
+| After `add-node` | The VM deploys, then Elestio spends a few minutes making it a replica. The cluster reads `running` meanwhile; wait before other node or firewall changes (the CLI refuses them) |
+| Removing the primary | Not possible: `promote` a replica first, or delete the cluster |
+| Restricting access | `clusters firewall-restrict`, never `elestio firewall` on one node: it would drift from the others |
+
+NEVER deploy a cluster without running `--dry-run` first and telling the user
+the VM count and cost.
+
 ### CI/CD Pipelines
 
 ```bash
+# CATALOG SOFTWARE -> always use deploy-template (reads the template elestio.yml)
+elestio cicd templates [query]     # Catalog software deployable as a pipeline
+elestio cicd deploy-template <software> --target <vmID>
+elestio cicd deploy-template <software> --target <vmID> --dry-run
+elestio cicd deploy-template <software> --target <vmID> --owner <git-user>  # git route (currently 404)
+# Options: --name, --branch, --private, --non-org, --auth-id, --git-type,
+#          --repo-name, --build-cmd, --run-cmd, --install-cmd, --build-dir
+
 elestio cicd targets               # List CI/CD targets
 elestio cicd pipelines <vmID>      # List pipelines
 elestio cicd pipeline-info <vmID> <pipelineID>
 
-# Automated pipeline creation (recommended for GitHub/GitLab repos)
+# USER'S OWN REPO -> create --auto. Never use this for catalog software.
 elestio cicd create --auto --target <vmID> --name my-app --repo owner/repo --mode github
 elestio cicd create --auto --target <vmID> --name my-app --repo owner/repo --mode github --auth-id <id>
 # Modes: github, github-fullstack, gitlab, gitlab-fullstack, docker
@@ -459,7 +730,7 @@ elestio cicd registries
 elestio cicd registry-add --name X --username U --password P --url URL
 ```
 
-**Auto-create pipeline flow:** The CLI automatically discovers the Git account, finds the repo, creates the pipeline via API, adds an SSH key, writes a correct multi-stage Dockerfile (Node build + Nginx serve), builds the Docker image, starts the container, and verifies HTTP 200. The entire process takes ~2 minutes after CI/CD target is deployed.
+**Auto-create pipeline flow:** the CLI finds the connected Git account (or uses `--auth-id`), resolves the repo and the CI/CD target, and creates the pipeline through the API. Elestio then clones, builds and starts it; follow the build with `elestio cicd pipelines <vmID>` and `elestio cicd pipeline-history <vmID> <pipelineID>`.
 
 ### Billing
 
@@ -528,11 +799,14 @@ Agent: Deploys with all confirmed parameters
 3. **Check deployment status** -- After deploy, wait for `deploymentStatus = "Deployed"` before accessing
 4. **Never delete without confirmation** -- Always require `--force` flag
 5. **Use catalog when possible** -- Phase 3 (catalog) is simpler than Phase 4 (CI/CD)
+5b. **Catalog software in a pipeline -> `cicd deploy-template` (MCP: `deploy_catalog_pipeline`), NEVER `cicd create` (MCP: `create_pipeline_docker` / `create_pipeline_auto`)** -- those cannot know the software's ports, env vars or install scripts, so they produce a pipeline that deploys and runs nothing
 6. **Validate combos** -- Provider + datacenter + serverType must match `elestio sizes`
 7. **Account must be approved** -- New accounts need credit card + approval before deploying
 8. **ALWAYS follow the Interactive Deployment Procedure above** -- Never skip parameter questions
 9. **Set default project** -- Use `elestio config --set-default-project <id>` to avoid passing `--project` every time
 10. **Service belongs to project** -- When using `elestio service <vmID>`, ensure the vmID belongs to the current default project or specify `--project`
+11. **Dry-run anything that multiplies VMs** -- Always run `--dry-run` before a cluster deploy and tell the user the VM count and monthly cost; clusters bill per VM
+12. **`--nodes` is the total** -- `--nodes 3` is 1 primary + 2 replicas and bills 3 VMs, not 4
 
 ---
 
@@ -598,11 +872,18 @@ Not all cloud providers support all features. Use `--provider` to switch.
 
 ### After Creating CI/CD Target
 
-**Automated (recommended):**
-1. **Auto-create pipeline:** `elestio cicd create --auto --target <vmID> --name my-app --repo owner/repo --mode github --auth-id <id>`
-2. Site is live -- CLI handles SSH, Dockerfile, build, start automatically
+**Catalog software (Vaultwarden, Redis, Metabase...) -- use this:**
+1. **Check it is available:** `elestio cicd templates <software>`
+2. **Preview:** `elestio cicd deploy-template <software> --target <vmID> --no-git --dry-run`
+3. **Deploy:** `elestio cicd deploy-template <software> --target <vmID>`
+4. **Report the printed URL, login and password to the user**
+5. **Add a domain:** `elestio cicd domain-add <vmID> --pipeline <pipelineID> --domain myapp.example.com`
 
-**Manual:**
+**User's own repo:**
+1. **Auto-create pipeline:** `elestio cicd create --auto --target <vmID> --name my-app --repo owner/repo --mode github --auth-id <id>`
+2. Follow the build: `elestio cicd pipelines <vmID>` (Build column must say "success")
+
+**Manual docker-compose:**
 1. **Add SSH key:** `elestio ssh-keys add <vmID> --name "name" --key "key"`
 2. **Create pipeline:** `elestio cicd create pipeline.json`
 3. **SSH and configure:** `ssh root@<ipv4>`
@@ -612,7 +893,8 @@ Not all cloud providers support all features. Use `--provider` to switch.
 
 1. **Re-authenticate:** `elestio auth test`
 2. **Check status:** `elestio service <vmID>`
-3. **View logs:** `elestio cicd pipeline-logs <vmID> <pipelineID>`
+3. **View logs:** `elestio logs <vmID>` (service) or `elestio cicd pipeline-logs <vmID> <pipelineID>` (pipeline)
+3b. **See what changed:** `elestio audits <vmID>`
 4. **Restart stack:** `elestio restart-stack <vmID>`
 
 ---
@@ -644,12 +926,62 @@ elestio auth test
 - Check the correct project: `elestio services --project X`
 - vmID looks like: `12345678` (numeric)
 
-### Pipeline not working
+### Pipeline deployed but the software is not running (MOST COMMON)
+
+Almost always: the pipeline was created with `cicd create` instead of
+`cicd deploy-template`, so it has no ports, no environment variables and no
+install scripts.
+
+```bash
+# Confirm: a pipeline built correctly has env vars
+elestio cicd pipeline-info <vmID> <pipelineID>
+
+# Fix: delete it and redeploy through deploy-template
+elestio cicd pipeline-delete <vmID> <pipelineID> --force
+elestio cicd deploy-template <software> --target <vmID>
+```
+
+With the MCP connector the cause is the same: the pipeline was made with
+`create_pipeline_docker` or `create_pipeline_auto`. Redeploy it with
+`deploy_catalog_pipeline`.
+
+### Software starts then exits immediately
+
+The template declares `preInstall`/`postInstall` scripts, and the compose route
+has no repo checkout to run them from.
+
+```bash
+# See which hooks the template needs
+elestio cicd deploy-template <software> --target <vmID> --dry-run
+```
+
+If a "Lifecycle:" line appears, the software needs those scripts. The git route
+runs them but is currently unavailable (API returns 404 for
+createRepoByTemplate). Report this to the user rather than retrying.
+
+### "No elestio.yml found at ..."
+
+That software has no pipeline template and cannot be deployed as a pipeline.
+Deploy it as a managed service instead: `elestio deploy <template>`.
+
+### Pipeline not working (general)
 
 1. SSH into CI/CD target: `ssh root@<ipv4>`
 2. Check logs: `cd /opt/app/<pipeline-name> && docker-compose logs`
 3. Verify docker-compose.yml syntax
 4. Check port mapping: `172.17.0.1:3000` (internal network)
+
+### Cluster errors
+
+| Message | Cause |
+|---|---|
+| `does not support clustering` | Not one of the clusterable templates -- run `elestio clusters templates` |
+| `needs at least 3 nodes` | Quorum software (ClickHouse, Vault, OpenSearch, RabbitMQ, rke2, Nats) |
+| `does not support multi-master` | `--cluster-mode multi-master` works for MySQL only |
+| `cannot exceed 15 nodes` | Hard platform cap |
+| `remote backups are off` (add-node) | New nodes are seeded from the primary's remote backup: `elestio backups auto-enable <primary vmID>` |
+| `is busy (add-node)` | A node is still being configured; wait a few minutes |
+| `is the primary` (remove-node) | Promote a replica first, or delete the whole cluster |
 
 ### "variables.trim is not a function" (500 Pipeline.CreateFailed)
 
@@ -657,6 +989,8 @@ The `variables` field in the pipeline payload must be a **string**, never an arr
 
 - Correct: `"variables": ""` (no env vars) or `"variables": "KEY=value\nKEY2=value2"`.
 - Wrong: `"variables": []` or leaving the field out entirely.
+
+The CLI enforces this from 1.1.0 and the MCP connector sends it correctly. If you hit it with the CLI, upgrade: `npm install -g elestio@latest`.
 
 ---
 

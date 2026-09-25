@@ -1,1 +1,0 @@
-{"description_zh": "审查并推广暂存中的 wiki 页面至其最终位置。当 WIKI_STAGED_WRITES=true 且用户输入\"/wiki-stage-commit\"、\"review staged pages\"、\"commit staged writes\"、\"promote staged pages\"、\"approve staged changes\"或\"what's waiting in staging\"时使用。该功能展示每个暂存文件，供用户接受或拒绝，并将被接受的文件移至其最终 wiki 位置。被拒绝的文件会移回 _raw/ 以便手动编辑。"}

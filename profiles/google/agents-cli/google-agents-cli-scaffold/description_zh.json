@@ -1,1 +1,0 @@
-{"description_zh": "该技能应在用户希望“创建智能体项目”、“启动新的 ADK 项目”、“为我构建一个新的智能体”、“为我的项目添加 CI/CD”、“添加部署”、“增强我的项目”或“升级我的项目”时使用。它是 agents-cli 技能套件的一部分。本技能涵盖 `agents-cli scaffold create`、`scaffold enhance` 和 `scaffold upgrade` 命令、模板选项、部署目标以及原型优先的工作流。请勿用于编写智能体代码（ADK 项目请使用 `google-agents-cli-adk-code`）或部署操作（请使用 `google-agents-cli-deploy`）。"}

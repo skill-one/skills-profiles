@@ -1,1 +1,0 @@
-{"description_zh": "分析当 BigQuery 表或视图发生损坏、过期或修改时产生的下游影响（爆炸半径）。识别所有将受影响的下游表格、仪表板和处理流程。使用场景：\n- 对 BigQuery 表或视图执行爆炸半径或影响分析时使用。\n- 评估对 BigQuery 资产进行修改、删除或暂停更新的后果时使用。\n- 识别 BigQuery 资产的下游依赖（表格、仪表板、处理流程）时使用。\n\n请勿用于：\n- 通用的 BigQuery 查询或数据分析（请改用 BigQuery 相关工具）。\n- 非 BigQuery 资产（例如 Cloud Storage 文件），除非它们属于 BigQuery 血缘的一部分。\n- 直接创建或修改血缘链接。"}

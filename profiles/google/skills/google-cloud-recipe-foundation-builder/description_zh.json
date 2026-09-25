@@ -1,1 +1,0 @@
-{"description_zh": "为 Google Cloud 组织部署基准着陆区基础架构，并建立基于组织策略、资源层级文件夹与项目、计费关联以及集中日志与监控的安全护栏。部署 Google Cloud 推荐的安全控制措施与架构。适用于设置新的 Google Cloud 组织或建立安全、企业级的着陆区基础架构。\n\n请勿用于单个项目的接入（请改用 google-cloud-recipe-onboarding 或产品专用技能）。"}

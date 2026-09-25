@@ -1,8 +1,0 @@
-{
-  "defaultAccount": "me",
-  "accounts": {
-    "me": {
-      "apiToken": "pk_your_token_here"
-    }
-  }
-}
