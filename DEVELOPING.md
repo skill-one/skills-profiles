@@ -167,9 +167,12 @@ uv run python skill_zh.py <owner>/<repo>/<slug> --print   # print the request an
 rename-into-place write - with two differences. It sends the SKILL.md *body* (the front matter is
 identifying metadata, and the catalog and the other angle files already carry it), rendered from
 `prompts/skill_zh.md` and `prompts/skill_zh_user.md`, and it writes the one text file
-`<output_dir>/profiles/<skill>/skill_zh.md`: the translation alone. A body past `MAX_BODY_CHARS`
-(60 000 characters, in the script) is unusable input - a
-half-translated page must never pass for a whole one - and, like a missing description, drops the
+`<output_dir>/profiles/<skill>/skill_zh.md`: the translation alone. A body too long for one
+answer is cut on its own markdown seams (blank lines outside a code fence; a block with no seam
+of its own is cut between lines) into pieces of `MAX_CHUNK_CHARS` characters or fewer, each
+translated in its own call over the shared endpoint and fallback, and the page is the pieces
+rejoined on the paragraph seams. Every piece must come back - a half-translated page must never
+pass for a whole one - and an empty body, like a missing description, drops the
 skill with no call and no file.
 
 `index.py` joins the mirror's rows with the tree and writes `output/skills.jsonl`. It has no

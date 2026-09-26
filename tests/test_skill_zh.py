@@ -35,12 +35,12 @@ def source(config) -> str:
 
 
 def test_the_request_is_one_chat_turn(config):
-    """The same OpenAI shape as the description angle, with the skill's body as the one user turn
+    """The same OpenAI shape as the description angle, with the body's one piece as the user turn
     rendered from the prompt files."""
     body = skill_zh._request(config, ALPHA, source(config), "desc")
     system = common.render(common.load_prompt(config, skill_zh.PROMPT), to=skill_zh.TO)
-    user = common.render(common.load_prompt(config, skill_zh.USER_PROMPT),
-                         to=skill_zh.TO, text=common.skill_body(source(config)))
+    user = common.render(common.load_prompt(config, skill_zh.USER_PROMPT), to=skill_zh.TO,
+                         text=skill_zh.chunks(common.skill_body(source(config)))[0])
 
     assert body["model"] == common.TRANSLATE_MODEL
     assert body["messages"] == [
@@ -104,17 +104,110 @@ def test_main_writes_the_translation_alone(workdir, monkeypatch):
     assert "description:" not in text  # no front matter rides along
 
 
-def test_a_too_long_body_is_dropped_whole(workdir, monkeypatch):
-    """A half-translated page must never pass for a whole one: past the cap nothing is written
-    and the skill is unusable input, like one without a description."""
-    monkeypatch.setenv("SKILLS_PROFILES_DRY_RUN", "0")  # the gate is a real request's gate
+def test_a_body_under_the_budget_travels_whole(config):
+    """A body one answer can carry is not cut: one piece, the page itself."""
+    assert skill_zh.chunks(common.skill_body(source(config))) == [
+        common.skill_body(source(config)).rstrip("\n")]
+
+
+def test_a_fence_holds_its_blank_lines():
+    """A blank line inside a code fence is fence content, not a seam - the fence is one block."""
+    fence = "```py\nA\n\nB\n```"
+    assert skill_zh.blocks(f"\n\n{fence}\n\nafter") == [fence, "after"]
+
+
+def test_pieces_are_packed_on_block_seams_and_the_fence_stays_whole():
+    """The cut lands between blocks, so a code fence travels in one piece however full the page."""
+    fence = "```py\nA\n\nB\n```"
+    text = "\n\n".join(["a" * 30, fence, "b" * 30])
+
+    pieces = skill_zh.chunks(text, size=50)
+
+    assert len(pieces) == 2
+    assert fence in pieces[0]  # packed with the first block, never split
+    assert all(len(p) <= 50 for p in pieces)
+
+
+def test_the_pieces_rebuild_the_page():
+    """Whatever the packing, the pieces joined on the paragraph seams are the page again."""
+    text = "\n\n".join(["# Title", "a paragraph", "```py\nA\n\nB\n```",
+                       "- item one", "- item two"])
+
+    assert "\n\n".join(skill_zh.chunks(text, size=30)) == text
+
+
+def test_a_block_bigger_than_the_budget_is_cut_between_lines():
+    """A block with no seam of its own - a wall of prose, a long fence - is cut between its
+    lines as the last resort: every part under the budget, open and close of a fence landing
+    in the first and last part."""
+    text = "\n".join(f"line {i}" for i in range(30))
+
+    pieces = skill_zh.chunks(text, size=60)
+
+    assert len(pieces) > 1
+    assert all(len(p) <= 60 for p in pieces)
+    assert pieces[0].startswith("line 0")
+    assert pieces[-1].endswith("line 29")
+
+
+def test_a_single_line_longer_than_the_budget_rides_whole():
+    """A line no seam can shorten is carried whole: the truncation guard, not the cutter, owns
+    that failure."""
+    assert skill_zh.chunks("x" * 200, size=60) == ["x" * 200]
+
+
+def test_a_long_body_travels_in_pieces_and_writes_one_whole_page(workdir, monkeypatch):
+    """A body far past any answer's budget is translated piece by piece, and the page is the
+    pieces on the paragraph seams - one whole page, never a stack of fragments."""
+    monkeypatch.setenv("SKILLS_PROFILES_DRY_RUN", "0")
+
+    class Numbered:
+        def __init__(self, config, client=None):
+            self.n = 0
+
+        def ask(self, body: dict) -> str:
+            self.n += 1
+            return f"第 {self.n} 块"
+
+    monkeypatch.setattr(translate, "Translator", Numbered)
     config = common.Config()
     common.skill_md_path(config, ALPHA).write_text(
-        "---\nname: alpha\ndescription: d\n---\n\n" + "a" * (skill_zh.MAX_BODY_CHARS + 1),
+        "---\nname: alpha\ndescription: d\n---\n\n"
+        + "\n\n".join("x" * 9000 for _ in range(9)),  # ~81k chars, far past any one answer
         encoding="utf-8")
 
-    with pytest.raises(SystemExit, match="not translated"):
-        skill_zh.main([ALPHA])
+    assert skill_zh.main([ALPHA]) == 0
+
+    text = (common.profile_path(config, ALPHA, common.SKILL_ZH_ANGLE)
+            .with_suffix(".md")).read_text(encoding="utf-8")
+    n = len(skill_zh.chunks(common.skill_body(source(config))))
+    assert n > 1
+    assert text == "\n\n".join(f"第 {i} 块" for i in range(1, n + 1)) + "\n"
+
+
+def test_one_failed_piece_fails_the_whole_page(workdir, monkeypatch):
+    """A half-translated page must never pass for a whole one: one piece failing leaves nothing
+    on disk, and the skill fails as itself."""
+    monkeypatch.setenv("SKILLS_PROFILES_DRY_RUN", "0")
+
+    class SecondPieceFails:
+        def __init__(self, config, client=None):
+            self.n = 0
+
+        def ask(self, body: dict) -> str:
+            self.n += 1
+            if self.n == 2:
+                raise RuntimeError("response carries no translation")
+            return "第一块"
+
+    monkeypatch.setattr(translate, "Translator", SecondPieceFails)
+    config = common.Config()
+    common.skill_md_path(config, ALPHA).write_text(
+        "---\nname: alpha\ndescription: d\n---\n\n"
+        + "\n\n".join("x" * 9000 for _ in range(3)),  # three pieces
+        encoding="utf-8")
+
+    assert skill_zh.main([ALPHA]) == 1
 
     assert not common.profile_path(
         config, ALPHA, common.SKILL_ZH_ANGLE).with_suffix(".md").exists()

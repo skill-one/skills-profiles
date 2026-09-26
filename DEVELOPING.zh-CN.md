@@ -149,8 +149,10 @@ uv run python skill_zh.py <owner>/<repo>/<slug> --print   # 打印请求就停�
 只有两处不同。它发送的是 SKILL.md *正文*（front matter 是标识性元数据，清单和其他角度文件已
 经携带），两段话从 `prompts/skill_zh.md` 和 `prompts/skill_zh_user.md` 渲染；它写的是一个文本
 文件 `<output_dir>/profiles/<skill>/skill_zh.md`：只有译文本身。
-正文超过 `MAX_BODY_CHARS`（脚本内，60 000 字符）即为不可用输入——半截翻译的页面绝不能冒充完整
-的一页——和缺 description 一样，丢弃该 skill：不调用、不写文件。
+正文超过单次回答所能时，按其自身的 Markdown 缝合线切块（代码围栏外的空行；自身没有缝合线的
+块在行间切）为不超过 `MAX_CHUNK_CHARS` 字符的小块，逐块经同一端点及其兜底各自调用翻译，页面即
+各块按段落缝合线拼回的结果。每一块都必须回来——半截翻译的页面绝不能冒充完整的一页——空正文和
+缺 description 一样，丢弃该 skill：不调用、不写文件。
 
 `index.py` 把镜像的行与树拼接，写 `output/skills.jsonl`。它无参数、无网络、无调用，也不在构建
 路径上：`just index` 是你想要清单时跑的命令，`just sync` 跑它是因为 sync 移动了它下面的源层。

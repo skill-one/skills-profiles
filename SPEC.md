@@ -68,9 +68,9 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py`
   answers a closed set with one member of it and writes no prose. `translate.py` asks an
   OpenAI-compatible chat endpoint one free-text question — the description in, Chinese out — so
   `description_zh` is a plain string with no confidence and no distribution. `skill_zh.py` asks the
-  same chat endpoint to translate the SKILL.md body; the answer is the one Chinese page, and a body
-  too long for the endpoint is unusable input, since a half-translated page must never pass for a
-  whole one. All are thin angles
+  same chat endpoint to translate the SKILL.md body; a body too long for one answer is cut on its
+  own markdown seams and translated piece by piece, and the page is written only when every piece
+  came back, since a half-translated page must never pass for a whole one. All are thin angles
   over one shared kernel, `common.py`: the tree, the source, the prompt files, the retried call,
   the atomic write and the command itself.
 
