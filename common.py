@@ -50,9 +50,9 @@ FRONT_MATTER = re.compile(r"\A\s*---\r?\n(.*?)\r?\n---\r?\n", re.S)
 # about the part that was never sent. Said in the prompt's language, and inside the source.
 TRUNCATION_NOTE = "[注: 这份正文过长, 以上仅为开头, 余下内容已省略]"
 
-# 302.AI serves System One under the provider's own namespace; its generic `/v1` gateway has no
-# channel for one and answers `503 no available models` whatever model is asked for.
-DOMAIN_BASE_URL = "https://api.302.ai/typesafeai/v1/systemone"
+# TypeSafe's own API for its System One protocol. 302.AI proxies the same path, but its channel
+# answers 402 once the TypeSafe credits behind it run out - the official endpoint is the baseline.
+DOMAIN_BASE_URL = "https://api.typesafe.ai/v1/systemone"
 DOMAIN_MODEL = "jev-latest"
 # Xunfei Xingchen MaaS, OpenAI protocol (the address for services published after 2026-01-10).
 TRANSLATE_BASE_URL = "https://maas-api.cn-huabei-1.xf-yun.com/v2"

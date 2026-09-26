@@ -219,7 +219,7 @@ tests/                  # 离线单元测试加 just 端到端套件
 | 变量                                        | 默认值                    | 含义                                                                                                  |
 | ------------------------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | `SKILLS_PROFILES_API_KEY`                   | –                         | 类型化端点的密钥；没有密钥就不调用                                                                    |
-| `SKILLS_PROFILES_BASE_URL`                  | 302.AI 的 System One 路径 | `jev.py` 发往哪里；别的都不发                                                                         |
+| `SKILLS_PROFILES_BASE_URL`                  | TypeSafe 的 System One 路径 | `jev.py` 发往哪里；别的都不发                                                                         |
 | `SKILLS_PROFILES_MODEL`                     | `jev-latest`              | System One 模型，固定版本之上的别名                                                                   |
 | `SKILLS_PROFILES_TRANSLATE_API_KEY`         | –                         | 聊天端点的密钥；`translate.py` 和 `skill_zh.py` 用                                                    |
 | `SKILLS_PROFILES_TRANSLATE_BASE_URL`        | 星辰 MaaS v2 根地址       | OpenAI 兼容根地址；`translate.py` 发往 `{base}/chat/completions`                                      |

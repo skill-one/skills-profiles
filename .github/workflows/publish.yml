@@ -20,7 +20,7 @@ name: publish
 # batch. Unset means unset - an empty value is ignored, so a missing variable falls back to the
 # default instead of overriding it. A run without an angle's key fails every skill of that angle.
 #
-#   Secrets:   SKILLS_PROFILES_JEV_API_KEY (the domain's 302.AI key), SKILLS_PROFILES_API_KEY
+#   Secrets:   SKILLS_PROFILES_JEV_API_KEY (the domain's TypeSafe key), SKILLS_PROFILES_API_KEY
 #              (the Agnes key behind the translate fallback), SKILLS_PROFILES_TRANSLATE_API_KEY
 #   Variables: SKILLS_PROFILES_BASE_URL, SKILLS_PROFILES_MODEL,
 #              SKILLS_PROFILES_TRANSLATE_BASE_URL, SKILLS_PROFILES_TRANSLATE_MODEL,
@@ -57,9 +57,9 @@ concurrency:
 
 env:
   # the two endpoints and how to talk to them; the batch's own tunables are `just` knobs instead.
-  # The domain key is the 302.AI one - jev.py speaks the typed System One protocol, which only
-  # 302.AI serves - and the Agnes key stays under SKILLS_PROFILES_API_KEY, arming the translate
-  # fallback below
+  # The domain key is the TypeSafe one - jev.py speaks the typed System One protocol, which
+  # TypeSafe's own API serves - and the Agnes key stays under SKILLS_PROFILES_API_KEY, arming the
+  # translate fallback below
   SKILLS_PROFILES_API_KEY: ${{ secrets.SKILLS_PROFILES_JEV_API_KEY }}
   SKILLS_PROFILES_BASE_URL: ${{ vars.SKILLS_PROFILES_BASE_URL }}
   SKILLS_PROFILES_MODEL: ${{ vars.SKILLS_PROFILES_MODEL }}

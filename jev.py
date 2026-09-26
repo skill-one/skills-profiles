@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Label one skill's `domain` with Jev (TypeSafe System One) over 302.AI.
+"""Label one skill's `domain` with Jev (TypeSafe System One) over its own API.
 
 The domain angle. Its endpoint is not OpenAI-compatible - a `state` and typed `questions` in,
 typed `answers` out, and no free text. The state is rendered from `prompts/_system.md`: the
