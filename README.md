@@ -12,7 +12,7 @@ Chinese `skill_zh` page - and `skills.jsonl` is the catalog joining them.
 
 ## Progress
 
-- **domain**: 8335 of 9006 labelled (92.5%), covering 90.2% of the mirror's installs
+- **domain**: 9006 of 9006 labelled (100.0%), covering 100.0% of the mirror's installs
 - **translate**: 9006 of 9006 translated (100.0%), covering 100.0% of the mirror's installs
 - **skill_zh**: 9006 of 9006 skill pages translated (100.0%), covering 100.0% of the mirror's installs
 - **snapshot**: `dist-2026-09-24`, 2026-09-24T20:52:29Z -> 2026-09-24T21:22:24Z (29m54s)
