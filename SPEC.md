@@ -157,7 +157,10 @@ also takes `TRANSLATE_ENABLE_THINKING` (on by default) and `TRANSLATE_MAX_TOKENS
 is slower, so `TIMEOUT` is raised locally for that batch. The third angle, `skill_zh.py`, calls
 the same chat endpoint with the same `TRANSLATE_*` settings. Its default address and model point at
 Xunfei Xingchen MaaS serving Spark-X2.5-4B; the model id is whatever the console's service page
-shows, so a subscription spells it via `TRANSLATE_MODEL`.
+shows, so a subscription spells it via `TRANSLATE_MODEL`. A skill that endpoint fails is retried
+once on a fallback chat endpoint — `TRANSLATE_FALLBACK_BASE_URL`, `TRANSLATE_FALLBACK_MODEL` and
+`TRANSLATE_FALLBACK_API_KEY`; the defaults point at Agnes AI, and an unset key turns the fallback
+off.
 
 The batch knobs above are **not** environment variables: a run changes only because a run said so.
 

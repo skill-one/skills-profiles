@@ -176,8 +176,11 @@ def test_a_rejected_body_is_not_retried():
             return httpx.Response(400, text="bad request",
                                   request=httpx.Request("POST", url))
 
+    # the fallback key is pinned off: this test is about the primary's own retries, and a local
+    # `.env` that arms the fallback must not turn it into a fallback test
     client = translate.Translator(
-        common.Config(translate_api_key="k", max_retries=3), client=Fake())
+        common.Config(translate_api_key="k", translate_fallback_api_key=None, max_retries=3),
+        client=Fake())
     with pytest.raises(httpx.HTTPStatusError):
         client.ask({})
     assert len(calls) == 1
@@ -235,6 +238,106 @@ def test_no_key_is_no_call(workdir, monkeypatch):
     monkeypatch.delenv("SKILLS_PROFILES_TRANSLATE_API_KEY", raising=False)
     with pytest.raises(SystemExit, match="SKILLS_PROFILES_TRANSLATE_API_KEY"):
         translate.Translator(common.Config())
+
+
+# ---------------------------------------------------------------- the fallback
+
+
+def fallback_config(**overrides) -> common.Config:
+    return common.Config(
+        translate_api_key="k", translate_fallback_api_key="fk", **overrides)
+
+
+def test_a_rejected_body_is_asked_once_on_the_fallback(capsys):
+    """The second model is the second chance: a skill the primary fails outright - here a
+    rejected body - is tried once on the fallback endpoint, the same request with only the
+    model swapped in."""
+    seen: list[dict] = []
+
+    class Fake:
+        def post(self, url, headers=None, json=None):
+            seen.append({"url": url, "headers": headers, "json": json})
+            if len(seen) == 1:
+                return httpx.Response(400, text="bad request",
+                                      request=httpx.Request("POST", url))
+            return completion()
+
+    config = fallback_config(translate_fallback_base_url="https://example.test/v1/",
+                             translate_fallback_model="other-model")
+    body = translate.request_body(config, "hi")
+
+    def chat_url(base: str) -> str:
+        return f"{base.rstrip('/')}/chat/completions"
+
+    assert translate.Translator(config, client=Fake()).ask(body) == ZH
+    assert [c["url"] for c in seen] == [
+        chat_url(config.translate_base_url), "https://example.test/v1/chat/completions"]
+    assert seen[1]["headers"] == {"Authorization": "Bearer fk"}
+    assert seen[1]["json"] == {**body, "model": "other-model"}
+    assert "retrying on other-model" in capsys.readouterr().err
+
+
+def test_an_empty_answer_is_also_handed_to_the_fallback():
+    """A 200 that carries no translation fails the primary like any other answer, and the
+    fallback gets its turn at the same skill."""
+    calls: list[str] = []
+
+    class Fake:
+        def post(self, url, headers=None, json=None):
+            calls.append(url)
+            if len(calls) == 1:
+                return completion(content="  ")
+            return completion()
+
+    config = fallback_config()
+    assert translate.Translator(config, client=Fake()).ask({}) == ZH
+    assert len(calls) == 2
+
+
+def test_without_a_fallback_key_the_primary_error_stands():
+    """No second key, no second try: the failure is the primary's, exactly as before. The key
+    is pinned off in the constructor, so a local `.env` that arms the fallback cannot."""
+    calls: list[str] = []
+
+    class Fake:
+        def post(self, url, headers=None, json=None):
+            calls.append(url)
+            return httpx.Response(400, text="bad request",
+                                  request=httpx.Request("POST", url))
+
+    config = common.Config(translate_api_key="k", translate_fallback_api_key=None)
+    with pytest.raises(httpx.HTTPStatusError):
+        translate.Translator(config, client=Fake()).ask({})
+    assert len(calls) == 1
+
+
+def test_a_failing_fallback_raises_as_itself():
+    """A skill both endpoints fail is one failure: the last error answers, unswallowed."""
+    calls: list[str] = []
+
+    class Fake:
+        def post(self, url, headers=None, json=None):
+            calls.append(url)
+            return httpx.Response(400, text="bad request",
+                                  request=httpx.Request("POST", url))
+
+    with pytest.raises(httpx.HTTPStatusError):
+        translate.Translator(fallback_config(), client=Fake()).ask({})
+    assert len(calls) == 2
+
+
+def test_the_fallback_endpoint_is_configurable(workdir, monkeypatch):
+    """The same prefixed environment as everything else: the Agnes defaults are code, the
+    deployment's spelling is configuration."""
+    monkeypatch.setenv("SKILLS_PROFILES_TRANSLATE_FALLBACK_BASE_URL", "https://example.test/v1")
+    monkeypatch.setenv("SKILLS_PROFILES_TRANSLATE_FALLBACK_MODEL", "other-model")
+    monkeypatch.delenv("SKILLS_PROFILES_TRANSLATE_FALLBACK_API_KEY", raising=False)
+
+    config = common.Config()
+
+    assert config.translate_fallback_base_url == "https://example.test/v1"
+    assert config.translate_fallback_model == "other-model"
+    assert config.translate_fallback_api_key is None  # unset means unset - no fallback key
 
 
 # ------------------------------------------------------------------ the output

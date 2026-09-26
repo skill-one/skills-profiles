@@ -139,7 +139,9 @@ translate.py <id> [--print]   # 一次聊天：两个翻译模板用那句话描
 `TRANSLATE_MAX_TOKENS`；思考调用更慢，因此本地为翻译批次调大 `TIMEOUT`。第三个角度
 `skill_zh.py` 调用同一个聊天端点，共用同一组 `TRANSLATE_*` 设置。默认地址和模型指向讯飞
 星辰 MaaS 上的 Spark-X2.5-4B；模型 id 以控制台服务页显示的为准，订阅方通过 `TRANSLATE_MODEL`
-指定。
+指定。该端点失败的 skill 会在一个兜底聊天端点上重试一次——`TRANSLATE_FALLBACK_BASE_URL`、
+`TRANSLATE_FALLBACK_MODEL` 与 `TRANSLATE_FALLBACK_API_KEY`；默认指向 Agnes AI，不设密钥即关闭
+兜底。
 
 上面的批处理旋钮**不是**环境变量：一次运行只因为命令行明说才改变。
 

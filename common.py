@@ -58,6 +58,9 @@ DOMAIN_MODEL = "jev-latest"
 TRANSLATE_BASE_URL = "https://maas-api.cn-huabei-1.xf-yun.com/v2"
 # The model id the MaaS console's service page shows for Spark-X2.5-4B; override when it differs.
 TRANSLATE_MODEL = "spark-x2.5-4b"
+# Agnes AI, OpenAI protocol: the second chat endpoint a skill the first one fails is retried on.
+TRANSLATE_FALLBACK_BASE_URL = "https://apihub.agnes-ai.com/v1"
+TRANSLATE_FALLBACK_MODEL = "agnes-3.0-flash"
 
 _env = Environment(autoescape=False, keep_trailing_newline=True, undefined=StrictUndefined)
 
@@ -78,6 +81,12 @@ class Config(BaseSettings):
     translate_api_key: str | None = None
     translate_base_url: str = TRANSLATE_BASE_URL
     translate_model: str = TRANSLATE_MODEL
+    # the second chat endpoint translate.py hands a failed skill to, once. It shares TIMEOUT,
+    # MAX_RETRIES and the token budget with the primary; its key is said separately, not borrowed
+    # from `api_key`, so the two endpoints can change apart.
+    translate_fallback_api_key: str | None = None
+    translate_fallback_base_url: str = TRANSLATE_FALLBACK_BASE_URL
+    translate_fallback_model: str = TRANSLATE_FALLBACK_MODEL
     # Deep thinking: the endpoint reasons into `reasoning_content` before answering. It is not read
     # - the translation still arrives in `content` - but the model thinks first. On by default.
     translate_enable_thinking: bool = True

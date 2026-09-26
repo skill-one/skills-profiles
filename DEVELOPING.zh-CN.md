@@ -224,6 +224,9 @@ tests/                  # 离线单元测试加 just 端到端套件
 | `SKILLS_PROFILES_TRANSLATE_MODEL`           | `spark-x2.5-4b`           | 聊天模型 id；以控制台服务页显示的拼写为准                                                             |
 | `SKILLS_PROFILES_TRANSLATE_ENABLE_THINKING` | `true`                    | 发送 MaaS 的 `enable_thinking` 开关；模型先推理再作答（`reasoning_content`）                          |
 | `SKILLS_PROFILES_TRANSLATE_MAX_TOKENS`      | `32768`                   | 回答的 token 预算，含推理；端点自己的默认值只有 2048                                                  |
+| `SKILLS_PROFILES_TRANSLATE_FALLBACK_API_KEY`  | –                         | 兜底端点的密钥；不设即关闭兜底——失败的 skill 照旧失败                                                 |
+| `SKILLS_PROFILES_TRANSLATE_FALLBACK_BASE_URL` | Agnes AI 根地址           | 聊天端点失败的 skill 在此重试一次：同样的 OpenAI 兼容调用，只换掉 model 一个字段                       |
+| `SKILLS_PROFILES_TRANSLATE_FALLBACK_MODEL`    | `agnes-3.0-flash`         | 兜底模型 id；推理模型，读法相同（`content` 之外的 `reasoning_content`）                                |
 | `SKILLS_PROFILES_TIMEOUT`                   | `20`                      | 每次请求秒数，两个端点通用：一到三秒回答，闲置后首个调用会被丢弃。思考式翻译更慢——该批次请调大（120） |
 | `SKILLS_PROFILES_MAX_RETRIES`               | `3`                       | 额外重试次数，针对丢弃的调用或繁忙的网关；两个端点通用                                                |
 | `SKILLS_PROFILES_DRY_RUN`                   | `false`                   | 两个生产者都用假的：不发 API 调用                                                                     |

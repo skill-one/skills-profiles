@@ -22,7 +22,8 @@ name: publish
 #
 #   Secrets:   SKILLS_PROFILES_API_KEY, SKILLS_PROFILES_TRANSLATE_API_KEY
 #   Variables: SKILLS_PROFILES_BASE_URL, SKILLS_PROFILES_MODEL,
-#              SKILLS_PROFILES_TRANSLATE_BASE_URL, SKILLS_PROFILES_TRANSLATE_MODEL
+#              SKILLS_PROFILES_TRANSLATE_BASE_URL, SKILLS_PROFILES_TRANSLATE_MODEL,
+#              SKILLS_PROFILES_TRANSLATE_FALLBACK_BASE_URL, SKILLS_PROFILES_TRANSLATE_FALLBACK_MODEL
 
 on:
   workflow_dispatch:
@@ -61,6 +62,11 @@ env:
   SKILLS_PROFILES_TRANSLATE_API_KEY: ${{ secrets.SKILLS_PROFILES_TRANSLATE_API_KEY }}
   SKILLS_PROFILES_TRANSLATE_BASE_URL: ${{ vars.SKILLS_PROFILES_TRANSLATE_BASE_URL }}
   SKILLS_PROFILES_TRANSLATE_MODEL: ${{ vars.SKILLS_PROFILES_TRANSLATE_MODEL }}
+  # the translate fallback: a skill the chat endpoint fails is retried once on a second model,
+  # Agnes by default (common.py) - its key is the Agnes one, already held as the domain secret
+  SKILLS_PROFILES_TRANSLATE_FALLBACK_API_KEY: ${{ secrets.SKILLS_PROFILES_API_KEY }}
+  SKILLS_PROFILES_TRANSLATE_FALLBACK_BASE_URL: ${{ vars.SKILLS_PROFILES_TRANSLATE_FALLBACK_BASE_URL }}
+  SKILLS_PROFILES_TRANSLATE_FALLBACK_MODEL: ${{ vars.SKILLS_PROFILES_TRANSLATE_FALLBACK_MODEL }}
   # the endpoint drops calls under load instead of answering 429: more attempts turn a dropped
   # handshake into a billable answer, which matters more than speed for an overnight batch
   SKILLS_PROFILES_MAX_RETRIES: "6"
