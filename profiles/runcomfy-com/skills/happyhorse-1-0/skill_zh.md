@@ -1,0 +1,167 @@
+# HappyHorse 1.0 — 专业版包在 RunComfy
+
+[runcomfy.com](https://www.runcomfy.com/?utm_source=skills.sh&utm_medium=skill&utm_campaign=happyhorse-1-0) · [文本到视频](https://www.runcomfy.com/models/happyhorse/happyhorse-1-0/text-to-video?utm_source=skills.sh&utm_medium=skill&utm_campaign=happyhorse-1-0) · [GitHub](https://github.com/agentspace-so/runcomfy-skills/tree/main/happyhorse-1-0)
+
+**HappyHorse 1.0** — 目前在人工智能分析视频竞技场中排名第一（Elo 1333 t2v / 1392 i2v）— 在 **RunComfy 模型 API** 上托管。原生 1080p 视频，具有 **同步音频**（对话、环境音、音效）和多镜头角色一致性。
+
+```bash
+npx skills add agentspace-so/runcomfy-skills --skill happyhorse-1-0 -g
+```
+
+## 选择此模型的时机（与同类模型对比）
+
+| 您需要 | 使用 |
+|---|---|
+| 多镜头故事中具有角色/服装一致性 | **HappyHorse 1.0** |
+| 同一生成过程中具有原生音频 | **HappyHorse 1.0** |
+| 目前排名第一的盲选视频模型 | **HappyHorse 1.0** |
+| 详细唇形同步对话 + 参考视频 | Seedance 2.0 Pro |
+| 精细运动控制 + 多参考条件 | Wan 2.7 |
+| 超快迭代（每帧亚秒级） | LTX 2 |
+| 对现有素材进行电影级运动编辑 | Kling Video O1 |
+
+如果用户明确提到 "HappyHorse" / "happy horse video"，则无论何种情况都路由至此。
+
+## 前置条件
+
+1. **RunComfy CLI** — `npm i -g @runcomfy/cli`
+2. **RunComfy 账户** — `runcomfy login` 会打开浏览器设备码流程。
+3. **CI / 容器** — 设置 `RUNCOMFY_TOKEN=<token>` 而不是 `runcomfy login`。
+
+## 端点 + 输入模式
+
+### `happyhorse/happyhorse-1-0/text-to-video`
+
+| 字段 | 类型 | 必填 | 默认 | 备注 |
+|---|---|---|---|---|
+| `prompt` | string | 是 | — | 最多 2,500 字符。6 种语言（CN/EN/JP/KR/DE/FR）。 |
+| `aspect_ratio` | enum | 否 | `16:9` | `16:9`, `9:16`, `1:1`, `4:3`, `3:4` 仅限这些。 |
+| `resolution` | enum | 否 | `1080P` | `720P` 或 `1080P`。 |
+| `duration` | int | 否 | 5 | 3–15 秒。 |
+| `seed` | int | 否 | 0 | 0..2^31-1。重复使用以进行变体比较。 |
+| `watermark` | bool | 否 | true | 提供商水印。 |
+
+## 如何调用
+
+**默认（16:9 1080p 5s）：**
+
+```bash
+runcomfy run happyhorse/happyhorse-1-0/text-to-video \
+  --input '{"prompt": "<用户提示>"}' \
+  --output-dir <绝对路径>
+```
+
+**竖屏短视频（9:16, 8s, 无水印）：**
+
+```bash
+runcomfy run happyhorse/happyhorse-1-0/text-to-video \
+  --input '{
+    "prompt": "<用户提示>",
+    "aspect_ratio": "9:16",
+    "duration": 8,
+    "watermark": false
+  }' \
+  --output-dir <绝对路径>
+```
+
+**更经济的测试通道（720p）：**
+
+```bash
+runcomfy run happyhorse/happyhorse-1-0/text-to-video \
+  --input '{"prompt": "<用户提示>", "resolution": "720P", "duration": 3}' \
+  --output-dir <绝对路径>
+```
+
+CLI 提交，每 2 秒轮询一次直到终端，然后从结果中下载任何 `*.runcomfy.net` / `*.runcomfy.com` URL 到 `--output-dir`。标准输出是结果 JSON。标准错误是进度信息。
+
+## 提示 — 实际有效的部分
+
+**描述随时间变化的动作，而不是静态画面。** "一位女士从窗户转身，走到桌前两步，拿起杯子，举到脸上，喝了一口" 比 "一位女士在喝咖啡" 更好。
+
+**用普通英语描述相机和镜头。** 先加载镜头：`"广角镜头。..."` / `"跟拍镜头。..."` / `"固定三脚架，低角度。..."` 作为真实指令有效。指定镜头感觉：`"35mm 舞台镜头"`，`"浅景深"`，`"压暗阴影"`。
+
+**迭代时每个片段一个视觉节奏。** 不要堆积 "她走路 AND 狗跑 AND 车经过"。选择节奏，使其清晰，然后用多镜头提示叠加。
+
+**多镜头一致性** — 描述两个节奏时，在每个节奏中重述锚点：`"镜头 1：高挑的女士穿着红色羊毛大衣，蓝色围巾，在雨中巷子里。镜头 2：同一位女士穿着红色大衣 / 蓝色围巾，现在在屋檐下躲避。"` HappyHorse 保持外观，但需要锚点。
+
+**音频方向** — 说明你想要听到的内容：`"远处寺庙的钟声，湿路面上的脚步声，无对话"` 或 `"温暖友好的语调，英语"`。
+
+**反模式：**
+- 静态帧描述（无时间动词）→ 运动将模糊。
+- 冲突的风格方向 → 取消。
+- > 2500 字符的提示 → 退化。
+- 不在 5 种支持的宽高比内 → 422。
+
+## 优势领域
+
+| 用例 | 为什么选择 HappyHorse 1.0 |
+|---|---|
+| **多镜头品牌故事中具有一个一致的角色** | 原生跨镜头身份保留 |
+| **需要片段内配音 + 环境音的访谈式解说** | 同一通道中同步音频 |
+| **多语言短视频广告** | 6 种提示语言，无脚本质量下降 |
+| **电影级 1080p 交付** | 原生 1080p 输出，广播级 |
+| **盲选领导者，用于一般视频质量** | 在人工智能分析视频竞技场中排名第一 |
+
+## 示例提示（验证可产生强结果）
+
+**从模型页面（电影范围）：**
+
+```
+广角镜头。一位穿着橙色宇航服（蓝色灰色束带）的孤独宇航员在月球平原上滑雪，留下平行轨迹在灰色月壤中。
+行进中，插上杆，在 1/6 重力下推，有轻微向上漂移。滑雪轨迹沿线的细尘雾。月球地平线上的新月，蓝色白色光芒在黑色天空中。原始阳光，压暗阴影，无补光。8K 照片级真实感。
+```
+
+**多镜头一致性：**
+
+```
+镜头 1：中景特写。一位穿着海军色风衣的女士进入雨滑的霓虹灯东京巷子，向左看，举起雨伞。
+镜头 2：同一位女士穿着相同的海军色风衣，现在在拉面店的屋檐下，抖掉雨伞上的水。温暖室内光线，柔和交谈，轻柔雨声在金属屋顶上在音频中。
+```
+
+**竖屏平台原生：**
+
+```
+9:16 竖屏短视频。一位穿着黑色围裙的咖啡师拉出一杯浓缩咖啡，蒸汽升起进入晨光，浓郁的奶油慢慢形成。手持特写，浅景深，温暖咖啡馆氛围和蒸汽喷嘴的嘶嘶声。
+```
+
+## 限制
+
+- **时长上限 15 秒** — 对于更长的叙事，分段为多镜头提示并拼接。
+- **宽高比** — 仅支持 5 种文档记录的值；超宽电影级会裁剪或拒绝。
+- **音频仅在通道内** — 你不能传递外部音频来驱动唇形同步。对于音频驱动唇形同步，使用 Wan 2.7（它接受一个 `audio_url`）或 Seedance 2.0 Pro。
+- **无免费图像到视频** — i2v 由 HappyHorse 通过单独的管道支持；此处 t2v 端点是纯文本。
+
+## 退出代码
+
+`runcomfy` CLI 使用 sysexits 风格的代码：
+
+| 代码 | 含义 |
+|---|---|
+| 0  | 成功 |
+| 64 | 命令行参数错误 |
+| 65 | 输入 JSON 错误 / 模式不匹配（例如 `duration: 30` 会 422） |
+| 69 | 上游 5xx |
+| 75 | 可重试：超时 / 429 |
+| 77 | 未登录或令牌被拒绝 |
+
+完整参考：[docs.runcomfy.com/cli/troubleshooting](https://docs.runcomfy.com/cli/troubleshooting?utm_source=skills.sh&utm_medium=skill&utm_campaign=happyhorse-1-0).
+
+## 工作原理
+
+1. 技能调用 `runcomfy run happyhorse/happyhorse-1-0/text-to-video` 并使用符合模式的 JSON 正文。
+2. CLI POST 到 `https://model-api.runcomfy.net/v1/models/happyhorse/happyhorse-1-0/text-to-video` 并使用用户的令牌。
+3. 模型 API 返回 `request_id`；CLI 每 2 秒轮询一次 `GET .../requests/<id>/status`。
+4. 终端状态时，CLI 获取 `GET .../requests/<id>/result` 并下载任何主机以 `.runcomfy.net` 或 `.runcomfy.com` 结尾的 URL 到 `--output-dir`。其他 URL 列出但未获取。
+5. 轮询时按 Ctrl-C 发送 `POST .../requests/<id>/cancel`，以免为停止的 GPU 付费。
+
+## 此技能不是什么
+
+不是自托管视频运行器。不是能力授权 — 依赖于一个有效的 RunComfy 账户。
+
+## 安全与隐私
+
+- **令牌存储**：`runcomfy login` 将 API 令牌写入 `~/.config/runcomfy/token.json`，权限为 0600（仅所有者可读写）。设置 `RUNCOMFY_TOKEN` 环境变量以在 CI / 容器中绕过文件。
+- **输入边界**：用户提示作为 JSON 字符串通过 `--input` 传递给 CLI。CLI 不会扩展提示；它直接将 JSON 正文传输到模型 API。提示内容没有 shell 注入表面。
+- **第三方内容**：您传递的图像/掩码/视频 URL 由 RunComfy 模型服务器获取，而不是您的机器上的 CLI。将外部 URL 视为不受信任；基于图像的提示注入是任何图像编辑/视频编辑模型的已知风险。
+- **出站端点**：仅 `model-api.runcomfy.net`（请求提交）和 `*.runcomfy.net` / `*.runcomfy.com`（生成输出的下载白名单）。无遥测，无回调。
+- **生成文件大小上限**：CLI 中止任何单个下载 > 2 GiB，以防止恶意或失控的模型输出导致磁盘填满。
