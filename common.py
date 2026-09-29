@@ -5,8 +5,11 @@
 chat endpoint - and `index.py` and `readme.py` read the same tree through it.
 """
 
+from __future__ import annotations
+
 import argparse
 import json
+import random
 import re
 import sys
 import time
@@ -96,9 +99,12 @@ class Config(BaseSettings):
     # cut the thinking off mid-sentence; the documented ceiling is 32768, which is the "think as
     # long as it takes" setting for a one-line translation.
     translate_max_tokens: int = 32768
-    # the endpoints answer in one to three seconds, and a dropped request never answers at all, so
-    # the timeout is what decides how long a dead call waits before the retry that rescues it. With
-    # thinking on, a translation call is slower than that - raise SKILLS_PROFILES_TIMEOUT locally.
+    # The chat endpoint's own seconds per request. A thinking call reasons before it answers and
+    # routinely runs past the typed endpoint's patience, so this has its own, slower default.
+    translate_timeout: float = 120.0
+    # the typed endpoint answers in one to three seconds, and a dropped request never answers at
+    # all, so the timeout is what decides how long a dead call waits before the retry that rescues
+    # it. The chat endpoint does not share it - see translate_timeout above.
     timeout: float = 20.0
     max_retries: int = 3
     dry_run: bool = False
@@ -235,6 +241,22 @@ def write_json(path: Path, payload: dict) -> Path:
     return write_atomic(path, json.dumps(payload, ensure_ascii=False))
 
 
+def read_jsonl(path: Path) -> list[dict]:
+    """The rows of one jsonl file, in its own order. A line that is not valid json is an error
+    naming the file and the line, never a silently shorter catalog."""
+    rows: list[dict] = []
+    for line_no, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        try:
+            row = json.loads(line)
+        except ValueError as error:
+            raise ValueError(f"{path}: line {line_no} is not valid JSON") from error
+        if isinstance(row, dict):
+            rows.append(row)
+    return rows
+
+
 # ----------------------------------------------------------------------------- the HTTP call
 
 
@@ -245,12 +267,19 @@ def worth_retrying(error: httpx.HTTPError) -> bool:
     return True  # a timeout or a transport error never reached an answer
 
 
+def backoff(attempt: int) -> None:
+    """Exponential backoff with jitter: a pool of callers a gateway just throttled must not all
+    knock again at the same moment."""
+    time.sleep(2 ** attempt + random.random())
+
+
 def post_json(client: httpx.Client, url: str, key: str, body: dict, max_retries: int) -> Any:
     """POST one Bearer-authenticated json body and parse the answer, with the shared retry reading.
 
     The first call after an endpoint has been idle is regularly dropped with no response at all,
     which arrives as a timeout, so a dropped call is retried rather than recorded as a skill that
-    could not be built. A rejected body (400) fails at once.
+    could not be built. A rejected body (400) - and a 200 that is not json - fail at once: the
+    chat caller still has its fallback endpoint for those.
     """
     attempt = 0
     while True:
@@ -265,7 +294,7 @@ def post_json(client: httpx.Client, url: str, key: str, body: dict, max_retries:
             if attempt >= max_retries or not worth_retrying(error):
                 raise
             attempt += 1
-            time.sleep(2 ** attempt)
+            backoff(attempt)
 
 
 # --------------------------------------------------------- the one command both producers are

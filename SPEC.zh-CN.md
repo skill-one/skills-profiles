@@ -32,8 +32,8 @@ English: [SPEC.md](SPEC.md)
 - `domain`——13 个封闭英文分类之一：development · testing · data-analysis · devops-security ·
   office-productivity · content-creation · design-media · knowledge-management · business-ops ·
   finance-payment · education · lifestyle · other。可以直接过滤。
-- `confidence`——端点自己对这次调用有多接近的读数，由枚举上的分布导出；不是标签正确的概率，发
-  布它是为了排序，而不是当作概率来信任。
+- `confidence`——端点自己对这次调用有多接近的读数，端点没说时为 `null`；不是标签正确的概率，
+  发布它是为了排序，而不是当作概率来信任。
 - `probabilities`——那个分布，完整保留，因为无法从赢家恢复它：0.52 对 0.48 的抉择与 0.99 对
   0.01 的抉择说的不是一回事。所有值均为英文。
 
@@ -83,15 +83,15 @@ schema 里的 enum，也没有要保持同步的解码器。翻译任务正好�
 
 ## 3. 控制
 
-批处理是一个驱动器 `batch.py`，修饰符走命令行，为两个角度之一运行；justfile 只负责选择命令
-与旋钮。动词如下：
+批处理是一个驱动器 `batch.py`，修饰符走命令行，为一个角度或两个角度运行；justfile 只负责选择
+命令与旋钮。动词如下：
 
 | 命令                 | 作用                                                                                                                  |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `just build <angle>` | 构建接下来 `limit` 个还缺该角度文件的 skill（`domain` 或 `skill_zh`）；裸 `just` 即默认只做一个的 `build domain`      |
+| `just build <angle>` | 构建接下来 `limit` 个还缺该角度文件的 skill（`domain`、`skill_zh`，或 `all` 表示两者共池共窗口一次跑完）；裸 `just` 即默认只做一个的 `build domain` |
 | `just clean <angle>` | 逆窗口：从接下来 `limit` 个**已有**该文件的 skill 删除它（`domain`、`skill_zh`，或 `all` 表示两者）；`limit 0` 为全部 |
 | `just index`         | 写清单和两个 README：镜像的行拼接 description、其中文翻译与标签，以及发布根目录的首页                                 |
-| `just sync`          | 与镜像对账：拉取清单、合并新增了 skill 的仓库里的源，其余源原样不动                                                   |
+| `just sync`          | 与镜像对账：拉取清单、合并新增了 skill 的仓库里的源，其余源原样不动；镜像删掉的 skill 会在 stderr 提到，文件原地保留 |
 | `just test`          | 跑套件                                                                                                                |
 
 `build` 和 `clean` 是同一清单顺序上的互逆窗口，受同一个 `limit` 约束：build 数缺文件的
@@ -121,20 +121,23 @@ skill_zh.py <id> [--print]    # 仅开发：页面的请求数组，先描述后
 - 聊天调用默认带上 MaaS 深度思考开关（`enable_thinking`，`max_tokens` 取文档上限）：模型先把推理
   写进 `reasoning_content`；这份草稿不读取也不落盘——页面里只有 `content`，即译文本身。
 - 退出：`0` 已建 · `1` 输入或端点不可用 · `2` 参数错误。front matter 给不出 description 的
-  skill 属于不可用输入：被丢弃，stderr 一行，什么都不写。
+  skill 属于不可用输入：被丢弃，stderr 一行，什么都不写。批次本身只在窗口内所有任务都失败时才
+  退出 `1`——部分产出即是已发布的产出。
 
 ## 4. 配置
 
 `.env`（复制 [`.env.example`](.env.example)）或 `SKILLS_PROFILES_*`；env → `.env` → 默认值。它装
 两个端点：类型化端点是 `API_KEY`、`BASE_URL`、`MODEL`，OpenAI 兼容聊天端点是 `TRANSLATE_API_KEY`、
-`TRANSLATE_BASE_URL`、`TRANSLATE_MODEL`——外加两者共用的 `TIMEOUT`、`MAX_RETRIES`、`DRY_RUN`，以
-及必要时移动两个路径用的变量。聊天调用方还有 `TRANSLATE_ENABLE_THINKING`（默认开）和
-`TRANSLATE_MAX_TOKENS`；思考调用更慢，因此本地为该批次调大 `TIMEOUT`。页面角度 `skill_zh.py` 是
-聊天端点唯一的调用方，先要描述、再要正文各块，共用同一组 `TRANSLATE_*` 设置。默认地址和模型指向
-讯飞星辰 MaaS 上的 Spark-X2.5-4B；模型 id 以控制台服务页显示的为准，订阅方通过 `TRANSLATE_MODEL`
-指定。该端点失败的 skill 会在一个兜底聊天端点上重试一次——`TRANSLATE_FALLBACK_BASE_URL`、
+`TRANSLATE_BASE_URL`、`TRANSLATE_MODEL`——外加 `MAX_RETRIES`、`DRY_RUN`，以及必要时移动两个路径
+用的变量。超时是每个端点各一个：`TIMEOUT`（类型化端点一到三秒即答）与 `TRANSLATE_TIMEOUT`（默认
+120，因为思考调用先推理、常常超出类型化端点的耐心）。聊天调用方还有 `TRANSLATE_ENABLE_THINKING`
+（默认开）和 `TRANSLATE_MAX_TOKENS`。页面角度 `skill_zh.py` 是聊天端点唯一的调用方，先要描述、
+再要正文各块，共用同一组 `TRANSLATE_*` 设置。默认地址和模型指向讯飞星辰 MaaS 上的
+Spark-X2.5-4B；模型 id 以控制台服务页显示的为准，订阅方通过 `TRANSLATE_MODEL` 指定。该端点失败
+的 skill 会在一个兜底聊天端点上重试一次——`TRANSLATE_FALLBACK_BASE_URL`、
 `TRANSLATE_FALLBACK_MODEL` 与 `TRANSLATE_FALLBACK_API_KEY`；默认指向 Agnes AI，不设密钥即关闭
-兜底。
+兜底。兜底请求只换模型：MaaS 专属的思考开关不带过去——更严格的 OpenAI 兼容端点会因为不认识的
+字段拒绝整个请求。
 
 上面的批处理旋钮**不是**环境变量：一次运行只因为命令行明说才改变。
 

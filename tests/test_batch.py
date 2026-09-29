@@ -5,8 +5,8 @@
 the launcher wiring, the command-line-only dry knob, and the pool flags reaching the command.
 
 Everything runs offline: the listing and the repository tarballs are local `file://` files, and
-the endpoints are faked with DRY_RUN. The producer itself still runs as the per-skill subprocess
-the pool spawns - the stderr/failure-log contract lives across that boundary.
+the endpoints are faked with DRY_RUN. The producers run in-process too, one pool job calling
+into the producer module - the stderr/failure-log contract lives at that boundary.
 """
 
 import json
@@ -49,7 +49,7 @@ DELTA = "owner-d/repo-d/delta"
 
 def copy_project(project: Path) -> Path:
     """A throwaway copy of the project: the justfile, the scripts and prompts/, so the in-process
-    batch and its producer subprocesses all run from the copy."""
+    batch and the `just` launcher checks all run from the copy."""
     project.mkdir(parents=True, exist_ok=True)
     for name in SCRIPTS:
         shutil.copy(PROJECT_ROOT / name, project)
@@ -220,6 +220,30 @@ def test_a_call_that_fails_does_not_end_the_run(monkeypatch, capsys, project):
     assert "Traceback" in (project / "errors.log").read_text(encoding="utf-8")
 
 
+def test_a_batch_where_every_job_fails_is_status_one(monkeypatch, capsys, project):
+    """A window whose every producer failed is a broken run, not a green one: partial output is
+    published output, so the run survives it - and says so in its exit status."""
+    isolate(monkeypatch, project)
+    for skill_id in (ALPHA, BETA):
+        (snapshot(project / OUTPUT, skill_id) / "SKILL.md").chmod(0o000)
+
+    assert batch.main(["build", "domain", "--limit", "2", "--jobs", "4"]) == 1
+
+
+def test_build_all_fills_both_angles_in_one_pool(monkeypatch, capsys, project):
+    """`all` is the two angles over one shared window: the skills missing either file are built
+    for both, so one run leaves each of them whole."""
+    result = run_batch(monkeypatch, capsys, project,
+                       "build", "all", "--limit", "2", "--jobs", "4")
+
+    assert result.returncode == 0, result.stderr
+    for skill_id in (ALPHA, BETA):
+        assert json_names(project, skill_id) == ["domain.json"]
+        assert (outputs(project, skill_id) / "SKILL.zh.md").is_file()
+    assert not built(project, GAMMA)  # the window was two wide
+    assert not (outputs(project, GAMMA) / "SKILL.zh.md").exists()
+
+
 def test_a_repo_whose_name_starts_with_a_dot_is_still_a_skill(monkeypatch, capsys, project):
     result = run_batch(monkeypatch, capsys, project,
                        "build", "domain", "--limit", "0", "--jobs", "4")
@@ -334,11 +358,12 @@ def test_a_repository_already_on_disk_is_not_fetched_again(fresh, tmp_path, monk
 
 def test_a_repository_that_fails_to_fetch_fails_only_its_skills(
         fresh, tmp_path, monkeypatch, capsys):
-    """One repository that will not download does not end the batch; the next run, with the
-    tarballs in place, builds its skills."""
+    """One repository that will not download does not end the batch: its skills fail as data,
+    a run of nothing but failures is a broken run (exit 1), and the next run, with the tarballs
+    in place, builds them."""
     failed = run_batch(monkeypatch, capsys, fresh, "build", "domain", "--limit", "2",
                        "--jobs", "4", "--repo-tarball", repos_knob(tmp_path / "nowhere"))
-    assert failed.returncode == 0, failed.stderr
+    assert failed.returncode == 1, failed.stderr
     assert "failed to fetch" in failed.stderr
     assert not (outputs(fresh, ALPHA) / "domain.json").exists()
     assert not (outputs(fresh, BETA) / "domain.json").exists()
@@ -348,6 +373,26 @@ def test_a_repository_that_fails_to_fetch_fails_only_its_skills(
                      "--jobs", "4", "--repo-tarball", repos_knob(repos)).returncode == 0
     assert (outputs(fresh, ALPHA) / "domain.json").is_file()
     assert (outputs(fresh, BETA) / "domain.json").is_file()
+
+
+def test_a_shared_repository_is_downloaded_once(fresh, tmp_path, monkeypatch, capsys):
+    """The fetch is lazy and deduplicated: the first job on a repository unpacks it, every later
+    job on the same repository waits on that one download - the tarball count says so."""
+    repos = make_repo_tarballs(tmp_path / "repos")
+    added = [*SKILLS, {"id": "owner-a/repo-a/newcomer", "installs": "1",
+                       "description": "A second skill of the repository alpha came from."}]
+    listing = make_listing(tmp_path / "listing.jsonl", added)
+    repos = make_repo_tarballs(repos, added)
+    assert run_batch(monkeypatch, capsys, fresh, "sync", "--listing", f"file://{listing}",
+                     "--repo-tarball", repos_knob(repos)).returncode == 0
+
+    result = run_batch(monkeypatch, capsys, fresh, "build", "domain", "--limit", "0",
+                       "--jobs", "8", "--repo-tarball", repos_knob(repos))
+
+    assert result.returncode == 0, result.stderr
+    assert "from 6 repository tarball(s)" in result.stderr  # repo-a fetched once for its two skills
+    assert (outputs(fresh, ALPHA) / "domain.json").is_file()
+    assert (outputs(fresh, "owner-a/repo-a/newcomer") / "domain.json").is_file()
 
 
 def test_the_repositorys_own_readme_is_not_a_skill(fresh, tmp_path, monkeypatch, capsys):
@@ -448,6 +493,21 @@ def test_a_failed_sync_leaves_the_catalog_alone(project, tmp_path, monkeypatch, 
     assert (project / OUTPUT / "skills.jsonl").read_bytes() == before
 
 
+def test_sync_names_the_skills_the_mirror_dropped(project, tmp_path, monkeypatch, capsys):
+    """A skill the mirror no longer lists stays in the tree, and sync says so rather than
+    dropping it silently: its files are a decision to make, not a surprise to find."""
+    listing = make_listing(tmp_path / "listing.jsonl", SKILLS[1:])
+
+    result = _sync(monkeypatch, capsys, project, listing)
+
+    assert result.returncode == 0, result.stderr
+    assert f"the mirror dropped {ALPHA}" in result.stderr
+    assert (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").is_file()
+    lines = [json.loads(line) for line in
+             (project / OUTPUT / "skills.jsonl").read_text(encoding="utf-8").splitlines()]
+    assert ALPHA not in [line["id"] for line in lines]
+
+
 # ------------------------------------------------------ the zh page angle
 
 
@@ -545,6 +605,7 @@ def test_the_build_and_clean_recipes_reach_the_driver(project):
     cases = {
         ("build", "domain"): "batch.py build domain --limit 1 --jobs 32",
         ("build", "skill_zh"): "batch.py build skill_zh --limit 1 --jobs 32",
+        ("build", "all"): "batch.py build all --limit 1 --jobs 32",
         ("clean", "domain"): "batch.py clean domain --limit 1",
         ("clean", "skill_zh"): "batch.py clean skill_zh --limit 1",
         ("clean", "all"): "batch.py clean all --limit 1",
@@ -614,12 +675,16 @@ def test_clean_with_nothing_built_is_a_message(monkeypatch, capsys, project):
     assert "nothing to clean" in result.stderr
 
 
-def test_a_bad_angle_fails_before_anything_runs(project):
-    """An angle that is neither producer (nor `all` for clean) is an evaluation error."""
-    result = subprocess.run(["just", "--dry-run", "clean", "bogus"], cwd=project,
-                            capture_output=True, text=True, check=False, env=os.environ)
+def test_a_bad_angle_is_argparse_s_to_reject(project):
+    """The angle is passed through verbatim, so a bad one never deletes a thing: the driver's
+    argparse stops the run with the choices spelled out."""
+    result = subprocess.run(["just", f"py={sys.executable}", "clean", "bogus"], cwd=project,
+                            capture_output=True, text=True, check=False,
+                            env={k: v for k, v in os.environ.items()
+                                 if not k.startswith("SKILLS_PROFILES_")})
     assert result.returncode != 0
-    assert "'domain', 'skill_zh' or 'all'" in result.stderr
+    assert "invalid choice: 'bogus' (choose from domain, skill_zh, all)" in result.stderr
+    assert (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").is_file()  # nothing was touched
 
 
 def test_just_passes_the_pool_flags(project):

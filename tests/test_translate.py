@@ -64,6 +64,14 @@ def test_thinking_can_be_switched_off():
     assert off["max_tokens"] > 2048
 
 
+def test_the_chat_timeout_is_its_own_slower_default():
+    """A thinking call reasons before it answers and routinely runs past the typed endpoint's
+    patience, so the chat caller carries its own timeout instead of a knob a user must remember."""
+    config = common.Config(_env_file=None)  # the developer's local .env says nothing here
+    assert config.timeout == 20.0
+    assert config.translate_timeout == 120.0
+
+
 def test_braces_in_a_description_are_data_not_template(config):
     """The description is a Jinja *value*, not part of the template: braces a skill writes in its
     own line are sent as written and can never trip the renderer."""
@@ -235,7 +243,7 @@ def fallback_config(**overrides) -> common.Config:
 def test_a_rejected_body_is_asked_once_on_the_fallback(capsys):
     """The second model is the second chance: a skill the primary fails outright - here a
     rejected body - is tried once on the fallback endpoint, the same request with only the
-    model swapped in."""
+    model swapped in and the MaaS-only thinking switch left out."""
     seen: list[dict] = []
 
     class Fake:
@@ -257,7 +265,12 @@ def test_a_rejected_body_is_asked_once_on_the_fallback(capsys):
     assert [c["url"] for c in seen] == [
         chat_url(config.translate_base_url), "https://example.test/v1/chat/completions"]
     assert seen[1]["headers"] == {"Authorization": "Bearer fk"}
-    assert seen[1]["json"] == {**body, "model": "other-model"}
+    # only the model swapped - and the MaaS-only thinking switch left out: a stricter
+    # OpenAI-compatible endpoint would reject the whole request over the unknown field
+    assert seen[1]["json"] == {
+        **{k: v for k, v in body.items() if k != "enable_thinking"},
+        "model": "other-model"}
+    assert "enable_thinking" not in seen[1]["json"]
     assert "retrying on other-model" in capsys.readouterr().err
 
 

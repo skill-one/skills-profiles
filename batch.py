@@ -3,29 +3,33 @@
 
 The justfile is a thin launcher of this script. It owns the three things that used to be shell:
 walking `skills.jsonl` (parsed as jsonl, never sed'ed) to pick the next `limit` skills still
-missing the angle, downloading and unpacking each window repository once (the repository
-directory is the cache), and the `jobs`-wide pool that runs the producers - one producer process
-per skill. `sync` is the other subcommand: reconcile with the mirror - pull its listing, refetch
-the repositories it adds a skill to, and rewrite the catalog last.
+missing the angle, fetching each repository just in time (the repository directory is the cache:
+one download, unpacked by the first job that touches it), and the `jobs`-wide pool that runs the
+producers - one call into a producer module per skill, in this process. `sync` is the other
+subcommand: reconcile with the mirror - pull its listing, refetch the repositories it adds a skill
+to, and rewrite the catalog last.
 
 A failed job never ends the run: the skill is named on stderr and, when CI gives the paths, in
-FAIL_LOG/GEN_ERR_LOG, and the next run retries exactly it - its angle file is still missing.
+FAIL_LOG/GEN_ERR_LOG, and the next run retries exactly it - its angle file is still missing. A
+run whose every job failed is a broken run and says so in its exit status.
 
     batch.py build <angle> --limit N --jobs N [--repo-tarball URL]
     batch.py clean <angle> --limit N        # the inverse: forget the first N built outputs
     batch.py sync --listing URL [--repo-tarball URL]
 """
 
+from __future__ import annotations
+
 import argparse
-import json
 import os
 import shutil
-import subprocess
 import sys
 import tempfile
 import threading
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import traceback
+from concurrent.futures import Future, ThreadPoolExecutor, as_completed
+from importlib import import_module
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -40,8 +44,8 @@ DEFAULT_LISTING = ("https://raw.githubusercontent.com/skill-one/"
                    "skills-sh-mirror/dist/skills.jsonl")
 DEFAULT_REPO_TARBALL = "https://codeload.github.com/{owner}/{repo}/tar.gz/HEAD"
 
-# one pool job is one producer process: the per-skill isolation the command contract assumes
-ANGLE_SCRIPT = {common.DOMAIN_ANGLE: "jev.py", common.SKILL_ZH_ANGLE: "skill_zh.py"}
+# the producers are plain modules: one pool job is one call into one of them
+ANGLE_MODULE = {common.DOMAIN_ANGLE: "jev", common.SKILL_ZH_ANGLE: "skill_zh"}
 ANGLE_LABEL = {common.DOMAIN_ANGLE: "domain", common.SKILL_ZH_ANGLE: "zh page"}
 
 # FAIL_LOG/GEN_ERR_LOG are append-only CI handovers; workers append from threads.
@@ -58,19 +62,12 @@ class BatchError(Exception):
 def read_ids(path: Path) -> list[str]:
     """The skill ids in one jsonl file, in its own order; a line that is not json is a hard
     error rather than a silently empty catalog."""
-    ids: list[str] = []
-    for line_no, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
-        if not line.strip():
-            continue
-        try:
-            entry = json.loads(line)
-        except ValueError as error:
-            raise BatchError(
-                f"{path}: line {line_no} is not valid JSON - run `just sync` first") from error
-        skill = entry.get("id") if isinstance(entry, dict) else None
-        if isinstance(skill, str):
-            ids.append(common.skill_dir_name(skill))
-    return ids
+    try:
+        rows = common.read_jsonl(path)
+    except ValueError as error:
+        raise BatchError(f"{error} - run `just sync` first") from error
+    return [common.skill_dir_name(row["id"]) for row in rows
+            if isinstance(row.get("id"), str)]
 
 
 def catalog_ids(config: Config) -> list[str]:
@@ -94,14 +91,14 @@ def repo_dir(config: Config, repo: str) -> Path:
     return config.output_dir / common.SKILLS_DIR / Path(repo)
 
 
-def window(config: Config, angle: str, limit: int) -> list[str]:
-    """The next `limit` skills still missing the angle, in catalog order. A skill whose
-    repository is already on disk without a source for it can never be built, so it is skipped
-    forever; `0` means no cap. The count is work, not positions."""
-    out_name = common.ANGLE_FILES[angle]
+def window(config: Config, angles: list[str], limit: int) -> list[str]:
+    """The next `limit` skills still missing at least one of the angles, in catalog order. A skill
+    whose repository is already on disk without a source for it can never be built, so it is
+    skipped forever; `0` means no cap. The count is work, not positions."""
+    names = [common.ANGLE_FILES[angle] for angle in angles]
     work: list[str] = []
     for skill in catalog_ids(config):
-        if (common.skill_dir(config, skill) / out_name).is_file():
+        if all((common.skill_dir(config, skill) / name).is_file() for name in names):
             continue
         if repo_dir(config, repo_of(skill)).is_dir() and not \
                 common.skill_md_path(config, skill).is_file():
@@ -156,7 +153,7 @@ class Downloader:
         if self._client is not None:
             self._client.close()
 
-    def __enter__(self) -> "Downloader":
+    def __enter__(self) -> Downloader:
         return self
 
     def __exit__(self, *_: object) -> None:
@@ -182,33 +179,89 @@ def download_repos(config: Config, repos: list[str], template: str, jobs: int,
         print(f"failed to fetch: {repo} ({detail})", file=sys.stderr)
 
 
-def ensure_repositories(config: Config, skills: list[str], template: str, jobs: int,
-                        downloader: Downloader) -> None:
-    """Download the window's repositories that are not cached, then unpack every tarball once."""
-    repos = sorted({repo_of(skill) for skill in skills
-                    if not repo_dir(config, repo_of(skill)).is_dir()})
-    if not repos:
-        return
-    with tempfile.TemporaryDirectory(prefix="skills-tarballs-") as tmp:
-        stage = Path(tmp)
-        download_repos(config, repos, template, jobs, downloader, stage)
-        taken, processed = fetch.extract(stage, config)
-    print(f"fetched {taken} skill(s) from {processed} repository tarball(s)", file=sys.stderr)
+class LazyFetcher:
+    """The repositories a batch needs, fetched the first time a job touches one.
+
+    The pool hands every job this fetcher: the first job to need a repository starts its one
+    download (bounded by `fetch_jobs`), every later job on the same repository waits on that one
+    result - so a whole-snapshot run unpacks sources as it produces instead of fetching every
+    tarball up front, and a repository is still downloaded exactly once: the directory on disk is
+    the cache. A repository that will not download is named once and fails only its own skills.
+    """
+
+    def __init__(self, config: Config, template: str, fetch_jobs: int):
+        self.config = config
+        self.template = template
+        self._pool = ThreadPoolExecutor(max_workers=max(fetch_jobs, 1))
+        self._futures: dict[str, Future[str | None]] = {}
+        self._lock = threading.Lock()
+        self._taken = 0
+        self._processed = 0
+
+    def ensure(self, repo: str) -> str | None:
+        """The repository unpacked under the tree, or the error that stopped it."""
+        with self._lock:
+            future = self._futures.get(repo)
+            if future is None:
+                future = self._pool.submit(self._one, repo)
+                self._futures[repo] = future
+        return future.result()
+
+    def _one(self, repo: str) -> str | None:
+        owner, _, name = repo.partition("/")
+        url = self.template.replace("{owner}", owner).replace("{repo}", name)
+        try:
+            with tempfile.TemporaryDirectory(prefix="skills-tarballs-") as tmp:
+                tarball = Path(tmp) / f"{owner}_{name}.tgz"
+                with Downloader(self.config) as downloader:
+                    downloader.get(url, tarball)
+                taken = fetch.extract_tarball(tarball, self.config)
+        except (httpx.HTTPError, OSError) as error:
+            detail = f"{type(error).__name__}: {error}"
+            print(f"failed to fetch: {repo} ({detail})", file=sys.stderr)
+            return detail
+        with _log_lock:
+            self._taken += taken
+            self._processed += 1
+        return None
+
+    def close(self) -> None:
+        self._pool.shutdown()
+        if self._processed:
+            print(f"fetched {self._taken} skill(s) from {self._processed} repository tarball(s)",
+                  file=sys.stderr)
+
+    def __enter__(self) -> LazyFetcher:
+        return self
+
+    def __exit__(self, *_: object) -> None:
+        self.close()
 
 
 # ----------------------------------------------------------------------------- the pool
 
 
-def build_one(angle: str, skill: str) -> bool:
-    """Run one producer process on one skill. Its stderr is the job's whole output: forwarded on
-    success, handed to GEN_ERR_LOG on failure beside the FAIL_LOG line CI groups partial runs by.
-    """
-    script = Path(__file__).resolve().parent / ANGLE_SCRIPT[angle]
-    result = subprocess.run([sys.executable, str(script), skill],
-                            capture_output=True, text=True, check=False)
-    if result.returncode == 0:
-        sys.stderr.write(result.stderr)
-        return True
+def build_one(config: Config, angle: str, skill: str, fetcher: LazyFetcher) -> str:
+    """Run one producer in this process on one skill: "built", "skipped" - its repository holds no
+    source for it, so it can never be built and the window skips it next time - or "failed". A
+    failure - a repository that will not download, any producer exception, a SystemExit for a
+    missing key included - is one stderr line here and the traceback in GEN_ERR_LOG beside the
+    FAIL_LOG line CI groups partial runs by."""
+    repo = repo_of(skill)
+    detail: str
+    # the repository directory on disk is the cache: there means fetched
+    error = None if repo_dir(config, repo).is_dir() else fetcher.ensure(repo)
+    if error is None and common.skill_md_path(config, skill).is_file():
+        try:
+            import_module(ANGLE_MODULE[angle]).main([skill])
+        except (Exception, SystemExit):  # a producer failure is data, not a crash
+            detail = traceback.format_exc()
+        else:
+            return "built"
+    elif error is not None:
+        detail = f"failed to fetch: {repo} ({error})"
+    else:
+        return "skipped"
     with _log_lock:
         fail_log = os.environ.get("FAIL_LOG")
         if fail_log:
@@ -217,30 +270,33 @@ def build_one(angle: str, skill: str) -> bool:
         error_log = os.environ.get("GEN_ERR_LOG")
         if error_log:
             with open(error_log, "a", encoding="utf-8") as out:
-                out.write(result.stderr)
+                out.write(detail)
     print(f"failed: {skill}", file=sys.stderr)
-    return False
+    return "failed"
 
 
 def build(config: Config, angle: str, limit: int, jobs: int, fetch_jobs: int,
           template: str) -> int:
-    """One batch: window, lazy fetch, pool. Returns 0 - partial output is published output."""
-    skills = window(config, angle, limit)
+    """One batch: window, pool, each job fetching its repository just in time. Partial output is
+    published output, so the run is 0 while something was built or nothing could be; a window
+    whose every job failed is a broken run and is 1."""
+    angles = [common.DOMAIN_ANGLE, common.SKILL_ZH_ANGLE] if angle == "all" else [angle]
+    skills = window(config, angles, limit)
     if not skills:
-        print(f"nothing to build: every skill is done for its {common.ANGLE_FILES[angle]}",
-              file=sys.stderr)
+        print(f"nothing to build: every skill is done for {angle}", file=sys.stderr)
         return 0
-    with Downloader(config) as downloader:
-        ensure_repositories(config, skills, template, fetch_jobs, downloader)
-    skills = [skill for skill in skills if common.skill_md_path(config, skill).is_file()]
-    if not skills:
-        print("nothing to build: the window's repositories hold no source", file=sys.stderr)
+    jobs_list = [(a, skill) for skill in skills for a in angles
+                 if not common.angle_path(config, skill, a).is_file()]
+    if not jobs_list:
+        print(f"nothing to build: no missing {angle} output in the window", file=sys.stderr)
         return 0
-    with ThreadPoolExecutor(max_workers=jobs) as pool:
-        futures = [pool.submit(build_one, angle, skill) for skill in skills]
-        done = sum(future.result() for future in as_completed(futures))
-    print(f"done {done}/{len(skills)} {ANGLE_LABEL[angle]}", file=sys.stderr)
-    return 0
+    with LazyFetcher(config, template, fetch_jobs) as fetcher, \
+            ThreadPoolExecutor(max_workers=jobs) as pool:
+        futures = [pool.submit(build_one, config, a, skill, fetcher) for a, skill in jobs_list]
+        results = [future.result() for future in as_completed(futures)]
+    built, failed = results.count("built"), results.count("failed")
+    print(f"done {built}/{len(jobs_list)} {angle} output(s)", file=sys.stderr)
+    return 1 if built == 0 and failed else 0
 
 
 # ------------------------------------------------------------------------------ clean
@@ -291,6 +347,8 @@ def sync(config: Config, listing_url: str, template: str, fetch_jobs: int) -> in
             old = set(read_ids(config.output_dir / common.INDEX)) \
                 if (config.output_dir / common.INDEX).is_file() else set()
             new = set(read_ids(listing))
+            for skill in sorted(old - new):
+                print(f"the mirror dropped {skill} - its files stay in the tree", file=sys.stderr)
             # a repository a skill was just added to, already fetched once: refetch and merge
             repos = sorted(repo for repo in {repo_of(skill) for skill in new - old}
                            if repo_dir(config, repo).is_dir())
@@ -311,8 +369,10 @@ def main(argv: list[str] | None = None) -> int:
         description="Window the catalog, fetch the window's repositories, build one angle.")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    build_parser = sub.add_parser("build", help="build the missing angle for the next skills")
-    build_parser.add_argument("angle", choices=[common.DOMAIN_ANGLE, common.SKILL_ZH_ANGLE])
+    build_parser = sub.add_parser("build", help="build the missing angle(s) for the next skills")
+    build_parser.add_argument(
+        "angle", choices=[common.DOMAIN_ANGLE, common.SKILL_ZH_ANGLE, "all"],
+        help="domain, skill_zh, or all: both angles in one pool, over the shared window")
     build_parser.add_argument("--limit", type=int, default=1,
                               help="skills per run, most installed first; 0 = all")
     build_parser.add_argument("--jobs", type=int, default=32, help="calls in flight at once")

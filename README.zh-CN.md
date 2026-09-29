@@ -35,7 +35,8 @@ skill 自己的 `SKILL.md` 读出的 `description`、它的 `description_zh`、�
 jq -r 'select(.domain == "development") | [.installs, .id] | @tsv' output/skills.jsonl | head
 
 # 端点最不确信的标签，完整回答在它旁边的文件里
-jq -r 'select(.confidence < 0.7) | [.confidence, .domain, .id] | @tsv' output/skills.jsonl
+jq -r 'select(.confidence != null and .confidence < 0.7) | [.confidence, .domain, .id] | @tsv' \
+  output/skills.jsonl
 ```
 
 每个 skill 一个目录、两个生成文件：`domain.json` 和 `SKILL.zh.md`。每个文件一生成就完整写入
@@ -48,8 +49,8 @@ jq -r 'select(.confidence < 0.7) | [.confidence, .domain, .id] | @tsv' output/sk
 `domain` 是封闭枚举的一员，可以直接过滤：
 development · testing · data-analysis · devops-security · office-productivity · content-creation ·
 design-media · knowledge-management · business-ops · finance-payment · education · lifestyle ·
-other。旁边的 `confidence` 是端点的确信度，由它在整个枚举上的分布导出——不是标签正确的概率，
-而是你想找出值得再看一眼的标签时用来排序的数字。
+other。旁边的 `confidence` 是端点自己说出的确信度——不是标签正确的概率，而是你想找出值得再
+看一眼的标签时用来排序的数字（端点没说时为 `null`）。
 
 profile 保留完整回答，包括 `probabilities`，因为赢家本身不包含它：0.52 对 0.48 的抉择与 0.99
 对 0.01 的抉择说的不是一回事。清单只带标签和确信度，到此为止：
@@ -79,6 +80,7 @@ just build domain                  # 同上的具名写法
 just limit=0 build domain          # 构建所有还缺的标签，整个快照，无上限
 just limit=20 jobs=8 build domain  # 前 20 个 skill，一次八个（默认池大小 32）
 just dry=1 limit=2 build domain    # 假端点，真实目录结构
+just build all                     # 两个角度共池共窗口，一次跑完
 just build skill_zh                # 第二个角度：构建第一个还缺的 SKILL.zh.md
 just limit=0 build skill_zh        # 构建所有中文页面，limit/jobs/dry 旋钮相同
 just clean domain                  # 反操作：忘掉第一个已构建的标签
@@ -111,7 +113,7 @@ skill，`clean` 取接下来 `limit` 个**已有**该文件的 skill，所以 cl
 
 ```bash
 # 一个 skill 是什么、值多少、被标成什么
-jq -r '[.id, .installs, (.domain[0] // "-")] | @tsv' output/skills.jsonl | head
+jq -r '[.id, .installs, (.domain // "-")] | @tsv' output/skills.jsonl | head
 
 # 一个 skill 的构建源：批次读的就是它；完整 skill 在它自己的仓库里
 cat output/skills/mattpocock/skills/grill-me/SKILL.md

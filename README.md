@@ -40,7 +40,8 @@ what is left — so the labelled part of the dataset is a filter away:
 jq -r 'select(.domain == "development") | [.installs, .id] | @tsv' output/skills.jsonl | head
 
 # the labels the endpoint was least sure of, with the rest of the answer in the profile beside them
-jq -r 'select(.confidence < 0.7) | [.confidence, .domain, .id] | @tsv' output/skills.jsonl
+jq -r 'select(.confidence != null and .confidence < 0.7) | [.confidence, .domain, .id] | @tsv' \
+  output/skills.jsonl
 ```
 
 One directory per skill, two generated files: `domain.json` and `SKILL.zh.md`. Each is written in
@@ -54,9 +55,9 @@ endpoint's confidence in it, and the distribution it was read off. Everything is
 `domain` is one member of the closed enum, so it is directly filterable:
 development · testing · data-analysis · devops-security · office-productivity · content-creation ·
 design-media · knowledge-management · business-ops · finance-payment · education · lifestyle ·
-other. Beside it, `confidence` is how sure the endpoint was, derived from its distribution over the
-whole enum — not the probability of the label being right, but the number to sort on when you want
-to find the labels worth a second look.
+other. Beside it, `confidence` is how sure the endpoint said it was about the choice — not the
+probability of the label being right, but the number to sort on when you want to find the labels
+worth a second look (and `null` where the endpoint did not say).
 
 The profile keeps the whole answer, `probabilities` included, because the winner does not contain
 it: a call decided 0.52 to 0.48 says something a call decided 0.99 to 0.01 does not. The catalog
@@ -89,6 +90,7 @@ just build domain               # the same thing, named
 just limit=0 build domain       # build every missing label, the whole snapshot, no cap
 just limit=20 jobs=8 build domain   # eight at a time, the first 20 skills (default pool: 32)
 just dry=1 limit=2 build domain     # fake endpoint, real layout
+just build all                  # both angles in one pool, over the shared window
 just build skill_zh             # the second angle: build the first missing SKILL.zh.md
 just limit=0 build skill_zh     # build every zh page, same limit/jobs/dry knobs
 just clean domain               # the inverse: forget the first built label
@@ -126,7 +128,7 @@ assets), and the whole of it lives in its own repository.
 
 ```bash
 # what a skill is, what it is worth, and what it was labelled
-jq -r '[.id, .installs, (.domain[0] // "-")] | @tsv' output/skills.jsonl | head
+jq -r '[.id, .installs, (.domain // "-")] | @tsv' output/skills.jsonl | head
 
 # a skill's source page: what the batches read; the full skill is at its own repository
 cat output/skills/mattpocock/skills/grill-me/SKILL.md

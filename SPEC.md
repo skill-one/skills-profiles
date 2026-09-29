@@ -36,9 +36,9 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py`
 - `domain` — one of 13 closed English categories: development · testing · data-analysis ·
   devops-security · office-productivity · content-creation · design-media · knowledge-management ·
   business-ops · finance-payment · education · lifestyle · other. It filters directly.
-- `confidence` — the endpoint's own reading of how close the call was, derived from the distribution
-  over the enum; not the probability of the label being right, published to be sorted on rather than
-  trusted as one.
+- `confidence` — the endpoint's own reading of how close the call was, `null` when it does not say;
+  not the probability of the label being right, published to be sorted on rather than trusted as
+  one.
 - `probabilities` — that distribution, kept whole because it cannot be recovered from the winner: a
   call decided 0.52 to 0.48 says something a call decided 0.99 to 0.01 does not. Every value is
   English.
@@ -101,15 +101,15 @@ with the fixed target language and the text, with nothing about the task in code
 
 ## 3. Control
 
-The batch is one driver, `batch.py`, with command-line modifiers, run for one of two angles; the
+The batch is one driver, `batch.py`, with command-line modifiers, run for one angle or both; the
 justfile only chooses the command and the knobs. The verbs:
 
 | command              | does                                                                                                                                                      |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `just build <angle>` | build the next `limit` skills still missing the angle's file (`domain` or `skill_zh`); a bare `just` is `build domain` with the default one-skill limit   |
+| `just build <angle>` | build the next `limit` skills still missing the angle's file (`domain`, `skill_zh`, or `all` for both in one pool over the shared window); a bare `just` is `build domain` with the default one-skill limit |
 | `just clean <angle>` | the inverse window: delete the angle's file from the next `limit` skills that have one (`domain`, `skill_zh`, or `all` for both); `limit 0` is every one  |
 | `just index`         | write the catalog and the READMEs: the mirror's rows joined with the descriptions, their translations and the labels, and the published root's front page |
-| `just sync`          | reconcile with the mirror: pull its listing, merge sources from repositories it added a skill to, the tree's other sources left where they are            |
+| `just sync`          | reconcile with the mirror: pull its listing, merge sources from repositories it added a skill to, the tree's other sources left where they are; a skill the mirror dropped is named on stderr, its files left in place |
 | `just test`          | run the suite                                                                                                                                             |
 
 `build` and `clean` are inverse windows over the same catalog order, bounded by the same `limit`:
@@ -143,22 +143,27 @@ skill_zh.py <id> [--print]    # dev only: the page's requests as one array, desc
   stored - the page holds `content`, the translation, alone.
 - Exit: `0` built · `1` unusable input or endpoint · `2` bad arguments. A skill whose front matter
   yields no description is unusable input: it is dropped, one line on stderr and nothing written.
+  The batch itself exits `1` only when every job in its window failed - partial output is published
+  output.
 
 ## 4. Configuration
 
 `.env` (copy [`.env.example`](.env.example)) or `SKILLS_PROFILES_*`; env → `.env` → defaults. It
 holds two endpoints: the typed one as `API_KEY`, `BASE_URL`, `MODEL`, and the OpenAI-compatible
-chat one as `TRANSLATE_API_KEY`, `TRANSLATE_BASE_URL`, `TRANSLATE_MODEL` — plus `TIMEOUT`,
-`MAX_RETRIES` shared by both, `DRY_RUN`, and the two paths if you must move them. The chat caller
-also takes `TRANSLATE_ENABLE_THINKING` (on by default) and `TRANSLATE_MAX_TOKENS`; a thinking call
-is slower, so `TIMEOUT` is raised locally for that batch. The page angle, `skill_zh.py`, is the only
-caller of the chat endpoint, asking it for the description and then the body pieces over the same
-`TRANSLATE_*` settings. The default address and model point at
-Xunfei Xingchen MaaS serving Spark-X2.5-4B; the model id is whatever the console's service page
-shows, so a subscription spells it via `TRANSLATE_MODEL`. A skill that endpoint fails is retried
-once on a fallback chat endpoint — `TRANSLATE_FALLBACK_BASE_URL`, `TRANSLATE_FALLBACK_MODEL` and
-`TRANSLATE_FALLBACK_API_KEY`; the defaults point at Agnes AI, and an unset key turns the fallback
-off.
+chat one as `TRANSLATE_API_KEY`, `TRANSLATE_BASE_URL`, `TRANSLATE_MODEL` — plus `MAX_RETRIES` and
+`DRY_RUN`, and the two paths if you must move them. The timeouts are one per endpoint: `TIMEOUT`
+(the typed endpoint answers in one to three seconds) and `TRANSLATE_TIMEOUT`, which defaults to
+120 because a thinking call reasons first and routinely runs past the typed endpoint's patience.
+The chat caller also takes `TRANSLATE_ENABLE_THINKING` (on by default) and `TRANSLATE_MAX_TOKENS`.
+The page angle, `skill_zh.py`, is the only caller of the chat endpoint, asking it for the
+description and then the body pieces over the same `TRANSLATE_*` settings. The default address and
+model point at Xunfei Xingchen MaaS serving Spark-X2.5-4B; the model id is whatever the console's
+service page shows, so a subscription spells it via `TRANSLATE_MODEL`. A skill that endpoint fails
+is retried once on a fallback chat endpoint — `TRANSLATE_FALLBACK_BASE_URL`,
+`TRANSLATE_FALLBACK_MODEL` and `TRANSLATE_FALLBACK_API_KEY`; the defaults point at Agnes AI, and
+an unset key turns the fallback off. The fallback request carries only the model swap: the
+MaaS-only thinking switch is left out, which a stricter OpenAI-compatible endpoint would reject
+the whole request over.
 
 The batch knobs above are **not** environment variables: a run changes only because a run said so.
 

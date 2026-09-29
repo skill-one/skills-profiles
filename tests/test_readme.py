@@ -1,6 +1,7 @@
 """readme.py: the page published with the dataset - one short document, said in two languages."""
 
-from string import Template
+import jinja2
+from jinja2 import meta
 
 import common
 import index
@@ -36,7 +37,8 @@ def test_every_placeholder_is_a_number_the_page_has(workdir):
     for lang, text in readme.TEXT.items():
         for name, template in text.items():
             if isinstance(template, str):
-                assert set(Template(template).get_identifiers()) <= known, (lang, name)
+                ast = jinja2.Environment().parse(template)
+                assert meta.find_undeclared_variables(ast) <= known, (lang, name)
 
 
 def test_the_page_stays_a_page(workdir):

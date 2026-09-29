@@ -13,6 +13,8 @@ Everything else - the tree, the source, the call's retries, the write and the co
 in `common.py`. Driven by `batch.py`, one skill per pool job.
 """
 
+from __future__ import annotations
+
 import httpx
 
 import common

@@ -42,7 +42,7 @@ def test_the_request_is_one_chat_turn(config):
     body = skill_zh._requests(config, ALPHA, source(config))[1]
     system = common.render(common.load_prompt(config, skill_zh.PROMPT), to=translate.TO)
     user = common.render(common.load_prompt(config, skill_zh.USER_PROMPT), to=translate.TO,
-                         text=skill_zh.chunks(common.skill_body(source(config)))[0])
+                         text=skill_zh.chunks(common.skill_body(source(config)))[0][0])
 
     assert body["model"] == common.TRANSLATE_MODEL
     assert body["messages"] == [
@@ -120,10 +120,15 @@ def test_main_writes_the_page_the_code_assembles(workdir, monkeypatch):
     assert text.endswith(f"\n{ZH.strip()}\n")  # the body's translation under it
 
 
+def texts(pieces: list[tuple[str, str]]) -> list[str]:
+    """The pieces' texts, without the seams - what the endpoint is asked to translate."""
+    return [text for text, _ in pieces]
+
+
 def test_a_body_under_the_budget_travels_whole(config):
-    """A body one answer can carry is not cut: one piece, the page itself."""
+    """A body one answer can carry is not cut: one piece, and no seam before it."""
     assert skill_zh.chunks(common.skill_body(source(config))) == [
-        common.skill_body(source(config)).rstrip("\n")]
+        (common.skill_body(source(config)).rstrip("\n"), "")]
 
 
 def test_a_fence_holds_its_blank_lines():
@@ -140,16 +145,16 @@ def test_pieces_are_packed_on_block_seams_and_the_fence_stays_whole():
     pieces = skill_zh.chunks(text, size=50)
 
     assert len(pieces) == 2
-    assert fence in pieces[0]  # packed with the first block, never split
-    assert all(len(p) <= 50 for p in pieces)
+    assert fence in texts(pieces)[0]  # packed with the first block, never split
+    assert all(len(p) <= 50 for p in texts(pieces))
 
 
 def test_the_pieces_rebuild_the_page():
-    """Whatever the packing, the pieces joined on the paragraph seams are the page again."""
+    """Whatever the packing, the pieces back on the seams they carried are the page again."""
     text = "\n\n".join(["# Title", "a paragraph", "```py\nA\n\nB\n```",
                        "- item one", "- item two"])
 
-    assert "\n\n".join(skill_zh.chunks(text, size=30)) == text
+    assert skill_zh.rejoin(skill_zh.chunks(text, size=30)) == text
 
 
 def test_a_block_bigger_than_the_budget_is_cut_between_lines():
@@ -161,15 +166,23 @@ def test_a_block_bigger_than_the_budget_is_cut_between_lines():
     pieces = skill_zh.chunks(text, size=60)
 
     assert len(pieces) > 1
-    assert all(len(p) <= 60 for p in pieces)
-    assert pieces[0].startswith("line 0")
-    assert pieces[-1].endswith("line 29")
+    assert all(len(p) <= 60 for p in texts(pieces))
+    assert texts(pieces)[0].startswith("line 0")
+    assert texts(pieces)[-1].endswith("line 29")
+
+
+def test_a_block_cut_between_lines_rejoins_on_its_own_lines():
+    """The seam a cut block travels with is the line's own newline, not a paragraph break: a long
+    table or list cut mid-block comes back the one block it was."""
+    text = "\n".join(f"| row {i} |" for i in range(20))
+
+    assert skill_zh.rejoin(skill_zh.chunks(text, size=40)) == text
 
 
 def test_a_single_line_longer_than_the_budget_rides_whole():
     """A line no seam can shorten is carried whole: the truncation guard, not the cutter, owns
     that failure."""
-    assert skill_zh.chunks("x" * 200, size=60) == ["x" * 200]
+    assert skill_zh.chunks("x" * 200, size=60) == [("x" * 200, "")]
 
 
 def test_a_long_body_travels_in_pieces_and_writes_one_whole_page(workdir, monkeypatch):

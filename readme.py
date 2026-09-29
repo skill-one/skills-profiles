@@ -7,9 +7,9 @@ the dataset is built for each angle. `just index` writes both from the same walk
 nothing reads them back.
 """
 
+from __future__ import annotations
+
 from pathlib import Path
-from string import Template
-from typing import Any
 
 import common
 
@@ -19,9 +19,10 @@ README_ZH = "README.zh-CN.md"
 # `<name>_label` beside it, so the two languages cannot drift apart in structure.
 FACTS = ("domain", "skill_zh", "catalog")
 
-# One page per language: the same thing said in the same order. `$name` is filled from the numbers
-# index.py reads; the rest is prose and markdown. The two hold the same keys - a test says so.
-TEXT: dict[str, dict[str, Any]] = {
+# One page per language: the same thing said in the same order. `{{ name }}` is filled from the
+# numbers index.py reads; the rest is prose and markdown. The two hold the same keys - a test says
+# so, and an unknown name fails loudly (strict undefineds).
+TEXT: dict[str, dict[str, str]] = {
     "en": {
         "intro": "The agent skills this repository collects, each labelled with one closed-domain\n"
                  "category by the Jev endpoint and described in Chinese by a chat model, plus the\n"
@@ -31,13 +32,13 @@ TEXT: dict[str, dict[str, Any]] = {
                  "the domain label and the Chinese `SKILL.zh.md` page, whose front matter carries\n"
                  "the Chinese description - and `skills.jsonl` is the catalog joining them.",
         "progress": "Progress",
-        "bullet": "- **$label**: $value",
+        "bullet": "- **{{ label }}**: {{ value }}",
         "domain_label": "domain",
         "skill_zh_label": "skill_zh",
         "catalog_label": "catalog",
-        "domain": "$built of $total labelled ($percent), covering $installs of the mirror's installs",
-        "skill_zh": "$skillzh of $total skill pages translated ($skillzh_percent), covering $skillzh_installs of the mirror's installs",
-        "catalog": "the catalog lists all $total of the mirror's skills; $described carry a description, the rest are null until fetched",
+        "domain": "{{ built }} of {{ total }} labelled ({{ percent }}), covering {{ installs }} of the mirror's installs",
+        "skill_zh": "{{ skillzh }} of {{ total }} skill pages translated ({{ skillzh_percent }}), covering {{ skillzh_installs }} of the mirror's installs",
+        "catalog": "the catalog lists all {{ total }} of the mirror's skills; {{ described }} carry a description, the rest are null until fetched",
     },
     "zh": {
         "intro": "本仓库收集的那些 agent skills，每个由 Jev 端点标注一个封闭分类、由聊天模型给出\n"
@@ -47,13 +48,13 @@ TEXT: dict[str, dict[str, Any]] = {
                  "中文 `SKILL.zh.md` 页面（front matter 里带中文 description）；\n"
                  "`skills.jsonl` 是把它们连起来的清单。",
         "progress": "进度",
-        "bullet": "- **$label**：$value",
+        "bullet": "- **{{ label }}**：{{ value }}",
         "domain_label": "domain",
         "skill_zh_label": "skill_zh",
         "catalog_label": "清单",
-        "domain": "$total 个里已标 $built 个（$percent），覆盖镜像安装量的 $installs",
-        "skill_zh": "$total 个里已有 $skillzh 个中文页面（$skillzh_percent），覆盖镜像安装量的 $skillzh_installs",
-        "catalog": "清单列出镜像全部 $total 个 skill；$described 个已有 description，其余在拉取前为 null",
+        "domain": "{{ total }} 个里已标 {{ built }} 个（{{ percent }}），覆盖镜像安装量的 {{ installs }}",
+        "skill_zh": "{{ total }} 个里已有 {{ skillzh }} 个中文页面（{{ skillzh_percent }}），覆盖镜像安装量的 {{ skillzh_installs }}",
+        "catalog": "清单列出镜像全部 {{ total }} 个 skill；{{ described }} 个已有 description，其余在拉取前为 null",
     },
 }
 
@@ -87,7 +88,8 @@ def write(config: common.Config, facts: dict) -> list[Path]:
 
 
 def _facts(facts: dict, text: dict) -> list[str]:
-    """The progress bullets: what each angle covers, and which tree they describe."""
-    return [Template(text["bullet"]).substitute(
-        label=text[f"{name}_label"], value=Template(text[name]).substitute(facts))
-        for name in FACTS]
+    """The progress bullets: what each angle covers, and which tree they describe. Rendered by the
+    same strict renderer the producers use, so an unknown name fails instead of printing itself."""
+    return [common.render(text["bullet"], label=text[f"{name}_label"],
+                          value=common.render(text[name], **facts))
+            for name in FACTS]

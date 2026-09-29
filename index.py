@@ -13,6 +13,8 @@ The same run writes the README that goes with it, out of the same walk: the numb
 a reader by `readme.py`.
 """
 
+from __future__ import annotations
+
 import argparse
 import json
 import sys
@@ -37,14 +39,12 @@ def mirror_rows(config: Config, listing: Path | None) -> list[dict]:
     if listing is not None:
         if not listing.is_file():
             raise SystemExit(f"{listing}: not found - run `just sync` first")
-        return [json.loads(line) for line in listing.read_text(encoding="utf-8").splitlines()
-                if line]
+        return common.read_jsonl(listing)
     path = config.output_dir / common.INDEX
     if not path.is_file():
         raise SystemExit(f"{path}: not found - run `just sync` first")
     return [{"id": row["id"], "installs": row.get("installs")}
-            for line in path.read_text(encoding="utf-8").splitlines() if line
-            for row in [json.loads(line)]]
+            for row in common.read_jsonl(path) if isinstance(row.get("id"), str)]
 
 
 def angle_output(config: Config, skill: str, angle: str) -> dict:

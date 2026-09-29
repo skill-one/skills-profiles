@@ -70,6 +70,17 @@ def test_a_duplicate_skill_name_is_taken_once(config, tmp_path):
     assert "The first one." in common.skill_md(config, f"{REPO}/alpha")
 
 
+def test_a_slug_that_is_not_a_name_writes_nowhere_outside(config, tmp_path):
+    """A repository that names its skill directory `..` must not write outside the tree: the
+    slug is skipped, like any other source this project cannot install as a skill."""
+    stage = tarball(tmp_path / "stage", {"../SKILL.md": source("Escapes.")})
+
+    assert fetch.extract(stage, config) == (0, 1)
+
+    assert not (config.output_dir / common.SKILLS_DIR / "owner-x" / "SKILL.md").exists()
+    assert not (config.output_dir / common.SKILLS_DIR / "SKILL.md").exists()
+
+
 def test_every_skill_in_the_repository_is_taken(config, tmp_path):
     """The catalog is not consulted: a skill the listing has not reached yet is unpacked all the
     same, so a listing that lags behind its repository catches up without a second download."""

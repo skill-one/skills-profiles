@@ -10,8 +10,9 @@ part of the page, so it is never left to a model's hands.
     skill_zh.py <skill> [--print]   build one page, or print the first request, calling nothing
 
 A body too long for one answer travels in pieces: the body is cut on its own markdown seams -
-never inside a code fence that fits in one piece - each piece is translated in its own call, and
-the page is written only when every piece came back. A file is whole or absent, as ever.
+never inside a code fence that fits in one piece - each piece is translated in its own call
+carrying the seam it was cut on, and the page is written only when every piece came back. A file
+is whole or absent, as ever.
 
 The turns are rendered from `prompts/translate.md`, `prompts/translate_user.md`,
 `prompts/skill_zh.md` and `prompts/skill_zh_user.md`; the endpoint, the layout, the gate and the
@@ -19,6 +20,8 @@ contract are the ones `translate.py` and `common.py` already hold.
 
 Driven by `batch.py`, one skill per pool job.
 """
+
+from __future__ import annotations
 
 import re
 
@@ -79,27 +82,38 @@ def cut_lines(block: str, size: int) -> list[str]:
     return parts
 
 
-def chunks(text: str, size: int = MAX_CHUNK_CHARS) -> list[str]:
-    """The body in pieces one call can translate whole: whole blocks packed up to `size`, every
-    piece meeting the next on the paragraph seam the assembler will put back."""
-    pieces: list[str] = []
+def chunks(text: str, size: int = MAX_CHUNK_CHARS) -> list[tuple[str, str]]:
+    """The body in pieces one call can translate whole, each carrying the seam that preceded it:
+    whole blocks packed up to `size`; a block cut between lines sends its next part with the
+    line seam it was cut on, so the rejoined page is the body again - a cut table stays a table."""
+    pieces: list[tuple[str, str]] = []
     piece = ""
+    seam = ""
     for block in blocks(text):
-        for part in [block] if len(block) <= size else cut_lines(block, size):
-            if piece and len(piece) + len(part) > size:
-                pieces.append(piece)
-                piece = ""
-            piece = f"{piece}\n\n{part}" if piece else part
+        parts = [block] if len(block) <= size else cut_lines(block, size)
+        for i, part in enumerate(parts):
+            joiner = "\n" if i else "\n\n"  # a block meets the page on its paragraph seam
+            if not piece:
+                seam = joiner if pieces else ""
+            elif len(piece) + len(part) > size:
+                pieces.append((piece, seam))
+                piece, seam = "", joiner
+            piece = f"{piece}{joiner}{part}" if piece else part
     if piece:
-        pieces.append(piece)
+        pieces.append((piece, seam))
     return pieces
+
+
+def rejoin(pieces: list[tuple[str, str]]) -> str:
+    """The page body: the pieces back on the seams they travelled with."""
+    return "".join(f"{seam}{text}" for text, seam in pieces).strip()
 
 
 def chunk_bodies(config: Config, body_text: str) -> list[dict]:
     """One chat body per piece: the same deterministic, non-streaming request shape the
     description angle sends, one per piece of the page."""
     return [translate.chat_body(config, translate.turns(config, piece, PROMPT, USER_PROMPT))
-            for piece in chunks(body_text)]
+            for piece, _ in chunks(body_text)]
 
 
 def _requests(config: Config, skill: str, source: str) -> list[dict]:
@@ -112,10 +126,10 @@ def _requests(config: Config, skill: str, source: str) -> list[dict]:
             *chunk_bodies(config, body_text)]
 
 
-def _page(source: str, zh_description: str, pieces: list[str]) -> str:
+def _page(source: str, zh_description: str, pieces: list[tuple[str, str]]) -> str:
     """The one Chinese page: the front matter assembled by code over the rejoined body. One failed
     call fails the page before this runs - a half translation is never written."""
-    body = "\n\n".join(pieces).strip()
+    body = rejoin(pieces)
     fields: dict = {}
     block = common.FRONT_MATTER.match(source)
     if block is not None:
@@ -128,10 +142,13 @@ def _page(source: str, zh_description: str, pieces: list[str]) -> str:
 
 def _produce(config: Config, bodies: list[dict], source: str) -> str:
     """The description is the first request; its answer leads the front matter, and the body
-    pieces' answers are rejoined in order, all over the shared endpoint and its fallback."""
+    pieces' answers are rejoined on the seams their requests were cut on, all over the shared
+    endpoint and its fallback."""
     translator = translate.Translator(config)
     zh_description = translator.ask(bodies[0])
-    pieces = [translator.ask(body) for body in bodies[1:]]
+    pieces = [(translator.ask(body), seam)
+              for (body, (_, seam)) in zip(bodies[1:], chunks(common.skill_body(source)),
+                                           strict=True)]
     return _page(source, zh_description, pieces)
 
 

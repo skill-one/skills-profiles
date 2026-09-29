@@ -14,6 +14,8 @@ address, model and key under the `TRANSLATE_FALLBACK_*` settings.
 A library rather than a command: the justfile drives `skill_zh.py`, one process per skill.
 """
 
+from __future__ import annotations
+
 import sys
 
 import httpx
@@ -96,7 +98,7 @@ class Translator:
         self.config = config
         self.api_key = key
         self.fallback_api_key = config.translate_fallback_api_key
-        self.client = client or httpx.Client(timeout=config.timeout)
+        self.client = client or httpx.Client(timeout=config.translate_timeout)
 
     def _chat_url(self, base_url: str) -> str:
         """The base joined with the chat path once, so a trailing slash in an override is harmless."""
@@ -115,9 +117,11 @@ class Translator:
 
         Anything the primary raises after its own retries - a dropped call, a rejected body, an
         empty or truncated answer - is worth one try elsewhere, because a different model may
-        take the input it choked on. The request travels as built with only the model swapped;
-        the fallback's own failure raises as itself, so a skill both endpoints fail is still one
-        diagnosable error, and no fallback key means the primary error stands unchanged.
+        take the input it choked on. The request travels as built with only the model swapped -
+        and the MaaS-only thinking switch left out, which a stricter OpenAI-compatible endpoint
+        would reject the whole request over. The fallback's own failure raises as itself, so a
+        skill both endpoints fail is still one diagnosable error, and no fallback key means the
+        primary error stands unchanged.
         """
         try:
             return translation(common.post_json(
@@ -127,7 +131,8 @@ class Translator:
                 raise
             print(f"primary translate endpoint failed ({type(error).__name__}); "
                   f"retrying on {self.config.translate_fallback_model}", file=sys.stderr)
+            plain = {name: value for name, value in body.items() if name != "enable_thinking"}
             return translation(common.post_json(
                 self.client, self.fallback_url, self.fallback_api_key,
-                {**body, "model": self.config.translate_fallback_model},
+                {**plain, "model": self.config.translate_fallback_model},
                 self.config.max_retries))

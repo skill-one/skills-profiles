@@ -6,7 +6,7 @@
 端点发起调用：一句话描述一次，正文按 markdown 接缝切块后每块一次；再按代码组装出中文页面
 `SKILL.zh.md`，其 front matter 从不经模型之手。两者是同一个 skill 目录上的平行角度，而且都很薄：
 目录树、源读取、prompt 文件、配置、带重试的调用、原子写和命令本身都只在 `common.py` 里有一份；
-`translate.py` 是页面角度所调用的聊天端点库。开窗、懒拉取和 `jobs` 宽的进程池都在同一个驱动器
+`translate.py` 是页面角度所调用的聊天端点库。开窗、懒拉取和 `jobs` 宽的生产者池都在同一个驱动器
 `batch.py` 里；justfile 只负责启动它。
 
 English: [DEVELOPING.md](DEVELOPING.md)
@@ -21,6 +21,7 @@ uv sync
 just sync                     # 与镜像对账：清单、新增源、目录文件
 just                          # 端到端构建第一个 domain 标签，顺带拉取它的仓库
 just limit=0 build domain     # ……或所有还没标签的 skill，整个快照，无上限
+just build all                # 两个角度共池共窗口，一次跑完
 just build skill_zh           # 第二个角度：构建第一个还缺的 SKILL.zh.md
 just clean domain             # 反操作：忘掉第一个已构建的标签
 ```
@@ -33,7 +34,7 @@ just clean domain             # 反操作：忘掉第一个已构建的标签
 
 | 命令                 | 作用                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `just build <angle>` | `batch.py build <angle>`：按安装量从高到低，为接下来 `limit` 个还缺该角度文件的 skill 构建。顺序是清单自己的（`OUTPUT_DIR/skills.jsonl`，镜像顺序，安装量降序）——按 jsonl 解析，镜像列出的每个 skill 一行。窗口取接下来 `limit` 个该角度尚未解决的 skill：没有角度文件，也不是「仓库已在磁盘上却没有 `SKILL.md`」的 skill（它永远构建不了）。数的是工作量而不是位置，所以重复运行沿数据集往下走。驱动器随后拉取窗口涉及的每个仓库（每个一次），丢弃其中没有源的 skill，再在 `jobs` 宽的池子里跑生产者，每个 skill 一个生产者进程。裸 `just` 即默认只做一个的 `build domain`。 |
+| `just build <angle>` | `batch.py build <angle>`：按安装量从高到低，为接下来 `limit` 个还缺该角度文件的 skill 构建（`domain`、`skill_zh`，或 `all` 表示两者共池共窗口一次跑完）。顺序是清单自己的（`OUTPUT_DIR/skills.jsonl`，镜像顺序，安装量降序）——按 jsonl 解析，镜像列出的每个 skill 一行。窗口取接下来 `limit` 个该角度尚未解决的 skill：没有角度文件，也不是「仓库已在磁盘上却没有 `SKILL.md`」的 skill（它永远构建不了）。数的是工作量而不是位置，所以重复运行沿数据集往下走。驱动器随后在 `jobs` 宽的池子里跑生产者，每个 skill 一次生产者调用：每个任务在需要时才拉取它的仓库——同一仓库的第一个任务下载并解包，其余任务等这一次下载——仓库没有源的 skill 被跳过。裸 `just` 即默认只做一个的 `build domain`。 |
 | `just clean <angle>` | 逆窗口，`batch.py clean <angle>`：按同一清单顺序取接下来 `limit` 个**已有**该角度文件的 skill，删掉文件。之后 `build` 恰好重建这些 skill；`limit 0` 清掉全部已构建的，`all` 同时忘掉两个角度的文件——即 sync 之前的那半步完整重置。窗口之外要按名构建单个 skill，仍直接跑脚本（`uv run python jev.py <id>` / `skill_zh.py <id>`）。                                                                                                                                                                                                                                            |
 | `just index`         | 写 `<output_dir>/skills.jsonl`——清单：镜像列出的每个 skill 一行，按镜像顺序，由镜像自己的行（`id`、`installs`）拼接从该 skill 的 `SKILL.md` 读出的 `description`、`SKILL.zh.md` front matter 里的 `description_zh`，以及 `domain.json` 里的 `domain` 和 `confidence`。拼接字段未知时为 `null`。只读树——无网络、无调用——整体重写文件。同一次遍历还在旁边写两个 README：见下文 `readme.py`。                                                                                                                                                                                    |
 | `just sync`          | 与镜像对账：拉取镜像清单，即行集合、顺序和安装量。源按需拉取：批次在第一次构建某仓库的 skill 时下载该仓库，仓库目录即缓存，所以既不会在需要前拉取，也不会拉取两次。清单新增了 skill 的仓库会在此时被重新拉取，新源合并进已建好的 skill 旁边。                                                                                                                                                                                                                                                                                                                                 |
@@ -46,7 +47,7 @@ clean 另接受 `all`）和同一个清单顺序窗口；build 创建，clean �
 | 变量           | 默认                                                     | 含义                                                                                                          |
 | -------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `limit`        | `1`                                                      | 按清单顺序接下来 N 个还缺当前角度产物的 skill；`0` = 全部。默认一个，所以裸 `just` 是冒烟。数工作量不数位置。 |
-| `jobs`         | `32`                                                     | 同时在跑的生产者进程数：驱动器的线程池。                                                                      |
+| `jobs`         | `32`                                                     | 同时在飞的生产者调用数：驱动器的线程池。                                                                      |
 | `dry`          | –                                                        | `1` = 假端点、真实目录结构：不调用任何东西。                                                                  |
 | `output_dir`   | `output`                                                 | 发布根目录：各 skill（连带写在其旁的角度文件）、清单和 README。                                               |
 | `listing`      | 镜像 `dist` 分支上的清单 url                             | 镜像的清单，由 `just sync` 现取；测试用本地 `file://` url 离线跑。                                            |
@@ -66,16 +67,18 @@ clean 另接受 `all`）和同一个清单顺序窗口；build 创建，clean �
   `output/skills/<id>/` 里的某个角度文件）删掉产出；下次跑该角度时重新生成。改 prompt 文件
   （`_system.md`、`translate.md`、`translate_user.md`）本身*不*会让任何东西失效——否则每次
   checkout 移动 mtime 都会免费重标整个数据集。
-- **源只拉取一次。** 仓库会在第一次构建它的某个 skill 时下载，且磁盘上的仓库目录就是缓存：`just sync`
+- **源只拉取一次。** 仓库会在第一个构建它的某个 skill 的任务里下载，且磁盘上的仓库目录就是缓存：`just sync`
   不动源，所以源只在它的仓库目录被删掉时才改变。sync 会做的是：把新版清单给某仓库新增了 skill 的
-  那些仓库重新拉取一次，把新源合并进来。镜像列出、但其仓库不含该 skill 的源的 skill 永远构建不了，窗口据此
+  那些仓库重新拉取一次，把新源合并进来，并对镜像删掉的每个 skill 提一行——文件留在树里，去留由人决定。
+  镜像列出、但其仓库不含该 skill 的源的 skill 永远构建不了，窗口据此
   跳过它而不是反复重试。
 - **单个 skill 失败不会结束整批。** 任务失败（配额、连接等）会按 id 报出来，不写入文件，池子继续处理；
-  CI 会记录错误详情并发布已经成功生成的产物。下一轮会重试仍缺少文件的 skill。
+  CI 会记录错误详情并发布已经成功生成的产物。下一轮会重试仍缺少文件的 skill。窗口内全部任务都失败
+  则是一次坏掉的运行：批次退出 `1`，部分产出照常保留。
 
 ## 脚本
 
-一个活一个生产者进程。两个命令做的事其实是同一个命令——`common.py` 里的共享骨架（`run`）：
+一个活一次生产者调用。两个命令做的事其实是同一个命令——`common.py` 里的共享骨架（`run`）：
 解析唯一的 skill 参数、读源、以 description 为门槛、构造该角度要发的全部请求（只构造一次）、
 调用、把该角度的一个文件原地改名写好，并把失败变成一行 stderr 和一个状态码。每个生产者只提供
 三样东西：请求们、回答它们的调用、dry-run 占位值。domain 角度：
@@ -136,12 +139,13 @@ uv run python skill_zh.py <owner>/<repo>/<slug> --print   # 把全部请求打�
 并按顺序发出页面所需的每一次调用：先描述，后正文。正文不带 front matter，从
 `prompts/skill_zh.md` 和 `prompts/skill_zh_user.md` 渲染。正文超过单次回答所能时，按其自身的
 Markdown 缝合线切块（代码围栏外的空行；自身没有缝合线的块在行间切）为不超过 `MAX_CHUNK_CHARS`
-字符的小块，逐块经同一端点及其兜底各自调用翻译。页面随后由代码组装——front matter 为 `name`
-（源自己的）加中文 description，下面是各块按段落缝合线拼回的结果——且只有每一次调用都回来才写
-入：半截翻译的页面绝不能冒充完整的一页，而 front matter 是页面里唯一严格解析的部分，所以绝不交
-给模型。空正文和缺 description 一样，丢弃该 skill：不调用、不写文件——走与其他不可用输入相同的
-一行 stderr/退出码 1 闸门，而不是 traceback。页面的请求只构造一次，`--print` 与实际运行共用，
-所以正文不会被切块两次。
+字符的小块，逐块经同一端点及其兜底各自调用翻译，每块带着它被切开的那道缝合线——所以行间切开的
+块按行自己的换行拼回，被切的表格或列表回来还是原来那一块。页面随后由代码组装——front matter 为
+`name`（源自己的）加中文 description，下面是各块沿各自缝合线拼回的结果——且只有每一次调用都回
+来才写入：半截翻译的页面绝不能冒充完整的一页，而 front matter 是页面里唯一严格解析的部分，所以
+绝不交给模型。空正文和缺 description 一样，丢弃该 skill：不调用、不写文件——走与其他不可用输入
+相同的一行 stderr/退出码 1 闸门，而不是 traceback。页面的请求只构造一次，`--print` 与实际运行
+共用。
 
 `index.py` 把镜像的行与树拼接，写 `output/skills.jsonl`。它的命令行就是离线动词——不接参数，
 已有清单本身按同一顺序携带安装量；驱动器 sync 在进程内用新清单调用同一个 `build()`，让新
@@ -169,8 +173,8 @@ Markdown 缝合线切块（代码围栏外的空行；自身没有缝合线的�
     来、从不保留）       │
                           ├─► batch.py 把清单当 jsonl 遍历
                                       │
-                        窗口各仓库只拉一次，然后跑生产者，一次 JOBS 个，每个 skill 一个进程；
-                        domain 与 skill_zh 共用同一个池子
+                        跑生产者，一次 JOBS 个，每个 skill 一次生产者调用，各自按需拉取仓库
+                        （每个仓库一次——仓库目录即缓存）；domain 与 skill_zh 共用同一个池子
                                       │
                         skills/<id>/SKILL.md + domain.json + SKILL.zh.md（仓库目录即缓存）
                                       │
@@ -179,14 +183,15 @@ Markdown 缝合线切块（代码围栏外的空行；自身没有缝合线的�
 
 驱动器是薄 just 启动器背后的普通 Python 模块，不是构建系统：**存在即跳过**，顺序直接按 jsonl
 读出镜像自己的顺序（所以仓库名里的前导点和 `_` 不再需要 shell 技巧），池子是 `jobs` 个 worker
-的 `ThreadPoolExecutor`，每个 worker 起一个生产者进程——没有 jobserver，也没有每分钟限速；每个
-worker 上一个 skill 一结束就接下一个，瞬时 429 由客户端自己的指数退避吸收。
+的 `ThreadPoolExecutor`，每个 worker 在本进程内跑一次生产者调用——没有 jobserver，也没有每分钟
+限速；每个 worker 上一个 skill 一结束就接下一个，瞬时 429 由客户端自己的指数退避吸收，且带抖
+动，被限流的池子不会在同一时刻齐刷刷地再敲门。
 
 ## 项目布局
 
 ```
 justfile                # 薄启动器：每个配方设置旋钮并运行 batch.py 或单个脚本
-batch.py                # 编排器：jsonl 开窗、懒拉取、进程池、sync
+batch.py                # 编排器：jsonl 开窗、懒拉取、生产者池、sync
 common.py               # 两个生产者共用的内核：Config、目录树、源读取、prompt、带重试的调用、
                         # 原子写，以及 run() 命令骨架
 fetch.py                # 源层：仓库的 skill 解包进 skills/，每个一次
@@ -219,10 +224,11 @@ tests/                  # 离线单元测试；批处理在 test_batch.py 里进
 | `SKILLS_PROFILES_TRANSLATE_MODEL`             | `spark-x2.5-4b`             | 聊天模型 id；以控制台服务页显示的拼写为准                                                             |
 | `SKILLS_PROFILES_TRANSLATE_ENABLE_THINKING`   | `true`                      | 发送 MaaS 的 `enable_thinking` 开关；模型先推理再作答（`reasoning_content`）                          |
 | `SKILLS_PROFILES_TRANSLATE_MAX_TOKENS`        | `32768`                     | 回答的 token 预算，含推理；端点自己的默认值只有 2048                                                  |
+| `SKILLS_PROFILES_TRANSLATE_TIMEOUT`           | `120`                       | 聊天端点单独的每次请求秒数：思考调用先推理，常常超出类型化端点的耐心，所以它有自己的旋钮              |
 | `SKILLS_PROFILES_TRANSLATE_FALLBACK_API_KEY`  | –                           | 兜底端点的密钥；不设即关闭兜底——失败的 skill 照旧失败                                                 |
-| `SKILLS_PROFILES_TRANSLATE_FALLBACK_BASE_URL` | Agnes AI 根地址             | 聊天端点失败的 skill 在此重试一次：同样的 OpenAI 兼容调用，只换掉 model 一个字段                      |
+| `SKILLS_PROFILES_TRANSLATE_FALLBACK_BASE_URL` | Agnes AI 根地址             | 聊天端点失败的 skill 在此重试一次：同样的 OpenAI 兼容调用，只换掉 model 一个字段，并去掉 MaaS 专属的思考开关 |
 | `SKILLS_PROFILES_TRANSLATE_FALLBACK_MODEL`    | `agnes-3.0-flash`           | 兜底模型 id；推理模型，读法相同（`content` 之外的 `reasoning_content`）                               |
-| `SKILLS_PROFILES_TIMEOUT`                     | `20`                        | 每次请求秒数，两个端点通用：一到三秒回答，闲置后首个调用会被丢弃。思考式翻译更慢——该批次请调大（120） |
+| `SKILLS_PROFILES_TIMEOUT`                     | `20`                        | 类型化端点的每次请求秒数：一到三秒回答，闲置后首个调用会被丢弃                                        |
 | `SKILLS_PROFILES_MAX_RETRIES`                 | `3`                         | 额外重试次数，针对丢弃的调用或繁忙的网关；两个端点通用                                                |
 | `SKILLS_PROFILES_DRY_RUN`                     | `false`                     | 两个生产者都用假的：不发 API 调用                                                                     |
 | `SKILLS_PROFILES_OUTPUT_DIR`                  | `output`                    | 发布根目录：各 skill（连带写在其旁的角度文件）、清单和 README                                         |
@@ -270,6 +276,6 @@ uv run python jev.py <owner>/<repo>/<slug> --print   # 仅开发：不调用，�
 | ------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `ci.yml`      | 每次 push 和 PR | `uv sync`、`ruff check .`、`mypy`、`pytest`，装了 `just`。离线。                                                                                                                                                                                            |
 | `sync.yml`    | 手动            | `restore-dist` → `just sync` → `publish-dist`（`date`）。拉取镜像清单并重写清单文件；不调用模型。                                                                                                                                                           |
-| `publish.yml` | 手动            | `restore-dist` → 替换时先 `just clean <angle> limit=0` → 对所选 `angle`（`domain`、`skill_zh` 或 `all`——先 domain 后 skill_zh）跑 `just build <angle> limit=… jobs=…` → `just index` → `publish-dist`（`date-counter`）。需要所选角度各自的 secret 和变量。 |
+| `publish.yml` | 手动            | `restore-dist` → 替换时先 `just clean <angle> limit=0` → 对所选 `angle`（`domain`、`skill_zh`，或 `all` 共池一次跑完）跑 `just build <angle> limit=… jobs=…` → `just index` → `publish-dist`（`date-counter`）。需要所选角度各自的 secret 和变量。 |
 
 文档规则：每份英文文档都有中文对应版——同一次修改保持两者同步。
