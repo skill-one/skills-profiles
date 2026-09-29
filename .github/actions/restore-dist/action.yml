@@ -1,9 +1,9 @@
 name: restore-dist
 description: >-
   Pull the published `dist` branch back into the output directory: the skills, the angles written
-  about them and the catalog, in one request. The branch-root `latest`
-  pointer is left out — a publish rewrites it, and a run never reads it. No-op when the branch does
-  not exist yet.
+  about them and the catalog, in one request. The branch is a single orphan snapshot (no history,
+  no pointer file - only tags pin releases); this copies its tree as-is. No-op when the branch
+  does not exist yet.
 
 inputs:
   dir:
@@ -31,9 +31,6 @@ runs:
         if curl -fsSL "https://codeload.github.com/${GITHUB_REPOSITORY}/tar.gz/dist" \
             -o "${RUNNER_TEMP}/dist.tar.gz" \
            && tar -xzf "${RUNNER_TEMP}/dist.tar.gz" -C "$tmp" --strip-components=1; then
-          # the pointer is what a publish writes, not what a run reads: restoring it would let a
-          # snapshot's own name ride into the next publish as if a run had produced it
-          rm -f "$tmp/latest"
           cp -a "$tmp/." "$DIR/"
           echo "restored=true" >> "$GITHUB_OUTPUT"
           echo "Restored $(du -sh "$DIR" | cut -f1) of sources and angles"

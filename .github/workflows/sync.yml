@@ -12,7 +12,8 @@ name: sync
 # itself, because a sync moves the source layer under it.
 #
 # The `dist` branch is the single atomic snapshot — the skills at its root, the angles written
-# about them beside them, the catalog, and a `latest` pointer naming the tag it was published as.
+# about them beside them, and the catalog. dist is one orphan commit force-pushed per run and
+# pinned by a `dist-<date>` tag - no history, no pointer file.
 
 on:
   workflow_dispatch:
