@@ -686,9 +686,11 @@ def test_a_bad_angle_is_argparse_s_to_reject(project):
                             env={k: v for k, v in os.environ.items()
                                  if not k.startswith("SKILLS_PROFILES_")})
     assert result.returncode != 0
-    # the choices' quoting is spelled differently across Python versions; the substance is not
+    # argparse spells the choices' quoting differently across Python versions; the substance
+    # - a rejected angle, with the three valid ones named - is what the test holds on
     assert "invalid choice: 'bogus'" in result.stderr
-    assert "domain, skill_zh, all" in result.stderr
+    for name in ("domain", "skill_zh", "all"):
+        assert name in result.stderr
     assert (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").is_file()  # nothing was touched
 
 
