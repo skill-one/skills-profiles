@@ -276,6 +276,6 @@ uv run python jev.py <owner>/<repo>/<slug> --print   # 仅开发：不调用，�
 | ------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `ci.yml`      | 每次 push 和 PR | `uv sync`、`ruff check .`、`mypy`、`pytest`，装了 `just`。离线。                                                                                                                                                                                            |
 | `sync.yml`    | 手动            | `restore-dist` → `just sync` → `publish-dist`（`date`）。拉取镜像清单并重写清单文件；不调用模型。                                                                                                                                                           |
-| `publish.yml` | 手动            | `restore-dist` → 替换时先 `just clean <angle> limit=0` → 对所选 `angle`（`domain`、`skill_zh`，或 `all` 共池一次跑完）跑 `just build <angle> limit=… jobs=…` → `just index` → `publish-dist`（`date-counter`）。需要所选角度各自的 secret 和变量。 |
+| `publish.yml` | 手动            | `restore-dist` → 对所选 `angle`（`domain`、`skill_zh`，或 `all` 共池一次跑完）跑 `just build <angle> limit=… jobs=…` → `just index` → `publish-dist`（`date-counter`）。需要所选角度各自的 secret 和变量。分类法或 prompt 变更后的重新生成，靠手动删除 `dist` 分支上该角度的文件。 |
 
 文档规则：每份英文文档都有中文对应版——同一次修改保持两者同步。
