@@ -78,6 +78,9 @@ def run_batch(monkeypatch, capsys, project: Path, *args: str, dry: bool = True):
 
 
 def run_index(monkeypatch, capsys, project: Path):
+    """One in-process index run, isolated like the batch: without the chdir and the env, index
+    would read whatever tree the CWD happens to hold rather than the test's own."""
+    isolate(monkeypatch, project)
     rc = index.main([])
     captured = capsys.readouterr()
     return SimpleNamespace(returncode=rc, stderr=captured.err)
@@ -683,7 +686,9 @@ def test_a_bad_angle_is_argparse_s_to_reject(project):
                             env={k: v for k, v in os.environ.items()
                                  if not k.startswith("SKILLS_PROFILES_")})
     assert result.returncode != 0
-    assert "invalid choice: 'bogus' (choose from domain, skill_zh, all)" in result.stderr
+    # the choices' quoting is spelled differently across Python versions; the substance is not
+    assert "invalid choice: 'bogus'" in result.stderr
+    assert "domain, skill_zh, all" in result.stderr
     assert (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").is_file()  # nothing was touched
 
 
