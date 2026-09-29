@@ -1,0 +1,167 @@
+---
+name: bilibili
+description: Read and publish 专栏 articles on Bilibili (bilibili.com) with the user's own login cookies (BYOC) — list their published articles with view/like/comment stats, inspect one article, and publish a new article. Use when the user mentions Bilibili / B站 / 专栏, "我的B站专栏", reading article stats (阅读/点赞), or publishing/投稿 a 专栏 article.
+when_to_use: |
+  Trigger for anything on the user's Bilibili (bilibili.com) 专栏 account driven
+  by their own login cookie: show who they are, list their published 专栏
+  articles with view / like / comment counts, look at one article's stats, or
+  publish a new 专栏 article. This acts as the user's real account, so writes are
+  gated behind an explicit confirmation.
+connections: [bilibili]
+allowed_tools: [Bash]
+license: Apache-2.0
+metadata:
+  author: acedatacloud
+  version: "1.0"
+---
+
+# bilibili — read & publish 专栏 via your own cookies
+
+Drives the user's **real** Bilibili 专栏 (article) account through the same
+`api.bilibili.com` web endpoints the site uses, authenticated by the login
+cookie they captured with the ACE extension. No browser, no third-party deps —
+`urllib` + `hashlib` (the article-list read endpoint needs WBI signing, done
+with stdlib).
+
+The connector injects the cookie jar as an env var:
+
+- `BILIBILI_COOKIES` — a JSON array of cookies. **Secret — never echo or print
+  it.** It includes `SESSDATA` (auth) and `bili_jct` (the CSRF token used for
+  writes).
+
+## CLI
+
+The skill ships [`scripts/bilibili.py`](scripts/bilibili.py) — self-contained, stdlib only.
+
+```sh
+# $SKILL_DIR can point at another skill loaded this turn — anchor on our own
+# script, and re-run this at the top of every Bash block (fresh shell each time).
+BILI="$SKILL_DIR/scripts/bilibili.py"; [ -f "$BILI" ] || BILI=$(find /tmp -maxdepth 8 -path '*/skills/*/scripts/bilibili.py' 2>/dev/null | head -1)
+[ -f "$BILI" ] || { echo "bilibili script not found (SKILL_DIR=$SKILL_DIR)" >&2; exit 1; }
+python3 "$BILI" whoami                     # who is logged in (mid, name)
+python3 "$BILI" articles --limit 20        # my 专栏 articles + stats
+python3 "$BILI" article <cvid>             # one article's stats (cv id)
+python3 "$BILI" drafts --limit 50          # list saved drafts (aid + title)
+python3 "$BILI" status --limit 10          # review state of recent submissions
+python3 "$BILI" categories                 # 分类 names accepted by --category
+```
+
+Stats come straight from Bilibili: `view` (阅读), `like` (点赞), `reply` (评论),
+`favorite` (收藏), `coin` (投币).
+
+## Verify the connection first
+
+```sh
+BILI="$SKILL_DIR/scripts/bilibili.py"; [ -f "$BILI" ] || BILI=$(find /tmp -maxdepth 8 -path '*/skills/*/scripts/bilibili.py' 2>/dev/null | head -1)
+python3 "$BILI" whoami
+# → {"mid": 10000000, "name": "...", "level": 4}
+```
+
+On a not-logged-in / auth error the cookie is expired — have the user reconnect
+at <https://studio.acedata.cloud/console/connectors>. Do **not** loop-retry.
+
+## Publishing — GATED (dry-run unless trailing `--confirm`)
+
+`publish` writes to the user's real account. 专栏 content is **HTML**. Without a
+trailing `--confirm` it dry-runs. `--confirm` is honored **only as the last
+argument**. Always show the dry-run, get an explicit "yes", then re-run.
+
+```sh
+BILI="$SKILL_DIR/scripts/bilibili.py"; [ -f "$BILI" ] || BILI=$(find /tmp -maxdepth 8 -path '*/skills/*/scripts/bilibili.py' 2>/dev/null | head -1)
+python3 "$BILI" publish --title "标题" --content-file a.html                       # dry-run
+python3 "$BILI" publish --title "标题" --content-file a.html --draft-only --confirm   # save a draft
+python3 "$BILI" publish --title "标题" --content-file a.html --confirm                # save draft + submit (publish)
+python3 "$BILI" publish --title "标题" --content-file a.html --category 数码 --confirm  # pick the 分类
+```
+
+- `--draft-only` saves a draft (no submit) — safe; finish/publish in the editor.
+  Prefer it when the user has not clearly asked to go public: a submitted
+  article enters a review queue this CLI cannot withdraw it from.
+- The **submit** (go public) step is frequently rate-limited by Bilibili
+  risk-control (HTTP 412). When that happens the CLI reports the saved draft +
+  edit URL so the user can publish from the web editor.
+- `--category` picks the 分类 (default **数码**, which suits technical posts).
+  Run `categories` for the accepted names. The result echoes the 分类 actually
+  used as `category` / `category_id` — report it when it wasn't the user's pick.
+
+### Publishing is not instant — it enters a review queue
+
+A successful `submit` returns `state: -2` (**待审核**) and `pending_review: true`.
+The returned `url` **404s for everyone until Bilibili approves it** (usually
+minutes to hours). Tell the user it is pending; do not claim it is live, and do
+not re-submit. Check later with `status`, which is the only view that shows
+pending/rejected articles (the public list omits them):
+
+```sh
+python3 "$BILI" status --limit 5    # state_desc: 待审核 / 已发布 / 未通过 (+ reason)
+```
+
+Other states are **not** pending and will never go live on their own — the CLI
+returns them with `ok: false` and `published: false` (`-1` 未通过 rejected, `-3`
+锁定, `-4` 已删除). Read `state_desc`, tell the user plainly, and check `status`
+for the `reason` rather than re-submitting.
+
+The `id` in the publish result is the **article id** (use `cv<id>`), which is a
+different number from `draft_aid`. Only ever share the `url` field. If Bilibili
+returned no article id, `url` and `id` are `null` and `id_unverified: true` is
+set — there is nothing shareable yet, so find the article with `status` instead
+of constructing a link from `draft_aid`.
+
+## Managing drafts (the 999-draft cap)
+
+Bilibili caps 专栏 drafts at **999**; once full, saving a new draft fails with
+`code 37106 草稿数已达最大上限`. List drafts and delete the ones you don't need:
+
+```sh
+BILI="$SKILL_DIR/scripts/bilibili.py"; [ -f "$BILI" ] || BILI=$(find /tmp -maxdepth 8 -path '*/skills/*/scripts/bilibili.py' 2>/dev/null | head -1)
+python3 "$BILI" drafts --limit 50                       # list (aid + title)
+python3 "$BILI" delete-draft <aid> <aid2> ...           # dry-run (shows what would delete)
+python3 "$BILI" delete-draft <aid> <aid2> ... --confirm # PERMANENTLY delete those drafts
+```
+
+- `delete-draft` is **GATED** (dry-run unless trailing `--confirm`) and deletion
+  is **permanent** — always show the dry-run + the titles and get an explicit
+  "yes" before `--confirm`. Pass multiple aids to batch a few per call.
+- Never bulk-delete blindly: list first, confirm the titles are junk/duplicates.
+
+## Images
+
+`publish` automatically re-hosts external images (both `<img src>` and markdown)
+onto Bilibili's CDN (`i0.hdslb.com` / `article.biliimg.com`) before saving —
+Bilibili hotlink-blocks external images and rejects the whole article (`37130`)
+if any external link remains. webp sources (which upcover rejects) are
+transcoded to png via the CDN when possible; an image that still can't upload is
+**dropped** from the article rather than failing the post. `--no-rehost-images`
+skips this.
+
+## Gotchas
+
+- **This is the user's real Bilibili account.** Confirm before any publish.
+- **submit may 412** (anti-bot) even when the draft saved fine — the draft is the
+  reliable result; don't loop-retry submit.
+- A 分类 the account can't post to returns `-17`; without `--category` the CLI
+  auto-retries the fallback list.
+- **Never print `BILIBILI_COOKIES`** — it is full account access.
+- **ToS**: acts only on the user's own account with their own captured cookie.
+
+
+## Record the output
+
+After you successfully publish and obtain the live result URL, call the built-in
+`publish_artifact` tool ONCE so the user can track this deliverable in **My Outputs**:
+
+```
+publish_artifact(kind="article", channel="bilibili", title="<title>", url="<the REAL returned URL>", status="delivered")
+```
+
+Use the real returned URL — never fabricate one. That is the `url` field of the
+publish result (built from the article `id`, **not** `draft_aid`). Call it once
+per published item, only after delivery is confirmed.
+
+- `state: 0` or `1` (已发布, live) → `status="delivered"`.
+- `pending_review: true` (待审核) → `status="draft"`; the URL is not live yet.
+  Re-record as delivered later if the user asks you to re-check with `status`.
+- rejected/locked states, a 412-blocked submit, `id_unverified: true`, or
+  `state_unknown: true` → `status="failed"` (or skip it).
+
+See `_shared/artifacts.md`.
