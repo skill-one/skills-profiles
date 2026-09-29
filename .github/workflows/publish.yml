@@ -87,11 +87,9 @@ env:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    # with no pace the run is bounded by the work itself; every request is bounded on its own by
-    # the client timeout, and 16 calls run at once. The ceiling is GitHub's own 360: a slow
-    # endpoint night (~1.5 skills/min at jobs=8) needs hours for a 300-skill window, and a job
-    # killed here loses its whole batch - the outputs die with the runner.
-    timeout-minutes: 350
+    # no explicit timeout: the run is bounded by GitHub's own 360-minute job ceiling. A job killed
+    # there loses its whole batch - the outputs die with the runner, publish happens last - so a
+    # window that tight should be split into smaller `limit` runs instead of pushed against it.
     steps:
       - uses: actions/checkout@v5
 
