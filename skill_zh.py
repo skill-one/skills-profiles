@@ -1,24 +1,28 @@
 #!/usr/bin/env python3
-"""Translate one skill's SKILL.md body into Simplified Chinese, over the same chat API.
+"""Build one skill's Chinese page, SKILL.zh.md, over the same chat API.
 
-The third angle on a skill, beside domain.json and description_zh.json: the body of the skill's
-own page in, its Chinese translation out. Only the translation is written - the page is not an
-installation, and the identifying metadata (name, description) already lives in the catalog and
-the other two angle files.
+The second angle on a skill, beside domain.json. One process makes every call the page needs:
+the description is translated first, then the body, and the page - the front matter with the
+Chinese description in it, over the translated body - is assembled by code and written only when
+every call came back. The model never shapes the front matter: YAML is the one strictly parsed
+part of the page, so it is never left to a model's hands.
 
-    skill_zh.py <skill> [--print]   translate one skill, or print the first request, calling nothing
+    skill_zh.py <skill> [--print]   build one page, or print the first request, calling nothing
 
 A body too long for one answer travels in pieces: the body is cut on its own markdown seams -
 never inside a code fence that fits in one piece - each piece is translated in its own call, and
 the page is written only when every piece came back. A file is whole or absent, as ever.
 
-The turns are rendered from `prompts/skill_zh.md` and `prompts/skill_zh_user.md`; the endpoint,
-the layout, the gate and the contract are the ones `translate.py` and `common.py` already hold.
+The turns are rendered from `prompts/translate.md`, `prompts/translate_user.md`,
+`prompts/skill_zh.md` and `prompts/skill_zh_user.md`; the endpoint, the layout, the gate and the
+contract are the ones `translate.py` and `common.py` already hold.
 
-Driven by the justfile, one process per skill.
+Driven by `batch.py`, one skill per pool job.
 """
 
 import re
+
+import yaml
 
 import common
 import translate
@@ -27,9 +31,6 @@ from common import Config
 # The two prompts, beside the other angles': the system task and the one user turn.
 PROMPT = "skill_zh.md"
 USER_PROMPT = "skill_zh_user.md"
-# The one target language the templates are rendered with; the value is the language as it is
-# named in the prompt itself.
-TO = "Simplified Chinese (简体中文)"
 # The seam lines a body is cut between: a code fence opens or closes here, and a cut never
 # lands between the two while the block itself fits in one piece.
 FENCE = re.compile(r"^\s*(?:```|~~~)")
@@ -94,52 +95,56 @@ def chunks(text: str, size: int = MAX_CHUNK_CHARS) -> list[str]:
     return pieces
 
 
-def messages(config: Config, text: str) -> list[dict]:
-    """The one chat turn for one piece: the task rendered for the target language, then the
-    piece to render into it - and nothing else.
-
-    The piece goes in as a template variable rather than text of the template, so braces in a
-    skill's own words can never be read as Jinja.
-    """
-    system = common.render(common.load_prompt(config, PROMPT), to=TO)
-    user = common.render(common.load_prompt(config, USER_PROMPT), to=TO, text=text)
-    return [{"role": "system", "content": system}, {"role": "user", "content": user}]
-
-
 def chunk_bodies(config: Config, body_text: str) -> list[dict]:
     """One chat body per piece: the same deterministic, non-streaming request shape the
     description angle sends, one per piece of the page."""
-    return [translate.chat_body(config, messages(config, piece)) for piece in chunks(body_text)]
+    return [translate.chat_body(config, translate.turns(config, piece, PROMPT, USER_PROMPT))
+            for piece in chunks(body_text)]
 
 
-def _request(config: Config, skill: str, source: str, _description: str) -> dict:
-    """The chat body for the body's first piece - every piece's request is the same shape - and
-    the one gate the angle adds: a body with nothing in it is dropped before any call."""
+def _requests(config: Config, skill: str, source: str) -> list[dict]:
+    """Every chat body the page needs, shaped once: the description call first, then one call per
+    body piece. The one gate the angle adds: a body with nothing in it is dropped before any call."""
     body_text = common.skill_body(source)
     if not body_text.strip():
-        raise SystemExit(f"{skill}: body is empty - not translated")
-    return chunk_bodies(config, body_text)[0]
+        raise common.UnusableInput("body is empty - not translated")
+    return [translate.request_body(config, common.skill_description(source)),
+            *chunk_bodies(config, body_text)]
 
 
-def _produce(config: Config, _body: dict, source: str) -> str:
-    """The one Chinese page: every piece translated in turn over the shared endpoint and its
-    fallback, rejoined on the paragraph seams. One failed piece fails the page - a half
-    translation is never written."""
+def _page(source: str, zh_description: str, pieces: list[str]) -> str:
+    """The one Chinese page: the front matter assembled by code over the rejoined body. One failed
+    call fails the page before this runs - a half translation is never written."""
+    body = "\n\n".join(pieces).strip()
+    fields: dict = {}
+    block = common.FRONT_MATTER.match(source)
+    if block is not None:
+        loaded = yaml.load(block.group(1), Loader=common.YAML_LOADER)
+        if isinstance(loaded, dict) and isinstance(loaded.get("name"), str):
+            fields["name"] = loaded["name"]
+    fields["description"] = zh_description
+    return f"{common.front_matter(fields)}\n{body}\n"
+
+
+def _produce(config: Config, bodies: list[dict], source: str) -> str:
+    """The description is the first request; its answer leads the front matter, and the body
+    pieces' answers are rejoined in order, all over the shared endpoint and its fallback."""
     translator = translate.Translator(config)
-    pieces = [translator.ask(body) for body in chunk_bodies(config, common.skill_body(source))]
-    return "\n\n".join(pieces).strip() + "\n"
+    zh_description = translator.ask(bodies[0])
+    pieces = [translator.ask(body) for body in bodies[1:]]
+    return _page(source, zh_description, pieces)
 
 
 def placeholder(description: str) -> str:
     """A value shaped like the answer, so `just dry=1 skill-zh` still writes the real layout."""
-    return f"【占位】\n{description}\n"
+    return f"{common.front_matter({'description': f'【占位】{description}'})}\n【占位】\n{description}\n"
 
 
 def main(argv: list[str] | None = None) -> int:
     return common.run(
         argv, program="skill_zh.py",
         description="Translate one skill's SKILL.md body into Chinese.",
-        angle=common.SKILL_ZH_ANGLE, build_request=_request, produce=_produce,
+        angle=common.SKILL_ZH_ANGLE, build_requests=_requests, produce=_produce,
         placeholder=placeholder)
 
 

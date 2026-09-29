@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Index the profile tree: one flat line per skill, the mirror's own row joined with both angles.
 
-`output/skills.jsonl` is the catalog: every skill the mirror lists that has a description of its
-own - the rest are not in it, there is nothing to lead a build with - carrying the description
-read out of that skill's own `SKILL.md`, its Chinese translation, the domain Jev labelled it
-with, and how sure the endpoint was of it. It is what a consumer reads instead of walking the
-tree - and instead of going back to the mirror's own index for the installs and the hash - and
-`just index` rewrites it whole.
+`output/skills.jsonl` is the catalog: one row per skill the mirror lists, in the mirror's order -
+the mirror's own `id` and `installs`, then the description read out of that skill's own `SKILL.md`,
+its Chinese translation, the domain Jev labelled it with, and how sure the endpoint was of it. The
+joined fields are `null` until the skill is fetched and built, so the catalog is both the dataset and
+the batch's order - a skill the tree has not reached yet is a row with `null`s, not a missing row. It
+is what a consumer reads instead of walking the tree, and the only place the mirror's listing
+survives.
 
 The same run writes the README that goes with it, out of the same walk: the numbers here, said for
 a reader by `readme.py`.
@@ -14,7 +15,6 @@ a reader by `readme.py`.
 
 import argparse
 import json
-import os
 import sys
 from pathlib import Path
 
@@ -22,63 +22,76 @@ import common
 import readme
 from common import Config
 
-MIRROR = Path(common.UPSTREAM_DIR) / common.INDEX  # the mirror's own listing: the join's left side
 # The mirror's row, forwarded field by field rather than whole, so that every row of the catalog
 # has the same shape and a field upstream adds later is a decision made here rather than a surprise.
-MIRROR_FIELDS = ("id", "installs", "hash", "fetchedAt")
-NOTHING = "—"  # an em dash: what the README shows where the tree cannot answer
+MIRROR_FIELDS = ("id", "installs")
 
 
-def mirror_rows(config: Config) -> list[dict]:
-    """The mirror's own rows, in its own order - installs, descending."""
-    path = config.output_dir / MIRROR
+def mirror_rows(config: Config, listing: Path | None) -> list[dict]:
+    """The mirror's own rows, in its own order - installs, descending.
+
+    A fresh listing the driver's refresh hands to `build()` is the left side; the offline CLI
+    passes none and falls back to the catalog itself: its rows carry `installs` already, in the
+    same order, so the numbers and the order survive.
+    """
+    if listing is not None:
+        if not listing.is_file():
+            raise SystemExit(f"{listing}: not found - run `just sync` first")
+        return [json.loads(line) for line in listing.read_text(encoding="utf-8").splitlines()
+                if line]
+    path = config.output_dir / common.INDEX
     if not path.is_file():
         raise SystemExit(f"{path}: not found - run `just sync` first")
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
-
-
-def description(config: Config, skill: str) -> str:
-    """The skill's own one line, out of its `SKILL.md`; empty when there is none to read."""
-    try:
-        return common.skill_description(common.skill_source(config, skill))
-    except FileNotFoundError:
-        return ""
+    return [{"id": row["id"], "installs": row.get("installs")}
+            for line in path.read_text(encoding="utf-8").splitlines() if line
+            for row in [json.loads(line)]]
 
 
 def angle_output(config: Config, skill: str, angle: str) -> dict:
     """One angle's json for one skill, or nothing while it has not been built."""
-    path = common.profile_path(config, skill, angle)
+    path = common.angle_path(config, skill, angle)
     if not path.is_file():
         return {}
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def rows(config: Config) -> list[dict]:
-    """One row per skill the mirror lists whose own `SKILL.md` yields a description: the mirror's
-    row, plus what this project read and decided about it.
+def zh_description(config: Config, skill: str) -> str:
+    """The Chinese description out of the zh page's own front matter - there is no second file
+    holding it; empty while the page has not been built."""
+    path = common.angle_path(config, skill, common.SKILL_ZH_ANGLE)
+    if not path.is_file():
+        return ""
+    return common.skill_description(path.read_text(encoding="utf-8", errors="replace"))
 
-    A skill without a description is not in the catalog at all - there is nothing to lead a build
-    with, so no row and no batch work. The joined fields are `null` while unknown.
+
+def rows(config: Config, listing: Path | None = None) -> list[dict]:
+    """One row per skill the mirror lists, in the mirror's order: its own row, plus what this
+    project has read and decided about it so far.
+
+    Every listed skill is a row, fetched or not - the batch walks the catalog to know what to build
+    next, so a skill the tree has not reached is a row whose joined fields are `null` rather than a
+    missing row. `null` is the one spelling of "not known yet".
     """
-    out = []
-    for entry in mirror_rows(config):
-        row = _row(entry, config, common.skill_dir_name(entry.get("id", "")))
-        if row["description"]:
-            out.append(row)
-    return out
+    return [_row(entry, config, common.skill_dir_name(entry.get("id", "")))
+            for entry in mirror_rows(config, listing)]
 
 
 def _row(entry: dict, config: Config, skill: str) -> dict:
-    """The mirror's row plus ours: the description, its Chinese translation, and the label with
-    its confidence.
+    """The mirror's row plus ours: the source's description, its Chinese translation, and the label
+    with its confidence - each `null` while the tree has not produced it.
 
-    Only the two of the label the catalog is asked for. The rest of what Jev wrote stays in the
-    profile, where it is the answer.
+    A skill not yet fetched is a row of `null`s, which is exactly how a reader tells a fetched row
+    from an unfetched one. The catalog takes two of the label's fields; the rest of what Jev wrote
+    stays in the profile.
     """
     row = {name: entry.get(name) for name in MIRROR_FIELDS}
-    row["description"] = description(config, skill) or None
-    row[common.TRANSLATE_ANGLE] = angle_output(
-        config, skill, common.TRANSLATE_ANGLE).get(common.TRANSLATE_ANGLE)
+    try:
+        source = common.skill_md(config, skill)
+    except FileNotFoundError:
+        row["description"] = None
+    else:
+        row["description"] = common.skill_description(source) or None
+    row["description_zh"] = zh_description(config, skill) or None
     label = angle_output(config, skill, common.DOMAIN_ANGLE)
     row["domain"] = label.get("domain")
     row["confidence"] = label.get("confidence")
@@ -96,61 +109,43 @@ def write(config: Config, rows: list[dict]) -> Path:
 
 
 def built_skills(config: Config, filename: str) -> set[str]:
-    """The skills whose angle file of that name is on disk, from one walk of the profile tree."""
-    root = config.output_dir / common.PROFILES_DIR
-    built: set[str] = set()
-    for dirpath, _, filenames in os.walk(root):
-        path = Path(dirpath)
-        if len(path.relative_to(root).parts) == 3 and filename in filenames:
-            built.add(path.relative_to(root).as_posix())
-    return built
+    """The skills whose angle file of that name is on disk, from one walk of the skills tree."""
+    root = config.output_dir / common.SKILLS_DIR
+    return {path.parent.relative_to(root).as_posix() for path in root.rglob(filename)
+            if len(path.relative_to(root).parts) == 4}
 
 
 def facts(config: Config, indexed: list[dict]) -> dict:
     """What the README says: how much of the dataset is built for each angle, and the tree the
     numbers come from.
 
-    The denominator is the catalog itself: every row in it has a description, and the skills the
-    mirror lists without one are in neither the catalog nor these numbers. The installs share is a
-    second reading of the same count: the batch works the most installed skills first, so the
-    count says how much is left and the weight says what it is worth. Everything here is a string,
-    ready to be dropped into a sentence.
+    The denominator is the mirror's own listing: every listed skill is a row, so the counts say how
+    much of the whole dataset is done rather than how much of the tree happens to be fetched. The
+    installs share is a second reading of the same count: the batch works the most installed skills
+    first, so the count says how much is left and the weight says what it is worth. Everything here
+    is a string, ready to be dropped into a sentence.
     """
+    total = len(indexed)
     weight = sum(_installs(row) for row in indexed)
     dirs = {row["id"]: common.skill_dir_name(row["id"]) for row in indexed}
-    domain_done = built_skills(config, f"{common.DOMAIN_ANGLE}.json")
-    translate_done = built_skills(config, f"{common.TRANSLATE_ANGLE}.json")
-    skill_zh_done = built_skills(config, f"{common.SKILL_ZH_ANGLE}.md")
+    domain_done = built_skills(config, common.ANGLE_FILES[common.DOMAIN_ANGLE])
+    skill_zh_done = built_skills(config, common.ANGLE_FILES[common.SKILL_ZH_ANGLE])
     domain_here = [row for row in indexed if dirs[row["id"]] in domain_done]
-    translate_here = [row for row in indexed if dirs[row["id"]] in translate_done]
     skill_zh_here = [row for row in indexed if dirs[row["id"]] in skill_zh_done]
     return {
-        "tag": _read_text(config.output_dir / common.UPSTREAM_DIR / "latest").strip() or NOTHING,
-        "scan": _scan(_read_json(config.output_dir / common.UPSTREAM_DIR / "stats.json")),
-        "total": str(len(mirror_rows(config))),
-        "buildable": str(len(indexed)),
+        "total": str(total),
+        "described": str(sum(1 for row in indexed if row["description"])),
         "built": str(len(domain_here)),
-        "percent": _percent(len(domain_here), len(indexed)),
+        "percent": _percent(len(domain_here), total),
         "installs": _percent(sum(_installs(row) for row in domain_here), weight),
-        "translated": str(len(translate_here)),
-        "translate_percent": _percent(len(translate_here), len(indexed)),
-        "translate_installs": _percent(sum(_installs(row) for row in translate_here), weight),
         "skillzh": str(len(skill_zh_here)),
-        "skillzh_percent": _percent(len(skill_zh_here), len(indexed)),
+        "skillzh_percent": _percent(len(skill_zh_here), total),
         "skillzh_installs": _percent(sum(_installs(row) for row in skill_zh_here), weight),
     }
 
 
-def _scan(scan: dict) -> str:
-    """The mirror's own scan as one range: `2026-09-19T19:42:24Z -> ... (30m07s)`."""
-    if not scan.get("startedAt") and not scan.get("finishedAt"):
-        return NOTHING
-    spent = f" ({_minutes(scan['durationMs'])})" if scan.get("durationMs") else ""
-    return f"{_moment(scan.get('startedAt'))} -> {_moment(scan.get('finishedAt'))}{spent}"
-
-
 def _installs(row: dict) -> int:
-    """A row's installs as a number: the mirror writes them as strings and as numbers."""
+    """A row's installs as a number: the listing writes them as strings and as numbers."""
     try:
         return int(row.get("installs") or 0)
     except (TypeError, ValueError):
@@ -161,42 +156,22 @@ def _percent(part: int, whole: int) -> str:
     return f"{part / whole:.1%}" if whole else "-"
 
 
-def _moment(value: object) -> str:
-    """`2026-09-14T21:40:59.596Z` as `2026-09-14T21:40:59Z`: milliseconds are noise in prose."""
-    text = str(value or "?")
-    return text.split(".")[0] + "Z" if "." in text else text
-
-
-def _minutes(millis: float) -> str:
-    """A millisecond duration as `29m06s`, or `30s` under a minute."""
-    seconds = int(millis) // 1000
-    return f"{seconds}s" if seconds < 60 else f"{seconds // 60}m{seconds % 60:02d}s"
-
-
-def _read_text(path: Path) -> str:
-    try:
-        return path.read_text(encoding="utf-8")
-    except OSError:
-        return ""
-
-
-def _read_json(path: Path) -> dict:
-    try:
-        loaded = json.loads(_read_text(path))
-    except ValueError:
-        return {}
-    return loaded if isinstance(loaded, dict) else {}
+def build(config: Config, listing: Path | None) -> tuple[Path, list[Path]]:
+    """The whole verb: the catalog and the two READMEs from one walk of one tree. `batch.py`'s
+    refresh calls this in-process after it merges the new sources."""
+    indexed = rows(config, listing)
+    return write(config, indexed), readme.write(config, facts(config, indexed))
 
 
 def main(argv: list[str] | None = None) -> int:
+    """The offline verb: rebuild the catalog and the READMEs from the tree alone. The fresh
+    listing is `batch.py sync`'s path - it calls `build()` in-process with it."""
     argparse.ArgumentParser(
-        description="Write output/skills.jsonl and the READMEs beside it from the tree."
-    ).parse_args(argv)
+        description="Write output/skills.jsonl and the READMEs beside it from the tree.").parse_args(
+        argv)
     config = Config()
-    indexed = rows(config)
-    path = write(config, indexed)
-    written = readme.write(config, facts(config, indexed))
-    print(f"indexed {len(indexed)} skills -> {path}", file=sys.stderr)
+    path, written = build(config, None)
+    print(f"indexed -> {path}", file=sys.stderr)
     print(f"readme -> {', '.join(str(page) for page in written)}", file=sys.stderr)
     return 0
 

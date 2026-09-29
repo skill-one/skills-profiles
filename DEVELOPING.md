@@ -1,13 +1,16 @@
 # Developing skills-profiles
 
-The generator behind the dataset described in [README.md](README.md): it reads each skill's
-`SKILL.md` from [skills-sh-mirror](https://github.com/skill-one/skills-sh-mirror) and asks the Jev
+The generator behind the dataset described in [README.md](README.md): it pulls each skill's
+`SKILL.md` from the skill's own repository - the mirror's index says what exists, the repositories
+hold what it is - and asks the Jev
 (TypeSafe System One) endpoint one typed question - which closed domain category the skill belongs
-to. A second producer, `translate.py`, asks an OpenAI-compatible chat endpoint one free-text
-question - the skill's one-line description in, Chinese out - and a third, `skill_zh.py`, asks the
-same endpoint to translate the `SKILL.md` body into a Chinese page. The three are parallel angles
-on the same profile directory, and all are thin: the tree, the source, the prompt files, the
-settings, the retried call, the atomic write and the command itself all live once in `common.py`.
+to. A second producer, `skill_zh.py`, asks an OpenAI-compatible chat endpoint once for the
+one-line description and then once per markdown piece of the body, and assembles the Chinese page
+`SKILL.zh.md` by code, its front matter never left to the model. The two are parallel angles on
+the same skill directory, and both are thin: the tree, the source, the prompt files, the settings,
+the retried call, the atomic write and the command itself all live once in `common.py`;
+`translate.py` is the chat endpoint library the page angle asks. The window, the lazy fetch and
+the `jobs`-wide pool around them live in one driver, `batch.py`; the justfile only launches it.
 
 中文: [DEVELOPING.zh-CN.md](DEVELOPING.zh-CN.md)
 
@@ -18,96 +21,92 @@ endpoint keys go in a local `.env` (copy [`.env.example`](.env.example)).
 
 ```bash
 uv sync
-just sync             # fetch the mirror into output/skills and output/upstream
-just                  # label the first skill, end to end
-just limit=0          # ... or every skill still unlabelled, whole snapshot, no cap
-just translate        # the second angle: translate the first missing description_zh
-just skill-zh         # the third angle: the SKILL.md body in Chinese
+just sync                  # reconcile with the mirror: its listing, new sources, the catalog
+just                       # build the first domain label, end to end - fetches its repository
+just limit=0 build domain  # ... or every skill still unlabelled, whole snapshot, no cap
+just build skill_zh        # the second angle: build the first missing SKILL.zh.md
+just clean domain          # the inverse: forget the first built label
 ```
 
-Offline, no API calls and no credentials: `just dry=1 limit=5` (and `just dry=1 translate`,
-`just dry=1 skill-zh`).
+Fake endpoint, real layout, no API calls and no credentials: `just dry=1 limit=5 build domain`
+(and `just dry=1 build skill_zh`); the repositories are still fetched, so run it where the sources
+already are or pass a local `repo_tarball`.
 
-## The batch is `just`
+## The batch is `batch.py`
 
-| Command                         | What it does                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `just`                          | Label the next `limit` skills still missing `domain.json`, most installed first. The order is the catalog's own (`OUTPUT_DIR/skills.jsonl`, installs-descending) filtered to rows with a description and a `SKILL.md` on disk; with no catalog it is the directory listing in path order. The window is the first `limit` of those skills - a count of work, not of positions, so repeated runs walk down the dataset. The recipe feeds them to an `xargs -P` pool running `jev.py`. `jobs` is the whole concurrency story.                                                                        |
-| `just translate`                | The same batch for the second angle: the next `limit` skills still missing `description_zh.json`, the same ordering and the same pool, running `translate.py`. Every modifier below works identically.                                                                                                                                                                                                                                                                                                                                                                                             |
-| `just skill-zh`                 | The same batch for the third angle: the next `limit` skills still missing `skill_zh.md`, the same ordering and the same pool, running `skill_zh.py`. Every modifier below works identically.                                                                                                                                                                                                                                                                                                                                                                                                       |
-| `just one <skill>`              | Label exactly one skill, whether or not the batch has reached it. The only way to address one skill - and the only way to rebuild one without the batch skipping it.                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| `just translate-one <skill>`    | Translate exactly one skill, inside or outside the window.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `just skill-zh-one <skill>`     | Translate exactly one skill's SKILL.md body, inside or outside the window.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `just render <skill>`           | Print the request one label would send - the state and the typed question - calling nothing.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| `just translate-render <skill>` | Print the request one translation would send - the two turns rendered from the translate templates - calling nothing.                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| `just invalidate`               | Delete every `domain.json`, so the next run relabels the whole window.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| `just invalidate-translate`     | Delete every `description_zh.json`, so the next translate run rebuilds the whole window.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| `just invalidate-skill-zh`      | Delete every `skill_zh.md`, so the next skill-zh run rebuilds the whole window.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| `just index`                    | Write `<output_dir>/skills.jsonl` - the catalog: one flat line per skill the mirror lists that has a description (a skill without one is not listed), in the mirror's order, being the mirror's own row (`id`, `installs`, `hash`, `fetchedAt`) joined with the `description` read out of that skill's `SKILL.md`, the `description_zh` in `profiles/<id>/description_zh.json`, and the `domain` and `confidence` in `profiles/<id>/domain.json`. The joined fields are `null` while unknown. It reads the tree alone - no network, no calls - and rewrites the file whole. It writes the READMEs beside it from the same walk: see `readme.py` below. |
-| `just sync`                     | Download the whole upstream `dist` branch as one tarball and unpack it: the skill directories - stripped to their `SKILL.md` - into `output_dir/skills`, and the mirror's own files as fetched into `output_dir/upstream`. Then rewrite the catalog. The fetch lands in a scratch directory and the swap happens only once it is whole; a guard refuses to replace a `skills/` that is not a snapshot. Pure data: it never touches a generated profile.                                                                                                                                                                     |
-| `just refresh`                  | `just sync`, plus the consequence: the catalog as it was before the sync is kept aside, and the whole profile - both files - of every skill whose source content hash moved is deleted. A skill that vanished upstream keeps its profile.                                                                                                                                                                                                                                                                                                                                                          |
-| `just clean`                    | Drop what was generated: `output_dir/profiles`, the catalog and the READMEs. The skill directories and the mirror's own files stay.                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| `just test`                     | `uv run pytest`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Command              | What it does                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `just build <angle>` | `batch.py build <angle>`: the next `limit` skills still missing the angle's file, most installed first. The order is the catalog's own (`OUTPUT_DIR/skills.jsonl`, the mirror's order, installs-descending) - parsed as jsonl, one row per listed skill. The window is the next `limit` skills this angle has not resolved: no angle file, and not a listed skill whose repository is already on disk without a `SKILL.md` (it can never be built). It is a count of work, not of positions, so repeated runs walk down the dataset. The driver then fetches each repository the window touches, once, drops any skill whose repository holds no source for it, and runs the producers in a `jobs`-wide pool, one producer process per skill. A bare `just` is `build domain` with the default one-skill limit. |
+| `just clean <angle>` | The inverse window, `batch.py clean <angle>`: the next `limit` skills that already HOLD the angle's file, in the same catalog order, with the file deleted. `build` then regenerates exactly those skills; `limit 0` cleans every built one, and `all` forgets both angles' files - the full-reset half that precedes `sync`. A single named skill outside the window is still built by running its script directly (`uv run python jev.py <id>` / `skill_zh.py <id>`).                                                                                                                                                                                                                                                                                                                                         |
+| `just index`         | Write `<output_dir>/skills.jsonl` - the catalog: one flat line per skill the mirror lists, in the mirror's order, being the listing's own row (`id`, `installs`) joined with the `description` read out of that skill's `SKILL.md`, the `description_zh` in the `SKILL.zh.md` front matter, and the `domain` and `confidence` in `domain.json`. The joined fields are `null` while unknown. It reads the tree alone - no network, no calls - and rewrites the file whole. It writes the READMEs beside it from the same walk: see `readme.py` below.                                                                                                                                                                                                                                                            |
+| `just sync`          | Reconcile with the mirror: pull its listing, the row set, the order and the installs. The sources are fetched lazily: a batch downloads a repository the first time it builds one of its skills, and the repository directory on disk is the cache, so nothing is fetched before it is needed and nothing twice. A repository a fresh listing adds a skill to is fetched again here, the new sources merged in beside the skills already built.                                                                                                                                                                                                                                                                                                                                                                 |
+| `just test`          | `uv run pytest`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 
-The three batches are one recipe body - the `[script] build angle:` parameterized recipe, with the
-angle choosing the script (`jev.py` vs `translate.py` vs `skill_zh.py`), the file that means "done",
-and the label in the failure log; `default`, `translate` and `skill-zh` just call it.
+`build` and `clean` are the two inverse verbs of one driver - `batch.py` - sharing the angle
+(`domain`/`skill_zh`; clean additionally takes `all`) and the same catalog-order window; build
+creates, clean deletes. `sync` is the driver's other subcommand.
 
-| Variable     | Default                                | Meaning                                                                                                                                                                              |
-| ------------ | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `limit`      | `1`                                    | The next N skills still missing the angle being built, in the catalog's order; `0` = all. One is the default, so a bare `just` is a smoke run. It counts work rather than positions. |
-| `jobs`       | `32`                                   | Calls in flight at once (`xargs -P`).                                                                                                                                                |
-| `dry`        | –                                      | `1` = fake endpoint, real layout: nothing is called.                                                                                                                                 |
-| `output_dir` | `output`                               | The published root, where all four layers live.                                                                                                                                      |
-| `snapshot`   | the codeload url for the `dist` branch | What `just sync` fetches; a local `file://` tarball is how the tests run it.                                                                                                         |
-| `py`         | `uv run python`                        | How to run the script (override with an absolute interpreter path in CI).                                                                                                            |
+| Variable       | Default                                                  | Meaning                                                                                                                                                                              |
+| -------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `limit`        | `1`                                                      | The next N skills still missing the angle being built, in the catalog's order; `0` = all. One is the default, so a bare `just` is a smoke run. It counts work rather than positions. |
+| `jobs`         | `32`                                                     | Producer processes in flight at once: the driver's thread pool.                                                                                                                      |
+| `dry`          | –                                                        | `1` = fake endpoint, real layout: nothing is called.                                                                                                                                 |
+| `output_dir`   | `output`                                                 | The published root: the skills (with the angles written beside them), the catalog and the READMEs.                                                                                   |
+| `listing`      | the mirror's `dist` listing url                          | The mirror's listing `just sync` pulls fresh; a local `file://` url is how the tests run it.                                                                                         |
+| `repo_tarball` | `https://codeload.github.com/{owner}/{repo}/tar.gz/HEAD` | Where a batch gets a repository's tarball; `{owner}` and `{repo}` are substituted per repository, and a `file://` template is how the tests run it.                                  |
+| `fetch_jobs`   | `16`                                                     | Repository tarballs in flight at once: the downloader's pool.                                                                                                                        |
+| `py`           | `uv run python`                                          | How to run the scripts (override with an absolute interpreter path in CI).                                                                                                           |
 
 The knobs are `just` variables - set on the command line and nowhere else: `SKILLS_PROFILES_LIMIT=20
 just` does _not_ work. `.env` belongs to the scripts and holds the two endpoints and their keys; the
 justfile exports `output_dir`, `prompts_dir` and `dry`, and that export is the only handover between
 the two.
 
-Because an output has no prerequisites anywhere, **its existence is the entire cache** - checked per
-skill with a `[ -f ]`, so a batch that stopped halfway resumes at the first file that is not there
-and never rebuilds one that is. The two files in a profile cache independently - a domain label does
-not count as a translation, or the reverse. That has three consequences:
+Because an output has no prerequisites anywhere, **its existence is the entire cache** - the driver
+checks the angle file per skill, so a batch that stopped halfway resumes at the first file that is
+not there and never rebuilds one that is. The two files in a profile cache independently - a domain
+label does not count as a zh page, or the reverse. That has three consequences:
 
-- **Invalidation is deletion.** `just invalidate` / `just invalidate-translate` (or `rm`-ing either
-  file in `output/profiles/<id>/`) remove outputs; the next run regenerates them. Editing a
-  prompt file (`_system.md`, `translate.md`, `translate_user.md`) does _not_ invalidate anything
+- **Invalidation is `clean`.** `just clean <angle>` (or `rm`-ing an angle file in
+  `output/skills/<id>/`) removes outputs; the next `build` of that angle regenerates them. Editing
+  a prompt file (`_system.md`, `translate.md`, `translate_user.md`) does _not_ invalidate anything
   by itself - mtimes moving on every checkout would otherwise relabel the whole dataset for free.
-- **The one thing that does invalidate is a new snapshot.** `just refresh` compares the index the
-  download replaced with the one it brought and removes the whole profile of every skill whose
-  content hash moved - both angles at once, since both came from that `SKILL.md`. A skill that
-  vanished upstream is _not_ dropped: its profile was paid for.
+- **A source is fetched once.** A repository is downloaded the first time a batch builds one of its
+  skills, and the repository directory on disk is the cache: `just sync` leaves the sources alone,
+  so a source changes only when its repository directory is deleted. What sync does do is fetch
+  again every repository the new listing adds a skill to, merging the new sources in. A listed skill
+  whose repository holds no source for it can never be built, so the window skips it rather than
+  retrying it forever.
 - **Per-skill failures do not end a batch.** A job that raises (quota, connection) is reported by id,
   writes nothing, and the pool continues; CI records the error details and publishes the successful
   outputs. The next run retries the skills whose files are still missing.
 
 ## The scripts
 
-One job, one call per process. What the two commands do is one command - the shared skeleton in
+One job, one producer process. What the two commands do is one command - the shared skeleton in
 `common.py` (`run`): parse the one skill argument, read the source, gate on its description, build
-the request, call, write the angle's one json file renamed into place, and turn a failure into one
-stderr line and a status. Each producer supplies only three things: the request, the call that
-answers it, and its dry-run placeholder. The domain angle:
+every request the angle makes (computed once), call, write the angle's one file renamed into
+place, and turn a failure into one stderr line and a status. Each producer supplies only three
+things: the requests, the calls that answer them, and its dry-run placeholder. The domain angle:
 
 ```bash
 uv run python jev.py <owner>/<repo>/<slug>           # label exactly one skill
 uv run python jev.py <owner>/<repo>/<slug> --print   # print the request and stop, calling nothing
 ```
 
-`jev.py` has no "skip if it exists" check on purpose: deciding what to build is the justfile's job.
+`jev.py` has no "skip if it exists" check on purpose: deciding what to build is `batch.py`'s job.
 Its whole contract with the caller is:
 
 - **`<skill>`** is a skill's directory under `<output_dir>/skills`: its id with `:` and `&` spelled
   `_`, which is how the mirror's own tree is named.
-- **The output** lands at `<output_dir>/profiles/<skill>/domain.json`, renamed into place - a
+- **The output** lands at `<output_dir>/skills/<skill>/domain.json`, renamed into place - a
   half-written one would be skipped as done by the next batch.
 - **The source is cut at 20 000 characters**, on a line break, and the cut is announced.
 - **The description is the front matter's `description`**, parsed as YAML, and it is the gate on a
   skill: a header that is missing, that does not parse, or that carries no description drops the
-  skill - no call, no file, one line on stderr, status 1.
+  skill - no call, no angle file, one line on stderr, status 1. The batch never reaches that case:
+  `fetch.py` writes only a source that yields a description, so a skill it cannot lead with has no
+  `SKILL.md` and the window leaves it alone.
 - **Status** is 0 built, 1 an input or the endpoint was unusable, 2 bad arguments. A failure is one
   line rather than a traceback, because a batch of thousands of them is where a traceback stops
   being information.
@@ -126,115 +125,113 @@ distribution over all 13 categories; the catalog takes the first two and leaves 
 profile. A dropped first call after the endpoint has been idle arrives as a timeout and is retried;
 a rejected body (400) is not.
 
-The translation angle mirrors it:
+The zh page angle is the chat one:
 
 ```bash
-uv run python translate.py <owner>/<repo>/<slug>           # translate exactly one skill
-uv run python translate.py <owner>/<repo>/<slug> --print   # print the request and stop, calling nothing
+uv run python skill_zh.py <owner>/<repo>/<slug>           # build exactly one Chinese page
+uv run python skill_zh.py <owner>/<repo>/<slug> --print   # print every request as one json array
 ```
 
-`translate.py` is deliberately the same shape as `jev.py` - same command line, same gate (no
-description, status 1), same exit codes, same rename-into-place write at
-`<output_dir>/profiles/<skill>/description_zh.json` as `{description_zh}`, same dry-run switch (a
-`【占位】` placeholder, so the layout is exercised without a key). Both take the same `common.Config`
+`skill_zh.py` and the chat library it asks, `translate.py`, share the same `common.Config`:
+the shared settings (timeout, retries, dry run, the paths), the typed endpoint's three, and the
+translation ones beside them. What differs is only the call: a normal OpenAI-compatible
+`POST {base}/chat/completions` with a Bearer key, `temperature` 0, and the two turns rendered from
+`prompts/translate.md` and `prompts/translate_user.md` with the one target language fixed in code -
+a faithful-translation system instruction (preserve meaning, tone, paragraph and formatting; keep
+code and placeholders; follow the supplied context and terminology) and the `Translate to …:` user
+turn carrying the text to translate. Deep thinking is on by default: the MaaS extension
+`enable_thinking: true` plus `max_tokens: 32768` (the documented ceiling - the endpoint's own 2048
+default would cut the reasoning off). The model reasons into `reasoning_content` first; that draft
+is never read (`translation()` takes `choices[0].message.content` alone) and never written to the
+angle file - both knobs are settings, `TRANSLATE_ENABLE_THINKING` and `TRANSLATE_MAX_TOKENS`. The
+description is a Jinja variable, never part of the template text, so braces in a skill's own line
+are data. It sends the description alone - no `SKILL.md`, no source cut. `choices[0].message.content`
+is the whole answer: an empty body is an unusable endpoint, not an empty translation. The retry
+rules are `common.py`'s, shared with the domain angle: transient status codes and connection errors
+back off exponentially, a 4xx fails at once. Defaults point at Xunfei Xingchen MaaS serving
+Spark-X2.5-4B; the model id the console shows may differ, hence the env override. This is
+`translate.py`, a library rather than a command - `skill_zh.py` is its only caller.
 
-- the shared settings (timeout, retries, dry run, the paths), the typed endpoint's three, and the
-  translation ones beside them. What differs is only the call: a normal OpenAI-compatible
-  `POST {base}/chat/completions` with a Bearer key, `temperature` 0, and the two turns rendered from
-  `prompts/translate.md` and `prompts/translate_user.md` with the one target language fixed in code -
-  a faithful-translation system instruction (preserve meaning, tone, paragraph and formatting; keep
-  code and placeholders; follow the supplied context and terminology) and the `Translate to …:` user
-  turn carrying the one description. Deep thinking is on by default: the MaaS extension
-  `enable_thinking: true` plus `max_tokens: 32768` (the documented ceiling - the endpoint's own 2048
-  default would cut the reasoning off). The model reasons into `reasoning_content` first; that draft
-  is never read (`translation()` takes `choices[0].message.content` alone) and never written to the
-  angle file - both knobs are settings, `TRANSLATE_ENABLE_THINKING` and `TRANSLATE_MAX_TOKENS`. The
-  description is a Jinja variable, never part of the template text, so braces in a skill's own line
-  are data. It sends the description alone - no `SKILL.md`, no source cut. `choices[0].message.content`
-  is the whole answer: an empty body is an unusable endpoint, not an empty translation. The retry
-  rules are `common.py`'s, shared with the domain angle: transient status codes and connection errors
-  back off exponentially, a 4xx fails at once. Defaults point at Xunfei Xingchen MaaS serving
-  Spark-X2.5-4B; the model id the console shows may differ, hence the env override.
+`skill_zh.py` shares the command shape - same command line, same gate, same exit codes, same
+rename-into-place write - and makes every call the page needs, in order: the description first,
+then the body. The body is sent without its front matter, rendered from `prompts/skill_zh.md` and
+`prompts/skill_zh_user.md`. A body too long for one answer is cut on its own markdown seams (blank
+lines outside a code fence; a block with no seam of its own is cut between lines) into pieces of
+`MAX_CHUNK_CHARS` characters or fewer, each translated in its own call over the shared endpoint and
+fallback. The page is then assembled by code - a front matter of `name` (the source's own) and the
+Chinese description, over the pieces rejoined on the paragraph seams - and written only when every
+call came back: a half-translated page must never pass for a whole one, and the front matter is the
+one strictly parsed part of the page, so it is never left to the model. An empty body, like a
+missing description, drops the skill with no call and no file - the same one-line/exit-1 gate as
+every other unusable input, not a traceback. The requests for the page are built once and shared by
+`--print` and the run, so the body is never chunked twice.
 
-The third angle mirrors it once more:
+`index.py` joins the mirror's listing with the tree and writes `output/skills.jsonl`. The CLI is
+the offline verb - it takes no argument, and the existing catalog carries the installs in the
+same order; the driver's sync calls the same `build()` in-process with the fresh listing, so
+its installs join in without a process between them. Each row carries the listing's fields, then `description`, `description_zh`, `domain`
+and `confidence` - the angles read from their own files, independently and missing independently
+(the Chinese page stays in its skill directory; a consumer falls back to the original without it),
+and every listed skill is a row, its joined fields `null` until the tree fetches and builds it.
+The same run writes `output/README.md` and its Chinese twin - `readme.py` holds the words, `index.py`
+hands it the numbers - the one thing the catalog cannot answer: **how much of the dataset is
+labelled** (domain coverage and zh-page coverage).
 
-```bash
-uv run python skill_zh.py <owner>/<repo>/<slug>           # translate exactly one skill's body
-uv run python skill_zh.py <owner>/<repo>/<slug> --print   # print the request and stop, calling nothing
-```
-
-`skill_zh.py` is the same shape again - same command line, same gate, same exit codes, same
-rename-into-place write - with two differences. It sends the SKILL.md *body* (the front matter is
-identifying metadata, and the catalog and the other angle files already carry it), rendered from
-`prompts/skill_zh.md` and `prompts/skill_zh_user.md`, and it writes the one text file
-`<output_dir>/profiles/<skill>/skill_zh.md`: the translation alone. A body too long for one
-answer is cut on its own markdown seams (blank lines outside a code fence; a block with no seam
-of its own is cut between lines) into pieces of `MAX_CHUNK_CHARS` characters or fewer, each
-translated in its own call over the shared endpoint and fallback, and the page is the pieces
-rejoined on the paragraph seams. Every piece must come back - a half-translated page must never
-pass for a whole one - and an empty body, like a missing description, drops the
-skill with no call and no file.
-
-`index.py` joins the mirror's rows with the tree and writes `output/skills.jsonl`. It has no
-arguments, no network and no call, and it is not in the build's path: `just index` is a verb you run
-when you want the catalog, and `just sync` runs it because a sync moves the source layer under it.
-Each row carries the mirror's fields, then `description`, `description_zh`, `domain` and
-`confidence` - the angles read from their own files, independently and missing independently
-(the Chinese page stays in its profile; a consumer falls back to the original without it). The same run
-writes `output/README.md` and its Chinese twin - `readme.py` holds the words, `index.py` hands it
-the numbers - the one thing the catalog cannot answer: **how much of the dataset is labelled**
-(domain coverage; translation coverage is not on the page). It reads the snapshot's own identity
-(`upstream/latest`, `upstream/stats.json`) rather than stamping a wall clock, so a publish with
-nothing new spends no version number.
-
-`stale.py` does the one comparison a shell is bad at: two catalogs in, the ids whose content hash
-moved out - minus the ones the new one no longer holds, which are nobody's to delete. `just refresh`
-is `sync` and it, in that order.
+`fetch.py` is the other side: the driver downloads the window's repositories - each `owner/repo` of
+the skills about to be built, one codeload tarball each (`--repo-tarball` says where), `fetch_jobs`
+at a time, and only the ones not already on disk - and `fetch.py` streams each tarball once. A skill is
+a `SKILL.md` under a subdirectory, named after it; the repository's own root `SKILL.md` is its
+readme, not a skill. A source is taken only when it yields a description, and only once per name.
+The catalog is not consulted here - a skill the listing has not reached yet is unpacked all the
+same. The repository directory is created either way, so its presence is the cache: a repository
+that holds no source for a listed skill leaves that skill an empty directory. A repository that
+will not download is simply not here: its skills fail and the batch carries on.
 
 ## How it works
 
 ```
                         output/  ── the whole artifact, published as one directory
                           │
-mirror `dist` branch ─────┼──► skills/<id>/**      the source page every angle reads, SKILL.md alone
-     (`just sync`)        │                          not an installation: the full skill is at its url
-                          ├──► upstream/**         the mirror's own files the tree reads, its index above all
-                          │
-                          └─► the justfile walks the catalog
+mirror `dist` listing ────┼──► skills.jsonl         the catalog: one row per listed skill, and the
+   (batch sync pulls      │                          order every batch works in (installs-descending)
+    it in, never keeps it)│
+                          ├──► batch.py walks the catalog as jsonl
                                       │
-                        `just` labels what is missing, JOBS at a time
-                        `just translate` translates what is missing, the same pool
-                        `just skill-zh` translates the pages, the same pool
+                        fetch each window's repositories once, then run the producers, JOBS at a
+                        time, one process per skill; the same pool for domain and skill_zh
                                       │
-                        profiles/<id>/domain.json + description_zh.json + skill_zh.md
+                        skills/<id>/SKILL.md + domain.json + SKILL.zh.md (the repo dir is the cache)
                                       │
-                `just index` ──► skills.jsonl + READMEs: upstream × skills/ × profiles/
+                index.build() ──► skills.jsonl + READMEs: the mirror's rows × the angles' files
 ```
 
-The runner is a command runner, not a build system: **existence is the skip**, the order is the
-mirror's own (a `find` rather than a glob, because `.claude` is a repo name people use, and
-`LC_ALL=C sort` because plain `sort` moves `_` around), and the pool is plain `xargs -P jobs` with
-no jobserver and no per-minute pace - every worker runs its next call as soon as the last returns;
-a transient 429 is absorbed by the client's own exponential backoff.
+The driver is a plain Python module behind a thin `just` launcher, not a build system: **existence
+is the skip**, the order is the mirror's own read straight out of the jsonl (so leading dots and
+`_` in repo names need no shell tricks), and the pool is a `ThreadPoolExecutor` with `jobs`
+workers spawning one producer process each - no jobserver and no per-minute pace; every worker
+runs its next skill as soon as the last returns, and a transient 429 is absorbed by the client's
+own exponential backoff.
 
 ## Project layout
 
 ```
-justfile                # the orchestrator: sync, the shared build-angle batch, the cache policy
+justfile                # a thin launcher: each recipe sets the knobs and runs batch.py or a script
+batch.py                # the orchestrator: the jsonl window, the lazy fetch, the process pool, sync
 common.py               # the kernel both producers share: Config, the tree, the source, prompts,
                         # the retried call, the atomic write, and the run() command skeleton
+fetch.py                # the sources: a repository's skills unpacked into skills/, once each
 jev.py                  # the domain angle: the taxonomy, the state, the typed question
-translate.py            # the translation angle: one chat call, shaped over the shared command
+translate.py            # the translation library: one chat call, shaped over the shared command
 skill_zh.py             # the page angle: the SKILL.md body translated, one .md written
 index.py                # the catalog and its numbers: one flat jsonl, and the facts a README is
 readme.py               # the page: those numbers said for a reader, in both languages
-stale.py                # the comparison: two catalogs in, the changed skills' profiles out
 prompts/_system.md       # the state template: name, description, body, and the repository block
 prompts/translate.md     # the translation system template: the faithful-translation task, {{to}}
 prompts/translate_user.md  # the translation user template: "Translate to {{to}}:" carrying {{text}}
 prompts/skill_zh.md      # the page system template: translate the document, keep the formatting
 prompts/skill_zh_user.md # the page user template: "Translate to {{to}}:" carrying the body
-tests/                  # offline unit tests plus a just end-to-end suite
+tests/                  # offline unit tests; the batch is driven in-process in test_batch.py,
+                        # with only the justfile launcher checks running `just`
 .github/                # ci on every push and pull request, sync and publish by hand
 ```
 
@@ -243,24 +240,24 @@ tests/                  # offline unit tests plus a just end-to-end suite
 Resolution order (highest first): `SKILLS_PROFILES_*` env vars → local `.env` → built-in defaults.
 An empty value means "not set".
 
-| Variable                                    | Default                  | Description                                                                                                                                                              |
-| ------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `SKILLS_PROFILES_API_KEY`                   | –                        | The typed endpoint's key; no key means no call                                                                                                                           |
-| `SKILLS_PROFILES_BASE_URL`                  | TypeSafe's System One path | Where `jev.py` posts; nothing else does                                                                                                                                  |
-| `SKILLS_PROFILES_MODEL`                     | `jev-latest`             | The System One model, an alias over the pinned version                                                                                                                   |
-| `SKILLS_PROFILES_TRANSLATE_API_KEY`         | –                        | The chat endpoint's key; `translate.py` is the only caller                                                                                                               |
-| `SKILLS_PROFILES_TRANSLATE_BASE_URL`        | Xingchen MaaS v2 root    | The OpenAI-compatible root; `translate.py` posts to `{base}/chat/completions`                                                                                            |
-| `SKILLS_PROFILES_TRANSLATE_MODEL`           | `spark-x2.5-4b`          | The chat model id; spell it as the console's service page shows it                                                                                                       |
-| `SKILLS_PROFILES_TRANSLATE_ENABLE_THINKING` | `true`                   | Send the MaaS `enable_thinking` switch; the model reasons before it answers (`reasoning_content`)                                                                        |
-| `SKILLS_PROFILES_TRANSLATE_MAX_TOKENS`      | `32768`                  | The answer's token budget including the reasoning; the endpoint's own default is 2048                                                                                    |
-| `SKILLS_PROFILES_TRANSLATE_FALLBACK_API_KEY`  | –                        | The fallback endpoint's key; unset turns the fallback off - a failed skill fails as before                                                                               |
-| `SKILLS_PROFILES_TRANSLATE_FALLBACK_BASE_URL` | Agnes AI root            | Where a skill the chat endpoint fails is retried, once: the same OpenAI-compatible call, only the model swapped                                                          |
-| `SKILLS_PROFILES_TRANSLATE_FALLBACK_MODEL`    | `agnes-3.0-flash`        | The fallback model id; a reasoning model, read the same way (`reasoning_content` beside `content`)                                                                       |
-| `SKILLS_PROFILES_TIMEOUT`                   | `20`                     | Seconds per request, for both endpoints: they answer in one to three, and drop a first call after idle. A thinking translation is slower - raise it (120) for that batch |
-| `SKILLS_PROFILES_MAX_RETRIES`               | `3`                      | Extra attempts, for a dropped call or a busy gateway; both endpoints                                                                                                     |
-| `SKILLS_PROFILES_DRY_RUN`                   | `false`                  | Fake both producers: no API calls                                                                                                                                        |
-| `SKILLS_PROFILES_OUTPUT_DIR`                | `output`                 | The published root: skills, profiles, upstream and catalog                                                                                                               |
-| `SKILLS_PROFILES_PROMPTS_DIR`               | `prompts`                | The directory holding `_system.md`, `translate.md` and `translate_user.md`                                                                                               |
+| Variable                                      | Default                    | Description                                                                                                                                                              |
+| --------------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `SKILLS_PROFILES_API_KEY`                     | –                          | The typed endpoint's key; no key means no call                                                                                                                           |
+| `SKILLS_PROFILES_BASE_URL`                    | TypeSafe's System One path | Where `jev.py` posts; nothing else does                                                                                                                                  |
+| `SKILLS_PROFILES_MODEL`                       | `jev-latest`               | The System One model, an alias over the pinned version                                                                                                                   |
+| `SKILLS_PROFILES_TRANSLATE_API_KEY`           | –                          | The chat endpoint's key; `translate.py` is the only caller                                                                                                               |
+| `SKILLS_PROFILES_TRANSLATE_BASE_URL`          | Xingchen MaaS v2 root      | The OpenAI-compatible root; `translate.py` posts to `{base}/chat/completions`                                                                                            |
+| `SKILLS_PROFILES_TRANSLATE_MODEL`             | `spark-x2.5-4b`            | The chat model id; spell it as the console's service page shows it                                                                                                       |
+| `SKILLS_PROFILES_TRANSLATE_ENABLE_THINKING`   | `true`                     | Send the MaaS `enable_thinking` switch; the model reasons before it answers (`reasoning_content`)                                                                        |
+| `SKILLS_PROFILES_TRANSLATE_MAX_TOKENS`        | `32768`                    | The answer's token budget including the reasoning; the endpoint's own default is 2048                                                                                    |
+| `SKILLS_PROFILES_TRANSLATE_FALLBACK_API_KEY`  | –                          | The fallback endpoint's key; unset turns the fallback off - a failed skill fails as before                                                                               |
+| `SKILLS_PROFILES_TRANSLATE_FALLBACK_BASE_URL` | Agnes AI root              | Where a skill the chat endpoint fails is retried, once: the same OpenAI-compatible call, only the model swapped                                                          |
+| `SKILLS_PROFILES_TRANSLATE_FALLBACK_MODEL`    | `agnes-3.0-flash`          | The fallback model id; a reasoning model, read the same way (`reasoning_content` beside `content`)                                                                       |
+| `SKILLS_PROFILES_TIMEOUT`                     | `20`                       | Seconds per request, for both endpoints: they answer in one to three, and drop a first call after idle. A thinking translation is slower - raise it (120) for that batch |
+| `SKILLS_PROFILES_MAX_RETRIES`                 | `3`                        | Extra attempts, for a dropped call or a busy gateway; both endpoints                                                                                                     |
+| `SKILLS_PROFILES_DRY_RUN`                     | `false`                    | Fake both producers: no API calls                                                                                                                                        |
+| `SKILLS_PROFILES_OUTPUT_DIR`                  | `output`                   | The published root: the skills (with the angles written beside them), the catalog and the READMEs                                                                        |
+| `SKILLS_PROFILES_PROMPTS_DIR`                 | `prompts`                  | The directory holding `_system.md`, `translate.md`, `translate_user.md`, `skill_zh.md` and `skill_zh_user.md`                                                            |
 
 ## Testing
 
@@ -274,36 +271,42 @@ fails loudly, so a test can never call out even with a local `.env` full of keys
   posts (a state and typed questions, no messages), the guard on an answer outside the closed set,
   the state the repository reaches, and the command - the gate, the exit codes, a request printed
   without a key.
-- `tests/test_translate.py` covers the second angle the same way: the request body (the two prompt
-  files rendered to system and user turns, no state), the description carried as a Jinja value, the
-  URL join and Bearer header, an empty answer rejected, the dry-run placeholder, and the command -
-  the gate, the exit codes, a request printed without a key.
-- `tests/test_index.py` covers the catalog and its numbers (including `description_zh` joining
-  independently); `tests/test_readme.py` the bilingual page; `tests/test_stale.py` the hash
-  comparison; `tests/test_just.py` drives the justfile itself - the batches, the window, the pool,
-  the cache, `sync`, `refresh`, `invalidate` for every angle - against a local tarball.
-- `tests/test_skill_zh.py` covers the third angle: the request (the body as a Jinja value, the
-  front matter never sent), the output (front matter as published over the translation, one
-  `skill_zh.md`), the length gate, and the command - the gate, the exit codes, a request printed
-  without a key.
+- `tests/test_translate.py` covers the chat library the page angle asks: the request body (the two
+  prompt files rendered to system and user turns), the description carried as a Jinja value, the
+  URL join and Bearer header, the retried call (a dropped one retried, a rejected body not), the
+  answer parsing (an empty or truncated one rejected), and the fallback hand-over.
+- `tests/test_index.py` covers the catalog and its numbers (one row per listed skill, its fields
+  `null` until built, and `description_zh` joining independently); `tests/test_readme.py` the
+  bilingual page; `tests/test_batch.py` drives `batch.py` in-process - the window, the lazy fetch
+  (a repository fetched once, a failed one failing only its skills), the per-skill failure logs,
+  `sync` and the clean inverse window - against local `file://` tarballs. Only the launcher
+  checks (the default recipe, the command-line-only dry knob, the pool flags reaching the command)
+  still run `just` as a subprocess.
+- `tests/test_skill_zh.py` covers the page angle: the requests (description first, then the body
+  pieces; the body as a Jinja value, the front matter never sent), the output (front matter as
+  published over the translation, one `SKILL.zh.md`), the length gates, and the command - the
+  exit codes and the request array printed without a key.
 
 ```bash
-uv run pytest          # offline test suite
-uv run ruff check .    # lint
-uv run mypy            # types
-just dry=1 limit=2     # the batch itself, end to end
-just dry=1 translate   # the second batch, end to end
-just dry=1 skill-zh    # the third batch, end to end
+uv run pytest                                # offline test suite
+uv run ruff check .                          # lint
+uv run mypy                                  # types
+just dry=1 limit=2 build domain              # the batch itself, end to end
+just dry=1 build skill_zh                    # the second batch, end to end
+uv run python jev.py <owner>/<repo>/<slug> --print   # dev only: see a request without calling
 ```
+
+There is deliberately no `just render`: printing a request is a dev-only check, so it stays a
+script flag run directly, while the justfile holds the production verbs.
 
 ## CI
 
 Three workflows, and each one is thin: the work they do is `just`.
 
-| workflow      | trigger                     | does                                                                                                                                                                                                                                                           |
-| ------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ci.yml`      | every push and pull request | `uv sync`, `ruff check .`, `mypy`, `pytest`, with `just` installed. Offline.                                                                                                                                                                                   |
-| `sync.yml`    | manual                      | `restore-dist` → `just refresh` → `publish-dist` (`date`). Replaces the dataset and retires what it invalidates; no model calls and no key.                                                                                                                    |
-| `publish.yml` | manual                      | `restore-dist` → `just limit=… jobs=…` for the chosen `angle` (`domain`, `translate`, or `both` - domain then translate) → `just index` → `publish-dist` (`date-counter`). Needs the chosen angles' secrets and variables; `replace` drops those angles first. |
+| workflow      | trigger                     | does                                                                                                                                                                                                                                                         |
+| ------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ci.yml`      | every push and pull request | `uv sync`, `ruff check .`, `mypy`, `pytest`, with `just` installed. Offline.                                                                                                                                                                                 |
+| `sync.yml`    | manual                      | `restore-dist` → `just sync` → `publish-dist` (`date`). Pulls the mirror's listing and rewrites the catalog; no model is called.                                                                                                                             |
+| `publish.yml` | manual                      | `restore-dist` → `just clean <angle> limit=0` when replacing → `just build <angle> limit=… jobs=…` (`domain`, `skill_zh`, or `all` - domain then skill_zh) → `just index` → `publish-dist` (`date-counter`). Needs the chosen angles' secrets and variables. |
 
 Docs rule: every English document has a Chinese counterpart — keep both in sync, in the same pass.

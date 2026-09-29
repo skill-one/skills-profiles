@@ -10,7 +10,7 @@ of the repository rather than of one file.
     jev.py <skill> [--print]   label one skill, or print the request and call nothing
 
 Everything else - the tree, the source, the call's retries, the write and the command - is shared
-in `common.py`. Driven by the justfile, one process per skill.
+in `common.py`. Driven by `batch.py`, one skill per pool job.
 """
 
 import httpx
@@ -133,18 +133,19 @@ def placeholder(_description: str) -> dict:
             "probabilities": {name: 1.0 if name == first else 0.0 for name in CRITERIA}}
 
 
-def _request(config: Config, skill: str, source: str, _description: str) -> dict:
-    return request_body(config.model, state(config, skill, common.cap_source(source)))
+def _requests(config: Config, skill: str, source: str) -> list[dict]:
+    """The one typed question this angle asks, as the one-item list the command takes."""
+    return [request_body(config.model, state(config, skill, common.cap_source(source)))]
 
 
-def _produce(config: Config, body: dict, _source: str) -> dict:
-    return profile(Jev(config).ask(body))
+def _produce(config: Config, bodies: list[dict], _source: str) -> dict:
+    return profile(Jev(config).ask(bodies[0]))
 
 
 def main(argv: list[str] | None = None) -> int:
     return common.run(
         argv, program="jev.py", description="Label one skill's domain.",
-        angle=common.DOMAIN_ANGLE, build_request=_request, produce=_produce,
+        angle=common.DOMAIN_ANGLE, build_requests=_requests, produce=_produce,
         placeholder=placeholder)
 
 

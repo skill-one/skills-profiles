@@ -20,7 +20,7 @@ ALPHA = "owner-a/repo-a/alpha"
 def test_a_short_source_is_passed_through_untouched(config):
     """No note, no reflow: the cap is the only thing that ever changes a source, and dropping the
     front matter is `skill_body`'s job rather than this one's."""
-    source = common.skill_source(config, ALPHA)
+    source = common.cap_source(common.skill_md(config, ALPHA))
     assert source.startswith("---\nname: owner-a/repo-a/alpha\ndescription: Tidies a note list")
     assert source.endswith("---\n\nowner-a/repo-a/alpha does useful things.\n")
 
@@ -28,7 +28,7 @@ def test_a_short_source_is_passed_through_untouched(config):
 def test_the_sent_body_leaves_the_front_matter_behind(config):
     """The name and the description lead the state, so the copy of them at the top of the file is
     not sent a second time: the body starts at the first line that says something new."""
-    body = common.skill_body(common.skill_source(config, ALPHA))
+    body = common.skill_body(common.cap_source(common.skill_md(config, ALPHA)))
 
     assert body == "owner-a/repo-a/alpha does useful things.\n"
 
@@ -39,12 +39,12 @@ def test_a_source_with_no_front_matter_is_sent_as_it_is(workdir):
     text = "Just a body.\n\n---\n\nStill the body.\n"
     common.skill_md_path(common.Config(), ALPHA).write_text(text, encoding="utf-8")
 
-    assert common.skill_body(common.skill_source(common.Config(), ALPHA)) == text
+    assert common.skill_body(common.cap_source(common.skill_md(common.Config(), ALPHA))) == text
 
 
 def test_the_description_comes_from_the_skills_own_front_matter(config):
     """The index upstream publishes no longer carries one, so the file is the source."""
-    assert common.skill_description(common.skill_source(config, ALPHA)).startswith(
+    assert common.skill_description(common.cap_source(common.skill_md(config, ALPHA))).startswith(
         "Tidies a note list")
 
 
@@ -55,11 +55,11 @@ def test_a_description_is_read_as_yaml_not_off_the_line(workdir):
 
     path.write_text("---\nname: alpha\ndescription: >-\n  Folds two lines\n  into one.\n---\n\nbody\n",
                     encoding="utf-8")
-    assert common.skill_description(common.skill_source(config, ALPHA)) == "Folds two lines into one."
+    assert common.skill_description(common.cap_source(common.skill_md(config, ALPHA))) == "Folds two lines into one."
 
     path.write_text('---\nname: alpha\ndescription: "Says \\"hi\\" and stops."\n---\n\nbody\n',
                     encoding="utf-8")
-    assert common.skill_description(common.skill_source(config, ALPHA)) == 'Says "hi" and stops.'
+    assert common.skill_description(common.cap_source(common.skill_md(config, ALPHA))) == 'Says "hi" and stops.'
 
 
 def test_a_long_source_is_cut_on_a_line_break_and_says_so(workdir):
@@ -70,7 +70,7 @@ def test_a_long_source_is_cut_on_a_line_break_and_says_so(workdir):
     assert len(body) > common.MAX_SKILL_MD_CHARS
     common.skill_md_path(config, ALPHA).write_text(body, encoding="utf-8")
 
-    source = common.skill_source(config, ALPHA)
+    source = common.cap_source(common.skill_md(config, ALPHA))
 
     head = source.removesuffix(f"\n\n{common.TRUNCATION_NOTE}\n")
     assert head != source  # the note is there, at the end
@@ -175,7 +175,7 @@ def test_the_translation_prompts_are_two_files(config):
 
 
 def test_write_json_writes_one_object_renamed_into_place(config):
-    path = common.profile_path(config, ALPHA, common.DOMAIN_ANGLE)
+    path = common.angle_path(config, ALPHA, common.DOMAIN_ANGLE)
     written = common.write_json(path, {"domain": "testing", "confidence": 1.0})
 
     assert written == path

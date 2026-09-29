@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
-"""Translate one skill's description into Simplified Chinese, over an OpenAI-compatible chat API.
+"""The chat endpoint the zh page angle asks: one free-text turn, Chinese out.
 
-The second angle on a skill. Where `jev.py` asks the typed System One endpoint a closed question,
-this asks a chat completions endpoint one free-text question: the skill's own one-line description
-in, Chinese out. Its two turns are rendered from `prompts/translate.md` and
-`prompts/translate_user.md`; the layout, the gate and the contract are the shared command in
-`common.py`.
-
-    translate.py <skill> [--print]   translate one skill, or print the request and call nothing
+Where `jev.py` asks the typed System One endpoint a closed question, this is the OpenAI-compatible
+chat endpoint `skill_zh.py` asks once for the one-line description and then once per body piece.
+The description turns are rendered from `prompts/translate.md` and `prompts/translate_user.md`;
+the body pieces carry their own prompts beside them.
 
 The default endpoint is Xunfei Xingchen MaaS serving Spark-X2.5-4B; base url and model are
 overridable, because the model id is what the console's service page shows for the subscription.
-A skill the endpoint fails is retried once on a fallback endpoint - Agnes AI by default, its
+A call the endpoint fails is retried once on a fallback endpoint - Agnes AI by default, its
 address, model and key under the `TRANSLATE_FALLBACK_*` settings.
 
-Driven by the justfile, one process per skill.
+A library rather than a command: the justfile drives `skill_zh.py`, one process per skill.
 """
 
 import sys
@@ -32,19 +29,20 @@ USER_PROMPT = "translate_user.md"
 TO = "Simplified Chinese (简体中文)"
 
 
-def messages(config: Config, description: str) -> list[dict]:
-    """The one chat turn: the task rendered for the target language, then the one line to render
-    into it - and nothing else.
+def turns(config: Config, text: str, system_prompt: str, user_prompt: str) -> list[dict]:
+    """One chat turn: the task rendered for the target language, then the text to render into it -
+    and nothing else.
 
-    The description goes in as a template variable rather than text of the template, so braces in a
-    skill's own words can never be read as Jinja.
+    The text goes in as a template variable rather than text of the template, so braces in a
+    skill's own words can never be read as Jinja. The two prompt files are the caller's, so the
+    description and the body pieces share this one renderer.
     """
-    system = common.render(common.load_prompt(config, PROMPT), to=TO)
-    user = common.render(common.load_prompt(config, USER_PROMPT), to=TO, text=description)
+    system = common.render(common.load_prompt(config, system_prompt), to=TO)
+    user = common.render(common.load_prompt(config, user_prompt), to=TO, text=text)
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
 
-def chat_body(config: Config, turns: list[dict]) -> dict:
+def chat_body(config: Config, messages: list[dict]) -> dict:
     """An OpenAI-compatible chat completions body over the turns given: deterministic,
     non-streaming.
 
@@ -52,7 +50,7 @@ def chat_body(config: Config, turns: list[dict]) -> dict:
     SDK): the model reasons into `reasoning_content` first, and `max_tokens` covers thinking plus
     the answer, so it is the ceiling the endpoint documents rather than its 2048 default.
     """
-    body = {"model": config.translate_model, "messages": turns,
+    body = {"model": config.translate_model, "messages": messages,
             "temperature": 0, "stream": False, "max_tokens": config.translate_max_tokens}
     if config.translate_enable_thinking:
         body["enable_thinking"] = True
@@ -60,7 +58,8 @@ def chat_body(config: Config, turns: list[dict]) -> dict:
 
 
 def request_body(config: Config, description: str) -> dict:
-    return chat_body(config, messages(config, description))
+    """The one request the description needs: the two prompt files this library holds."""
+    return chat_body(config, turns(config, description, PROMPT, USER_PROMPT))
 
 
 def translation(payload: object) -> str:
@@ -132,28 +131,3 @@ class Translator:
                 self.client, self.fallback_url, self.fallback_api_key,
                 {**body, "model": self.config.translate_fallback_model},
                 self.config.max_retries))
-
-
-def placeholder(description: str) -> dict:
-    """A value shaped like the answer, so `just dry=1 translate` still writes the real layout."""
-    return {common.TRANSLATE_ANGLE: f"【占位】{description}"}
-
-
-def _request(config: Config, _skill: str, _source: str, description: str) -> dict:
-    return request_body(config, description)
-
-
-def _produce(config: Config, body: dict, _source: str) -> dict:
-    return {common.TRANSLATE_ANGLE: Translator(config).ask(body)}
-
-
-def main(argv: list[str] | None = None) -> int:
-    return common.run(
-        argv, program="translate.py",
-        description="Translate one skill's description into Chinese.",
-        angle=common.TRANSLATE_ANGLE, build_request=_request, produce=_produce,
-        placeholder=placeholder)
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

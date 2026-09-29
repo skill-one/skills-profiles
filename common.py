@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """The kernel both producers share: settings, the tree, the source, prompts, writes, calls, CLI.
 
-`jev.py` and `translate.py` are two thin angles over everything here - one typed endpoint and one
-chat endpoint - and `index.py`, `stale.py` and `readme.py` read the same tree through it.
+`jev.py` and `skill_zh.py` are two thin angles over everything here - one typed endpoint and one
+chat endpoint - and `index.py` and `readme.py` read the same tree through it.
 """
 
 import argparse
@@ -19,19 +19,21 @@ import yaml
 from jinja2 import Environment, StrictUndefined
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-# The output root holds three layers, and they do not overlap: the source pages the angles read
-# (one SKILL.md per skill), the profiles this project writes about them, and the mirror's own
-# files the tree reads (its index above all) that the sources were taken from.
+# The output root holds one layer per skill plus the catalog: `skills/<id>/` holds the source
+# page and, beside it, what this project wrote about it - the catalog `skills.jsonl` joins them.
+# The mirror's listing is pulled fresh by `just sync` into the catalog, which is its only
+# lasting trace.
 SKILLS_DIR = "skills"
-PROFILES_DIR = "profiles"
-UPSTREAM_DIR = "upstream"
 SKILL_MD = "SKILL.md"
 INDEX = "skills.jsonl"
 
-# The three angles, each one file in a skill's profile directory and one field in the catalog.
+# The two angles, each one file in a skill's directory and its fields in the catalog. The file
+# names spell the generated one as a sibling of the source page: a `.` and the locale, so the
+# directory installs as a skill with its annotation riding along. The Chinese description is not
+# a file of its own - it is the `description` in the zh page's front matter, assembled here.
 DOMAIN_ANGLE = "domain"
-TRANSLATE_ANGLE = "description_zh"
-SKILL_ZH_ANGLE = "skill_zh"  # the one text angle: its file is skill_zh.md, not skill_zh.json
+SKILL_ZH_ANGLE = "skill_zh"
+ANGLE_FILES = {DOMAIN_ANGLE: "domain.json", SKILL_ZH_ANGLE: "SKILL.zh.md"}
 
 MAX_SKILL_MD_CHARS = 20000
 # A repository can be one skill or several hundred (`awesome-*` collections). The cap keeps the
@@ -113,18 +115,19 @@ def skill_dir_name(skill: str) -> str:
     return skill.replace(":", "_").replace("&", "_")
 
 
+def skill_dir(config: Config, skill: str) -> Path:
+    """The skill's one directory: its source page and its angles' files together."""
+    return config.output_dir / SKILLS_DIR / skill_dir_name(skill)
+
+
 def skill_md_path(config: Config, skill: str) -> Path:
-    """The skill's own SKILL.md as the mirror published it, beside the profile written from it."""
-    return config.output_dir / SKILLS_DIR / skill_dir_name(skill) / SKILL_MD
+    """The skill's own SKILL.md as fetched from its repository, beside what this project wrote."""
+    return skill_dir(config, skill) / SKILL_MD
 
 
-def profile_dir(config: Config, skill: str) -> Path:
-    return config.output_dir / PROFILES_DIR / skill_dir_name(skill)
-
-
-def profile_path(config: Config, skill: str, angle: str) -> Path:
-    """profiles/<skill>/<angle>.json: where one producer writes its one file."""
-    return profile_dir(config, skill) / f"{angle}.json"
+def angle_path(config: Config, skill: str, angle: str) -> Path:
+    """One angle's file, beside the source page it was built from: the generated sibling."""
+    return skill_dir(config, skill) / ANGLE_FILES[angle]
 
 
 # ----------------------------------------------------------------------- the skill source
@@ -145,14 +148,17 @@ def cap_source(text: str) -> str:
     return f"{head.rstrip()}\n\n{TRUNCATION_NOTE}\n"
 
 
-def skill_source(config: Config, skill: str) -> str:
-    """The skill's own text at the state's budget: what a state-building angle reads."""
-    return cap_source(skill_md(config, skill))
-
-
 def skill_body(source: str) -> str:
     """The source without its front matter: the name and the description lead the state already."""
     return FRONT_MATTER.sub("", source, count=1).lstrip("\n")
+
+
+def front_matter(fields: dict) -> str:
+    """Valid YAML from the fields given: the header a generated page carries, assembled here so
+    the model never shapes it - a broken header is a description no one can read back."""
+    block = yaml.dump(fields, allow_unicode=True, sort_keys=False, default_flow_style=False,
+                      width=1000000)
+    return f"---\n{block}---\n"
 
 
 def skill_description(source: str) -> str:
@@ -265,15 +271,20 @@ def post_json(client: httpx.Client, url: str, key: str, body: dict, max_retries:
 # --------------------------------------------------------- the one command both producers are
 
 
+class UnusableInput(Exception):
+    """A skill that cannot be built: a gate `run()` reports as one stderr line and exit 1."""
+
+
 def run(argv: list[str] | None, *, program: str, description: str, angle: str,
-        build_request: Callable[[Config, str, str, str], dict],
-        produce: Callable[[Config, dict, str], Any],
+        build_requests: Callable[[Config, str, str], list[dict]],
+        produce: Callable[[Config, list[dict], str], Any],
         placeholder: Callable[[str], Any]) -> int:
     """The whole command the producers share: one skill in, one angle file written.
 
-    `build_request(config, skill, source, description)` shapes the call; `produce(config, body,
-    source)` makes it and shapes the answer, raising on a bad one; `placeholder(description)` is
-    the dry run. A dict answer is written as `<angle>.json`, a str answer as `<angle>.md`.
+    `build_requests(config, skill, source)` shapes every call the angle makes, computed once;
+    `produce(config, requests, source)` makes them and shapes the answer, raising on a bad one;
+    `placeholder(description)` is the dry run. A dict answer is written as `<angle>.json`, a str
+    answer as `<angle>.md`.
     Exit: 0 built, 1 unusable input or endpoint, 2 bad arguments.
     """
     parser = argparse.ArgumentParser(description=description)
@@ -300,23 +311,27 @@ def run(argv: list[str] | None, *, program: str, description: str, angle: str,
         print(f"{args.skill}: no description in its front matter", file=sys.stderr)
         return 1
 
-    body = build_request(config, args.skill, source, line)
+    try:
+        requests = build_requests(config, args.skill, source)
+    except UnusableInput as error:
+        print(f"{args.skill}: {error}", file=sys.stderr)
+        return 1
     if args.print_request:
-        print(json.dumps(body, ensure_ascii=False, indent=2))
+        # one request prints as the object; an angle that makes several prints them as an array
+        shown: object = requests[0] if len(requests) == 1 else requests
+        print(json.dumps(shown, ensure_ascii=False, indent=2))
         return 0
 
     if config.dry_run:
         output = placeholder(line)
     else:
         try:
-            output = produce(config, body, source)
-        except (httpx.HTTPError, RuntimeError) as error:
+            output = produce(config, requests, source)
+        except (httpx.HTTPError, RuntimeError, UnusableInput) as error:
             print(f"{args.skill}: {type(error).__name__}: {error}", file=sys.stderr)
             return 1
-    path = profile_path(config, args.skill, angle)
-    if isinstance(output, str):  # the text angle: one markdown page, not one json object
-        written = write_atomic(path.with_suffix(".md"), output)
-    else:
-        written = write_json(path, output)
+    path = angle_path(config, args.skill, angle)
+    # the text angle writes one markdown page; the others one json object
+    written = write_atomic(path, output) if isinstance(output, str) else write_json(path, output)
     print(f"built {written}", file=sys.stderr)
     return 0

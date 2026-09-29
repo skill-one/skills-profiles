@@ -7,7 +7,7 @@ import pytest
 import common
 import index
 import readme
-from conftest import skill_path
+from conftest import SKILLS, skill_md_text, skill_path
 
 ALPHA = "owner-a/repo-a/alpha"
 BETA = "owner-b/repo-b/beta"
@@ -17,11 +17,18 @@ HOTEL = "owner-h/repo-h/hotel:sub"
 
 DOMAIN = {"domain": "office-productivity", "confidence": 0.9,
           "probabilities": {"office-productivity": 0.9, "other": 0.1}}
+
+
+def alpha_source() -> str:
+    """The SKILL.md the fixture tree holds for `alpha`."""
+    text = skill_md_text(next(e for e in SKILLS if e["id"] == ALPHA))
+    assert text is not None
+    return text
+
+
 ALPHA_ROW = {
     "id": ALPHA,
     "installs": "300",
-    "hash": "a" * 64,
-    "fetchedAt": None,
     "description": "Tidies a note list, folds the loose ends into a running index, and keeps "
                    "the whole pile searchable.",
     "description_zh": None,
@@ -47,15 +54,15 @@ def test_a_row_is_the_mirrors_own_fields_plus_ours(workdir):
     """The mirror's row forwarded field by field, plus the two it cannot know: the description out
     of the skill itself, and the domain one category of the closed set."""
     config = common.Config()
-    common.write_json(common.profile_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
+    common.write_json(common.angle_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
     assert indexed(config)[0] == ALPHA_ROW
 
 
-def test_every_describable_skill_the_mirror_lists_is_a_row(workdir):
-    """The catalog is the dataset, not the work in progress: it lists the describable skills with
-    no label yet, in the mirror's order - the batch's own."""
+def test_every_skill_the_mirror_lists_is_a_row(workdir):
+    """The catalog is the dataset, not the work in progress: every listed skill is a row, in the
+    mirror's order - the batch's own - whether or not its source is fetched yet."""
     assert [line["id"] for line in indexed(common.Config())] == [
-        ALPHA, BETA, "owner-c/repo-c/gamma", HOTEL, DOT]
+        ALPHA, BETA, "owner-c/repo-c/gamma", HOTEL, DOT, "owner-d/repo-d/delta"]
 
 
 def test_the_description_is_read_out_of_the_skill_itself(workdir):
@@ -68,18 +75,25 @@ def test_the_description_is_read_out_of_the_skill_itself(workdir):
     assert row(config, BETA)["description"] == "Drafts a release note."
 
 
-def test_a_skill_with_no_description_has_no_row(workdir):
-    """`delta` is a skill the scraper recorded and never fetched: no `SKILL.md`, no description -
-    and no row either, the catalog holding only what a build could start from. A source whose
-    front matter yields no description is out the same way."""
+def test_a_skill_not_yet_fetched_is_a_row_of_nulls(workdir):
+    """A listed skill whose source the tree does not hold is a row of `null`s rather than a
+    missing row: `delta` is listed and its repository yields nothing, so every joined field is
+    `null` - which is exactly how a reader tells an unfetched row from a fetched one."""
+    delta = row(common.Config(), "owner-d/repo-d/delta")
+
+    assert delta["description"] is None
+    assert delta["description_zh"] is None
+    assert delta["domain"] is None
+
+
+def test_a_source_that_yields_no_description_is_a_null_row(workdir):
+    """A source whose front matter yields no description fills in no description: the row stays,
+    its `description` `null`."""
     config = common.Config()
     source = skill_path(config.output_dir, ALPHA) / "SKILL.md"
     source.write_text("---\nname: alpha\n---\n\nBody.\n", encoding="utf-8")
 
-    ids = [line["id"] for line in indexed(config)]
-
-    assert "owner-d/repo-d/delta" not in ids
-    assert ALPHA not in ids
+    assert row(config, ALPHA)["description"] is None
 
 
 def test_the_domain_is_null_until_it_is_built(workdir):
@@ -88,7 +102,7 @@ def test_the_domain_is_null_until_it_is_built(workdir):
     config = common.Config()
     assert row(config, ALPHA)["domain"] is None
 
-    common.write_json(common.profile_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
+    common.write_json(common.angle_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
 
     assert row(config, ALPHA)["domain"] == "office-productivity"
     assert row(config, ALPHA)["confidence"] == 0.9  # how sure the endpoint was, beside the label
@@ -96,14 +110,14 @@ def test_the_domain_is_null_until_it_is_built(workdir):
     assert row(config, BETA)["confidence"] is None
 
 
-def test_the_chinese_description_is_null_until_it_is_built(workdir):
-    """The second angle joins the same way the label does: its own file in the profile dir, `null`
-    in the row until translate.py wrote it, and the Chinese text once it has."""
+def test_the_chinese_description_is_read_out_of_the_zh_page(workdir):
+    """There is no second file holding the Chinese description: it is the `description` in the
+    zh page's own front matter, `null` in the row until skill_zh.py wrote the page."""
     config = common.Config()
     assert row(config, BETA)["description_zh"] is None
 
-    common.write_json(common.profile_path(config, BETA, common.TRANSLATE_ANGLE),
-                      {"description_zh": "根据已合并的拉取请求起草发布说明。"})
+    from conftest import write_zh_page
+    write_zh_page(config.output_dir, BETA, "根据已合并的拉取请求起草发布说明。")
 
     beta = row(config, BETA)
     assert beta["description_zh"] == "根据已合并的拉取请求起草发布说明。"
@@ -125,25 +139,49 @@ def test_a_profile_the_mirror_dropped_is_not_a_row(workdir):
     description - its source is gone with the snapshot, so nothing could be rebuilt. The label
     paid for stays on disk; it is just not listed."""
     config = common.Config()
-    common.write_json(common.profile_path(config, "owner-z/repo-z/zeta", common.DOMAIN_ANGLE),
+    common.write_json(common.angle_path(config, "owner-z/repo-z/zeta", common.DOMAIN_ANGLE),
                       DOMAIN)
 
     lines = indexed(config)
 
-    assert len(lines) == 5  # the mirror's describable rows, and nothing beside them
+    assert len(lines) == 6  # the mirror's own rows, and nothing beside them
     assert "owner-z/repo-z/zeta" not in [line["id"] for line in lines]
-    assert common.profile_path(config, "owner-z/repo-z/zeta", common.DOMAIN_ANGLE).is_file()
+    assert common.angle_path(config, "owner-z/repo-z/zeta", common.DOMAIN_ANGLE).is_file()
 
 
 # -------------------------------------------------------------------- the file
 
 
-def test_a_missing_mirror_index_says_what_to_run(workdir):
-    """Without the mirror's own listing there is no dataset to label, and the fix is one command -
-    not a traceback and not a catalog of nothing."""
-    (common.Config().output_dir / index.MIRROR).unlink()
+def test_a_missing_catalog_says_what_to_run(workdir):
+    """Without the catalog - the listing's only lasting trace - there is no dataset to label, and
+    the fix is one command, not a traceback and not a catalog of nothing."""
+    (common.Config().output_dir / common.INDEX).unlink()
     with pytest.raises(SystemExit, match="just sync"):
         index.rows(common.Config())
+
+
+def test_a_missing_fresh_listing_says_what_to_run(workdir):
+    """A listing path that names nothing is a sync that never completed."""
+    with pytest.raises(SystemExit, match="just sync"):
+        index.rows(common.Config(), common.Config().output_dir / "nowhere.jsonl")
+
+
+def test_a_fresh_listing_is_the_left_side(workdir):
+    """The listing `just sync` hands over decides the row set, the order and the installs -
+    every listed skill a row, in the listing's own order, a source or not."""
+    listing = common.Config().output_dir / "fresh.jsonl"
+    listing.write_text(
+        '{"id": "owner-e/.dotcfg/settings", "installs": 5}\n'
+        '{"id": "owner-a/repo-a/alpha", "installs": 9}\n'
+        '{"id": "owner-d/repo-d/delta", "installs": 7}\n', encoding="utf-8")
+
+    lines = index.rows(common.Config(), listing)
+
+    assert [line["id"] for line in lines] == [DOT, ALPHA, "owner-d/repo-d/delta"]
+    assert lines[0]["installs"] == 5  # the fresh listing's installs joined in
+    assert lines[0]["description"]  # a fetched source fills its description in
+    assert lines[2]["description"] is None  # an unfetched skill is a row of nulls
+    assert "fetchedAt" not in lines[0]  # upstream dropped it, the row does not carry it
 
 
 def test_write_is_whole_or_absent(workdir):
@@ -159,7 +197,7 @@ def test_write_is_whole_or_absent(workdir):
 
 def test_main_writes_and_reports_the_catalog(workdir, capsys):
     config = common.Config()
-    common.write_json(common.profile_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
+    common.write_json(common.angle_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
 
     assert index.main([]) == 0
 
@@ -169,7 +207,7 @@ def test_main_writes_and_reports_the_catalog(workdir, capsys):
     assert first["confidence"] == 0.9
     assert first["description_zh"] is None  # the second angle has not been built in this tree
     assert "probabilities" not in first  # the row takes what a consumer uses, the profile keeps it
-    assert "indexed 5 skills" in capsys.readouterr().err
+    assert "indexed ->" in capsys.readouterr().err
 
 
 # ------------------------------------------------------------------ the numbers
@@ -184,36 +222,31 @@ def test_the_numbers_count_each_angle_independently(workdir):
     """They read the tree the way each batch does, so domain and translation can have different
     coverage: two labels and one translation here mean two built and one translated."""
     config = common.Config()
-    common.write_json(common.profile_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
-    common.write_json(common.profile_path(config, BETA, common.DOMAIN_ANGLE), DOMAIN)
-    common.write_json(common.profile_path(config, ALPHA, common.TRANSLATE_ANGLE),
-                      {"description_zh": "中文描述"})
-    page = common.profile_dir(config, BETA) / f"{common.SKILL_ZH_ANGLE}.md"
-    page.parent.mkdir(parents=True, exist_ok=True)
-    page.write_text("中文页面\n", encoding="utf-8")
+    common.write_json(common.angle_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
+    common.write_json(common.angle_path(config, BETA, common.DOMAIN_ANGLE), DOMAIN)
+    from conftest import write_zh_page
+    write_zh_page(config.output_dir, ALPHA, "中文描述")
 
     numbers = facts(config)
 
-    assert (numbers["built"], numbers["buildable"]) == ("2", "5")
-    assert numbers["percent"] == "40.0%"
-    assert (numbers["translated"], numbers["translate_percent"]) == ("1", "20.0%")
-    assert numbers["translate_installs"] == "43.5%"
-    assert (numbers["skillzh"], numbers["skillzh_percent"]) == ("1", "20.0%")
+    assert (numbers["built"], numbers["total"]) == ("2", "6")
+    assert numbers["percent"] == "33.3%"
+    assert (numbers["skillzh"], numbers["skillzh_percent"]) == ("1", "16.7%")
 
 
-def test_the_denominator_is_the_catalog(workdir):
-    """`delta` is a skill the mirror lists and never fetched: it is in neither the catalog nor the
-    numbers, so the denominator is the catalog itself and a full build reaches 100%."""
+def test_the_denominator_is_the_mirror(workdir):
+    """The counts are over the mirror's own rows, unfetched ones included, so the numbers say how
+    much of the whole dataset is done rather than how much of the tree happens to be fetched."""
     numbers = facts(common.Config())
 
-    assert (numbers["buildable"], numbers["total"]) == ("5", "6")
+    assert (numbers["described"], numbers["total"]) == ("5", "6")
 
 
 def test_a_leftover_directory_is_not_progress(workdir):
     """Only the json counts: a directory without it is not work on disk."""
     config = common.Config()
-    common.write_json(common.profile_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
-    common.profile_path(config, ALPHA, common.DOMAIN_ANGLE).unlink()
+    common.write_json(common.angle_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
+    common.angle_path(config, ALPHA, common.DOMAIN_ANGLE).unlink()
 
     assert facts(config)["built"] == "0"
 
@@ -222,55 +255,30 @@ def test_a_profile_the_mirror_dropped_is_not_coverage(workdir):
     """A dropped skill keeps the label paid for on disk, but it is not in the catalog, so it is in
     neither side of the count."""
     config = common.Config()
-    common.write_json(common.profile_path(config, "owner-z/repo-z/zeta", common.DOMAIN_ANGLE),
+    common.write_json(common.angle_path(config, "owner-z/repo-z/zeta", common.DOMAIN_ANGLE),
                       DOMAIN)
 
     numbers = facts(config)
 
     assert numbers["built"] == "0"
-    assert (numbers["buildable"], numbers["total"]) == ("5", "6")
+    assert (numbers["described"], numbers["total"]) == ("5", "6")
 
 
 def test_the_installs_share_weighs_the_same_count(workdir):
     """The batch works the most installed first, so the count says how much is left and the weight
-    says what that is worth: `alpha` and `beta` carry 500 of the 690 installs there are."""
+    says what that is worth: `alpha` and `beta` carry 500 of the 780 installs the mirror lists."""
     config = common.Config()
-    common.write_json(common.profile_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
-    common.write_json(common.profile_path(config, BETA, common.DOMAIN_ANGLE), DOMAIN)
+    common.write_json(common.angle_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
+    common.write_json(common.angle_path(config, BETA, common.DOMAIN_ANGLE), DOMAIN)
 
-    assert facts(config)["installs"] == "72.5%"
-
-
-def test_the_numbers_say_which_snapshot_they_describe(workdir):
-    """The mirror's own files are its identity, and they are read: a wall clock of our own would
-    make every publish a change."""
-    config = common.Config()
-    upstream = config.output_dir / common.UPSTREAM_DIR
-    (upstream / "latest").write_text("dist-2026-01-02\n", encoding="utf-8")
-    (upstream / "stats.json").write_text(json.dumps({
-        "startedAt": "2026-01-02T03:04:05.678Z", "finishedAt": "2026-01-02T03:04:35.678Z",
-        "durationMs": 30000,
-    }), encoding="utf-8")
-
-    numbers = facts(config)
-
-    assert numbers["tag"] == "dist-2026-01-02"
-    assert numbers["scan"] == "2026-01-02T03:04:05Z -> 2026-01-02T03:04:35Z (30s)"
-
-
-def test_a_tree_that_cannot_answer_says_so(workdir):
-    """The fixture's `upstream/` holds the mirror's index and nothing else, so the numbers with
-    nothing behind them are one dash rather than a traceback or a blank."""
-    numbers = facts(common.Config())
-
-    assert (numbers["tag"], numbers["scan"]) == ("—", "—")
+    assert facts(config)["installs"] == "64.1%"
 
 
 def test_the_same_tree_reads_the_same_numbers(workdir):
     """Everything in them is a function of the tree, so a run that changed nothing writes the same
     bytes - which is what keeps `publish-dist` from spending a version number on a tree it has."""
     config = common.Config()
-    common.write_json(common.profile_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
+    common.write_json(common.angle_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
 
     assert facts(config) == facts(config)
 
@@ -278,7 +286,7 @@ def test_the_same_tree_reads_the_same_numbers(workdir):
 def test_the_readmes_are_written_whole_or_absent(workdir, capsys):
     """They land beside the catalog, by the same rename: a reader never sees half of one."""
     config = common.Config()
-    common.write_json(common.profile_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
+    common.write_json(common.angle_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
 
     assert index.main([]) == 0
 

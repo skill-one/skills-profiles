@@ -3,9 +3,9 @@
 Domain labels and Chinese translations for the [agent skills](https://www.skills.sh) collected by
 [skill-one/skills-sh-mirror](https://github.com/skill-one/skills-sh-mirror): one closed-category
 label per skill, each a single typed call to the Jev (TypeSafe System One) endpoint built from
-that skill's own description and `SKILL.md`, and two OpenAI-compatible chat calls - one
-translating that description into Chinese, one translating the `SKILL.md` body into a Chinese
-page of its own.
+that skill's own description and `SKILL.md`, and OpenAI-compatible chat calls - one translating
+that description into Chinese, then one per markdown piece of the `SKILL.md` body, the pieces
+rejoined into a Chinese page of its own.
 
 中文: [README.zh-CN.md](README.zh-CN.md) · Dev guide: [DEVELOPING.md](DEVELOPING.md)
 
@@ -17,26 +17,24 @@ here sends a reader back to the mirror. Publishing is copying that one directory
 
 ```
 output/
-├── skills/<owner>/<repo>/<slug>/    one directory per skill, its SKILL.md alone: the source page
-│   └── SKILL.md                     the angles read; the full skill lives in its own repository
-├── profiles/<owner>/<repo>/<slug>/
+├── skills/<owner>/<repo>/<slug>/    one directory per skill — it installs as the skill itself,
+│   ├── SKILL.md                     with its annotations riding along: the source page, fetched
+│   │                                from the skill's own repository
 │   ├── domain.json                  one label, the typed endpoint's whole answer
-│   ├── description_zh.json          one Chinese translation of the one-line description
-│   └── skill_zh.md                  the SKILL.md body, translated into Chinese
-├── skills.jsonl                     `just index`: one flat line per skill — the mirror's own row
-│                                    (id, installs, hash, fetchedAt) plus description,
-│                                    description_zh and domain
-├── README.md                        ... and the front page beside it: what this directory is, and
-├── README.zh-CN.md                  how much of it is built — the first is in English, this Chinese
-└── upstream/                        the mirror's own files as fetched: its index, the version
-                                     pointer, the scan stats, and the rest beside them
+│   └── SKILL.zh.md                  the page in Chinese; its front matter carries the Chinese
+│                                    description
+├── skills.jsonl                     the catalog: one flat line per skill the mirror lists — its
+│                                    own row (id, installs) plus description, description_zh and
+│                                    domain, each null until the skill is fetched and built
+└── README.md                        ... and the front page beside it: what this directory is, and
+    README.zh-CN.md                  how much of it is built — the first is in English, this Chinese
 ```
 
-`skills.jsonl` is the way in. It lists every skill the mirror has that yields a description of its
-own — the rest are not listed — in the mirror's own order, the most installed first, with the
-`description` read out of that skill's own `SKILL.md`, its `description_zh`, the `domain` this
-project labelled it with, and how sure the endpoint was of it. The last three are `null` while
-they are unknown, so the labelled part of the dataset is a filter away:
+`skills.jsonl` is the way in. It lists every skill the mirror has, in the mirror's own order, the
+most installed first, with the `description` read out of that skill's own `SKILL.md`, its
+`description_zh`, the `domain` this project labelled it with, and how sure the endpoint was of it.
+The joined fields are `null` until the skill is fetched and built — which is also how a batch knows
+what is left — so the labelled part of the dataset is a filter away:
 
 ```bash
 jq -r 'select(.domain == "development") | [.installs, .id] | @tsv' output/skills.jsonl | head
@@ -45,10 +43,10 @@ jq -r 'select(.domain == "development") | [.installs, .id] | @tsv' output/skills
 jq -r 'select(.confidence < 0.7) | [.confidence, .domain, .id] | @tsv' output/skills.jsonl
 ```
 
-One directory per skill, three files: `domain.json`, `description_zh.json` and `skill_zh.md`. Each
-is written in full the moment it is generated — so an interrupted batch loses only the call it was
-in the middle of, and the next one picks up where it stopped. The three angles are independent:
-each is built and rebuilt on its own.
+One directory per skill, two generated files: `domain.json` and `SKILL.zh.md`. Each is written in
+full the moment it is generated — so an interrupted batch loses only the call it was in the middle
+of, and the next one picks up where it stopped. The two angles are independent: each is built and
+rebuilt on its own.
 
 `domain.json` is `{domain, confidence, probabilities}`: one of the 13 English categories below, the
 endpoint's confidence in it, and the distribution it was read off. Everything is English.
@@ -65,14 +63,16 @@ it: a call decided 0.52 to 0.48 says something a call decided 0.99 to 0.01 does 
 carries the label and the confidence and stops there:
 
 ```bash
-# one label was chosen; what the endpoint nearly chose instead is in the same skill's profile
+# one label was chosen; what the endpoint nearly chose instead is in the same file
 jq '{domain, confidence, second: (.probabilities | to_entries | sort_by(-.value) | .[1])}' \
-  output/profiles/mattpocock/skills/grill-me/domain.json
+  output/skills/mattpocock/skills/grill-me/domain.json
 ```
 
-`description_zh.json` is just `{description_zh}`: the one-line description rendered in Chinese,
-product names and code kept as written and Chinese left unchanged. A chat endpoint has no closed
-enum, so there is no confidence and no distribution — the string is the whole answer.
+`SKILL.zh.md` is the page in Chinese, assembled by code: a front matter carrying the one-line
+description rendered in Chinese — product names and code kept as written, Chinese left unchanged —
+over the translated body. The model never shapes the front matter, so the description is always
+machine-readable back out of it. A chat endpoint has no closed enum, so there is no confidence and
+no distribution — the string is the whole answer.
 
 ## Running it
 
@@ -83,36 +83,46 @@ endpoint that does the translations.
 
 ```bash
 uv sync
-just sync              # fetch the mirror into output/skills and output/upstream
-just refresh           # ... and drop the profiles whose source changed with it
-just                   # label the first skill: a one-skill smoke run
-just limit=0           # label every skill still missing one, the whole snapshot, no cap
-just limit=20 jobs=8   # eight at a time, for the first 20 skills (default pool: 32)
-just dry=1 limit=2     # offline smoke test: fake endpoint, real layout
-just translate         # the second angle: translate the first missing description_zh
-just limit=0 translate # translate every skill, same limit/jobs/dry knobs as above
-just skill-zh          # the third angle: the SKILL.md body in Chinese, same knobs
-just index             # rebuild output/skills.jsonl and the READMEs from what is on disk
+just sync                       # reconcile with the mirror: its listing, new sources, the catalog
+just                            # build the first domain label: a one-skill smoke, fetches its repo
+just build domain               # the same thing, named
+just limit=0 build domain       # build every missing label, the whole snapshot, no cap
+just limit=20 jobs=8 build domain   # eight at a time, the first 20 skills (default pool: 32)
+just dry=1 limit=2 build domain     # fake endpoint, real layout
+just build skill_zh             # the second angle: build the first missing SKILL.zh.md
+just limit=0 build skill_zh     # build every zh page, same limit/jobs/dry knobs
+just clean domain               # the inverse: forget the first built label
+just limit=0 clean all          # forget every built output of both angles
+just index                      # rebuild output/skills.jsonl and the READMEs from what is on disk
 ```
+
+`build` and `clean` are inverse windows over the same catalog order: `build` takes the next
+`limit` skills missing an angle's file, `clean` the next `limit` that have one, so cleaning and
+building regenerates exactly the cleaned skills (`limit 0` means no cap).
 
 `jobs` bounds how many calls run at once (32 by default); a transient 429 is left to the client's
 own retry, there is no per-minute pacing.
 
+A skill's repository is fetched the first time one of its skills is built and never again — the
+repository directory on disk is the cache — so a bounded run downloads only the repositories its
+window actually needs, not the whole dataset. `just sync` fetches again any repository the mirror
+has since added a skill to.
+
 `limit` counts work, not positions: it takes the next skills still missing the angle being built,
 in the catalog's own order (the mirror's: installs descending), so a bounded run does the most
 installed skills first and repeated runs walk down the dataset. An output that already exists is
-never rebuilt — the files are the whole cache. `just invalidate` and `just invalidate-translate`
-(or deleting an output, or `just clean`) is how an angle is regenerated.
+never rebuilt — the files are the whole cache. `just clean <angle>` (or deleting an output) is
+how an angle is regenerated; a full reset keeping the sources is `just limit=0 clean all` then
+`just sync`.
 See [DEVELOPING.md](DEVELOPING.md).
 
 ## Consuming it
 
-The catalog says what a skill is; the two directories are the payload. `output/skills/<id>/` holds
-the source page every angle was built from, and `output/profiles/<id>/` holds what was written
-about it: `domain.json`, `description_zh.json` and the Chinese page `skill_zh.md`.
-`<id>` is the path under both, with a `:` or an `&` spelled `_`. Nothing here is an installation:
-a skill ships more than its `SKILL.md` — scripts, references, assets — and the whole of it lives
-in its own repository.
+The catalog says what a skill is; the skill directories are the payload. `output/skills/<id>/`
+holds the source page with what was written beside it: `domain.json` and the Chinese page
+`SKILL.zh.md`. `<id>` is the path under `skills/`, with a `:` or an `&` spelled `_`. The directory
+installs as the skill itself — though a skill ships more than its `SKILL.md` (scripts, references,
+assets), and the whole of it lives in its own repository.
 
 ```bash
 # what a skill is, what it is worth, and what it was labelled
@@ -121,11 +131,11 @@ jq -r '[.id, .installs, (.domain[0] // "-")] | @tsv' output/skills.jsonl | head
 # a skill's source page: what the batches read; the full skill is at its own repository
 cat output/skills/mattpocock/skills/grill-me/SKILL.md
 
-# what was written about it, beside it: the label and the Chinese description
-cat output/profiles/mattpocock/skills/grill-me/domain.json
-cat output/profiles/mattpocock/skills/grill-me/description_zh.json
+# what was written about it, beside it: the label and the Chinese page
+cat output/skills/mattpocock/skills/grill-me/domain.json
+cat output/skills/mattpocock/skills/grill-me/SKILL.zh.md
 ```
 
-Publish `output/` as it is — the layout is the only contract, the mirror's own files included. The
+Publish `output/` as it is — the layout is the only contract. The
 catalog is a convenience derived from the tree: it goes stale exactly when the tree does, and
 `just index` rebuilds it whole.

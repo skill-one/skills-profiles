@@ -1,7 +1,7 @@
 name: restore-dist
 description: >-
-  Pull the published `dist` branch back into the output directory: the skills, the profiles written
-  about them, the mirror's own files and the catalog, in one request. The branch-root `latest`
+  Pull the published `dist` branch back into the output directory: the skills, the angles written
+  about them and the catalog, in one request. The branch-root `latest`
   pointer is left out — a publish rewrites it, and a run never reads it. No-op when the branch does
   not exist yet.
 
@@ -36,7 +36,7 @@ runs:
           rm -f "$tmp/latest"
           cp -a "$tmp/." "$DIR/"
           echo "restored=true" >> "$GITHUB_OUTPUT"
-          echo "Restored $(du -sh "$DIR" | cut -f1) of profiles and sources"
+          echo "Restored $(du -sh "$DIR" | cut -f1) of sources and angles"
         else
           echo "restored=false" >> "$GITHUB_OUTPUT"
           echo "No dist branch yet: starting from an empty $DIR/"

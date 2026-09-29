@@ -11,30 +11,31 @@ import pytest
 import common
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-SCRIPTS = ["justfile", "common.py", "jev.py", "translate.py", "skill_zh.py", "index.py",
-           "readme.py", "stale.py"]
-ARCHIVE_ROOT = "skills-sh-mirror-dist"  # GitHub wraps a branch in <repo>-<branch>/
+SCRIPTS = ["justfile", "batch.py", "common.py", "fetch.py", "jev.py", "translate.py",
+           "skill_zh.py", "index.py", "readme.py"]
+REPO_SHA = "abc1234"  # codeload names a repository tarball's root <repo>-<sha>
 # the published root: the skill directories, the labels written about them, the mirror's own files
 # and the catalog, which are the four things the justfile and the scripts all read
 OUTPUT = Path("output")
 
-# The fake mirror's own index: five skills with saved content, one without (the scraper recorded no
-# source for it, so nothing could be generated from it). A mirror row carries no description any
-# more - upstream dropped it - so a skill's own front matter is the only copy of it.
+# The fake mirror's own index: five skills with sources on disk, one without (its repository holds
+# no skills/ directory, so the fetch yields nothing). The mirror carries no description and no
+# content hash any more - a skill's own front matter is the only description, and the hash is
+# computed here, over the fetched source.
 SKILLS = [
-    {"id": "owner-a/repo-a/alpha", "installs": "300", "hash": "a" * 64,
+    {"id": "owner-a/repo-a/alpha", "installs": "300",
      "description": "Tidies a note list, folds the loose ends into a running index, and keeps "
                     "the whole pile searchable."},
-    {"id": "owner-b/repo-b/beta", "installs": "200", "hash": "b" * 64,
+    {"id": "owner-b/repo-b/beta", "installs": "200",
      "description": "Drafts a release note from the merged pull requests, then trims it down to "
                     "the sentences a reader would actually care about."},
-    {"id": "owner-c/repo-c/gamma", "installs": "100", "hash": "c" * 64,
+    {"id": "owner-c/repo-c/gamma", "installs": "100",
      "description": "Converts a table into CSV, guessing the delimiter and the encoding, and "
                     "reporting what it guessed instead of failing quietly."},
-    {"id": "owner-h/repo-h/hotel:sub", "installs": "50", "hash": "h" * 64,
+    {"id": "owner-h/repo-h/hotel:sub", "installs": "50",
      "description": "Books a hotel room for the dates in a sentence, then hands the confirmation "
                     "number back to whoever asked for it."},
-    {"id": "owner-e/.dotcfg/settings", "installs": "40", "hash": "e" * 64,
+    {"id": "owner-e/.dotcfg/settings", "installs": "40",
      "description": "Keeps dotfiles in order across machines, one file per tool, and no symlink "
                     "surprises on a new laptop."},
     {"id": "owner-d/repo-d/delta", "installs": "90"},
@@ -47,64 +48,103 @@ def skill_dir_name(skill_id: str) -> str:
 
 
 def skill_md_text(entry: dict) -> str | None:
-    """The SKILL.md the fake mirror holds for one skill; None = no content."""
-    if not entry.get("hash"):  # the scraper saved no source for it
+    """The SKILL.md the skill's own repository holds for one entry; None = the repository has none."""
+    if not entry.get("description"):
         return None
     return (f"---\nname: {entry['id']}\ndescription: {entry['description']}\n---\n\n"
             f"{entry['id']} does useful things.\n")
 
 
 def index_row(entry: dict) -> dict:
-    """One row of the fake mirror's index: what upstream publishes for a skill, and no description."""
-    return {name: entry[name] for name in ("id", "installs", "hash") if name in entry}
+    """One row of the mirror's listing: what upstream publishes for a skill, and no more."""
+    return {name: entry[name] for name in ("id", "installs") if name in entry}
+
+
+def catalog_row(entry: dict) -> dict:
+    """One row of the catalog as this project publishes it: the mirror's fields, and no more - the
+    fixture only has to carry the order and the installs the window reads."""
+    return index_row(entry)
 
 
 def skill_path(output: Path, skill_id: str) -> Path:
-    """A skill's own directory in the tree: its SKILL.md alone, the way `just sync` leaves it."""
+    """A skill's own directory in the tree: its SKILL.md alone, the way the lazy fetch leaves it."""
     return output / common.SKILLS_DIR / skill_dir_name(skill_id)
 
 
 def profile_path(output: Path, skill_id: str) -> Path:
-    """What this project writes about a skill."""
-    return output / common.PROFILES_DIR / skill_dir_name(skill_id)
+    """The skill's directory, seen from the generated side: the angles' files live beside the
+    source page since the two travel together now."""
+    return skill_path(output, skill_id)
 
 
-def branch_files(entries: list[dict]) -> dict[str, str]:
-    """The files the fake mirror's branch holds: its index, one directory per skill, and the
-    metadata a real branch carries beside them - including a directory of its own (avatars/)."""
-    files = {"skills.jsonl": "".join(json.dumps(index_row(entry)) + "\n" for entry in entries),
-             "repos.jsonl": '{"repo": "owner-a/repo-a", "stars": 1}\n',
-             "avatars/owner-a.png": "png bytes"}
-    for entry in entries:
-        text = skill_md_text(entry)
-        if text:
-            rel = f"skills/{skill_dir_name(entry['id'])}"
-            files[f"{rel}/SKILL.md"] = text
-            files[f"{rel}/extra.md"] = "part of the skill repo\n"
-    return files
+def write_zh_page(output: Path, skill_id: str, description_zh: str) -> Path:
+    """The zh page as skill_zh.py writes one: the front matter carries the Chinese description,
+    the machine-assembled header a reader parses the translation back out of."""
+    path = skill_path(output, skill_id) / "SKILL.zh.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(f"---\nname: {skill_id}\ndescription: {description_zh}\n---\n\n中文页面。\n",
+                    encoding="utf-8")
+    return path
+
+
+def make_listing(path: Path, entries: list[dict] | None = None) -> Path:
+    """The mirror's listing, as `just sync` pulls it: one `{id, installs}` row per skill."""
+    entries = SKILLS if entries is None else entries
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("".join(json.dumps(index_row(entry)) + "\n" for entry in entries),
+                    encoding="utf-8")
+    return path
 
 
 def write_snapshot(output: Path, entries: list[dict] | None = None) -> None:
-    """A snapshot already unpacked into the output tree, the way `just sync` leaves one: each
-    skill's SKILL.md alone, and the mirror's own files beside it."""
-    for name, content in branch_files(SKILLS if entries is None else entries).items():
-        if name.startswith("skills/") and not name.endswith("/" + common.SKILL_MD):
-            continue  # sync strips everything a skill ships but its SKILL.md
-        where = output / name if name.startswith("skills/") else output / common.UPSTREAM_DIR / name
-        where.parent.mkdir(parents=True, exist_ok=True)
-        where.write_text(content, encoding="utf-8")
+    """A snapshot already unpacked into the output tree, the way a lazy fetch leaves one: each
+    skill's SKILL.md, its repository directory (the cache - nothing re-downloads it), and the
+    catalog - the listing's only lasting trace - at the root. A listed skill its repository holds
+    no source for is an empty directory, which is how the batch tells it from an unfetched one."""
+    entries = SKILLS if entries is None else entries
+    catalog = output / common.INDEX
+    catalog.parent.mkdir(parents=True, exist_ok=True)
+    catalog.write_text("".join(json.dumps(catalog_row(entry)) + "\n" for entry in entries),
+                       encoding="utf-8")
+    for entry in entries:
+        owner, repo, _ = entry["id"].split("/")
+        (output / common.SKILLS_DIR / owner / repo).mkdir(parents=True, exist_ok=True)
+        text = skill_md_text(entry)
+        if text:
+            where = skill_path(output, entry["id"]) / common.SKILL_MD
+            where.parent.mkdir(parents=True, exist_ok=True)
+            where.write_text(text, encoding="utf-8")
 
 
-def make_tarball(archive: Path, entries: list[dict] | None = None) -> None:
-    """Build a dist-branch tarball for `just sync` to fetch."""
-    with tempfile.TemporaryDirectory() as tmp:
-        root = Path(tmp) / ARCHIVE_ROOT
-        for name, content in branch_files(SKILLS if entries is None else entries).items():
-            path = root / name
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(content, encoding="utf-8")
-        with tarfile.open(archive, "w:gz") as tar:
-            tar.add(root, arcname=root.name)
+def make_repo_tarballs(stage: Path, entries: list[dict] | None = None) -> Path:
+    """The tarballs a window's lazy fetch downloads, one per repository in the listing, laid out for the
+    recipe's `repo_tarball` template: <owner>_<repo>.tgz holding the repository's skills at
+    `skills/<slug>/SKILL.md`, what the repository ships beside them, and a SKILL.md of its own at
+    the root that belongs to no listed skill."""
+    entries = SKILLS if entries is None else entries
+    stage.mkdir(parents=True, exist_ok=True)
+    repos: dict[tuple[str, str], list[dict]] = {}
+    for entry in entries:
+        owner, repo, _ = entry["id"].split("/")
+        repos.setdefault((owner, repo), []).append(entry)
+    for (owner, repo), group in repos.items():
+        root = f"{repo}-{REPO_SHA}"
+        files = {f"{root}/SKILL.md": f"# {repo}\n\nA repository readme, not a skill.\n"}
+        for entry in group:
+            text = skill_md_text(entry)
+            if text:
+                slug = entry["id"].split("/")[2]
+                files[f"{root}/skills/{slug}/SKILL.md"] = text
+                files[f"{root}/skills/{slug}/extra.md"] = "part of the skill repo\n"
+        with tempfile.TemporaryDirectory() as tmp:
+            packaged = Path(tmp) / "pack"
+            for name, content in files.items():
+                path = packaged / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(content, encoding="utf-8")
+            with tarfile.open(stage / f"{owner}_{repo}.tgz", "w:gz") as tar:
+                tar.add(packaged, arcname=root)
+    return stage
 
 
 @pytest.fixture(autouse=True)

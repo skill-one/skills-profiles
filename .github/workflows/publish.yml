@@ -4,13 +4,13 @@ name: publish
 # `dist-<base>-N`, where base is the newest bare `dist-YYYY-MM-DD` sync tag (or today, when there is
 # none) and N increments across that base's publishes.
 #
-# Three angles, chosen by `angle`: the domain labels (jev.py), the Chinese descriptions
-# (translate.py), the Chinese SKILL.md pages (skill_zh.py), or `all` of them - in that order. Every
+# Two angles, chosen by `angle`: the domain labels (jev.py), the Chinese SKILL.md pages
+# (skill_zh.py), or `all` - domain then skill_zh. Every
 # run starts on a fresh runner, and
-# `restore-dist` pulls the published tree back - the skills, the angles written about them, the
-# mirror's own files and the catalog, in one request. The outputs are the cache (so `just` only
-# fills what is missing) and the skills are what it builds from. This run never touches upstream:
-# the dataset is exactly what the last `sync` published. `limit` counts work rather than positions
+# `restore-dist` pulls the published tree back - the skills, the angles written about them and the
+# catalog, in one request. The outputs are the cache (so `just` only fills what is missing) and the
+# skills are what it builds from. This run fetches nothing: it builds over the sources the last
+# `sync` published. `limit` counts work rather than positions
 # - the next skills still missing that angle, in the catalog's order, most installed first - so
 # repeated runs walk down the dataset instead of redoing the top of it. Asking for `replace` drops
 # the chosen angle's outputs before building, when its taxonomy, prompts or shape changed.
@@ -35,7 +35,6 @@ on:
         options:
           - all
           - domain
-          - translate
           - skill_zh
         default: all
       limit:
@@ -112,38 +111,26 @@ jobs:
 
       # Outputs are the cache, so a published one is never rebuilt and a change to the taxonomy,
       # the prompts or the output shape has to say so. A run is a fresh runner plus what
-      # `restore-dist` brings back, so an invalidation only survives by publishing.
+      # `restore-dist` brings back, so a clean only survives by publishing. `clean` is the inverse
+      # of build: limit 0 forgets every built output of the chosen angle (all = both).
+      # just overrides must precede the recipe name, hence limit= before `clean`/`build`.
       - name: Drop the chosen angles, when asked
         if: inputs.replace == 'true'
-        shell: sh
-        run: |
-          case "${{ inputs.angle }}" in
-            domain) just invalidate ;;
-            translate) just invalidate-translate ;;
-            skill_zh) just invalidate-skill-zh ;;
-            all) just invalidate && just invalidate-translate && just invalidate-skill-zh ;;
-          esac
+        run: just limit=0 clean "${{ inputs.angle }}"
 
       - name: Build the missing domain labels
         if: inputs.angle == 'all' || inputs.angle == 'domain'
         env:
           GEN_ERR_LOG: ${{ runner.temp }}/generation-errors.log
           FAIL_LOG: ${{ runner.temp }}/failed-skills.log
-        run: just limit="${{ inputs.limit }}" jobs="${{ inputs.jobs }}"
-
-      - name: Build the missing Chinese descriptions
-        if: inputs.angle == 'all' || inputs.angle == 'translate'
-        env:
-          GEN_ERR_LOG: ${{ runner.temp }}/generation-errors.log
-          FAIL_LOG: ${{ runner.temp }}/failed-skills.log
-        run: just limit="${{ inputs.limit }}" jobs="${{ inputs.jobs }}" translate
+        run: just limit="${{ inputs.limit }}" jobs="${{ inputs.jobs }}" build domain
 
       - name: Build the missing Chinese SKILL.md pages
         if: inputs.angle == 'all' || inputs.angle == 'skill_zh'
         env:
           GEN_ERR_LOG: ${{ runner.temp }}/generation-errors.log
           FAIL_LOG: ${{ runner.temp }}/failed-skills.log
-        run: just limit="${{ inputs.limit }}" jobs="${{ inputs.jobs }}" skill-zh
+        run: just limit="${{ inputs.limit }}" jobs="${{ inputs.jobs }}" build skill_zh
 
       - name: Report partial results
         if: always()

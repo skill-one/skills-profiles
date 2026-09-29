@@ -1,13 +1,13 @@
-"""skill_zh.py: the third angle - one skill's SKILL.md body in, one Chinese page out.
+"""skill_zh.py: the second angle - one skill in, one Chinese page (SKILL.zh.md) out.
 
 Offline like test_translate: the chat endpoint is a stand-in, and everything the command does
 short of the call - the body reading, the request messages, the layout, the gates, the exit
-codes - runs for real.
+codes - runs for real. The page is assembled by code: its front matter is never the model's.
 """
 
 import json
 
-import pytest
+import yaml
 
 import common
 import skill_zh
@@ -18,12 +18,13 @@ ZH = "# 整理笔记\n\n把零散的头绪折进一份持续更新的索引，�
 
 
 class FakeTranslator:
-    """A stand-in endpoint: one fixed Chinese page body."""
+    """A stand-in endpoint: one fixed Chinese text, description and body pieces alike."""
 
     def __init__(self, config, client=None):
-        pass
+        self.n = 0
 
     def ask(self, body: dict) -> str:
+        self.n += 1
         return ZH
 
 
@@ -36,10 +37,11 @@ def source(config) -> str:
 
 def test_the_request_is_one_chat_turn(config):
     """The same OpenAI shape as the description angle, with the body's one piece as the user turn
-    rendered from the prompt files."""
-    body = skill_zh._request(config, ALPHA, source(config), "desc")
-    system = common.render(common.load_prompt(config, skill_zh.PROMPT), to=skill_zh.TO)
-    user = common.render(common.load_prompt(config, skill_zh.USER_PROMPT), to=skill_zh.TO,
+    rendered from the prompt files. The requests are the description call first, then the pieces.
+    """
+    body = skill_zh._requests(config, ALPHA, source(config))[1]
+    system = common.render(common.load_prompt(config, skill_zh.PROMPT), to=translate.TO)
+    user = common.render(common.load_prompt(config, skill_zh.USER_PROMPT), to=translate.TO,
                          text=skill_zh.chunks(common.skill_body(source(config)))[0])
 
     assert body["model"] == common.TRANSLATE_MODEL
@@ -53,13 +55,15 @@ def test_the_request_is_one_chat_turn(config):
 
 
 def test_the_front_matter_is_not_sent(workdir, capsys):
-    """Only the body crosses the endpoint: the front matter is metadata, and the description has
-    its own angle."""
+    """Only the body crosses the body calls: the front matter is metadata, and the description has
+    its own request - the first one printed, then the body pieces."""
     assert skill_zh.main(["--print", ALPHA]) == 0
-    body = json.loads(capsys.readouterr().out)
+    requests = json.loads(capsys.readouterr().out)
+    description, body_call = requests[0], requests[1]
 
-    user = body["messages"][1]["content"]
-    assert user.startswith(f"Translate to {skill_zh.TO}:")
+    assert "Tidies a note list" in description["messages"][1]["content"]  # the description's own
+    user = body_call["messages"][1]["content"]
+    assert user.startswith(f"Translate to {translate.TO}:")
     assert "does useful things" in user  # the body, carried by the user template
     assert "Tidies a note list" not in user  # the description lives in the front matter
 
@@ -72,7 +76,7 @@ def test_braces_in_a_body_are_data_not_template(workdir):
         "---\nname: alpha\ndescription: d\n---\n\nUse {{placeholder}} as written.\n",
         encoding="utf-8")
 
-    body = skill_zh._request(config, ALPHA, source(config), "d")
+    body = skill_zh._requests(config, ALPHA, source(config))[1]
 
     assert "{{placeholder}}" in body["messages"][1]["content"]
 
@@ -84,24 +88,36 @@ def test_a_dry_run_writes_the_layout_without_calling(config):
     """`just dry=1 skill-zh` is offline, and the tree it leaves is the tree a real run leaves."""
     assert skill_zh.main([ALPHA]) == 0
 
-    path = common.profile_path(config, ALPHA, common.SKILL_ZH_ANGLE).with_suffix(".md")
-    assert path == common.profile_dir(config, ALPHA) / "skill_zh.md"
-    assert path.read_text(encoding="utf-8").startswith("【占位】")  # identifiable as a placeholder
+    path = common.angle_path(config, ALPHA, common.SKILL_ZH_ANGLE)
+    assert path == common.skill_dir(config, ALPHA) / "SKILL.zh.md"
+    text = path.read_text(encoding="utf-8")
+    assert text.startswith("---\n")  # a front matter the dry run shapes too
+    assert "【占位】" in text  # identifiable as a placeholder
 
 
-def test_main_writes_the_translation_alone(workdir, monkeypatch):
-    """The page is the translation and nothing else - the identifying metadata lives in the
-    catalog, and the reasoning or whitespace of the endpoint never reaches the disk."""
+def test_main_writes_the_page_the_code_assembles(workdir, monkeypatch):
+    """The page is the front matter the code writes - name and the Chinese description - over
+    the translated body. The description call is the first one the endpoint sees."""
     monkeypatch.setenv("SKILLS_PROFILES_DRY_RUN", "0")
-    monkeypatch.setattr(translate, "Translator", FakeTranslator)
+    translator = FakeTranslator
+    seen_order = []
+    original = translator.ask
+
+    def counting(self, body):
+        seen_order.append(body["messages"][0]["content"][:12])
+        return original(self, body)
+
+    monkeypatch.setattr(translate, "Translator", translator)
+    monkeypatch.setattr(translator, "ask", counting)
 
     assert skill_zh.main([ALPHA]) == 0
 
     config = common.Config()
-    text = (common.profile_path(config, ALPHA, common.SKILL_ZH_ANGLE)
-            .with_suffix(".md")).read_text(encoding="utf-8")
-    assert text == f"{ZH.strip()}\n"
-    assert "description:" not in text  # no front matter rides along
+    text = common.angle_path(
+        config, ALPHA, common.SKILL_ZH_ANGLE).read_text(encoding="utf-8")
+    header = yaml.load(common.FRONT_MATTER.match(text).group(1), Loader=common.YAML_LOADER)
+    assert header == {"name": "owner-a/repo-a/alpha", "description": ZH}  # the description's own call
+    assert text.endswith(f"\n{ZH.strip()}\n")  # the body's translation under it
 
 
 def test_a_body_under_the_budget_travels_whole(config):
@@ -167,7 +183,7 @@ def test_a_long_body_travels_in_pieces_and_writes_one_whole_page(workdir, monkey
 
         def ask(self, body: dict) -> str:
             self.n += 1
-            return f"第 {self.n} 块"
+            return f"第 {self.n} 块"  # ask 1 is the description; the pieces follow
 
     monkeypatch.setattr(translate, "Translator", Numbered)
     config = common.Config()
@@ -178,11 +194,13 @@ def test_a_long_body_travels_in_pieces_and_writes_one_whole_page(workdir, monkey
 
     assert skill_zh.main([ALPHA]) == 0
 
-    text = (common.profile_path(config, ALPHA, common.SKILL_ZH_ANGLE)
-            .with_suffix(".md")).read_text(encoding="utf-8")
+    text = common.angle_path(config, ALPHA, common.SKILL_ZH_ANGLE).read_text(encoding="utf-8")
     n = len(skill_zh.chunks(common.skill_body(source(config))))
     assert n > 1
-    assert text == "\n\n".join(f"第 {i} 块" for i in range(1, n + 1)) + "\n"
+    # ask 1 was the description, in the front matter; asks 2..n+1 are the pieces
+    header = yaml.load(common.FRONT_MATTER.match(text).group(1), Loader=common.YAML_LOADER)
+    assert header == {"name": "alpha", "description": "第 1 块"}  # the source's own name
+    assert text.endswith("\n" + "\n\n".join(f"第 {i} 块" for i in range(2, n + 2)) + "\n")
 
 
 def test_one_failed_piece_fails_the_whole_page(workdir, monkeypatch):
@@ -196,7 +214,7 @@ def test_one_failed_piece_fails_the_whole_page(workdir, monkeypatch):
 
         def ask(self, body: dict) -> str:
             self.n += 1
-            if self.n == 2:
+            if self.n == 3:  # ask 1 the description, ask 2 body piece one, ask 3 fails
                 raise RuntimeError("response carries no translation")
             return "第一块"
 
@@ -209,21 +227,23 @@ def test_one_failed_piece_fails_the_whole_page(workdir, monkeypatch):
 
     assert skill_zh.main([ALPHA]) == 1
 
-    assert not common.profile_path(
-        config, ALPHA, common.SKILL_ZH_ANGLE).with_suffix(".md").exists()
+    assert not common.angle_path(
+        config, ALPHA, common.SKILL_ZH_ANGLE).exists()
 
 
-def test_an_empty_body_is_dropped_whole(workdir, monkeypatch):
+def test_an_empty_body_is_dropped_whole(workdir, monkeypatch, capsys):
+    """The angle's own gate goes through the same one-line/exit-1 contract as every other unusable
+    input: no SystemExit traceback, no call, no file."""
     monkeypatch.setenv("SKILLS_PROFILES_DRY_RUN", "0")
     config = common.Config()
     common.skill_md_path(config, ALPHA).write_text(
         "---\nname: alpha\ndescription: d\n---\n\n   \n", encoding="utf-8")
 
-    with pytest.raises(SystemExit, match="not translated"):
-        skill_zh.main([ALPHA])
+    assert skill_zh.main([ALPHA]) == 1
+    assert "body is empty - not translated" in capsys.readouterr().err
 
-    assert not common.profile_path(
-        config, ALPHA, common.SKILL_ZH_ANGLE).with_suffix(".md").exists()
+    assert not common.angle_path(
+        config, ALPHA, common.SKILL_ZH_ANGLE).exists()
 
 
 def test_a_call_that_fails_is_one_line_and_status_one(workdir, monkeypatch, capsys):
@@ -239,8 +259,8 @@ def test_a_call_that_fails_is_one_line_and_status_one(workdir, monkeypatch, caps
     monkeypatch.setattr(translate, "Translator", Broken)
 
     assert skill_zh.main([ALPHA]) == 1
-    assert not common.profile_path(
-        common.Config(), ALPHA, common.SKILL_ZH_ANGLE).with_suffix(".md").exists()
+    assert not common.angle_path(
+        common.Config(), ALPHA, common.SKILL_ZH_ANGLE).exists()
     assert "RuntimeError" in capsys.readouterr().err
 
 

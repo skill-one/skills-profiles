@@ -1,11 +1,8 @@
-"""translate.py: the one skill in, one line translated, one description_zh.json written.
+"""translate.py: the chat endpoint library the zh page angle asks per page - description and pieces.
 
-Offline like test_jev: the chat endpoint is a stand-in client, and everything the command does
-short of the call - the source reading, the request messages, the layout, the gate, the exit
-codes - runs for real.
+Offline like test_jev: the endpoint is a stand-in client, and everything the library does short
+of the call - the request messages, the answer parsing, the fallback hand-over - runs for real.
 """
-
-import json
 
 import httpx
 import pytest
@@ -76,19 +73,6 @@ def test_braces_in_a_description_are_data_not_template(config):
     user = body["messages"][1]["content"]
     assert user.endswith(description)
     assert "{{placeholder}}" in user
-
-
-def test_print_sends_the_messages_and_calls_nothing(workdir, capsys):
-    """Printed from `workdir`, where there is no `.env`: a request that needs no key is the point
-    of `just translate-render`."""
-    assert translate.main(["--print", ALPHA]) == 0
-    body = json.loads(capsys.readouterr().out)
-
-    assert body["model"] == common.TRANSLATE_MODEL
-    assert [m["role"] for m in body["messages"]] == ["system", "user"]
-    user = body["messages"][1]["content"]
-    assert user.startswith(f"Translate to {translate.TO}:")
-    assert "Tidies a note list" in user  # the line to translate, carried by the user template
 
 
 def test_the_translate_endpoint_is_configurable(workdir, monkeypatch):
@@ -338,99 +322,3 @@ def test_the_fallback_endpoint_is_configurable(workdir, monkeypatch):
     assert config.translate_fallback_base_url == "https://example.test/v1"
     assert config.translate_fallback_model == "other-model"
     assert config.translate_fallback_api_key is None  # unset means unset - no fallback key
-
-
-# ------------------------------------------------------------------ the output
-
-
-def test_the_angle_file_sits_beside_the_domain_file(config):
-    """The two angles on one skill share its profile directory."""
-    path = common.write_json(
-        common.profile_path(config, ALPHA, common.TRANSLATE_ANGLE),
-        {common.TRANSLATE_ANGLE: ZH})
-
-    assert path == common.profile_path(config, ALPHA, common.TRANSLATE_ANGLE)
-    assert json.loads(path.read_text(encoding="utf-8")) == {"description_zh": ZH}
-    assert not path.with_name(path.name + ".part").exists()  # renamed into place
-    assert path.parent == common.profile_dir(config, ALPHA)  # beside domain.json, in the same dir
-
-
-# ---------------------------------------------------------------------- main
-
-
-def test_a_dry_run_writes_the_layout_without_calling(config):
-    """`just dry=1 translate` is offline, and the tree it leaves is the tree a real run leaves."""
-    assert translate.main([ALPHA]) == 0
-
-    written = json.loads(common.profile_path(
-        config, ALPHA, common.TRANSLATE_ANGLE).read_text(encoding="utf-8"))
-    assert list(written) == ["description_zh"]
-    assert written["description_zh"].startswith("【占位】")  # identifiable as a placeholder
-    assert written["description_zh"].endswith("the whole pile searchable.")  # the line it faked
-
-
-def test_main_writes_one_output(workdir, monkeypatch):
-    monkeypatch.setenv("SKILLS_PROFILES_DRY_RUN", "0")
-    monkeypatch.setattr(translate, "Translator", FakeTranslator)
-    config = common.Config()
-
-    assert translate.main([ALPHA]) == 0
-
-    assert json.loads(common.profile_path(
-        config, ALPHA, common.TRANSLATE_ANGLE).read_text(encoding="utf-8")) == {
-        "description_zh": ZH}
-
-
-def test_a_call_that_fails_is_one_line_and_status_one(workdir, monkeypatch, capsys):
-    monkeypatch.setenv("SKILLS_PROFILES_DRY_RUN", "0")
-
-    class Broken:
-        def __init__(self, config, client=None):
-            pass
-
-        def ask(self, body: dict) -> str:
-            raise httpx.ReadTimeout("dropped")
-
-    monkeypatch.setattr(translate, "Translator", Broken)
-
-    assert translate.main([ALPHA]) == 1
-    assert not common.profile_path(common.Config(), ALPHA, common.TRANSLATE_ANGLE).exists()
-    assert "ReadTimeout" in capsys.readouterr().err
-
-
-def test_an_empty_answer_fails_the_command(workdir, monkeypatch, capsys):
-    monkeypatch.setenv("SKILLS_PROFILES_DRY_RUN", "0")
-
-    class Empty:
-        def __init__(self, config, client=None):
-            pass
-
-        def ask(self, body: dict) -> str:
-            raise RuntimeError("response carries no translation")
-
-    monkeypatch.setattr(translate, "Translator", Empty)
-
-    assert translate.main([ALPHA]) == 1
-    assert not common.profile_path(common.Config(), ALPHA, common.TRANSLATE_ANGLE).exists()
-    assert "RuntimeError" in capsys.readouterr().err
-
-
-def test_a_skill_whose_front_matter_yields_no_description_is_dropped(workdir, capsys):
-    """The same gate as jev.py: nothing to translate is nothing to call."""
-    config = common.Config()
-    path = common.skill_md_path(config, ALPHA)
-    path.write_text("---\nname: alpha\n---\n\nA header with no description.\n", encoding="utf-8")
-
-    assert translate.main([ALPHA]) == 1
-    assert not common.profile_path(config, ALPHA, common.TRANSLATE_ANGLE).exists()
-    assert "no description in its front matter" in capsys.readouterr().err
-
-
-def test_a_missing_skill_is_a_message_not_a_traceback(workdir, capsys):
-    assert translate.main(["owner-a/repo-a/nope"]) == 1
-    assert "not found" in capsys.readouterr().err
-
-
-def test_bad_arguments_are_status_two(capsys):
-    assert translate.main([]) == 2
-    assert "usage: translate.py" in capsys.readouterr().err

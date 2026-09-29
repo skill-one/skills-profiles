@@ -103,7 +103,7 @@ def test_the_repository_reaches_the_state(workdir):
     (path / common.SKILL_MD).write_text(
         "---\nname: beta\ndescription: Drafts a release note.\n---\n\nbody\n", encoding="utf-8")
 
-    rendered = jev.state(config, ALPHA, common.skill_source(config, ALPHA))
+    rendered = jev.state(config, ALPHA, common.cap_source(common.skill_md(config, ALPHA)))
 
     assert "<repository>" in rendered
     assert "<id>owner-a/repo-a</id>" in rendered
@@ -113,7 +113,7 @@ def test_the_repository_reaches_the_state(workdir):
 def test_a_lone_skill_gets_no_repository(workdir, capsys):
     """A repository with no sibling is not invented into the state, and `--print` shows the same."""
     config = common.Config()
-    assert "<repository>" not in jev.state(config, ALPHA, common.skill_source(config, ALPHA))
+    assert "<repository>" not in jev.state(config, ALPHA, common.cap_source(common.skill_md(config, ALPHA)))
 
     assert jev.main(["--print", ALPHA]) == 0
     assert "<repository>" not in json.loads(capsys.readouterr().out)["state"]
@@ -160,9 +160,9 @@ def test_a_skill_whose_front_matter_yields_no_description_is_dropped(workdir, ca
                  "---\nname: alpha\n---\n\nA header with no description.\n",
                  "---\nname: alpha\ndescription: DEPRECATED: renamed elsewhere\n---\n\nBody.\n"]:
         path.write_text(text, encoding="utf-8")
-        assert common.skill_description(common.skill_source(config, ALPHA)) == ""
+        assert common.skill_description(common.cap_source(common.skill_md(config, ALPHA))) == ""
         assert jev.main([ALPHA]) == 1
-        assert not common.profile_path(config, ALPHA, common.DOMAIN_ANGLE).exists()
+        assert not common.angle_path(config, ALPHA, common.DOMAIN_ANGLE).exists()
         assert "no description in its front matter" in capsys.readouterr().err
 
 
@@ -171,7 +171,7 @@ def test_a_dry_run_writes_the_layout_without_calling(config):
     assert jev.main([ALPHA]) == 0
 
     written = json.loads(
-        common.profile_path(config, ALPHA, common.DOMAIN_ANGLE).read_text(encoding="utf-8"))
+        common.angle_path(config, ALPHA, common.DOMAIN_ANGLE).read_text(encoding="utf-8"))
     assert written["domain"] == "development"
     assert written["confidence"] == 1.0
     assert set(written["probabilities"]) == set(jev.CRITERIA)  # every option, as a real answer has
@@ -185,7 +185,7 @@ def test_main_writes_one_output(workdir, monkeypatch):
 
     assert jev.main([ALPHA]) == 0
 
-    assert json.loads(common.profile_path(
+    assert json.loads(common.angle_path(
         config, ALPHA, common.DOMAIN_ANGLE).read_text(encoding="utf-8")) == {
         "domain": "testing", "confidence": 0.9, "probabilities": {"testing": 0.9, "other": 0.1}}
 
@@ -203,7 +203,7 @@ def test_a_call_that_fails_is_one_line_and_status_one(workdir, monkeypatch, caps
     monkeypatch.setattr(jev, "Jev", Broken)
 
     assert jev.main([ALPHA]) == 1
-    assert not common.profile_path(common.Config(), ALPHA, common.DOMAIN_ANGLE).exists()
+    assert not common.angle_path(common.Config(), ALPHA, common.DOMAIN_ANGLE).exists()
     assert "ReadTimeout" in capsys.readouterr().err
 
 

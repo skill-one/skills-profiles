@@ -36,10 +36,12 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["common", "jev", "translate", "index", "readme", "conftest"]
+known-first-party = ["batch", "common", "fetch", "index", "jev", "readme", "skill_zh",
+                     "translate", "conftest"]
 
 [tool.mypy]
 python_version = "3.12"
 ignore_missing_imports = true
 warn_unused_ignores = true
-files = ["common.py", "index.py", "jev.py", "translate.py", "readme.py", "stale.py"]
+files = ["batch.py", "common.py", "fetch.py", "index.py", "jev.py", "readme.py", "skill_zh.py",
+         "translate.py"]
