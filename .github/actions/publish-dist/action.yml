@@ -112,13 +112,11 @@ runs:
         git commit -q -m "snapshot: run ${GITHUB_RUN_ID} at ${published_at}"
         git push -q --force origin dist
 
-        # Pin this snapshot. Force for the bare date (a same-day rerun re-points it, a
-        # non-fast-forward move to the orphan commit); the counter tag is new each run.
-        if [ "$TAG_MODE" = "date" ]; then
-          git push -q --force origin "HEAD:refs/tags/${tag}"
-        else
-          git push -q origin "HEAD:refs/tags/${tag}"
-        fi
+        # Pin this snapshot with a local tag first so the self-check can resolve it, then push.
+        # Force for the bare date (a same-day rerun re-points it, a non-fast-forward move to the
+        # orphan commit); the counter tag is new each run.
+        git tag $force "$tag" HEAD
+        git push -q $force origin "refs/tags/${tag}"
 
         # Prune tags older than the retention window. The newest of each pattern is a floor, so a
         # dormant repo still exposes its latest snapshot; today's tag is always kept. Deleting a
