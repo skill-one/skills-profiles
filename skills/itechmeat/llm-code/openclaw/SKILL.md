@@ -1,0 +1,295 @@
+---
+name: openclaw
+description: "OpenClaw local AI assistant stack. Covers architecture, tools, gateway operations, channels, and onboarding. Use when deploying, configuring, or operating an OpenClaw instance, managing gateway routing, setting up channels, or working with the multi-agent tool governance system. Keywords: OpenClaw, gateway, tools, channels, agents."
+metadata:
+  version: "v2026.6.6"
+  release_date: "2026-06-12"
+---
+
+# OpenClaw (Operator Playbook)
+
+This skill is self-contained and includes operational documentation directly in this file.
+
+## Links
+
+- [Documentation](https://docs.openclaw.ai/)
+- [Releases](https://github.com/openclaw/openclaw/releases)
+- [GitHub](https://github.com/openclaw/openclaw)
+
+## Quick Navigation
+
+- Installation / migration: `references/installation.md`
+- Configuration model & workspace bootstrap: `references/configuration.md`
+- Architecture & multi-agent routing: `references/architecture.md`
+- Extended concepts: `references/concepts.md`
+- Tool governance & safety: `references/tools.md`
+- Gateway runbook & security: `references/gateway.md`
+- Onboarding & first-run: `references/getting-started.md`
+- Channels & providers: `references/channels-and-providers.md`
+- Nodes & remote execution: `references/nodes.md`
+- CLI operations & troubleshooting: `references/operations.md`
+
+## Core Model
+
+- OpenClaw is gateway-centric: one long-lived Gateway per host is the control plane.
+- Clients and nodes connect via typed WebSocket API; channels/providers are orchestrated by gateway.
+- Session safety depends on deterministic routing + queueing + explicit policy controls.
+
+## Day-1 Setup
+
+1. Run onboarding with daemon install.
+2. Confirm the active config path and validate config before first edits.
+3. Verify gateway health/status.
+4. Open Control UI/dashboard for first chat.
+5. Add channels/providers only after baseline health is stable.
+
+If OpenClaw is not installed, use `references/installation.md`.
+
+## Gateway Operations
+
+- Keep default posture loopback + auth enabled.
+- For remote access, prefer Tailscale Serve or SSH tunnel over public bind.
+- Non-loopback binds require strict token/password controls.
+- Use supervised process mode (launchd/systemd) for reliability.
+- For config changes, treat `config.apply` as controlled rollout and `config.patch` as targeted merge.
+- Remember patch semantics: objects merge, arrays replace, `null` deletes.
+- Treat restart boundaries explicitly: channels/agents/messages/tools often hot-apply, while bind/port and other gateway infra settings commonly require `openclaw gateway restart`.
+
+## Release Updates (v2026.3.11-v2026.3.13)
+
+- **Security:** browser-originated WebSocket connections now enforce origin validation even in `trusted-proxy` mode; keep browser clients on approved origins only and do not treat proxy headers as a bypass.
+- **BREAKING:** isolated cron delivery is stricter; legacy cron storage and legacy notify/webhook metadata should be migrated with `openclaw doctor --fix` after upgrade.
+- Gateway/onboarding: remote macOS onboarding now detects when a shared gateway auth token is required and explains where to retrieve it on the gateway host.
+- Gateway/control UI: token-auth dashboard sessions now keep auth in session-scoped browser storage instead of long-lived local storage; same-tab refresh should survive, but browser restarts should not be treated as persistent auth.
+- Gateway reachability: scope-limited probe RPC now reports degraded reachability instead of looking fully healthy; use that signal during incident triage.
+- Channels: Slack adds opt-in interactive reply directives; Telegram inbound media fetching now has IPv4 retry fallback.
+- Plugins/tooling: plugin channel/binding collisions now fail fast instead of producing ambiguous runtime behavior.
+- Nodes: gateway exposes `node.pending.enqueue` / `node.pending.drain` primitives as the foundation for dormant-node pending work delivery.
+
+## Release Updates (v2026.3.14–v2026.3.28)
+
+- **MCP remote servers**: `mcp.servers` now supports remote HTTP/SSE URLs with auth headers and safer credential redaction. Bundled MCP tools use provider-safe names (`serverName__toolName`), support `streamable-http` transport, per-server connection timeouts, and preserve tool results from aborted turns.
+- **Plugin `before_install` hook**: structured request with provenance, built-in scan status, and install-target metadata for external security scanners. `--dangerously-force-unsafe-install` as break-glass override. Gateway-backed skill dependency installs blocked on dangerous-code `critical` findings unless override is set.
+- **Background tasks → unified control plane**: ACP, subagent, cron, and background CLI unified under one SQLite-backed ledger with audit/maintenance/status visibility, auto-cleanup, and lost-run recovery.
+- **ClawFlow**: first linear flow control surface (`openclaw flows list|show|cancel`). Multi-task flows separate from one-task auto-sync flows. Doctor recovery hints for orphaned flow/task linkage.
+- **Memory/QMD**: per-agent `memorySearch.qmd.extraCollections` for cross-agent search; CJK-aware chunk sizing; session indexer includes reset/deleted transcripts; `memory.qmd.searchTool` as mcporter tool override.
+- **WhatsApp reactions**: agents can react with emoji on incoming WhatsApp messages.
+- **Matrix**: `channels.matrix.historyLimit` for room history context in group triggers; per-DM `threadReplies` overrides; proxy config via `channels.matrix.proxy`.
+- **Slack**: native Slack exec approval routing with approver authorization.
+- **LINE**: image/video/audio outbound sends on LINE-specific delivery path.
+- **Android**: notification-forwarding controls with package filtering, quiet hours, rate limiting.
+- **Agents/LLM**: configurable idle-stream timeout for embedded runner; `text.verbosity` forwarded across Responses HTTP/WebSocket transports.
+- **Security**: Nostr inbound DM signature verification; LINE webhook timing-safe HMAC compare; sandbox browser CJK fonts; gateway auth hardening (origin validation, local-direct token enforcement).
+
+## Release Updates (v2026.5.12)
+
+- **Leaner installs**: Slack, WhatsApp, Amazon Bedrock, Anthropic Vertex, and related provider/plugin dependency cones moved out of the core runtime, so installs only pull what you actually use.
+- **Telegram resilience**: isolated polling, durable local spooling, safer group-media handling, and preserved HTML/Markdown formatting improve operator confidence on the default channel path.
+- **Codex/OpenAI/media**: auth-profile-backed media tools, MCP server projection, context-engine thread rotation, and runtime fallback behavior were tightened.
+- **Ops/security/UI**: plugin install/update flows, pnpm 11 handling, gateway/browser/sandbox/node-pairing hardening, and Control UI/WebChat reply delivery all received a significant polish pass.
+- **ACP fallbacks**: ACP turns can try configured backup runtime backends before emitting output, which matters for graceful degraded operation.
+
+## Release Updates (v2026.5.22)
+
+- **Meeting notes plugin**: a source-only external meeting-notes path lands with auto-start capture config, manual transcript import, read-only `openclaw meeting-notes` CLI access, and Discord voice as the first live source.
+- **Gateway readiness**: startup now lazy-loads idle plugin work, core handler trees, and the embedded ACPX runtime, so health/ready checks no longer wait on unused subsystems.
+- **Plugin metadata caching**: immutable plugin metadata snapshots are reused across startup/config/secret readers, which reduces repeated manifest and file-stat churn during operations.
+- **Channel/runtime tuning**: channel catalog reads are reused, Signal gets `configPath`, Telegram gains wildcard topic defaults, and backup archives use local-time names.
+- **Media quality control**: model-aware image compression now follows `agents.defaults.imageQuality`, so operators can choose token-efficient, balanced, or high-detail handling explicitly.
+- **Plugin SDK migration**: row-level session workflow helpers are added and `loadSessionStore` is deprecated; plugin maintenance should move away from whole-store session access.
+- **Provider auth reuse**: xAI OAuth auth profiles can now back Grok `web_search`, and provider-side media operations have clearer default timeout behavior.
+
+## Release Updates (v2026.5.29-v2026.6.6)
+
+- **Security**: boundaries tightened across transcripts, sandbox binds, host env inheritance, MCP stdio, and Codex HTTP access; exec-approval timeouts now fail closed; Feishu no longer leaks prompt-preface runtime context into replies; WebSocket payload handling hardened; Skill Workshop symlink writes validated before metadata commits.
+- **Channels**: Telegram routes account-scoped topics correctly, streams text across tool calls, extends `/compact` to generic ingress, and excludes unauthorized DM text from cache/prompt; iMessage gains always-on inbound restart, durable echo markers, block streaming, idle approval discovery, and startup diagnostics.
+- **Providers/models**: Kimi K2.7 Code with tool-call ID repair and reasoning replay fixes, Claude Fable 5 adaptive thinking, more robust Mistral schema handling, Fireworks manifest-sourced catalog params, repaired Anthropic thinking replay, and Vertex/ADC catalog recovery.
+- **MCP/browser**: existing-session Chrome DevTools Protocol support, WebSocket discovery validation, streamable HTTP loopback transport, safer browser-output boundaries, and MCP tool-result coercion of `resource_link`/`resource`/`audio`/malformed images at the materialize boundary.
+- **Plugins**: npm publishing moved to trusted paths with ClawHub publishing split, plugin version drift reported to operators, managed installs keep trusted integrity pins, and prerelease fallback integrity checks avoid stale carryforward.
+- **UI/performance**: cached model metadata and removed startup catalog wait cut Control UI latency, lazy slash-command loading, first-event tracing with slow-reply diagnostics, accessibility fixes, and explicit user intent required before opening chat sessions.
+
+## Release Updates (v2026.5.27-v2026.5.28)
+
+- **Runtime recovery**: Codex/app-server and subagent paths preserve workspace/cwd separation, route workspace memory through tools, keep native hook relay generations alive across restarts, release session locks on timeout abort, and avoid stale restart continuations.
+- **Security and input boundaries**: group prompt metadata stays out of system prompts, repeated-dot hostnames normalize, unsafe command wrappers and Node env overrides are rejected, no-auth Tailscale exposure is blocked, Teams service URLs are trusted explicitly, and malformed numeric, browser, cron, media, schema, and Telegram callback inputs fail earlier.
+- **Channels and mobile surfaces**: Telegram delivery is more durable, Slack final replies survive late cleanup, Matrix/iMessage/Discord/WhatsApp/Teams paths preserve identity and approval context more carefully, and iOS/WebChat/Talk surfaces keep more state across reconnects.
+- **Provider/media coverage**: OpenAI-compatible embeddings are core, Pixverse video, DeepInfra catalog loading, Claude Opus 4.8, Fal Krea schemas, NVIDIA catalogs, MiniMax streaming music, provider voice catalogs, encrypted PDF extraction, GitHub Copilot runtime, and Codex Supervisor plugin coverage landed.
+- **Plugin and work coordination**: ClawHub display/trust surfaces, reply payload sending hooks, install-on-demand GitHub Copilot/Tokenjuice plugins, and Workboard coordination tools expand plugin/operator workflows while preserving stricter catalog and cache behavior.
+
+## Release Updates (v2026.4.15)
+
+- **Anthropic/model defaults**: bundled Anthropic defaults and `opus` aliases now target Claude Opus 4.7, including bundled image understanding.
+- **Google TTS**: bundled `google` plugin now exposes text-to-speech with voice selection, WAV replies, and PCM telephony output.
+- **Control UI / gateway**: model auth status card backed by `models.authStatus` shows OAuth token health and provider rate-limit pressure.
+- **Memory**: LanceDB can use cloud object storage, GitHub Copilot is available as a memory-search embedding provider, and Dreaming defaults to `separate` storage instead of inline daily memory blocks.
+- **Agents/tools**: `agents.defaults.experimental.localModelLean: true` trims heavyweight default tools for weaker local models; unknown-tool loop guard is now enabled by default; skills-snapshot invalidation is stricter on `skills.*` config writes.
+- **Security hardening**: built-in tool-name collisions are rejected, `/mcp` auth uses constant-time comparison with browser-origin checks, HTTP bearer rotation applies immediately after secret reload, and webchat/media paths enforce stronger local-root/file restrictions.
+
+## Release Updates (v2026.3.13-1)
+
+- This is a recovery Git tag for the broken `v2026.3.13` release path; the npm/runtime version remains `2026.3.13`.
+- Gateway/UI: control-ui connect failures are classified more clearly, and insecure-control-ui shared-auth behavior is restored for the intended compatibility path.
+- Operations: post-compaction sanity now checks full-session token counts, which makes compaction regressions easier to detect during incident triage.
+- Sessions/channels: session reset preserves `lastAccountId` and `lastThreadId`; Telegram inbound media retries keep IPv4 fallback behavior.
+- Runtime/platforms: Docker adds `OPENCLAW_TZ`; gateway probe handling and unanswered client-request bounding are more operator-visible when reachability degrades.
+
+## Release Updates (v2026.3.7)
+
+- **BREAKING:** Gateway auth now requires explicit `gateway.auth.mode` (`token` or `password`) when both `gateway.auth.token` and `gateway.auth.password` are configured (including SecretRefs). Set before upgrade to avoid startup/pairing failures.
+- Agents: `ContextEngine` plugin interface with full lifecycle hooks (`bootstrap`, `ingest`, `assemble`, `compact`, `afterTurn`, `prepareSubagentSpawn`, `onSubagentEnded`). Enables alternative context management strategies (e.g. `lossless-claw`) without modifying core compaction.
+- Agents: configurable `postCompactionSections` to choose which `AGENTS.md` sections re-inject after compaction.
+- Agents: head+tail truncation for oversized tool results (preserves tail diagnostics).
+- Telegram: per-topic `agentId` overrides in forum groups and DM topics for dedicated agent routing with isolated sessions.
+- Telegram/ACP: durable topic binding (`--thread here|auto`), approval buttons with prefixed-id resolution, bind pin confirmations.
+- ACP: persistent Discord channel and Telegram topic binding storage surviving restarts.
+- Plugins: `prependSystemContext`/`appendSystemContext` for static guidance in system prompt space (provider caching, lower repeated cost).
+- Plugins: `hooks.allowPromptInjection` policy and runtime validation of unknown hook names.
+- Hooks: `session:compact:before`/`session:compact:after` events with session/count metadata.
+- Config: `recentTurnsPreserve` and quality-guard retry knobs exposed through validated config.
+- Tools/Web search: Perplexity provider switched to Search API with structured results + language/region/time filters.
+- Tools/Diffs: guidance moved from prompt-hook injection to companion skill path (reduces unrelated-turn noise).
+- Gateway: SecretRef support for `gateway.auth.token` with auth-mode guardrails.
+- Docker: multi-stage build producing minimal runtime image; `OPENCLAW_VARIANT=slim` build arg; `OPENCLAW_EXTENSIONS` for pre-baking extension dependencies.
+- TTS: `messages.tts.openai.baseUrl` config support for OpenAI-compatible endpoints.
+- Google: first-class `gemini-3.1-flash-lite-preview` support.
+- Slack: `typingReaction` for DM processing status when assistant typing unavailable.
+- Discord: `allowBots: "mentions"` to gate bot messages by mention.
+- Mattermost: interactive `/oc_model` provider/model browsing.
+- Cron: `jobs.json.bak` preserved as pre-edit snapshot for recovery.
+
+## Release Updates (v2026.3.2)
+
+- **BREAKING:** New installs default `tools.profile` to `messaging` (not broad coding/system). If you expect coding tools on day-1, set `tools.profile` explicitly.
+- **BREAKING:** ACP dispatch defaults to enabled unless explicitly disabled (`acp.dispatch.enabled=false`).
+- **BREAKING:** Plugin SDK removed `api.registerHttpHandler(...)`; use `api.registerHttpRoute(...)`.
+- **BREAKING:** Zalo personal plugin (`@openclaw/zalouser`) no longer uses external CLI transports; after upgrade re-login with `openclaw channels login --channel zalouser`.
+- Secrets/SecretRef coverage expanded across user-supplied credential surfaces; unresolved refs fail fast on active surfaces.
+- Tools: first-class `pdf` tool (native Anthropic/Google support + fallback extraction, with configurable limits).
+- CLI: `openclaw config validate` (and `--json`) to validate config before gateway startup.
+- Telegram: streaming defaults to `partial` for new setups; DM preview streaming behavior updated.
+- Memory: embeddings via Ollama supported for memory search (`memorySearch.provider/fallback = "ollama"`).
+- Tools/diffs plugin: PDF output support and rendering quality controls for diff artifacts.
+
+## Release Updates (v2026.3.1)
+
+- Gateway: built-in container probe endpoints (`/healthz`, `/readyz`, plus aliases `/health`, `/ready`) for Docker/Kubernetes.
+- CLI: `openclaw config file` prints the active config path (resolves `OPENCLAW_CONFIG_PATH` or default).
+- Discord: thread-bound session lifecycle now supports inactivity (`idleHours`) and hard max age (`maxAgeHours`), plus `/session idle` and `/session max-age`.
+- Telegram: per-DM `direct` + DM topics config surface (topic-aware policy, skills, system prompt, allowlists).
+- Nodes (Android): expanded node tool surface (camera/device/notifications/photos/contacts/calendar/motion).
+- Tools: optional `diffs` plugin tool for read-only diff views and PNG rendering.
+
+## Release Updates (v2026.2.23)
+
+- Providers: first-class `kilocode` provider support (auth, onboarding, implicit provider detection, and model defaults).
+- Tools/web_search: add provider `"kimi"` (Moonshot) and correct the two-step `$web_search` tool flow (echo tool results before synthesis).
+- Gateway: optional HSTS via `gateway.http.securityHeaders.strictTransportSecurity` for direct HTTPS deployments.
+- Sessions: hardened maintenance via `openclaw sessions cleanup` with disk-budget controls and safer transcript/archive cleanup.
+- **Breaking:** browser SSRF policy defaults changed and config key renamed (`browser.ssrfPolicy.allowPrivateNetwork` -> `browser.ssrfPolicy.dangerouslyAllowPrivateNetwork`); use `openclaw doctor --fix` to migrate.
+
+## Architecture and Runtime Concepts
+
+### Agent Loop
+
+- Agent loop is serialized per session (and optionally globally) to avoid tool/history races.
+- Run lifecycle emits assistant/tool/lifecycle streams for observability.
+- Wait timeout and runtime timeout are different controls.
+
+### System Prompt and Context
+
+- System prompt is OpenClaw-composed per run (not provider default prompt).
+- Prompt mode can be `full`, `minimal`, or `none` depending on run context.
+- Context includes system prompt, transcript, tools/results, attachments, schemas.
+- Bootstrap files are injected into context window and consume budget.
+
+### Workspace and Memory
+
+- Workspace is default execution directory and memory surface, not a hard sandbox.
+- Use sandbox settings when strict filesystem isolation is required.
+- Memory is markdown-first: daily notes + curated durable memory.
+- Compaction persists summary to transcript; pruning trims old tool results in-memory.
+- Bootstrap files such as `AGENTS.md`, `SOUL.md`, `USER.md`, `TOOLS.md`, `HEARTBEAT.md`, `IDENTITY.md`, and `MEMORY.md` all consume context budget; keep them deliberate and compact.
+
+### Messaging, Queueing, Presence
+
+- Message processing uses dedupe, optional inbound debounce, queue modes, and channel-aware delivery.
+- Queue/streaming/chunking behavior is policy-driven and tunable per channel.
+- Presence is best-effort observability; stable `instanceId` is required to avoid duplicate entries.
+
+## Tools Governance
+
+- Start with least-privilege profile, then explicitly allow required tools.
+- Deny list overrides allow list.
+- Treat `exec`, `sessions_*`, `gateway`, `nodes` as high-impact surfaces.
+- Require explicit user consent for media-capture operations.
+- Enable loop-detection when tools may form no-progress cycles.
+
+## Channels and Provider Strategy
+
+- Start with fastest stable channel path (commonly Telegram) for baseline verification.
+- Add WhatsApp and advanced channels only after pairing/allowlists are proven.
+- Keep provider selection explicit via `provider/model` and avoid implicit model drift.
+- Isolate auth profiles per agent when separating work/personal contexts.
+
+## Nodes and Remote Execution
+
+- Nodes are capability executors, not gateway replacements.
+- Pair nodes explicitly and verify capabilities before invoking actions.
+- Keep node exec approvals local to node host and audited.
+- Use explicit node binding for deterministic remote execution targeting.
+
+## Security Baseline
+
+- Assume prompt injection is always possible.
+- Apply controls in this order: identity (pairing/allowlist) -> scope (tools/sandbox/mentions) -> model policy.
+- Keep control UI in secure context (loopback/HTTPS); avoid insecure auth downgrades.
+- Use strict filesystem permissions for config/state and redact sensitive logs.
+
+## Troubleshooting Ladder
+
+1. `openclaw status`
+2. `openclaw gateway status`
+3. `openclaw logs --follow`
+4. `openclaw doctor`
+5. `openclaw channels status --probe`
+
+Common triage map:
+
+- No replies -> pairing/allowlist/mention policy.
+- Connect loop -> auth mode + endpoint + secure context.
+- Startup fail -> mode/bind/auth/port conflict.
+- Tool failure -> permissions/approvals/foreground constraints.
+
+## Concepts URLs Status (from left navigation)
+
+- Extracted concepts are integrated directly into this skill.
+- Some source URLs in docs navigation currently return 404 or empty content.
+- Coverage for those pages is consolidated in `references/concepts.md` with fallback guidance.
+
+## When to Use
+
+- You need to design or operate an OpenClaw deployment.
+- You need to connect channels, providers, and tools safely.
+- You need a practical checklist for onboarding and gateway setup.
+
+## Core Operating Workflow
+
+1. Confirm topology and responsibilities from architecture notes.
+2. Shape `openclaw.json` around the six operator blocks: gateway, agents, channels, bindings, session/messages, heartbeat/tools/cron/hooks.
+3. Choose channels/providers and required tools.
+4. Configure gateway access, secrets, and remote connectivity.
+5. Validate onboarding flow, config health, and control UI accessibility.
+6. Run troubleshooting and hardening checklist.
+
+## Critical Prohibitions
+
+- Do not copy large verbatim chunks from vendor docs into this skill.
+- Do not invent defaults or hidden behavior without doc evidence.
+- Do not weaken safety controls (pairing, allowlists, auth, sandbox) for convenience in production.
+
+## Links
+
+- [Documentation](https://docs.openclaw.ai/)
+- [Releases](https://github.com/openclaw/openclaw/releases)
+
+Key docs pages: [Architecture](https://docs.openclaw.ai/concepts/architecture), [Tools](https://docs.openclaw.ai/tools), [Gateway](https://docs.openclaw.ai/gateway)
