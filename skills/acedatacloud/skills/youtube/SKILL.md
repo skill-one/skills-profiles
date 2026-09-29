@@ -1,0 +1,214 @@
+---
+name: youtube
+description: Search YouTube, read your own channel and uploaded videos (stats, comments), and upload new videos via the YouTube Data API v3. Use when the user mentions YouTube, "my channel", "my videos", searching YouTube, video views / likes / stats, uploading a video to YouTube, or checking how a published video is doing.
+when_to_use: |
+  Trigger when the user wants to search YouTube, inspect their own
+  channel / uploaded videos (views, likes, comments), look up a
+  video's stats, or upload a new video to their channel. The
+  installed connector always grants `youtube.readonly` (search + read
+  your channel and videos); the user opts in to `youtube.upload` at
+  install time to publish videos — confirm before uploading and
+  re-prompt to re-install if the upload scope is missing.
+connections: [google/youtube]
+allowed_tools: [Bash, publish_artifact]
+license: Apache-2.0
+metadata:
+  author: acedatacloud
+  version: "1.0"
+---
+
+Call the **YouTube Data API v3** with `curl + jq`. The user's OAuth bearer
+token is in `$GOOGLE_YOUTUBE_TOKEN`; every call needs it as
+`Authorization: Bearer $GOOGLE_YOUTUBE_TOKEN`. Base URL:
+`https://www.googleapis.com/youtube/v3`.
+
+The token always carries `youtube.readonly` plus identity scopes
+(`openid email profile`); if the user opted in at install it also
+carries `youtube.upload` (publish videos).
+
+Responses are standard JSON; failures surface as
+`{"error": {"code": 401|403|..., "message": "..."}}` — show that error
+verbatim. `401` → token expired, the user must re-connect the YouTube
+connector. `403 insufficientPermissions` on an upload → the user did
+not grant `youtube.upload`; ask them to re-connect with the upload box
+checked.
+
+**Always start with the channel check** to confirm the connection works
+and learn which channel you're operating against.
+
+```bash
+curl -sS -H "Authorization: Bearer $GOOGLE_YOUTUBE_TOKEN" \
+  "https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics,contentDetails&mine=true" \
+  | jq '.items[0] | {title: .snippet.title, subs: .statistics.subscriberCount, views: .statistics.viewCount, uploads: .contentDetails.relatedPlaylists.uploads}'
+```
+
+## Search YouTube
+
+```bash
+# Public search (any video). type can be video|channel|playlist.
+curl -sS -H "Authorization: Bearer $GOOGLE_YOUTUBE_TOKEN" \
+  --data-urlencode "q=ai video automation" \
+  --data-urlencode "part=snippet" \
+  --data-urlencode "type=video" \
+  --data-urlencode "maxResults=10" \
+  -G "https://www.googleapis.com/youtube/v3/search" \
+  | jq '.items[] | {videoId: .id.videoId, title: .snippet.title, channel: .snippet.channelTitle, published: .snippet.publishedAt}'
+```
+
+Add `--data-urlencode "order=date|viewCount|rating|relevance"` to sort,
+or `--data-urlencode "publishedAfter=2026-01-01T00:00:00Z"` to window.
+
+## See my uploaded videos
+
+YouTube has no "list my videos" call directly — read the channel's
+**uploads playlist**, then page its items.
+
+```bash
+python3 skills/youtube/scripts/list_uploads.py --max-pages 20
+```
+
+The helper follows every `nextPageToken` until the upload history is complete
+(or the explicit safety limit is reached). Its compact JSON keeps `videoId`,
+`title`, and `published` for each item, plus `complete`, `pages_fetched`, and
+`next_page_token`. Do not claim a video is absent when `complete` is false.
+
+Paginate by passing `--data-urlencode "pageToken=$PAGE_TOKEN"` with the
+`.nextPageToken` from the previous response.
+
+## Video stats (views / likes / comments)
+
+```bash
+# Accepts a comma-separated id list.
+curl -sS -H "Authorization: Bearer $GOOGLE_YOUTUBE_TOKEN" \
+  -G "https://www.googleapis.com/youtube/v3/videos" \
+  --data-urlencode "part=snippet,statistics,status" \
+  --data-urlencode "id=VIDEO_ID_1,VIDEO_ID_2" \
+  | jq '.items[] | {title: .snippet.title, views: .statistics.viewCount, likes: .statistics.likeCount, comments: .statistics.commentCount, privacy: .status.privacyStatus}'
+```
+
+## Read comments on a video
+
+```bash
+curl -sS -H "Authorization: Bearer $GOOGLE_YOUTUBE_TOKEN" \
+  -G "https://www.googleapis.com/youtube/v3/commentThreads" \
+  --data-urlencode "part=snippet" \
+  --data-urlencode "videoId=VIDEO_ID" \
+  --data-urlencode "maxResults=20" \
+  --data-urlencode "order=relevance" \
+  | jq '.items[] | .snippet.topLevelComment.snippet | {author: .authorDisplayName, text: .textDisplay, likes: .likeCount}'
+```
+
+## Upload a video (needs `youtube.upload`)
+
+**Confirm with the user before publishing** — show the title, privacy and
+file you're about to upload. Uploads are a two-step *resumable* flow:
+init with metadata → PUT the bytes.
+
+### If the source is a URL, fetch it first
+
+Videos produced by a generation API (Maestro, Seedance, Veo, …) come back as a
+CDN URL, not a local file. Download it and verify you actually got a video
+before starting the upload:
+
+```bash
+SRC="https://example.cdn.acedata.cloud/path/video.mp4"
+FILE=$(mktemp)   # plain mktemp — `mktemp /tmp/x-XXXXXX.mp4` is not portable
+
+# -f: fail on 4xx/5xx instead of saving the error page. -L: follow CDN redirects.
+curl -fsSL -o "$FILE" -w 'http=%{http_code} size=%{size_download}\n' "$SRC"
+
+# Two distinct failures, two distinct messages — a 404/DNS error is a bad URL,
+# not a bad video, and saying so saves the next step from misdiagnosing it.
+[ -s "$FILE" ] \
+  || { echo "download failed (see http= above) — nothing to upload"; rm -f "$FILE"; exit 1; }
+
+# A 200 can still be an HTML interstitial or an expired-link page. Reject that
+# rather than allow-listing one container, so WebM/MOV/AVI still pass. `grep -a`
+# is required — without it grep treats a binary header as "no match".
+head -c 512 "$FILE" | grep -qai '<html\|<!doctype' \
+  && { echo "got an HTML page, not a video"; rm -f "$FILE"; exit 1; }
+```
+
+`--upload-file` ignores the filename; YouTube keys off the
+`Content-Type: video/*` header, so the extensionless temp file is fine.
+
+### The upload itself
+
+```bash
+# Falls back to the placeholder only if the fetch step above didn't set FILE.
+FILE="${FILE:-/path/to/video.mp4}"
+TITLE="My title"
+DESC="My description"
+# privacyStatus: public | unlisted | private
+META=$(jq -n --arg title "$TITLE" --arg description "$DESC" '{
+  snippet: {title: $title, description: $description, categoryId: "22"},
+  status: {privacyStatus: "unlisted", selfDeclaredMadeForKids: false}
+}')
+
+# 1. Init the resumable session. Keep headers, body and status so a missing
+# Location reports the real API error instead of turning into an empty PUT URL.
+INIT_HEADERS=$(mktemp)
+INIT_BODY=$(mktemp)
+INIT_HTTP=$(curl -sS -D "$INIT_HEADERS" -o "$INIT_BODY" -w '%{http_code}' \
+  -H "Authorization: Bearer $GOOGLE_YOUTUBE_TOKEN" \
+  -H "Content-Type: application/json; charset=UTF-8" \
+  -H "X-Upload-Content-Type: video/*" \
+  -X POST "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status" \
+  -d "$META")
+UPLOAD_URL=$(tr -d '\r' < "$INIT_HEADERS" | awk 'tolower($1) == "location:" {print $2; exit}')
+if [ -z "$UPLOAD_URL" ]; then
+  echo "upload init failed: HTTP $INIT_HTTP: $(jq -r '.error.message // .' "$INIT_BODY" 2>/dev/null || cat "$INIT_BODY")"
+  rm -f "$INIT_HEADERS" "$INIT_BODY"
+  exit 1
+fi
+rm -f "$INIT_HEADERS" "$INIT_BODY"
+
+# 2. Upload the bytes -> returns the created video resource (has .id).
+RESULT=$(curl -sS -H "Authorization: Bearer $GOOGLE_YOUTUBE_TOKEN" \
+  -H "Content-Type: video/*" \
+  -X PUT --upload-file "$FILE" "$UPLOAD_URL")
+echo "$RESULT" | jq -e .id >/dev/null 2>&1 \
+  || { echo "upload failed: $(echo "$RESULT" | jq -r '.error.message' 2>/dev/null || echo "$RESULT")"; exit 1; }
+VIDEO_ID=$(echo "$RESULT" | jq -r '.id')
+VERIFY=$(curl -sS -H "Authorization: Bearer $GOOGLE_YOUTUBE_TOKEN" \
+  -G "https://www.googleapis.com/youtube/v3/videos" \
+  --data-urlencode "part=snippet,status,processingDetails" \
+  --data-urlencode "id=$VIDEO_ID")
+echo "$VERIFY" | jq -e '.items[0].id == "'"$VIDEO_ID"'"' >/dev/null \
+  || { echo "upload readback failed for $VIDEO_ID"; exit 1; }
+echo "$VERIFY" | jq '.items[0] | {
+  video_id: .id,
+  canonical_url: ("https://www.youtube.com/watch?v=" + .id),
+  privacy: .status.privacyStatus,
+  upload_status: .status.uploadStatus,
+  processing_status: .processingDetails.processingStatus
+}'
+```
+
+Delete a downloaded temp file only **after** you've confirmed an id came back
+(`echo "$RESULT" | jq -e .id >/dev/null && rm -f "$FILE"`). On a 401/403 or a
+dropped connection the download is still good and re-uploading beats re-fetching
+a few hundred MB.
+
+After a confirmed upload returns a real `.id`, call `publish_artifact` exactly
+once so the result appears in **My Outputs**. Use `kind="video"`,
+`channel="youtube"`, `status="delivered"`, the real title, and the canonical
+`https://www.youtube.com/watch?v=<id>` URL. Include the actual privacy in the
+summary. If the upload fails or no `.id` is returned, do not record a delivered
+artifact and never fabricate a URL.
+
+`categoryId` `22` = "People & Blogs" (a safe default). To set a custom
+thumbnail (needs the file to be processed first), call
+`POST /upload/youtube/v3/thumbnails/set?videoId=VIDEO_ID` with the image.
+
+## Gotchas
+
+- **Quota:** the Data API is quota-metered (default 10,000 units/day). A
+  `search` costs 100 units; an `upload` costs ~1,600. A burst of searches
+  can exhaust the daily quota → `403 quotaExceeded`; surface it plainly.
+- **No "my videos" endpoint** — always go via the uploads playlist.
+- **`search` results are eventually-consistent** — a freshly uploaded
+  video may not appear in `search` for minutes/hours; read it via the
+  uploads playlist or by id instead.
+- Uploaded videos start in `uploaded`/`processing` state; stats are `0`
+  until processing completes.

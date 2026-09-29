@@ -1,0 +1,152 @@
+---
+name: x
+description: Read & act on X (Twitter) with the user's own login cookies (BYOC) — post tweets (text / images / video / threads / replies / quotes), search tweets & users, read timelines and single tweets, like / retweet / follow / delete, and see trends. Use when the user mentions X / Twitter, 发推 / 发推特 / 推特, "我的 Twitter", posting to X, searching X, or reading their X timeline.
+when_to_use: |
+  Trigger for anything on the user's X (Twitter) account driven by their own
+  login cookie: post a tweet / thread / reply / quote (optionally with images or
+  a video), search tweets or users, read their home timeline or a user's tweets,
+  look up one tweet, like / retweet / follow / delete, or check trends. This acts
+  as the user's REAL account, so every write is gated behind an explicit
+  confirmation.
+connections: [x]
+allowed_tools: [Bash, publish_artifact]
+license: Apache-2.0
+metadata:
+  author: acedatacloud
+  version: "1.0"
+---
+
+# x — read & post on X (Twitter) via your own cookies
+
+Drives the user's **real** X account through X's internal web API via
+[`twikit`](https://github.com/d60/twikit), authenticated by the login cookie they
+captured with the ACE extension. No official API key, no cost.
+
+> E2E-verified on 2026-07-06 with a real connected account for: cookie load,
+> whoami, tweet search, user search, home timeline, trends, tweet detail, and
+> post dry-run. Live writes still require explicit confirmation and were not
+> executed in the verification run.
+
+The connector injects the cookie jar as an env var:
+
+- `X_COOKIES` — a JSON array of cookies (needs at least `auth_token` + `ct0`).
+  **Secret — full account access. Never echo or print it.**
+
+## Setup — verify the shipped CLI
+
+`twikit` is preinstalled in the hosted sandbox image. Do not `pip install` it at
+runtime; if import fails, report that the sandbox image is missing the X skill
+dependency and stop.
+
+```sh
+python3 -c "import twikit" || { echo "sandbox missing twikit; deploy the sandbox skill dependencies image" >&2; exit 1; }
+# $SKILL_DIR can point at another skill loaded this turn — anchor on our own
+# script (re-run this setup at the top of every fresh-shell Bash block below).
+X="$SKILL_DIR/scripts/x.py"; [ -f "$X" ] || X=$(find /tmp -maxdepth 8 -path '*/skills/*/scripts/x.py' 2>/dev/null | head -1)
+[ -f "$X" ] || { echo "x script not found (SKILL_DIR=$SKILL_DIR)" >&2; exit 1; }
+python3 "$X" whoami          # confirm the shipped CLI can read the authenticated account
+```
+
+## Read commands (run directly)
+
+```sh
+python3 $X whoami                                            # discover the authenticated account
+python3 $X whoami --expect SCREEN_NAME                       # optional: assert a specific account
+python3 $X search --query "ai agents" --product Latest --limit 20   # Top | Latest | Media
+python3 $X search-users --query "openai" --limit 10
+python3 $X timeline --limit 20                               # my home timeline
+python3 $X user-tweets --user elonmusk --type Tweets --limit 20     # Tweets|Replies|Media|Likes
+python3 $X tweet --id 1234567890123456789                    # single tweet detail
+python3 $X trends --category trending --limit 20             # trending|for-you|news|sports|entertainment
+```
+
+`--user` accepts either an `@screen_name` (the `@` is optional) or a numeric id.
+
+## Verify the connection first
+
+```sh
+python3 $X whoami
+# → {"id": "...", "screen_name": "<the connected handle>", "identity_verified": true, ...}
+```
+
+`whoami` reads the authenticated account's screen name from X account settings,
+then resolves its public profile. This avoids X's Cloudflare-blocked
+`UserByRestId` endpoint without trusting a local identity cookie.
+
+`--expect <screen_name>` is optional: pass it only when the user explicitly names
+the account they want to act as, and it will abort if the connected cookie
+belongs to someone else. Do not invent an expected handle — plain `whoami` is
+the default.
+
+On an actual auth error the cookie is expired — have the user reconnect at
+<https://studio.acedata.cloud/console/connectors>. A Cloudflare block is different:
+reconnecting cookies does not fix it. Use `whoami` for identity checks; other
+blocked endpoints need `X_PROXY` or the official X API. Do **not** loop-retry a
+Cloudflare block or an auth error.
+
+A **404 is not an auth error.** X's identity endpoints 404 on roughly a quarter
+of calls even with healthy cookies, on every account. `whoami` already retries
+those internally, so if it still reports a 404, wait a moment and run it again —
+do not tell the user to reconnect.
+
+## Write commands — GATED (dry-run unless trailing `--confirm`)
+
+Every state-changing command (`post`, `thread`, `like`, `unlike`, `retweet`,
+`unretweet`, `follow`, `unfollow`, `delete`) **dry-runs** without a trailing
+`--confirm`. `--confirm` is honored **only as the last argument**, so a tweet
+body that merely contains "--confirm" can never silently post. Always show the
+dry-run, get an explicit "yes" on the exact text, then re-run with `--confirm`.
+
+```sh
+python3 $X post --text "hello world"                          # dry-run
+python3 $X post --text "hello world" --confirm                # LIVE tweet
+python3 $X post --text "look at this" --media a.jpg,b.png --confirm     # up to 4 images (or 1 video)
+python3 $X post --text "great point" --reply-to 123456 --confirm        # reply
+python3 $X post --text "worth reading" --quote-url https://x.com/u/status/123 --confirm  # quote
+python3 $X thread --text "1/2 first" --text "2/2 second" --confirm       # thread (2+ segments)
+python3 $X like --id 123456 --confirm
+python3 $X retweet --id 123456 --confirm
+python3 $X follow --user elonmusk --confirm
+python3 $X delete --id 123456 --confirm                        # delete one of MY tweets
+```
+
+- **A confirmed `post` / `thread` is immediately PUBLIC** on the user's real
+  account — there is no draft step. Always confirm the exact text first.
+- `--media` takes comma-separated file paths. X allows up to **4 images** OR
+  **1 video/GIF** per tweet; for a thread the media attaches to the **first**
+  segment only.
+
+## Gotchas
+
+- **This is the user's real X account.** Confirm before any write — posts are
+  immediate and public.
+- **Live writes are not E2E-verified.** Read commands were verified on 2026-07-06;
+  validate the first confirmed write carefully.
+- **twikit is a scraper of X's non-public API.** It can break when X changes its
+  internal endpoints. The bundled script carries an AceDataCloud compatibility
+  patch for the current `ondemand.s` webpack chunk map used to generate
+  transaction IDs. If `Couldn't get KEY_BYTE indices` appears again, report it
+  as X/twikit upstream drift — do NOT ask the user to reconnect cookies for that
+  specific error.
+- X currently returns a dependency error for its dedicated `UserMedia` query.
+  The CLI falls back to the normal Tweets timeline and filters media posts
+  locally; the response includes a `fallback` field when this happens.
+- **ToS / rate-limit / ban risk.** This acts through the web API, not the
+  official API — high-frequency automation can get the account rate-limited or
+  suspended. Keep volume human-like.
+- **Never print `X_COOKIES`** — it is full account access.
+- **DMs are intentionally not exposed** by this skill.
+
+
+## Record the output
+
+After you successfully publish and obtain the live result URL, call the built-in
+`publish_artifact` tool ONCE so the user can track this deliverable in **My Outputs**:
+
+```
+publish_artifact(kind="message", channel="x", title="<title>", url="<the REAL returned URL>", status="delivered")
+```
+
+Use the real returned URL — never fabricate one. Call it once per published item,
+only after delivery is confirmed; skip it (or use `status="failed"`) if publishing failed.
+See `_shared/artifacts.md`.
