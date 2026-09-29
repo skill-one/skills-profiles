@@ -184,6 +184,20 @@ def skill_description(source: str) -> str:
     return description.strip() if isinstance(description, str) else ""
 
 
+def skill_name(source: str) -> str:
+    """The skill's own front matter `name`, or nothing when there is none. The mirror spells a
+    skill's slug out of this field, the tree out of the directory the source sat in."""
+    block = FRONT_MATTER.match(source)
+    if block is None:
+        return ""
+    try:
+        front = yaml.load(block.group(1), Loader=YAML_LOADER)
+    except yaml.YAMLError:
+        return ""
+    name = front.get("name") if isinstance(front, dict) else None
+    return name.strip() if isinstance(name, str) else ""
+
+
 def repository(config: Config, skill: str) -> dict | None:
     """The context a skill's own repository gives: its id, and the siblings beside it.
 

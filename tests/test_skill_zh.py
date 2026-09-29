@@ -116,7 +116,7 @@ def test_main_writes_the_page_the_code_assembles(workdir, monkeypatch):
     text = common.angle_path(
         config, ALPHA, common.SKILL_ZH_ANGLE).read_text(encoding="utf-8")
     header = yaml.load(common.FRONT_MATTER.match(text).group(1), Loader=common.YAML_LOADER)
-    assert header == {"name": "owner-a/repo-a/alpha", "description": ZH}  # the description's own call
+    assert header == {"name": "alpha", "description": ZH}  # the description's own call
     assert text.endswith(f"\n{ZH.strip()}\n")  # the body's translation under it
 
 

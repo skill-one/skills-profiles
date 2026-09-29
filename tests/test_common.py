@@ -21,7 +21,7 @@ def test_a_short_source_is_passed_through_untouched(config):
     """No note, no reflow: the cap is the only thing that ever changes a source, and dropping the
     front matter is `skill_body`'s job rather than this one's."""
     source = common.cap_source(common.skill_md(config, ALPHA))
-    assert source.startswith("---\nname: owner-a/repo-a/alpha\ndescription: Tidies a note list")
+    assert source.startswith("---\nname: alpha\ndescription: Tidies a note list")
     assert source.endswith("---\n\nowner-a/repo-a/alpha does useful things.\n")
 
 

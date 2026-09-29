@@ -37,7 +37,7 @@ just clean domain             # 反操作：忘掉第一个已构建的标签
 | `just build <angle>` | `batch.py build <angle>`：按安装量从高到低，为接下来 `limit` 个还缺该角度文件的 skill 构建（`domain`、`skill_zh`，或 `all` 表示两者共池共窗口一次跑完）。顺序是清单自己的（`OUTPUT_DIR/skills.jsonl`，镜像顺序，安装量降序）——按 jsonl 解析，镜像列出的每个 skill 一行。窗口取接下来 `limit` 个该角度尚未解决的 skill：没有角度文件，也不是「仓库已在磁盘上却没有 `SKILL.md`」的 skill（它永远构建不了）。数的是工作量而不是位置，所以重复运行沿数据集往下走。驱动器随后在 `jobs` 宽的池子里跑生产者，每个 skill 一次生产者调用：每个任务在需要时才拉取它的仓库——同一仓库的第一个任务下载并解包，其余任务等这一次下载——仓库没有源的 skill 被跳过。裸 `just` 即默认只做一个的 `build domain`。 |
 | `just clean <angle>` | 逆窗口，`batch.py clean <angle>`：按同一清单顺序取接下来 `limit` 个**已有**该角度文件的 skill，删掉文件。之后 `build` 恰好重建这些 skill；`limit 0` 清掉全部已构建的，`all` 同时忘掉两个角度的文件——即 sync 之前的那半步完整重置。窗口之外要按名构建单个 skill，仍直接跑脚本（`uv run python jev.py <id>` / `skill_zh.py <id>`）。                                                                                                                                                                                                                                            |
 | `just index`         | 写 `<output_dir>/skills.jsonl`——清单：镜像列出的每个 skill 一行，按镜像顺序，由镜像自己的行（`id`、`installs`）拼接从该 skill 的 `SKILL.md` 读出的 `description`、`SKILL.zh.md` front matter 里的 `description_zh`，以及 `domain.json` 里的 `domain` 和 `confidence`。拼接字段未知时为 `null`。只读树——无网络、无调用——整体重写文件。同一次遍历还在旁边写两个 README：见下文 `readme.py`。                                                                                                                                                                                    |
-| `just sync`          | 与镜像对账：拉取镜像清单，即行集合、顺序和安装量。源按需拉取：批次在第一次构建某仓库的 skill 时下载该仓库，仓库目录即缓存，所以既不会在需要前拉取，也不会拉取两次。清单新增了 skill 的仓库会在此时被重新拉取，新源合并进已建好的 skill 旁边。                                                                                                                                                                                                                                                                                                                                 |
+| `just sync`          | 与镜像对账：拉取镜像清单，即行集合、顺序和安装量。源按需拉取：批次在第一次构建某仓库的 skill 时下载该仓库，仓库目录即缓存，所以既不会在需要前拉取，也不会拉取两次。清单新增了 skill 的仓库会在此时被重新拉取，新源合并进已建好的 skill 旁边，并全树修复按 name 拼写的别名。                                                                                                                                                                                                                                                                                                                                 |
 | `just test`          | `uv run pytest`。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 `build` 和 `clean` 是同一个驱动器 `batch.py` 的两个互逆动词：共用角度（`domain`/`skill_zh`，
@@ -159,9 +159,11 @@ Markdown 缝合线切块（代码围栏外的空行；自身没有缝合线的�
 一个 codeload tarball（`--repo-tarball` 指明地址），`fetch_jobs` 路并发，且只下载尚未在磁盘上
 的那些——随后 `fetch.py` 流式解包每个 tarball。一个 skill 是子目录里的一个 `SKILL.md`，以其目录命名；
 仓库根目录的那个 `SKILL.md` 是它的 readme，不算 skill。只有能读出 description 的源才会落盘，且
-同名只取一次。这里不查清单——清单还没列到的 skill 也照样解出来。仓库目录总会创建，所以它的存在
-就是缓存：某仓库不含某列出 skill 的源，就把该 skill 留作空目录。下载不下来的仓库干脆不在——它
-的 skill 失败，批次继续。
+同名只取一次。镜像用 front matter `name` 的 kebab 形式作 skill 的 slug，树用源所在的目录：作者把
+两者拼得不一样时，源会以两种拼写各落一份，`just sync` 也会以同样方式修复已拉取的树
+（`fetch.write_aliases`），让镜像行无论按哪种拼写都能找到源并被构建。这里不查清单——清单还没
+列到的 skill 也照样解出来。仓库目录总会创建，所以它的存在就是缓存：某仓库不含某列出 skill 的
+源，就把该 skill 留作空目录。下载不下来的仓库干脆不在——它的 skill 失败，批次继续。
 
 ## 工作方式
 

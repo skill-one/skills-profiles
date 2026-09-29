@@ -11,7 +11,8 @@ REPO = "owner-x/repo-x"
 
 
 def source(description: str) -> str:
-    return f"---\nname: x\ndescription: {description}\n---\n\nBody.\n"
+    """A front matter whose `name` kebab-cases to the directory the tests drop it in."""
+    return f"---\nname: alpha\ndescription: {description}\n---\n\nBody.\n"
 
 
 def tarball(stage: Path, files: dict[str, str], repo: str = REPO) -> Path:
@@ -79,6 +80,48 @@ def test_a_slug_that_is_not_a_name_writes_nowhere_outside(config, tmp_path):
 
     assert not (config.output_dir / common.SKILLS_DIR / "owner-x" / "SKILL.md").exists()
     assert not (config.output_dir / common.SKILLS_DIR / "SKILL.md").exists()
+
+
+def test_a_source_whose_name_differs_from_its_directory_writes_both(config, tmp_path):
+    """The mirror keys a skill by the kebab case of the `name` field, the tree by the directory:
+    an author who spells them apart gets both spellings on disk, and the count still says one."""
+    stage = tarball(tmp_path / "stage", {
+        "skills/writing-rules/SKILL.md":
+            "---\nname: Writing Hookify Rules\ndescription: D.\n---\n\nBody.\n"})
+
+    assert fetch.extract(stage, config) == (1, 1)
+
+    assert common.skill_md_path(config, f"{REPO}/writing-rules").is_file()
+    assert common.skill_md_path(config, f"{REPO}/writing-hookify-rules").is_file()
+
+
+def test_a_source_whose_name_matches_its_directory_writes_no_alias(config, tmp_path):
+    stage = tarball(tmp_path / "stage", {"skills/alpha/SKILL.md": source("Alpha.")})
+
+    assert fetch.extract(stage, config) == (1, 1)
+
+    assert [p.name for p in repo_dir(config).iterdir()] == ["alpha"]
+
+
+def test_a_source_without_a_name_writes_no_alias(config, tmp_path):
+    stage = tarball(tmp_path / "stage", {
+        "skills/alpha/SKILL.md": "---\ndescription: D.\n---\n\nBody.\n"})
+
+    assert fetch.extract(stage, config) == (1, 1)
+
+    assert [p.name for p in repo_dir(config).iterdir()] == ["alpha"]
+
+
+def test_write_aliases_repairs_the_tree_already_fetched(config):
+    """Sources fetched before the alias rule gain the name-spelled copy without a refetch - once:
+    a second pass over the repaired tree writes nothing."""
+    text = "---\nname: Writing Hookify Rules\ndescription: D.\n---\n\nBody.\n"
+    fetched = (config.output_dir / common.SKILLS_DIR / "owner-x" / "repo-x" / "writing-rules")
+    common.write_atomic(fetched / common.SKILL_MD, text)
+
+    assert fetch.write_aliases(config) == 1
+    assert common.skill_md_path(config, f"{REPO}/writing-hookify-rules").is_file()
+    assert fetch.write_aliases(config) == 0  # idempotent
 
 
 def test_every_skill_in_the_repository_is_taken(config, tmp_path):

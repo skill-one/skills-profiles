@@ -48,10 +48,12 @@ def skill_dir_name(skill_id: str) -> str:
 
 
 def skill_md_text(entry: dict) -> str | None:
-    """The SKILL.md the skill's own repository holds for one entry; None = the repository has none."""
+    """The SKILL.md the skill's own repository holds for one entry; None = the repository has none.
+    The front matter `name` is the skill's own slug, the way real skills spell it."""
     if not entry.get("description"):
         return None
-    return (f"---\nname: {entry['id']}\ndescription: {entry['description']}\n---\n\n"
+    return (f"---\nname: {entry['id'].rsplit('/', 1)[-1]}\n"
+            f"description: {entry['description']}\n---\n\n"
             f"{entry['id']} does useful things.\n")
 
 
