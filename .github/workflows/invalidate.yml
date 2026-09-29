@@ -1,0 +1,58 @@
+name: invalidate
+
+# Manual: forget every built output of the chosen angle and publish the tree without them.
+#
+# The outputs are the cache, so `build` never redoes a published file: when the taxonomy, the
+# prompts or the output shape change, the angle has to be dropped before the next publish run
+# rebuilds it from scratch. A deletion only survives by publishing - a fresh runner plus
+# `restore-dist` brings the published tree back - so this run is restore -> clean (`limit 0`: every
+# built output of the angle; `all` = both) -> index -> publish. No model calls and no credentials:
+# the run only deletes. The next publish rebuilds the dropped angle, walking down the dataset.
+
+on:
+  workflow_dispatch:
+    inputs:
+      angle:
+        description: Which angle to forget
+        type: choice
+        options:
+          - all
+          - domain
+          - skill_zh
+        default: all
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-dist
+  cancel-in-progress: false # never cancel a run that is about to push
+
+jobs:
+  invalidate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: extractions/setup-just@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install
+        run: uv sync
+
+      - name: Restore the published snapshot (angles + sources)
+        uses: ./.github/actions/restore-dist
+
+      - name: Forget every built output of the chosen angle
+        run: just limit=0 clean "${{ inputs.angle }}"
+
+      - name: Rewrite the index
+        run: just index
+
+      - name: Publish to dist
+        uses: ./.github/actions/publish-dist
+        with:
+          tag-mode: date-counter
