@@ -72,7 +72,8 @@ English: [SPEC.md](SPEC.md)
 镜像的清单——`just sync` 现拉进清单文件，清单是它唯一留下的痕迹——是行集合：批次工作的顺序
 （安装量降序），以及树无法知道的安装量。`skills/<id>/SKILL.md` 是构造 state 的全部材料——此外为
 消歧还会用同仓库旁系 skill 的一句话描述；一次 fetch 把仓库里每个 skill 的 `SKILL.md` 都取出来
-（子目录里的那个才算 skill，仓库根的那个是它的 readme），所以树里留下的是仓库所带的 skill。
+（子目录里的那个才算 skill；只在根目录有一个 `SKILL.md` 的仓库本身是单个 skill，根文件就是它的源，
+而子目录 skill 旁的根 `SKILL.md` 仍是 readme），所以树里留下的是仓库所带的 skill。
 
 skill 的一句话描述不在镜像索引里（上游已移除）：它从 skill 自己的 front matter 读出，front
 matter 给不出描述的 skill 永远不会被任何一个生产者构建。镜像是拉来的快照，只读。分类法是代码：

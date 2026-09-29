@@ -140,9 +140,44 @@ def test_every_skill_in_the_repository_is_taken(config, tmp_path):
 
 def test_a_repository_that_holds_no_skill_is_still_a_directory(config, tmp_path):
     """The repository directory is the cache, created even when the repository yields nothing, so
-    it is never downloaded again."""
+    it is never downloaded again. A root `SKILL.md` that cannot say what it is for stays nothing."""
     stage = tarball(tmp_path / "stage", {"SKILL.md": "# A repository readme.\n"})
 
     assert fetch.extract(stage, config) == (0, 1)
 
     assert repo_dir(config).is_dir()
+
+
+def test_a_repository_whose_only_skill_md_is_at_the_root(config, tmp_path):
+    """A single-skill repository keeps its source at the root: with nothing in a subdirectory, the
+    root `SKILL.md` is the skill itself, keyed by the kebab case of its `name`."""
+    stage = tarball(tmp_path / "stage", {
+        "SKILL.md": "---\nname: Alpha Skill\ndescription: Does one thing well.\n---\n\nBody.\n",
+    })
+
+    assert fetch.extract(stage, config) == (1, 1)
+
+    assert common.skill_md_path(config, f"{REPO}/alpha-skill").is_file()
+
+
+def test_a_root_source_without_a_name_takes_the_repositorys_name(config, tmp_path):
+    stage = tarball(tmp_path / "stage", {
+        "SKILL.md": "---\ndescription: Does one thing well.\n---\n\nBody.\n",
+    })
+
+    assert fetch.extract(stage, config) == (1, 1)
+
+    assert common.skill_md_path(config, f"{REPO}/repo-x").is_file()
+
+
+def test_a_root_readme_beside_subdirectory_skills_stays_a_readme(config, tmp_path):
+    """The root `SKILL.md` is the single-skill repository's source only when nothing below it is a
+    skill; beside subdirectory skills it is the repository's readme, described or not."""
+    stage = tarball(tmp_path / "stage", {
+        "SKILL.md": "---\nname: root-skill\ndescription: The readme, described.\n---\n\nBody.\n",
+        "skills/alpha/SKILL.md": source("The real skill."),
+    })
+
+    assert fetch.extract(stage, config) == (1, 1)
+
+    assert [p.name for p in repo_dir(config).iterdir()] == ["alpha"]

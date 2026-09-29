@@ -378,6 +378,35 @@ def test_a_repository_that_fails_to_fetch_fails_only_its_skills(
     assert (outputs(fresh, BETA) / "domain.json").is_file()
 
 
+def test_a_gone_repository_is_skipped_forever_not_failed(
+        fresh, tmp_path, monkeypatch, capsys):
+    """A repository GitHub answers 404 for never comes back: its directory is left as the cache
+    marker, its skills are skipped rather than failed - the run stays green - and the next run
+    walks the window past them without fetching again."""
+    import httpx
+
+    def gone(self, url, dest):
+        raise httpx.HTTPStatusError("Client error '404 Not Found'",
+                                    request=httpx.Request("GET", url),
+                                    response=httpx.Response(404))
+
+    monkeypatch.setattr(batch.Downloader, "get", gone)
+    failed = run_batch(monkeypatch, capsys, fresh, "build", "domain", "--limit", "0",
+                       "--jobs", "4", "--repo-tarball", repos_knob(tmp_path / "unused"))
+
+    assert failed.returncode == 0, failed.stderr
+    assert "gone: owner-a/repo-a" in failed.stderr
+    assert "failed to fetch" not in failed.stderr
+    assert not (outputs(fresh, ALPHA) / "domain.json").exists()
+    assert (fresh / OUTPUT / "skills" / "owner-a" / "repo-a").is_dir()
+
+    again = run_batch(monkeypatch, capsys, fresh, "build", "domain", "--limit", "0",
+                      "--jobs", "4", "--repo-tarball", repos_knob(tmp_path / "unused"))
+
+    assert again.returncode == 0, again.stderr
+    assert "nothing to build" in again.stderr  # the window skips the gone repositories entirely
+
+
 def test_a_shared_repository_is_downloaded_once(fresh, tmp_path, monkeypatch, capsys):
     """The fetch is lazy and deduplicated: the first job on a repository unpacks it, every later
     job on the same repository waits on that one download - the tarball count says so."""

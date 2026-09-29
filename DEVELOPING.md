@@ -184,8 +184,10 @@ labelled** (domain coverage and zh-page coverage).
 `fetch.py` is the other side: the driver downloads the window's repositories - each `owner/repo` of
 the skills about to be built, one codeload tarball each (`--repo-tarball` says where), `fetch_jobs`
 at a time, and only the ones not already on disk - and `fetch.py` streams each tarball once. A skill is
-a `SKILL.md` under a subdirectory, named after it; the repository's own root `SKILL.md` is its
-readme, not a skill. A source is taken only when it yields a description, and only once per name.
+a `SKILL.md` under a subdirectory, named after it; a repository with no skill in a subdirectory is
+itself one skill, its root `SKILL.md` the source (keyed by the kebab of the `name`, the repository's
+own name when there is none), while a root one beside subdirectory skills stays the readme. A source
+is taken only when it yields a description, and only once per name.
 The mirror keys a skill by the kebab case of its front matter `name`, the tree by the directory:
 when an author spells the two apart, the source lands under both spellings, and `just sync`
 repairs the tree already fetched the same way (`fetch.write_aliases`), so a mirror row keyed by
@@ -193,7 +195,9 @@ either spelling finds a source and gets built.
 The catalog is not consulted here - a skill the listing has not reached yet is unpacked all the
 same. The repository directory is created either way, so its presence is the cache: a repository
 that holds no source for a listed skill leaves that skill an empty directory. A repository that
-will not download is simply not here: its skills fail and the batch carries on.
+will not download is simply not here: its skills fail and the batch carries on. One GitHub answers
+404/410 for is gone for good - deleted or private - so its repository directory is still created as
+the marker and its skills are skipped on every later run rather than fetched and failed again.
 
 ## How it works
 

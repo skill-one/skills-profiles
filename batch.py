@@ -51,6 +51,11 @@ ANGLE_LABEL = {common.DOMAIN_ANGLE: "domain", common.SKILL_ZH_ANGLE: "zh page"}
 # FAIL_LOG/GEN_ERR_LOG are append-only CI handovers; workers append from threads.
 _log_lock = threading.Lock()
 
+# a repository GitHub answers 404/410 for is gone for good - deleted or made private. Its
+# repository directory is still created as the cache marker, so the window skips its skills on
+# every later run instead of refetching and failing them again.
+GONE_STATUSES = frozenset({404, 410})
+
 
 class BatchError(Exception):
     """A fatal batch error: one stderr line and exit 1, never a traceback."""
@@ -186,7 +191,9 @@ class LazyFetcher:
     download (bounded by `fetch_jobs`), every later job on the same repository waits on that one
     result - so a whole-snapshot run unpacks sources as it produces instead of fetching every
     tarball up front, and a repository is still downloaded exactly once: the directory on disk is
-    the cache. A repository that will not download is named once and fails only its own skills.
+    the cache. A repository that will not download is named once and fails only its own skills;
+    one GitHub answers 404/410 for is gone for good - its directory is left as the marker, so its
+    skills are skipped, not failed.
     """
 
     def __init__(self, config: Config, template: str, fetch_jobs: int):
@@ -218,6 +225,11 @@ class LazyFetcher:
                 taken = fetch.extract_tarball(tarball, self.config)
         except (httpx.HTTPError, OSError) as error:
             detail = f"{type(error).__name__}: {error}"
+            if isinstance(error, httpx.HTTPStatusError) and \
+                    error.response.status_code in GONE_STATUSES:
+                repo_dir(self.config, repo).mkdir(parents=True, exist_ok=True)
+                print(f"gone: {repo} ({detail})", file=sys.stderr)
+                return None
             print(f"failed to fetch: {repo} ({detail})", file=sys.stderr)
             return detail
         with _log_lock:

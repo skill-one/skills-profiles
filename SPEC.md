@@ -87,7 +87,8 @@ trace - is the row set: the order a batch works in (installs, descending), and t
 tree has no way to know. `skills/<id>/SKILL.md` is the whole of what the state is built from —
 plus, for disambiguation, the one-line descriptions of the sibling skills beside it in its
 repository; a fetch takes every skill's SKILL.md from the repository - each one a subdirectory's
-SKILL.md, the repository's own root one being its readme - so the tree holds the skills the
+SKILL.md, a repository whose only one sits at the root being a single skill with that source, while
+a root one beside subdirectory skills stays its readme - so the tree holds the skills the
 repository ships.
 
 A skill's one-line description is not in the mirror's index, upstream having dropped it: it is read
