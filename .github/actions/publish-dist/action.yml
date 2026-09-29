@@ -37,7 +37,7 @@ runs:
       env:
         GH_TOKEN: ${{ inputs.token }}
         DIR: ${{ inputs.dir }}
-        TAG_MODE: ${{ inputs.tag_mode }}
+        TAG_MODE: ${{ inputs.tag-mode }}
         RETENTION: ${{ inputs.retention }}
       shell: bash
       run: |
