@@ -47,13 +47,16 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py`
   answer; and `SKILL.zh.md`, the page in Chinese - a machine-assembled front matter whose
   `description` is the Chinese translation of the one-line description, over the translated body.
   The model never shapes the front matter, so the description always parses back out of the page.
-- **The catalog is the way in.** `skills.jsonl` holds one flat line per skill the mirror lists, in
-  the mirror's own order - the mirror's row (`id`, `installs`) plus the `description` read out of
-  that skill's own `SKILL.md`, its `description_zh` (the `description` in the zh page's front
-  matter), the `domain` it was labelled with, and the `confidence` it was labelled at. Every listed
-  skill is a row, fetched or not: the joined fields are `null` until the tree fetches and builds it,
-  so an unfetched skill is a row of nulls rather than a missing one, and the catalog is both the
-  dataset and the order the batches work in. `.domain != null` is what has been labelled,
+- **The catalog is the way in.** `skills.jsonl` holds one flat line per skill the mirror lists and
+  the tree can still build, in the mirror's own order - the mirror's row (`id`, `installs`) plus the
+  `description` read out of that skill's own `SKILL.md`, its `description_zh` (the `description` in
+  the zh page's front matter), the `domain` it was labelled with, and the `confidence` it was
+  labelled at. Every listed skill is a row, fetched or not: the joined fields are `null` until the
+  tree fetches and builds it, so an unfetched skill is a row of nulls rather than a missing one, and
+  the catalog is both the dataset and the order the batches work in. A listed skill whose repository
+  is already on disk without a readable description is no row at all - the fetch took the repository
+  and yielded nothing, so no run could ever build it, and it does not dilute the dataset.
+  `.domain != null` is what has been labelled,
   `.description_zh != null` what has been translated, and `.installs` ranks what has not. The
   catalog takes two of the three label fields; the profile is where the answer lives.
 - **The READMEs are the front page**, written by the same command from the same walk: two lines on
@@ -186,7 +189,8 @@ The batch knobs above are **not** environment variables: a run changes only beca
   visible.
 - **One turn per file.** No ordering, no dependency between the angles, no cascade.
 - **The catalog is derived and complete.** `just index` rebuilds it whole from the tree, offline: one
-  row per skill the mirror lists, its joined fields `null` while the tree has not produced them -
+  row per skill the mirror lists and the tree can still build, its joined fields `null` while the
+  tree has not produced them -
   with the READMEs written from the same walk, so no two things there can describe different trees.
 - **The layout is the only contract.** Publish `output/` as it is.
 

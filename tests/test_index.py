@@ -58,11 +58,26 @@ def test_a_row_is_the_mirrors_own_fields_plus_ours(workdir):
     assert indexed(config)[0] == ALPHA_ROW
 
 
-def test_every_skill_the_mirror_lists_is_a_row(workdir):
-    """The catalog is the dataset, not the work in progress: every listed skill is a row, in the
-    mirror's order - the batch's own - whether or not its source is fetched yet."""
+def test_every_buildable_skill_the_mirror_lists_is_a_row(workdir):
+    """The catalog is the dataset, not the work in progress: every listed skill the tree can still
+    build is a row, in the mirror's order - the batch's own - whether or not its source is fetched
+    yet. `delta`'s repository is on disk and yielded nothing, so its row is gone."""
     assert [line["id"] for line in indexed(common.Config())] == [
-        ALPHA, BETA, "owner-c/repo-c/gamma", HOTEL, DOT, "owner-d/repo-d/delta"]
+        ALPHA, BETA, "owner-c/repo-c/gamma", HOTEL, DOT]
+
+
+def test_a_listed_skill_whose_repository_is_not_on_disk_is_a_row_of_nulls(workdir):
+    """A listed skill the tree has not reached yet is a row of `null`s rather than a missing row:
+    the batch walks the catalog to know what to build next."""
+    config = common.Config()
+    listing = config.output_dir / "fresh.jsonl"
+    listing.write_text('{"id": "owner-f/repo-f/foxtrot", "installs": 5}\n', encoding="utf-8")
+
+    lines = index.rows(config, listing)
+
+    assert [line["id"] for line in lines] == ["owner-f/repo-f/foxtrot"]
+    assert lines[0]["description"] is None
+    assert lines[0]["domain"] is None
 
 
 def test_the_description_is_read_out_of_the_skill_itself(workdir):
@@ -75,25 +90,20 @@ def test_the_description_is_read_out_of_the_skill_itself(workdir):
     assert row(config, BETA)["description"] == "Drafts a release note."
 
 
-def test_a_skill_not_yet_fetched_is_a_row_of_nulls(workdir):
-    """A listed skill whose source the tree does not hold is a row of `null`s rather than a
-    missing row: `delta` is listed and its repository yields nothing, so every joined field is
-    `null` - which is exactly how a reader tells an unfetched row from a fetched one."""
-    delta = row(common.Config(), "owner-d/repo-d/delta")
-
-    assert delta["description"] is None
-    assert delta["description_zh"] is None
-    assert delta["domain"] is None
+def test_a_listed_skill_whose_repository_yields_nothing_is_no_row(workdir):
+    """`delta` is listed, but its repository is on disk and yielded no source for it: no run can
+    ever build it, so the row is gone rather than a `null` one diluting the dataset."""
+    assert "owner-d/repo-d/delta" not in [line["id"] for line in indexed(common.Config())]
 
 
-def test_a_source_that_yields_no_description_is_a_null_row(workdir):
-    """A source whose front matter yields no description fills in no description: the row stays,
-    its `description` `null`."""
+def test_a_source_that_yields_no_description_is_no_row(workdir):
+    """A source whose front matter yields no description can never lead a build: with its
+    repository already fetched, the row is gone with it."""
     config = common.Config()
     source = skill_path(config.output_dir, ALPHA) / "SKILL.md"
     source.write_text("---\nname: alpha\n---\n\nBody.\n", encoding="utf-8")
 
-    assert row(config, ALPHA)["description"] is None
+    assert ALPHA not in [line["id"] for line in indexed(common.Config())]
 
 
 def test_the_domain_is_null_until_it_is_built(workdir):
@@ -144,7 +154,7 @@ def test_a_profile_the_mirror_dropped_is_not_a_row(workdir):
 
     lines = indexed(config)
 
-    assert len(lines) == 6  # the mirror's own rows, and nothing beside them
+    assert len(lines) == 5  # the mirror's own rows, and nothing beside them
     assert "owner-z/repo-z/zeta" not in [line["id"] for line in lines]
     assert common.angle_path(config, "owner-z/repo-z/zeta", common.DOMAIN_ANGLE).is_file()
 
@@ -168,16 +178,17 @@ def test_a_missing_fresh_listing_says_what_to_run(workdir):
 
 def test_a_fresh_listing_is_the_left_side(workdir):
     """The listing `just sync` hands over decides the row set, the order and the installs -
-    every listed skill a row, in the listing's own order, a source or not."""
+    every listed skill the tree can still build is a row, in the listing's own order, a source or
+    not."""
     listing = common.Config().output_dir / "fresh.jsonl"
     listing.write_text(
         '{"id": "owner-e/.dotcfg/settings", "installs": 5}\n'
         '{"id": "owner-a/repo-a/alpha", "installs": 9}\n'
-        '{"id": "owner-d/repo-d/delta", "installs": 7}\n', encoding="utf-8")
+        '{"id": "owner-f/repo-f/foxtrot", "installs": 7}\n', encoding="utf-8")
 
     lines = index.rows(common.Config(), listing)
 
-    assert [line["id"] for line in lines] == [DOT, ALPHA, "owner-d/repo-d/delta"]
+    assert [line["id"] for line in lines] == [DOT, ALPHA, "owner-f/repo-f/foxtrot"]
     assert lines[0]["installs"] == 5  # the fresh listing's installs joined in
     assert lines[0]["description"]  # a fetched source fills its description in
     assert lines[2]["description"] is None  # an unfetched skill is a row of nulls
@@ -229,17 +240,18 @@ def test_the_numbers_count_each_angle_independently(workdir):
 
     numbers = facts(config)
 
-    assert (numbers["built"], numbers["total"]) == ("2", "6")
-    assert numbers["percent"] == "33.3%"
-    assert (numbers["skillzh"], numbers["skillzh_percent"]) == ("1", "16.7%")
+    assert (numbers["built"], numbers["total"]) == ("2", "5")
+    assert numbers["percent"] == "40.0%"
+    assert (numbers["skillzh"], numbers["skillzh_percent"]) == ("1", "20.0%")
 
 
-def test_the_denominator_is_the_mirror(workdir):
-    """The counts are over the mirror's own rows, unfetched ones included, so the numbers say how
-    much of the whole dataset is done rather than how much of the tree happens to be fetched."""
+def test_the_denominator_is_the_buildable_dataset(workdir):
+    """The counts are over the mirror's rows the tree can still build - unfetched ones included,
+    the ones whose repository yielded nothing excluded - so the numbers say how much of the real
+    dataset is done rather than how much of the tree happens to be fetched."""
     numbers = facts(common.Config())
 
-    assert (numbers["described"], numbers["total"]) == ("5", "6")
+    assert (numbers["described"], numbers["total"]) == ("5", "5")
 
 
 def test_a_leftover_directory_is_not_progress(workdir):
@@ -261,17 +273,18 @@ def test_a_profile_the_mirror_dropped_is_not_coverage(workdir):
     numbers = facts(config)
 
     assert numbers["built"] == "0"
-    assert (numbers["described"], numbers["total"]) == ("5", "6")
+    assert (numbers["described"], numbers["total"]) == ("5", "5")
 
 
 def test_the_installs_share_weighs_the_same_count(workdir):
     """The batch works the most installed first, so the count says how much is left and the weight
-    says what that is worth: `alpha` and `beta` carry 500 of the 780 installs the mirror lists."""
+    says what that is worth: `alpha` and `beta` carry 500 of the 690 installs the buildable rows
+    hold."""
     config = common.Config()
     common.write_json(common.angle_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
     common.write_json(common.angle_path(config, BETA, common.DOMAIN_ANGLE), DOMAIN)
 
-    assert facts(config)["installs"] == "64.1%"
+    assert facts(config)["installs"] == "72.5%"
 
 
 def test_the_same_tree_reads_the_same_numbers(workdir):

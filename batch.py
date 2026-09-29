@@ -361,7 +361,10 @@ def sync(config: Config, listing_url: str, template: str, fetch_jobs: int) -> in
             new = set(read_ids(listing))
             for skill in sorted(old - new):
                 print(f"the mirror dropped {skill} - its files stay in the tree", file=sys.stderr)
-            # a repository a skill was just added to, already fetched once: refetch and merge
+            # a repository a skill was just added to, already fetched once: refetch and merge.
+            # The catalog no longer lists a skill its repository yielded nothing for, so such a
+            # row reads as new here and its repository is refetched - harmless, idempotent, and
+            # the one path that recovers a skill its repository ships again.
             repos = sorted(repo for repo in {repo_of(skill) for skill in new - old}
                            if repo_dir(config, repo).is_dir())
             if repos:

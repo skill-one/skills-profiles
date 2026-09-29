@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """Index the profile tree: one flat line per skill, the mirror's own row joined with both angles.
 
-`output/skills.jsonl` is the catalog: one row per skill the mirror lists, in the mirror's order -
-the mirror's own `id` and `installs`, then the description read out of that skill's own `SKILL.md`,
-its Chinese translation, the domain Jev labelled it with, and how sure the endpoint was of it. The
-joined fields are `null` until the skill is fetched and built, so the catalog is both the dataset and
-the batch's order - a skill the tree has not reached yet is a row with `null`s, not a missing row. It
-is what a consumer reads instead of walking the tree, and the only place the mirror's listing
-survives.
+`output/skills.jsonl` is the catalog: one row per skill the mirror lists and the tree can still
+build, in the mirror's order - the mirror's own `id` and `installs`, then the description read out
+of that skill's own `SKILL.md`, its Chinese translation, the domain Jev labelled it with, and how
+sure the endpoint was of it. The joined fields are `null` until the skill is fetched and built, so
+the catalog is both the dataset and the batch's order - a skill the tree has not reached yet is a
+row with `null`s, not a missing row. A listed skill whose repository is already on disk without a
+readable description is no row at all: the fetch took the repository and yielded nothing, so no
+run can ever build it. It is what a consumer reads instead of walking the tree, and the only place
+the mirror's listing survives.
 
 The same run writes the README that goes with it, out of the same walk: the numbers here, said for
 a reader by `readme.py`.
@@ -65,15 +67,38 @@ def zh_description(config: Config, skill: str) -> str:
 
 
 def rows(config: Config, listing: Path | None = None) -> list[dict]:
-    """One row per skill the mirror lists, in the mirror's order: its own row, plus what this
-    project has read and decided about it so far.
+    """One row per skill the mirror lists and the tree can still build, in the mirror's order: the
+    mirror's row, plus what this project has read and decided about it so far.
 
     Every listed skill is a row, fetched or not - the batch walks the catalog to know what to build
     next, so a skill the tree has not reached is a row whose joined fields are `null` rather than a
-    missing row. `null` is the one spelling of "not known yet".
+    missing row. A skill whose repository is on disk without a readable description, though, is a
+    skill no run can ever build - the fetch took the repository and yielded nothing to lead with -
+    so it is no row at all, and the mirror's dead rows do not dilute the dataset.
     """
-    return [_row(entry, config, common.skill_dir_name(entry.get("id", "")))
-            for entry in mirror_rows(config, listing)]
+    kept: list[dict] = []
+    dropped = 0
+    for entry in mirror_rows(config, listing):
+        skill = common.skill_dir_name(entry.get("id", ""))
+        if sourceless(config, skill):
+            dropped += 1
+            continue
+        kept.append(_row(entry, config, skill))
+    if dropped:
+        print(f"dropped {dropped} listed skill(s) with no readable source on disk", file=sys.stderr)
+    return kept
+
+
+def sourceless(config: Config, skill: str) -> bool:
+    """True when the repository is on disk without a description to build from: the repository was
+    fetched and will not be again, so no run can ever produce the skill's angles."""
+    if not (config.output_dir / common.SKILLS_DIR / Path(skill).parent).is_dir():
+        return False  # not fetched yet - the batch may still reach it
+    try:
+        source = common.skill_md(config, skill)
+    except FileNotFoundError:
+        return True
+    return not common.skill_description(source)
 
 
 def _row(entry: dict, config: Config, skill: str) -> dict:

@@ -487,7 +487,7 @@ def test_sync_keeps_the_sources_it_already_has(project, tmp_path, monkeypatch, c
 
     lines = [json.loads(line) for line in
              (project / OUTPUT / "skills.jsonl").read_text(encoding="utf-8").splitlines()]
-    assert [line["id"] for line in lines] == [entry["id"] for entry in reversed(SKILLS)]
+    assert [line["id"] for line in lines] == [DOT, HOTEL, GAMMA, BETA, ALPHA]  # delta: no source
     alpha = next(line for line in lines if line["id"] == ALPHA)
     assert alpha["description"].startswith("Tidies a note list")
     assert (snapshot(project / OUTPUT, ALPHA) / "SKILL.md").read_bytes() == before
@@ -540,6 +540,26 @@ def test_sync_names_the_skills_the_mirror_dropped(project, tmp_path, monkeypatch
     assert ALPHA not in [line["id"] for line in lines]
 
 
+def test_sync_refetches_a_dropped_rows_repository_without_failing(
+        fresh, tmp_path, monkeypatch, capsys):
+    """A row the catalog dropped - repository on disk, no source - reads as new to the next sync,
+    so its repository is refetched: harmless, idempotent, and the path that would recover the
+    skill if its repository shipped it again."""
+    repos = make_repo_tarballs(tmp_path / "repos")
+    listing = make_listing(tmp_path / "listing.jsonl")
+    assert run_batch(monkeypatch, capsys, fresh, "build", "domain", "--limit", "0",
+                     "--jobs", "4", "--repo-tarball", repos_knob(repos)).returncode == 0
+    assert run_index(monkeypatch, capsys, fresh).returncode == 0  # the catalog drops delta
+
+    again = _sync(monkeypatch, capsys, fresh, listing, repos)
+
+    assert again.returncode == 0, again.stderr
+    assert "fetched 0 skill(s) from 1 repository tarball(s)" in again.stderr  # only repo-d
+    lines = [json.loads(line) for line in
+             (fresh / OUTPUT / "skills.jsonl").read_text(encoding="utf-8").splitlines()]
+    assert "owner-d/repo-d/delta" not in [line["id"] for line in lines]  # still no source, no row
+
+
 # ------------------------------------------------------ the zh page angle
 
 
@@ -569,7 +589,7 @@ def test_the_zh_page_carries_the_chinese_into_the_catalog(monkeypatch, capsys, p
 
     lines = [json.loads(line) for line in
              (project / OUTPUT / "skills.jsonl").read_text(encoding="utf-8").splitlines()]
-    assert [line["id"] for line in lines] == [ALPHA, BETA, GAMMA, HOTEL, DOT, DELTA]
+    assert [line["id"] for line in lines] == [ALPHA, BETA, GAMMA, HOTEL, DOT]
     assert lines[0]["description_zh"].startswith("【占位】")
     assert lines[0]["description_zh"].endswith("the whole pile searchable.")
     assert lines[0]["domain"] is None  # only the zh page was built
@@ -599,11 +619,11 @@ def test_index_joins_the_mirror_with_the_profiles(monkeypatch, capsys, project):
 
     lines = [json.loads(line) for line in
              (project / OUTPUT / "skills.jsonl").read_text(encoding="utf-8").splitlines()]
-    assert [line["id"] for line in lines] == [ALPHA, BETA, GAMMA, HOTEL, DOT, DELTA]
+    assert [line["id"] for line in lines] == [ALPHA, BETA, GAMMA, HOTEL, DOT]
     assert lines[0]["description"].startswith("Tidies a note list")
     assert lines[0]["domain"] is None
     text = (project / OUTPUT / readme.README).read_text(encoding="utf-8")
-    assert "- **domain**: 4 of 6 labelled (66.7%)" in text
+    assert "- **domain**: 4 of 5 labelled (80.0%)" in text
 
 
 # ----------------------------------------------------- the justfile itself
@@ -695,7 +715,7 @@ def test_clean_all_limit_zero_then_sync_is_the_full_reset(
                  ).returncode == 0
     lines = [json.loads(line) for line in
              (project / OUTPUT / "skills.jsonl").read_text(encoding="utf-8").splitlines()]
-    assert [line["id"] for line in lines] == [entry["id"] for entry in SKILLS]
+    assert [line["id"] for line in lines] == [ALPHA, BETA, GAMMA, HOTEL, DOT]  # delta has no source
     assert (project / OUTPUT / readme.README).is_file()
     assert (project / OUTPUT / readme.README_ZH).is_file()
 

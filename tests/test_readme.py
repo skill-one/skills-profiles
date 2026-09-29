@@ -61,7 +61,7 @@ def test_the_page_opens_the_directory_it_sits_in(workdir):
     assert text.startswith("# skills-profiles\n")
     assert "`skills/<id>/` holds the skill's own `SKILL.md`" in text
     assert "`SKILL.zh.md`" in text
-    assert "- **domain**: 1 of 6 labelled (16.7%), covering 38.5% of the mirror's installs" in text
+    assert "- **domain**: 1 of 5 labelled (20.0%), covering 43.5% of the mirror's installs" in text
 
 
 def test_the_page_says_it_is_generated(workdir):
@@ -79,7 +79,7 @@ def test_the_chinese_page_is_the_same_document(workdir):
     zh = page(config, "zh")
 
     assert "## 进度" in zh
-    assert "6 个里已标 1 个（16.7%），覆盖镜像安装量的 38.5%" in zh
+    assert "5 个里已标 1 个（20.0%），覆盖镜像安装量的 43.5%" in zh
     assert "[README.md](README.md)" in zh
     assert "[README.zh-CN.md](README.zh-CN.md)" in page(config, "en")
 
@@ -89,7 +89,7 @@ def test_a_tree_with_nothing_built_still_has_a_page(workdir):
     is zero and the numbers with nothing behind them are one dash."""
     text = page(common.Config(), "en")
 
-    assert "- **domain**: 0 of 6 labelled (0.0%), covering 0.0% of the mirror's installs" in text
+    assert "- **domain**: 0 of 5 labelled (0.0%), covering 0.0% of the mirror's installs" in text
 
 
 def test_the_same_tree_writes_the_same_pages(workdir):

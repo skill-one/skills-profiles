@@ -30,11 +30,13 @@ output/
     README.zh-CN.md                  how much of it is built — the first is in English, this Chinese
 ```
 
-`skills.jsonl` is the way in. It lists every skill the mirror has, in the mirror's own order, the
+`skills.jsonl` is the way in. It lists every skill the mirror has that the tree can still build, in
+the mirror's own order, the
 most installed first, with the `description` read out of that skill's own `SKILL.md`, its
 `description_zh`, the `domain` this project labelled it with, and how sure the endpoint was of it.
 The joined fields are `null` until the skill is fetched and built — which is also how a batch knows
-what is left — so the labelled part of the dataset is a filter away:
+what is left; a skill whose repository yielded nothing is no row at all — so the labelled part of
+the dataset is a filter away:
 
 ```bash
 jq -r 'select(.domain == "development") | [.installs, .id] | @tsv' output/skills.jsonl | head

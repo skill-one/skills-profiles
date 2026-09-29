@@ -40,11 +40,13 @@ English: [SPEC.md](SPEC.md)
 - 每个 skill 一个目录、两个生成文件：`domain.json`，即端点完整的类型化回答；以及 `SKILL.zh.md`，
   中文页面——代码组装的 front matter，其 `description` 是一句话描述的中文译文，下面是翻译后的正文。
   front matter 从不经模型之手，所以 description 永远能从页面里解析回来。
-- **清单是入口。** `skills.jsonl` 按镜像自己的顺序为镜像列出的每个 skill 存扁平一行——镜像的行
+- **清单是入口。** `skills.jsonl` 按镜像自己的顺序为镜像列出的、树仍可构建的每个 skill 存扁平一行——镜像的行
   （`id`、`installs`）加上从该 skill 自己的 `SKILL.md` 读出的 `description`、它的
   `description_zh`（即 zh 页面 front matter 里的 `description`）、标的 `domain` 和标注时的
   `confidence`。每个列出的 skill 都是一行，无论拉没拉取：拼接字段在树拉取并构建之前为 `null`，
   所以未拉取的 skill 是一行 null 而不是缺失的行，清单同时是数据集和批次工作的顺序。
+  仓库已在盘上、却解析不出可读 description 的行不是一行——fetch 已取过该仓库而一无所获，
+  任何一轮都无法构建它，死行不稀释数据集。
   `.domain != null` 是已标注、`.description_zh != null` 是已翻译的部分，`.installs` 给未建成的
   排序。清单取三个标签字段中的两个，回答本身住在 profile 里。
 - **README 是首页**，由同一命令从同一次遍历写出：两行说明目录是什么，然后数据集标了多少——数量
@@ -154,7 +156,7 @@ Spark-X2.5-4B；模型 id 以控制台服务页显示的为准，订阅方通过
   它，窗口也看不到它：不调用、不写文件、没有要重试的失败——两个角度都一样。
 - **文件要么完整要么不存在。** json 原地改名写入，所以写了一半的永远不可见。
 - **每个文件一次对话。** 无排序、角度之间无依赖、无级联。
-- **清单是派生且完整的。** `just index` 离线地从树整体重建它：镜像列出的每个 skill 一行，树还没
+- **清单是派生且完整的。** `just index` 离线地从树整体重建它：镜像列出的、树仍可构建的每个 skill 一行，树还没
   产出的拼接字段为 `null`——README 从同一次遍历写出，所以那里没有两样东西能描述不同的树。
 - **目录结构是唯一的契约。** 原样发布 `output/`。
 

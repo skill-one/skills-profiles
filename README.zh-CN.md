@@ -19,16 +19,17 @@ output/
 │   ├── SKILL.md                     标注随行：源页面，从该 skill 自己的仓库拉取
 │   ├── domain.json                  一个标签，类型化端点回答的完整内容
 │   └── SKILL.zh.md                  中文页面；front matter 里带中文 description
-├── skills.jsonl                     清单：镜像列出的每个 skill 一行——镜像自己的行
+├── skills.jsonl                     清单：镜像列出的、树仍可构建的每个 skill 一行——镜像自己的行
 │                                    （id、installs）外加 description、
 │                                    description_zh 和 domain，未拉取构建前均为 null
 └── README.md                        ……以及旁边的首页：这个目录是什么、建了多少——
     README.zh-CN.md                  一份英文，这份中文
 ```
 
-`skills.jsonl` 是入口。它按镜像自己的顺序（安装量从高到低）列出镜像有的每个 skill，带着从该
+`skills.jsonl` 是入口。它按镜像自己的顺序（安装量从高到低）列出镜像有的、树仍可构建的每个 skill，带着从该
 skill 自己的 `SKILL.md` 读出的 `description`、它的 `description_zh`、本项目标的 `domain`，以及
-端点对该标签的确信度。拼接字段在拉取并构建之前都是 `null`——这也是批次判断还剩什么的方式——所以
+端点对该标签的确信度。拼接字段在拉取并构建之前都是 `null`——这也是批次判断还剩什么的方式；仓库
+一无所获的 skill 则整行不出现——所以
 已标注的部分一个过滤就能取出：
 
 ```bash
