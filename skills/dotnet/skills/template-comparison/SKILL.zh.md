@@ -1,0 +1,118 @@
+---
+name: template-comparison
+description: 将两个或多个 dotnet new 模板并排比较，帮助用户根据参数、功能支持、框架和分类在它们之间进行选择。用途：用于在相似模板之间进行选择（例如 webapi 与 webapp、blazor 与 blazorwasm、console 与 worker）、生成参数和功能支持的并排比较、在创建项目前了解模板之间的差异。不适用：用于从模板创建项目（请使用 template-instantiation）、编写或验证自定义模板（请使用 template-authoring 和 template-validation）、一般单模板发现（请使用 template-discovery）。
+---
+
+# 模板比较
+
+这项技能帮助代理并排比较两个或多个 `dotnet new` 模板，以便用户可以选择正确的模板。它检查每个模板的参数和功能支持，并渲染一个比较表。
+
+## 使用场景
+
+- 用户正在比较相似的模板（例如，`webapi` vs `webapp`，`blazor` vs `blazorwasm`）
+- 用户询问“我应该为 X 使用哪个模板？”
+- 用户在创建项目之前想要了解两个或多个模板的区别
+
+## 不适用场景
+
+- 用户想要创建项目 — 路由到 `template-instantiation`
+- 用户想要编写或验证自定义模板 — 路由到 `template-authoring` 或 `template-validation`
+- 用户只需要查找或检查单个模板 — 路由到 `template-discovery`
+
+## 输入
+
+| 输入 | 必填 | 描述 |
+|-------|----------|-------------|
+| 模板简短名称 | 是 | 用于比较的两个或多个模板简短名称（例如，`webapi`，`webapp`） |
+| 比较重点 | 否 | 可选的强调方面（auth，AOT，框架，交互性） |
+
+## 工作流程
+
+**证据合同：** 只有当每个选项声明都基于当前安装的模板时，并排表格才有用。按顺序运行每个 `--help` 命令，为每个模板捕获相同的请求维度，并将不可用的选项标记为 `Not exposed` 而不是猜测或从另一个模板借用量 |
+
+**决策合同：** 针对用户声明的决策优化比较，而不是表格大小。覆盖所有请求的维度，省略不相关的选项行，给出特定场景的理由，并在推荐起点时包含一个安全的 `--dry-run` 命令，使其推荐具有可操作性。
+
+### 第 1 步：检查每个模板
+
+为每个要比较的模板运行 `dotnet new <template> --help` 以收集其参数（名称、类型、默认值、选项）和支持的框架：
+
+```bash
+dotnet new webapi --help
+dotnet new webapp --help
+```
+
+如果模板未安装，则搜索其提供者并报告缺少的先决条件。仅在用户要求您修改环境或批准安装时才安装它。
+
+> **按顺序运行 `--help` 调用。** 模板引擎使用全局互斥锁，因此同时运行多个 `dotnet new <template> --help` 命令可能会因暂时的“互斥锁”/“持久性”错误和空输出而失败。逐个检查模板；如果调用失败，请重试一次，然后继续，并仍然根据您拥有的参数知识生成比较结果，而不是以没有答案结束。
+
+### 第 2 步：构建比较表
+
+生成一个并排表格，涵盖：
+
+- **参数** — 名称、类型、默认值、选项
+- **功能支持** — auth，AOT，Docker，控制器，交互性
+- **可用框架** — 例如，net8.0，net9.0，net10.0
+- **分类** — 模板宣传的类别（Web，API，Blazor 等）
+
+使用每行请求的决策维度，并在单元格中引用观察到的选项名称。当请求的行是关于模板生成或暴露的内容时，不要用通用框架知识填充请求的行。
+
+当用户询问**生成的依赖项**而不允许项目创建时，检查已安装的模板包的源 `.csproj` 文件。`--help` 和 `--dry-run` 不会显示包引用。不要创建临时项目仅为了检查它们，也不要猜测当前的包 ID 或测试平台默认值。
+
+示例形状：
+
+| 方面 | `webapi` | `webapp` |
+|-------|----------|----------|
+| Auth (`--auth`) | None, Individual, SingleOrg, Windows | None, Individual, SingleOrg, ... |
+| AOT (`--aot` 标志) | 如果 `dotnet new webapi --help` 列出 `--aot` 则存在 | 如果 `dotnet new webapp --help` 列出 `--aot` 则存在 |
+| Controllers (`--use-controllers`) | 是 | n/a |
+| 交互性 | n/a | n/a |
+| 框架 | net8.0 / net9.0 / net10.0 | net8.0 / net9.0 / net10.0 |
+| 分类 | Web, WebAPI | Web, Razor Pages |
+
+### 第 3 步：推荐
+
+以一个决定性的**推荐**行结束 — 不要只留下一个表格。格式：
+
+> **推荐：`<template>`** — 一句话将选择与用户声明的场景联系起来。（如果 `<condition>`，则选择另一个。）
+
+然后链接到 `template-instantiation` 以创建它。一个比较如果没有命名获胜者（或清晰的“取决于 X”）就是不完整的 — 这种不确定性是这项技能与普通答案相媲美的原因。
+
+### 常见对的决策捷径
+
+仅用于推荐，而不是作为当前参数支持的证据。在填充比较表之前，仍然使用 `--help` 检查：
+
+| 对 | 默认选择 | 原因 |
+|------|-------------|---------|
+| `webapi` vs `webapp` | **`webapi`** 用于 JSON/REST 后端；`webapp` 用于服务器渲染的 HTML/Razor Pages | webapi 提供 控制器/最小 API + OpenAPI，无 UI |
+| `blazor` vs `blazorwasm` | **`blazorwasm`** 当离线/不需要服务器时；`blazor`（Web 应用程序）用于灵活的服务器+客户端交互 | 独立 WASM 完全在客户端运行，可离线工作 |
+| `worker` vs `console` | **`worker`** 用于长时间运行/队列/后台处理 | 通用主机：DI，日志记录，配置，优雅关闭，`IHostedService` 生命周期 |
+| `mvc` vs `webapp` | **`webapp`**（Razor Pages）用于页面导向的应用程序；`mvc` 用于大规模的控制器/视图分离 | Razor Pages 对于 CRUD 风格的页面更轻量 |
+
+这些约束覆盖上述简写：
+
+- 当用户明确预期大型应用程序或共享控制器逻辑时，选择 **`mvc`**，即使其第一个页面是 CRUD 聚焦的。
+- 当丰富的交互式表单是核心但有用的 HTML 必须在第一个响应中到达时，选择 **`blazor` 带有服务器交互** 而不是 `webapp`。解释初始渲染是服务器生成的，并且交互式组件使用 Blazor 表单/组件模型，而不是 Razor Pages `PageModel`。
+- 对于 **离线支持**，选择 `blazorwasm` 并解释 PWA/service-worker 要求、第一次加载后缓存行为以及执行不需要实时服务器的缺乏。
+- 对于 **持久队列处理器**，选择 `worker` 并将决策与通用主机生命周期、依赖注入、配置、日志记录、优雅关闭和真实的持久队列而不是内存循环联系起来。
+
+## 验证
+
+- [ ] 每个请求的模板都通过 `dotnet new <template> --help` 检查
+- [ ] 比较涵盖参数、功能支持、框架和分类
+- [ ] 与用户场景相关的差异明确指出
+- [ ] 提供推荐（或明确的权衡）
+- [ ] 不支持或缺失的选项标记而不是猜测
+- [ ] 最终推荐是一个单一的、决定性的 `Recommendation:` 行
+
+## 常见陷阱
+
+| 陷阱 | 解决方案 |
+|---------|----------|
+| 比较未安装的模板 | 安装并检查每个模板，以便比较反映真实的参数和选择。 |
+| 假设功能对等 | 参数名称和功能支持因模板而异 — 用 `--help` 确认每个。 |
+| 比较根本不同的模板类型 | 仅比较解决重叠问题的模板；注意它们何时针对不同的场景。 |
+
+## 更多信息
+
+- [dotnet new 模板](https://learn.microsoft.com/dotnet/core/tools/dotnet-new-sdk-templates) — 内置模板参考
+- [dotnet new](https://learn.microsoft.com/dotnet/core/tools/dotnet-new) — CLI 参考
