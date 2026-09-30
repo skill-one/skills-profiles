@@ -8,7 +8,6 @@ chat endpoint - and `index.py` and `readme.py` read the same tree through it.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import random
 import re
@@ -171,12 +170,6 @@ def owner_avatar_path(config: Config, owner: str) -> Path:
 def skill_md(config: Config, skill: str) -> str:
     """The skill's own SKILL.md, whole: the text as the mirror published it."""
     return skill_md_path(config, skill).read_text(encoding="utf-8", errors="replace")
-
-
-def blob_sha1(data: bytes) -> str:
-    """The Git blob id of some bytes - `sha1("blob <n>\\0" + data)`. It is what GitHub's contents
-    and tree APIs report as a file's `sha`, so a catalog row's value can be checked against GitHub."""
-    return hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()
 
 
 def cap_source(text: str) -> str:

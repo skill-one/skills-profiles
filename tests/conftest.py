@@ -20,8 +20,8 @@ OUTPUT = Path("output")
 
 # The fake mirror's own index: five skills with sources on disk, one without (its repository holds
 # no skills/ directory, so the fetch yields nothing). The mirror carries no description and no
-# hash any more - a skill's own front matter is the only description, and the catalog computes the
-# source's Git blob `sha1`.
+# content hash any more - a skill's own front matter is the only description, and the hash is
+# computed here, over the fetched source.
 SKILLS = [
     {"id": "owner-a/repo-a/alpha", "installs": "300",
      "description": "Tidies a note list, folds the loose ends into a running index, and keeps "
