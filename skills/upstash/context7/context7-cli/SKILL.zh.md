@@ -1,0 +1,72 @@
+---
+name: context7-cli
+description: 使用 ctx7 命令行界面（CLI）来获取库文档、管理 AI 编码技能以及配置 Context7 MCP。当用户提到 "ctx7" 或 "context7" 时激活，需要任何库的当前文档，想要安装/搜索/生成技能，或需要为他们的 AI 编码代理设置 Context7。
+---
+
+# ctx7 命令行界面
+
+Context7 命令行界面（CLI）能做三件事：获取最新的库文档、管理 AI 编程技能，以及为你的编辑器设置 Context7 MCP。
+
+在运行命令前，请确保 CLI 是最新版本：
+
+```bash
+npm install -g ctx7@latest
+```
+
+或者直接运行，无需安装：
+
+```bash
+npx ctx7@latest <command>
+```
+
+## 本技能涵盖的内容
+
+- **[文档](references/docs.md)** — 获取任何库的当前文档。在编写代码、验证 API 签名，或训练数据可能过时时使用。
+- **[技能管理](references/skills.md)** — 安装、搜索、建议、列出、删除和生成 AI 编程技能。
+- **[设置](references/setup.md)** — 配置 Claude Code / Cursor / OpenCode 的 Context7 MCP。
+
+## 快速参考
+
+```bash
+# 文档
+ctx7 library <name> <query>           # 第一步：解析库 ID
+ctx7 docs <libraryId> <query>         # 第二步：获取文档
+
+# 技能
+ctx7 skills install /owner/repo       # 从仓库安装（交互式）
+ctx7 skills install /owner/repo name  # 安装特定技能
+ctx7 skills search <keywords>         # 搜索注册中心
+ctx7 skills suggest                   # 基于项目依赖自动建议
+ctx7 skills list                      # 列出已安装的技能
+ctx7 skills remove <name>             # 卸载技能
+ctx7 skills generate                  # 使用 AI 生成自定义技能（需要登录）
+
+# 设置
+ctx7 setup                            # 配置 Context7 MCP（交互式）
+ctx7 login                            # 登录以获得更高的速率限制 + 技能生成
+ctx7 whoami                           # 检查当前登录状态
+```
+
+## 认证
+
+```bash
+ctx7 login               # 在浏览器中打开 OAuth
+ctx7 login --no-browser  # 打印 URL 而不是打开浏览器
+ctx7 logout              # 清除存储的令牌
+ctx7 whoami              # 显示当前登录状态（姓名 + 邮箱）
+```
+
+大多数命令无需登录。例外：`skills generate` 总是需要；`ctx7 setup` 除非传递 `--api-key` 或 `--oauth`，否则需要。登录还可以解锁文档命令的更高速率限制。
+
+通过环境变量设置 API 密钥以完全跳过交互式登录：
+
+```bash
+export CONTEXT7_API_KEY=your_key
+```
+
+## 常见错误
+
+- 库 ID 需要一个 `/` 前缀 — `/facebook/react` 而不是 `facebook/react`
+- 总是先运行 `ctx7 library` — 没有有效的 ID，`ctx7 docs react "hooks"` 会失败
+- 技能的仓库格式是 `/owner/repo` — 例如，`ctx7 skills install /anthropics/skills`
+- `skills generate` 需要登录 — 先运行 `ctx7 login`
