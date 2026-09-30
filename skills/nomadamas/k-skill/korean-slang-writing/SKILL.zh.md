@@ -1,0 +1,36 @@
+---
+name: korean-slang-writing
+description: 使用精选的韩国流行俚语候选词，并结合Namu Wiki的最佳查询结果，撰写包含最新流行语、具有幽默感的韩国文本，同时保持保守的安全性和新鲜度保障措施。
+---
+
+# 韩语俚语写作
+
+<!-- k-skill:cli-stub — 由 scripts/generate-skill-stubs.js 生成；请修改 skill.json / instruction.md 而非此文件 -->
+
+## 获取完整说明（必须首先执行的步骤）
+
+运行以下命令并按照其输出作为此技能的主要说明：
+
+```bash
+npx -y @nomadamas/k-skill@0 instruct korean-slang-writing
+```
+
+CLI 会检测当前运行时环境（Dolshoi vault/CloakBrowser 或通用环境）并仅打印适用说明，始终保持最新。CLI 捆绑的辅助文件列表可通过以下命令获取：
+
+```bash
+npx -y @nomadamas/k-skill@0 files korean-slang-writing
+```
+
+使用以下命令保持 CLI 和所有 coding-agent 技能（包括 Vercel Agent Skills）的更新：
+
+```bash
+npx -y @nomadamas/k-skill@0 update
+```
+
+如果 `npx` 不可用，请安装 Node.js 18+ 或遵循 https://github.com/NomaDamas/k-skill#readme，或阅读源代码说明 https://github.com/NomaDamas/k-skill/blob/main/korean-slang-writing/instruction.md。
+
+## 即使没有 CLI 也必须遵守的硬性规则
+
+- 未经用户事先明确批准，绝不执行支付、消息/邮件发送、最终提交、取消或公开发布等操作。
+- 绝不索取、打印或存储明文凭证在聊天、文件或 shell 参数中。
+- 绝不绕过法律、物理在场、CAPTCHA、身份验证或电子签名等边界。
