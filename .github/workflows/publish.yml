@@ -1,16 +1,17 @@
 name: publish
 
-# Manual: write the missing angles about the dataset already published in `dist`, and publish as
-# `dist-<base>-N`, where base is the newest bare `dist-YYYY-MM-DD` sync tag (or today, when there is
+# Manual: reconcile with the mirror, write the missing angles about the dataset, and publish as
+# `dist-<base>-N`, where base is the newest bare `dist-YYYY-MM-DD` tag (or today, when there is
 # none) and N increments across that base's publishes.
 #
 # Two angles, chosen by `angle`: the domain labels (jev.py), the Chinese SKILL.md pages
 # (skill_zh.py), or `all` - domain then skill_zh. Every
 # run starts on a fresh runner, and
 # `restore-dist` pulls the published tree back - the skills, the angles written about them and the
-# catalog, in one request. The outputs are the cache (so `just` only fills what is missing) and the
-# skills are what it builds from. This run fetches nothing: it builds over the sources the last
-# `sync` published. `limit` counts work rather than positions
+# catalog, in one request. `just sync` runs first: the fresh listing decides the row set, the
+# repositories it adds a skill to are fetched, and the catalog is rewritten - so the build below
+# always walks a catalog in the current shape, never a stale one. The outputs are the cache (so
+# `just` only fills what is missing) and the skills are what it builds from. `limit` counts work rather than positions
 # - the next skills still missing that angle, in the catalog's order, most installed first - so
 # repeated runs walk down the dataset instead of redoing the top of it. An angle whose taxonomy,
 # prompts or shape changed is dropped first by the `invalidate` workflow, which publishes the tree
@@ -104,6 +105,9 @@ jobs:
 
       - name: Restore the published snapshot (angles + sources)
         uses: ./.github/actions/restore-dist
+
+      - name: Sync the dataset (fresh listing, new sources, catalog rewrite)
+        run: just sync
 
       # Outputs are the cache, so a published one is never rebuilt: the run fills what is missing
       # and publishes. A changed taxonomy or prompt set is dropped first by the `invalidate`

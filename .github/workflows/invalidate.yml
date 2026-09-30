@@ -6,8 +6,9 @@ name: invalidate
 # prompts or the output shape change, the angle has to be dropped before the next publish run
 # rebuilds it from scratch. A deletion only survives by publishing - a fresh runner plus
 # `restore-dist` brings the published tree back - so this run is restore -> clean (`limit 0`: every
-# built output of the angle; `all` = both) -> index -> publish. No model calls and no credentials:
-# the run only deletes. The next publish rebuilds the dropped angle, walking down the dataset.
+# built output of the angle; `all` = both) -> index -> publish. `just sync` runs first, so the
+# index is rewritten over a catalog in the current shape. No model calls and no credentials: the
+# run only deletes. The next publish rebuilds the dropped angle, walking down the dataset.
 
 on:
   workflow_dispatch:
@@ -45,6 +46,9 @@ jobs:
 
       - name: Restore the published snapshot (angles + sources)
         uses: ./.github/actions/restore-dist
+
+      - name: Sync the dataset (fresh listing, new sources, catalog rewrite)
+        run: just sync
 
       - name: Forget every built output of the chosen angle
         run: just limit=0 clean "${{ inputs.angle }}"
