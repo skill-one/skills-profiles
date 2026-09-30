@@ -161,13 +161,12 @@ Markdown 缝合线切块（代码围栏外的空行；自身没有缝合线的�
 
 `fetch.py` 是另一侧：驱动器下载窗口涉及的仓库——即将构建的每个 skill 的 `owner/repo`，每个仓库
 一个 codeload tarball（`--repo-tarball` 指明地址），`fetch_jobs` 路并发，且只下载尚未在磁盘上
-的那些——随后 `fetch.py` 流式解包每个 tarball。一个 skill 是子目录里的一个 `SKILL.md`，以其目录命名；
-子目录里没有任何 skill 的仓库本身就是单个 skill，根目录的 `SKILL.md` 就是它的源（按 `name` 的
-kebab 形式作 slug，没有 `name` 时用仓库名），而子目录 skill 旁的根 `SKILL.md` 仍是 readme。只有能
+的那些——随后 `fetch.py` 流式解包每个 tarball。一个 skill 是子目录里的一个 `SKILL.md`，以 front matter
+`name` 为键；子目录里没有任何 skill 的仓库本身就是单个 skill，根目录的 `SKILL.md` 就是它的源（按
+`name` 作 slug，没有 `name` 时用仓库名），而子目录 skill 旁的根 `SKILL.md` 仍是 readme。只有能
 读出 description 的源才会落盘，且
-同名只取一次。镜像用 front matter `name` 的 kebab 形式作 skill 的 slug，树用源所在的目录：作者把
-两者拼得不一样时，源会以两种拼写各落一份，`just sync` 也会以同样方式修复已拉取的树
-（`fetch.write_aliases`），让镜像行无论按哪种拼写都能找到源并被构建。这里不查清单——清单还没
+同名只取一次。镜像以 front matter `name` 拼写 skill id 的 slug，树也以同一字段作目录名，目录行
+凭 `skill_dir_name` 一步即可命中源；没有可用 `name` 的源回退到它所在的目录名。这里不查清单——清单还没
 列到的 skill 也照样解出来。仓库目录总会创建，所以它的存在就是缓存：某仓库不含某列出 skill 的
 源，就把该 skill 留作空目录。下载不下来的仓库干脆不在——它的 skill 失败，批次继续。GitHub 回答
 404/410 的仓库是彻底消失（已删除或转私有），仓库目录仍会创建作为标记，其 skill 之后的每轮运行都

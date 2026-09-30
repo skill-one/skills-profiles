@@ -434,9 +434,6 @@ def sync(config: Config, listing_url: str, template: str, fetch_jobs: int) -> in
                 taken, processed = fetch.extract(stage, config)
                 print(f"fetched {taken} skill(s) from {processed} repository tarball(s)",
                       file=sys.stderr)
-        aliases = fetch.write_aliases(config)
-        if aliases:
-            print(f"aliases written: {aliases}", file=sys.stderr)
         catalog, pages = index.build(config, listing)
     print(f"indexed -> {catalog}", file=sys.stderr)
     print(f"readme -> {', '.join(str(page) for page in pages)}", file=sys.stderr)

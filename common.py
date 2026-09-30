@@ -214,7 +214,7 @@ def skill_description(source: str) -> str:
 
 def skill_name(source: str) -> str:
     """The skill's own front matter `name`, or nothing when there is none. The mirror spells a
-    skill's slug out of this field, the tree out of the directory the source sat in."""
+    skill's id slug out of this field, and the tree keys the source's directory by it too."""
     block = FRONT_MATTER.match(source)
     if block is None:
         return ""

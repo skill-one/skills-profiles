@@ -4,23 +4,20 @@
 `batch.py` downloads the repositories a batch needs - one codeload tarball each, on demand by the
 first job that touches one, and only the ones not already on disk - and this module streams each
 tarball once. A skill is a `SKILL.md` in a
-subdirectory of the repository, named after that directory. A repository whose only `SKILL.md` sits
-at the root is itself one skill: the mirror keys it by the kebab case of the front matter `name`,
-the repository's own name when there is none. A root `SKILL.md` beside subdirectory skills stays the
-repository's readme, not a skill. Only a source that can say what the skill is for is taken
-(one without a description can never be built), and a slug already taken is skipped - one directory,
-one skill. The repository directory is created either way, so its presence on disk is the cache: a
-repository is downloaded once. The catalog is not read here - what is listed is `index.py`'s
-question, not this one's.
-
-The mirror keys a skill by the kebab case of its front matter `name`, the tree by the directory
-the source sat in; when an author spells the two differently, the source is written under both
-spellings, so a mirror row finds it either way (`write_aliases` repairs the tree already fetched).
+subdirectory of the repository, keyed by the front matter `name` of its `SKILL.md` - the same
+spelling the mirror's `skills.jsonl` spells a skill id's slug out of, so a catalog row reaches its
+directory through `skill_dir_name` alone. A repository whose only `SKILL.md` sits at the root is
+itself one skill, keyed by its `name`, the repository's own name when there is none. A root
+`SKILL.md` beside subdirectory skills stays the repository's readme, not a skill. Only a source
+that can say what the skill is for is taken (one without a description can never be built), and a
+slug already taken is skipped - one directory, one skill. A source without a usable `name` falls
+back to the directory it sat in. The repository directory is created either way, so its presence
+on disk is the cache: a repository is downloaded once. The catalog is not read here - what is
+listed is `index.py`'s question, not this one's.
 """
 
 from __future__ import annotations
 
-import re
 import tarfile
 from pathlib import Path
 
@@ -30,19 +27,13 @@ from common import Config
 INVALID_SLUGS = {"", ".", ".."}
 
 
-def alias_slug(name: str) -> str:
-    """The mirror spells a skill's slug as the kebab case of the front matter `name`; the tree
-    spells it as the directory the source sat in. Both spellings land in the tree, so a mirror
-    row keyed by either finds a source. A kebab that only re-spells the separators the directory
-    spelling already covers (`-` where the id had `:`) is not an alias: the catalog joins those
-    rows through `skill_dir_name` anyway."""
-    return re.sub(r"[^a-z0-9]+", "-", name.strip().lower()).strip("-")
-
-
-def is_alias(alias: str, slug: str) -> bool:
-    """True when the name-spelled slug is a genuinely different directory, not the directory
-    slug with its separators re-spelled."""
-    return alias != slug and alias.replace("-", "_") != slug
+def skill_slug(name: str, fallback: str) -> str:
+    """The directory a skill is stored under: the front matter `name` - the spelling the mirror's
+    id slug uses - or, when there is no usable one, the directory the source sat in. A name that
+    would escape its repository (`a/b`) is not usable."""
+    if name and "/" not in name and name not in INVALID_SLUGS:
+        return common.skill_dir_name(name)
+    return common.skill_dir_name(fallback)
 
 
 def extract(stage: Path, config: Config) -> tuple[int, int]:
@@ -74,54 +65,23 @@ def extract_tarball(tarball: Path, config: Config) -> int:
                 source = tar.extractfile(member)
                 readme = source.read().decode("utf-8", errors="replace") if source else None
                 continue  # <root>/SKILL.md, held back for the single-skill repository below
-            slug = common.skill_dir_name(parts[1])
-            # a slug that is not a name under the repository - `..`, say - would write outside it
-            if slug in taken or slug in INVALID_SLUGS:
-                continue
             source = tar.extractfile(member)
             if source is None:
                 continue
             text = source.read().decode("utf-8", errors="replace")
             if not common.skill_description(text):
                 continue
+            slug = skill_slug(common.skill_name(text), parts[1])
+            if slug in taken or slug in INVALID_SLUGS:
+                continue
             common.write_atomic(repo_dir / slug / common.SKILL_MD, text)
             taken.add(slug)
             skills += 1
-            # the mirror row for this skill is keyed by the kebab case of the `name` field, which
-            # an author may spell differently from the directory; write that spelling too, so the
-            # mirror row finds a source without ever meeting the directory itself
-            alias = alias_slug(common.skill_name(text))
-            if alias and is_alias(alias, slug) and alias not in taken \
-                    and alias not in INVALID_SLUGS:
-                common.write_atomic(repo_dir / alias / common.SKILL_MD, text)
-                taken.add(alias)
     # no skill in a subdirectory, but the root SKILL.md can say what it is for: the repository is
-    # itself one skill, keyed by the kebab of its `name` - the repository's name when there is none
+    # itself one skill, keyed by its `name` - the repository's name when there is none
     if not skills and readme and common.skill_description(readme):
-        slug = alias_slug(common.skill_name(readme)) or repo
+        slug = skill_slug(common.skill_name(readme), repo)
         if slug not in INVALID_SLUGS and not (repo_dir / slug / common.SKILL_MD).is_file():
             common.write_atomic(repo_dir / slug / common.SKILL_MD, readme)
             skills += 1
     return skills
-
-
-def write_aliases(config: Config) -> int:
-    """The alias half of `extract_tarball` over the tree already on disk: every fetched source
-    whose `name` spells differently from its directory gains the name-spelled copy. Sync runs
-    this, so sources fetched before the alias rule - and their mirror rows - are repaired
-    without a refetch; returns the aliases written."""
-    written = 0
-    sources = (config.output_dir / common.SKILLS_DIR).glob("*/*/*/SKILL.md")
-    for source in sources:
-        skill_dir = source.parent
-        text = source.read_text(encoding="utf-8", errors="replace")
-        if not common.skill_description(text):
-            continue
-        alias = alias_slug(common.skill_name(text))
-        alias_dir = skill_dir.parent / alias
-        if not alias or not is_alias(alias, skill_dir.name) or alias in INVALID_SLUGS \
-                or alias_dir.is_dir() or (alias_dir / common.SKILL_MD).is_file():
-            continue
-        common.write_atomic(alias_dir / common.SKILL_MD, text)
-        written += 1
-    return written

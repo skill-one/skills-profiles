@@ -37,7 +37,7 @@ def repo_dir(config: common.Config) -> Path:
 
 def test_a_skill_is_a_skill_md_in_a_subdirectory(config, tmp_path):
     """The repository's own root `SKILL.md` is its readme, not a skill: only the subdirectory one
-    is unpacked, named after its directory."""
+    is unpacked, keyed by the front matter `name`."""
     stage = tarball(tmp_path / "stage", {
         "SKILL.md": "# A repository readme, not a skill.\n",
         "skills/alpha/SKILL.md": source("Tidies a list."),
@@ -72,9 +72,10 @@ def test_a_duplicate_skill_name_is_taken_once(config, tmp_path):
 
 
 def test_a_slug_that_is_not_a_name_writes_nowhere_outside(config, tmp_path):
-    """A repository that names its skill directory `..` must not write outside the tree: the
-    slug is skipped, like any other source this project cannot install as a skill."""
-    stage = tarball(tmp_path / "stage", {"../SKILL.md": source("Escapes.")})
+    """A repository that names its skill directory `..` must not write outside the tree: without
+    a `name` to key the source by, the directory slug is skipped, like any other source this
+    project cannot install as a skill."""
+    stage = tarball(tmp_path / "stage", {"../SKILL.md": "---\ndescription: Escapes.\n---\n"})
 
     assert fetch.extract(stage, config) == (0, 1)
 
@@ -82,20 +83,30 @@ def test_a_slug_that_is_not_a_name_writes_nowhere_outside(config, tmp_path):
     assert not (config.output_dir / common.SKILLS_DIR / "SKILL.md").exists()
 
 
-def test_a_source_whose_name_differs_from_its_directory_writes_both(config, tmp_path):
-    """The mirror keys a skill by the kebab case of the `name` field, the tree by the directory:
-    an author who spells them apart gets both spellings on disk, and the count still says one."""
+def test_a_source_is_keyed_by_its_name_not_its_directory(config, tmp_path):
+    """The mirror spells a skill id's slug out of the front matter `name`, and the tree keys the
+    directory by the same field: an author whose directory spelling differs still lands at the
+    slug the catalog rows use, one directory, one skill."""
     stage = tarball(tmp_path / "stage", {
         "skills/writing-rules/SKILL.md":
-            "---\nname: Writing Hookify Rules\ndescription: D.\n---\n\nBody.\n"})
+            "---\nname: hookify-rules\ndescription: D.\n---\n\nBody.\n"})
 
     assert fetch.extract(stage, config) == (1, 1)
 
-    assert common.skill_md_path(config, f"{REPO}/writing-rules").is_file()
-    assert common.skill_md_path(config, f"{REPO}/writing-hookify-rules").is_file()
+    assert common.skill_md_path(config, f"{REPO}/hookify-rules").is_file()
+    assert [p.name for p in repo_dir(config).iterdir()] == ["hookify-rules"]
 
 
-def test_a_source_whose_name_matches_its_directory_writes_no_alias(config, tmp_path):
+def test_a_name_that_would_escape_falls_back_to_its_directory(config, tmp_path):
+    stage = tarball(tmp_path / "stage", {
+        "skills/alpha/SKILL.md": "---\nname: ../escape\ndescription: D.\n---\n\nBody.\n"})
+
+    assert fetch.extract(stage, config) == (1, 1)
+
+    assert common.skill_md_path(config, f"{REPO}/alpha").is_file()
+
+
+def test_a_source_whose_name_matches_its_directory_writes_one_directory(config, tmp_path):
     stage = tarball(tmp_path / "stage", {"skills/alpha/SKILL.md": source("Alpha.")})
 
     assert fetch.extract(stage, config) == (1, 1)
@@ -103,7 +114,7 @@ def test_a_source_whose_name_matches_its_directory_writes_no_alias(config, tmp_p
     assert [p.name for p in repo_dir(config).iterdir()] == ["alpha"]
 
 
-def test_a_source_without_a_name_writes_no_alias(config, tmp_path):
+def test_a_source_without_a_name_takes_its_directory(config, tmp_path):
     stage = tarball(tmp_path / "stage", {
         "skills/alpha/SKILL.md": "---\ndescription: D.\n---\n\nBody.\n"})
 
@@ -112,24 +123,12 @@ def test_a_source_without_a_name_writes_no_alias(config, tmp_path):
     assert [p.name for p in repo_dir(config).iterdir()] == ["alpha"]
 
 
-def test_write_aliases_repairs_the_tree_already_fetched(config):
-    """Sources fetched before the alias rule gain the name-spelled copy without a refetch - once:
-    a second pass over the repaired tree writes nothing."""
-    text = "---\nname: Writing Hookify Rules\ndescription: D.\n---\n\nBody.\n"
-    fetched = (config.output_dir / common.SKILLS_DIR / "owner-x" / "repo-x" / "writing-rules")
-    common.write_atomic(fetched / common.SKILL_MD, text)
-
-    assert fetch.write_aliases(config) == 1
-    assert common.skill_md_path(config, f"{REPO}/writing-hookify-rules").is_file()
-    assert fetch.write_aliases(config) == 0  # idempotent
-
-
 def test_every_skill_in_the_repository_is_taken(config, tmp_path):
     """The catalog is not consulted: a skill the listing has not reached yet is unpacked all the
     same, so a listing that lags behind its repository catches up without a second download."""
     stage = tarball(tmp_path / "stage", {
         "skills/alpha/SKILL.md": source("Alpha."),
-        "skills/beta/SKILL.md": source("Beta."),
+        "skills/beta/SKILL.md": "---\nname: beta\ndescription: Beta.\n---\n\nBody.\n",
     })
 
     assert fetch.extract(stage, config) == (2, 1)
@@ -150,9 +149,9 @@ def test_a_repository_that_holds_no_skill_is_still_a_directory(config, tmp_path)
 
 def test_a_repository_whose_only_skill_md_is_at_the_root(config, tmp_path):
     """A single-skill repository keeps its source at the root: with nothing in a subdirectory, the
-    root `SKILL.md` is the skill itself, keyed by the kebab case of its `name`."""
+    root `SKILL.md` is the skill itself, keyed by its `name`."""
     stage = tarball(tmp_path / "stage", {
-        "SKILL.md": "---\nname: Alpha Skill\ndescription: Does one thing well.\n---\n\nBody.\n",
+        "SKILL.md": "---\nname: alpha-skill\ndescription: Does one thing well.\n---\n\nBody.\n",
     })
 
     assert fetch.extract(stage, config) == (1, 1)
