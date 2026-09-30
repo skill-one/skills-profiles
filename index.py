@@ -141,10 +141,12 @@ def write(config: Config, rows: list[dict]) -> Path:
 
 
 def built_skills(config: Config, filename: str) -> set[str]:
-    """The skills whose angle file of that name is on disk, from one walk of the skills tree."""
+    """The skills whose angle file of that name is on disk, from one walk of the skills tree -
+    three segments deep for a single-skill repository (its files sit at the repository's root),
+    four for every other skill."""
     root = config.output_dir / common.SKILLS_DIR
     return {path.parent.relative_to(root).as_posix() for path in root.rglob(filename)
-            if len(path.relative_to(root).parts) == 4}
+            if len(path.relative_to(root).parts) in (3, 4)}
 
 
 def resolved_repos(config: Config) -> set[str]:

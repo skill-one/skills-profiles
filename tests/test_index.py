@@ -315,3 +315,19 @@ def test_the_readmes_are_written_whole_or_absent(workdir, capsys):
         assert path.read_text(encoding="utf-8").startswith("# skills-profiles\n")
         assert not path.with_name(path.name + ".part").exists()
     assert "readme ->" in capsys.readouterr().err
+
+
+def test_a_root_skill_counts_as_built(workdir):
+    """A single-skill repository keeps its source and its angles at the repository's root, one
+    segment shallower than every other skill - and the numbers count it like any other."""
+    config = common.Config()
+    d = config.output_dir / common.SKILLS_DIR / "owner-r/repo-r"
+    d.mkdir(parents=True)
+    common.write_json(d / common.ANGLE_FILES[common.DOMAIN_ANGLE], DOMAIN)
+    indexed = [{"id": "owner-r/repo-r/alpha", "name": "alpha", "installs": "1",
+                "dir": "owner-r/repo-r", "description": "D.", "description_zh": None,
+                "domain": None, "confidence": None}]
+
+    numbers = index.facts(config, indexed)
+
+    assert (numbers["built"], numbers["total"]) == ("1", "1")
