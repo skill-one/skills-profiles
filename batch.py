@@ -346,11 +346,16 @@ def repo_result(config: Config, repo: str, downloader: Downloader) -> dict | Non
         return None
 
 
-def owner_result(config: Config, owner: str, downloader: Downloader) -> bool:
-    """Fetch one owner's avatar; a failure is one stderr line and nothing, retried next run."""
+def owner_result(config: Config, owner: str, downloader: Downloader) -> bool | None:
+    """Fetch one owner's avatar: True built, None for an owner GitHub has no answer for - a dead
+    end rather than a failure, so a window of only such owners does not fail the run - and False for
+    any other failure. Either way nothing is written and the next run retries it."""
     try:
         meta.build_owner(config, owner, downloader)
     except (httpx.HTTPError, OSError, ValueError) as error:
+        if isinstance(error, httpx.HTTPStatusError) and error.response.status_code in GONE_STATUSES:
+            print(f"gone: {owner} ({error})", file=sys.stderr)
+            return None
         print(f"failed: {owner} ({type(error).__name__}: {error})", file=sys.stderr)
         return False
     return True
@@ -360,7 +365,7 @@ def build_meta(config: Config) -> int:
     """Fetch every repository the catalog names without a row and every owner without an avatar: the
     repositories into `repos.jsonl`, the avatars into `owners/`. Both windows are existence, so a
     rerun fills only what is missing. A repository GitHub has no answer for gets a `gone` row; an
-    owner is simply retried next run. A run whose every fetch failed is 1."""
+    owner with none is a dead end, retried next run. A run whose every fetch failed is 1."""
     repo_roster = meta_entities(config, meta.REPO_KIND)
     owner_roster = meta_entities(config, meta.OWNER_KIND)
     resolved = repo_rows(config)
@@ -380,8 +385,10 @@ def build_meta(config: Config) -> int:
     rows = [merged[repo] for repo in repo_roster if repo in merged]
     if rows or resolved:
         write_repo_rows(config, rows)
-    built = sum(1 for row in fetched if row is not None and not row["gone"]) + sum(avatars)
-    failed = sum(1 for row in fetched if row is None) + len(avatars) - sum(avatars)
+    built = (sum(1 for row in fetched if row is not None and not row["gone"])
+             + sum(1 for ok in avatars if ok is True))
+    failed = (sum(1 for row in fetched if row is None)
+              + sum(1 for ok in avatars if ok is False))
     print(f"done: {built} built, {failed} failed", file=sys.stderr)
     return 1 if built == 0 and failed else 0
 

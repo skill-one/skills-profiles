@@ -137,7 +137,7 @@ def test_a_repository_github_lacks_becomes_a_gone_row(capsys, workdir, tmp_path,
     assert "nothing to build" in again.stderr  # the gone row is resolved, so not retried
 
 
-def test_an_owner_github_lacks_is_retried_next_run(capsys, workdir, tmp_path, monkeypatch):
+def test_an_owner_github_lacks_is_a_dead_end_not_a_failure(capsys, workdir, tmp_path, monkeypatch):
     root = make_github_root(tmp_path / "github")
     real = common.Downloader.get
 
@@ -149,13 +149,37 @@ def test_an_owner_github_lacks_is_retried_next_run(capsys, workdir, tmp_path, mo
         return real(self, url, dest)
 
     monkeypatch.setattr(common.Downloader, "get", gone)
-    assert run_meta(capsys, root, monkeypatch).returncode == 0
+    first = run_meta(capsys, root, monkeypatch)
+    assert first.returncode == 0, first.stderr
+    assert f"gone: {OWNER_A}" in first.stderr and f"failed: {OWNER_A}" not in first.stderr
     config = common.Config()
     assert not common.owner_avatar_path(config, OWNER_A).exists()
     assert common.owner_avatar_path(config, "owner-b").is_file()
 
     again = run_meta(capsys, root, monkeypatch)
-    assert f"failed: {OWNER_A}" in again.stderr  # no catalog, no gone: it is tried again
+    assert f"gone: {OWNER_A}" in again.stderr  # no catalog, no persisted gone: it is tried again
+
+
+def test_a_window_of_only_dead_owners_does_not_fail_the_run(capsys, workdir, tmp_path, monkeypatch):
+    """The CI case: everything is fetched but one owner GitHub 404s - the window is that owner alone,
+    a dead end rather than a failed run."""
+    root = make_github_root(tmp_path / "github")
+    assert run_meta(capsys, root, monkeypatch).returncode == 0
+    common.owner_avatar_path(common.Config(), OWNER_A).unlink()
+    real = common.Downloader.get
+
+    def gone(self, url, dest):
+        if url.endswith(f"/users/{OWNER_A}"):
+            raise httpx.HTTPStatusError("Client error '404 Not Found'",
+                                        request=httpx.Request("GET", url),
+                                        response=httpx.Response(404))
+        return real(self, url, dest)
+
+    monkeypatch.setattr(common.Downloader, "get", gone)
+    result = run_meta(capsys, root, monkeypatch)
+
+    assert result.returncode == 0, result.stderr
+    assert f"gone: {OWNER_A}" in result.stderr
 
 
 def test_a_broken_payload_fails_only_its_own_repository(capsys, workdir, tmp_path, monkeypatch):

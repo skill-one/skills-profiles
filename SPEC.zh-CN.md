@@ -50,8 +50,8 @@ English: [SPEC.md](SPEC.md)
 - **实体是一份清单加一组文件。** `repos.jsonl` 一行一仓库（`id`、`owner`、`repo`、`description`、
   `stars`、`updated_at`、`pushed_at`、`html_url`、`gone`、`fetched_at`）；每个 owner 就是一张头像，
   在固定的 `owners/<owner>.png`，前端只看 owner 名即可拼接，没有 owner 清单要读。仓库行带 `gone: true`
-  的是 GitHub 无答案的仓库：否定结果留在清单里，所以没有哪一轮会重拉；owner 没有这样的行，404 的
-  owner 就在下一轮重试。与 skill 的连接键是 id 开头的 `owner/repo`（或 `owner`）。
+  的是 GitHub 无答案的仓库：否定结果留在清单里，所以没有哪一轮会重拉；owner 没有这样的行，404 的 owner
+  是死胡同、下一轮重试，但不会让运行失败。与 skill 的连接键是 id 开头的 `owner/repo`（或 `owner`）。
 - **清单是入口。** `skills.jsonl` 按镜像自己的顺序为镜像列出的、树仍可构建的每个 skill 存扁平一行——镜像的行
   （`id`、`installs`）加上从该 skill 自己的 `SKILL.md` 读出的 `description`、它的
   `description_zh`（即 zh 页面 front matter 里的 `description`）、标的 `domain` 和标注时的
