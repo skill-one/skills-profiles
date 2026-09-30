@@ -7,7 +7,9 @@ missing the angle, fetching each repository just in time (the repository directo
 one download, unpacked by the first job that touches it), and the `jobs`-wide pool that runs the
 producers - one call into a producer module per skill, in this process. `sync` is the other
 subcommand: reconcile with the mirror - pull its listing, refetch the repositories it adds a skill
-to, and rewrite the catalog last.
+to, and rewrite the catalog last. `meta` is the third: the same catalog read as repositories and
+owners, one GitHub fetch each - every repository missing a row and every owner missing an avatar;
+`--clean` forgets them instead.
 
 A failed job never ends the run: the skill is named on stderr and, when CI gives the paths, in
 FAIL_LOG/GEN_ERR_LOG, and the next run retries exactly it - its angle file is still missing. A
@@ -15,30 +17,31 @@ run whose every job failed is a broken run and says so in its exit status.
 
     batch.py build <angle> --limit N --jobs N [--repo-tarball URL]
     batch.py clean <angle> --limit N        # the inverse: forget the first N built outputs
+    batch.py meta [--clean]                 # the entity catalog and the owner avatars, both ways
     batch.py sync --listing URL [--repo-tarball URL]
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import shutil
 import sys
 import tempfile
 import threading
-import time
 import traceback
 from concurrent.futures import Future, ThreadPoolExecutor, as_completed
 from importlib import import_module
 from pathlib import Path
-from urllib.parse import urlsplit
 
 import httpx
 
 import common
 import fetch
 import index
-from common import Config
+import meta
+from common import Config, Downloader
 
 DEFAULT_LISTING = ("https://raw.githubusercontent.com/skill-one/"
                    "skills-sh-mirror/dist/skills.jsonl")
@@ -115,54 +118,6 @@ def window(config: Config, angles: list[str], limit: int) -> list[str]:
 
 
 # ------------------------------------------------------------------------- the downloads
-
-
-class Downloader:
-    """One GET per file, streamed, retried on the shared reading. A `file://` URL is a local copy
-    with no client - the offline suite's tarballs and listing - so a test never builds an HTTP
-    client."""
-
-    def __init__(self, config: Config):
-        self.config = config
-        self._client: httpx.Client | None = None
-
-    def _http(self) -> httpx.Client:
-        if self._client is None:
-            # the connect waits on the timeout; a tarball's read is allowed to take its time
-            self._client = httpx.Client(
-                follow_redirects=True, timeout=httpx.Timeout(self.config.timeout, read=None))
-        return self._client
-
-    def get(self, url: str, dest: Path) -> None:
-        if urlsplit(url).scheme == "file":
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(urlsplit(url).path, dest)  # a missing local file is a failed fetch
-            return
-        attempt = 0
-        while True:
-            try:
-                with self._http().stream("GET", url) as response:
-                    response.raise_for_status()
-                    dest.parent.mkdir(parents=True, exist_ok=True)
-                    with dest.open("wb") as out:
-                        for chunk in response.iter_bytes():
-                            out.write(chunk)
-                return
-            except httpx.HTTPError as error:
-                if attempt >= self.config.max_retries or not common.worth_retrying(error):
-                    raise
-                attempt += 1
-                time.sleep(2 ** attempt)
-
-    def close(self) -> None:
-        if self._client is not None:
-            self._client.close()
-
-    def __enter__(self) -> Downloader:
-        return self
-
-    def __exit__(self, *_: object) -> None:
-        self.close()
 
 
 def download_repos(config: Config, repos: list[str], template: str, jobs: int,
@@ -340,6 +295,108 @@ def clean(config: Config, angle: str, limit: int) -> int:
     return 0
 
 
+# ------------------------------------------------------------------------------ meta
+
+# The entity fetches run this wide; unlike a producer pool, there is no per-run knob for it.
+META_JOBS = 32
+
+
+def meta_entities(config: Config, kind: str) -> list[str]:
+    """The distinct entities the catalog names, in its own order - the roster a meta run works, the
+    same way the catalog is the order a build works. A repository is a skill's first two segments,
+    an owner its first."""
+    seen: list[str] = []
+    for skill in catalog_ids(config):
+        entity = repo_of(skill) if kind == meta.REPO_KIND else skill.split("/", 1)[0]
+        if entity not in seen:
+            seen.append(entity)
+    return seen
+
+
+def repo_rows(config: Config) -> dict[str, dict]:
+    """The repositories already resolved, keyed by id - an absent row is the work left to do."""
+    path = common.repos_index_path(config)
+    if not path.is_file():
+        return {}
+    try:
+        rows = common.read_jsonl(path)
+    except ValueError as error:
+        raise BatchError(str(error)) from error
+    return {row["id"]: row for row in rows if isinstance(row.get("id"), str)}
+
+
+def write_repo_rows(config: Config, rows: list[dict]) -> Path:
+    """Write the repository catalog whole, renamed into place: a half-written one reads as a whole
+    one. Compact, like `skills.jsonl` beside it."""
+    text = "".join(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n"
+                   for row in rows)
+    return common.write_atomic(common.repos_index_path(config), text)
+
+
+def repo_result(config: Config, repo: str, downloader: Downloader) -> dict | None:
+    """Fetch one repository to its row; one GitHub has no answer for becomes a `gone` row, and any
+    other failure is one stderr line and nothing - so the next run retries exactly it."""
+    try:
+        return meta.build_repo(config, repo, downloader)
+    except (httpx.HTTPError, OSError, ValueError) as error:
+        if isinstance(error, httpx.HTTPStatusError) and error.response.status_code in GONE_STATUSES:
+            print(f"gone: {repo} ({error})", file=sys.stderr)
+            return meta.repo_gone_row(repo)
+        print(f"failed: {repo} ({type(error).__name__}: {error})", file=sys.stderr)
+        return None
+
+
+def owner_result(config: Config, owner: str, downloader: Downloader) -> bool:
+    """Fetch one owner's avatar; a failure is one stderr line and nothing, retried next run."""
+    try:
+        meta.build_owner(config, owner, downloader)
+    except (httpx.HTTPError, OSError, ValueError) as error:
+        print(f"failed: {owner} ({type(error).__name__}: {error})", file=sys.stderr)
+        return False
+    return True
+
+
+def build_meta(config: Config) -> int:
+    """Fetch every repository the catalog names without a row and every owner without an avatar: the
+    repositories into `repos.jsonl`, the avatars into `owners/`. Both windows are existence, so a
+    rerun fills only what is missing. A repository GitHub has no answer for gets a `gone` row; an
+    owner is simply retried next run. A run whose every fetch failed is 1."""
+    repo_roster = meta_entities(config, meta.REPO_KIND)
+    owner_roster = meta_entities(config, meta.OWNER_KIND)
+    resolved = repo_rows(config)
+    repos = [repo for repo in repo_roster if repo not in resolved]
+    owners = [owner for owner in owner_roster
+              if not common.owner_avatar_path(config, owner).is_file()]
+    if not repos and not owners:
+        print("nothing to build: every entity is done", file=sys.stderr)
+        return 0
+    with Downloader(config, headers=meta.headers(config)) as downloader, \
+            ThreadPoolExecutor(max_workers=META_JOBS) as pool:
+        fetched = list(pool.map(lambda repo: repo_result(config, repo, downloader), repos))
+        avatars = list(pool.map(lambda owner: owner_result(config, owner, downloader), owners))
+    merged = dict(resolved)
+    merged.update({repo: row for repo, row in zip(repos, fetched, strict=True)
+                   if row is not None})
+    rows = [merged[repo] for repo in repo_roster if repo in merged]
+    if rows or resolved:
+        write_repo_rows(config, rows)
+    built = sum(1 for row in fetched if row is not None and not row["gone"]) + sum(avatars)
+    failed = sum(1 for row in fetched if row is None) + len(avatars) - sum(avatars)
+    print(f"done: {built} built, {failed} failed", file=sys.stderr)
+    return 1 if built == 0 and failed else 0
+
+
+def clean_meta(config: Config) -> int:
+    """Forget every entity output: the repository catalog and the owner avatars. Existence is the
+    cache, so this is the whole invalidation - the next `meta` rebuilds from nothing."""
+    catalog = common.repos_index_path(config)
+    if catalog.is_file():
+        catalog.unlink()
+    shutil.rmtree(config.output_dir / common.OWNERS_DIR, ignore_errors=True)
+    print("cleaned the repository catalog and the owner avatars", file=sys.stderr)
+    return 0
+
+
 # ------------------------------------------------------------------------------ sync
 
 
@@ -406,6 +463,11 @@ def main(argv: list[str] | None = None) -> int:
     clean_parser.add_argument("--limit", type=int, default=1,
                               help="built skills to forget, in catalog order; 0 = every one")
 
+    meta_parser = sub.add_parser(
+        "meta", help="fetch the GitHub profile of the catalog's repositories and owners")
+    meta_parser.add_argument("--clean", action="store_true",
+                             help="forget the repository catalog and the owner avatars instead")
+
     sync_parser = sub.add_parser("sync", help="reconcile with the mirror: listing, sources, index")
     sync_parser.add_argument("--listing", default=DEFAULT_LISTING,
                              help="the mirror's listing URL (file:// works offline)")
@@ -421,6 +483,8 @@ def main(argv: list[str] | None = None) -> int:
                          args.repo_tarball)
         if args.command == "clean":
             return clean(config, args.angle, args.limit)
+        if args.command == "meta":
+            return clean_meta(config) if args.clean else build_meta(config)
         return sync(config, args.listing, args.repo_tarball, args.fetch_jobs)
     except BatchError as error:
         print(error, file=sys.stderr)

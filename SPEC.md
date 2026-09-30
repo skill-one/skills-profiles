@@ -19,13 +19,20 @@ it gets written.
 │   ├── domain.json                   # the label: {domain, confidence, probabilities}
 │   └── SKILL.zh.md                   # the page in Chinese; its front matter carries the
 │                                     #   Chinese description
+├── repos.jsonl                       # one row per repository: {id, owner, repo, description,
+│                                     #   stars, updated_at, pushed_at, html_url, gone, fetched_at}
+├── owners/<owner>.png                # one owner's avatar, the fixed path a frontend builds from
+│                                     #   the owner alone - an owner has no catalog
 ├── skills.jsonl                      # `just index`: the catalog, one flat line per skill
 └── README.md                         # ... and the front page beside it: what this directory is,
     README.zh-CN.md                   #     and how much of it is built; the same page, in Chinese
 ```
 
 Nothing here needs the mirror: the catalog names every skill, and each skill directory holds the
-source page with what was built about it. The mirror's listing is pulled fresh by `just sync`
+source page with what was built about it. `repos.jsonl` and the `owners/` avatars are the entities
+above a skill - one row per repository (its description, stars and last-update time) and one avatar
+per owner - keyed by the `owner/repo` (or `owner`) a skill id leads with, so they join without a
+second catalog. The mirror's listing is pulled fresh by `just sync`
 into the catalog - its only lasting trace.
 
 `<id>` is the skill id, `{owner}/{repo}/{slug}`. A row carries it the way the mirror spells it; the
@@ -47,6 +54,13 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py`
   answer; and `SKILL.zh.md`, the page in Chinese - a machine-assembled front matter whose
   `description` is the Chinese translation of the one-line description, over the translated body.
   The model never shapes the front matter, so the description always parses back out of the page.
+- **The entities are one catalog and one file.** `repos.jsonl` holds one row per repository (`id`,
+  `owner`, `repo`, `description`, `stars`, `updated_at`, `pushed_at`, `html_url`, `gone`,
+  `fetched_at`), and each owner is one avatar at the fixed `owners/<owner>.png` - a path a frontend
+  builds from the owner alone, with no owner catalog to read. A repository row with `gone: true` is
+  one GitHub has no answer for: the negative lives in the catalog, so no run fetches it again. An
+  owner has no such row, so a 404 owner is retried next run. The join to a skill is the `owner/repo`
+  (or `owner`) its id leads with.
 - **The catalog is the way in.** `skills.jsonl` holds one flat line per skill the mirror lists and
   the tree can still build, in the mirror's own order - the mirror's row (`id`, `installs`) plus the
   `description` read out of that skill's own `SKILL.md`, its `description_zh` (the `description` in
@@ -112,6 +126,7 @@ justfile only chooses the command and the knobs. The verbs:
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `just build <angle>` | build the next `limit` skills still missing the angle's file (`domain`, `skill_zh`, or `all` for both in one pool over the shared window); a bare `just` is `build domain` with the default one-skill limit |
 | `just clean <angle>` | the inverse window: delete the angle's file from the next `limit` skills that have one (`domain`, `skill_zh`, or `all` for both); `limit 0` is every one  |
+| `just meta`          | fetch every repository and owner the catalog names that still lacks one - the profiles into `repos.jsonl`, the avatars into `owners/<owner>.png`; `just meta --clean` forgets them instead |
 | `just index`         | write the catalog and the READMEs: the mirror's rows joined with the descriptions, their translations and the labels, and the published root's front page |
 | `just sync`          | reconcile with the mirror: pull its listing, merge sources from repositories it added a skill to, the tree's other sources left where they are; a skill the mirror dropped is named on stderr, its files left in place |
 | `just test`          | run the suite                                                                                                                                             |
@@ -121,7 +136,9 @@ build counts skills missing the file, clean skills holding it. A full reset that
 fetched sources is `just limit=0 clean all` then `just sync`. Dropping the sources themselves is
 deleting the repository directory, after which the next build or sync fetches it again. Building
 one named skill outside the window is running its script directly (`jev.py <id>` /
-`skill_zh.py <id>`).
+`skill_zh.py <id>`). `meta` is the one entity verb: it fetches every repository the catalog names
+without a row and every owner without an avatar, and `meta --clean` forgets them again - the catalog
+is still the order, read as `owner/repo` and `owner`.
 
 The modifiers are command-line variables, nowhere else:
 
@@ -155,7 +172,8 @@ skill_zh.py <id> [--print]    # dev only: the page's requests as one array, desc
 `.env` (copy [`.env.example`](.env.example)) or `SKILLS_PROFILES_*`; env → `.env` → defaults. It
 holds two endpoints: the typed one as `API_KEY`, `BASE_URL`, `MODEL`, and the OpenAI-compatible
 chat one as `TRANSLATE_API_KEY`, `TRANSLATE_BASE_URL`, `TRANSLATE_MODEL` — plus `MAX_RETRIES` and
-`DRY_RUN`, and the two paths if you must move them. The timeouts are one per endpoint: `TIMEOUT`
+`DRY_RUN`, the `GITHUB_TOKEN` the entity profiles are read with, and the two paths if you must move
+them. The timeouts are one per endpoint: `TIMEOUT`
 (the typed endpoint answers in one to three seconds) and `TRANSLATE_TIMEOUT`, which defaults to
 120 because a thinking call reasons first and routinely runs past the typed endpoint's patience.
 The chat caller also takes `TRANSLATE_ENABLE_THINKING` (on by default) and `TRANSLATE_MAX_TOKENS`.

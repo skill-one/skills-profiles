@@ -11,7 +11,7 @@ import pytest
 import common
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-SCRIPTS = ["justfile", "batch.py", "common.py", "fetch.py", "jev.py", "translate.py",
+SCRIPTS = ["justfile", "batch.py", "common.py", "fetch.py", "jev.py", "meta.py", "translate.py",
            "skill_zh.py", "index.py", "readme.py"]
 REPO_SHA = "abc1234"  # codeload names a repository tarball's root <repo>-<sha>
 # the published root: the skill directories, the labels written about them, the mirror's own files
@@ -147,6 +147,37 @@ def make_repo_tarballs(stage: Path, entries: list[dict] | None = None) -> Path:
             with tarfile.open(stage / f"{owner}_{repo}.tgz", "w:gz") as tar:
                 tar.add(packaged, arcname=root)
     return stage
+
+
+def write_json_file(path: Path, payload: dict) -> None:
+    """One json object on disk, the way the fake GitHub root serves it to `Downloader`."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+
+def make_github_root(root: Path, entries: list[dict] | None = None) -> Path:
+    """A local stand-in for the GitHub API, laid out for the `--github-api file://…` knob: a
+    `repos/<owner>/<repo>` payload, a `users/<owner>` payload, and the avatar bytes its `avatar_url`
+    points at. The payloads carry what `meta.py` reads, and nothing wider."""
+    entries = SKILLS if entries is None else entries
+    repos = sorted({"/".join(entry["id"].split("/")[:2]) for entry in entries})
+    owners = sorted({entry["id"].split("/")[0] for entry in entries})
+    for repo in repos:
+        owner, name = repo.split("/")
+        write_json_file(root / "repos" / owner / name,
+                        {"full_name": repo, "description": f"A repository the test fakes: {name}.",
+                         "stargazers_count": len(name) * 10,
+                         "html_url": f"https://github.com/{repo}",
+                         "updated_at": "2026-09-01T00:00:00Z",
+                         "pushed_at": "2026-08-30T00:00:00Z"})
+    for owner in owners:
+        avatar = root / "avatars" / f"{owner}.png"
+        avatar.parent.mkdir(parents=True, exist_ok=True)
+        avatar.write_bytes(b"\x89PNG\r\n\x1a\n" + owner.encode())
+        write_json_file(root / "users" / owner,
+                        {"login": owner, "name": owner.title(), "type": "Organization",
+                         "html_url": f"https://github.com/{owner}", "avatar_url": avatar.as_uri()})
+    return root
 
 
 @pytest.fixture(autouse=True)

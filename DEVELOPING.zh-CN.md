@@ -6,8 +6,9 @@
 端点发起调用：一句话描述一次，正文按 markdown 接缝切块后每块一次；再按代码组装出中文页面
 `SKILL.zh.md`，其 front matter 从不经模型之手。两者是同一个 skill 目录上的平行角度，而且都很薄：
 目录树、源读取、prompt 文件、配置、带重试的调用、原子写和命令本身都只在 `common.py` 里有一份；
-`translate.py` 是页面角度所调用的聊天端点库。开窗、懒拉取和 `jobs` 宽的生产者池都在同一个驱动器
-`batch.py` 里；justfile 只负责启动它。
+`translate.py` 是页面角度所调用的聊天端点库。`meta.py` 不是作用在 skill 上的角度，而是作用在它之上
+的两个实体：它读取每个仓库与 owner 的 GitHub 资料，写进 skills 旁的两棵树。开窗、懒拉取和 `jobs` 宽的
+生产者池都在同一个驱动器 `batch.py` 里；justfile 只负责启动它。
 
 English: [DEVELOPING.md](DEVELOPING.md)
 
@@ -36,13 +37,15 @@ just clean domain             # 反操作：忘掉第一个已构建的标签
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `just build <angle>` | `batch.py build <angle>`：按安装量从高到低，为接下来 `limit` 个还缺该角度文件的 skill 构建（`domain`、`skill_zh`，或 `all` 表示两者共池共窗口一次跑完）。顺序是清单自己的（`OUTPUT_DIR/skills.jsonl`，镜像顺序，安装量降序）——按 jsonl 解析，镜像列出的每个 skill 一行。窗口取接下来 `limit` 个该角度尚未解决的 skill：没有角度文件，也不是「仓库已在磁盘上却没有 `SKILL.md`」的 skill（它永远构建不了）。数的是工作量而不是位置，所以重复运行沿数据集往下走。驱动器随后在 `jobs` 宽的池子里跑生产者，每个 skill 一次生产者调用：每个任务在需要时才拉取它的仓库——同一仓库的第一个任务下载并解包，其余任务等这一次下载——仓库没有源的 skill 被跳过。裸 `just` 即默认只做一个的 `build domain`。 |
 | `just clean <angle>` | 逆窗口，`batch.py clean <angle>`：按同一清单顺序取接下来 `limit` 个**已有**该角度文件的 skill，删掉文件。之后 `build` 恰好重建这些 skill；`limit 0` 清掉全部已构建的，`all` 同时忘掉两个角度的文件——即 sync 之前的那半步完整重置。窗口之外要按名构建单个 skill，仍直接跑脚本（`uv run python jev.py <id>` / `skill_zh.py <id>`）。                                                                                                                                                                                                                                            |
+| `just meta`          | `batch.py meta`：从 GitHub 抓取清单里还缺行/头像的每个仓库与 owner——仓库按清单顺序合并进 `repos.jsonl`，头像写在固定的 `owners/<owner>.png`。GitHub 回 404/410 的仓库变成 `gone` 行——否定结果被留住，之后没有哪轮会重拉（owner 无此机制，404 的 owner 下轮重试）。`just meta --clean` 则忘掉清单与头像。规模快照需要 `SKILLS_PROFILES_GITHUB_TOKEN`（匿名每小时 60 次）。 |
 | `just index`         | 写 `<output_dir>/skills.jsonl`——清单：镜像列出的、树仍可构建的每个 skill 一行，按镜像顺序，由镜像自己的行（`id`、`installs`）拼接从该 skill 的 `SKILL.md` 读出的 `description`、`SKILL.zh.md` front matter 里的 `description_zh`，以及 `domain.json` 里的 `domain` 和 `confidence`。拼接字段未知时为 `null`；仓库已在盘上、却解析不出可读 description 的行不是一行——fetch 已取过该仓库而一无所获，任何一轮都无法构建它。只读树——无网络、无调用——整体重写文件。同一次遍历还在旁边写两个 README：见下文 `readme.py`。                                                                                                                                                                                    |
 | `just sync`          | 与镜像对账：拉取镜像清单，即行集合、顺序和安装量。源按需拉取：批次在第一次构建某仓库的 skill 时下载该仓库，仓库目录即缓存，所以既不会在需要前拉取，也不会拉取两次。清单新增了 skill 的仓库会在此时被重新拉取，新源合并进已建好的 skill 旁边，并全树修复按 name 拼写的别名。                                                                                                                                                                                                                                                                                                                                 |
 | `just test`          | `uv run pytest`。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 `build` 和 `clean` 是同一个驱动器 `batch.py` 的两个互逆动词：共用角度（`domain`/`skill_zh`，
-clean 另接受 `all`）和同一个清单顺序窗口；build 创建，clean 删除。`sync` 是该驱动器的另一个
-子命令。
+clean 另接受 `all`）和同一个清单顺序窗口；build 创建，clean 删除。`meta` 是该驱动器的第三个
+动词——同一份清单读成仓库与 owner（`owner/repo`、`owner`），`meta --clean` 是其逆操作。`sync` 是
+该驱动器的另一个子命令。
 
 | 变量           | 默认                                                     | 含义                                                                                                          |
 | -------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
@@ -170,6 +173,16 @@ kebab 形式作 slug，没有 `name` 时用仓库名），而子目录 skill 旁
 404/410 的仓库是彻底消失（已删除或转私有），仓库目录仍会创建作为标记，其 skill 之后的每轮运行都
 被跳过，而不是反复拉取、反复失败。
 
+`meta.py` 是第三个生产者，但作用于实体而非 skill。清单按 `owner/repo` 与 `owner` 读出——即名册，
+顺序不变——每个实体一次 GitHub 调用：仓库是 `GET {api}/repos/{owner}/{repo}`，owner 是
+`GET {api}/users/{owner}` 再加一次 `avatar_url` 下载。仓库被整形为 `repos.jsonl` 的一行，由
+`batch.py` 按清单自身顺序合并；owner 就是一张头像，由 `common.write_bytes` 写在固定的
+`owners/<owner>.png`，它的存在就是它全部的缓存。
+每个请求都带 `Accept: application/vnd.github+json`、GitHub 非有不可的 `User-Agent`，以及设了
+`SKILLS_PROFILES_GITHUB_TOKEN` 时的 Bearer token。窗口与池属于 `batch.py`；整形属于 `meta.py`
+——`headers()`、两个 URL 构造器、`repo_row()`、`repo_gone_row()`、`build_repo()` 和
+`build_owner()`。
+
 ## 工作方式
 
 ```
@@ -203,6 +216,8 @@ common.py               # 两个生产者共用的内核：Config、目录树、
                         # 原子写，以及 run() 命令骨架
 fetch.py                # 源层：仓库的 skill 解包进 skills/，每个一次
 jev.py                  # domain 角度：分类法、state、类型化问题
+meta.py                 # skill 之上的实体：仓库与 owner 的 GitHub 资料，含头像，
+                        # 写进 skills 旁的两棵树
 translate.py            # 翻译库：一次聊天调用，套在共享命令之上
 skill_zh.py             # 页面角度：SKILL.md 正文的翻译，写一个 .md
 index.py                # 清单及其数字：一行一个 json，以及 README 用的事实
@@ -214,7 +229,7 @@ prompts/skill_zh.md       # 页面 system 模板：翻译文档、保留格式
 prompts/skill_zh_user.md  # 页面 user 模板：承载正文的 “Translate to {{to}}:”
 tests/                  # 离线单元测试；批处理在 test_batch.py 里进程内驱动，
                         # 只有 justfile 启动器的检查会真的跑 `just`
-.github/                # 每次 push 和 PR 跑 ci，sync 和 publish 手动触发
+.github/                # 每次 push 和 PR 跑 ci；sync、meta、publish 与 invalidate 手动触发
 ```
 
 ## 配置
@@ -237,6 +252,8 @@ tests/                  # 离线单元测试；批处理在 test_batch.py 里进
 | `SKILLS_PROFILES_TRANSLATE_FALLBACK_MODEL`    | `agnes-3.0-flash`           | 兜底模型 id；推理模型，读法相同（`content` 之外的 `reasoning_content`）                               |
 | `SKILLS_PROFILES_TIMEOUT`                     | `20`                        | 类型化端点的每次请求秒数：一到三秒回答，闲置后首个调用会被丢弃                                        |
 | `SKILLS_PROFILES_MAX_RETRIES`                 | `3`                         | 额外重试次数，针对丢弃的调用或繁忙的网关；两个端点通用                                                |
+| `SKILLS_PROFILES_GITHUB_TOKEN`                | –                           | `meta.py` 用的 GitHub token：没有它匿名客户端每小时仅 60 次                                          |
+| `SKILLS_PROFILES_GITHUB_API_URL`              | `https://api.github.com`    | 读取实体资料用的 GitHub API 根；`file://` 根是测试离线跑它的方式                                      |
 | `SKILLS_PROFILES_DRY_RUN`                     | `false`                     | 两个生产者都用假的：不发 API 调用                                                                     |
 | `SKILLS_PROFILES_OUTPUT_DIR`                  | `output`                    | 发布根目录：各 skill（连带写在其旁的角度文件）、清单和 README                                         |
 | `SKILLS_PROFILES_PROMPTS_DIR`                 | `prompts`                   | 放 `_system.md`、`translate.md`、`translate_user.md`、`skill_zh.md` 和 `skill_zh_user.md` 的目录      |
@@ -260,6 +277,7 @@ tests/                  # 离线单元测试；批处理在 test_batch.py 里进
   驱动 `batch.py`——窗口、懒加载（仓库只拉取一次、失败只影响它的 skill）、单 skill 失败日志、
   `sync`，以及删除即失效——全部对着本地 `file://` tarball。只有启动器检查（默认配方、
   dry 旋钮只认命令行、池子参数到达命令行）仍以子进程跑 `just`。
+- `tests/test_meta.py` 覆盖实体：整形（仓库行与 `gone` 行）、固定的头像路径、两个窗口与 `--clean`、清单合并——全部对着 `file://` GitHub 根，所以没有测试联网。
 - `tests/test_skill_zh.py` 覆盖页面角度：请求们（描述在前、正文各块在后；正文作为 Jinja 值传入、
   front matter 绝不外发）、产出（原样发布的 front matter 加译文，一个 `SKILL.zh.md`）、长度门槛，
   以及命令本身——退出码、无需密钥打印请求数组。
@@ -277,12 +295,13 @@ uv run python jev.py <owner>/<repo>/<slug> --print   # 仅开发：不调用，�
 
 ## CI
 
-四个 workflow，每个都很薄：它们做的活就是 `just`。
+五个 workflow，每个都很薄：它们做的活就是 `just`。
 
 | workflow      | 触发            | 作用                                                                                                                                                                                                                                                        |
 | ------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `ci.yml`      | 每次 push 和 PR | `uv sync`、`ruff check .`、`mypy`、`pytest`，装了 `just`。离线。                                                                                                                                                                                            |
 | `sync.yml`    | 手动            | `restore-dist` → `just sync` → `publish-dist`（`date`）。拉取镜像清单并重写清单文件；不调用模型。                                                                                                                                                           |
+| `meta.yml`    | 手动            | `restore-dist` → `just meta` → `publish-dist`（`date`）。补齐还缺的仓库资料与 owner 头像；不调用模型，只需要 `SKILLS_PROFILES_GITHUB_TOKEN`。                                                                     |
 | `publish.yml` | 手动            | `restore-dist` → 对所选 `angle`（`domain`、`skill_zh`，或 `all` 共池一次跑完）跑 `just build <angle> limit=… jobs=…` → `just index` → `publish-dist`（`date-counter`）。需要所选角度各自的 secret 和变量。 |
 | `invalidate.yml` | 手动         | `restore-dist` → `just limit=0 clean <angle>` → `just index` → `publish-dist`。忘掉所选角度的全部已建产出——远程唯一的失效入口，分类法或 prompt 变更时运行——并发布删掉它们之后的树；不调用模型。下一次 publish 从零重建该角度。 |
 

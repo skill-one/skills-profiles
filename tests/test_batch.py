@@ -669,6 +669,19 @@ def test_the_build_and_clean_recipes_reach_the_driver(project):
         assert expected in result.stderr
 
 
+def test_the_meta_recipe_reaches_the_driver(project):
+    """The one meta recipe fetches both entities, and `--clean` is its inverse - a thin launcher."""
+    result = subprocess.run(["just", "--dry-run", "meta"], cwd=project,
+                            capture_output=True, text=True, check=False, env=os.environ)
+    assert result.returncode == 0, result.stderr
+    assert "batch.py meta" in result.stderr and "--clean" not in result.stderr
+
+    clean = subprocess.run(["just", "--dry-run", "meta", "--clean"], cwd=project,
+                           capture_output=True, text=True, check=False, env=os.environ)
+    assert clean.returncode == 0, clean.stderr
+    assert "batch.py meta --clean" in clean.stderr
+
+
 def test_clean_is_the_inverse_window_of_build(monkeypatch, capsys, project):
     """Build windows the first N skills MISSING the file; clean windows the first N that HAVE it,
     same catalog order. With a default limit of one, clean forgets only the first built skill,

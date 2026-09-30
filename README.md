@@ -13,7 +13,9 @@ rejoined into a Chinese page of its own.
 
 Everything lands under one root, `output/`: the source pages the angles were built from, what is
 written about them — a label and Chinese translations — and one catalog joining it all, so nothing
-here sends a reader back to the mirror. Publishing is copying that one directory.
+here sends a reader back to the mirror. Publishing is copying that one directory. Beside the
+skills, `repos.jsonl` holds one row per repository and `owners/<owner>.png` one avatar per owner —
+keyed by the `owner/repo` a skill id leads with.
 
 ```
 output/
@@ -23,6 +25,9 @@ output/
 │   ├── domain.json                  one label, the typed endpoint's whole answer
 │   └── SKILL.zh.md                  the page in Chinese; its front matter carries the Chinese
 │                                    description
+├── repos.jsonl                      one row per repository: description, stars, last-update time
+│                                    and link, `gone` where GitHub has none
+├── owners/<owner>.png               one owner's avatar - the fixed file a frontend builds unaided
 ├── skills.jsonl                     the catalog: one flat line per skill the mirror lists — its
 │                                    own row (id, installs) plus description, description_zh and
 │                                    domain, each null until the skill is fetched and built
@@ -97,6 +102,7 @@ just build skill_zh             # the second angle: build the first missing SKIL
 just limit=0 build skill_zh     # build every zh page, same limit/jobs/dry knobs
 just clean domain               # the inverse: forget the first built label
 just limit=0 clean all          # forget every built output of both angles
+just meta                       # fetch each repository's GitHub profile and each owner's avatar
 just index                      # rebuild output/skills.jsonl and the READMEs from what is on disk
 ```
 

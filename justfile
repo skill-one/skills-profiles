@@ -10,6 +10,8 @@
 #   just dry=1 limit=2 build domain     fake the endpoints, real layout
 #   just clean domain          the inverse: forget the first built skill's label
 #   just limit=0 clean all     forget every built output of both angles
+#   just meta                  fetch every repository's profile and every owner's avatar
+#   just meta --clean          ... or forget them (existence is the cache, so this invalidates)
 #   just sync                  reconcile with the mirror: listing, new sources, reindex
 #   just index                 write output/skills.jsonl and the READMEs from what is on disk
 #
@@ -49,6 +51,11 @@ build angle:
 # (0 = every one; `all` = both angles' files).
 clean angle:
 	@{{py}} batch.py clean {{angle}} --limit {{limit}}
+
+# Fetch every repository and owner the catalog names and still lack one - the profiles into
+# `repos.jsonl`, the avatars into `owners/<owner>.png`. `--clean` forgets them instead.
+meta *args:
+	@{{py}} batch.py meta {{args}}
 
 # Write the catalog and its READMEs: the mirror's rows joined with each skill's description, its
 # Chinese translation and its domain, plus the front page of the published root.

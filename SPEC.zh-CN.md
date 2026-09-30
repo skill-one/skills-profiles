@@ -16,13 +16,20 @@ English: [SPEC.md](SPEC.md)
 │   ├── SKILL.md                      #   标注随行：源页面，从该 skill 自己的仓库拉取
 │   ├── domain.json                   # 标签：{domain, confidence, probabilities}
 │   └── SKILL.zh.md                   # 中文页面；front matter 里带中文 description
+├── repos.jsonl                       # 一行一仓库：{id, owner, repo, description, stars,
+│                                     #   updated_at, pushed_at, html_url, gone, fetched_at}
+├── owners/<owner>.png                # 一个 owner 的头像，前端只看 owner 即可拼接的固定路径——
+│                                     #   owner 没有清单
 ├── skills.jsonl                      # `just index`：清单，每个 skill 扁平一行
 └── README.md                         # ……以及旁边的首页：这个目录是什么、
     README.zh-CN.md                   #     建了多少；同一页面，中文一份
 ```
 
-这里的一切都不需要镜像：清单写明每个 skill，每个 skill 目录里装着源页面和为它建的东西。镜像的清单
-由 `just sync` 现拉进清单文件——清单是它唯一留下的痕迹。
+这里的一切都不需要镜像：清单写明每个 skill，每个 skill 目录里装着源页面和为它建的东西。
+`repos.jsonl` 与 `owners/` 下的头像是 skill 之上的实体——一行一仓库（description、stars 和最近
+更新时间）、一 owner 一张头像——按 skill id 开头的 `owner/repo`（或 `owner`）作键，所以不必第二份
+清单就能拼上。镜像的清单由 `just sync` 现拉进清单文件
+——清单是它唯一留下的痕迹。
 
 `<id>` 是 skill id，`{owner}/{repo}/{slug}`。行里按镜像的拼写携带它；两个目录把 `:` 和 `&` 拼
 写成 `_`，这也是交给 `jev.py` 的句柄。
@@ -40,6 +47,11 @@ English: [SPEC.md](SPEC.md)
 - 每个 skill 一个目录、两个生成文件：`domain.json`，即端点完整的类型化回答；以及 `SKILL.zh.md`，
   中文页面——代码组装的 front matter，其 `description` 是一句话描述的中文译文，下面是翻译后的正文。
   front matter 从不经模型之手，所以 description 永远能从页面里解析回来。
+- **实体是一份清单加一组文件。** `repos.jsonl` 一行一仓库（`id`、`owner`、`repo`、`description`、
+  `stars`、`updated_at`、`pushed_at`、`html_url`、`gone`、`fetched_at`）；每个 owner 就是一张头像，
+  在固定的 `owners/<owner>.png`，前端只看 owner 名即可拼接，没有 owner 清单要读。仓库行带 `gone: true`
+  的是 GitHub 无答案的仓库：否定结果留在清单里，所以没有哪一轮会重拉；owner 没有这样的行，404 的
+  owner 就在下一轮重试。与 skill 的连接键是 id 开头的 `owner/repo`（或 `owner`）。
 - **清单是入口。** `skills.jsonl` 按镜像自己的顺序为镜像列出的、树仍可构建的每个 skill 存扁平一行——镜像的行
   （`id`、`installs`）加上从该 skill 自己的 `SKILL.md` 读出的 `description`、它的
   `description_zh`（即 zh 页面 front matter 里的 `description`）、标的 `domain` 和标注时的
@@ -93,6 +105,7 @@ schema 里的 enum，也没有要保持同步的解码器。翻译任务正好�
 | -------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | `just build <angle>` | 构建接下来 `limit` 个还缺该角度文件的 skill（`domain`、`skill_zh`，或 `all` 表示两者共池共窗口一次跑完）；裸 `just` 即默认只做一个的 `build domain` |
 | `just clean <angle>` | 逆窗口：从接下来 `limit` 个**已有**该文件的 skill 删除它（`domain`、`skill_zh`，或 `all` 表示两者）；`limit 0` 为全部 |
+| `just meta`          | 抓取清单列出、还缺产物的每个仓库与 owner——仓库资料写进 `repos.jsonl`，头像写进 `owners/<owner>.png`；`just meta --clean` 则忘掉它们 |
 | `just index`         | 写清单和两个 README：镜像的行拼接 description、其中文翻译与标签，以及发布根目录的首页                                 |
 | `just sync`          | 与镜像对账：拉取清单、合并新增了 skill 的仓库里的源，其余源原样不动；镜像删掉的 skill 会在 stderr 提到，文件原地保留 |
 | `just test`          | 跑套件                                                                                                                |
@@ -100,7 +113,9 @@ schema 里的 enum，也没有要保持同步的解码器。翻译任务正好�
 `build` 和 `clean` 是同一清单顺序上的互逆窗口，受同一个 `limit` 约束：build 数缺文件的
 skill，clean 数有文件的 skill。保留已拉取源的完整重置是 `just limit=0 clean all` 之后再
 `just sync`。连源也要丢掉则删除仓库目录，下一次 build 或 sync 会重新拉取。要在窗口之外直接
-构建某个具名 skill，直接跑它的脚本（`jev.py <id>` / `skill_zh.py <id>`）。
+构建某个具名 skill，直接跑它的脚本（`jev.py <id>` / `skill_zh.py <id>`）。`meta` 是唯一的实体动词：
+它抓取清单里还缺行的每个仓库、还缺头像的每个 owner，`meta --clean` 再忘掉它们——顺序仍是清单，
+按 `owner/repo` 与 `owner` 去重读出。
 
 修饰符是命令行变量，别无他处：
 
@@ -131,8 +146,8 @@ skill_zh.py <id> [--print]    # 仅开发：页面的请求数组，先描述后
 
 `.env`（复制 [`.env.example`](.env.example)）或 `SKILLS_PROFILES_*`；env → `.env` → 默认值。它装
 两个端点：类型化端点是 `API_KEY`、`BASE_URL`、`MODEL`，OpenAI 兼容聊天端点是 `TRANSLATE_API_KEY`、
-`TRANSLATE_BASE_URL`、`TRANSLATE_MODEL`——外加 `MAX_RETRIES`、`DRY_RUN`，以及必要时移动两个路径
-用的变量。超时是每个端点各一个：`TIMEOUT`（类型化端点一到三秒即答）与 `TRANSLATE_TIMEOUT`（默认
+`TRANSLATE_BASE_URL`、`TRANSLATE_MODEL`——外加 `MAX_RETRIES`、`DRY_RUN`、读取实体资料所用的
+`GITHUB_TOKEN`，以及必要时移动两个路径用的变量。超时是每个端点各一个：`TIMEOUT`（类型化端点一到三秒即答）与 `TRANSLATE_TIMEOUT`（默认
 120，因为思考调用先推理、常常超出类型化端点的耐心）。聊天调用方还有 `TRANSLATE_ENABLE_THINKING`
 （默认开）和 `TRANSLATE_MAX_TOKENS`。页面角度 `skill_zh.py` 是聊天端点唯一的调用方，先要描述、
 再要正文各块，共用同一组 `TRANSLATE_*` 设置。默认地址和模型指向讯飞星辰 MaaS 上的

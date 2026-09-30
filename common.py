@@ -11,11 +11,13 @@ import argparse
 import json
 import random
 import re
+import shutil
 import sys
 import time
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
 
 import httpx
 import yaml
@@ -37,6 +39,17 @@ INDEX = "skills.jsonl"
 DOMAIN_ANGLE = "domain"
 SKILL_ZH_ANGLE = "skill_zh"
 ANGLE_FILES = {DOMAIN_ANGLE: "domain.json", SKILL_ZH_ANGLE: "SKILL.zh.md"}
+
+# The entities above a skill, each where it fits: repositories are a catalog beside the skills -
+# `repos.jsonl`, one flat row per repository, keyed the way a skill id leads with it - and an owner
+# is one avatar file, `owners/<owner>.png`, the path a frontend builds from the owner alone. A
+# repository GitHub has no answer for is a row with `gone: true` rather than a marker file, so it is
+# never fetched again; an owner has no catalog, so its avatar file is its cache.
+REPOS_INDEX = "repos.jsonl"
+OWNERS_DIR = "owners"
+AVATAR_SUFFIX = ".png"
+# GitHub's own API, where the repository and owner profiles are read; the tests point it at file://.
+GITHUB_API_URL = "https://api.github.com"
 
 MAX_SKILL_MD_CHARS = 20000
 # A repository can be one skill or several hundred (`awesome-*` collections). The cap keeps the
@@ -109,6 +122,11 @@ class Config(BaseSettings):
     max_retries: int = 3
     dry_run: bool = False
 
+    # GitHub's own API, read for the repository and owner profiles beside the skills: the key keeps
+    # the calls off the anonymous 60-an-hour floor, the root is the offline suite's seam.
+    github_token: str | None = None
+    github_api_url: str = GITHUB_API_URL
+
     prompts_dir: Path = Path("prompts")
     output_dir: Path = Path("output")
 
@@ -134,6 +152,16 @@ def skill_md_path(config: Config, skill: str) -> Path:
 def angle_path(config: Config, skill: str, angle: str) -> Path:
     """One angle's file, beside the source page it was built from: the generated sibling."""
     return skill_dir(config, skill) / ANGLE_FILES[angle]
+
+
+def repos_index_path(config: Config) -> Path:
+    """The repository catalog: one row per repository, the way `skills.jsonl` holds the skills."""
+    return config.output_dir / REPOS_INDEX
+
+
+def owner_avatar_path(config: Config, owner: str) -> Path:
+    """One owner's avatar: `owners/<owner>.png`, the fixed path a frontend can build unaided."""
+    return config.output_dir / OWNERS_DIR / f"{owner}{AVATAR_SUFFIX}"
 
 
 # ----------------------------------------------------------------------- the skill source
@@ -255,6 +283,15 @@ def write_json(path: Path, payload: dict) -> Path:
     return write_atomic(path, json.dumps(payload, ensure_ascii=False))
 
 
+def write_bytes(path: Path, data: bytes) -> Path:
+    """Write binary content renamed into place: an avatar is whole or absent like any other file."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    partial = path.with_name(path.name + ".part")
+    partial.write_bytes(data)
+    partial.replace(path)
+    return path
+
+
 def read_jsonl(path: Path) -> list[dict]:
     """The rows of one jsonl file, in its own order. A line that is not valid json is an error
     naming the file and the line, never a silently shorter catalog."""
@@ -309,6 +346,59 @@ def post_json(client: httpx.Client, url: str, key: str, body: dict, max_retries:
                 raise
             attempt += 1
             backoff(attempt)
+
+
+# ----------------------------------------------------------------------------- the downloads
+
+
+class Downloader:
+    """One GET per file, streamed, retried on the shared reading. A `file://` URL is a local copy
+    with no client - the offline suite's tarballs, listing and GitHub payloads - so a test never
+    builds an HTTP client. `headers` ride every request: the GitHub profile fetches carry theirs.
+    """
+
+    def __init__(self, config: Config, headers: dict[str, str] | None = None):
+        self.config = config
+        self.headers = headers or {}
+        self._client: httpx.Client | None = None
+
+    def _http(self) -> httpx.Client:
+        if self._client is None:
+            # the connect waits on the timeout; a tarball's read is allowed to take its time
+            self._client = httpx.Client(
+                follow_redirects=True, timeout=httpx.Timeout(self.config.timeout, read=None))
+        return self._client
+
+    def get(self, url: str, dest: Path) -> None:
+        if urlsplit(url).scheme == "file":
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(urlsplit(url).path, dest)  # a missing local file is a failed fetch
+            return
+        attempt = 0
+        while True:
+            try:
+                with self._http().stream("GET", url, headers=self.headers) as response:
+                    response.raise_for_status()
+                    dest.parent.mkdir(parents=True, exist_ok=True)
+                    with dest.open("wb") as out:
+                        for chunk in response.iter_bytes():
+                            out.write(chunk)
+                return
+            except httpx.HTTPError as error:
+                if attempt >= self.config.max_retries or not worth_retrying(error):
+                    raise
+                attempt += 1
+                time.sleep(2 ** attempt)
+
+    def close(self) -> None:
+        if self._client is not None:
+            self._client.close()
+
+    def __enter__(self) -> Downloader:
+        return self
+
+    def __exit__(self, *_: object) -> None:
+        self.close()
 
 
 # --------------------------------------------------------- the one command both producers are

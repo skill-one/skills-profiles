@@ -11,7 +11,9 @@ English: [README.md](README.md) · 开发指南: [DEVELOPING.zh-CN.md](DEVELOPIN
 ## 产出
 
 一切都落在同一个根目录 `output/` 下：各角度所依据的构建源、为它们写的东西（一个标签加中文翻
-译），以及把这些连起来的一份清单——读者不需要再回到镜像。发布就是拷贝这一个目录。
+译），以及把这些连起来的一份清单——读者不需要再回到镜像。发布就是拷贝这一个目录。skills 旁边，
+`repos.jsonl` 一行一仓库、`owners/<owner>.png` 一 owner 一张头像，按 skill id 开头的同一个
+`owner/repo` 作键。
 
 ```
 output/
@@ -19,6 +21,9 @@ output/
 │   ├── SKILL.md                     标注随行：源页面，从该 skill 自己的仓库拉取
 │   ├── domain.json                  一个标签，类型化端点回答的完整内容
 │   └── SKILL.zh.md                  中文页面；front matter 里带中文 description
+├── repos.jsonl                      一行一仓库：description、stars、最近更新时间和链接，
+│                                    GitHub 无答案处 `gone`
+├── owners/<owner>.png               owner 头像——前端无需读清单即可拼接的固定文件
 ├── skills.jsonl                     清单：镜像列出的、树仍可构建的每个 skill 一行——镜像自己的行
 │                                    （id、installs）外加 description、
 │                                    description_zh 和 domain，未拉取构建前均为 null
@@ -86,6 +91,7 @@ just build skill_zh                # 第二个角度：构建第一个还缺的 
 just limit=0 build skill_zh        # 构建所有中文页面，limit/jobs/dry 旋钮相同
 just clean domain                  # 反操作：忘掉第一个已构建的标签
 just limit=0 clean all             # 忘掉两个角度的全部产物
+just meta                          # 抓取每个仓库的 GitHub 资料与每个 owner 的头像
 just index                         # 按磁盘内容重建 output/skills.jsonl 和两个 README
 ```
 

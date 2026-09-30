@@ -9,7 +9,9 @@ one-line description and then once per markdown piece of the body, and assembles
 `SKILL.zh.md` by code, its front matter never left to the model. The two are parallel angles on
 the same skill directory, and both are thin: the tree, the source, the prompt files, the settings,
 the retried call, the atomic write and the command itself all live once in `common.py`;
-`translate.py` is the chat endpoint library the page angle asks. The window, the lazy fetch and
+`translate.py` is the chat endpoint library the page angle asks. `meta.py` is not an angle over a
+skill but over the two entities above it: it reads each repository's and owner's GitHub profile and
+writes it into the trees beside the skills. The window, the lazy fetch and
 the `jobs`-wide pool around them live in one driver, `batch.py`; the justfile only launches it.
 
 中文: [DEVELOPING.zh-CN.md](DEVELOPING.zh-CN.md)
@@ -39,13 +41,15 @@ already are or pass a local `repo_tarball`.
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `just build <angle>` | `batch.py build <angle>`: the next `limit` skills still missing the angle's file (`domain`, `skill_zh`, or `all` for both in one pool over the shared window), most installed first. The order is the catalog's own (`OUTPUT_DIR/skills.jsonl`, the mirror's order, installs-descending) - parsed as jsonl, one row per listed skill. The window is the next `limit` skills this angle has not resolved: no angle file, and not a listed skill whose repository is already on disk without a `SKILL.md` (it can never be built). It is a count of work, not of positions, so repeated runs walk down the dataset. The driver then runs the producers in a `jobs`-wide pool, one call into a producer module per skill: each job fetches its repository just in time - the first job on a repository downloads and unpacks it, the rest wait on that one download - and a skill whose repository holds no source for it is skipped. A bare `just` is `build domain` with the default one-skill limit. |
 | `just clean <angle>` | The inverse window, `batch.py clean <angle>`: the next `limit` skills that already HOLD the angle's file, in the same catalog order, with the file deleted. `build` then regenerates exactly those skills; `limit 0` cleans every built one, and `all` forgets both angles' files - the full-reset half that precedes `sync`. A single named skill outside the window is still built by running its script directly (`uv run python jev.py <id>` / `skill_zh.py <id>`).                                                                                                                                                                                                                                                                                                                                         |
+| `just meta`          | `batch.py meta`: fetch every repository the catalog names without a row and every owner without an avatar, from GitHub - the repositories into `repos.jsonl` in catalog order, the avatars at the fixed `owners/<owner>.png`. A repository GitHub answers 404/410 for becomes a `gone` row - the negative is kept, so no later run fetches it (an owner has no row, so a 404 owner is simply retried). `just meta --clean` forgets the catalog and the avatars instead. Needs `SKILLS_PROFILES_GITHUB_TOKEN` for a snapshot of any size (anonymous is 60 requests an hour). |
 | `just index`         | Write `<output_dir>/skills.jsonl` - the catalog: one flat line per skill the mirror lists and the tree can still build, in the mirror's order, being the listing's own row (`id`, `installs`) joined with the `description` read out of that skill's `SKILL.md`, the `description_zh` in the `SKILL.zh.md` front matter, and the `domain` and `confidence` in `domain.json`. The joined fields are `null` while unknown; a listed skill whose repository is already on disk without a readable description is no row at all - the fetch took the repository and yielded nothing, so no run could ever build it. It reads the tree alone - no network, no calls - and rewrites the file whole. It writes the READMEs beside it from the same walk: see `readme.py` below.                                                            |
 | `just sync`          | Reconcile with the mirror: pull its listing, the row set, the order and the installs. The sources are fetched lazily: a batch downloads a repository the first time it builds one of its skills, and the repository directory on disk is the cache, so nothing is fetched before it is needed and nothing twice. A repository a fresh listing adds a skill to is fetched again here, the new sources merged in beside the skills already built, and name-spelled aliases repaired over the whole tree.                                                                                                                                                                                                                                                                                                 |
 | `just test`          | `uv run pytest`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 
 `build` and `clean` are the two inverse verbs of one driver - `batch.py` - sharing the angle
 (`domain`/`skill_zh`; clean additionally takes `all`) and the same catalog-order window; build
-creates, clean deletes. `sync` is the driver's other subcommand.
+creates, clean deletes. `meta` is the driver's third verb - the same catalog read as repositories
+and owners (`owner/repo`, `owner`), with `meta --clean` its inverse. `sync` is the other subcommand.
 
 | Variable       | Default                                                  | Meaning                                                                                                                                                                              |
 | -------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -201,6 +205,17 @@ will not download is simply not here: its skills fail and the batch carries on. 
 404/410 for is gone for good - deleted or private - so its repository directory is still created as
 the marker and its skills are skipped on every later run rather than fetched and failed again.
 
+`meta.py` is the third producer, but over entities rather than skills. The catalog is read as
+`owner/repo` and `owner` - the roster, in the same order - and each entity is one GitHub call:
+`GET {api}/repos/{owner}/{repo}` for a repository, `GET {api}/users/{owner}` plus a download of its
+`avatar_url` for an owner. A repository is shaped into one row of `repos.jsonl`, which `batch.py`
+merges in the catalog's own order; an owner is one avatar, written at the fixed `owners/<owner>.png`
+by `common.write_bytes`, its presence the whole of its cache. Every request carries
+`Accept: application/vnd.github+json`, a `User-Agent` GitHub refuses to answer without, and the
+Bearer token when `SKILLS_PROFILES_GITHUB_TOKEN` is set. `batch.py` owns the window and the pool;
+`meta.py` owns the shaping - `headers()`, the two URL builders, `repo_row()`, `repo_gone_row()`,
+`build_repo()` and `build_owner()`.
+
 ## How it works
 
 ```
@@ -237,6 +252,8 @@ common.py               # the kernel both producers share: Config, the tree, the
                         # the retried call, the atomic write, and the run() command skeleton
 fetch.py                # the sources: a repository's skills unpacked into skills/, once each
 jev.py                  # the domain angle: the taxonomy, the state, the typed question
+meta.py                 # the entities above a skill: a repository's and an owner's GitHub profile,
+                        # with the avatar, into the two trees beside the skills
 translate.py            # the translation library: one chat call, shaped over the shared command
 skill_zh.py             # the page angle: the SKILL.md body translated, one .md written
 index.py                # the catalog and its numbers: one flat jsonl, and the facts a README is
@@ -248,7 +265,8 @@ prompts/skill_zh.md      # the page system template: translate the document, kee
 prompts/skill_zh_user.md # the page user template: "Translate to {{to}}:" carrying the body
 tests/                  # offline unit tests; the batch is driven in-process in test_batch.py,
                         # with only the justfile launcher checks running `just`
-.github/                # ci on every push and pull request, sync and publish by hand
+.github/                # ci on every push and pull request; sync, meta, publish and invalidate
+                        # by hand
 ```
 
 ## Configuration
@@ -272,6 +290,8 @@ An empty value means "not set".
 | `SKILLS_PROFILES_TRANSLATE_FALLBACK_MODEL`    | `agnes-3.0-flash`          | The fallback model id; a reasoning model, read the same way (`reasoning_content` beside `content`)                                                                       |
 | `SKILLS_PROFILES_TIMEOUT`                     | `20`                       | Seconds per request for the typed endpoint: it answers in one to three, and drops a first call after idle                                                                 |
 | `SKILLS_PROFILES_MAX_RETRIES`                 | `3`                        | Extra attempts, for a dropped call or a busy gateway; both endpoints                                                                                                     |
+| `SKILLS_PROFILES_GITHUB_TOKEN`                | –                          | GitHub token for `meta.py`: without it an anonymous client is capped at 60 requests an hour                                                                              |
+| `SKILLS_PROFILES_GITHUB_API_URL`              | `https://api.github.com`   | The GitHub API root the entity profiles are read from; a `file://` root is how the tests run offline                                                                     |
 | `SKILLS_PROFILES_DRY_RUN`                     | `false`                    | Fake both producers: no API calls                                                                                                                                        |
 | `SKILLS_PROFILES_OUTPUT_DIR`                  | `output`                   | The published root: the skills (with the angles written beside them), the catalog and the READMEs                                                                        |
 | `SKILLS_PROFILES_PROMPTS_DIR`                 | `prompts`                  | The directory holding `_system.md`, `translate.md`, `translate_user.md`, `skill_zh.md` and `skill_zh_user.md`                                                            |
@@ -299,6 +319,9 @@ fails loudly, so a test can never call out even with a local `.env` full of keys
   `sync` and the clean inverse window - against local `file://` tarballs. Only the launcher
   checks (the default recipe, the command-line-only dry knob, the pool flags reaching the command)
   still run `just` as a subprocess.
+- `tests/test_meta.py` covers the entities: the shaping (the repository row and a `gone` row), the
+  fixed avatar path, both windows and `--clean`, and the catalog merge - all against a `file://`
+  GitHub root, so no test calls out.
 - `tests/test_skill_zh.py` covers the page angle: the requests (description first, then the body
   pieces; the body as a Jinja value, the front matter never sent), the output (front matter as
   published over the translation, one `SKILL.zh.md`), the length gates, and the command - the
@@ -318,12 +341,13 @@ script flag run directly, while the justfile holds the production verbs.
 
 ## CI
 
-Four workflows, and each one is thin: the work they do is `just`.
+Five workflows, and each one is thin: the work they do is `just`.
 
 | workflow      | trigger                     | does                                                                                                                                                                                                                                                         |
 | ------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `ci.yml`      | every push and pull request | `uv sync`, `ruff check .`, `mypy`, `pytest`, with `just` installed. Offline.                                                                                                                                                                                 |
 | `sync.yml`    | manual                      | `restore-dist` → `just sync` → `publish-dist` (`date`). Pulls the mirror's listing and rewrites the catalog; no model is called.                                                                                                                             |
+| `meta.yml`    | manual                      | `restore-dist` → `just meta` → `publish-dist` (`date`). Fills the repository profiles and owner avatars still missing; no model is called, only `SKILLS_PROFILES_GITHUB_TOKEN`.                                                                             |
 | `publish.yml` | manual                      | `restore-dist` → `just build <angle> limit=… jobs=…` (`domain`, `skill_zh`, or `all` in one pool) → `just index` → `publish-dist` (`date-counter`). Needs the chosen angles' secrets and variables. |
 | `invalidate.yml` | manual                   | `restore-dist` → `just limit=0 clean <angle>` → `just index` → `publish-dist`. Forgets every built output of the chosen angle - the one remote invalidation path, run when the taxonomy or the prompts changed - and publishes the tree without them; no model calls. The next publish rebuilds the angle from scratch. |
 

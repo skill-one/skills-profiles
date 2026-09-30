@@ -1,0 +1,52 @@
+name: meta
+
+# Manual: fill the entity data the skills point at - each repository's GitHub profile and each
+# owner's avatar. Independent of `publish`, and deliberately not part of it: this run calls no
+# model, needs only the GitHub token, and is incremental - `just meta` fills what is missing and an
+# existing row or avatar is the cache. It is also not on a schedule: star counts and avatars move on
+# their own, so a refresh is a deliberate act (`just meta --clean` then `just meta`).
+#
+# The `dist` branch is the single atomic snapshot - the skills at its root, the angles written about
+# them, the entity catalog and the avatars beside them. dist is one orphan commit force-pushed per
+# run and pinned by a `dist-<date>` tag - no history, no pointer file.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-dist
+  cancel-in-progress: false # never cancel a run that is about to push
+
+env:
+  # the only credential this run needs: GitHub's own API, for the repository and owner profiles.
+  # Unset runs under the anonymous 60-an-hour cap, which a whole snapshot would exhaust at once.
+  SKILLS_PROFILES_GITHUB_TOKEN: ${{ secrets.SKILLS_PROFILES_GITHUB_TOKEN }}
+
+jobs:
+  meta:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: extractions/setup-just@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install
+        run: uv sync
+
+      - name: Restore the published snapshot (entities included)
+        uses: ./.github/actions/restore-dist
+
+      - name: Fetch the missing repository profiles and owner avatars
+        run: just meta
+
+      - name: Publish to dist
+        uses: ./.github/actions/publish-dist
+        with:
+          tag-mode: date

@@ -30,7 +30,9 @@ TEXT: dict[str, dict[str, str]] = {
                  "中文: [README.zh-CN.md](README.zh-CN.md)",
         "where": "`skills/<id>/` holds the skill's own `SKILL.md` with what was written about it -\n"
                  "the domain label and the Chinese `SKILL.zh.md` page, whose front matter carries\n"
-                 "the Chinese description - and `skills.jsonl` is the catalog joining them.",
+                 "the Chinese description - and `skills.jsonl` is the catalog joining them. Beside\n"
+                 "the skills, `repos.jsonl` holds each repository's GitHub profile, and\n"
+                 "`owners/<owner>.png` each owner's avatar.",
         "progress": "Progress",
         "bullet": "- **{{ label }}**: {{ value }}",
         "domain_label": "domain",
@@ -46,7 +48,8 @@ TEXT: dict[str, dict[str, str]] = {
                  "English: [README.md](README.md)",
         "where": "`skills/<id>/` 里是 skill 自己的 `SKILL.md` 和为它写的东西：domain 分类与\n"
                  "中文 `SKILL.zh.md` 页面（front matter 里带中文 description）；\n"
-                 "`skills.jsonl` 是把它们连起来的清单。",
+                 "`skills.jsonl` 是把它们连起来的清单。skills 旁边，`repos.jsonl` 存每个仓库的 GitHub 资料，\n"
+                 "每个 owner 的头像在 `owners/<owner>.png`。",
         "progress": "进度",
         "bullet": "- **{{ label }}**：{{ value }}",
         "domain_label": "domain",
