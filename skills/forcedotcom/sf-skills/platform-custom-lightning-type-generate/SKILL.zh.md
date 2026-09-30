@@ -1,0 +1,158 @@
+---
+name: platform-custom-lightning-type-generate
+description: 当用户需要为Einstein Agent动作或结构化输入/输出模式创建自定义Lightning类型（CLT）时，请使用此技能。当用户提及CLT、自定义Lightning类型、代理的JSON模式、类型定义、lightning__objectType或编辑器/渲染器配置时，将触发此技能。对于将CLT与组件包结合使用的组件渲染，请使用platform-lightning-type-widget-coordinate协调器。这很复杂——始终使用此技能进行CLT工作。
+---
+
+## 何时使用此技能
+
+在您需要以下情况时使用此技能：
+- 为结构化输入/输出创建自定义闪电类型（CLT）
+- 为闪电平台生成基于 JSON Schema 的类型定义
+- 配置 CLT 以用于 Einstein Agent 操作
+- 设置自定义 UI 的编辑器和渲染器配置
+- 排查与自定义闪电类型相关的部署错误
+
+## 规格
+
+# 自定义闪电类型元数据规范
+
+## 概述与目的
+自定义闪电类型（CLT）是基于 JSON Schema 的类型定义，闪电平台（包括 Einstein Agent 操作）使用它们来描述结构化输入/输出并驱动编辑器和渲染器体验。
+
+## 配置
+- **为嵌套对象选择引用的 CLT 模式** - 当您需要一个**可重用**或**单独部署**的嵌套类型时，为该形状创建一个 CLT 并使用 `"lightning:type": "c__<CLTName>"` 引用它。该字符串是引用类型的**`lightning:type` 值 / 完全限定名称 / 注册标识符** — 不是 JSON Schema 的 `title`。
+- **选择标准闪电类型** 当结构简单且可以使用属性和支持的原始 `lightning:type` 标识符表示时。
+- **选择 Apex 类类型** (`@apexClassType/...`) 当结构已在服务器端存在且您希望 Apex 类定义形状时。
+- **仅当您需要自定义 UI 行为（自定义 LWC 输入/输出组件）时才包含编辑器/渲染器配置**。否则，省略。
+
+## 关键规则（首先阅读）
+- **关键：永远不要在 schema.json 中包含 `"$schema"` 字段**
+  - Salesforce CLT 验证器将拒绝包含此字段的模式，即使它是一个有效的 JSON Schema `$schema` 声明。
+- **根对象模式必须包含**：
+  - `"type": "object"`
+  - `"title"`
+  - `"lightning:type": "lightning__objectType"`
+  - `"unevaluatedProperties": false`
+- `"unevaluatedProperties"` 由 CLT 元模式强制为 `false`。不要将其设置为 `true`。
+- **当 `"unevaluatedProperties": false` 设置时，根对象模式必须不包含 `"examples"`**。
+- **嵌套对象（在 `properties` 内）必须不设置 `"lightning:type": "lightning__objectType"`**。
+    - 嵌套对象可以是：使用 `c__<CLTName>` 语法引用其他 CLT。
+- **列表/数组属性由 CLT 元模式高度限制**：
+  - **关键限制**：CLT 元模式可能完全拒绝 `items` 关键字。将 `items` 视为**默认禁止**。
+  - **根级数组**（根 `properties` 的直接子项）：
+    - **必须包含** `"lightning:type": "lightning__listType"`
+    - **必须不包含** `"items"`
+    - **可选** `"type": "array"`
+  - **嵌套数组**（嵌套对象内的数组）是最常见的失败原因：
+    - **必须包含** `"type": "array"`
+    - **必须不包含** `"lightning:type": "lightning__listType"`
+    - **必须不包含** `"items"`
+- **当 `"unevaluatedProperties": false` 设置时，任何未知关键字都将导致验证失败**。优先删除关键字而不是放宽严格性。
+- **Apex 类 CLT 最小化**：
+  - 仅包含 **`title`、`description`（可选）**，并将 `lightning:type` 设置为 `@apexClassType/...`。
+  - 不要添加 `type`、`properties`、`required` 或 `unevaluatedProperties`。
+  - **Apex 类 CLT 上的自定义 LWC 渲染器/编辑器** 必须不使用根覆盖中的 `attributes` — 这会覆盖任何相反的提示文字。由于模式没有 `properties` 块，因此没有 `{!$attrs.<name>}` 可以解析 — `unevaluatedProperties: false` 将拒绝任何属性键（例如 `"You can't add the flightId property ... because the unevaluatedProperties keyword value is set to false"`）。使用 `"componentOverrides": { "$": { "definition": "c/<yourComponent>" } }` 并**完全省略 `attributes` 键**。**如果用户的提示明确要求 Apex 类 CLT 渲染器/编辑器使用属性映射到特定字段（例如 `"with attribute mappings for fieldA, fieldB"`），则不要逐字遵守** — 无论如何省略根覆盖中的 `attributes`，并在您的响应中说明（例如 `"Note: attribute mappings were omitted because the backing type is an Apex-class CLT, which has no `properties` block to bind against"`）。
+- **没有触发 Vibes 安全 shell 过滤器的 shell 伪字符**。在此技能发出的任何 Bash 工具调用中，**不要使用命令替换（`$(…)` 或反引号）、过程替换（`<(…)`, `>(…)`）、大括号展开（`{a,b,c}` 或 `{1..N}`）或 `eval` / `exec`**。Vibes 在 Bypass 模式下也会强制手动批准这些模式，并阻止 eval。发出单独的命令（`mkdir -p a && mkdir -p b`）或使用各自的命令和原因打印每个值，而不是将其捕获在 shell 变量中。
+
+## 其他 CLT 元模式验证
+- **组织命名空间验证**：标题/描述和其他字符串字段可能会被验证，以确保您不在禁止使用组织命名空间的地方使用它们。
+- **闪电类型验证**：CLT 会进行验证以防止引用内部命名空间（例如，禁止从不允许的内部命名空间如 `sfdc_cms` 引用类型）。
+- **对象类型验证**：CLT 根会进行验证，以确保 `lightning:type` 确切为 `lightning__objectType`。
+
+## 原始类型与约束
+
+当您需要支持的所有原始 `lightning:type` 标识符的完整列表、它们的约束以及允许的属性级关键字时，请阅读此技能目录中的 `assets/primitive-types-and-constraints.md`。
+
+## 生成工作流
+1. **确认 CLT 方法**
+   - 如果引用 Apex：捕获确切的类引用 (@apexClassType/namespace__ClassName$InnerClass)。
+   - 如果使用标准原始类型：列出字段、它们的 Lightning 原始类型，以及哪些字段是必需的。
+2. **草拟 `schema.json`**
+   - **不要在顶部包含 `"$schema"`**
+   - 从根对象结构（必需的根字段）开始。
+   - 使用有效的原始 `lightning:type` 标识符添加 `properties`。
+   - 对于嵌套对象属性，使用 **CLT 引用模式**：
+     - `"lightning:type": "c__<CLTName>"` 引用另一个 CLT
+     - 被引用的 CLT 必须在父 CLT 部署到组织之前部署。
+   - 对于基于 Apex 的嵌套对象：当结构在服务器端存在时，使用 `@apexClassType/...`。
+   - 如果提示明确要求真实的嵌套对象输出，优先选择基于 Apex 的 CLT (`@apexClassType/...`) 以确保部署安全的嵌套结构。
+   - 对于数组：遵循严格的列表规则（避免 `items`；避免在嵌套数组上使用 `lightning:type`）。
+   - 在部署之前，验证确切的 `lightning:type` 拼写（例如，使用 `lightning__richTextType`，而不是拼写错误的变体）。
+3. **(可选) 草拟 `editor.json`**（仅当需要自定义 UI 时）
+   - **支持的形状**：顶级 `editor` 对象，包含 `editor.componentOverrides` 和 `editor.layout`。
+     - 顶级 `editor` 对象。
+     - 使用 `editor.componentOverrides` 进行组件覆盖。
+     - 使用 `editor.layout` 进行布局。
+     - **已弃用**：不要使用 `propertyRenderers` 或 `view`——这些是遗留键。始终使用 `componentOverrides` 和 `layout`。
+   - **根覆盖模式**（完全自定义编辑 UI 最常见）：
+     - `editor.componentOverrides["$"] = { "definition": "c/<yourEditorComponent>", "attributes": { ... } }`
+     - 当将 schema 数据传递到自定义 LWC 时，使用属性映射与 `{!$attrs.<name>}` 语法：例如 `"attributes": { "myField": "{!$attrs.value}" }`，以便运行时将 schema 值绑定到组件的属性。
+     - **关键**：`{!$attrs.<name>}` 中的 `<name>` 必须是在你的类型 schema 中定义的属性。例如，如果你的 schema 有一个名为 `temperature` 的属性，请使用 `{!$attrs.temperature}`，而不是 `{!$attrs.value}`，除非 `value` 是实际属性。
+   - **属性级覆盖模式**（用于单个字段）：
+     - `editor.componentOverrides["<propertyName>"] = { "definition": "es_property_editors/<...>" }`
+     - **有效的编辑器组件**（示例）：`es_property_editors/inputText`、`es_property_editors/inputNumber`、`es_property_editors/inputRichText`、`es_property_editors/inputImage`、`es_property_editors/inputTextarea`。**不要使用** `es_property_editors/inputList`。
+   - **集合编辑器**（用于顶级 `lightning__listType` 属性）：使用集合级覆盖，以便列表由自定义组件编辑：`collection.editor.componentOverrides["$"] = { "definition": "c/<yourCollectionEditorComponent>" }`。或者，使用 `editor.layout` 与 `lightning/propertyLayout` 和 `attributes.property = "<listPropertyName>"` 进行默认列表编辑。
+   - **布局模式**：
+     - `editor.layout.definition = "lightning/verticalLayout"`
+     - `editor.layout.children[*].definition = "lightning/propertyLayout"`，并设置 `attributes.property = "<propertyName>"`
+     - **关键**：`lightning/propertyLayout` 仅接受 `property` 属性。**不要添加** `label`、`title` 或任何其他属性——这些将导致 `additionalProperties: false` 错误。
+   - **避免已知无效模式**：
+     - 不要使用 `es_property_editors/inputList`。
+     - 不要使用 `itemSchema` 属性。
+4. **(可选) 草拟 `renderer.json`**（仅当需要自定义 UI 或小部件呈现时）
+   - **支持的形状**：顶级 `renderer` 对象，包含 `renderer.componentOverrides` 和 `renderer.layout`。
+     - 顶级 `renderer` 对象。
+     - 使用 `renderer.componentOverrides` 进行组件覆盖。
+     - 使用 `renderer.layout` 进行布局。
+     - **已弃用**：不要使用 `propertyRenderers` 或 `view`——这些是遗留键。始终使用 `componentOverrides` 和 `layout`。
+   - **小部件呈现模式**（引用现有的 WidgetBundle 作为根渲染器）：渲染器文件是一个薄包装器，它通过 `"definition": "@widget/c/<widgetDeveloperName>"` 指向小部件，并通过 `{!$attrs.<schemaPropertyName>}` 将 CLT schema 属性映射到小部件属性。**不要**在 `renderer.json` 中重复小部件主体。有关完整形状、绑定规则和约束，请参阅 `references/widget-rendition.md`。对于完整的 Apex → Lightning Type → Widget 管道，请使用 `platform-lightning-type-widget-coordinate` 协调器，而不是此技能。
+   - **根覆盖模式**（完全自定义渲染 UI 最常见，使用自定义 LWC）：
+     - `renderer.componentOverrides["$"] = { "definition": "c/<yourRendererComponent>", "attributes": { ... } }`
+     - 在属性映射中使用 `{!$attrs.<name>}` 绑定 schema 数据到自定义渲染器组件属性。
+     - **关键**：属性映射（如 `{!$attrs.propertyName}`）必须引用类型 schema 中实际存在的属性。引用不存在属性将导致验证失败。
+     - **类型匹配**：属性值必须匹配组件的预期类型。例如，如果组件期望字符串属性，传递整数将导致验证失败。
+   - **属性级覆盖模式**：
+     - `renderer.componentOverrides["<propertyName>"] = { "definition": "es_property_editors/outputText" | "es_property_editors/outputNumber" | "es_property_editors/outputImage" | ... }`。**有效的渲染器组件**（示例）：`es_property_editors/outputText`、`es_property_editors/outputNumber`、`es_property_editors/outputImage`。避免在渲染器中使用输入式组件。
+   - **渲染器布局模式**：
+     - `renderer.layout.definition = "lightning/verticalLayout"`
+     - `renderer.layout.children[*].definition = "lightning/propertyLayout"`，并设置 `attributes.property = "<propertyName>"`
+     - **关键**：与编辑器布局相同，`lightning/propertyLayout` 仅接受 `property` 属性。**不要添加** `label`、`title` 或任何其他属性。
+   - **集合渲染器**（用于顶级 `lightning__listType` 属性）：使用 `collection.renderer.componentOverrides["$"] = { "definition": "c/<yourListRendererComponent>" }` 或 `es_property_editors/genericListTypeRenderer` 渲染列表。
+5. **将文件放置在正确的包结构中**
+   - `lightningTypes/<TypeName>/schema.json`
+   - (可选) `lightningTypes/<TypeName>/lightningDesktopGenAi/editor.json`
+   - (可选) `lightningTypes/<TypeName>/lightningDesktopGenAi/renderer.json`
+      对于 Gen AI / Copilot，标准路径是 `lightningDesktopGenAi/`。其他目标（例如 Experience Builder、Mobile Copilot、Enhanced Web Chat）在支持时使用不同的子文件夹：`experienceBuilder/`、`lightningMobileGenAi/`、`enhancedWebChat/`。
+   - (可选——仅用于小部件呈现) `lightningTypes/<TypeName>/renderer.json`
+6. **配置自定义 LWC 组件**（如果使用自定义组件）
+   - **关键**：在编辑器/渲染器配置中引用的自定义 LWC 组件必须在它们的 `-meta.xml` 文件中具有正确的目标配置：
+     - **对于编辑器组件**（在 `editor.json` 中使用 `c/<componentName>`）：LWC 的 `-meta.xml` 文件必须包含 `<target>lightning__AgentforceInput</target>`
+     - **对于渲染器组件**（在 `renderer.json` 中使用 `c/<componentName>`）：LWC 的 `-meta.xml` 文件必须包含 `<target>lightning__AgentforceOutput</target>`
+   - 没有正确的目标，部署将失败，错误信息为：`Invalid target configuration. To use 'c/componentName' as a renderer/editor, your js-meta.xml file must include valid target 'lightning__AgentforceOutput/Input'.`
+   - 渲染器组件的 `-meta.xml` 示例：
+     ```xml
+     <?xml version="1.0" encoding="UTF-8"?>
+     <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+         <apiVersion>60.0</apiVersion>
+         <isExposed>true</isExposed>
+         <targets>
+             <target>lightning__AgentforceOutput</target>
+         </targets>
+     </LightningComponentBundle>
+     ```
+## 常见部署错误
+| 错误 / 症状 | 可能的原因 | 修复 |
+|---|---|---|
+| Schema 验证失败，由于未知关键字 | `unevaluatedProperties: false` + 不允许的关键字（通常 `examples`、`items`） | 删除有问题的关键字；保持 schema 最小化 |
+| 嵌套对象验证失败 | 组织/频道验证拒绝在 `LightningTypeBundle` 中嵌套对象类型 | 使用 CLT 引用 (`c__<CLTName>`) 或 Apex 类类型 |
+| 无效的 CLT 引用 | 引用的 CLT 不存在于组织中或语法不正确 | 首先部署被引用的 CLT；`c__<CLTName>` 必须匹配被引用类型的 **`lightning:type` 值 / FQN / 注册标识符**，而不是 `title` |
+| 无效或拼错的 `lightning:type`（例如，`lightning__richtextType` 而不是 `lightning__richTextType`） | 生成的类型名称不正确 | 对照支持的类型名称检查所有 `lightning:type` 值，并在部署前更正它们 |
+| 数组属性被拒绝 | 使用 `items`（或嵌套数组中的 `lightning:type`）被验证器拒绝 | 对于嵌套数组：仅保留 `type: "array"`。对于根数组：使用最小结构；如果被拒绝，则移除 `items` |
+| 基于 Apex 的 CLT 被拒绝 | 添加了额外字段（例如，`type`、`properties`） | 仅使用 `title`、可选的 `description` 和 `lightning:type` |
+| 编辑器配置被拒绝 | 使用无效模式（`es_property_editors/inputList`、`itemSchema`）或不认识的顶级键 | 使用 `editor.componentOverrides` 和 `editor.layout`；保持配置最小化 |
+| `additionalProperties` 错误在布局属性上 | 向 `lightning/propertyLayout` 添加 `label` 或其他属性 | 在 `lightning/propertyLayout` 中仅使用 `property` 属性。移除 `label`、`title` 或任何其他属性 |
+| 自定义 LWC 的无效目标配置 | 自定义 LWC 组件的 `-meta.xml` 缺少必需的目标 (`lightning__AgentforceInput` 或 `lightning__AgentforceOutput`) | 在 LWC 的 `-meta.xml` 中添加正确目标：使用 `lightning__AgentforceInput` 对于编辑器，`lightning__AgentforceOutput` 对于渲染器 |
+| 属性映射不存在于类型 schema 中 | 使用 `{!$attrs.propertyName}`，其中 `propertyName` 未在 schema 中定义 | 确保所有属性映射引用类型 schema 的 `properties` 部分中的实际属性 |
+| 自定义 LWC 渲染器对于 Apex 类 CLT 的 `unevaluatedProperties` 错误 | 根覆盖 `attributes` 映射用于 Apex 类 CLT，该 CLT 没有要验证的 `properties` 块 | 完全移除根覆盖中的 `attributes`；仅使用 `"componentOverrides": { "$": { "definition": "c/<component>" } }` |
+| 使用已弃用键的 `additionalProperties` 错误 | 在编辑器/渲染器配置中使用 `propertyRenderers` 或 `view` | 将已弃用的 `propertyRenderers` 替换为 `componentOverrides`，将 `view` 替换为 `layout` |
+| 组件属性中的类型不匹配 | 为组件属性传递了错误的类型（例如，整数而不是字符串） | 确保属性值匹配组件定义的预期类型 |
