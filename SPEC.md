@@ -64,7 +64,8 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py`
   with.
 - **The catalog is the way in.** `skills.jsonl` holds one flat line per skill the mirror lists and
   the tree can still build, in the mirror's own order - the mirror's row (`id`, `installs`) plus the
-  `description` read out of that skill's own `SKILL.md`, its `description_zh` (the `description` in
+  `description` read out of that skill's own `SKILL.md`, that file's Git blob `sha1` (the `sha`
+  GitHub reports for it), its `description_zh` (the `description` in
   the zh page's front matter), the `domain` it was labelled with, and the `confidence` it was
   labelled at. Every listed skill is a row, fetched or not: the joined fields are `null` until the
   tree fetches and builds it, so an unfetched skill is a row of nulls rather than a missing one, and

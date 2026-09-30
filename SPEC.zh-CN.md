@@ -54,8 +54,8 @@ English: [SPEC.md](SPEC.md)
   仓库行带 `gone: true` 的是 GitHub 无答案的仓库：否定结果留在清单里，所以没有哪一轮会重拉。与 skill 的
   连接键是 id 开头的 `owner/repo`。
 - **清单是入口。** `skills.jsonl` 按镜像自己的顺序为镜像列出的、树仍可构建的每个 skill 存扁平一行——镜像的行
-  （`id`、`installs`）加上从该 skill 自己的 `SKILL.md` 读出的 `description`、它的
-  `description_zh`（即 zh 页面 front matter 里的 `description`）、标的 `domain` 和标注时的
+  （`id`、`installs`）加上从该 skill 自己的 `SKILL.md` 读出的 `description`、该文件的 Git blob
+  `sha1`（即 GitHub 对它报告的 `sha`）、它的 `description_zh`（即 zh 页面 front matter 里的 `description`）、标的 `domain` 和标注时的
   `confidence`。每个列出的 skill 都是一行，无论拉没拉取：拼接字段在树拉取并构建之前为 `null`，
   所以未拉取的 skill 是一行 null 而不是缺失的行，清单同时是数据集和批次工作的顺序。
   仓库已在盘上、却解析不出可读 description 的行不是一行——fetch 已取过该仓库而一无所获，

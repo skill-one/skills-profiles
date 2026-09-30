@@ -25,8 +25,8 @@ output/
 │                                    GitHub 无答案处 `gone`
 ├── owners/<owner>.png               owner 头像——前端无需读清单即可拼接的固定文件
 ├── skills.jsonl                     清单：镜像列出的、树仍可构建的每个 skill 一行——镜像自己的行
-│                                    （id、installs）外加 description、
-│                                    description_zh 和 domain，未拉取构建前均为 null
+│                                    （id、installs）外加 description、该文件的 Git blob
+│                                    sha1、description_zh 和 domain，未拉取构建前均为 null
 └── README.md                        ……以及旁边的首页：这个目录是什么、建了多少——
     README.zh-CN.md                  一份英文，这份中文
 ```

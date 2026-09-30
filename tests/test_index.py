@@ -34,6 +34,7 @@ ALPHA_ROW = {
     "description_zh": None,
     "domain": "office-productivity",
     "confidence": 0.9,
+    "sha1": common.blob_sha1(alpha_source().encode("utf-8")),
 }
 
 
@@ -51,8 +52,8 @@ def row(config, skill_id: str) -> dict:
 
 
 def test_a_row_is_the_mirrors_own_fields_plus_ours(workdir):
-    """The mirror's row forwarded field by field, plus the two it cannot know: the description out
-    of the skill itself, and the domain one category of the closed set."""
+    """The mirror's row forwarded field by field, plus what it cannot know: the description out of
+    the skill itself, the domain one category of the closed set, and the source's Git blob id."""
     config = common.Config()
     common.write_json(common.angle_path(config, ALPHA, common.DOMAIN_ANGLE), DOMAIN)
     assert indexed(config)[0] == ALPHA_ROW

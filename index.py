@@ -102,12 +102,13 @@ def sourceless(config: Config, skill: str) -> bool:
 
 
 def _row(entry: dict, config: Config, skill: str) -> dict:
-    """The mirror's row plus ours: the source's description, its Chinese translation, and the label
-    with its confidence - each `null` while the tree has not produced it.
+    """The mirror's row plus ours: the source's description and its Git blob id, its Chinese
+    translation, and the label with its confidence - each `null` while the tree has not produced it.
 
     A skill not yet fetched is a row of `null`s, which is exactly how a reader tells a fetched row
     from an unfetched one. The catalog takes two of the label's fields; the rest of what Jev wrote
-    stays in the profile.
+    stays in the profile. `sha1` is the file's Git blob id - the `sha` GitHub reports for it - so a
+    consumer can check the row against the repository.
     """
     row = {name: entry.get(name) for name in MIRROR_FIELDS}
     try:
@@ -120,6 +121,8 @@ def _row(entry: dict, config: Config, skill: str) -> dict:
     label = angle_output(config, skill, common.DOMAIN_ANGLE)
     row["domain"] = label.get("domain")
     row["confidence"] = label.get("confidence")
+    path = common.skill_md_path(config, skill)
+    row["sha1"] = common.blob_sha1(path.read_bytes()) if path.is_file() else None
     return row
 
 
