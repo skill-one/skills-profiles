@@ -69,8 +69,8 @@ def extract_tarball(tarball: Path, config: Config) -> int:
             skills += 1
     # no skill in a subdirectory, but the root SKILL.md can say what it is for: the repository is
     # itself one skill, its source kept at the root where it sat
-    if not skills and readme and common.skill_description(readme):
-        if not (repo_dir / common.SKILL_MD).is_file():
-            common.write_atomic(repo_dir / common.SKILL_MD, readme)
-            skills += 1
+    if not skills and readme and common.skill_description(readme) \
+            and not (repo_dir / common.SKILL_MD).is_file():
+        common.write_atomic(repo_dir / common.SKILL_MD, readme)
+        skills += 1
     return skills
