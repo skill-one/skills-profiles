@@ -1,0 +1,111 @@
+---
+name: project-workspace
+description: "Create and manage topic-specific project workspaces for validation, investigation, PoC, comparison, or workstreams, including meeting notes in an existing project. Use for a project workspace, cost comparison workspace, or project meeting notes. Triggers on プロジェクトワークスペース, 検証フォルダ, PoC ワークスペース, トピック別作業フォルダ, プロジェクトの議事メモ."
+argument-hint: "プロジェクト名・検証テーマ、または既存プロジェクトの議事メモ"
+user-invocable: true
+license: CC BY-NC-SA 4.0
+metadata:
+  author: yamapan (https://github.com/aktsmm)
+---
+
+# Project Workspace Skill
+
+Use this skill when the user asks to create, open, prepare, or organize a topic-specific project workspace, or to record a meeting in an existing project. Use a customer-specific workflow for customer account operations, and a transcription workflow when the source media still needs transcription.
+
+## Default location
+
+- When an active VS Code workspace is provided and the user is adding or organizing assets for the current task, use that workspace as the default target even without repo markers. Do not redirect it to an external project root.
+- When that workspace already manages a customer's ongoing work, add requested validation evidence under the confirmed topic and link to its existing status and actions. Do not create a second project workspace or parallel task ledger unless a separate workspace is explicitly requested.
+- Use the configured project root only when the user requests a separate project workspace or no active workspace target is available.
+- In CLI / Scout without active-workspace context, ask for a target folder when CWD does not identify a workspace. Do not infer an external project location.
+- Use Windows-style paths with backslashes.
+
+## Folder naming
+
+- Prefer concise kebab-case English folder names, for example:
+  - `azure-monitor-workspace-validation`
+  - `joule-validation`
+  - `customer-meeting-prep`
+- If the user provides a Japanese or informal topic name, convert it to a clear English folder slug.
+- If a folder already exists, reuse it instead of creating a duplicate. If the requested name is ambiguous or would collide with an unrelated folder, ask before proceeding.
+
+## Creation flow
+
+1. Determine the intended project topic and folder slug.
+2. Resolve the target using Default location. Reuse an active workspace for in-place work; create a new folder under the configured project root only when a separate project workspace is requested.
+3. Default to creating a lightweight project package, not just an empty folder, when the request is for validation, investigation, PoC, comparison, customer explanation, screenshot collection, or when the user asks for viewpoints/criteria.
+4. If the user explicitly asks for only a folder, create the folder only and report the path.
+5. For large moves, renames, or destructive cleanup, follow dry-run -> confirmation -> execution.
+
+## Meeting notes in an existing project
+
+- Locate the project's existing meeting note or retrospective and update it; otherwise use a dated note in its notes folder if one exists, or alongside its existing records. Do not initialize a new project, create a customer workspace, or add meeting folders to the default package just for one meeting.
+- Record the meeting date, source (link to the original transcript or attachment when available), confirmed discussion and decisions, open questions, and follow-up actions. Assign owners and deadlines only when explicitly agreed; mark uncertain names, figures, and speech-recognition output as unverified.
+- Keep restricted source material in its existing authorized location. Do not copy confidential slides or raw transcripts into a shareable summary; distinguish what a participant proposed from an agreed commitment or outcome.
+- Verify that the note exists in the owning project and that unresolved questions and next actions are visible there or linked to an existing action record. Avoid a parallel task ledger.
+
+## Default project package
+
+When creating a validation, investigation, PoC, or comparison workspace, create these artifacts by default unless the user asks otherwise:
+
+```text
+README.md
+validation-plan.md
+notes\findings.md
+screenshots\README.md
+screenshots\01-source-or-baseline
+screenshots\02-validation
+screenshots\03-customer-story
+exports
+```
+
+Adapt folder names to the topic when obvious. For example, a two-product comparison can use product-specific screenshot folders plus a comparison/customer-story folder.
+
+If the user mentions cost, pricing, TCO, FinOps, billing, or comparing the cost of multiple options, also create `cost-comparison.md` with assumptions, measured usage, unit prices, formulas, screenshots/evidence, and final comparison notes.
+
+## Validation plan quality bar
+
+`validation-plan.md` should be useful immediately, even before the user provides detailed requirements. Include:
+
+- Purpose and expected output.
+- Key questions or hypotheses to validate.
+- Scope and explicit non-goals.
+- Environment and prerequisites to prepare.
+- Step-by-step validation scenarios.
+- Evidence plan, including screenshot targets and naming convention.
+- Provenance for source material and screenshots; keep originals distinct from edited or shareable copies.
+- Comparison or decision criteria when there are multiple options.
+- Customer value story: what benefit the customer should understand from the validation.
+- Actual measurement scenarios for claims that require evidence. Do not stop at conceptual comparison when the user asks to "actually compare", "verify", "measure", or "cost compare".
+- Risks, caveats, and open questions.
+- Official references for Microsoft/Azure topics.
+
+For Microsoft/Azure topics, verify important product facts with official Microsoft Learn, Azure pricing, or other Microsoft official sources before writing them into the artifact, and include source URLs.
+
+## Cost comparison plans
+
+When the task includes cost comparison, the plan must define how cost will be measured or estimated, not only list pricing pages. Include:
+
+- The comparable workload or scenario.
+- What data each option actually stores or processes. If the services are not same-data alternatives, state that explicitly.
+- Usage drivers and units for each option, such as GB ingested, GB retained, metric samples, time series, queries, exports, or add-on services.
+- Baseline unit prices from official pricing sources or Azure Retail Prices API, with region, currency, and retrieval date.
+- Test runs that separate baseline, high-volume, and high-cardinality or high-retention cases where relevant.
+- Formulas for converting measured usage into daily/monthly estimates.
+- Evidence to collect, such as Cost Management screenshots, usage queries, pricing calculator/API output, and portal screenshots.
+- A note that actual billing can lag and should be reconciled with Cost Management after charges are reflected.
+
+For Azure Monitor workspace versus Log Analytics workspace specifically, do not frame the comparison as putting identical data into both. Use the same monitored workload, send logs to Log Analytics workspace and Prometheus metrics to Azure Monitor workspace, then compare the actual cost drivers: log ingestion/retention for Log Analytics workspace versus metric samples/cardinality/query behavior for Azure Monitor workspace.
+
+## Reporting
+
+- Report the final path first.
+- Mention if an existing folder was reused.
+- Keep the response concise in Japanese.
+
+## Guardrails
+
+- Do not move or delete existing files unless explicitly requested or needed to fix a mistaken placement made in the current task.
+- Do not store secrets or credentials in project files.
+- Do not store user-machine-specific absolute paths in this private repo skill; keep those in local configuration or local installed skill copies.
+- For Microsoft/Azure validation plans, verify important facts with official Microsoft Learn/Azure pricing information and include source URLs in artifacts when applicable.
