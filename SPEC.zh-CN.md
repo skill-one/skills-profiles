@@ -32,8 +32,10 @@ English: [SPEC.md](SPEC.md)
 ——清单是它唯一留下的痕迹。
 
 `<id>` 是 skill id，`{owner}/{repo}/{slug}`，按镜像的拼写原样携带。每行还带镜像发布的 `name`
-（即该 skill 自己 `SKILL.md` 里的 front matter `name`）和 `dir`——它的文件在树里的路径，由该
-`name` 与其仓库所含源匹配解析而来。`dir` 是交给 `jev.py` 的句柄，仓库未拉取前为 `null`。
+（即该 skill 自己 `SKILL.md` 里的 front matter `name`）和 `dir`——它的文件所在目录，是相对
+`skills/` 根的路径，以该行自己的 `owner/repo` 开头（因此文件总在 `skills/<dir>`，原样拼接即可），
+由该 `name` 与其仓库所含源匹配解析而来。`dir` 为两段表示源就在仓库根——单 skill 仓库。
+`dir` 是交给 `jev.py` 的句柄，仓库未拉取前为 `null`。
 
 `domain.json` 是 `{domain, confidence, probabilities}`：
 

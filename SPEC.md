@@ -37,9 +37,11 @@ into the catalog - its only lasting trace.
 
 `<id>` is the skill id, `{owner}/{repo}/{slug}`, carried the way the mirror spells it. Each row
 also carries the mirror's `name` - the front matter `name` of the skill's own `SKILL.md` - and
-`dir`, the tree path its files live at, resolved by matching that `name` against the sources its
-repository holds. `dir` is the handle `jev.py` is handed, and `null` while the repository has not
-been fetched.
+`dir`: the directory its files live at, as a path relative to `skills/`, leading with the row's
+own `owner/repo` (so the files are always at `skills/<dir>`, taken as-is), resolved by matching
+that `name` against the sources its repository holds. A two-segment `dir` means the source sits
+at the repository's root - a single-skill repository. `dir` is the handle `jev.py` is handed, and
+`null` while the repository has not been fetched.
 
 `domain.json` is `{domain, confidence, probabilities}`:
 

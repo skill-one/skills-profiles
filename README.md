@@ -29,8 +29,9 @@ output/
 │                                    and link, `gone` where GitHub has none
 ├── owners/<owner>.png               one owner's avatar - the fixed file a frontend builds unaided
 ├── skills.jsonl                     the catalog: one flat line per skill the mirror lists — its
-│                                    own row (id, name, installs) plus dir, description,
-│                                    description_zh and domain, each null until fetched and built
+│                                    own row (id, name, installs) plus dir (the files' home under
+│                                    skills/, taken as-is), description, description_zh and
+│                                    domain, each null until fetched and built
 └── README.md                        ... and the front page beside it: what this directory is, and
     README.zh-CN.md                  how much of it is built — the first is in English, this Chinese
 ```
