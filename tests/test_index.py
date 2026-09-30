@@ -12,7 +12,8 @@ from conftest import SKILLS, skill_md_text, skill_path
 ALPHA = "owner-a/repo-a/alpha"
 BETA = "owner-b/repo-b/beta"
 DOT = "owner-e/.dotcfg/settings"
-# `hotel:sub` is how the mirror spells this id, and `hotel_sub` is the spelling its directories take
+# the id is the mirror's own spelling, `name` is what its SKILL.md says, and here the tree's
+# directory takes the same spelling as the id - the common case
 HOTEL = "owner-h/repo-h/hotel:sub"
 
 DOMAIN = {"domain": "office-productivity", "confidence": 0.9,
@@ -28,6 +29,8 @@ def alpha_source() -> str:
 
 ALPHA_ROW = {
     "id": ALPHA,
+    "name": "alpha",
+    "dir": ALPHA,
     "installs": "300",
     "description": "Tidies a note list, folds the loose ends into a running index, and keeps "
                    "the whole pile searchable.",
@@ -71,7 +74,8 @@ def test_a_listed_skill_whose_repository_is_not_on_disk_is_a_row_of_nulls(workdi
     the batch walks the catalog to know what to build next."""
     config = common.Config()
     listing = config.output_dir / "fresh.jsonl"
-    listing.write_text('{"id": "owner-f/repo-f/foxtrot", "installs": 5}\n', encoding="utf-8")
+    listing.write_text('{"id": "owner-f/repo-f/foxtrot", "name": "foxtrot", "installs": 5}\n',
+                       encoding="utf-8")
 
     lines = index.rows(config, listing)
 
@@ -137,10 +141,13 @@ def test_the_chinese_description_is_read_out_of_the_zh_page(workdir):
 
 
 def test_the_id_is_the_mirrors_own_spelling(workdir):
-    """A row is joined on the mirror's id, while the directories of the tree spell a `:` as `_`,
-    which is the handle the batch is handed."""
+    """A row keeps the mirror's id verbatim; the `dir` field is the handle the batch is handed,
+    resolved by matching the row's `name` against the sources its repository holds."""
     config = common.Config()
-    assert row(config, HOTEL)["id"] == HOTEL
+    hotel = row(config, HOTEL)
+    assert hotel["id"] == HOTEL
+    assert hotel["name"] == "hotel:sub"
+    assert hotel["dir"] == HOTEL
     assert skill_path(config.output_dir, HOTEL).is_dir()
 
 
@@ -182,9 +189,9 @@ def test_a_fresh_listing_is_the_left_side(workdir):
     not."""
     listing = common.Config().output_dir / "fresh.jsonl"
     listing.write_text(
-        '{"id": "owner-e/.dotcfg/settings", "installs": 5}\n'
-        '{"id": "owner-a/repo-a/alpha", "installs": 9}\n'
-        '{"id": "owner-f/repo-f/foxtrot", "installs": 7}\n', encoding="utf-8")
+        '{"id": "owner-e/.dotcfg/settings", "name": "settings", "installs": 5}\n'
+        '{"id": "owner-a/repo-a/alpha", "name": "alpha", "installs": 9}\n'
+        '{"id": "owner-f/repo-f/foxtrot", "name": "foxtrot", "installs": 7}\n', encoding="utf-8")
 
     lines = index.rows(common.Config(), listing)
 

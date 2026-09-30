@@ -17,7 +17,7 @@ English: [README.md](README.md) · 开发指南: [DEVELOPING.zh-CN.md](DEVELOPIN
 
 ```
 output/
-├── skills/<owner>/<repo>/<slug>/    每个 skill 一个目录——可直接当 skill 安装，
+├── skills/<owner>/<repo>/<dir>/     每个 skill 一个目录——可直接当 skill 安装，
 │   ├── SKILL.md                     标注随行：源页面，从该 skill 自己的仓库拉取
 │   ├── domain.json                  一个标签，类型化端点回答的完整内容
 │   └── SKILL.zh.md                  中文页面；front matter 里带中文 description
@@ -25,7 +25,7 @@ output/
 │                                    GitHub 无答案处 `gone`
 ├── owners/<owner>.png               owner 头像——前端无需读清单即可拼接的固定文件
 ├── skills.jsonl                     清单：镜像列出的、树仍可构建的每个 skill 一行——镜像自己的行
-│                                    （id、installs）外加 description、
+│                                    （id、name、installs）外加 dir、description、
 │                                    description_zh 和 domain，未拉取构建前均为 null
 └── README.md                        ……以及旁边的首页：这个目录是什么、建了多少——
     README.zh-CN.md                  一份英文，这份中文

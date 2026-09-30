@@ -134,14 +134,10 @@ class Config(BaseSettings):
 # --------------------------------------------------------------------------- the tree
 
 
-def skill_dir_name(skill: str) -> str:
-    """The `_` spelling upstream writes for `:` and `&` in an id."""
-    return skill.replace(":", "_").replace("&", "_")
-
-
 def skill_dir(config: Config, skill: str) -> Path:
-    """The skill's one directory: its source page and its angles' files together."""
-    return config.output_dir / SKILLS_DIR / skill_dir_name(skill)
+    """The skill's one directory: its source page and its angles' files together. The argument is
+    the tree path the catalog's `dir` field carries - the directory the source sat in."""
+    return config.output_dir / SKILLS_DIR / skill
 
 
 def skill_md_path(config: Config, skill: str) -> Path:
@@ -213,8 +209,8 @@ def skill_description(source: str) -> str:
 
 
 def skill_name(source: str) -> str:
-    """The skill's own front matter `name`, or nothing when there is none. The mirror spells a
-    skill's id slug out of this field, and the tree keys the source's directory by it too."""
+    """The skill's own front matter `name`, or nothing when there is none. The mirror publishes
+    the same field for each listed skill, and it is what ties a listing row to its source."""
     block = FRONT_MATTER.match(source)
     if block is None:
         return ""
@@ -226,6 +222,38 @@ def skill_name(source: str) -> str:
     return name.strip() if isinstance(name, str) else ""
 
 
+class SkillDirs:
+    """The skills one repository holds, found by their front-matter `name`: the directory each
+    name sits in under `skills/`, scanned once per repository and kept. Sorted order decides a
+    name that two directories carry. The root `SKILL.md` of a single-skill repository is the
+    skill itself: its directory is the repository's own."""
+
+    def __init__(self, config: Config):
+        self.config = config
+        self._dirs: dict[str, dict[str, str]] = {}
+
+    def find(self, repo: str, name: str) -> str | None:
+        """The tree path holding the source whose `name` this is, or None - either the repository
+        is not on disk yet, or no source in it carries the name."""
+        if repo not in self._dirs:
+            self._dirs[repo] = self._scan(repo)
+        return self._dirs[repo].get(name)
+
+    def _scan(self, repo: str) -> dict[str, str]:
+        dirs: dict[str, str] = {}
+        root = self.config.output_dir / SKILLS_DIR / repo
+        root_source = root / SKILL_MD
+        if root_source.is_file():
+            dirs[skill_name(root_source.read_text(encoding="utf-8", errors="replace"))] = repo
+        if root.is_dir():
+            for child in sorted(root.iterdir()):
+                source = child / SKILL_MD
+                if child.is_dir() and source.is_file():
+                    text = source.read_text(encoding="utf-8", errors="replace")
+                    dirs.setdefault(skill_name(text), f"{repo}/{child.name}")
+        return dirs
+
+
 def repository(config: Config, skill: str) -> dict | None:
     """The context a skill's own repository gives: its id, and the siblings beside it.
 
@@ -233,7 +261,7 @@ def repository(config: Config, skill: str) -> dict | None:
     second skill's body. A repository with no sibling says nothing the skill's own name has not
     already said, so it is not sent at all rather than sent empty.
     """
-    parts = skill_dir_name(skill).split("/")
+    parts = skill.split("/")
     if len(parts) != 3:
         return None
     owner, repo, own = parts
@@ -422,7 +450,7 @@ def run(argv: list[str] | None, *, program: str, description: str, angle: str,
     """
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument("skill", nargs="?",
-                        help="skill directory in the snapshot: owner/repo/slug")
+                        help="the skill's directory in the tree: owner/repo/dir")
     parser.add_argument("--print", dest="print_request", action="store_true",
                         help="print the request and stop, calling nothing")
     args = parser.parse_args(argv)

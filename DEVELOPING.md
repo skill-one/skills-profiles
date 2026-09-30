@@ -97,8 +97,8 @@ place, and turn a failure into one stderr line and a status. Each producer suppl
 things: the requests, the calls that answer them, and its dry-run placeholder. The domain angle:
 
 ```bash
-uv run python jev.py <owner>/<repo>/<slug>           # label exactly one skill
-uv run python jev.py <owner>/<repo>/<slug> --print   # print the request and stop, calling nothing
+uv run python jev.py <owner>/<repo>/<dir>           # label exactly one skill
+uv run python jev.py <owner>/<repo>/<dir> --print   # print the request and stop, calling nothing
 ```
 
 `jev.py` has no "skip if it exists" check on purpose: deciding what to build is `batch.py`'s job.
@@ -135,8 +135,8 @@ a rejected body (400) is not.
 The zh page angle is the chat one:
 
 ```bash
-uv run python skill_zh.py <owner>/<repo>/<slug>           # build exactly one Chinese page
-uv run python skill_zh.py <owner>/<repo>/<slug> --print   # print every request as one json array
+uv run python skill_zh.py <owner>/<repo>/<dir>           # build exactly one Chinese page
+uv run python skill_zh.py <owner>/<repo>/<dir> --print   # print every request as one json array
 ```
 
 `skill_zh.py` and the chat library it asks, `translate.py`, share the same `common.Config`:
@@ -190,13 +190,14 @@ built** (domain coverage, zh-page coverage, and the repository and owner coverag
 `fetch.py` is the other side: the driver downloads the window's repositories - each `owner/repo` of
 the skills about to be built, one codeload tarball each (`--repo-tarball` says where), `fetch_jobs`
 at a time, and only the ones not already on disk - and `fetch.py` streams each tarball once. A skill is
-a `SKILL.md` under a subdirectory, keyed by the front matter `name`; a repository with no skill in a
-subdirectory is itself one skill, its root `SKILL.md` the source (keyed by the `name`, the
-repository's own name when there is none), while a root one beside subdirectory skills stays the
-readme. A source is taken only when it yields a description, and only once per name.
-The mirror spells a skill id's slug out of the front matter `name`, and the tree keys the directory
-by the same field, so a catalog row reaches its source through `skill_dir_name` alone; a source
-without a usable `name` falls back to the directory it sat in.
+a `SKILL.md` under a subdirectory, and it lands under the directory it sat in, unchanged; a
+repository with no skill in a subdirectory is itself one skill, its root `SKILL.md` the source
+kept at the root, while a root one beside subdirectory skills stays the readme. A source is taken
+only when it yields a description, and only once per directory.
+Which listing row a directory belongs to is decided by matching the front matter `name` - the
+field the mirror publishes for every skill - against the sources the repository holds, once per
+repository and kept; the row's `dir` field carries the answer, and that is the handle `jev.py` is
+handed.
 The catalog is not consulted here - a skill the listing has not reached yet is unpacked all the
 same. The repository directory is created either way, so its presence is the cache: a repository
 that holds no source for a listed skill leaves that skill an empty directory. A repository that
@@ -333,7 +334,7 @@ uv run ruff check .                          # lint
 uv run mypy                                  # types
 just dry=1 limit=2 build domain              # the batch itself, end to end
 just dry=1 build skill_zh                    # the second batch, end to end
-uv run python jev.py <owner>/<repo>/<slug> --print   # dev only: see a request without calling
+uv run python jev.py <owner>/<repo>/<dir> --print   # dev only: see a request without calling
 ```
 
 There is deliberately no `just render`: printing a request is a dev-only check, so it stays a

@@ -13,7 +13,7 @@ it gets written.
 
 ```
 <output_dir>/
-├── skills/<owner>/<repo>/<slug>/     # one directory per skill - it installs as the skill itself,
+├── skills/<owner>/<repo>/<dir>/      # one directory per skill - it installs as the skill itself,
 │   ├── SKILL.md                      #   its annotations riding along: the source page, fetched
 │   │                                 #   from the skill's own repository
 │   ├── domain.json                   # the label: {domain, confidence, probabilities}
@@ -35,8 +35,11 @@ per owner - keyed by the `owner/repo` (or `owner`) a skill id leads with, so the
 second catalog. The mirror's listing is pulled fresh by `just sync`
 into the catalog - its only lasting trace.
 
-`<id>` is the skill id, `{owner}/{repo}/{slug}`. A row carries it the way the mirror spells it; the
-two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py` is handed.
+`<id>` is the skill id, `{owner}/{repo}/{slug}`, carried the way the mirror spells it. Each row
+also carries the mirror's `name` - the front matter `name` of the skill's own `SKILL.md` - and
+`dir`, the tree path its files live at, resolved by matching that `name` against the sources its
+repository holds. `dir` is the handle `jev.py` is handed, and `null` while the repository has not
+been fetched.
 
 `domain.json` is `{domain, confidence, probabilities}`:
 
@@ -63,7 +66,8 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py`
   in the catalog, so no run fetches it again. The join to a skill is the `owner/repo` its id leads
   with.
 - **The catalog is the way in.** `skills.jsonl` holds one flat line per skill the mirror lists and
-  the tree can still build, in the mirror's own order - the mirror's row (`id`, `installs`) plus the
+  the tree can still build, in the mirror's own order - the mirror's row (`id`, `name`, `installs`)
+  plus the tree's `dir` and the
   `description` read out of that skill's own `SKILL.md`, its `description_zh` (the `description` in
   the zh page's front matter), the `domain` it was labelled with, and the `confidence` it was
   labelled at. Every listed skill is a row, fetched or not: the joined fields are `null` until the

@@ -74,19 +74,24 @@ def read_ids(path: Path) -> list[str]:
         rows = common.read_jsonl(path)
     except ValueError as error:
         raise BatchError(f"{error} - run `just sync` first") from error
-    return [common.skill_dir_name(row["id"]) for row in rows
-            if isinstance(row.get("id"), str)]
+    return [row["id"] for row in rows if isinstance(row.get("id"), str)]
 
 
-def catalog_ids(config: Config) -> list[str]:
-    """The catalog's ids in the batch's own order - the mirror's, installs descending."""
+def catalog_rows(config: Config) -> list[dict]:
+    """The catalog's rows in the batch's own order - the mirror's, installs descending - each
+    carrying the `dir` its files live at (null while the repository has not been fetched) and
+    the `name` the tree resolves a still-unfetched skill by."""
     path = config.output_dir / common.INDEX
     if not path.is_file():
         raise BatchError(f"no catalog under {config.output_dir} - run `just sync` first")
-    ids = read_ids(path)
-    if not ids:
+    try:
+        rows = common.read_jsonl(path)
+    except ValueError as error:
+        raise BatchError(str(error)) from error
+    rows = [row for row in rows if isinstance(row.get("id"), str)]
+    if not rows:
         raise BatchError("the catalog lists no skill")
-    return ids
+    return rows
 
 
 def repo_of(skill: str) -> str:
@@ -99,19 +104,26 @@ def repo_dir(config: Config, repo: str) -> Path:
     return config.output_dir / common.SKILLS_DIR / Path(repo)
 
 
-def window(config: Config, angles: list[str], limit: int) -> list[str]:
-    """The next `limit` skills still missing at least one of the angles, in catalog order. A skill
-    whose repository is already on disk without a source for it can never be built, so it is
-    skipped forever; `0` means no cap. The count is work, not positions."""
+def window(config: Config, angles: list[str], limit: int, dirs: common.SkillDirs) -> list[dict]:
+    """The next `limit` catalog rows still missing at least one of the angles, in catalog order.
+    A row's files live at its `dir`; a row fetched without a source carrying its `name` can never
+    be built, so it is skipped forever; `0` means no cap. The count is work, not positions."""
     names = [common.ANGLE_FILES[angle] for angle in angles]
-    work: list[str] = []
-    for skill in catalog_ids(config):
-        if all((common.skill_dir(config, skill) / name).is_file() for name in names):
+    work: list[dict] = []
+    for row in catalog_rows(config):
+        repo = repo_of(row["id"])
+        dir_path = row.get("dir")
+        if dir_path and all((common.skill_dir(config, dir_path) / name).is_file()
+                            for name in names):
             continue
-        if repo_dir(config, repo_of(skill)).is_dir() and not \
-                common.skill_md_path(config, skill).is_file():
-            continue
-        work.append(skill)
+        if repo_dir(config, repo).is_dir():
+            # the repository is fetched: the row resolves now or never
+            if not dir_path and isinstance(row.get("name"), str):
+                dir_path = dirs.find(repo, row["name"])
+            if dir_path is None or not common.skill_md_path(config, dir_path).is_file():
+                continue
+            row["dir"] = dir_path
+        work.append(row)
         if limit and len(work) >= limit:
             break
     return work
@@ -208,19 +220,23 @@ class LazyFetcher:
 # ----------------------------------------------------------------------------- the pool
 
 
-def build_one(config: Config, angle: str, skill: str, fetcher: LazyFetcher) -> str:
-    """Run one producer in this process on one skill: "built", "skipped" - its repository holds no
-    source for it, so it can never be built and the window skips it next time - or "failed". A
-    failure - a repository that will not download, any producer exception, a SystemExit for a
-    missing key included - is one stderr line here and the traceback in GEN_ERR_LOG beside the
-    FAIL_LOG line CI groups partial runs by."""
-    repo = repo_of(skill)
+def build_one(config: Config, angle: str, row: dict, fetcher: LazyFetcher,
+              dirs: common.SkillDirs) -> str:
+    """Run one producer in this process on one catalog row: "built", "skipped" - its repository
+    holds no source carrying its `name`, so it can never be built and the window skips it next
+    time - or "failed". A failure - a repository that will not download, any producer exception, a
+    SystemExit for a missing key included - is one stderr line here and the traceback in
+    GEN_ERR_LOG beside the FAIL_LOG line CI groups partial runs by."""
+    repo = repo_of(row["id"])
     detail: str
+    dir_path = row.get("dir")
     # the repository directory on disk is the cache: there means fetched
     error = None if repo_dir(config, repo).is_dir() else fetcher.ensure(repo)
-    if error is None and common.skill_md_path(config, skill).is_file():
+    if dir_path is None and error is None and isinstance(row.get("name"), str):
+        dir_path = dirs.find(repo, row["name"])
+    if error is None and dir_path and common.skill_md_path(config, dir_path).is_file():
         try:
-            import_module(ANGLE_MODULE[angle]).main([skill])
+            import_module(ANGLE_MODULE[angle]).main([dir_path])
         except (Exception, SystemExit):  # a producer failure is data, not a crash
             detail = traceback.format_exc()
         else:
@@ -233,12 +249,12 @@ def build_one(config: Config, angle: str, skill: str, fetcher: LazyFetcher) -> s
         fail_log = os.environ.get("FAIL_LOG")
         if fail_log:
             with open(fail_log, "a", encoding="utf-8") as out:
-                out.write(f"FAILED {ANGLE_LABEL[angle]} {skill}\n")
+                out.write(f"FAILED {ANGLE_LABEL[angle]} {row['id']}\n")
         error_log = os.environ.get("GEN_ERR_LOG")
         if error_log:
             with open(error_log, "a", encoding="utf-8") as out:
                 out.write(detail)
-    print(f"failed: {skill}", file=sys.stderr)
+    print(f"failed: {row['id']}", file=sys.stderr)
     return "failed"
 
 
@@ -248,18 +264,20 @@ def build(config: Config, angle: str, limit: int, jobs: int, fetch_jobs: int,
     published output, so the run is 0 while something was built or nothing could be; a window
     whose every job failed is a broken run and is 1."""
     angles = [common.DOMAIN_ANGLE, common.SKILL_ZH_ANGLE] if angle == "all" else [angle]
-    skills = window(config, angles, limit)
+    dirs = common.SkillDirs(config)
+    skills = window(config, angles, limit, dirs)
     if not skills:
         print(f"nothing to build: every skill is done for {angle}", file=sys.stderr)
         return 0
-    jobs_list = [(a, skill) for skill in skills for a in angles
-                 if not common.angle_path(config, skill, a).is_file()]
+    jobs_list = [(a, row) for row in skills for a in angles
+                 if not (row.get("dir") and common.angle_path(config, row["dir"], a).is_file())]
     if not jobs_list:
         print(f"nothing to build: no missing {angle} output in the window", file=sys.stderr)
         return 0
     with LazyFetcher(config, template, fetch_jobs) as fetcher, \
             ThreadPoolExecutor(max_workers=jobs) as pool:
-        futures = [pool.submit(build_one, config, a, skill, fetcher) for a, skill in jobs_list]
+        futures = [pool.submit(build_one, config, a, row, fetcher, dirs)
+                   for a, row in jobs_list]
         results = [future.result() for future in as_completed(futures)]
     built, failed = results.count("built"), results.count("failed")
     print(f"done {built}/{len(jobs_list)} {angle} output(s)", file=sys.stderr)
@@ -276,8 +294,11 @@ def clean(config: Config, angle: str, limit: int) -> int:
     names = (list(common.ANGLE_FILES.values()) if angle == "all"
              else [common.ANGLE_FILES[angle]])
     window: list[list[Path]] = []
-    for skill in catalog_ids(config):
-        files = [common.skill_dir(config, skill) / name for name in names]
+    for row in catalog_rows(config):
+        dir_path = row.get("dir")
+        if not dir_path:
+            continue
+        files = [common.skill_dir(config, dir_path) / name for name in names]
         if any(path.is_file() for path in files):
             window.append(files)
             if limit and len(window) >= limit:
@@ -305,8 +326,8 @@ def repo_roster(config: Config) -> list[str]:
     """The distinct repositories the catalog names, in its own order - a skill id's first two
     segments, deduped, the roster a meta run works."""
     seen: list[str] = []
-    for skill in catalog_ids(config):
-        repo = repo_of(skill)
+    for row in catalog_rows(config):
+        repo = repo_of(row["id"])
         if repo not in seen:
             seen.append(repo)
     return seen

@@ -19,9 +19,9 @@ REPO_SHA = "abc1234"  # codeload names a repository tarball's root <repo>-<sha>
 OUTPUT = Path("output")
 
 # The fake mirror's own index: five skills with sources on disk, one without (its repository holds
-# no skills/ directory, so the fetch yields nothing). The mirror carries no description and no
-# content hash any more - a skill's own front matter is the only description, and the hash is
-# computed here, over the fetched source.
+# no skills/ directory, so the fetch yields nothing). Each row carries the front matter `name` the
+# mirror now publishes, and the catalog carries the `dir` the tree resolves it to - here the same
+# spelling, the way real skills spell it.
 SKILLS = [
     {"id": "owner-a/repo-a/alpha", "installs": "300",
      "description": "Tidies a note list, folds the loose ends into a running index, and keeps "
@@ -42,35 +42,47 @@ SKILLS = [
 ]
 
 
-def skill_dir_name(skill_id: str) -> str:
-    """Upstream writes `_` where an id carries a colon or an ampersand."""
-    return skill_id.replace(":", "_").replace("&", "_")
+def entry_name(entry: dict) -> str:
+    """The front matter `name` the mirror publishes for one entry: its id's last segment."""
+    return entry["id"].rsplit("/", 1)[-1]
+
+
+def entry_dir(entry: dict) -> str:
+    """The tree path one entry's source lives at: the id's `owner/repo` joined with the directory
+    the tarball keeps it in - here the same spelling as the id."""
+    return entry["id"]
 
 
 def skill_md_text(entry: dict) -> str | None:
     """The SKILL.md the skill's own repository holds for one entry; None = the repository has none.
-    The front matter `name` is the skill's own slug, the way real skills spell it."""
+    The front matter `name` is the field the mirror publishes, the way real skills spell it."""
     if not entry.get("description"):
         return None
-    return (f"---\nname: {entry['id'].rsplit('/', 1)[-1]}\n"
+    return (f"---\nname: {entry_name(entry)}\n"
             f"description: {entry['description']}\n---\n\n"
             f"{entry['id']} does useful things.\n")
 
 
 def index_row(entry: dict) -> dict:
     """One row of the mirror's listing: what upstream publishes for a skill, and no more."""
-    return {name: entry[name] for name in ("id", "installs") if name in entry}
+    row = {name: entry[name] for name in ("id", "installs") if name in entry}
+    if entry.get("description"):
+        row["name"] = entry_name(entry)
+    return row
 
 
 def catalog_row(entry: dict) -> dict:
-    """One row of the catalog as this project publishes it: the mirror's fields, and no more - the
-    fixture only has to carry the order and the installs the window reads."""
-    return index_row(entry)
+    """One row of the catalog as this project publishes it: the mirror's fields plus the `dir`
+    its files live at - `null` while no source for the skill has been fetched."""
+    row = index_row(entry)
+    row["dir"] = entry_dir(entry) if entry.get("description") else None
+    return row
 
 
 def skill_path(output: Path, skill_id: str) -> Path:
-    """A skill's own directory in the tree: its SKILL.md alone, the way the lazy fetch leaves it."""
-    return output / common.SKILLS_DIR / skill_dir_name(skill_id)
+    """A skill's own directory in the tree: its SKILL.md alone, the way the lazy fetch leaves it.
+    The fixtures spell every directory the same as its id, so the id addresses it directly."""
+    return output / common.SKILLS_DIR / skill_id
 
 
 def profile_path(output: Path, skill_id: str) -> Path:

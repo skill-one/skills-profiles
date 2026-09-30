@@ -87,8 +87,8 @@ clean 另接受 `all`）和同一个清单顺序窗口；build 创建，clean �
 三样东西：请求们、回答它们的调用、dry-run 占位值。domain 角度：
 
 ```bash
-uv run python jev.py <owner>/<repo>/<slug>           # 精确标注一个 skill
-uv run python jev.py <owner>/<repo>/<slug> --print   # 打印请求就停，什么都不调用
+uv run python jev.py <owner>/<repo>/<dir>           # 精确标注一个 skill
+uv run python jev.py <owner>/<repo>/<dir> --print   # 打印请求就停，什么都不调用
 ```
 
 `jev.py` 故意没有“存在则跳过”的检查：决定建什么是 `batch.py` 的职责。它与调用方的完整契约是：
@@ -118,8 +118,8 @@ profile。端点闲置后的第一次调用常被丢弃（表现为超时），�
 zh 页面角度就是聊天那一个：
 
 ```bash
-uv run python skill_zh.py <owner>/<repo>/<slug>           # 精确构建一份中文页面
-uv run python skill_zh.py <owner>/<repo>/<slug> --print   # 把全部请求打印成一个 json 数组
+uv run python skill_zh.py <owner>/<repo>/<dir>           # 精确构建一份中文页面
+uv run python skill_zh.py <owner>/<repo>/<dir> --print   # 把全部请求打印成一个 json 数组
 ```
 
 `skill_zh.py` 和它调用的聊天库 `translate.py` 共用同一个 `common.Config`：
@@ -161,12 +161,11 @@ Markdown 缝合线切块（代码围栏外的空行；自身没有缝合线的�
 
 `fetch.py` 是另一侧：驱动器下载窗口涉及的仓库——即将构建的每个 skill 的 `owner/repo`，每个仓库
 一个 codeload tarball（`--repo-tarball` 指明地址），`fetch_jobs` 路并发，且只下载尚未在磁盘上
-的那些——随后 `fetch.py` 流式解包每个 tarball。一个 skill 是子目录里的一个 `SKILL.md`，以 front matter
-`name` 为键；子目录里没有任何 skill 的仓库本身就是单个 skill，根目录的 `SKILL.md` 就是它的源（按
-`name` 作 slug，没有 `name` 时用仓库名），而子目录 skill 旁的根 `SKILL.md` 仍是 readme。只有能
-读出 description 的源才会落盘，且
-同名只取一次。镜像以 front matter `name` 拼写 skill id 的 slug，树也以同一字段作目录名，目录行
-凭 `skill_dir_name` 一步即可命中源；没有可用 `name` 的源回退到它所在的目录名。这里不查清单——清单还没
+的那些——随后 `fetch.py` 流式解包每个 tarball。一个 skill 是子目录里的一个 `SKILL.md`，落在它所在的
+目录、原名不改；子目录里没有任何 skill 的仓库本身就是单个 skill，根目录的 `SKILL.md` 就是它的源，
+留在根上，而子目录 skill 旁的根 `SKILL.md` 仍是 readme。只有能读出 description 的源才会落盘，且
+同一目录只取一次。某个目录属于哪一行清单，由 front matter `name`——镜像为每个 skill 发布的字段——
+与该仓库所含源匹配而定，每仓库扫一次并记住；清单行的 `dir` 字段携带答案，也是交给 `jev.py` 的句柄。这里不查清单——清单还没
 列到的 skill 也照样解出来。仓库目录总会创建，所以它的存在就是缓存：某仓库不含某列出 skill 的
 源，就把该 skill 留作空目录。下载不下来的仓库干脆不在——它的 skill 失败，批次继续。GitHub 回答
 404/410 的仓库是彻底消失（已删除或转私有），仓库目录仍会创建作为标记，其 skill 之后的每轮运行都
@@ -286,7 +285,7 @@ uv run ruff check .                          # lint
 uv run mypy                                  # 类型
 just dry=1 limit=2 build domain              # 批处理本身，端到端
 just dry=1 build skill_zh                    # 第二个批次，端到端
-uv run python jev.py <owner>/<repo>/<slug> --print   # 仅开发：不调用，只看请求
+uv run python jev.py <owner>/<repo>/<dir> --print   # 仅开发：不调用，只看请求
 ```
 
 故意没有 `just render`：打印请求是仅开发用的检查，保留为直接运行的脚本开关，justfile 只放生产动词。

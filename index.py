@@ -28,25 +28,26 @@ from common import Config
 
 # The mirror's row, forwarded field by field rather than whole, so that every row of the catalog
 # has the same shape and a field upstream adds later is a decision made here rather than a surprise.
-MIRROR_FIELDS = ("id", "installs")
+# `dir` is ours: the tree path the skill's files live at, resolved by matching the row's `name`
+# against the sources its repository holds, and null while the repository has not been fetched.
+MIRROR_FIELDS = ("id", "name", "installs")
 
 
 def mirror_rows(config: Config, listing: Path | None) -> list[dict]:
-    """The mirror's own rows, in its own order - installs, descending.
+    """The rows to publish, in the mirror's own order - installs, descending.
 
-    A fresh listing the driver's refresh hands to `build()` is the left side; the offline CLI
-    passes none and falls back to the catalog itself: its rows carry `installs` already, in the
-    same order, so the numbers and the order survive.
+    A fresh listing the driver's refresh hands to `build()` is the left side, carried as-is; the
+    offline CLI passes none and falls back to the catalog itself, whose rows are already in this
+    shape, so the numbers, the order and the resolved directories survive.
     """
     if listing is not None:
         if not listing.is_file():
             raise SystemExit(f"{listing}: not found - run `just sync` first")
-        return common.read_jsonl(listing)
+        return [row for row in common.read_jsonl(listing) if isinstance(row.get("id"), str)]
     path = config.output_dir / common.INDEX
     if not path.is_file():
         raise SystemExit(f"{path}: not found - run `just sync` first")
-    return [{"id": row["id"], "installs": row.get("installs")}
-            for row in common.read_jsonl(path) if isinstance(row.get("id"), str)]
+    return [row for row in common.read_jsonl(path) if isinstance(row.get("id"), str)]
 
 
 def angle_output(config: Config, skill: str, angle: str) -> dict:
@@ -68,56 +69,62 @@ def zh_description(config: Config, skill: str) -> str:
 
 def rows(config: Config, listing: Path | None = None) -> list[dict]:
     """One row per skill the mirror lists and the tree can still build, in the mirror's order: the
-    mirror's row, plus what this project has read and decided about it so far.
+    mirror's row, plus the directory its source sits in and what this project has read and decided
+    about it so far.
 
     Every listed skill is a row, fetched or not - the batch walks the catalog to know what to build
-    next, so a skill the tree has not reached is a row whose joined fields are `null` rather than a
-    missing row. A skill whose repository is on disk without a readable description, though, is a
-    skill no run can ever build - the fetch took the repository and yielded nothing to lead with -
-    so it is no row at all, and the mirror's dead rows do not dilute the dataset.
+    next, so a skill whose repository has not been fetched is a row with `dir` null rather than a
+    missing row. A skill whose repository is on disk without a source carrying its `name`, though,
+    is a skill no run can ever build - the fetch took the repository and yielded nothing to lead
+    with - so it is no row at all, and the mirror's dead rows do not dilute the dataset.
     """
     kept: list[dict] = []
     dropped = 0
+    dirs = common.SkillDirs(config)
     for entry in mirror_rows(config, listing):
-        skill = common.skill_dir_name(entry.get("id", ""))
-        if sourceless(config, skill):
+        listed = entry.get("id")
+        if not isinstance(listed, str):
+            continue
+        repo = "/".join(listed.split("/")[:2])
+        name = entry.get("name")
+        dir_path = dirs.find(repo, name) if isinstance(name, str) else None
+        if dir_path is None:
+            if (config.output_dir / common.SKILLS_DIR / repo).is_dir():
+                dropped += 1
+                continue
+        elif not common.skill_description(common.skill_md(config, dir_path)):
             dropped += 1
             continue
-        kept.append(_row(entry, config, skill))
+        kept.append(_row(entry, config, dir_path))
     if dropped:
         print(f"dropped {dropped} listed skill(s) with no readable source on disk", file=sys.stderr)
     return kept
 
 
-def sourceless(config: Config, skill: str) -> bool:
-    """True when the repository is on disk without a description to build from: the repository was
-    fetched and will not be again, so no run can ever produce the skill's angles."""
-    if not (config.output_dir / common.SKILLS_DIR / Path(skill).parent).is_dir():
-        return False  # not fetched yet - the batch may still reach it
-    try:
-        source = common.skill_md(config, skill)
-    except FileNotFoundError:
-        return True
-    return not common.skill_description(source)
-
-
-def _row(entry: dict, config: Config, skill: str) -> dict:
-    """The mirror's row plus ours: the source's description, its Chinese translation, and the label
-    with its confidence - each `null` while the tree has not produced it.
+def _row(entry: dict, config: Config, dir_path: str | None) -> dict:
+    """The mirror's row plus ours: the directory its files live at, the source's description, its
+    Chinese translation, and the label with its confidence - each `null` while the tree has not
+    produced it.
 
     A skill not yet fetched is a row of `null`s, which is exactly how a reader tells a fetched row
     from an unfetched one. The catalog takes two of the label's fields; the rest of what Jev wrote
     stays in the profile.
     """
-    row = {name: entry.get(name) for name in MIRROR_FIELDS}
-    try:
-        source = common.skill_md(config, skill)
-    except FileNotFoundError:
+    row = {field: entry.get(field) for field in MIRROR_FIELDS}
+    row["dir"] = dir_path
+    if dir_path is None:
         row["description"] = None
+        row["description_zh"] = None
+        label: dict = {}
     else:
-        row["description"] = common.skill_description(source) or None
-    row["description_zh"] = zh_description(config, skill) or None
-    label = angle_output(config, skill, common.DOMAIN_ANGLE)
+        try:
+            source = common.skill_md(config, dir_path)
+        except FileNotFoundError:
+            row["description"] = None
+        else:
+            row["description"] = common.skill_description(source) or None
+        row["description_zh"] = zh_description(config, dir_path) or None
+        label = angle_output(config, dir_path, common.DOMAIN_ANGLE)
     row["domain"] = label.get("domain")
     row["confidence"] = label.get("confidence")
     return row
@@ -160,11 +167,10 @@ def facts(config: Config, indexed: list[dict]) -> dict:
     """
     total = len(indexed)
     weight = sum(_installs(row) for row in indexed)
-    dirs = {row["id"]: common.skill_dir_name(row["id"]) for row in indexed}
     domain_done = built_skills(config, common.ANGLE_FILES[common.DOMAIN_ANGLE])
     skill_zh_done = built_skills(config, common.ANGLE_FILES[common.SKILL_ZH_ANGLE])
-    domain_here = [row for row in indexed if dirs[row["id"]] in domain_done]
-    skill_zh_here = [row for row in indexed if dirs[row["id"]] in skill_zh_done]
+    domain_here = [row for row in indexed if row.get("dir") in domain_done]
+    skill_zh_here = [row for row in indexed if row.get("dir") in skill_zh_done]
     repos = {"/".join(row["id"].split("/")[:2]) for row in indexed}
     owners = {row["id"].split("/")[0] for row in indexed}
     repos_done = len(repos & resolved_repos(config))

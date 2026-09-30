@@ -19,7 +19,7 @@ keyed by the `owner/repo` a skill id leads with.
 
 ```
 output/
-├── skills/<owner>/<repo>/<slug>/    one directory per skill — it installs as the skill itself,
+├── skills/<owner>/<repo>/<dir>/     one directory per skill — it installs as the skill itself,
 │   ├── SKILL.md                     with its annotations riding along: the source page, fetched
 │   │                                from the skill's own repository
 │   ├── domain.json                  one label, the typed endpoint's whole answer
@@ -29,8 +29,8 @@ output/
 │                                    and link, `gone` where GitHub has none
 ├── owners/<owner>.png               one owner's avatar - the fixed file a frontend builds unaided
 ├── skills.jsonl                     the catalog: one flat line per skill the mirror lists — its
-│                                    own row (id, installs) plus description, description_zh and
-│                                    domain, each null until the skill is fetched and built
+│                                    own row (id, name, installs) plus dir, description,
+│                                    description_zh and domain, each null until fetched and built
 └── README.md                        ... and the front page beside it: what this directory is, and
     README.zh-CN.md                  how much of it is built — the first is in English, this Chinese
 ```

@@ -12,7 +12,7 @@ English: [SPEC.md](SPEC.md)
 
 ```
 <output_dir>/
-├── skills/<owner>/<repo>/<slug>/     # 每个 skill 一个目录——可直接当 skill 安装，
+├── skills/<owner>/<repo>/<dir>/      # 每个 skill 一个目录——可直接当 skill 安装，
 │   ├── SKILL.md                      #   标注随行：源页面，从该 skill 自己的仓库拉取
 │   ├── domain.json                   # 标签：{domain, confidence, probabilities}
 │   └── SKILL.zh.md                   # 中文页面；front matter 里带中文 description
@@ -31,8 +31,9 @@ English: [SPEC.md](SPEC.md)
 清单就能拼上。镜像的清单由 `just sync` 现拉进清单文件
 ——清单是它唯一留下的痕迹。
 
-`<id>` 是 skill id，`{owner}/{repo}/{slug}`。行里按镜像的拼写携带它；两个目录把 `:` 和 `&` 拼
-写成 `_`，这也是交给 `jev.py` 的句柄。
+`<id>` 是 skill id，`{owner}/{repo}/{slug}`，按镜像的拼写原样携带。每行还带镜像发布的 `name`
+（即该 skill 自己 `SKILL.md` 里的 front matter `name`）和 `dir`——它的文件在树里的路径，由该
+`name` 与其仓库所含源匹配解析而来。`dir` 是交给 `jev.py` 的句柄，仓库未拉取前为 `null`。
 
 `domain.json` 是 `{domain, confidence, probabilities}`：
 
@@ -54,7 +55,7 @@ English: [SPEC.md](SPEC.md)
   仓库行带 `gone: true` 的是 GitHub 无答案的仓库：否定结果留在清单里，所以没有哪一轮会重拉。与 skill 的
   连接键是 id 开头的 `owner/repo`。
 - **清单是入口。** `skills.jsonl` 按镜像自己的顺序为镜像列出的、树仍可构建的每个 skill 存扁平一行——镜像的行
-  （`id`、`installs`）加上从该 skill 自己的 `SKILL.md` 读出的 `description`、它的
+  （`id`、`name`、`installs`）加上树解析出的 `dir`、从该 skill 自己的 `SKILL.md` 读出的 `description`、它的
   `description_zh`（即 zh 页面 front matter 里的 `description`）、标的 `domain` 和标注时的
   `confidence`。每个列出的 skill 都是一行，无论拉没拉取：拼接字段在树拉取并构建之前为 `null`，
   所以未拉取的 skill 是一行 null 而不是缺失的行，清单同时是数据集和批次工作的顺序。

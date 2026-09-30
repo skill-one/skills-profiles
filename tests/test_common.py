@@ -237,3 +237,41 @@ def test_a_rejected_body_is_not_retried():
     with pytest.raises(httpx.HTTPStatusError):
         common.post_json(Fake(), common.DOMAIN_BASE_URL, "k", {}, max_retries=3)
     assert len(calls) == 1
+
+
+# ------------------------------------------------------------------------ the name resolution
+
+
+def test_a_source_is_found_by_its_front_matter_name(config):
+    """The mirror publishes the `name` each listed skill's SKILL.md carries; the directory its
+    source sits in is found by matching that field, whatever the directory itself spells."""
+    common.write_atomic(config.output_dir / common.SKILLS_DIR / "owner/repo/writing-rules"
+                        / common.SKILL_MD, "---\nname: hookify-rules\ndescription: D.\n---\n")
+
+    dirs = common.SkillDirs(config)
+
+    assert dirs.find("owner/repo", "hookify-rules") == "owner/repo/writing-rules"
+    assert dirs.find("owner/repo", "writing-rules") is None
+
+
+def test_a_root_source_is_found_at_the_repository_itself(config):
+    common.write_atomic(config.output_dir / common.SKILLS_DIR / "owner/repo"
+                        / common.SKILL_MD, "---\nname: the-one\ndescription: D.\n---\n")
+
+    dirs = common.SkillDirs(config)
+
+    assert dirs.find("owner/repo", "the-one") == "owner/repo"
+
+
+def test_a_repository_not_on_disk_resolves_nothing(config):
+    assert common.SkillDirs(config).find("owner/absent", "alpha") is None
+
+
+def test_sorted_order_decides_a_name_two_directories_carry(config):
+    """A repository that ships two copies of a skill under different directories resolves the
+    first in sorted order - one name, one directory."""
+    for where in ("zeta", "alpha"):
+        common.write_atomic(config.output_dir / common.SKILLS_DIR / f"owner/repo/{where}"
+                            / common.SKILL_MD, "---\nname: twin\ndescription: D.\n---\n")
+
+    assert common.SkillDirs(config).find("owner/repo", "twin") == "owner/repo/alpha"
