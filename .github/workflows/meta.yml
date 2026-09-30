@@ -21,9 +21,10 @@ concurrency:
   cancel-in-progress: false # never cancel a run that is about to push
 
 env:
-  # the only credential this run needs: GitHub's own API, for the repository and owner profiles.
-  # Unset runs under the anonymous 60-an-hour cap, which a whole snapshot would exhaust at once.
-  SKILLS_PROFILES_GITHUB_TOKEN: ${{ secrets.SKILLS_PROFILES_GITHUB_TOKEN }}
+  # GitHub's own API, for the repository and owner profiles. The built-in token is always there
+  # (1,000 requests an hour per repository); set the `SKILLS_PROFILES_GITHUB_TOKEN` secret to a PAT
+  # (5,000 an hour) when a whole snapshot outgrows that - anonymous is only 60.
+  SKILLS_PROFILES_GITHUB_TOKEN: ${{ secrets.SKILLS_PROFILES_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
 
 jobs:
   meta:

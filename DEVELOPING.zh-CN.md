@@ -301,7 +301,7 @@ uv run python jev.py <owner>/<repo>/<slug> --print   # 仅开发：不调用，�
 | ------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `ci.yml`      | 每次 push 和 PR | `uv sync`、`ruff check .`、`mypy`、`pytest`，装了 `just`。离线。                                                                                                                                                                                            |
 | `sync.yml`    | 手动            | `restore-dist` → `just sync` → `publish-dist`（`date`）。拉取镜像清单并重写清单文件；不调用模型。                                                                                                                                                           |
-| `meta.yml`    | 手动            | `restore-dist` → `just meta` → `publish-dist`（`date`）。补齐还缺的仓库资料与 owner 头像；不调用模型，只需要 `SKILLS_PROFILES_GITHUB_TOKEN`。                                                                     |
+| `meta.yml`    | 手动            | `restore-dist` → `just meta` → `publish-dist`（`date`）。补齐还缺的仓库资料与 owner 头像；不调用模型，只用 GitHub token（PAT 或内置的）。                                                                     |
 | `publish.yml` | 手动            | `restore-dist` → 对所选 `angle`（`domain`、`skill_zh`，或 `all` 共池一次跑完）跑 `just build <angle> limit=… jobs=…` → `just index` → `publish-dist`（`date-counter`）。需要所选角度各自的 secret 和变量。 |
 | `invalidate.yml` | 手动         | `restore-dist` → `just limit=0 clean <angle>` → `just index` → `publish-dist`。忘掉所选角度的全部已建产出——远程唯一的失效入口，分类法或 prompt 变更时运行——并发布删掉它们之后的树；不调用模型。下一次 publish 从零重建该角度。 |
 
