@@ -47,6 +47,9 @@ jobs:
       - name: Fetch the missing repository profiles and owner avatars
         run: just meta
 
+      - name: Rewrite the index and the READMEs (now carrying the entity coverage)
+        run: just index
+
       - name: Publish to dist
         uses: ./.github/actions/publish-dist
         with:

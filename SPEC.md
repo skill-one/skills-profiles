@@ -74,8 +74,9 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py`
   `.description_zh != null` what has been translated, and `.installs` ranks what has not. The
   catalog takes two of the three label fields; the profile is where the answer lives.
 - **The READMEs are the front page**, written by the same command from the same walk: two lines on
-  what the directory is, then how much of the dataset is labelled — the count and its share of the
-  mirror's installs, under the snapshot they describe. Nothing reads them back, and every line is a
+  what the directory is, then how much of the dataset is built — each angle's count and share of the
+  mirror's installs, and the repository and owner coverage the entity catalog adds, under the
+  snapshot they describe. Nothing reads them back, and every line is a
   function of the tree, so a tree that did not change rewrites them identically.
 - The two angles have two producers. `jev.py` asks a System One endpoint a typed question instead
   of sending a chat prompt: that is why `domain` has no prompt pair and no reason line, the

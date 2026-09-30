@@ -185,7 +185,7 @@ a listed skill whose repository is on disk without a readable description is no 
 run could ever build it.
 The same run writes `output/README.md` and its Chinese twin - `readme.py` holds the words, `index.py`
 hands it the numbers - the one thing the catalog cannot answer: **how much of the dataset is
-labelled** (domain coverage and zh-page coverage).
+built** (domain coverage, zh-page coverage, and the repository and owner coverage beside them).
 
 `fetch.py` is the other side: the driver downloads the window's repositories - each `owner/repo` of
 the skills about to be built, one codeload tarball each (`--repo-tarball` says where), `fetch_jobs`
@@ -347,7 +347,7 @@ Five workflows, and each one is thin: the work they do is `just`.
 | ------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `ci.yml`      | every push and pull request | `uv sync`, `ruff check .`, `mypy`, `pytest`, with `just` installed. Offline.                                                                                                                                                                                 |
 | `sync.yml`    | manual                      | `restore-dist` → `just sync` → `publish-dist` (`date`). Pulls the mirror's listing and rewrites the catalog; no model is called.                                                                                                                             |
-| `meta.yml`    | manual                      | `restore-dist` → `just meta` → `publish-dist` (`date`). Fills the repository profiles and owner avatars still missing; no model is called, only the GitHub token (a PAT, or the built-in one).                                                                             |
+| `meta.yml`    | manual                      | `restore-dist` → `just meta` → `just index` → `publish-dist` (`date`). Fills the repository profiles and owner avatars still missing; no model is called, only the GitHub token (a PAT, or the built-in one).                                                                             |
 | `publish.yml` | manual                      | `restore-dist` → `just build <angle> limit=… jobs=…` (`domain`, `skill_zh`, or `all` in one pool) → `just index` → `publish-dist` (`date-counter`). Needs the chosen angles' secrets and variables. |
 | `invalidate.yml` | manual                   | `restore-dist` → `just limit=0 clean <angle>` → `just index` → `publish-dist`. Forgets every built output of the chosen angle - the one remote invalidation path, run when the taxonomy or the prompts changed - and publishes the tree without them; no model calls. The next publish rebuilds the angle from scratch. |
 

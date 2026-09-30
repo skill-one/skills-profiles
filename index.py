@@ -140,9 +140,17 @@ def built_skills(config: Config, filename: str) -> set[str]:
             if len(path.relative_to(root).parts) == 4}
 
 
+def resolved_repos(config: Config) -> set[str]:
+    """The repositories the meta catalog has resolved: the ids in `repos.jsonl`, empty without one."""
+    path = common.repos_index_path(config)
+    if not path.is_file():
+        return set()
+    return {row["id"] for row in common.read_jsonl(path) if isinstance(row.get("id"), str)}
+
+
 def facts(config: Config, indexed: list[dict]) -> dict:
-    """What the README says: how much of the dataset is built for each angle, and the tree the
-    numbers come from.
+    """What the README says: how much of the dataset is built for each angle and each entity, and the
+    tree the numbers come from.
 
     The denominator is the mirror's own listing: every listed skill is a row, so the counts say how
     much of the whole dataset is done rather than how much of the tree happens to be fetched. The
@@ -157,6 +165,10 @@ def facts(config: Config, indexed: list[dict]) -> dict:
     skill_zh_done = built_skills(config, common.ANGLE_FILES[common.SKILL_ZH_ANGLE])
     domain_here = [row for row in indexed if dirs[row["id"]] in domain_done]
     skill_zh_here = [row for row in indexed if dirs[row["id"]] in skill_zh_done]
+    repos = {"/".join(row["id"].split("/")[:2]) for row in indexed}
+    owners = {row["id"].split("/")[0] for row in indexed}
+    repos_done = len(repos & resolved_repos(config))
+    owners_done = sum(1 for owner in owners if common.owner_avatar_path(config, owner).is_file())
     return {
         "total": str(total),
         "described": str(sum(1 for row in indexed if row["description"])),
@@ -166,6 +178,12 @@ def facts(config: Config, indexed: list[dict]) -> dict:
         "skillzh": str(len(skill_zh_here)),
         "skillzh_percent": _percent(len(skill_zh_here), total),
         "skillzh_installs": _percent(sum(_installs(row) for row in skill_zh_here), weight),
+        "repos_total": str(len(repos)),
+        "repos_built": str(repos_done),
+        "repos_percent": _percent(repos_done, len(repos)),
+        "owners_total": str(len(owners)),
+        "owners_built": str(owners_done),
+        "owners_percent": _percent(owners_done, len(owners)),
     }
 
 

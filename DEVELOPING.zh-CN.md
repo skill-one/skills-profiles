@@ -157,7 +157,7 @@ Markdown 缝合线切块（代码围栏外的空行；自身没有缝合线的�
 没有时消费者回退原文），而镜像列出的每个 skill 都是一行，其拼接字段在树拉取并构建前为 `null`；
 仓库已在盘上、却解析不出可读 description 的行则整行去掉——任何一轮都无法构建它。
 同一次运行写 `output/README.md` 和它的中文双胞胎——`readme.py` 装措辞，`index.py` 给数字——即清单
-回答不了的那件事：**数据集标了多少**（domain 覆盖率与 zh 页面覆盖率）。
+回答不了的那件事：**数据集建了多少**（domain 覆盖率、zh 页面覆盖率，以及伴随的仓库与 owner 覆盖率）。
 
 `fetch.py` 是另一侧：驱动器下载窗口涉及的仓库——即将构建的每个 skill 的 `owner/repo`，每个仓库
 一个 codeload tarball（`--repo-tarball` 指明地址），`fetch_jobs` 路并发，且只下载尚未在磁盘上
@@ -301,7 +301,7 @@ uv run python jev.py <owner>/<repo>/<slug> --print   # 仅开发：不调用，�
 | ------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `ci.yml`      | 每次 push 和 PR | `uv sync`、`ruff check .`、`mypy`、`pytest`，装了 `just`。离线。                                                                                                                                                                                            |
 | `sync.yml`    | 手动            | `restore-dist` → `just sync` → `publish-dist`（`date`）。拉取镜像清单并重写清单文件；不调用模型。                                                                                                                                                           |
-| `meta.yml`    | 手动            | `restore-dist` → `just meta` → `publish-dist`（`date`）。补齐还缺的仓库资料与 owner 头像；不调用模型，只用 GitHub token（PAT 或内置的）。                                                                     |
+| `meta.yml`    | 手动            | `restore-dist` → `just meta` → `just index` → `publish-dist`（`date`）。补齐还缺的仓库资料与 owner 头像；不调用模型，只用 GitHub token（PAT 或内置的）。                                                                     |
 | `publish.yml` | 手动            | `restore-dist` → 对所选 `angle`（`domain`、`skill_zh`，或 `all` 共池一次跑完）跑 `just build <angle> limit=… jobs=…` → `just index` → `publish-dist`（`date-counter`）。需要所选角度各自的 secret 和变量。 |
 | `invalidate.yml` | 手动         | `restore-dist` → `just limit=0 clean <angle>` → `just index` → `publish-dist`。忘掉所选角度的全部已建产出——远程唯一的失效入口，分类法或 prompt 变更时运行——并发布删掉它们之后的树；不调用模型。下一次 publish 从零重建该角度。 |
 

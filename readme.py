@@ -2,9 +2,9 @@
 """The README published with the dataset: the numbers index.py reads, said for a reader.
 
 `output/README.md` and its Chinese twin become the root of the `dist` branch, so they are the page
-anyone lands on. It stays small on purpose: what the directory is in two lines, then how much of
-the dataset is built for each angle. `just index` writes both from the same walk as the catalog, and
-nothing reads them back.
+anyone lands on. It stays small on purpose: what the directory is in a few lines, then how much of
+the dataset is built - each angle and each entity beside it. `just index` writes both from the same
+walk as the catalog, and nothing reads them back.
 """
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ README = "README.md"
 README_ZH = "README.zh-CN.md"
 # What the bullets under Progress say, in this order. Each name is a sentence in TEXT below and a
 # `<name>_label` beside it, so the two languages cannot drift apart in structure.
-FACTS = ("domain", "skill_zh", "catalog")
+FACTS = ("domain", "skill_zh", "catalog", "repos", "owners")
 
 # One page per language: the same thing said in the same order. `{{ name }}` is filled from the
 # numbers index.py reads; the rest is prose and markdown. The two hold the same keys - a test says
@@ -38,9 +38,13 @@ TEXT: dict[str, dict[str, str]] = {
         "domain_label": "domain",
         "skill_zh_label": "skill_zh",
         "catalog_label": "catalog",
+        "repos_label": "repos",
+        "owners_label": "owners",
         "domain": "{{ built }} of {{ total }} labelled ({{ percent }}), covering {{ installs }} of the mirror's installs",
         "skill_zh": "{{ skillzh }} of {{ total }} skill pages translated ({{ skillzh_percent }}), covering {{ skillzh_installs }} of the mirror's installs",
         "catalog": "the catalog lists all {{ total }} of the mirror's skills; {{ described }} carry a description, the rest are null until fetched",
+        "repos": "{{ repos_built }} of {{ repos_total }} repositories profiled ({{ repos_percent }})",
+        "owners": "{{ owners_built }} of {{ owners_total }} owner avatars ({{ owners_percent }})",
     },
     "zh": {
         "intro": "本仓库收集的那些 agent skills，每个由 Jev 端点标注一个封闭分类、由聊天模型给出\n"
@@ -55,9 +59,13 @@ TEXT: dict[str, dict[str, str]] = {
         "domain_label": "domain",
         "skill_zh_label": "skill_zh",
         "catalog_label": "清单",
+        "repos_label": "repos",
+        "owners_label": "owners",
         "domain": "{{ total }} 个里已标 {{ built }} 个（{{ percent }}），覆盖镜像安装量的 {{ installs }}",
         "skill_zh": "{{ total }} 个里已有 {{ skillzh }} 个中文页面（{{ skillzh_percent }}），覆盖镜像安装量的 {{ skillzh_installs }}",
         "catalog": "清单列出镜像全部 {{ total }} 个 skill；{{ described }} 个已有 description，其余在拉取前为 null",
+        "repos": "{{ repos_total }} 个仓库里建了 {{ repos_built }} 个资料（{{ repos_percent }}）",
+        "owners": "{{ owners_total }} 个 owner 里抓了 {{ owners_built }} 个头像（{{ owners_percent }}）",
     },
 }
 
