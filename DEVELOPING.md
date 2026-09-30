@@ -206,15 +206,16 @@ will not download is simply not here: its skills fail and the batch carries on. 
 the marker and its skills are skipped on every later run rather than fetched and failed again.
 
 `meta.py` is the third producer, but over entities rather than skills. The catalog is read as
-`owner/repo` and `owner` - the roster, in the same order - and each entity is one GitHub call:
-`GET {api}/repos/{owner}/{repo}` for a repository, `GET {api}/users/{owner}` plus a download of its
-`avatar_url` for an owner. A repository is shaped into one row of `repos.jsonl`, which `batch.py`
-merges in the catalog's own order; an owner is one avatar, written at the fixed `owners/<owner>.png`
-by `common.write_bytes`, its presence the whole of its cache. Every request carries
-`Accept: application/vnd.github+json`, a `User-Agent` GitHub refuses to answer without, and the
-Bearer token when `SKILLS_PROFILES_GITHUB_TOKEN` is set. `batch.py` owns the window and the pool;
-`meta.py` owns the shaping - `headers()`, the two URL builders, `repo_row()`, `repo_gone_row()`,
-`build_repo()` and `build_owner()`.
+`owner/repo` - the repositories, in the same order - and one repository is one GitHub call: `GET
+{api}/repos/{owner}/{repo}`, whose payload is shaped into a row of `repos.jsonl` (merged by
+`batch.py` in the catalog's own order) and carries the owner, whose avatar is written to the fixed
+`owners/<owner>.png` by `common.write_bytes`. Reading the owner from the repository rather than
+`/users` is why a renamed owner still yields an avatar (`/repos` follows the rename, `/users` answers
+404); an avatar's presence is the whole of its cache, so one repository is re-read when it is
+missing. Every request carries `Accept: application/vnd.github+json`, a `User-Agent` GitHub refuses
+to answer without, and the Bearer token when `SKILLS_PROFILES_GITHUB_TOKEN` is set. `batch.py` owns
+the window and the pool; `meta.py` owns the shaping - `headers()`, the URL builder, `repo_row()`,
+`repo_gone_row()` and `build_repo()`.
 
 ## How it works
 

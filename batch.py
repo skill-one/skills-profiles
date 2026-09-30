@@ -301,15 +301,14 @@ def clean(config: Config, angle: str, limit: int) -> int:
 META_JOBS = 32
 
 
-def meta_entities(config: Config, kind: str) -> list[str]:
-    """The distinct entities the catalog names, in its own order - the roster a meta run works, the
-    same way the catalog is the order a build works. A repository is a skill's first two segments,
-    an owner its first."""
+def repo_roster(config: Config) -> list[str]:
+    """The distinct repositories the catalog names, in its own order - a skill id's first two
+    segments, deduped, the roster a meta run works."""
     seen: list[str] = []
     for skill in catalog_ids(config):
-        entity = repo_of(skill) if kind == meta.REPO_KIND else skill.split("/", 1)[0]
-        if entity not in seen:
-            seen.append(entity)
+        repo = repo_of(skill)
+        if repo not in seen:
+            seen.append(repo)
     return seen
 
 
@@ -346,49 +345,47 @@ def repo_result(config: Config, repo: str, downloader: Downloader) -> dict | Non
         return None
 
 
-def owner_result(config: Config, owner: str, downloader: Downloader) -> bool | None:
-    """Fetch one owner's avatar: True built, None for an owner GitHub has no answer for - a dead
-    end rather than a failure, so a window of only such owners does not fail the run - and False for
-    any other failure. Either way nothing is written and the next run retries it."""
-    try:
-        meta.build_owner(config, owner, downloader)
-    except (httpx.HTTPError, OSError, ValueError) as error:
-        if isinstance(error, httpx.HTTPStatusError) and error.response.status_code in GONE_STATUSES:
-            print(f"gone: {owner} ({error})", file=sys.stderr)
-            return None
-        print(f"failed: {owner} ({type(error).__name__}: {error})", file=sys.stderr)
-        return False
-    return True
+def meta_window(config: Config, resolved: dict[str, dict]) -> list[str]:
+    """The repositories to fetch, in catalog order: those without a row, plus one live repository of
+    every owner still without an avatar - the owner is read from its repository's payload, so one
+    call serves both. `live` skips a repository already known to be gone, so the representative is
+    one that can still answer."""
+    roster = repo_roster(config)
+    need = {repo for repo in roster if repo not in resolved}
+    representative: dict[str, str] = {}
+    for repo in roster:
+        owner = repo.split("/", 1)[0]
+        row = resolved.get(repo)
+        if owner not in representative and (row is None or not row.get("gone")):
+            representative[owner] = repo
+    for owner, repo in representative.items():
+        if not common.owner_avatar_path(config, owner).is_file():
+            need.add(repo)
+    return [repo for repo in roster if repo in need]
 
 
 def build_meta(config: Config) -> int:
-    """Fetch every repository the catalog names without a row and every owner without an avatar: the
-    repositories into `repos.jsonl`, the avatars into `owners/`. Both windows are existence, so a
-    rerun fills only what is missing. A repository GitHub has no answer for gets a `gone` row; an
-    owner with none is a dead end, retried next run. A run whose every fetch failed is 1."""
-    repo_roster = meta_entities(config, meta.REPO_KIND)
-    owner_roster = meta_entities(config, meta.OWNER_KIND)
+    """Fetch the repositories the catalog names that are missing a row, and one live repository of
+    every owner still without an avatar - the `/repos` payload carries the owner, so its avatar lands
+    as the repository is fetched. The rows merge into `repos.jsonl` in catalog order; a repository
+    GitHub has no answer for gets a `gone` row. A run whose every fetch failed is 1."""
+    roster = repo_roster(config)
     resolved = repo_rows(config)
-    repos = [repo for repo in repo_roster if repo not in resolved]
-    owners = [owner for owner in owner_roster
-              if not common.owner_avatar_path(config, owner).is_file()]
-    if not repos and not owners:
+    window = meta_window(config, resolved)
+    if not window:
         print("nothing to build: every entity is done", file=sys.stderr)
         return 0
     with Downloader(config, headers=meta.headers(config)) as downloader, \
             ThreadPoolExecutor(max_workers=META_JOBS) as pool:
-        fetched = list(pool.map(lambda repo: repo_result(config, repo, downloader), repos))
-        avatars = list(pool.map(lambda owner: owner_result(config, owner, downloader), owners))
+        fetched = list(pool.map(lambda repo: repo_result(config, repo, downloader), window))
     merged = dict(resolved)
-    merged.update({repo: row for repo, row in zip(repos, fetched, strict=True)
+    merged.update({repo: row for repo, row in zip(window, fetched, strict=True)
                    if row is not None})
-    rows = [merged[repo] for repo in repo_roster if repo in merged]
+    rows = [merged[repo] for repo in roster if repo in merged]
     if rows or resolved:
         write_repo_rows(config, rows)
-    built = (sum(1 for row in fetched if row is not None and not row["gone"])
-             + sum(1 for ok in avatars if ok is True))
-    failed = (sum(1 for row in fetched if row is None)
-              + sum(1 for ok in avatars if ok is False))
+    built = sum(1 for row in fetched if row is not None and not row["gone"])
+    failed = sum(1 for row in fetched if row is None)
     print(f"done: {built} built, {failed} failed", file=sys.stderr)
     return 1 if built == 0 and failed else 0
 

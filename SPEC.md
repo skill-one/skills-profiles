@@ -56,11 +56,12 @@ two directories spell a `:` and an `&` as `_`, which is also the handle `jev.py`
   The model never shapes the front matter, so the description always parses back out of the page.
 - **The entities are one catalog and one file.** `repos.jsonl` holds one row per repository (`id`,
   `owner`, `repo`, `description`, `stars`, `updated_at`, `pushed_at`, `html_url`, `gone`,
-  `fetched_at`), and each owner is one avatar at the fixed `owners/<owner>.png` - a path a frontend
-  builds from the owner alone, with no owner catalog to read. A repository row with `gone: true` is
-  one GitHub has no answer for: the negative lives in the catalog, so no run fetches it again. An
-  owner has no such row, so a 404 owner is a dead end retried next run - it does not fail the run.
-  The join to a skill is the `owner/repo` (or `owner`) its id leads with.
+  `fetched_at`); each owner is one avatar at the fixed `owners/<owner>.png` - a path a frontend builds
+  from the owner alone, with no owner catalog to read. One repository call yields both: `/repos`
+  carries the owner and follows a rename where `/users` answers 404, so a renamed owner still yields
+  an avatar. A repository row with `gone: true` is one GitHub has no answer for: the negative lives
+  in the catalog, so no run fetches it again. The join to a skill is the `owner/repo` its id leads
+  with.
 - **The catalog is the way in.** `skills.jsonl` holds one flat line per skill the mirror lists and
   the tree can still build, in the mirror's own order - the mirror's row (`id`, `installs`) plus the
   `description` read out of that skill's own `SKILL.md`, its `description_zh` (the `description` in

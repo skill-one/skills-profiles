@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
-"""The two entities above a skill: one repository's profile, one owner's avatar.
+"""The entities above a skill: a repository's profile, and the avatar of the owner it belongs to.
 
-A skill id leads with `owner/repo`, and both are worth more than the id alone says: a repository
-has a description, a star count and a last-update time, and an owner has an avatar. The mirror's
-listing carries neither, so this module reads GitHub's own API - one call per repository, one per
-owner plus a download of its avatar - and puts each where it fits: repositories into the catalog
-`repos.jsonl`, one row each; an owner into the one file it is, `owners/<owner>.png`, at the fixed
-path a frontend builds from the owner alone. A repository GitHub has no answer for becomes a `gone`
+A skill id leads with `owner/repo`, and a repository is worth more than the id alone says: it has a
+description, a star count and a last-update time, and it carries its owner. So this module reads
+GitHub's own `/repos` for each repository - one call yields both artifacts - and puts each where it
+fits: the repository into the catalog `repos.jsonl`, one row each; the owner into the one file it is,
+`owners/<owner>.png`, at the fixed path a frontend builds from the owner alone. Reading the owner
+from the repository rather than `/users` matters: `/repos` follows a rename where `/users` answers
+404, so a renamed owner still yields an avatar. A repository GitHub has no answer for becomes a `gone`
 row, so it is not fetched again.
 
 The shaping is here; `headers()` builds what every request carries - the versioned accept, the
 user-agent GitHub refuses to answer without, and the token when one is set. `batch.py` owns the
-window and the pool: one entity per pool job, the repositories into the catalog, the avatars to
-their one file.
+window and the pool: one repository per pool job, its row into the catalog and its owner's avatar
+to their one file.
 """
 
 from __future__ import annotations
@@ -24,9 +25,6 @@ from pathlib import Path
 
 import common
 from common import Config, Downloader
-
-REPO_KIND = "repo"
-OWNER_KIND = "owner"
 
 
 def headers(config: Config) -> dict[str, str]:
@@ -41,11 +39,6 @@ def headers(config: Config) -> dict[str, str]:
 def repo_url(api: str, repo: str) -> str:
     """The one repository endpoint, addressed by the `owner/repo` a skill id leads with."""
     return f"{api.rstrip('/')}/repos/{repo}"
-
-
-def owner_url(api: str, owner: str) -> str:
-    """The one owner endpoint."""
-    return f"{api.rstrip('/')}/users/{owner}"
 
 
 def repo_row(repo: str, fetched_at: str, payload: dict | None = None, gone: bool = False) -> dict:
@@ -69,22 +62,25 @@ def repo_gone_row(repo: str) -> dict:
 
 
 def build_repo(config: Config, repo: str, downloader: Downloader) -> dict:
-    """Fetch one repository and return its catalog row."""
-    return repo_row(repo, _now(), payload=_json(downloader, repo_url(config.github_api_url, repo)))
+    """Fetch one repository: return its catalog row and write its owner's avatar. The `/repos` payload
+    carries the owner - with the login the endpoint resolved, which is why a renamed owner still
+    yields an avatar - so one call serves both."""
+    payload = _json(downloader, repo_url(config.github_api_url, repo))
+    _write_avatar(config, repo.partition("/")[0], payload.get("owner"), downloader)
+    return repo_row(repo, _now(), payload=payload)
 
 
-def build_owner(config: Config, owner: str, downloader: Downloader) -> Path:
-    """Fetch one owner's avatar and write it to its fixed path; returns the file. The avatar is the
-    whole of what an owner has, so its presence is the cache - no catalog, no row."""
-    payload = _json(downloader, owner_url(config.github_api_url, owner))
-    avatar_url = payload.get("avatar_url")
+def _write_avatar(config: Config, owner: str, holder: object, downloader: Downloader) -> None:
+    """Write `owners/<owner>.png` from a payload's `owner` object, unless the file is already there.
+    The mirror's own spelling names the file, so a frontend's `owners/<owner>.png` always matches."""
+    avatar_url = holder.get("avatar_url") if isinstance(holder, dict) else None
     path = common.owner_avatar_path(config, owner)
-    if isinstance(avatar_url, str) and avatar_url:
-        with tempfile.TemporaryDirectory(prefix="skills-meta-") as tmp:
-            blob = Path(tmp) / "avatar"
-            downloader.get(avatar_url, blob)
-            common.write_bytes(path, blob.read_bytes())
-    return path
+    if path.is_file() or not (isinstance(avatar_url, str) and avatar_url):
+        return
+    with tempfile.TemporaryDirectory(prefix="skills-meta-") as tmp:
+        blob = Path(tmp) / "avatar"
+        downloader.get(avatar_url, blob)
+        common.write_bytes(path, blob.read_bytes())
 
 
 def _json(downloader: Downloader, url: str) -> dict:

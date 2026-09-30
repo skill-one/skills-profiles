@@ -1,4 +1,4 @@
-"""meta.py and the `meta` batch: a repository's profile and an owner's avatar.
+"""meta.py and the `meta` batch: a repository's profile and the avatar of its owner.
 
 The shaping is unit-tested directly; the catalog merge, the avatar download and the gone row run
 in-process through `batch.py`, against a local `file://` GitHub root, so no test calls out.
@@ -30,11 +30,24 @@ def repos_of(config) -> dict:
     return {row["id"]: row for row in common.read_jsonl(common.repos_index_path(config))}
 
 
-def fail_with(code: int):
+def failing(code: int):
     """A `Downloader.get` that answers one status for every request."""
     def get(self, url, dest):
         raise httpx.HTTPStatusError(f"{code}", request=httpx.Request("GET", url),
                                     response=httpx.Response(code))
+    return get
+
+
+def not_found(path: str):
+    """A `Downloader.get` that answers 404 for one URL and delegates the rest."""
+    real = common.Downloader.get
+
+    def get(self, url, dest):
+        if url.endswith(path):
+            raise httpx.HTTPStatusError("Client error '404 Not Found'",
+                                        request=httpx.Request("GET", url),
+                                        response=httpx.Response(404))
+        return real(self, url, dest)
     return get
 
 
@@ -74,14 +87,10 @@ def test_headers_carry_the_versioned_accept_and_the_token_only_when_set(monkeypa
 # ------------------------------------------------------------------ the roster
 
 
-def test_the_roster_is_the_catalogs_entities_deduped_and_in_order(workdir):
-    config = common.Config()
-
-    assert batch.meta_entities(config, meta.REPO_KIND) == [
+def test_the_roster_is_the_catalogs_repositories_deduped_and_in_order(workdir):
+    assert batch.repo_roster(common.Config()) == [
         "owner-a/repo-a", "owner-b/repo-b", "owner-c/repo-c", "owner-h/repo-h",
         "owner-e/.dotcfg", "owner-d/repo-d"]
-    assert batch.meta_entities(config, meta.OWNER_KIND) == [
-        "owner-a", "owner-b", "owner-c", "owner-h", "owner-e", "owner-d"]
 
 
 # ---------------------------------------------------------------- the batch
@@ -99,8 +108,9 @@ def test_one_run_writes_the_catalog_and_the_avatars(capsys, workdir, tmp_path, m
     assert repos[REPO_A]["stars"] == 60
     assert repos[REPO_A]["description"].startswith("A repository the test fakes")
     assert repos[REPO_A]["gone"] is False
+    # the avatar rides on the repository's payload
     assert common.owner_avatar_path(config, OWNER_A).read_bytes().startswith(b"\x89PNG")
-    assert not (config.output_dir / "owners.jsonl").exists()  # an owner has no row
+    assert not (config.output_dir / "owners.jsonl").exists()
 
 
 def test_a_second_run_has_nothing_to_do(capsys, workdir, tmp_path, monkeypatch):
@@ -113,18 +123,23 @@ def test_a_second_run_has_nothing_to_do(capsys, workdir, tmp_path, monkeypatch):
     assert "nothing to build" in again.stderr
 
 
+def test_a_missing_avatar_is_refilled_from_its_repository(capsys, workdir, tmp_path, monkeypatch):
+    """An avatar is derived from a repository, so a deleted one is refilled by re-reading that
+    repository - no `/users` call, no separate owner window."""
+    root = make_github_root(tmp_path / "github")
+    assert run_meta(capsys, root, monkeypatch).returncode == 0
+    config = common.Config()
+    common.owner_avatar_path(config, OWNER_A).unlink()
+
+    assert run_meta(capsys, root, monkeypatch).returncode == 0
+
+    assert common.owner_avatar_path(config, OWNER_A).read_bytes().startswith(b"\x89PNG")
+
+
 def test_a_repository_github_lacks_becomes_a_gone_row(capsys, workdir, tmp_path, monkeypatch):
     root = make_github_root(tmp_path / "github")
-    real = common.Downloader.get
+    monkeypatch.setattr(common.Downloader, "get", not_found(f"/repos/{REPO_A}"))
 
-    def gone(self, url, dest):
-        if url.endswith(f"/repos/{REPO_A}"):
-            raise httpx.HTTPStatusError("Client error '404 Not Found'",
-                                        request=httpx.Request("GET", url),
-                                        response=httpx.Response(404))
-        return real(self, url, dest)
-
-    monkeypatch.setattr(common.Downloader, "get", gone)
     result = run_meta(capsys, root, monkeypatch)
 
     assert result.returncode == 0, result.stderr
@@ -137,49 +152,19 @@ def test_a_repository_github_lacks_becomes_a_gone_row(capsys, workdir, tmp_path,
     assert "nothing to build" in again.stderr  # the gone row is resolved, so not retried
 
 
-def test_an_owner_github_lacks_is_a_dead_end_not_a_failure(capsys, workdir, tmp_path, monkeypatch):
-    root = make_github_root(tmp_path / "github")
-    real = common.Downloader.get
-
-    def gone(self, url, dest):
-        if url.endswith(f"/users/{OWNER_A}"):
-            raise httpx.HTTPStatusError("Client error '404 Not Found'",
-                                        request=httpx.Request("GET", url),
-                                        response=httpx.Response(404))
-        return real(self, url, dest)
-
-    monkeypatch.setattr(common.Downloader, "get", gone)
-    first = run_meta(capsys, root, monkeypatch)
-    assert first.returncode == 0, first.stderr
-    assert f"gone: {OWNER_A}" in first.stderr and f"failed: {OWNER_A}" not in first.stderr
-    config = common.Config()
-    assert not common.owner_avatar_path(config, OWNER_A).exists()
-    assert common.owner_avatar_path(config, "owner-b").is_file()
-
-    again = run_meta(capsys, root, monkeypatch)
-    assert f"gone: {OWNER_A}" in again.stderr  # no catalog, no persisted gone: it is tried again
-
-
-def test_a_window_of_only_dead_owners_does_not_fail_the_run(capsys, workdir, tmp_path, monkeypatch):
-    """The CI case: everything is fetched but one owner GitHub 404s - the window is that owner alone,
-    a dead end rather than a failed run."""
+def test_a_window_of_only_a_dead_repository_does_not_fail_the_run(
+        capsys, workdir, tmp_path, monkeypatch):
+    """The CI case: everything is fetched but one owner's avatar is gone - its only repository 404s,
+    so the window is that repository alone, a dead end rather than a failed run."""
     root = make_github_root(tmp_path / "github")
     assert run_meta(capsys, root, monkeypatch).returncode == 0
     common.owner_avatar_path(common.Config(), OWNER_A).unlink()
-    real = common.Downloader.get
+    monkeypatch.setattr(common.Downloader, "get", not_found(f"/repos/{REPO_A}"))
 
-    def gone(self, url, dest):
-        if url.endswith(f"/users/{OWNER_A}"):
-            raise httpx.HTTPStatusError("Client error '404 Not Found'",
-                                        request=httpx.Request("GET", url),
-                                        response=httpx.Response(404))
-        return real(self, url, dest)
-
-    monkeypatch.setattr(common.Downloader, "get", gone)
     result = run_meta(capsys, root, monkeypatch)
 
     assert result.returncode == 0, result.stderr
-    assert f"gone: {OWNER_A}" in result.stderr
+    assert f"gone: {REPO_A}" in result.stderr
 
 
 def test_a_broken_payload_fails_only_its_own_repository(capsys, workdir, tmp_path, monkeypatch):
@@ -196,7 +181,7 @@ def test_a_broken_payload_fails_only_its_own_repository(capsys, workdir, tmp_pat
 
 def test_a_run_whose_every_fetch_failed_is_status_one(capsys, workdir, tmp_path, monkeypatch):
     root = make_github_root(tmp_path / "github")
-    monkeypatch.setattr(common.Downloader, "get", fail_with(400))
+    monkeypatch.setattr(common.Downloader, "get", failing(400))
 
     result = run_meta(capsys, root, monkeypatch)
 

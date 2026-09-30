@@ -173,15 +173,14 @@ kebab 形式作 slug，没有 `name` 时用仓库名），而子目录 skill 旁
 404/410 的仓库是彻底消失（已删除或转私有），仓库目录仍会创建作为标记，其 skill 之后的每轮运行都
 被跳过，而不是反复拉取、反复失败。
 
-`meta.py` 是第三个生产者，但作用于实体而非 skill。清单按 `owner/repo` 与 `owner` 读出——即名册，
-顺序不变——每个实体一次 GitHub 调用：仓库是 `GET {api}/repos/{owner}/{repo}`，owner 是
-`GET {api}/users/{owner}` 再加一次 `avatar_url` 下载。仓库被整形为 `repos.jsonl` 的一行，由
-`batch.py` 按清单自身顺序合并；owner 就是一张头像，由 `common.write_bytes` 写在固定的
-`owners/<owner>.png`，它的存在就是它全部的缓存。
+`meta.py` 是第三个生产者，但作用于实体而非 skill。清单按 `owner/repo` 读出——即仓库名册，顺序不变
+——一个仓库一次 GitHub 调用：`GET {api}/repos/{owner}/{repo}`，其载荷被整形为 `repos.jsonl` 的一行
+（由 `batch.py` 按清单自身顺序合并），并带有 owner，其头像由 `common.write_bytes` 写到固定的
+`owners/<owner>.png`。从仓库而非 `/users` 读 owner，正是改名后仍能拿到头像的原因（`/repos` 跟随改名，
+`/users` 返回 404）；头像的存在就是它全部的缓存，缺一个就重读一次仓库。
 每个请求都带 `Accept: application/vnd.github+json`、GitHub 非有不可的 `User-Agent`，以及设了
 `SKILLS_PROFILES_GITHUB_TOKEN` 时的 Bearer token。窗口与池属于 `batch.py`；整形属于 `meta.py`
-——`headers()`、两个 URL 构造器、`repo_row()`、`repo_gone_row()`、`build_repo()` 和
-`build_owner()`。
+——`headers()`、URL 构造器、`repo_row()`、`repo_gone_row()` 和 `build_repo()`。
 
 ## 工作方式
 

@@ -156,27 +156,24 @@ def write_json_file(path: Path, payload: dict) -> None:
 
 
 def make_github_root(root: Path, entries: list[dict] | None = None) -> Path:
-    """A local stand-in for the GitHub API, laid out for the `--github-api file://…` knob: a
-    `repos/<owner>/<repo>` payload, a `users/<owner>` payload, and the avatar bytes its `avatar_url`
-    points at. The payloads carry what `meta.py` reads, and nothing wider."""
+    """A local stand-in for the GitHub API, laid out for the `SKILLS_PROFILES_GITHUB_API_URL` seam:
+    one `repos/<owner>/<repo>` payload per repository, each carrying the owner whose `avatar_url`
+    points at the avatar bytes. One repository is one file, the endpoint `meta.py` reads."""
     entries = SKILLS if entries is None else entries
     repos = sorted({"/".join(entry["id"].split("/")[:2]) for entry in entries})
-    owners = sorted({entry["id"].split("/")[0] for entry in entries})
     for repo in repos:
         owner, name = repo.split("/")
+        avatar = root / "avatars" / f"{owner}.png"
+        avatar.parent.mkdir(parents=True, exist_ok=True)
+        avatar.write_bytes(b"\x89PNG\r\n\x1a\n" + owner.encode())
         write_json_file(root / "repos" / owner / name,
                         {"full_name": repo, "description": f"A repository the test fakes: {name}.",
                          "stargazers_count": len(name) * 10,
                          "html_url": f"https://github.com/{repo}",
                          "updated_at": "2026-09-01T00:00:00Z",
-                         "pushed_at": "2026-08-30T00:00:00Z"})
-    for owner in owners:
-        avatar = root / "avatars" / f"{owner}.png"
-        avatar.parent.mkdir(parents=True, exist_ok=True)
-        avatar.write_bytes(b"\x89PNG\r\n\x1a\n" + owner.encode())
-        write_json_file(root / "users" / owner,
-                        {"login": owner, "name": owner.title(), "type": "Organization",
-                         "html_url": f"https://github.com/{owner}", "avatar_url": avatar.as_uri()})
+                         "pushed_at": "2026-08-30T00:00:00Z",
+                         "owner": {"login": owner, "type": "Organization",
+                                   "avatar_url": avatar.as_uri()}})
     return root
 
 
